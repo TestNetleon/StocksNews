@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'dart:developer';
+
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
+
+class QRcodePRovider extends ChangeNotifier {
+  String? _error;
+  Status _status = Status.ideal;
+  Status get status => _status;
+  bool get isLoading => _status == Status.loading;
+  String? get error => _error ?? Const.errSomethingWrong;
+  final FocusNode searchFocusNode = FocusNode();
+
+  void setStatus(status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  Future getQRdata({required String qrCode}) async {
+    setStatus(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "qr_token": qrCode,
+      };
+      ApiResponse response =
+          await apiRequest(url: Apis.qrCodeScan, request: request);
+      if (response.status) {
+      } else {}
+      Navigator.pop(navigatorKey.currentContext!);
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+      setStatus(Status.ideal);
+    } catch (e) {
+      log(e.toString());
+      setStatus(Status.ideal);
+    }
+  }
+}

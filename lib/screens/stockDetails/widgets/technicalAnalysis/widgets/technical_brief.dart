@@ -1,0 +1,589 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/technical_analysis_res.dart';
+import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/item_back.dart';
+import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+
+class TechnicalAnalysisBrief extends StatelessWidget {
+  const TechnicalAnalysisBrief({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    TechnicalAnalysisRes? res =
+        context.watch<StockDetailProvider>().technicalAnalysisRes;
+    return Column(
+      children: [
+        Visibility(
+          visible: res?.technicalIndicatorArr.isNotEmpty == true &&
+              res?.movingAverageArr.isNotEmpty == true,
+          child: Padding(
+            padding: EdgeInsets.only(top: 10.sp),
+            child: const SummaryBlock(),
+          ),
+        ),
+        Visibility(
+          visible: res?.technicalIndicatorArr.isNotEmpty == true,
+          child: Padding(
+            padding: EdgeInsets.only(top: 10.sp),
+            child: const TechnicalIndicatorsBlock(),
+          ),
+        ),
+        Visibility(
+          visible: res?.movingAverageArr.isNotEmpty == true,
+          child: Padding(
+            padding: EdgeInsets.only(top: 10.sp),
+            child: const TechnicalMovingAverages(),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SummaryBlock extends StatelessWidget {
+  const SummaryBlock({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    MovingAverage? summary =
+        context.watch<StockDetailProvider>().technicalAnalysisRes?.summary;
+
+    MovingAverage? movingAverage = context
+        .watch<StockDetailProvider>()
+        .technicalAnalysisRes
+        ?.movingAverage;
+
+    MovingAverage? technicalIndicator = context
+        .watch<StockDetailProvider>()
+        .technicalAnalysisRes
+        ?.technicalIndicator;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(
+          color: ThemeColors.greyBorder,
+          height: 30.sp,
+        ),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Summary: ",
+                style: stylePTSansBold(
+                  fontSize: 16,
+                ),
+              ),
+              TextSpan(
+                text: "${summary?.type}",
+                style: stylePTSansBold(
+                    fontSize: 16,
+                    color: summary?.type == "Strong Sell" ||
+                            summary?.type == "Sell"
+                        ? Colors.red
+                        : summary?.type == "Strong Buy" ||
+                                summary?.type == "Buy"
+                            ? ThemeColors.accent
+                            : ThemeColors.blue),
+              ),
+            ],
+          ),
+        ),
+        const SpacerVerticel(height: 5),
+        ItemBack(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 120.sp,
+                child: Text(
+                  "Moving Averages:",
+                  style: stylePTSansBold(fontSize: 12),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.end,
+                  "${movingAverage?.type}",
+                  style: stylePTSansBold(
+                    fontSize: 12,
+                    color: movingAverage?.type == "Strong Sell" ||
+                            movingAverage?.type == "Sell"
+                        ? Colors.red
+                        : movingAverage?.type == "Strong Buy" ||
+                                movingAverage?.type == "Buy"
+                            ? ThemeColors.accent
+                            : ThemeColors.buttonBlue,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.end,
+                  "Buy: (${movingAverage?.totalBuy})",
+                  style: stylePTSansBold(
+                    fontSize: 12,
+                    color: ThemeColors.accent,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.end,
+                  "Sell: (${movingAverage?.totalSell})",
+                  style: stylePTSansBold(
+                    fontSize: 12,
+                    color: ThemeColors.sos,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SpacerVerticel(height: 10),
+        ItemBack(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 120.sp,
+                child: Text(
+                  "Technical Indicators:",
+                  style: stylePTSansBold(fontSize: 12),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.end,
+                  "${technicalIndicator?.type}",
+                  style: stylePTSansBold(
+                    fontSize: 12,
+                    color: technicalIndicator?.type == "Strong Sell" ||
+                            technicalIndicator?.type == "Sell"
+                        ? Colors.red
+                        : technicalIndicator?.type == "Strong Buy" ||
+                                technicalIndicator?.type == "Buy"
+                            ? ThemeColors.accent
+                            : ThemeColors.buttonBlue,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.end,
+                  "Buy: (${technicalIndicator?.totalBuy})",
+                  style: stylePTSansBold(
+                    fontSize: 12,
+                    color: ThemeColors.accent,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.end,
+                  "Sell: (${technicalIndicator?.totalSell})",
+                  style: stylePTSansBold(
+                    fontSize: 12,
+                    color: ThemeColors.sos,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TechnicalIndicatorsBlock extends StatelessWidget {
+  const TechnicalIndicatorsBlock({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<TechnicalIndicatorArr>? data = context
+        .watch<StockDetailProvider>()
+        .technicalAnalysisRes
+        ?.technicalIndicatorArr;
+
+    MovingAverage? technicalIndicator = context
+        .watch<StockDetailProvider>()
+        .technicalAnalysisRes
+        ?.technicalIndicator;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(
+          color: ThemeColors.greyBorder,
+          height: 30.sp,
+        ),
+        Text(
+          "Technical Indicators",
+          style: stylePTSansBold(fontSize: 16),
+        ),
+        const SpacerVerticel(height: 2),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Summary: ",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                ),
+              ),
+              TextSpan(
+                text: "${technicalIndicator?.type}      ",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: technicalIndicator?.type == "Strong Sell" ||
+                          technicalIndicator?.type == "Sell"
+                      ? ThemeColors.sos
+                      : technicalIndicator?.type == "Strong Buy" ||
+                              technicalIndicator?.type == "Buy"
+                          ? ThemeColors.accent
+                          : ThemeColors.buttonBlue,
+                ),
+              ),
+              TextSpan(
+                text: "Buy: ${technicalIndicator?.totalBuy}      ",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.accent),
+              ),
+              TextSpan(
+                text: "Sell: ${technicalIndicator?.totalSell}",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.sos),
+              ),
+            ],
+          ),
+        ),
+        const SpacerVerticel(height: 2),
+        data?.isNotEmpty == true
+            ? Text(
+                "${data?[0].date}",
+                style: stylePTSansBold(fontSize: 12),
+              )
+            : const SizedBox(),
+        const SpacerVerticel(height: 5),
+        ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100.sp,
+                          child: Text(
+                            "NAME",
+                            textAlign: TextAlign.start,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "VALUE",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "ACTION",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SpacerVerticel(height: 10),
+                    ItemBack(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 100.sp,
+                            child: Text(
+                              "${data?[index].name}",
+                              style: stylePTSansBold(fontSize: 12),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              textAlign: TextAlign.end,
+                              "${data?[index].value}",
+                              style: stylePTSansBold(fontSize: 12),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              textAlign: TextAlign.end,
+                              "${data?[index].action}",
+                              style: stylePTSansBold(
+                                  fontSize: 12,
+                                  color: data?[index].action == "Sell"
+                                      ? ThemeColors.sos
+                                      : data?[index].action == "Buy"
+                                          ? ThemeColors.accent
+                                          : ThemeColors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              return ItemBack(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 100.sp,
+                      child: Text(
+                        "${data?[index].name}",
+                        style: stylePTSansBold(fontSize: 12),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.end,
+                        "${data?[index].value}",
+                        style: stylePTSansBold(fontSize: 12),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        textAlign: TextAlign.end,
+                        "${data?[index].action}",
+                        style: stylePTSansBold(
+                            fontSize: 12,
+                            color: data?[index].action == "Sell"
+                                ? ThemeColors.sos
+                                : data?[index].action == "Buy"
+                                    ? ThemeColors.accent
+                                    : ThemeColors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SpacerVerticel(height: 10);
+            },
+            itemCount: data?.length ?? 0)
+      ],
+    );
+  }
+}
+
+class TechnicalMovingAverages extends StatelessWidget {
+  const TechnicalMovingAverages({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<MovingAverageArr>? data = context
+        .watch<StockDetailProvider>()
+        .technicalAnalysisRes
+        ?.movingAverageArr;
+    MovingAverage? movingAverage = context
+        .watch<StockDetailProvider>()
+        .technicalAnalysisRes
+        ?.movingAverage;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(
+          color: ThemeColors.greyBorder,
+          height: 30.sp,
+        ),
+        Text(
+          "Moving Averages",
+          style: stylePTSansBold(fontSize: 16),
+        ),
+        const SpacerVerticel(height: 2),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Summary: ",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                ),
+              ),
+              TextSpan(
+                text: "${movingAverage?.type}      ",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: movingAverage?.type == "Strong Sell" ||
+                          movingAverage?.type == "Sell"
+                      ? ThemeColors.sos
+                      : movingAverage?.type == "Strong Buy" ||
+                              movingAverage?.type == "Buy"
+                          ? ThemeColors.accent
+                          : ThemeColors.buttonBlue,
+                ),
+              ),
+              TextSpan(
+                text: "Buy: ${movingAverage?.totalBuy}      ",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.accent),
+              ),
+              TextSpan(
+                text: "Sell: ${movingAverage?.totalSell}      ",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.sos),
+              ),
+            ],
+          ),
+        ),
+        const SpacerVerticel(height: 2),
+        data?.isNotEmpty == true
+            ? Text(
+                "${data?[0].date}",
+                style: stylePTSansBold(fontSize: 12),
+              )
+            : const SizedBox(),
+        const SpacerVerticel(height: 5),
+        ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          child: Text(
+                            "NAME",
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            maxLines: 1,
+                            "SIMPLE",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            maxLines: 1,
+                            "EXPONENTIAL",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            maxLines: 1,
+                            "WEIGHTED",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SpacerVerticel(height: 10),
+                    ItemBack(
+                      child: Row(
+                        children: [
+                          Text(
+                            "${data?[index].name}",
+                            style: stylePTSansBold(fontSize: 12),
+                          ),
+                          _item(
+                              subText: "${data?[index].smaStatus}",
+                              text: "${data?[index].sma}"),
+                          _item(
+                              subText: "${data?[index].emaStatus}",
+                              text: "${data?[index].ema}"),
+                          _item(
+                              subText: "${data?[index].wmaStatus}",
+                              text: "${data?[index].wma}"),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              return ItemBack(
+                child: Row(
+                  children: [
+                    Text(
+                      "${data?[index].name}",
+                      style: stylePTSansBold(fontSize: 12),
+                    ),
+                    _item(
+                        subText: "${data?[index].smaStatus}",
+                        text: "${data?[index].sma}"),
+                    _item(
+                        subText: "${data?[index].emaStatus}",
+                        text: "${data?[index].ema}"),
+                    _item(
+                        subText: "${data?[index].wmaStatus}",
+                        text: "${data?[index].wma}"),
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SpacerVerticel(height: 10);
+            },
+            itemCount: data?.length ?? 0)
+      ],
+    );
+  }
+
+  Widget _item({required String text, required String subText}) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            text,
+            style: stylePTSansBold(fontSize: 12),
+          ),
+          Text(
+            subText,
+            style: stylePTSansBold(
+              fontSize: 11,
+              color: subText == "Sell"
+                  ? ThemeColors.sos
+                  : subText == "Buy"
+                      ? ThemeColors.accent
+                      : ThemeColors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

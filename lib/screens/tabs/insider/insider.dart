@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/insider_trading_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
+import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/text_input_field_search.dart';
+
+class Insider extends StatelessWidget {
+  const Insider({super.key});
+
+  void _filterClick() {
+    showPlatformBottomSheet(
+      context: navigatorKey.currentContext!,
+      content: const FilterInsiders(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();
+
+    return BaseContainer(
+      drawer: const BaseDrawer(),
+      appbar: AppBarHome(filterClick: _filterClick),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const ScreenTitle(title: "Insider Trading"),
+            TextInputFieldSearch(
+              hintText: "Find by insider or company name",
+              onSubmitted: (text) {
+                closeKeyboard();
+                provider.getData(search: text, clear: false);
+              },
+              searching: provider.isSearching,
+              editable: true,
+            ),
+            const Expanded(child: InsiderContent())
+          ],
+        ),
+      ),
+    );
+  }
+}

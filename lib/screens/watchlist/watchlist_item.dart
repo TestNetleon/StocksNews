@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/watchlist_res.dart';
+import 'package:stocks_news_new/providers/watchlist_provider.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/theme_image_view.dart';
+
+class WatchlistItem extends StatelessWidget {
+  final int index;
+  final WatchlistData data;
+
+  const WatchlistItem({
+    super.key,
+    required this.index,
+    required this.data,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Slidable(
+      key: ValueKey(index.toString()),
+      groupTag: "A",
+      endActionPane: ActionPane(
+        extentRatio: .4,
+        motion: const ScrollMotion(),
+        children: [
+          const SpacerHorizontal(),
+          SlidableAction(
+            onPressed: (_) {
+              context
+                  .read<WatchlistProvider>()
+                  .deleteItem(data.id, data.symbol);
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            label: 'Delete',
+          ),
+          // Expanded(
+          //   child: InkWell(
+          //     splashColor: Colors.black12,
+          //     onTap: (){
+          //       log("****");
+          //     },
+          //     child: Container(
+          //       color: Colors.red,
+          //       child: Column(
+          //         children: [
+          //           Expanded(
+          //             child: Center(
+          //               child: Padding(
+          //                 padding: EdgeInsets.symmetric(horizontal: 12.sp),
+          //                 child: Text(
+          //                   "Delete",
+          //                   style: stylePTSansBold(),
+          //                   textAlign: TextAlign.center,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, StockDetails.path,
+              arguments: data.symbol);
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25.sp),
+              child: Container(
+                padding: EdgeInsets.all(5.sp),
+                width: 43.sp,
+                height: 43.sp,
+                child: ThemeImageView(url: data.image),
+              ),
+            ),
+            const SpacerHorizontal(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.symbol,
+                    style: stylePTSansBold(fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SpacerVerticel(height: 5),
+                  Text(
+                    data.name,
+                    style: stylePTSansRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 12,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const SpacerHorizontal(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  data.price,
+                  style: stylePTSansBold(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SpacerVerticel(height: 5),
+                Text(
+                  "${data.changes.toCurrency()}%",
+                  style: stylePTSansRegular(
+                    fontSize: 12,
+                    color: data.changes > 0 ? ThemeColors.accent : Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
