@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -144,5 +145,13 @@ Future<void> openUrl(String? url,
       await launchUrl(Uri.parse(extraUrl ?? ""),
           mode: LaunchMode.platformDefault);
     }
+  }
+}
+
+commonShare({String? url, String? title}) {
+  if (url == null || url == '') {
+    showErrorMessage(message: "No url found.");
+  } else {
+    Share.share("$title $url", subject: title);
   }
 }

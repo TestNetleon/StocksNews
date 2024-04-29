@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +16,7 @@ import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -22,6 +24,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
+import '../../../blogs/index.dart';
 import '../headerStocks/index.dart';
 import 'news_details_list.dart';
 
@@ -448,6 +451,20 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     ),
                   ),
                 ),
+                Positioned(
+                  bottom: 6.sp,
+                  right: 0,
+                  child: FloatingActionButton(
+                    backgroundColor: ThemeColors.accent,
+                    child: const Icon(Icons.share),
+                    onPressed: () {
+                      commonShare(
+                        title: provider.data?.postDetail?.title ?? "",
+                        url: provider.data?.postDetail?.slug ?? "",
+                      );
+                    },
+                  ),
+                ),
                 // CommonShare(
                 //   visible: controllerProvider.isVisible,
                 //   linkShare: provider.data?.postDetail?.slug ?? "",
@@ -652,11 +669,14 @@ class ListAlignment extends StatelessWidget {
   final List<DetailListType>? list1;
   final List<DetailListType>? list2;
   final String? date;
+  final bool blog;
+
   const ListAlignment({
     super.key,
     this.list1,
     this.list2,
     this.date,
+    this.blog = false,
   });
 
   @override
@@ -672,7 +692,8 @@ class ListAlignment extends StatelessWidget {
                 styleGeorgiaRegular(color: ThemeColors.greyText, fontSize: 13),
           ),
         ),
-        buildList(list: list1, isLastList: true, type: BlogsType.author),
+        buildList(
+            list: list1, isLastList: true, type: BlogsType.author, blog: blog),
         // buildList(list: list2, isLastList: list3.isEmpty),
         Visibility(
           visible: date != null,
@@ -698,6 +719,7 @@ class ListAlignment extends StatelessWidget {
     required bool isLastList,
     bool clickable = true,
     required BlogsType type,
+    bool blog = false,
   }) {
     List<Widget> widgets = [];
 
@@ -706,12 +728,29 @@ class ListAlignment extends StatelessWidget {
         widgets.add(
           InkWell(
             onTap: () {
-              Navigator.pushNamed(
-                  navigatorKey.currentContext!, NewsAuthorIndex.path,
-                  arguments: {
-                    "data": list[i],
-                    "type": type,
-                  });
+              if (blog) {
+                log("1");
+                Navigator.pushReplacementNamed(
+                    navigatorKey.currentContext!, Blog.path,
+                    arguments: {
+                      "type": BlogsType.author,
+                      "id": list[i].id,
+                    });
+              } else {
+                Navigator.pushNamed(
+                    navigatorKey.currentContext!, NewsAuthorIndex.path,
+                    arguments: {
+                      "data": list[i],
+                      "type": type,
+                    });
+              }
+
+              // Navigator.pushNamed(
+              //     navigatorKey.currentContext!, NewsAuthorIndex.path,
+              //     arguments: {
+              //       "data": list[i],
+              //       "type": type,
+              //     });
             },
             child: Text(
               list[i].name ?? "",

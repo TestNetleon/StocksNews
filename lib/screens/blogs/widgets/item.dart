@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/modals/blogs_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
+import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -115,6 +117,12 @@ class BlogItem extends StatelessWidget {
             //       "data": detail,
             //       "type": type,
             //     });
+            Navigator.pushReplacementNamed(
+                navigatorKey.currentContext!, Blog.path,
+                arguments: {
+                  "type": BlogsType.author,
+                  "id": detail.id,
+                });
           },
           child: Text(
             "${detail.name}",

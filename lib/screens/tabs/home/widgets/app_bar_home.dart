@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
@@ -9,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -27,6 +29,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? image = context.watch<UserProvider>().user?.image;
     return AppBar(
       // backgroundColor: ThemeColors.lightRed,
       backgroundColor: ThemeColors.background,
@@ -53,8 +56,14 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                   color: ThemeColors.accent,
                   borderRadius: BorderRadius.circular(30.r),
                 ),
-                padding: EdgeInsets.all(3.sp),
-                child: const Icon(Icons.person),
+                padding: image == null || image == ''
+                    ? EdgeInsets.all(3.sp)
+                    : EdgeInsets.all(0.9.sp),
+                child: image == null || image == ''
+                    ? const Icon(Icons.person)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(30.r),
+                        child: ThemeImageView(url: image)),
               ),
             ),
       centerTitle: true,
