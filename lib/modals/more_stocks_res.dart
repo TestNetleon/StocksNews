@@ -7,6 +7,7 @@ List<MoreStocksRes> moreStocksResFromJson(String str) =>
 String moreStocksResToJson(List<MoreStocksRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+//
 class MoreStocksRes {
   final String name;
   final String symbol;

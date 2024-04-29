@@ -187,9 +187,12 @@ class FirebaseApi {
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       Utils().showLog("OnMessageOpenedApp ==> ${message.data}");
 
-      Future.delayed(const Duration(seconds: 1), () {
-        handleMessage(message);
-      });
+      Future.delayed(
+        const Duration(seconds: 1),
+        () {
+          handleMessage(message);
+        },
+      );
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
     FirebaseMessaging.onMessage.listen((message) async {

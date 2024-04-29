@@ -23,6 +23,7 @@ class _TrendingIndustriesGraphState extends State<TrendingIndustriesGraph> {
     _renderData();
   }
 
+//
   void _renderData() {
     TrendingIndustriesProvider provider =
         context.read<TrendingIndustriesProvider>();

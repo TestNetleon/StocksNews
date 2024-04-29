@@ -22,6 +22,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'widgets/trending_now.dart';
 
+//
 class TopTrendingContainer extends StatefulWidget {
   const TopTrendingContainer({super.key});
 

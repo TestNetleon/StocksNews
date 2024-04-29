@@ -8,7 +8,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class TrendingFilter extends StatelessWidget {
   const TrendingFilter({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return Column(

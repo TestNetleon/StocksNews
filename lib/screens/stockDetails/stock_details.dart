@@ -18,6 +18,7 @@ class StockDetails extends StatefulWidget {
   State<StockDetails> createState() => _StockDetailsState();
 }
 
+//
 class _StockDetailsState extends State<StockDetails> {
   @override
   void initState() {

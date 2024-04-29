@@ -13,7 +13,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 class MoreStocksContainer extends StatefulWidget {
   final StocksType type;
   const MoreStocksContainer({required this.type, super.key});
-
+//
   @override
   State<MoreStocksContainer> createState() => _MoreStocksContainerState();
 }

@@ -8,7 +8,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 class LinearBarCommon extends StatelessWidget {
   final num value;
   const LinearBarCommon({super.key, this.value = 0});
-
+//
   @override
   Widget build(BuildContext context) {
     return LinearPercentIndicator(

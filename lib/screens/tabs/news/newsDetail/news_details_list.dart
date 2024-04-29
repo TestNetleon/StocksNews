@@ -7,7 +7,7 @@ import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 class NewsDetailList extends StatelessWidget {
   final PostDetail? moreNewsData;
   const NewsDetailList({super.key, this.moreNewsData});
-
+//
   @override
   Widget build(BuildContext context) {
     return NewsItem(

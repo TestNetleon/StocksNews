@@ -22,6 +22,7 @@ import 'widgets/stock_top_detail.dart';
 import 'widgets/technicalAnalysis/index.dart';
 import 'widgets/top_graph.dart';
 
+//
 class StockDetailsBase extends StatelessWidget {
   const StockDetailsBase({super.key});
 

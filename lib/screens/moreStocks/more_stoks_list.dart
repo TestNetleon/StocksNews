@@ -8,7 +8,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class MoreStocksList extends StatelessWidget {
   const MoreStocksList({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     MoreStocksProvider provider = context.watch<MoreStocksProvider>();

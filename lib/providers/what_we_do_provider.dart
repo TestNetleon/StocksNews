@@ -21,7 +21,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   int selectedIndex = 0;
   TermsPolicyRes? _data;
   TermsPolicyRes? get data => _data;
-
+//
   void setStatus(status) {
     _status = status;
     notifyListeners();

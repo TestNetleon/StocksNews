@@ -17,6 +17,7 @@ class FeaturedNewsList extends StatefulWidget {
   State<FeaturedNewsList> createState() => _FeaturedNewsListState();
 }
 
+//
 class _FeaturedNewsListState extends State<FeaturedNewsList> {
   @override
   void initState() {

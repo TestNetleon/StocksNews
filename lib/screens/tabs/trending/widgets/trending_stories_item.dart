@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class TrendingStoriesItem extends StatelessWidget {
   final GeneralNew data;
   const TrendingStoriesItem({required this.data, super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return InkWell(

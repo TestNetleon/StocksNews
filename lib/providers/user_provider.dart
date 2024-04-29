@@ -20,6 +20,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+//
 class UserProvider extends ChangeNotifier with AuthProviderBase {
   UserRes? _user;
   Status _status = Status.loaded;

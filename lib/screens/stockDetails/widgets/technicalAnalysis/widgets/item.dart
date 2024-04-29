@@ -6,7 +6,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 class TechnicalAnalysisGaugeItem extends StatelessWidget {
   final double value;
   const TechnicalAnalysisGaugeItem({super.key, this.value = 80});
-
+//
   @override
   Widget build(BuildContext context) {
     return SfRadialGauge(

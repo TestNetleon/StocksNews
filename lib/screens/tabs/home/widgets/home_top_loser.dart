@@ -20,8 +20,7 @@ class HomeTopLoser extends StatelessWidget {
         error: Const.errNoRecord,
         smallHeight: true,
       );
-    }
-
+    } //
     return ListView.separated(
       itemCount: provider.homeTrendingRes?.losers.length ?? 0,
       physics: const NeverScrollableScrollPhysics(),

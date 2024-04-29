@@ -12,7 +12,7 @@ class NewsDetails extends StatelessWidget {
   static const String path = "NewsDetails";
   final String? slug;
   const NewsDetails({super.key, this.slug});
-
+//
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(

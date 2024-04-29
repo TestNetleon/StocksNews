@@ -12,7 +12,7 @@ class StocksRes {
   final int currentPage;
   final List<AllStocks>? data;
   final int lastPage;
-
+//
   StocksRes({
     required this.currentPage,
     this.data,

@@ -17,6 +17,7 @@ class InternetConnectionWidget extends StatefulWidget {
       _InternetConnectionWidgetState();
 }
 
+//
 class _InternetConnectionWidgetState extends State<InternetConnectionWidget> {
   var connectivityResult;
   Future<void> checkConnectivity() async {

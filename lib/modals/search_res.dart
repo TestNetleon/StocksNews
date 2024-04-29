@@ -10,7 +10,7 @@ class SearchRes {
   final String id;
   final String symbol;
   final String name;
-
+//
   SearchRes({
     required this.id,
     required this.symbol,

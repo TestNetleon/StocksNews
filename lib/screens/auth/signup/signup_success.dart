@@ -12,7 +12,7 @@ class SignUpSuccess extends StatelessWidget {
   static const String path = "SignUpSuccess";
 
   const SignUpSuccess({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return BaseContainer(

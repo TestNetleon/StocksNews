@@ -18,7 +18,7 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   SocialSentimentsRes? _socialSentimentRes;
   SocialSentimentsRes? get socialSentimentRes => _socialSentimentRes;
-
+//
   int buttonIndex = 0;
   int lastDayIndex = 0;
   String selectedDays = "1";

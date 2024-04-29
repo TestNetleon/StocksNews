@@ -14,7 +14,7 @@ class SocialSentimentsGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RedditTwitterProvider provider = context.watch<RedditTwitterProvider>();
-
+//
     String? cVolString =
         provider.socialSentimentRes?.commentVolume.toCurrency();
     String? sTrendString =

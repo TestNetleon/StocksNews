@@ -12,7 +12,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-
+//
 import 'featuredNews/container.dart';
 import 'headerStocks/index.dart';
 

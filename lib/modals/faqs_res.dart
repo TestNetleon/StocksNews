@@ -13,7 +13,7 @@ String faQsResToJson(List<FaQsRes> data) =>
 class FaQsRes {
   final String question;
   final String answer;
-  
+
   FaQsRes({
     required this.question,
     required this.answer,
@@ -29,3 +29,4 @@ class FaQsRes {
         "answer": answer,
       };
 }
+//

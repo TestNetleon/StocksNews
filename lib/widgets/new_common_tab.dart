@@ -12,7 +12,7 @@ class CommonTabs extends StatefulWidget {
   final String? error;
   final Function()? onRefresh;
   final bool screenScroll;
-
+//
   const CommonTabs({
     super.key,
     required this.tabContents,

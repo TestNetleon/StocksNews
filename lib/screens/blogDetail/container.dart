@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 import '../tabs/news/newsDetail/news_details_body.dart';
 
+//
 class BlogDetailContainer extends StatelessWidget {
   final String id;
 

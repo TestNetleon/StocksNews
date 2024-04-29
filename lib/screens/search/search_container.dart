@@ -15,7 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 class SearchContainer extends StatelessWidget {
   static const String path = "Home";
   const SearchContainer({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     SearchProvider provider = context.watch<SearchProvider>();

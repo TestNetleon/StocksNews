@@ -21,6 +21,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
+//
 class StocksContainer extends StatelessWidget {
   const StocksContainer({super.key});
 

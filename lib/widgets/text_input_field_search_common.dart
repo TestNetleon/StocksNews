@@ -17,6 +17,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+//
 class TextInputFieldSearchCommon extends StatefulWidget {
   const TextInputFieldSearchCommon({
     // required this.controller,

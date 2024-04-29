@@ -14,7 +14,7 @@ import 'item.dart';
 
 class CompanyEarningStockDetail extends StatelessWidget {
   const CompanyEarningStockDetail({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();

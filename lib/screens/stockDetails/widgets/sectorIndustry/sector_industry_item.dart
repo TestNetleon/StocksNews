@@ -13,7 +13,7 @@ class SectorIndustryItem extends StatelessWidget {
   final int index;
   final SectorIndustryData? data;
   const SectorIndustryItem({super.key, required this.index, this.data});
-
+//
   @override
   Widget build(BuildContext context) {
     return InkWell(

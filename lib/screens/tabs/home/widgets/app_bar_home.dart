@@ -14,7 +14,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopback, showQR, canSearch;
   final void Function()? filterClick;
-
+//
   const AppBarHome({
     super.key,
     this.showTrailing = true,

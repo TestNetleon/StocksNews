@@ -15,6 +15,7 @@ class BlogDetail extends StatefulWidget {
   State<BlogDetail> createState() => _BlogDetailState();
 }
 
+//
 class _BlogDetailState extends State<BlogDetail> {
   @override
   void initState() {

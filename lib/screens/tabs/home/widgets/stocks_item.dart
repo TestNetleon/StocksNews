@@ -13,7 +13,7 @@ class StocksItem extends StatelessWidget {
   final bool gainer;
   final Top top;
   const StocksItem({required this.top, this.gainer = true, super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return InkWell(

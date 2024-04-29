@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+//
 class AnalysisForecast extends StatefulWidget {
   final String? html;
   const AnalysisForecast({super.key, this.html});

@@ -11,6 +11,7 @@ List<CompareStockRes> compareStockResFromJson(String str) =>
 String compareStockResToJson(List<CompareStockRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+//
 class CompareStockRes {
   final String symbol;
   final String name;

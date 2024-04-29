@@ -10,6 +10,7 @@ StockDetailMentionRes stockDetailMentionResFromJson(String str) =>
 String stockDetailMentionResToJson(StockDetailMentionRes data) =>
     json.encode(data.toJson());
 
+//
 class StockDetailMentionRes {
   // final KeyStats? keyStats;
   // final CompanyInfo? companyInfo;

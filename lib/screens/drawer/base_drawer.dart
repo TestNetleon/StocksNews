@@ -27,7 +27,7 @@ import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
+//
 import '../watchlist/watchlist.dart';
 
 class BaseDrawer extends StatefulWidget {

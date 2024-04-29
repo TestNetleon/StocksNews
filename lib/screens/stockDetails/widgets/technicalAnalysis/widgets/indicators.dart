@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 class TechnicalAnalystIndicators extends StatelessWidget {
   final BoxConstraints constraints;
   const TechnicalAnalystIndicators({super.key, required this.constraints});
-
+//
   @override
   Widget build(BuildContext context) {
     MovingAverage? value = context

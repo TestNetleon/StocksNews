@@ -14,6 +14,7 @@ import '../widgets/averages.dart';
 import '../widgets/indicators.dart';
 import '../widgets/technical_brief.dart';
 
+//
 class TEstTechnicalAnalysis extends StatefulWidget {
   const TEstTechnicalAnalysis({super.key});
 

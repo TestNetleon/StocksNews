@@ -15,7 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class HomeItemInsiderTrending extends StatelessWidget {
   const HomeItemInsiderTrending({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();

@@ -19,7 +19,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 class InsiderTradingDetailsProvider extends ChangeNotifier
     with AuthProviderBase {
   String? _error;
-
+//
   // int _openIndex = -1;
   int _pageCompany = 1;
   int _pageReporter = 1;

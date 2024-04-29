@@ -13,7 +13,7 @@ class FooterList extends StatefulWidget {
 
   @override
   State<FooterList> createState() => _FooterListState();
-}
+} //
 
 class _FooterListState extends State<FooterList> {
   @override

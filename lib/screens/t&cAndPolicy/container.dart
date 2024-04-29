@@ -14,7 +14,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsPolicyContainer extends StatefulWidget {
   final PolicyType policyType;
-
+//
   const TermsPolicyContainer({super.key, required this.policyType});
 
   @override

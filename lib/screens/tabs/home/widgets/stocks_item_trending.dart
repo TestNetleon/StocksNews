@@ -16,7 +16,7 @@ class StocksItemTrending extends StatelessWidget {
     required this.trending,
     super.key,
   });
-
+//
   @override
   Widget build(BuildContext context) {
     return InkWell(

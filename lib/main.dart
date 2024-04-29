@@ -10,6 +10,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+//
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();

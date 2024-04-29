@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
 class NewsList extends StatefulWidget {
   const NewsList({super.key});
-
+//
   @override
   State<NewsList> createState() => _NewsListState();
 }

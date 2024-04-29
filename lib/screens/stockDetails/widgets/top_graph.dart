@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+//
 class StockDetailTopGraph extends StatefulWidget {
   const StockDetailTopGraph({super.key});
 

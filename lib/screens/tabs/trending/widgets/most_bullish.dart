@@ -16,7 +16,7 @@ class MostBullish extends StatelessWidget {
   Widget build(BuildContext context) {
     // TrendingProvider provider = context.watch<TrendingProvider>();
     TrendingRes? data = context.watch<TrendingProvider>().mostBullish;
-
+//
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,

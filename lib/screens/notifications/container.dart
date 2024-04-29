@@ -15,7 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class NotificationsContainer extends StatefulWidget {
   static const String path = "Notifications";
-
+//
   const NotificationsContainer({super.key});
 
   @override

@@ -11,7 +11,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
-
+//
 import 'newsAuthor/index.dart';
 
 class NewsItem extends StatelessWidget {

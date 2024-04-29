@@ -7,7 +7,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 class ProgressDialog extends StatelessWidget {
   final bool optionalParent;
   const ProgressDialog({super.key, this.optionalParent = false});
-
+//
   @override
   Widget build(BuildContext context) {
     return PopScope(

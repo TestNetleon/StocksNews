@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/item_back.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
+//
 class InsidersDetailsItem extends StatelessWidget {
   final void Function()? onTap;
   final void Function()? leadingClick;

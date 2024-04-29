@@ -14,7 +14,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-
+//
 import '../../home/widgets/app_bar_home.dart';
 
 class NewsAuthorIndex extends StatelessWidget {

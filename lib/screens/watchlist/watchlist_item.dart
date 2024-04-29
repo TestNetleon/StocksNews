@@ -15,7 +15,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class WatchlistItem extends StatelessWidget {
   final int index;
   final WatchlistData data;
-
+//
   const WatchlistItem({
     super.key,
     required this.index,

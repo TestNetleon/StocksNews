@@ -4,7 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 
 class ThemeDivider extends StatelessWidget {
   static const String path = '/invoicePurchase';
-
+//
   const ThemeDivider({
     this.height = 1,
     this.color = ThemeColors.divider,

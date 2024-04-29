@@ -13,7 +13,7 @@ class WatchlistContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WatchlistProvider provider = context.watch<WatchlistProvider>();
-
+//
     return RefreshControll(
       onRefresh: () => provider.getData(showProgress: true),
       canLoadmore: provider.canLoadMore,

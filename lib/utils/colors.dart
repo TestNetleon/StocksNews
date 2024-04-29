@@ -16,7 +16,7 @@ class ThemeColors {
       900: Color(0xFF000000),
     },
   );
-
+//
   static const primary = Color(0xFF000000);
   static const primaryLight = Color(0xFF2C2C2C);
   static const background = Color(0xFF121212);

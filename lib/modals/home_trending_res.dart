@@ -12,6 +12,7 @@ HomeTrendingRes homeTrendingResFromJson(String str) =>
 String homeTrendingResToJson(HomeTrendingRes data) =>
     json.encode(data.toJson());
 
+//
 class HomeTrendingRes {
   final List<HomeTrendingData> trending;
   final List<Top> gainers;

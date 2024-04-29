@@ -9,7 +9,7 @@ class MyAccountImageType extends StatelessWidget {
   final Function()? onCamera, onGallery;
 
   const MyAccountImageType({super.key, this.onCamera, this.onGallery});
-
+//
   @override
   Widget build(BuildContext context) {
     return Column(

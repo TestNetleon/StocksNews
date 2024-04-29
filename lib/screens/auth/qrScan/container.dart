@@ -15,6 +15,7 @@ class QRcodeContainer extends StatefulWidget {
   State<QRcodeContainer> createState() => _QRcodeContainerState();
 }
 
+//
 class _QRcodeContainerState extends State<QRcodeContainer> {
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');

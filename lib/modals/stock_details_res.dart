@@ -6,6 +6,7 @@ StockDetailsRes stockDetailsResFromJson(String str) =>
 String stockDetailsResToJson(StockDetailsRes data) =>
     json.encode(data.toJson());
 
+//
 class StockDetailsRes {
   final KeyStats? keyStats;
   final CompanyInfo? companyInfo;

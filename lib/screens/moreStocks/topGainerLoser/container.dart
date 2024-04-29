@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 import 'item.dart';
 
+//
 class GainerLoserContainer extends StatefulWidget {
   final StocksType type;
 

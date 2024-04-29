@@ -14,7 +14,7 @@ class SentimentsGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.read<HomeProvider>();
-
+//
     String? cVolString = provider.homeSentimentRes?.commentVolume?.toCurrency();
     String? sTrendString =
         provider.homeSentimentRes?.sentimentTrending?.toCurrency();

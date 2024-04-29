@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 import '../states.dart';
 
+//
 class CompanyBrief extends StatelessWidget {
   const CompanyBrief({super.key});
   void _navigateSector(context, name, titleName) {

@@ -20,7 +20,7 @@ class _FilterStocksState extends State<FilterStocks> {
   @override
   Widget build(BuildContext context) {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
-
+//
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

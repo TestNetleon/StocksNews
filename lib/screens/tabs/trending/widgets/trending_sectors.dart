@@ -13,7 +13,7 @@ class TrendingSectors extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TrendingProvider provider = context.watch<TrendingProvider>();
-
+//
     TrendingRes? data = context.read<TrendingProvider>().trendingStories;
 
     return Column(

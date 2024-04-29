@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class SocialSentimentMentions extends StatelessWidget {
   final RecentMention data;
   const SocialSentimentMentions({super.key, required this.data});
-
+//
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

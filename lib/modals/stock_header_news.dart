@@ -7,7 +7,7 @@ import 'dart:convert';
 List<StockHeaderNewsRes> stockHeaderNewsResFromJson(String str) =>
     List<StockHeaderNewsRes>.from(
         json.decode(str).map((x) => StockHeaderNewsRes.fromJson(x)));
-
+//
 String stockHeaderNewsResToJson(List<StockHeaderNewsRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

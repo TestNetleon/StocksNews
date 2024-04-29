@@ -16,7 +16,7 @@ class UserRes {
   final String? type;
   String? image;
   String? name;
-
+//
   UserRes({
     required this.email,
     required this.phone,

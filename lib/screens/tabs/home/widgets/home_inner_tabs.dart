@@ -15,7 +15,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 class HomeInnerTabs extends StatefulWidget {
   const HomeInnerTabs({super.key});
-
+//
   @override
   State<HomeInnerTabs> createState() => _HomeInnerTabsState();
 }

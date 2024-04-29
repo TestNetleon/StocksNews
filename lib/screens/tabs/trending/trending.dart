@@ -6,7 +6,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 class Trending extends StatelessWidget {
   const Trending({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(

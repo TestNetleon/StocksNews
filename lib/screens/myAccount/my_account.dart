@@ -14,7 +14,7 @@ import '../../widgets/screen_title.dart';
 class MyAccount extends StatelessWidget {
   static const String path = "MyAccount";
   const MyAccount({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();

@@ -18,6 +18,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 import 'insider_details.dart';
 
+//
 class InsiderCompanyContainer extends StatelessWidget {
   final String? companySlug;
   const InsiderCompanyContainer({super.key, this.companySlug});

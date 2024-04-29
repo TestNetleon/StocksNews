@@ -415,7 +415,6 @@
 //       };
 // }
 
-
 class HomeTrendingData {
   final String symbol;
   final String name;
@@ -460,3 +459,4 @@ class HomeTrendingData {
         "image": image,
       };
 }
+//

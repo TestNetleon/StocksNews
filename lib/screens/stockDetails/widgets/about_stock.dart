@@ -7,7 +7,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class AboutStock extends StatelessWidget {
   const AboutStock({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     CompanyInfo? companyInfo =

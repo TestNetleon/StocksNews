@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
+//
 class Insider extends StatelessWidget {
   const Insider({super.key});
 

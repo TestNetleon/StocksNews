@@ -10,6 +10,7 @@ NotificationsRes notificationsResFromJson(String str) =>
 String notificationsResToJson(NotificationsRes data) =>
     json.encode(data.toJson());
 
+//
 class NotificationsRes {
   final List<NotificationData>? data;
   final int lastPage;

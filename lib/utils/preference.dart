@@ -17,7 +17,7 @@ class Preference {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final userString = preferences.getString("@userlogin");
     return userString == null ? null : UserRes.fromJson(jsonDecode(userString));
-  }
+  } //
 
   static void logout() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

@@ -3,3 +3,4 @@ class GraphRes {
   bool isSelected;
   GraphRes({required this.name, this.isSelected = false});
 }
+//

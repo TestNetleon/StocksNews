@@ -13,7 +13,7 @@ class HomeSliderRes {
   HomeSliderRes({
     this.sliderPosts,
   });
-
+//
   factory HomeSliderRes.fromJson(Map<String, dynamic> json) => HomeSliderRes(
         sliderPosts: json["slider_posts"] == null
             ? []

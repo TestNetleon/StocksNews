@@ -14,7 +14,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class StockDetailTopDisclaimer extends StatelessWidget {
   const StockDetailTopDisclaimer({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();

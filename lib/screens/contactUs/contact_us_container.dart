@@ -15,7 +15,7 @@ class ContactUsContainer extends StatelessWidget {
     if (provider.isLoading) {
       return const SizedBox();
     }
-
+//
     return RefreshIndicator(
       onRefresh: () async {
         provider.getTermsPolicy(type: PolicyType.contactUs);

@@ -16,6 +16,7 @@ class NewsHeaderStocks extends StatelessWidget {
   }
 }
 
+//
 class NewsHeaderStocksContainer extends StatelessWidget {
   const NewsHeaderStocksContainer({super.key});
 

@@ -21,7 +21,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+//
 import '../headerStocks/index.dart';
 import 'news_details_list.dart';
 

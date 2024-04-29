@@ -14,7 +14,7 @@ class TopTrendingPartialLoading extends StatelessWidget {
     this.onRefresh,
     super.key,
   });
-
+//
   final Widget child;
   final bool loading;
   final bool marginTop;

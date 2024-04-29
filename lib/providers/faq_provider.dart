@@ -20,7 +20,7 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
-
+//
   List<FaQsRes>? _data;
   List<FaQsRes>? get data => _data;
 

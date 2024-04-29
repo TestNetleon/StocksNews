@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 
 import 'user_provider.dart';
 
+//
 class CompareStocksProvider extends ChangeNotifier {
   List<CompareStockRes> _company = [];
   List<CompareStockRes> get company => _company;

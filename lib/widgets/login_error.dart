@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+//
 class LoginError extends StatelessWidget {
   const LoginError({
     this.error,

@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
+//
 class Analysis extends StatelessWidget {
   const Analysis({super.key});
 

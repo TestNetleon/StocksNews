@@ -19,7 +19,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
   TopTrendingRes? get res => _res;
 
   List<TopTrendingDataRes>? get data => _res?.data;
-
+//
   List<TopTrendingDataRes>? _capData;
   List<TopTrendingDataRes>? get capData => _capData;
 

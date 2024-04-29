@@ -15,6 +15,7 @@ class DrawerRes {
   });
 }
 
+//
 List<DrawerRes> drawerItems = [
   DrawerRes(iconData: Icons.home_filled, text: "Home"),
   DrawerRes(iconData: Icons.stacked_line_chart_rounded, text: "Stocks"),

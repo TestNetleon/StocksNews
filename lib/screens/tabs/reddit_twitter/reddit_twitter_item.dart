@@ -15,7 +15,7 @@ class RedditTwitterItem extends StatelessWidget {
   final SocialSentimentItemRes? data;
   const RedditTwitterItem(
       {this.up = true, super.key, required this.index, this.data});
-
+//
   @override
   Widget build(BuildContext context) {
     if (data == null) {

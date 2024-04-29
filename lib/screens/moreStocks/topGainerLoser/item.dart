@@ -15,7 +15,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class GainerLoserItem extends StatelessWidget {
   final GainersLosersDataRes data;
   final int index;
-
+//
   const GainerLoserItem({
     required this.data,
     required this.index,

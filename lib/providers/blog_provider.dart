@@ -14,6 +14,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
+//
 class BlogProvider extends ChangeNotifier with AuthProviderBase {
   BlogsRes? _data;
 

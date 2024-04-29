@@ -13,7 +13,7 @@ bool isMobileNumber(String? number) {
 //   final emailRegExp = RegExp(
 //     r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
 //   );
-
+//
 //   // Use the regular expression to check if the email is valid
 //   return emailRegExp.hasMatch(email);
 // }

@@ -10,6 +10,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
+//
 class SectorIndustry extends StatefulWidget {
   final StockStates stockStates;
   final String name;

@@ -10,7 +10,7 @@ class TrendingGraphTabs extends StatefulWidget {
 
   @override
   State<TrendingGraphTabs> createState() => _TrendingGraphTabsState();
-}
+} //
 
 class _TrendingGraphTabsState extends State<TrendingGraphTabs> {
   int _selectedIndex = 0;

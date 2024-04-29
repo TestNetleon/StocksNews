@@ -9,7 +9,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 class HeaderList extends StatelessWidget {
   final void Function()? onTap;
   const HeaderList({super.key, this.onTap});
-
+//
   @override
   Widget build(BuildContext context) {
     List<CompareStockRes> company =

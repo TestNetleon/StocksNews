@@ -10,6 +10,7 @@ StocksOtherDetailsRes stocksOtherDetailsFromJson(String str) =>
 String stocksOtherDetailsToJson(StocksOtherDetailsRes data) =>
     json.encode(data.toJson());
 
+//
 class StocksOtherDetailsRes {
   final Earning? earning;
   final Score? score;

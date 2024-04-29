@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class FAQItem extends StatelessWidget {
   final int index;
-
+//
   const FAQItem({super.key, required this.index});
 
   @override

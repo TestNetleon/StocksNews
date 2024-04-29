@@ -17,6 +17,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 
 import '../modals/search_new.dart';
 
+//
 class SearchProvider extends ChangeNotifier with AuthProviderBase {
   List<SearchRes>? _data;
   List<TopSearch>? _topSearch;

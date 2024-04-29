@@ -11,6 +11,7 @@ BlogsDetailRes blogsDetailResFromJson(String str) =>
 
 String blogsDetailResToJson(BlogsDetailRes data) => json.encode(data.toJson());
 
+//
 class BlogsDetailRes {
   final String id;
   final String name;

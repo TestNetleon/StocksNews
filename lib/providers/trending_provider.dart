@@ -19,7 +19,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
 
   TrendingRes? _mostBearish;
   TrendingRes? get mostBearish => _mostBearish;
-
+//
   TrendingRes? _trendingStories;
   TrendingRes? get trendingStories => _trendingStories;
 

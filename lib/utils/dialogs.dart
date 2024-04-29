@@ -16,7 +16,7 @@ import 'package:stocks_news_new/widgets/progress_dialog.dart';
 //         return const ProgressDialog();
 //       });
 // }
-
+//
 void showGlobalProgressDialog({bool optionalParent = false}) {
   showDialog(
     context: navigatorKey.currentContext ??

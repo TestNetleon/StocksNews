@@ -10,7 +10,7 @@ class ScrollControllerProvider extends ChangeNotifier {
   ScrollControllerProvider() {
     _scrollController.addListener(_scrollListener);
   }
-
+//
   void _scrollListener() {
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {

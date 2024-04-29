@@ -18,7 +18,7 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
-
+//
   TermsPolicyRes? _data;
   TermsPolicyRes? get data => _data;
 

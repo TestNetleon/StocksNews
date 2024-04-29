@@ -8,7 +8,7 @@ import 'package:stocks_news_new/modals/home_insider_res.dart';
 
 SocialSentimentsRes socialSentimentsResFromJson(String str) =>
     SocialSentimentsRes.fromJson(json.decode(str));
-
+//
 String socialSentimentsResToJson(SocialSentimentsRes data) =>
     json.encode(data.toJson());
 

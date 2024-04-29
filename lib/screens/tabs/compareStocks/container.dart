@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
+//
 class CompareStocksContainer extends StatelessWidget {
   const CompareStocksContainer({super.key});
 

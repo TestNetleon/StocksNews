@@ -16,6 +16,7 @@ class InsiderContentItem extends StatefulWidget {
   State<InsiderContentItem> createState() => _InsiderContentItemState();
 }
 
+//
 class _InsiderContentItemState extends State<InsiderContentItem> {
   bool open = false;
   @override

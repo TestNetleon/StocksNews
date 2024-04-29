@@ -8,7 +8,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class TrendingNowListView extends StatelessWidget {
   const TrendingNowListView({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     List<TopTrendingDataRes>? dataList =

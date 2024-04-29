@@ -11,6 +11,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
+//
 class CompareStocksPopup extends StatefulWidget {
   const CompareStocksPopup({super.key});
 

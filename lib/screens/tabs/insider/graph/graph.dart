@@ -15,6 +15,7 @@ class InsiderDetailGraph extends StatefulWidget {
   State<InsiderDetailGraph> createState() => _InsiderDetailGraphState();
 }
 
+//
 class _InsiderDetailGraphState extends State<InsiderDetailGraph> {
   WebViewController controller = WebViewController();
   @override

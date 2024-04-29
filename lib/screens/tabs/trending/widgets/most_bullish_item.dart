@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/item_back.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+//
 class MostBullishItem extends StatelessWidget {
   final bool up;
   final MostBullishData data;

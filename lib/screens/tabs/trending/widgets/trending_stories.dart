@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class TrendingStories extends StatelessWidget {
   const TrendingStories({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     // TrendingProvider provider = context.watch<TrendingProvider>();

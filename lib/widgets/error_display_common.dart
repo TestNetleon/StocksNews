@@ -6,6 +6,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
 
+//
 class ErrorDisplayWidget extends StatelessWidget {
   const ErrorDisplayWidget({
     this.error,

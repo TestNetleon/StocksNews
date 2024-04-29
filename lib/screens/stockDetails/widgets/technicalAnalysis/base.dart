@@ -21,6 +21,7 @@ class StocksTechnicalAnalysisBase extends StatefulWidget {
       _StocksTechnicalAnalysisBaseState();
 }
 
+//
 class _StocksTechnicalAnalysisBaseState
     extends State<StocksTechnicalAnalysisBase> {
   List<TabData> tabs = [

@@ -5,6 +5,7 @@ AnalysisRes analysisResFromJson(String str) =>
 
 String analysisResToJson(AnalysisRes data) => json.encode(data.toJson());
 
+//
 class AnalysisRes {
   final num fundamentalPercent;
   final num shortTermPercent;

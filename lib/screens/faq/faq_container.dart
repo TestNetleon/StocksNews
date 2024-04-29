@@ -8,7 +8,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class FAQContainer extends StatelessWidget {
   const FAQContainer({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     List<FaQsRes>? faqs = context.watch<FaqProvide>().data;

@@ -8,7 +8,7 @@ String sectorGraphResToJson(SectorGraphRes data) => json.encode(data.toJson());
 class SectorGraphRes {
   final List<String>? dates;
   final List<double>? values;
-
+//
   SectorGraphRes({
     this.dates,
     this.values,

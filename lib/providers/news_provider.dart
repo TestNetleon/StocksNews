@@ -21,7 +21,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
   Status _status = Status.ideal;
   int _page = 1;
-
+//
   List<NewsData>? get data => _data?.data;
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;

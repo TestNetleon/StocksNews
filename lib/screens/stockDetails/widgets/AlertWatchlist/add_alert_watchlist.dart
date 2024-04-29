@@ -17,6 +17,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'alert_popup.dart';
 import 'button.dart';
 
+//
 class AddToAlertWatchlist extends StatelessWidget {
   const AddToAlertWatchlist({super.key});
 

@@ -18,7 +18,7 @@
 // import 'package:stocks_news_new/widgets/theme_button_outline.dart';
 // import 'package:stocks_news_new/widgets/theme_input_field.dart';
 // import 'package:validators/validators.dart';
-
+//
 // class SignUp extends StatefulWidget {
 //   static const String path = "SignUp";
 

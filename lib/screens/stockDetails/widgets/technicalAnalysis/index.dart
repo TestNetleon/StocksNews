@@ -14,7 +14,7 @@ class StocksTechnicalAnalysis extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-
+//
     return Column(
       children: [
         ScreenTitle(

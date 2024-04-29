@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
 import '../setupAlert/setup_alert.dart';
 
+//
 class AlertPopup extends StatefulWidget {
   final String symbol;
   final bool up;

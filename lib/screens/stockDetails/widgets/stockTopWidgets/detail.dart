@@ -16,7 +16,7 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-
+//
     KeyStats? keyStats = provider.data?.keyStats;
     CompanyInfo? companyInfo = provider.data?.companyInfo;
     return Row(

@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class TradingWidget extends StatelessWidget {
   const TradingWidget({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     String html = '''
@@ -51,7 +51,7 @@ class TradingWidget extends StatelessWidget {
 
     return SizedBox(
       height: 200,
-      width: ScreenUtil().screenWidth ,
+      width: ScreenUtil().screenWidth,
       child: WebViewWidget(controller: controller),
     );
   }

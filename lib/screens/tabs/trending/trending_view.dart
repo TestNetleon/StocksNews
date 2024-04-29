@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
 import 'widgets/trending_partial_loading.dart';
 import 'widgets/trending_sectors.dart';
 
+//
 class TrendingView extends StatefulWidget {
   const TrendingView({super.key});
 

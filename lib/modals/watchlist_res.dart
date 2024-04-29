@@ -15,7 +15,7 @@ class WatchlistRes {
     required this.data,
     required this.lastPage,
   });
-
+//
   factory WatchlistRes.fromJson(Map<String, dynamic> json) => WatchlistRes(
         currentPage: json["current_page"],
         data: List<WatchlistData>.from(

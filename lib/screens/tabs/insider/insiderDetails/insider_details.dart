@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
+//
 class InsiderDetailsType extends StatelessWidget {
   static const String path = "CompanyDetailsType";
   final String? companySlug, reportingSlug, companyName, reportingName;

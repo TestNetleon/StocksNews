@@ -17,7 +17,7 @@ class HomeNewsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
-
+//
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

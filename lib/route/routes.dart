@@ -16,7 +16,7 @@ import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
-
+//
 import 'package:stocks_news_new/providers/user_provider.dart';
 
 import 'package:provider/provider.dart';

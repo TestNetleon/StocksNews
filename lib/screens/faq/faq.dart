@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class FAQBase extends StatefulWidget {
   const FAQBase({super.key});
-
+//
   @override
   State<FAQBase> createState() => _FAQBaseState();
 }

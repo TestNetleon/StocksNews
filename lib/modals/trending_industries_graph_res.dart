@@ -12,7 +12,7 @@ class TrendingIndustriesGraphRes {
   final List<int>? positiveMentions;
   final List<int>? negativeMentions;
   final List<int>? neutralMentions;
-
+//
   TrendingIndustriesGraphRes({
     this.labels,
     this.totalMentions,

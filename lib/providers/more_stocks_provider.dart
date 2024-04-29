@@ -19,7 +19,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
 
   GainersLosersRes? _gainersLosers;
   GainersLosersRes? get gainersLosers => _gainersLosers;
-
+//
   String? _error;
   Status _status = Status.ideal;
   int _page = 1;

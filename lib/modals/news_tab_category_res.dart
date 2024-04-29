@@ -7,6 +7,7 @@ List<NesCategoryTabRes> nesCategoryTabResFromJson(String str) =>
 String nesCategoryTabResToJson(List<NesCategoryTabRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+//
 class NesCategoryTabRes {
   final String id;
   final String name;

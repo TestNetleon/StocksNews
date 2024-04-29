@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+//
 // import 'package:whatsapp_share/whatsapp_share.dart';
 
 bool isEven(index) {

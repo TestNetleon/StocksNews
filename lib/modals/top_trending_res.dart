@@ -13,7 +13,7 @@ class TopTrendingRes {
   final int? currentPage;
   final List<TopTrendingDataRes>? data;
   final int? lastPage;
-
+//
   TopTrendingRes({
     this.currentPage,
     this.data,

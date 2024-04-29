@@ -18,7 +18,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
   Status _status = Status.ideal;
   int _page = 1;
-
+//
   Status get status => _status;
   List<WatchlistData>? get data => _data?.data;
   bool get isLoading => _status == Status.loading;

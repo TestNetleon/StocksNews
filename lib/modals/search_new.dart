@@ -11,6 +11,7 @@ SearchNewRes searchNewResFromJson(String str) =>
 
 String searchNewResToJson(SearchNewRes data) => json.encode(data.toJson());
 
+//
 class SearchNewRes {
   final List<SearchRes>? symbols;
   final List<SearchNewsRes>? news;

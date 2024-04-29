@@ -12,7 +12,7 @@ import '../cap_heading.dart';
 
 class MicroCapListView extends StatelessWidget {
   const MicroCapListView({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     TopTrendingProvider provider = context.watch<TopTrendingProvider>();

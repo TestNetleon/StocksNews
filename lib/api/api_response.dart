@@ -42,7 +42,9 @@ class ApiResponse {
             // ? List<dynamic>.from(json["data"].map((x) => dynamic.fromJson(x)))
             : json["extra"] == null
                 ? null
-                : Extra.fromJson(json["extra"]),
+                : Extra.fromJson(
+                    json["extra"],
+                  ),
       );
 }
 

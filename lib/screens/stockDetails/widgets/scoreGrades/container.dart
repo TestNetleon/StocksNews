@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class StocksScoreGrades extends StatelessWidget {
   const StocksScoreGrades({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();

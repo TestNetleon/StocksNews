@@ -9,7 +9,7 @@ class TCandPolicy extends StatelessWidget {
   static const String path = "TermsAndConditions";
 
   const TCandPolicy({super.key, required this.policyType});
-
+//
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(

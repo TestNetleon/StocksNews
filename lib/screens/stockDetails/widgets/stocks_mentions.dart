@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class StocksMentions extends StatelessWidget {
   const StocksMentions({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     List<Mentions>? mentions =

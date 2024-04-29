@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
+//
 class BlogContainer extends StatelessWidget {
   const BlogContainer({super.key});
 

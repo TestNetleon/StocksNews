@@ -9,7 +9,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class MyAccountDelete extends StatelessWidget {
   const MyAccountDelete({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return Visibility(

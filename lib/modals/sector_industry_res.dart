@@ -11,7 +11,7 @@ class SectorIndustryRes {
   final List<SectorIndustryData> data;
   final num total;
   final num lastPage;
-
+//
   SectorIndustryRes({
     required this.currentPage,
     required this.data,

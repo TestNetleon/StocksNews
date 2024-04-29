@@ -14,7 +14,7 @@ class ColoredText extends StatelessWidget {
     this.color,
     super.key,
   });
-
+//
   @override
   Widget build(BuildContext context) {
     return RichText(

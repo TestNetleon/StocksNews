@@ -14,7 +14,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class AlertsItem extends StatelessWidget {
   final int index;
   final AlertData data;
-
+//
   const AlertsItem({
     super.key,
     required this.index,

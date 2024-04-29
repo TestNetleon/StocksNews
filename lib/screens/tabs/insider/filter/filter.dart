@@ -13,7 +13,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 class FilterInsiders extends StatelessWidget {
   const FilterInsiders({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();

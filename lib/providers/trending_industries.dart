@@ -19,7 +19,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
-
+//
   List<TrendingIndustriesRes>? _data;
   List<TrendingIndustriesRes>? get data => _data;
 

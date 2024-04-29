@@ -10,6 +10,7 @@ GainersLosersRes gainersLosersResFromJson(String str) =>
 String gainersLosersResToJson(GainersLosersRes data) =>
     json.encode(data.toJson());
 
+//
 class GainersLosersRes {
   final int currentPage;
   final List<GainersLosersDataRes>? data;

@@ -4,6 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
+//
 class ThemeButtonOutlined extends StatelessWidget {
   const ThemeButtonOutlined({
     required this.onPressed,

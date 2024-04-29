@@ -7,7 +7,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 class AddCompanyContainer extends StatelessWidget {
   final void Function()? onTap;
   const AddCompanyContainer({super.key, this.onTap});
-
+//
   @override
   Widget build(BuildContext context) {
     return InkWell(

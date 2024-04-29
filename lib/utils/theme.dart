@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
+//
 final lightTheme = ThemeData(
   useMaterial3: false,
   primarySwatch: ThemeColors.primaryPalette,

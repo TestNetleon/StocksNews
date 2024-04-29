@@ -7,7 +7,7 @@ import 'stockTopWidgets/detail.dart';
 
 class StockTopDetail extends StatelessWidget {
   const StockTopDetail({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return const Column(

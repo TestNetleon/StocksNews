@@ -15,7 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
 import 'package:upgrader/upgrader.dart';
-
+//
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
 

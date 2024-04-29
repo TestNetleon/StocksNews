@@ -9,7 +9,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 class CompareStocks extends StatelessWidget {
   static const String path = "CompareStocks";
   const CompareStocks({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return PopScope(

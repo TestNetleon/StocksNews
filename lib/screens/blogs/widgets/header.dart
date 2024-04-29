@@ -8,7 +8,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class BlogsHeader extends StatelessWidget {
   final BlogsRes? data;
   const BlogsHeader({super.key, this.data});
-
+//
   @override
   Widget build(BuildContext context) {
     return Column(

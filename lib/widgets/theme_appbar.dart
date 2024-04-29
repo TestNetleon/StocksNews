@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+//
 PreferredSizeWidget getThemeAppBar({Widget? leading, required String title}) {
   return AppBar(
     leading: leading,

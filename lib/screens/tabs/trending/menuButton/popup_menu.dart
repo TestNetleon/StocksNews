@@ -16,7 +16,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
   final String alertString;
   final String watchlistString;
-
+//
   final Function() onClickAlert, onClickWatchlist;
   const PopUpMenuButtonCommon({
     super.key,

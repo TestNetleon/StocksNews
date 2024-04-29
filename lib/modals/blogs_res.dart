@@ -10,6 +10,7 @@ BlogsRes blogsResFromJson(String str) => BlogsRes.fromJson(json.decode(str));
 
 String blogsResToJson(BlogsRes data) => json.encode(data.toJson());
 
+//
 class BlogsRes {
   final String title;
   final String subTitle;

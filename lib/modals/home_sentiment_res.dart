@@ -16,7 +16,7 @@ class HomeSentimentRes {
     required this.commentVolume,
     required this.sentimentTrending,
   });
-
+//
   factory HomeSentimentRes.fromJson(Map<String, dynamic> json) =>
       HomeSentimentRes(
         avgSentiment: json["avg_sentiment"],

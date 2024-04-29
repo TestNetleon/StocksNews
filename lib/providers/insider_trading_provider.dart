@@ -19,7 +19,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   int _openIndex = -1;
   int _page = 1;
-
+//
   Status get status => _status;
   InsiderTradingRes? get data => _data;
   int get openIndex => _openIndex;

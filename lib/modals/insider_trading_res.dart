@@ -12,7 +12,7 @@ class InsiderTradingRes {
   final num lastPage;
   final String perPage;
   final num total;
-
+//
   InsiderTradingRes({
     required this.currentPage,
     required this.data,

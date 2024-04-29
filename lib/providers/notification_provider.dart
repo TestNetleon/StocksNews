@@ -18,7 +18,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
   int _page = 1;
   Status get status => _status;
   NotificationsRes? get data => _data;
-
+//
   bool get canLoadMore => _page < (_data?.lastPage ?? 0);
   bool get isLoading => _status == Status.loading;
   bool get isSearching => _status == Status.searching;

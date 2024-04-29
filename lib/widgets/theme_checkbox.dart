@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
+//
 class ThemeCheckbox extends StatelessWidget {
   const ThemeCheckbox({
     required this.value,

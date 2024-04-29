@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 
+//
 class ThemeInputFieldClickable extends StatelessWidget {
   const ThemeInputFieldClickable({
     required this.controller,

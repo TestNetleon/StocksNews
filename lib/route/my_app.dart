@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
 
+//
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {

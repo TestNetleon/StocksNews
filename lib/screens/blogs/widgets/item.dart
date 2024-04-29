@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../../../modals/news_datail_res.dart';
 
+//
 class BlogItem extends StatelessWidget {
   final BlogItemRes? blogItem;
   const BlogItem({

@@ -9,7 +9,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class StocksTrendingStories extends StatelessWidget {
   const StocksTrendingStories({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     List<News>? newsPost =

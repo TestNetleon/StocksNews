@@ -16,7 +16,7 @@ class StockDetailiFrameItem extends StatefulWidget {
   static const path = "StockDetailiFrameItem";
   final CommentType type;
   const StockDetailiFrameItem({super.key, required this.type});
-
+//
   @override
   State<StockDetailiFrameItem> createState() => _StockDetailiFrameItemState();
 }

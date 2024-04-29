@@ -6,6 +6,7 @@ NewsRes newsResFromJson(String str) => NewsRes.fromJson(json.decode(str));
 
 String newsResToJson(NewsRes data) => json.encode(data.toJson());
 
+//
 class NewsRes {
   // final num currentPage;
   final List<NewsData> data;

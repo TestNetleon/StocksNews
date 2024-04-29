@@ -10,7 +10,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 class Home extends StatelessWidget {
   static const String path = "Home";
   const Home({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();

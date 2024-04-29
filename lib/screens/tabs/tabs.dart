@@ -19,6 +19,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
+//
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int index;

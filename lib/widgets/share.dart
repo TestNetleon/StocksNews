@@ -7,6 +7,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+//
 class CommonShare extends StatefulWidget {
   final bool visible;
   final String linkShare;

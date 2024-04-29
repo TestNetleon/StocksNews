@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+//
 class TopTrendingItem extends StatelessWidget {
   final int index;
   final TopTrendingDataRes data;

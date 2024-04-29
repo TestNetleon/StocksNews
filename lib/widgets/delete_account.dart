@@ -16,6 +16,7 @@ class DeleteAccountPopUp extends StatefulWidget {
   State<DeleteAccountPopUp> createState() => _DeleteAccountPopUpState();
 }
 
+//
 class _DeleteAccountPopUpState extends State<DeleteAccountPopUp> {
   bool isChecked = false;
   @override

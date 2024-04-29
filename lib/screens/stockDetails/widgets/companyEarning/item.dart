@@ -15,7 +15,7 @@ class CompanyEarningItem extends StatelessWidget {
   Widget build(BuildContext context) {
     EarningData? data =
         context.watch<StockDetailProvider>().otherData?.earning?.data?[index];
-
+//
     return ItemBack(
       color: isEven(index) ? null : ThemeColors.background,
       child: Row(

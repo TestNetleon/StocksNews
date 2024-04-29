@@ -21,7 +21,7 @@ class HomeTopGainer extends StatelessWidget {
         smallHeight: true,
       );
     }
-
+//
     return ListView.separated(
       itemCount: provider.homeTrendingRes?.gainers.length ?? 0,
       physics: const NeverScrollableScrollPhysics(),

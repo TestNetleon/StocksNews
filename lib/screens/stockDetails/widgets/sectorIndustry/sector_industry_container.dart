@@ -15,7 +15,7 @@ class SectorIndustryList extends StatelessWidget {
   final String name;
   const SectorIndustryList(
       {required this.stockStates, super.key, required this.name});
-
+//
   @override
   Widget build(BuildContext context) {
     SectorIndustryProvider provider = context.watch<SectorIndustryProvider>();

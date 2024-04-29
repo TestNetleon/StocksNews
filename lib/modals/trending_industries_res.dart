@@ -11,6 +11,7 @@ List<TrendingIndustriesRes> trendingIndustriesResFromJson(String str) =>
 String trendingIndustriesResToJson(List<TrendingIndustriesRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+//
 class TrendingIndustriesRes {
   final String? industry;
   final String? industrySlug;

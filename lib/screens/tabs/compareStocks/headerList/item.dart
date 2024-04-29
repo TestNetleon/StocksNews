@@ -12,7 +12,7 @@ class HeaderItem extends StatelessWidget {
   final CompareStockRes? company;
   final void Function()? onTap;
   const HeaderItem({super.key, this.company, this.onTap});
-
+//
   @override
   Widget build(BuildContext context) {
     return Ink(

@@ -16,7 +16,7 @@ class InsiderCompanyGraph {
     this.chartPurchase,
     this.chartSale,
   });
-
+//
   factory InsiderCompanyGraph.fromJson(Map<String, dynamic> json) =>
       InsiderCompanyGraph(
         chartDates: json["chart_dates"] == null

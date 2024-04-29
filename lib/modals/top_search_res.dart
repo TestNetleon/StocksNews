@@ -12,7 +12,7 @@ class TopSearch {
   final String image;
   final String price;
   final num changes;
-
+//
   TopSearch({
     required this.symbol,
     required this.name,

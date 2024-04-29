@@ -8,6 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
+//
 class TechnicalAnalystSummary extends StatelessWidget {
   final BoxConstraints constraints;
   const TechnicalAnalystSummary({super.key, required this.constraints});

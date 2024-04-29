@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class MostBearish extends StatelessWidget {
   const MostBearish({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     // TrendingProvider provider = context.watch<TrendingProvider>();

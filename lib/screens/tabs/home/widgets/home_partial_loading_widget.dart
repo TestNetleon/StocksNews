@@ -18,7 +18,7 @@ class HomePartialLoading extends StatelessWidget {
   final bool marginTop;
   final String? error;
   final Function()? onRefresh;
-
+//
   @override
   Widget build(BuildContext context) {
     return Column(

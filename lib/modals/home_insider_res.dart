@@ -7,6 +7,7 @@ HomeInsiderRes homeInsiderResFromJson(String str) =>
 
 String homeInsiderResToJson(HomeInsiderRes data) => json.encode(data.toJson());
 
+//
 class HomeInsiderRes {
   final List<InsiderTrading> insiderTrading;
   final List<RecentMention>? recentMentions;

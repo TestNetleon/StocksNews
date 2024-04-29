@@ -9,7 +9,7 @@ String newsDetailDataResToJson(NewsDetailDataRes data) =>
 class NewsDetailDataRes {
   final PostDetail? postDetail;
   final List<PostDetail>? otherPost;
-
+//
   NewsDetailDataRes({
     this.postDetail,
     this.otherPost,

@@ -21,6 +21,7 @@ class TrendingIndustriesContainer extends StatefulWidget {
       _TrendingIndustriesContainerState();
 }
 
+//
 class _TrendingIndustriesContainerState
     extends State<TrendingIndustriesContainer> {
   @override

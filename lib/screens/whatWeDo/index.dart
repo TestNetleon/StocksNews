@@ -16,7 +16,7 @@ import '../../utils/theme.dart';
 class WhatWeDoIndex extends StatelessWidget {
   static const path = "WhatWeDoIndex";
   const WhatWeDoIndex({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(

@@ -19,7 +19,7 @@ import 'package:stocks_news_new/utils/preference.dart';
 class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
   String? _error;
-
+//
   Status _statusSlider = Status.ideal;
   Status get statusSlider => _statusSlider;
 

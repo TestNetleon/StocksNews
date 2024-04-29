@@ -14,7 +14,7 @@ class TrendingRes {
   final List<Sector>? sectors;
   final List<SectorsPerformance>? sectorsPerformance;
   final String? trendingSymbolList;
-
+//
   TrendingRes({
     required this.mostBullish,
     required this.mostBearish,

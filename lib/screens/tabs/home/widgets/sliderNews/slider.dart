@@ -21,6 +21,7 @@ class HomeTopNewsSlider extends StatefulWidget {
   State<HomeTopNewsSlider> createState() => _HomeTopNewsSliderState();
 }
 
+//
 class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
   int _activeIndex = 0;
 

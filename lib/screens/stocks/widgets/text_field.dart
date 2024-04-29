@@ -12,7 +12,7 @@ class TextFieldChangePercentage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
-
+//
     return TextField(
       controller: provider.controller,
       onChanged: (value) => provider.onChanged(value),

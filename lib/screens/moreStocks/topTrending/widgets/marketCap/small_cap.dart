@@ -12,7 +12,7 @@ import '../cap_heading.dart';
 
 class SmallCapListView extends StatelessWidget {
   const SmallCapListView({super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     TopTrendingProvider provider = context.watch<TopTrendingProvider>();

@@ -13,3 +13,4 @@ class QrScan extends StatelessWidget {
         value: QRcodePRovider(), child: const QRcodeContainer());
   }
 }
+//

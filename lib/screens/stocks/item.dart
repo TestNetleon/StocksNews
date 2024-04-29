@@ -16,7 +16,7 @@ class StocksItemAll extends StatelessWidget {
   final AllStocks? data;
   final int index;
   const StocksItemAll({super.key, this.data, required this.index});
-
+//
   @override
   Widget build(BuildContext context) {
     AllStocksProvider provider = context.watch<AllStocksProvider>();

@@ -10,6 +10,7 @@ TechnicalAnalysisRes technicalAnalysisResFromJson(String str) =>
 String technicalAnalysisResToJson(TechnicalAnalysisRes data) =>
     json.encode(data.toJson());
 
+//
 class TechnicalAnalysisRes {
   final MovingAverage summary;
   final List<TechnicalIndicatorArr> technicalIndicatorArr;

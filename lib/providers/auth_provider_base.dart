@@ -13,7 +13,7 @@ mixin AuthProviderBase {
   //   Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
   //   navigatorKey.currentContext!.read<UserProvider>().clearUser();
   // }
-
+//
   void handleSessionOut() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);

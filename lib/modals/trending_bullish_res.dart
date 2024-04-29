@@ -14,7 +14,7 @@ class TrendingBullishRes {
   TrendingBullishRes({
     required this.mostBullish,
   });
-
+//
   factory TrendingBullishRes.fromJson(Map<String, dynamic> json) =>
       TrendingBullishRes(
         mostBullish: json["most_bullish"] == null

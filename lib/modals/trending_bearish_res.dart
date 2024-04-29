@@ -14,7 +14,7 @@ class TrendingBearishRes {
   TrendingBearishRes({
     required this.mostBearish,
   });
-
+//
   factory TrendingBearishRes.fromJson(Map<String, dynamic> json) =>
       TrendingBearishRes(
         mostBearish: json["most_bearish"] == null

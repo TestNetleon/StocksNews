@@ -8,7 +8,7 @@ class BlogDetailClickItem extends StatelessWidget {
 
   final List<Widget> children;
   final bool fromNews, showTopDivider, showBottomDivider;
-
+//
   const BlogDetailClickItem(
       {super.key,
       this.title,

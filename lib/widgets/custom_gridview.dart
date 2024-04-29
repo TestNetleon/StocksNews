@@ -13,7 +13,7 @@ class CustomGridView extends StatelessWidget {
   final double paddingVerticle, paddingHorizontal;
   final int length;
   final Widget Function(int index) getChild;
-
+//
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

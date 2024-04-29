@@ -10,7 +10,7 @@
 //   final CompareStockRes? company;
 //   final int index;
 //   const FooterItem({super.key, this.company, required this.index});
-
+//
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(

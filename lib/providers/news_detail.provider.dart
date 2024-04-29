@@ -19,7 +19,7 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
-
+//
   NewsDetailDataRes? _data;
   NewsDetailDataRes? get data => _data;
 
