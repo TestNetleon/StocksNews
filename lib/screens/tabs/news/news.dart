@@ -48,7 +48,9 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     if (_tabController == null) return const SizedBox();
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: const AppBarHome(),
+      appbar: const AppBarHome(
+        canSearch: true,
+      ),
       // body: NewsList(),
       body: Padding(
         padding: EdgeInsets.fromLTRB(

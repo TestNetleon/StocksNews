@@ -92,10 +92,7 @@
 	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-    	<string>fb</string>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
+	    <string>facebook</string>
     	<string>twitter</string>
 	</array>
 

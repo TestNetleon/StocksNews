@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 import '../../widgets/theme_image_view.dart';
+import '../blogDetail/index.dart';
 
 class NotificationsItem extends StatelessWidget {
   final NotificationData data;
@@ -49,6 +50,17 @@ class NotificationsItem extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => WebviewLink(
               stringURL: slug,
+            ),
+          ),
+        );
+      } else if (slug != '' && type == NotificationType.blogDetail.name) {
+        log("--navigate to blog detail---");
+
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => BlogDetail(
+              id: slug ?? "",
             ),
           ),
         );

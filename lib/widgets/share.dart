@@ -26,10 +26,13 @@ class _CommonShareState extends State<CommonShare> {
     ShareClass(
       image: Images.facebook,
       onTap: (link, title) async {
+        String encodedUrl = Uri.encodeFull(link);
+
         String baseUrl =
             "https://www.facebook.com/sharer/sharer.php?u=$link&quote=$title";
 
-        String url = Platform.isAndroid ? baseUrl : "fb://share/?url=$link";
+        String url =
+            Platform.isAndroid ? baseUrl : "fb://share/?url=$encodedUrl";
 
         await openUrl(url, extraUrl: baseUrl);
       },
@@ -42,7 +45,7 @@ class _CommonShareState extends State<CommonShare> {
 
         String url = Platform.isAndroid
             ? baseUrl
-            : "twitter://post?message=$title:url=$link";
+            : "twitter://post?message=$title $link";
 
         await openUrl(url, extraUrl: baseUrl);
       },
@@ -62,9 +65,8 @@ class _CommonShareState extends State<CommonShare> {
       image: Images.whatsapp,
       onTap: (link, title) {
         String baseUrl = "https://api.whatsapp.com/send?text=$title $link";
-        String url = Platform.isAndroid
-            ? baseUrl
-            : 'whatsapp://send?text=$title:url=$link';
+        String url =
+            Platform.isAndroid ? baseUrl : 'whatsapp://send?text=$title $link';
 
         openUrl(url, extraUrl: baseUrl);
       },

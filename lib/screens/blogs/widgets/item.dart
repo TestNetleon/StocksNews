@@ -25,7 +25,7 @@ class BlogItem extends StatelessWidget {
         Navigator.pushNamed(
           context,
           BlogDetail.path,
-          arguments: blogItem,
+          arguments: blogItem?.id,
         );
       },
       child: Row(
@@ -57,7 +57,7 @@ class BlogItem extends StatelessWidget {
                     child: Wrap(
                       children: [
                         Visibility(
-                          visible: false,
+                          visible: blogItem?.authors?.isNotEmpty == true,
                           child: Text(
                             "By ",
                             style: stylePTSansRegular(
@@ -66,7 +66,7 @@ class BlogItem extends StatelessWidget {
                         ),
                         Wrap(
                           children: _buildTextWidgets(
-                              data: null, type: BlogsType.author),
+                              data: blogItem?.authors, type: BlogsType.author),
                         ),
                         Text(
                           // " | ${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",

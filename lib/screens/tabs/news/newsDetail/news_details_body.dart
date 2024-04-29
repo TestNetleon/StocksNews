@@ -17,7 +17,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/share.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
@@ -449,11 +448,11 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     ),
                   ),
                 ),
-                CommonShare(
-                  visible: controllerProvider.isVisible,
-                  linkShare: provider.data?.postDetail?.slug ?? "",
-                  title: provider.data?.postDetail?.title ?? "",
-                ),
+                // CommonShare(
+                //   visible: controllerProvider.isVisible,
+                //   linkShare: provider.data?.postDetail?.slug ?? "",
+                //   title: provider.data?.postDetail?.title ?? "",
+                // ),
               ],
             ),
           )

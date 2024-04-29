@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/modals/blogs_res.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
@@ -151,7 +150,7 @@ class Routes {
       case BlogDetail.path:
         return MaterialPageRoute(
           builder: (context) {
-            return BlogDetail(item: settings.arguments as BlogItemRes);
+            return BlogDetail(id: settings.arguments as String);
           },
         );
 

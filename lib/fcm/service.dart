@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -115,6 +116,15 @@ class FirebaseApi {
             ),
           ),
         );
+      } else if (slug != '' && type == NotificationType.blogDetail.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => BlogDetail(
+              id: slug ?? "",
+            ),
+          ),
+        );
       } else {
         Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
             arguments: type);
@@ -204,31 +214,33 @@ class FirebaseApi {
 
       // log("THIS IS BIGIMAGE NOTIFICATION ${information != null}");
 
-      _localNotifications.show(
-        data.hashCode,
-        data["title"],
-        data["message"],
-        // null, null,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            _androidChannel.id,
-            _androidChannel.name,
-            playSound: true,
-            enableVibration: true,
-            importance: Importance.max,
+      if (Platform.isAndroid) {
+        _localNotifications.show(
+          data.hashCode,
+          data["title"],
+          data["message"],
+          // null, null,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              _androidChannel.id,
+              _androidChannel.name,
+              playSound: true,
+              enableVibration: true,
+              importance: Importance.max,
 
-            icon: "mipmap/ic_launcher_round", //CHANGE ICON
-            styleInformation: image != null
-                ? information
-                : BigTextStyleInformation(
-                    contentTitle: data["title"],
-                    data["message"].toString(),
-                  ),
+              icon: "mipmap/ic_launcher_round", //CHANGE ICON
+              styleInformation: image != null
+                  ? information
+                  : BigTextStyleInformation(
+                      contentTitle: data["title"],
+                      data["message"].toString(),
+                    ),
+            ),
+            iOS: const DarwinNotificationDetails(),
           ),
-          iOS: const DarwinNotificationDetails(),
-        ),
-        payload: jsonEncode(message.toMap()),
-      );
+          payload: jsonEncode(message.toMap()),
+        );
+      }
     });
   }
 

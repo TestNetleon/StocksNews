@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'blogs_res.dart';
+import 'news_datail_res.dart';
 
 BlogsDetailRes blogsDetailResFromJson(String str) =>
     BlogsDetailRes.fromJson(json.decode(str));
@@ -15,9 +15,9 @@ class BlogsDetailRes {
   final String id;
   final String name;
   final String description;
-  final List<BlogItemRes> authors;
-  final List<BlogItemRes> categories;
-  final List<BlogItemRes> tags;
+  final List<DetailListType>? authors;
+  // final List<BlogItemRes> categories;
+  // final List<BlogItemRes> tags;
   final DateTime? publishedDate;
   final String image;
 
@@ -25,9 +25,9 @@ class BlogsDetailRes {
     required this.id,
     required this.name,
     required this.description,
-    required this.authors,
-    required this.categories,
-    required this.tags,
+    this.authors,
+    // required this.categories,
+    // required this.tags,
     this.publishedDate,
     required this.image,
   });
@@ -36,12 +36,14 @@ class BlogsDetailRes {
         id: json["_id"],
         name: json["name"],
         description: json["description"],
-        authors: List<BlogItemRes>.from(
-            json["authors"].map((x) => BlogItemRes.fromJson(x))),
-        categories: List<BlogItemRes>.from(
-            json["categories"].map((x) => BlogItemRes.fromJson(x))),
-        tags: List<BlogItemRes>.from(
-            json["tags"].map((x) => BlogItemRes.fromJson(x))),
+        authors: json["authors"] == null
+            ? []
+            : List<DetailListType>.from(
+                json["authors"]!.map((x) => DetailListType.fromJson(x))),
+        // categories: List<BlogItemRes>.from(
+        //     json["categories"].map((x) => BlogItemRes.fromJson(x))),
+        // tags: List<BlogItemRes>.from(
+        //     json["tags"].map((x) => BlogItemRes.fromJson(x))),
         publishedDate: json["published_date"] == null
             ? null
             : DateTime.parse(json["published_date"]),
@@ -52,9 +54,11 @@ class BlogsDetailRes {
         "_id": id,
         "name": name,
         "description": description,
-        "authors": List<dynamic>.from(authors.map((x) => x.toJson())),
-        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
+        "authors": authors == null
+            ? []
+            : List<dynamic>.from(authors!.map((x) => x.toJson())),
+        // "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+        // "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
         "published_date": publishedDate?.toIso8601String(),
         "image": image,
       };

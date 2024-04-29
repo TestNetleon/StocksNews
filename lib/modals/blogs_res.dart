@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'news_datail_res.dart';
+
 BlogsRes blogsResFromJson(String str) => BlogsRes.fromJson(json.decode(str));
 
 String blogsResToJson(BlogsRes data) => json.encode(data.toJson());
@@ -65,11 +67,14 @@ class BlogItemRes {
   final String id;
   final String name;
   final DateTime? publishedDate;
+  final List<DetailListType>? authors;
+
   final String? image;
 
   BlogItemRes({
     required this.id,
     required this.name,
+    this.authors,
     this.publishedDate,
     this.image,
   });
@@ -77,6 +82,10 @@ class BlogItemRes {
   factory BlogItemRes.fromJson(Map<String, dynamic> json) => BlogItemRes(
         id: json["_id"],
         name: json["name"],
+        authors: json["authors"] == null
+            ? []
+            : List<DetailListType>.from(
+                json["authors"]!.map((x) => DetailListType.fromJson(x))),
         publishedDate: json["published_date"] == null
             ? null
             : DateTime.parse(json["published_date"]),
@@ -86,6 +95,9 @@ class BlogItemRes {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
+        "authors": authors == null
+            ? []
+            : List<dynamic>.from(authors!.map((x) => x.toJson())),
         "published_date": publishedDate?.toIso8601String(),
         "image": image,
       };

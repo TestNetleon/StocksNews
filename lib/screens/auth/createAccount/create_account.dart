@@ -47,7 +47,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
     UserProvider provider = context.read<UserProvider>();
 
-    Map request = {"username": _controller.text};
+    Map request = {"username": _controller.text.toLowerCase()};
 
     provider.signup(request);
   }

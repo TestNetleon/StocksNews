@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
     }
     UserProvider provider = context.read<UserProvider>();
     Map request = {
-      "username": _controller.text,
+      "username": _controller.text.toLowerCase(),
       "type": "email",
     };
     provider.login(request, state: widget.state);

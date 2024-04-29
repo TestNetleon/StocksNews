@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/blogs_res.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -14,9 +13,9 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 
 class BlogDetailContainer extends StatelessWidget {
-  final BlogItemRes item;
+  final String id;
 
-  const BlogDetailContainer({super.key, required this.item});
+  const BlogDetailContainer({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +32,9 @@ class BlogDetailContainer extends StatelessWidget {
               error: provider.error,
               hasData: provider.blogsDetail != null,
               isLoading: provider.isLoading,
-              onRefresh: () => provider.getBlogDetailData(blogId: item.id),
+              onRefresh: () => provider.getBlogDetailData(blogId: id),
               child: RefreshIndicator(
-                onRefresh: () => provider.getBlogDetailData(blogId: item.id),
+                onRefresh: () => provider.getBlogDetailData(blogId: id),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
@@ -54,7 +53,7 @@ class BlogDetailContainer extends StatelessWidget {
                           date: DateFormat("MMMM dd, yyyy").format(
                               provider.blogsDetail?.publishedDate ??
                                   DateTime.now()),
-                          list1: [],
+                          list1: provider.blogsDetail?.authors,
                           list2: [],
                         ),
                       ),

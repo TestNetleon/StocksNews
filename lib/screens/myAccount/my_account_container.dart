@@ -84,7 +84,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ApiResponse res = await context.read<UserProvider>().updateProfile(
               token: context.read<UserProvider>().user?.token ?? "",
               name: nameController.text,
-              email: emailController.text,
+              email: emailController.text.toLowerCase(),
             );
 
         if (res.status) {
@@ -94,7 +94,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           } else {
             log("ELSE");
             provider.updateUser(
-                name: nameController.text, email: emailController.text);
+                name: nameController.text,
+                email: emailController.text.toLowerCase());
           }
         }
       } catch (e) {
