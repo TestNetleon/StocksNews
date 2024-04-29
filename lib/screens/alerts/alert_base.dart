@@ -80,9 +80,10 @@ class _AlertBaseState extends State<AlertBase> {
             userProvider.user == null
                 ? const Expanded(
                     child: LoginError(
-                    error: "User Not logged in",
-                    state: "alert",
-                  ))
+                      error: "User Not logged in",
+                      state: "alert",
+                    ),
+                  )
                 : Expanded(
                     child: BaseUiContainer(
                       isLoading: provider.isLoading && provider.data == null,
