@@ -56,6 +56,7 @@ class BlogDetailContainer extends StatelessWidget {
                                   DateTime.now()),
                           list1: provider.blogsDetail?.authors,
                           list2: [],
+                          blog: true,
                         ),
                       ),
 
