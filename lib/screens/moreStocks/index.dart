@@ -7,7 +7,7 @@ import 'topTrending/container.dart';
 class MoreStocks extends StatelessWidget {
   final StocksType type;
   const MoreStocks({required this.type, super.key});
-
+//
   @override
   Widget build(BuildContext context) {
     return type == StocksType.gainers || type == StocksType.losers
