@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 class Splash extends StatefulWidget {
@@ -33,6 +38,14 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     } else if (deviceType == DeviceScreenType.mobile) {
       isPhone = true;
     }
+
+    UserProvider provider = context.read<UserProvider>();
+    UserRes? user = await Preference.getUser();
+
+    if (provider.user == null) {
+      log("-------FROM SPLASH USER UPDATING---------");
+      provider.setUser(user!);
+    }
   }
 
   void _navigateToRequiredScreen() {
@@ -42,6 +55,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     // } else {
     //   // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
     // }
+
     Navigator.pushNamedAndRemoveUntil(
         navigatorKey.currentContext!, Tabs.path, (route) => false);
   }

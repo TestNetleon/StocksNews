@@ -54,10 +54,17 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool topLoading = false;
   String? get error => _error ?? Const.errSomethingWrong;
 
+  bool notificationSeen = false;
+
   // void setStatus(status) {
   //   _status = status;
   //   notifyListeners();
   // }
+
+  setNotification(value) {
+    notificationSeen = value;
+    notifyListeners();
+  }
 
   Future refreshData() async {
     getHomeSlider();
@@ -99,6 +106,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
       if (response.status) {
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
+        // UserProvider provider =
+        //     navigatorKey.currentContext!.read<UserProvider>();
+        notificationSeen = response.extra.notificationCount == 0;
+        notifyListeners();
       } else {
         _homeSliderRes = null;
       }
