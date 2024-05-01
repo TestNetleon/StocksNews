@@ -125,7 +125,7 @@ class InsiderTrading {
   // final String image;
   final String exchangeShortName;
   final String companyName;
-  // final String companySlug;
+  final String companySlug;
   final String exchange;
   // final String cap;
   // final String sector;
@@ -157,7 +157,7 @@ class InsiderTrading {
     // required this.image,
     required this.exchangeShortName,
     required this.companyName,
-    // required this.companySlug,
+    required this.companySlug,
     required this.exchange,
     // required this.cap,
     // required this.sector,
@@ -190,7 +190,7 @@ class InsiderTrading {
         // image: json["image"],
         exchangeShortName: json["exchange_short_name"],
         companyName: json["companyName"],
-        // companySlug: json["companySlug"],
+        companySlug: json["companySlug"],
         exchange: json["exchange"],
         // cap: json["cap"],
         // sector: json["sector"],
@@ -223,7 +223,7 @@ class InsiderTrading {
         // "image": image,
         "exchange_short_name": exchangeShortName,
         "companyName": companyName,
-        // "companySlug": companySlug,
+        "companySlug": companySlug,
         "exchange": exchange,
         // "cap": cap,
         // "sector": sector,

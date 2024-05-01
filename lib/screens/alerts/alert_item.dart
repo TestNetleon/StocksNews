@@ -7,9 +7,9 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class AlertsItem extends StatelessWidget {
   final int index;
@@ -78,11 +78,21 @@ class AlertsItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(25.sp),
+              // child: Container(
+              //   padding: EdgeInsets.all(5.sp),
+              //   width: 43.sp,
+              //   height: 43.sp,
+              //   child: ThemeImageView(url: data.image),
+              // ),
               child: Container(
-                padding: EdgeInsets.all(5.sp),
                 width: 43.sp,
                 height: 43.sp,
-                child: ThemeImageView(url: data.image),
+                padding: EdgeInsets.all(5.sp),
+                child: CachedNetworkImagesWidget(
+                  data.image,
+                  // width: 30,
+                  // height: 30,
+                ),
               ),
             ),
             const SpacerHorizontal(width: 12),

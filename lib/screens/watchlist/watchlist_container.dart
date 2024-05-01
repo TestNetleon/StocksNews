@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/watchlist_res.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist_item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class WatchlistContainer extends StatelessWidget {
   const WatchlistContainer({super.key});
@@ -27,7 +27,11 @@ class WatchlistContainer extends StatelessWidget {
           return WatchlistItem(index: index, data: data);
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const SpacerVerticel(height: 12);
+          // return const SpacerVerticel(height: 12);
+          return Divider(
+            color: ThemeColors.greyBorder,
+            height: 12.sp,
+          );
         },
       ),
     );

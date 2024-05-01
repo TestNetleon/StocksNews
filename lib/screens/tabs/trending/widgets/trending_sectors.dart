@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_sectors_item.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class TrendingSectors extends StatelessWidget {
@@ -35,11 +35,14 @@ class TrendingSectors extends StatelessWidget {
         //   "Top trending sectors in online chatter, Past 7 days",
         //   style: stylePTSansRegular(fontSize: 12),
         // ),
-        const ScreenTitle(
-          title: "Trending Sectors",
-          subTitle: "Top trending sectors in online chatter, Past 7 days",
+        // const ScreenTitle(
+        //   title: "Trending Sectors",
+        //   subTitle: "Top trending sectors in online chatter, Past 7 days",
+        // ),
+        Text(
+          "Top trending sectors in online chatter, Past 7 days",
+          style: stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
         ),
-
         const SpacerVerticel(),
         ListView.separated(
           itemCount: data?.sectors?.length ?? 0,
@@ -50,10 +53,14 @@ class TrendingSectors extends StatelessWidget {
             return TrendingSectorItem(data: sectorData);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVerticel(height: 8);
+            // return const SpacerVerticel(height: 8);
+            return const Divider(
+              color: ThemeColors.greyBorder,
+              height: 15,
+            );
           },
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        // const SpacerVerticel(height: Dimen.itemSpacing),
         // Align(
         //   alignment: Alignment.centerLeft,
         //   child: ThemeButtonSmall(

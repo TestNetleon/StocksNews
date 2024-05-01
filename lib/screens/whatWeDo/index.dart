@@ -49,7 +49,7 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
   Widget build(BuildContext context) {
     WhatWeDoProvider provider = context.watch<WhatWeDoProvider>();
     return provider.isLoading && provider.data == null
-        ? SizedBox()
+        ? const SizedBox()
         : !provider.isLoading && provider.data == null
             ? ErrorDisplayWidget(
                 error: provider.error,

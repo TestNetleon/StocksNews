@@ -6,15 +6,19 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
-import 'package:stocks_news_new/widgets/item_back.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
-class HomeItemInsiderTrending extends StatelessWidget {
+class HomeItemInsiderTrending extends StatefulWidget {
   const HomeItemInsiderTrending({super.key});
+
+  @override
+  State<HomeItemInsiderTrending> createState() =>
+      _HomeItemInsiderTrendingState();
+}
+
+class _HomeItemInsiderTrendingState extends State<HomeItemInsiderTrending> {
+  int openItemIndex = -1;
+
 //
   @override
   Widget build(BuildContext context) {
@@ -33,67 +37,76 @@ class HomeItemInsiderTrending extends StatelessWidget {
       padding: EdgeInsets.only(top: 12.sp),
       itemBuilder: (context, index) {
         InsiderTrading data = provider.homeInsiderRes!.insiderTrading[index];
-        if (index == 0) {
-          return Column(
-            children: [
-              Divider(
-                color: ThemeColors.greyBorder,
-                height: 15.sp,
-                thickness: 1,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "COMPANY",
-                      style: stylePTSansRegular(
-                        fontSize: 12,
-                        color: ThemeColors.greyText,
-                      ),
-                    ),
-                  ),
-                  const SpacerHorizontal(width: 10),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "INSIDER NAME",
-                      style: stylePTSansRegular(
-                        fontSize: 12,
-                        color: ThemeColors.greyText,
-                      ),
-                    ),
-                  ),
-                  const SpacerHorizontal(width: 10),
-                  Expanded(
-                    child: Text(
-                      "BUY/SELL",
-                      style: stylePTSansRegular(
-                        fontSize: 12,
-                        color: ThemeColors.greyText,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Divider(
-                color: ThemeColors.greyBorder,
-                height: 15.sp,
-                thickness: 1,
-              ),
-              ItemBack(
-                  color: isEven(index) ? null : ThemeColors.background,
-                  child: InsiderContentItem(data: data)),
-            ],
-          );
-        }
-        return ItemBack(
-            color: isEven(index) ? null : ThemeColors.background,
-            child: InsiderContentItem(data: data));
+        // if (index == 0) {
+        //   return Column(
+        //     children: [
+        //       Divider(
+        //         color: ThemeColors.greyBorder,
+        //         height: 15.sp,
+        //         thickness: 1,
+        //       ),
+        //       Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         children: [
+        //           Expanded(
+        //             flex: 2,
+        //             child: Text(
+        //               "COMPANY",
+        //               style: stylePTSansRegular(
+        //                 fontSize: 12,
+        //                 color: ThemeColors.greyText,
+        //               ),
+        //             ),
+        //           ),
+        //           const SpacerHorizontal(width: 10),
+        //           Expanded(
+        //             flex: 2,
+        //             child: Text(
+        //               "INSIDER NAME",
+        //               style: stylePTSansRegular(
+        //                 fontSize: 12,
+        //                 color: ThemeColors.greyText,
+        //               ),
+        //             ),
+        //           ),
+        //           const SpacerHorizontal(width: 10),
+        //           Expanded(
+        //             child: Text(
+        //               "BUY/SELL",
+        //               style: stylePTSansRegular(
+        //                 fontSize: 12,
+        //                 color: ThemeColors.greyText,
+        //               ),
+        //             ),
+        //           )
+        //         ],
+        //       ),
+        //       Divider(
+        //         color: ThemeColors.greyBorder,
+        //         height: 15.sp,
+        //         thickness: 1,
+        //       ),
+        //       InsiderContentItem(data: data),
+        //     ],
+        //   );
+        // }
+        return InsiderContentItem(
+          data: data,
+          isOpen: openItemIndex == index,
+          onTap: () {
+            // Toggle open/close state
+            setState(() {
+              openItemIndex = openItemIndex == index ? -1 : index;
+            });
+          },
+        );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return const SpacerVerticel(height: 12);
+        // return const SpacerVerticel(height: 12);
+        return Divider(
+          color: ThemeColors.greyBorder,
+          height: 12.sp,
+        );
       },
     );
   }

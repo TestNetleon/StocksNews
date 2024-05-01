@@ -10,6 +10,7 @@ class ScreenTitle extends StatelessWidget {
   final String title;
   final TextStyle? style;
   final String? optionalText;
+  final Widget? optionalWidget;
   final bool canPopBack;
   final String? subTitle;
   const ScreenTitle({
@@ -19,6 +20,7 @@ class ScreenTitle extends StatelessWidget {
     this.optionalText,
     this.subTitle,
     this.canPopBack = false,
+    this.optionalWidget,
   });
 //
   @override
@@ -27,7 +29,7 @@ class ScreenTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         OptionalParent(
-          addParent: optionalText != null,
+          addParent: optionalText != null || optionalWidget != null,
           parentBuilder: (child) {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -38,9 +40,19 @@ class ScreenTitle extends StatelessWidget {
                     style: style ?? styleGeorgiaBold(fontSize: 17),
                   ),
                 ),
-                Text(
-                  optionalText ?? "",
-                  style: style ?? stylePTSansRegular(fontSize: 12),
+                Visibility(
+                  visible: optionalText != null,
+                  child: Text(
+                    optionalText ?? "",
+                    style: style ?? stylePTSansRegular(fontSize: 12),
+                  ),
+                ),
+                Visibility(
+                  visible: optionalWidget != null,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.sp),
+                    child: optionalWidget ?? const SizedBox(),
+                  ),
                 ),
               ],
             );

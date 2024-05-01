@@ -56,13 +56,13 @@ class _RedditTwitterState extends State<RedditTwitter> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
         child: Column(
           children: [
-            const ScreenTitle(title: "Social Sentiment"),
+            // const ScreenTitle(title: "Social Sentiment"),
             Expanded(
               child: provider.isLoading && provider.socialSentimentRes == null
                   ? Center(
@@ -171,7 +171,11 @@ class _RedditTwitterState extends State<RedditTwitter> {
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
-                              return const SpacerVerticel(height: 12);
+                              // return const SpacerVerticel(height: 12);
+                              return Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 12.sp,
+                              );
                             },
                           ),
                 Divider(
@@ -196,7 +200,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                       provider.socialSentimentRes?.recentMentions?.length ?? 0,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding: EdgeInsets.only(top: 8.sp, bottom: 15.sp),
+                  padding: EdgeInsets.only(top: 0, bottom: 15.sp),
                   itemBuilder: (context, index) {
                     RecentMention? data =
                         provider.socialSentimentRes?.recentMentions?[index];
@@ -208,7 +212,11 @@ class _RedditTwitterState extends State<RedditTwitter> {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SpacerVerticel(height: 12);
+                    // return const SpacerVerticel(height: 12);
+                    return Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 12.sp,
+                    );
                   },
                 ),
               ],

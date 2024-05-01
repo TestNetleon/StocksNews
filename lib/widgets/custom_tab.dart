@@ -36,3 +36,28 @@ class CustomTab extends StatelessWidget {
     );
   }
 }
+
+class CustomTabNEW extends StatelessWidget {
+  const CustomTabNEW({
+    required this.index,
+    required this.label,
+    required this.selectedIndex,
+    super.key,
+  });
+
+  final int index;
+  final String label;
+  final int selectedIndex;
+//
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: stylePTSansBold(
+        fontSize: 13,
+        color: selectedIndex == index ? ThemeColors.accent : Colors.white,
+        // index == selectedIndex ? ThemeColors.border : ThemeColors.primary,
+      ),
+    );
+  }
+}

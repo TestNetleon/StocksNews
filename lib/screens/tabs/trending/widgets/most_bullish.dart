@@ -4,9 +4,7 @@ import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class MostBullish extends StatelessWidget {
@@ -21,29 +19,29 @@ class MostBullish extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            // ColoredText(
-            //   text: "Most Bullish",
-            //   coloredLetters: const ["B"],
-            //   style: stylePTSansBold(),
-            // ),
+        // Row(
+        //   children: [
+        //     // ColoredText(
+        //     //   text: "Most Bullish",
+        //     //   coloredLetters: const ["B"],
+        //     //   style: stylePTSansBold(),
+        //     // ),
 
-            const Icon(
-              Icons.trending_up_rounded,
-              color: ThemeColors.accent,
-            ),
-            const SpacerHorizontal(width: 5),
-            Text(
-              "Most Bullish",
-              style: styleGeorgiaBold(fontSize: 17),
-            ),
-          ],
-        ),
-        const SpacerVerticel(height: 5),
+        //     const Icon(
+        //       Icons.trending_up_rounded,
+        //       color: ThemeColors.accent,
+        //     ),
+        //     const SpacerHorizontal(width: 5),
+        //     Text(
+        //       "Most Bullish",
+        //       style: styleGeorgiaBold(fontSize: 17),
+        //     ),
+        //   ],
+        // ),
+        // const SpacerVerticel(height: 5),
         Text(
           "This segment displays stocks with the most bullish outlook, determined by a consistently positive (bullish) sentiment in recent news over the past 7 days.",
-          style: stylePTSansRegular(fontSize: 12),
+          style: stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
         ),
         const SpacerVerticel(),
         ListView.separated(
@@ -61,10 +59,14 @@ class MostBullish extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVerticel(height: 12);
+            // return const SpacerVerticel(height: 12);
+            return const Divider(
+              color: ThemeColors.greyBorder,
+              height: 12,
+            );
           },
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        // const SpacerVerticel(height: Dimen.itemSpacing),
         // Align(
         //   alignment: Alignment.centerLeft,
         //   child: ThemeButtonSmall(

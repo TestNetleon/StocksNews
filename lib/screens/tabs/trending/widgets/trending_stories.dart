@@ -6,7 +6,6 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class TrendingStories extends StatelessWidget {
@@ -32,7 +31,7 @@ class TrendingStories extends StatelessWidget {
         // ),
         // const SpacerVerticel(),
 
-        const ScreenTitle(title: "Trending Stories"),
+        // const ScreenTitle(title: "Trending Stories"),
         ListView.separated(
           itemCount: data?.generalNews?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),

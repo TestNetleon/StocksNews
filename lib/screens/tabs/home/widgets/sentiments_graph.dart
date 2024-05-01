@@ -55,7 +55,7 @@ class SentimentsGraph extends StatelessWidget {
             textAlign: TextAlign.center,
             style: styleGeorgiaBold(
               fontSize: 15,
-              decoration: TextDecoration.underline,
+              // decoration: TextDecoration.underline,
             ),
           ),
           const SpacerVerticel(),

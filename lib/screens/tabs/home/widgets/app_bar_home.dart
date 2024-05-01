@@ -85,7 +85,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                     ? const Icon(Icons.person)
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(30.r),
-                        child: ThemeImageView(url: image)),
+                        child: ThemeImageView(url: image),
+                      ),
               ),
             ),
       centerTitle: true,
@@ -123,16 +124,16 @@ class _AppBarHomeState extends State<AppBarHome> {
             ),
           ),
         ),
-        Visibility(
-          visible: widget.filterClick != null,
-          child: IconButton(
-            onPressed: widget.filterClick,
-            icon: const Icon(
-              Icons.filter_alt,
-              color: ThemeColors.white,
-            ),
-          ),
-        ),
+        // Visibility(
+        //   visible: widget.filterClick != null,
+        //   child: IconButton(
+        //     onPressed: widget.filterClick,
+        //     icon: const Icon(
+        //       Icons.filter_alt,
+        //       color: ThemeColors.white,
+        //     ),
+        //   ),
+        // ),
         Visibility(
           visible: widget.canSearch,
           child: IconButton(
@@ -147,6 +148,7 @@ class _AppBarHomeState extends State<AppBarHome> {
         ),
         if (widget.showTrailing)
           Stack(
+            alignment: Alignment.center,
             children: [
               IconButton(
                 onPressed: () {
@@ -164,10 +166,10 @@ class _AppBarHomeState extends State<AppBarHome> {
                 visible:
                     !homeProvider.notificationSeen && provider.user != null,
                 child: Positioned(
-                  right: 10.sp,
-                  top: 10.sp,
+                  right: 13.sp,
+                  top: 14.sp,
                   child: CircleAvatar(
-                    radius: 5.sp,
+                    radius: 4.sp,
                     backgroundColor: ThemeColors.sos,
                   ),
                 ),

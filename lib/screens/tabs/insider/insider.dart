@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -31,7 +32,10 @@ class Insider extends StatelessWidget {
 
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: AppBarHome(filterClick: _filterClick),
+      appbar: AppBarHome(
+        filterClick: _filterClick,
+        canSearch: true,
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
@@ -42,7 +46,16 @@ class Insider extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const ScreenTitle(title: "Insider Trading"),
+            ScreenTitle(
+              title: "Insider Trading",
+              optionalWidget: GestureDetector(
+                onTap: _filterClick,
+                child: const Icon(
+                  Icons.filter_alt,
+                  color: ThemeColors.white,
+                ),
+              ),
+            ),
             TextInputFieldSearch(
               hintText: "Find by insider or company name",
               onSubmitted: (text) {
