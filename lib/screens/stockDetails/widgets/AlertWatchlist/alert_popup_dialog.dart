@@ -16,7 +16,7 @@ class AlertPopUpDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true, showTrailing: false),
+      appBar: const AppBarHome(isPopback: true, showTrailing: false),
       body: content,
     );
   }

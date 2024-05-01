@@ -5,7 +5,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class RedditTwitterItem extends StatelessWidget {
@@ -29,7 +29,7 @@ class RedditTwitterItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(25.sp),
+            borderRadius: BorderRadius.circular(0.sp),
             child: Container(
               padding: EdgeInsets.all(5.sp),
               width: 43.sp,
@@ -48,7 +48,7 @@ class RedditTwitterItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 Text(
                   data?.name ?? "",
                   style: stylePTSansRegular(
@@ -78,7 +78,7 @@ class RedditTwitterItem extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SpacerVerticel(height: 5),
+              const SpacerVertical(height: 5),
               Text(
                 data?.recentMentions ?? "",
                 style: stylePTSansRegular(
@@ -101,7 +101,7 @@ class RedditTwitterItem extends StatelessWidget {
           //         color: ThemeColors.accent,
           //       ),
           //     ),
-          //     const SpacerVerticel(height: 5),
+          //     const SpacerVertical(height: 5),
           //     Text(
           //       "-0.00%",
           //       style: stylePTSansRegular(

@@ -5,7 +5,7 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class SocialSentimentsGraph extends StatelessWidget {
@@ -49,12 +49,12 @@ class SocialSentimentsGraph extends StatelessWidget {
             "Average Market Sentiment",
             style: styleGeorgiaBold(fontSize: 18),
           ),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           Text(
             "Current average sentiment across all stocks",
             style: stylePTSansRegular(fontSize: 12, letterSpacing: 0.0),
           ),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           Text(
             "See which stocks are bearish vs bullish",
             style: styleGeorgiaBold(
@@ -62,7 +62,7 @@ class SocialSentimentsGraph extends StatelessWidget {
               // decoration: TextDecoration.underline,
             ),
           ),
-          const SpacerVerticel(),
+          const SpacerVertical(),
           LayoutBuilder(
             builder: (context, constraints) => Container(
               padding: const EdgeInsets.all(0),
@@ -179,12 +179,12 @@ class SocialSentimentsGraph extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Text(
                     "Comment Volume",
                     style: stylePTSansRegular(fontSize: 14),
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Row(
                     children: [
                       Icon(
@@ -201,18 +201,18 @@ class SocialSentimentsGraph extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // const SpacerVerticel(),
+                  // const SpacerVertical(),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Text(
                     "Sentiment Trending",
                     style: stylePTSansRegular(fontSize: 14),
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Row(
                     children: [
                       Icon(
@@ -229,7 +229,7 @@ class SocialSentimentsGraph extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // const SpacerVerticel(),
+                  // const SpacerVertical(),
                 ],
               )
             ],
@@ -305,12 +305,12 @@ class SocialSentimentsGraph extends StatelessWidget {
           //               "Bearish",
           //               style: stylePTSansRegular(fontSize: 18),
           //             ),
-          //             const SpacerVerticel(height: 5),
+          //             const SpacerVertical(height: 5),
           //             Text(
           //               "Comment Volume",
           //               style: stylePTSansRegular(fontSize: 14),
           //             ),
-          //             const SpacerVerticel(height: 5),
+          //             const SpacerVertical(height: 5),
           //             Row(
           //               children: [
           //                 const Icon(
@@ -324,7 +324,7 @@ class SocialSentimentsGraph extends StatelessWidget {
           //                 ),
           //               ],
           //             ),
-          //             const SpacerVerticel(),
+          //             const SpacerVertical(),
           //           ],
           //         ),
           //         Column(
@@ -334,12 +334,12 @@ class SocialSentimentsGraph extends StatelessWidget {
           //               "Bullish",
           //               style: stylePTSansRegular(fontSize: 18),
           //             ),
-          //             const SpacerVerticel(height: 5),
+          //             const SpacerVertical(height: 5),
           //             Text(
           //               "Comment Volume",
           //               style: stylePTSansRegular(fontSize: 14),
           //             ),
-          //             const SpacerVerticel(height: 5),
+          //             const SpacerVertical(height: 5),
           //             Row(
           //               children: [
           //                 const Icon(
@@ -353,7 +353,7 @@ class SocialSentimentsGraph extends StatelessWidget {
           //                 ),
           //               ],
           //             ),
-          //             const SpacerVerticel(),
+          //             const SpacerVertical(),
           //           ],
           //         )
           //       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TwitterSentiments extends StatelessWidget {
   const TwitterSentiments({super.key});
@@ -14,7 +14,7 @@ class TwitterSentiments extends StatelessWidget {
           title: "X Sentiment/Activity",
           style: stylePTSansRegular(fontSize: 20),
         ),
-        const SpacerVerticel(),
+        const SpacerVertical(),
         ScreenTitle(
           title: "Recent Tweets",
           style: stylePTSansRegular(fontSize: 20),

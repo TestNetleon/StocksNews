@@ -12,7 +12,7 @@ import 'package:validators/validators.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 import '../../utils/validations.dart';
-import '../../widgets/spacer_verticle.dart';
+import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_button.dart';
 import '../../widgets/theme_input_field.dart';
 
@@ -65,7 +65,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _richText(text: "Name"),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           ThemeInputField(
             textCapitalization: TextCapitalization.words,
             controller: name,
@@ -73,7 +73,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
             keyboardType: TextInputType.name,
             inputFormatters: [AlphabetInputFormatter()],
           ),
-          const SpacerVerticel(height: 10),
+          const SpacerVertical(height: 10),
           // Text(
           //   "Email Id",
           //   style: stylePTSansRegular(fontSize: 14),
@@ -81,21 +81,21 @@ class _ContactUsItemState extends State<ContactUsItem> {
 
           _richText(text: "Email"),
 
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           ThemeInputField(
             controller: email,
             placeholder: "Enter your email address",
             keyboardType: TextInputType.emailAddress,
             inputFormatters: [emailFormatter],
           ),
-          // const SpacerVerticel(height: 10),
+          // const SpacerVertical(height: 10),
           // Text(
           //   "Phone Number",
           //   style: stylePTSansRegular(fontSize: 14),
           // ),
           // _richText(text: "Phone Number"),
 
-          // const SpacerVerticel(height: 5),
+          // const SpacerVertical(height: 5),
           // ThemeInputField(
           //   controller: phone,
           //   placeholder: "Enter your phone number",
@@ -104,14 +104,14 @@ class _ContactUsItemState extends State<ContactUsItem> {
           //     FilteringTextInputFormatter.digitsOnly,
           //   ],
           // ),
-          const SpacerVerticel(height: 10),
+          const SpacerVertical(height: 10),
           // Text(
           //   "Comments",
           //   style: stylePTSansRegular(fontSize: 14),
           // ),
           _richText(text: "Comment"),
 
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           ThemeInputField(
             minLines: 5,
             maxLength: 250,
@@ -119,7 +119,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
             placeholder: "Enter your comment",
             keyboardType: TextInputType.text,
           ),
-          const SpacerVerticel(height: 25),
+          const SpacerVertical(height: 25),
           ThemeButton(
             text: "Next",
             onPressed: _onTap,

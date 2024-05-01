@@ -7,7 +7,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class StockDetailTopWidgetDetail extends StatelessWidget {
@@ -24,10 +24,9 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
         Visibility(
           visible: companyInfo?.image != null,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(25.sp),
+            borderRadius: BorderRadius.circular(0.sp),
             child: Container(
               padding: EdgeInsets.all(5.sp),
-
               width: 43.sp,
               height: 43.sp,
               child: ThemeImageView(url: companyInfo?.image ?? ""),
@@ -50,7 +49,7 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
                   keyStats?.symbol ?? "",
                   style: styleGeorgiaBold(fontSize: 18),
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 Text(
                   keyStats?.name ?? "",
                   style: styleGeorgiaRegular(
@@ -67,7 +66,7 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(keyStats?.price ?? "", style: stylePTSansBold(fontSize: 18)),
-            const SpacerVerticel(height: 2),
+            const SpacerVertical(height: 2),
             Visibility(
               visible: keyStats?.change != null,
               child: Row(

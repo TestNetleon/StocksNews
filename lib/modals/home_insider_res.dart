@@ -117,7 +117,7 @@ class InsiderTrading {
   final String typeOfOwner;
   // final String acquistionOrDisposition;
   // final String formType;
-  // final num price;
+  final String price;
   // final String securityName;
   final String link;
   // final num insiderTradingTotalTransaction;
@@ -149,7 +149,7 @@ class InsiderTrading {
     required this.typeOfOwner,
     // required this.acquistionOrDisposition,
     // required this.formType,
-    // required this.price,
+    required this.price,
     // required this.securityName,
     required this.link,
     // required this.insiderTradingTotalTransaction,
@@ -172,7 +172,7 @@ class InsiderTrading {
         symbol: json["symbol"],
         // transactionDate: DateTime.parse(json["transactionDate"]),
         // reportingCik: json["reportingCik"],
-        securitiesTransacted: json["securitiesTransacted"]?.toDouble(),
+        securitiesTransacted: json["securitiesTransacted"],
         // filingDate: DateTime.parse(json["filingDate"]),
         transactionType: json["transactionType"],
         securitiesOwned: json["securitiesOwned"],
@@ -182,7 +182,7 @@ class InsiderTrading {
         typeOfOwner: json["typeOfOwner"],
         // acquistionOrDisposition: json["acquistionOrDisposition"],
         // formType: json["formType"],
-        // price: json["price"]?.toDouble(),
+        price: json["price"],
         // securityName: json["securityName"],
         link: json["link"],
         // insiderTradingTotalTransaction: json["total_transaction"],
@@ -215,7 +215,7 @@ class InsiderTrading {
         "typeOfOwner": typeOfOwner,
         // "acquistionOrDisposition": acquistionOrDisposition,
         // "formType": formType,
-        // "price": price,
+        "price": price,
         // "securityName": securityName,
         "link": link,
         // "total_transaction": insiderTradingTotalTransaction,

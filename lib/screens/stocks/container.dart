@@ -18,7 +18,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
 //
@@ -34,7 +34,7 @@ class StocksContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
     return BaseContainer(
-      appbar: AppBarHome(
+      appBar: AppBarHome(
         isPopback: true,
         filterClick: _filterClick,
       ),
@@ -73,7 +73,7 @@ class StocksContainer extends StatelessWidget {
                     itemCount: provider.data?.length ?? 0,
                     padding: EdgeInsets.symmetric(vertical: 10.sp),
                     separatorBuilder: (context, index) {
-                      // return const SpacerVerticel(height: 10);
+                      // return const SpacerVertical(height: 10);
                       return Divider(
                         color: ThemeColors.greyBorder,
                         height: 12.sp,
@@ -126,7 +126,7 @@ class StocksContainer extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SpacerVerticel(height: Dimen.itemSpacing),
+                            const SpacerVertical(height: Dimen.itemSpacing),
                             StocksItemAll(data: data, index: index),
                           ],
                         );

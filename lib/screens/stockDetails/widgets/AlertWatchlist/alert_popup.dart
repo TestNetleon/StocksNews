@@ -7,7 +7,7 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
@@ -69,7 +69,7 @@ class _AlertPopupState extends State<AlertPopup> {
         // insetPadding: widget.insetPadding,
         children: [
           _header(context),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           Text(
             "Select an alert type",
             style: stylePTSansBold(),
@@ -137,7 +137,7 @@ class _AlertPopupState extends State<AlertPopup> {
                 ? ThemeColors.background
                 : ThemeColors.border,
           ),
-          const SpacerVerticel(height: 10),
+          const SpacerVertical(height: 10),
         ],
       ),
     );
@@ -145,7 +145,7 @@ class _AlertPopupState extends State<AlertPopup> {
     //   insetPadding: widget.insetPadding,
     //   children: [
     //     _header(context),
-    //     const SpacerVerticel(height: 3),
+    //     const SpacerVertical(height: 3),
     //     Text(
     //       "Select an alert type",
     //       style: stylePTSansBold(),
@@ -213,7 +213,7 @@ class _AlertPopupState extends State<AlertPopup> {
     //           ? ThemeColors.background
     //           : ThemeColors.border,
     //     ),
-    //     const SpacerVerticel(height: 10),
+    //     const SpacerVertical(height: 10),
     //   ],
     // );
   }

@@ -9,7 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'widgets/summary.dart';
 
@@ -139,7 +139,7 @@ class _StocksTechnicalAnalysisBaseState
         mainAxisSize: MainAxisSize.min,
         children: [
           TechnicalAnalystSummary(constraints: constraints),
-          const SpacerVerticel(height: 30),
+          const SpacerVertical(height: 30),
           Row(
             children: [
               Expanded(

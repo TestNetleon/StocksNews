@@ -14,7 +14,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
 //
@@ -109,7 +109,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
         context.watch<InsiderTradingDetailsProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: AppBarHome(
+      appBar: AppBarHome(
         isPopback: true,
         canSearch: true,
         filterClick: () => _filterClick(
@@ -181,7 +181,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
                 editable: true,
               ),
             ),
-            const SpacerVerticel(height: 10),
+            const SpacerVertical(height: 10),
             Expanded(
               child: widget.reportingSlug == ""
                   ? InsiderCompanyContainer(

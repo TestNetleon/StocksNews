@@ -16,7 +16,7 @@ import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_alert_dialog.dart';
 
 String? validAuthToken;
@@ -288,7 +288,7 @@ Future<dynamic> _showLogout() => showDialog(
               "Session Out",
               style: stylePTSansBold(fontSize: 19),
             ),
-            const SpacerVerticel(height: 10),
+            const SpacerVertical(height: 10),
             Text(
               "Someone else has logged into this account. Please log in again.",
               style: stylePTSansRegular(),

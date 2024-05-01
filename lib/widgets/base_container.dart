@@ -4,7 +4,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 class BaseContainer extends StatelessWidget {
   const BaseContainer({
     required this.body,
-    this.appbar,
+    this.appBar,
     this.bottomNavigationBar,
     this.showSync = false,
     this.drawer,
@@ -14,7 +14,7 @@ class BaseContainer extends StatelessWidget {
 
   final Widget? drawer;
   final Widget? bottomNavigationBar;
-  final PreferredSizeWidget? appbar;
+  final PreferredSizeWidget? appBar;
   final Widget body;
   final bool showSync;
   final bool? resizeToAvoidBottomInset;
@@ -26,7 +26,7 @@ class BaseContainer extends StatelessWidget {
         closeKeyboard();
       },
       child: Scaffold(
-        appBar: appbar,
+        appBar: appBar,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         drawer: drawer,
         body: SafeArea(

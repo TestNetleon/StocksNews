@@ -34,12 +34,12 @@ class TopTrendingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 10.sp),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.sp),
-              border: Border.all(color: ThemeColors.greyBorder),
-              color: ThemeColors.primaryLight),
+        return SizedBox(
+          // padding: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 10.sp),
+          // decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(10.sp),
+          //     border: Border.all(color: ThemeColors.greyBorder),
+          //     color: ThemeColors.primaryLight),
           child: Row(
             children: [
               InkWell(
@@ -53,7 +53,7 @@ class TopTrendingItem extends StatelessWidget {
                 child: Row(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(25.sp),
+                      borderRadius: BorderRadius.circular(0.sp),
                       child: Container(
                         padding: EdgeInsets.all(5.sp),
                         width: 43.sp,

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/more_stocks_res.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/more_stoks_list_item.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MoreStocksList extends StatelessWidget {
   const MoreStocksList({super.key});
@@ -22,7 +22,7 @@ class MoreStocksList extends StatelessWidget {
         return MoreStocksListItem(data: data, index: index);
       },
       separatorBuilder: (BuildContext context, int index) {
-        return const SpacerVerticel(height: 12);
+        return const SpacerVertical(height: 12);
       },
     );
   }

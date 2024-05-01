@@ -19,7 +19,7 @@ class NewsDetails extends StatelessWidget {
       value: ScrollControllerProvider(),
       child: BaseContainer(
         drawer: const BaseDrawer(resetIndex: true),
-        appbar: const AppBarHome(isPopback: true, showTrailing: false),
+        appBar: const AppBarHome(isPopback: true, showTrailing: false),
         body: Padding(
           padding: EdgeInsets.fromLTRB(10.sp, 10.sp, 10.sp, 0),
           child: NewsDetailsBody(slug: slug),

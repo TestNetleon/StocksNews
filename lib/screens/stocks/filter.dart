@@ -6,7 +6,7 @@ import 'package:stocks_news_new/screens/stocks/widgets/text_field.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/filter_drop_down.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 class FilterStocks extends StatefulWidget {
@@ -25,9 +25,9 @@ class _FilterStocksState extends State<FilterStocks> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SpacerVerticel(height: 3),
+        const SpacerVertical(height: 3),
         const ScreenTitle(title: "Filter"),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         FilterDropDownTextField(
           heading: "Exchange",
           value: provider.valueExchange.isEmpty
@@ -43,7 +43,7 @@ class _FilterStocksState extends State<FilterStocks> {
           onChanged: (selectedItem) =>
               provider.onChangeExchange(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         FilterDropDownTextField(
           heading: "Price",
           value: provider.valuePrice.isEmpty
@@ -59,9 +59,9 @@ class _FilterStocksState extends State<FilterStocks> {
           onChanged: (selectedItem) =>
               provider.onChangePrice(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         const TextFieldChangePercentage(),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         ThemeButton(
           color: ThemeColors.accent,
           onPressed: () {
@@ -74,7 +74,7 @@ class _FilterStocksState extends State<FilterStocks> {
           text: "FILTER",
           textColor: Colors.white,
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
       ],
     );
   }

@@ -10,7 +10,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 //
@@ -33,15 +33,19 @@ class StockMentionWith extends StatelessWidget {
           itemCount: tradingStock?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          padding: EdgeInsets.only(top: 12.sp),
+          padding: EdgeInsets.only(top: 10.sp),
           itemBuilder: (context, index) {
             return StockMentionWithItem(up: index % 3 == 0, index: index);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVerticel(height: 12);
+            // return const SpacerVertical(height: 12);
+            return Divider(
+              color: ThemeColors.greyBorder,
+              height: 20.sp,
+            );
           },
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
       ],
     );
   }
@@ -66,7 +70,7 @@ class StockMentionWithItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(25.sp),
+            borderRadius: BorderRadius.circular(0.sp),
             child: Container(
               padding: EdgeInsets.all(5.sp),
               width: 43.sp,
@@ -87,7 +91,7 @@ class StockMentionWithItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 Text(
                   item.name,
                   style: stylePTSansRegular(

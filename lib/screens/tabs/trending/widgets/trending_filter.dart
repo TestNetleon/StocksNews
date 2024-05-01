@@ -4,7 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingFilter extends StatelessWidget {
   const TrendingFilter({super.key});
@@ -25,12 +25,12 @@ class TrendingFilter extends StatelessWidget {
             style: stylePTSansBold(),
           ),
         ),
-        const SpacerVerticel(height: 8),
+        const SpacerVertical(height: 8),
         Text(
           "Top trending Stocks in outline chatter, past 7 days",
           style: stylePTSansRegular(fontSize: 12),
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         Container(
           decoration: BoxDecoration(
             color: ThemeColors.primaryLight,
@@ -67,7 +67,7 @@ class TrendingFilter extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 8),
+        const SpacerVertical(height: 8),
         Container(
           decoration: BoxDecoration(
             color: ThemeColors.primaryLight,
@@ -104,8 +104,8 @@ class TrendingFilter extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 8),
-        const SpacerVerticel(height: 8),
+        const SpacerVertical(height: 8),
+        const SpacerVertical(height: 8),
       ],
     );
   }

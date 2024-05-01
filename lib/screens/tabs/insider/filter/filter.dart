@@ -7,7 +7,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/filter_drop_down.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -22,9 +22,9 @@ class FilterInsiders extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SpacerVerticel(height: 3),
+        const SpacerVertical(height: 3),
         const ScreenTitle(title: "Filter"),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         FilterDropDownTextField(
           heading: "Transaction Type",
           value: provider.valueTxnType.isEmpty
@@ -40,7 +40,7 @@ class FilterInsiders extends StatelessWidget {
           onChanged: (selectedItem) =>
               provider.onChangeTransactionType(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         FilterDropDownTextField(
           heading: "Market Cap",
           value: provider.valueCap.isEmpty
@@ -56,7 +56,7 @@ class FilterInsiders extends StatelessWidget {
           onChanged: (selectedItem) =>
               provider.onChangeCap(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         FilterDropDownTextField(
           heading: "Sector",
           value: provider.valueSector.isEmpty
@@ -72,7 +72,7 @@ class FilterInsiders extends StatelessWidget {
           onChanged: (selectedItem) =>
               provider.onChangeSector(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         FilterDropDownTextField(
           heading: "Transaction Size",
           value: provider.valueTxnSize.isEmpty
@@ -88,7 +88,7 @@ class FilterInsiders extends StatelessWidget {
           onChanged: (selectedItem) =>
               provider.onChangeTransactionSize(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         GestureDetector(
           onTap: provider.pickDate,
           child: Column(
@@ -98,7 +98,7 @@ class FilterInsiders extends StatelessWidget {
                 "Transaction Date",
                 style: stylePTSansRegular(),
               ),
-              const SpacerVerticel(height: 5),
+              const SpacerVertical(height: 5),
               TextInputField(
                   suffix: Icon(Icons.calendar_month, size: 23.sp),
                   style: stylePTSansRegular(
@@ -111,7 +111,7 @@ class FilterInsiders extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         ThemeButton(
           color: ThemeColors.accent,
           onPressed: () {
@@ -124,7 +124,7 @@ class FilterInsiders extends StatelessWidget {
           text: "FILTER",
           textColor: Colors.white,
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
       ],
     );
   }

@@ -18,7 +18,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 class SignUp extends StatefulWidget {
@@ -118,7 +118,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true, showTrailing: false),
+      appBar: const AppBarHome(isPopback: true, showTrailing: false),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -132,12 +132,12 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerVerticel(height: 16),
+                  const SpacerVertical(height: 16),
                   Text(
                     "SIGN UP",
                     style: stylePTSansBold(fontSize: 24),
                   ),
-                  const SpacerVerticel(height: 40),
+                  const SpacerVertical(height: 40),
                   ThemeButton(
                     onPressed: () {
                       Navigator.pushNamed(context, CreateAccount.path);
@@ -157,7 +157,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                  const SpacerVerticel(),
+                  const SpacerVertical(),
                   Column(
                     children: [
                       Stack(
@@ -181,7 +181,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ],
                       ),
-                      const SpacerVerticel(),
+                      const SpacerVertical(),
                       ThemeButton(
                         onPressed: () async {
                           _handleSignIn();
@@ -210,7 +210,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      // const SpacerVerticel(height: ),
+                      // const SpacerVertical(height: ),
 
                       Visibility(
                         visible: Platform.isIOS,

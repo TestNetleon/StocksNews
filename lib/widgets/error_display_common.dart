@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../utils/colors.dart';
 import '../utils/constants.dart';
@@ -49,7 +49,7 @@ class ErrorDisplayWidget extends StatelessWidget {
                     style: stylePTSansRegular(fontSize: fontSize),
                     textAlign: TextAlign.center,
                   ),
-                  const SpacerVerticel(),
+                  const SpacerVertical(),
                   Visibility(
                     visible: onRefresh != null,
                     child: GestureDetector(

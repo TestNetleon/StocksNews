@@ -108,7 +108,7 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            // return const SpacerVerticel(height: 16);
+            // return const SpacerVertical(height: 16);
             return Divider(
               color: ThemeColors.greyBorder,
               height: 20.sp,
@@ -192,7 +192,7 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
 //                 );
 //               },
 //               separatorBuilder: (BuildContext context, int index) {
-//                 // return const SpacerVerticel(height: 16);
+//                 // return const SpacerVertical(height: 16);
 //                 return Divider(
 //                   color: ThemeColors.greyBorder,
 //                   height: 20.sp,

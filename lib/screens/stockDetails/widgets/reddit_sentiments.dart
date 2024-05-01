@@ -14,7 +14,7 @@ class RedditSentiments extends StatelessWidget {
         //   title: "Reddit Sentiment/Activity",
         //   style: stylePTSansRegular(fontSize: 20),
         // ),
-        // const SpacerVerticel(),
+        // const SpacerVertical(),
         ScreenTitle(
           title: "Recent Reddit Comments",
           style: stylePTSansRegular(fontSize: 20),

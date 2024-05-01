@@ -76,7 +76,7 @@ class SectorIndustryBase extends StatelessWidget {
     SectorIndustryProvider provider = context.watch<SectorIndustryProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appbar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: BaseUiContainer(
         isLoading: provider.isLoading,
         hasData: provider.data != null,

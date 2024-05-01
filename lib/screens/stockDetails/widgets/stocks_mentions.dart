@@ -7,7 +7,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class StocksMentions extends StatelessWidget {
   const StocksMentions({super.key});
@@ -78,7 +78,7 @@ class StocksMentions extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) {
-            return const SpacerVerticel(height: 12);
+            return const SpacerVertical(height: 12);
           },
           itemCount: mentions.length,
         )

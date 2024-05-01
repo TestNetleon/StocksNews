@@ -21,7 +21,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
 import '../../../blogs/index.dart';
@@ -162,7 +162,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         //   height: 10.sp,
                         // ),
 
-                        const SpacerVerticel(height: 5),
+                        const SpacerVertical(height: 5),
 
                         // Visibility(
                         //   visible: foundSite,
@@ -351,7 +351,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         //     ),
                         //   ),
                         // ),
-                        SpacerVerticel(height: Dimen.itemSpacing.sp),
+                        SpacerVertical(height: Dimen.itemSpacing.sp),
                         // Text(
                         //   provider.data?.postDetail?.text ?? "",
                         //   style: stylePTSansRegular(),
@@ -391,7 +391,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               styleGeorgiaRegular(fontSize: 14, height: 1.5),
                         ),
 
-                        const SpacerVerticel(height: 20),
+                        const SpacerVertical(height: 20),
                         Visibility(
                           visible:
                               provider.data?.postDetail?.tags?.isNotEmpty ==
@@ -430,7 +430,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         //   onPressed: () {},
                         //   text: "Read More",
                         // ),
-                        const SpacerVerticel(height: 25),
+                        const SpacerVertical(height: 25),
                         const ScreenTitle(title: "More News to Read"),
 
                         ListView.separated(
@@ -447,7 +447,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
-                            // return const SpacerVerticel(height: 16);
+                            // return const SpacerVertical(height: 16);
                             return Divider(
                               color: ThemeColors.greyBorder,
                               height: 16.sp,

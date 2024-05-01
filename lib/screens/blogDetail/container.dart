@@ -7,7 +7,7 @@ import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 import '../tabs/news/newsDetail/news_details_body.dart';
@@ -41,12 +41,12 @@ class BlogDetailContainer extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const SpacerVerticel(height: 5),
+                      // const SpacerVertical(height: 5),
                       Text(
                         provider.blogsDetail?.name ?? "",
                         style: styleGeorgiaBold(fontSize: 25),
                       ),
-                      const SpacerVerticel(height: 5),
+                      const SpacerVertical(height: 5),
 
                       Padding(
                         padding: EdgeInsets.only(bottom: 15.sp),
@@ -67,7 +67,7 @@ class BlogDetailContainer extends StatelessWidget {
                           url: provider.blogsDetail?.image ?? "",
                         ),
                       ),
-                      // const SpacerVerticel(height: 5),
+                      // const SpacerVertical(height: 5),
                       // RichText(
                       //   text: TextSpan(
                       //     children: [
@@ -89,19 +89,19 @@ class BlogDetailContainer extends StatelessWidget {
                       //   ),
                       // ),
 
-                      SpacerVerticel(height: Dimen.itemSpacing.sp),
+                      SpacerVertical(height: Dimen.itemSpacing.sp),
 
                       // const BlogDetailAuthor(),
-                      // const SpacerVerticel(height: 5),
+                      // const SpacerVertical(height: 5),
                       // const BlogDetailCategory(),
-                      // const SpacerVerticel(height: 5),
+                      // const SpacerVertical(height: 5),
                       // const BlogDetailTags(),
                       HtmlWidget(
                         provider.blogsDetail?.description ?? "",
                         textStyle:
                             styleGeorgiaRegular(fontSize: 14, height: 1.5),
                       ),
-                      const SpacerVerticel(height: 10),
+                      const SpacerVertical(height: 10),
                     ],
                   ),
                 ),

@@ -42,7 +42,7 @@ class _WatchListState extends State<WatchList> {
 
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
         isPopback: true,
         canSearch: true,
       ),

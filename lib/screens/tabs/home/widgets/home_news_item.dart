@@ -8,8 +8,8 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/view_more_widget.dart';
 
 class HomeNewsItem extends StatelessWidget {
   const HomeNewsItem({super.key});
@@ -70,26 +70,37 @@ class HomeNewsItem extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            // return const SpacerVerticel(height: 16);
+            // return const SpacerVertical(height: 16);
             return Divider(
               color: ThemeColors.greyBorder,
               height: 20.sp,
             );
           },
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: ThemeButtonSmall(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const Tabs(index: 4)),
-              );
-            },
-            text: "View More",
-          ),
-        )
+        const SpacerVertical(height: Dimen.itemSpacing),
+        // Align(
+        //   alignment: Alignment.centerLeft,
+        //   child: ThemeButtonSmall(
+        //     onPressed: () {
+        //       Navigator.pushReplacement(
+        //         context,
+        //         MaterialPageRoute(builder: (_) => const Tabs(index: 4)),
+        //       );
+        //     },
+        //     text: "View More",
+        //   ),
+        // )
+
+        ViewMoreWidget(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Tabs(index: 4)),
+            );
+          },
+          text: "View More Stock Market News",
+          // paddingLeft: 2,
+        ),
       ],
     );
   }

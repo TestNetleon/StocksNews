@@ -102,7 +102,7 @@ class _HomeItemInsiderTrendingState extends State<HomeItemInsiderTrending> {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        // return const SpacerVerticel(height: 12);
+        // return const SpacerVertical(height: 12);
         return Divider(
           color: ThemeColors.greyBorder,
           height: 12.sp,
@@ -148,7 +148,7 @@ class _HomeItemInsiderTrendingState extends State<HomeItemInsiderTrending> {
 //                       maxLines: 1,
 //                       overflow: TextOverflow.ellipsis,
 //                     ),
-//                     const SpacerVerticel(height: 5),
+//                     const SpacerVertical(height: 5),
 //                     Text(
 //                       "Tesla Inc",
 //                       style: stylePTSansRegular(
@@ -171,7 +171,7 @@ class _HomeItemInsiderTrendingState extends State<HomeItemInsiderTrending> {
 //                       maxLines: 1,
 //                       overflow: TextOverflow.ellipsis,
 //                     ),
-//                     const SpacerVerticel(height: 5),
+//                     const SpacerVertical(height: 5),
 //                     Text(
 //                       "Tesla Inc",
 //                       style: stylePTSansRegular(
@@ -188,7 +188,7 @@ class _HomeItemInsiderTrendingState extends State<HomeItemInsiderTrending> {
 //                   crossAxisAlignment: CrossAxisAlignment.end,
 //                   children: [
 //                     Text("Buy", style: stylePTSansBold(fontSize: 14)),
-//                     const SpacerVerticel(height: 5),
+//                     const SpacerVertical(height: 5),
 //                     Container(
 //                       decoration: const BoxDecoration(
 //                         color: ThemeColors.accent,

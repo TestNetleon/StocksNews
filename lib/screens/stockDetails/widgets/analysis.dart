@@ -10,7 +10,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 //
 class Analysis extends StatelessWidget {
@@ -79,7 +79,7 @@ class AlalysisBase extends StatelessWidget {
                     value: analysisRes?.fundamentalPercent.toDouble())),
           ],
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
         Row(
           children: [
             // Expanded(child: AnalysisItemLocked(label: "Short Technical")),
@@ -97,7 +97,7 @@ class AlalysisBase extends StatelessWidget {
                     value: analysisRes?.longTermPercent.toDouble())),
           ],
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
         Row(
           children: [
             // Expanded(child: AnalysisItemLocked(label: "Analysis Renking")),
@@ -116,7 +116,7 @@ class AlalysisBase extends StatelessWidget {
                     value: analysisRes?.valuationPercent.toDouble())),
           ],
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
         SentimentSeekbarItem(
             label: "Neutral",
             // analysisRes!.setimentPercent == 0 ||
@@ -267,7 +267,7 @@ class SentimentSeekbarItem extends StatelessWidget {
               // ),
             ],
           ),
-          const SpacerVerticel(height: 3),
+          const SpacerVertical(height: 3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

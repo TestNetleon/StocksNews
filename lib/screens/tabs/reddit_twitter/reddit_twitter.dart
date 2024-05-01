@@ -18,7 +18,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_item.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import 'widgets/graph.dart';
 
@@ -52,7 +52,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
     // }
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: const AppBarHome(canSearch: true),
+      appBar: const AppBarHome(canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
@@ -104,7 +104,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
               visible: provider.socialSentimentRes?.avgSentiment != null,
               child: const SocialSentimentsGraph(),
             ),
-            const SpacerVerticel(),
+            const SpacerVertical(),
             TextInputFieldSearch(
               hintText: "Search symbol or company name",
               onSubmitted: (text) {
@@ -114,9 +114,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
               searching: provider.isSearching,
               editable: true,
             ),
-            const SpacerVerticel(height: 10),
+            const SpacerVertical(height: 10),
             // RedditTwitterButtons(constraints: constraints),
-            // const SpacerVerticel(height: 8),
+            // const SpacerVertical(height: 8),
             Text(
               "SHOW THE LAST - ",
               style: stylePTSansBold(fontSize: 12),
@@ -171,7 +171,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
-                              // return const SpacerVerticel(height: 12);
+                              // return const SpacerVertical(height: 12);
                               return Divider(
                                 color: ThemeColors.greyBorder,
                                 height: 12.sp,
@@ -212,7 +212,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    // return const SpacerVerticel(height: 12);
+                    // return const SpacerVertical(height: 12);
                     return Divider(
                       color: ThemeColors.greyBorder,
                       height: 12.sp,

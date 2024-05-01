@@ -9,7 +9,7 @@
 // import 'package:stocks_news_new/widgets/base_container.dart';
 // import 'package:stocks_news_new/widgets/colored_text.dart';
 // import 'package:stocks_news_new/widgets/rounded_pinput.dart';
-// import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:stocks_news_new/widgets/theme_button.dart';
 
 // class OTPSignup extends StatefulWidget {
@@ -90,12 +90,12 @@
 //               padding: const EdgeInsets.all(Dimen.authScreenPadding),
 //               child: Column(
 //                 children: [
-//                   const SpacerVerticel(height: 16),
+//                   const SpacerVertical(height: 16),
 //                   Text(
 //                     "Validate Email Address",
 //                     style: stylePTSansBold(fontSize: 22),
 //                   ),
-//                   const SpacerVerticel(height: 8),
+//                   const SpacerVertical(height: 8),
 //                   Text(
 //                     "We have sent an OTP to your email address",
 //                     style: stylePTSansRegular(
@@ -103,12 +103,12 @@
 //                       color: ThemeColors.greyText,
 //                     ),
 //                   ),
-//                   const SpacerVerticel(height: 8),
+//                   const SpacerVertical(height: 8),
 //                   InputOTP(
 //                     pinController: _emailOtpcontroller,
 //                     focusNode: FocusNode(),
 //                   ),
-//                   const SpacerVerticel(height: 12),
+//                   const SpacerVertical(height: 12),
 //                   Align(
 //                     alignment: Alignment.centerRight,
 //                     child: TextButton(
@@ -122,23 +122,23 @@
 //                       ),
 //                     ),
 //                   ),
-//                   const SpacerVerticel(height: 30),
+//                   const SpacerVertical(height: 30),
 //                   Text(
 //                     "Validate Phone Number",
 //                     style: stylePTSansBold(fontSize: 22),
 //                   ),
-//                   const SpacerVerticel(height: 8),
+//                   const SpacerVertical(height: 8),
 //                   Text(
 //                     "We have sent an OTP to your phone number",
 //                     style: stylePTSansRegular(
 //                         fontSize: 12, color: ThemeColors.greyText),
 //                   ),
-//                   const SpacerVerticel(height: 8),
+//                   const SpacerVertical(height: 8),
 //                   InputOTP(
 //                     pinController: _phoneOtpcontroller,
 //                     focusNode: FocusNode(),
 //                   ),
-//                   const SpacerVerticel(height: 12),
+//                   const SpacerVertical(height: 12),
 //                   Align(
 //                     alignment: Alignment.centerRight,
 //                     child: TextButton(
@@ -152,12 +152,12 @@
 //                       ),
 //                     ),
 //                   ),
-//                   const SpacerVerticel(height: 40),
+//                   const SpacerVertical(height: 40),
 //                   ThemeButton(
 //                     onPressed: _onVeryClick,
 //                     text: "Verify",
 //                   ),
-//                   const SpacerVerticel(),
+//                   const SpacerVertical(),
 //                   Text(
 //                     "Code not received?",
 //                     style: stylePTSansRegular(
@@ -165,7 +165,7 @@
 //                       color: ThemeColors.greyText,
 //                     ),
 //                   ),
-//                   // const SpacerVerticel(height: Dimen.itemSpacing),
+//                   // const SpacerVertical(height: Dimen.itemSpacing),
 //                   TextButton(
 //                     onPressed: () {
 //                       Navigator.pop(context);

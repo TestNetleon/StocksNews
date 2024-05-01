@@ -13,7 +13,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import '../../widgets/theme_image_view.dart';
 import '../blogDetail/index.dart';
@@ -129,7 +129,7 @@ class NotificationsItem extends StatelessWidget {
                           data.title,
                           style: stylePTSansRegular(),
                         ),
-                        const SpacerVerticel(height: 6),
+                        const SpacerVertical(height: 6),
                         Text(
                           data.message,
                           style: stylePTSansRegular(
@@ -148,7 +148,7 @@ class NotificationsItem extends StatelessWidget {
                   ),
                 ],
               ),
-              const SpacerVerticel(height: 10),
+              const SpacerVertical(height: 10),
               Visibility(
                 visible: data.image != null && data.image != '',
                 child: ClipRRect(
@@ -161,7 +161,7 @@ class NotificationsItem extends StatelessWidget {
                   ),
                 ),
               ),
-              const SpacerVerticel(height: 10),
+              const SpacerVertical(height: 10),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(

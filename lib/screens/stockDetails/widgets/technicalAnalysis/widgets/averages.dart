@@ -6,7 +6,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/technicalAnalysis/widgets/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TechnicalAnalystAverages extends StatelessWidget {
   final BoxConstraints constraints;
@@ -26,12 +26,12 @@ class TechnicalAnalystAverages extends StatelessWidget {
           "Moving Averages",
           style: stylePTSansBold(fontSize: 13),
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         // SizedBox(
         //     height: constraints.maxWidth / 3,
         //     child:
         //         TechnicalAnalysisGaugeItem(value: value.indicater.toDouble())),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         Stack(
           alignment: Alignment.center,
           children: [
@@ -66,7 +66,7 @@ class TechnicalAnalystAverages extends StatelessWidget {
             ),
           ],
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
 
         Container(
           decoration: BoxDecoration(
@@ -94,7 +94,7 @@ class TechnicalAnalystAverages extends StatelessWidget {
             ),
           ),
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         SizedBox(
           width: constraints.maxWidth * .4,
           child: Row(

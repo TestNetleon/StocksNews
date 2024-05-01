@@ -34,7 +34,7 @@ class _MoreStocksContainerState extends State<MoreStocksContainer> {
     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,

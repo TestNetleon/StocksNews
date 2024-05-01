@@ -6,7 +6,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 //
@@ -61,7 +61,7 @@ class _AnalysisForecastState extends State<AnalysisForecast> {
             controller: controller,
           ),
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
       ],
     );
   }

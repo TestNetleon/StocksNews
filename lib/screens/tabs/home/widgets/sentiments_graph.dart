@@ -5,7 +5,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class SentimentsGraph extends StatelessWidget {
@@ -20,7 +20,7 @@ class SentimentsGraph extends StatelessWidget {
         provider.homeSentimentRes?.sentimentTrending?.toCurrency();
 
     return Container(
-      margin: EdgeInsets.only(top: 20.sp),
+      margin: EdgeInsets.only(top: 10.sp),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Dimen.radius.r),
         gradient: const LinearGradient(
@@ -43,13 +43,13 @@ class SentimentsGraph extends StatelessWidget {
             textAlign: TextAlign.center,
             style: styleGeorgiaBold(fontSize: 18),
           ),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           Text(
             "Current average sentiment across all stocks",
             textAlign: TextAlign.center,
             style: stylePTSansRegular(fontSize: 12),
           ),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           Text(
             "See which stocks are bearish vs bullish",
             textAlign: TextAlign.center,
@@ -58,7 +58,7 @@ class SentimentsGraph extends StatelessWidget {
               // decoration: TextDecoration.underline,
             ),
           ),
-          const SpacerVerticel(),
+          const SpacerVertical(),
           LayoutBuilder(
             builder: (context, constraints) => Container(
               padding: const EdgeInsets.all(0),
@@ -177,12 +177,12 @@ class SentimentsGraph extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Text(
                     "Comment Volume",
                     style: stylePTSansRegular(fontSize: 14),
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Row(
                     children: [
                       Icon(
@@ -201,18 +201,18 @@ class SentimentsGraph extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // const SpacerVerticel(),
+                  // const SpacerVertical(),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Text(
                     "Sentiment Trending",
                     style: stylePTSansRegular(fontSize: 14),
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Row(
                     children: [
                       Icon(
@@ -232,7 +232,7 @@ class SentimentsGraph extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // const SpacerVerticel(),
+                  // const SpacerVertical(),
                 ],
               )
             ],

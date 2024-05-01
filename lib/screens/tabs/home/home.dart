@@ -17,11 +17,11 @@ class Home extends StatelessWidget {
     // UserProvider userProvider = context.watch<UserProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(),
-      // appbar: AppBarHome(showQR: userProvider.user != null, isHome: true),
-      appbar: const AppBarHome(
+      // appBar: AppBarHome(showQR: userProvider.user != null, isHome: true),
+      appBar: const AppBarHome(
         isHome: true,
+        canSearch: true,
       ),
-
       body: provider.isLoadingSlider
           ? Center(
               child: Text(

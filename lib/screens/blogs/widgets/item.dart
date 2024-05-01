@@ -9,7 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../../../modals/news_datail_res.dart';
 
@@ -44,7 +44,7 @@ class BlogItem extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 // Text(
                 //   DateFormat("MMMM dd, yyyy")
                 //       .format(blogItem?.publishedDate ?? DateTime.now()),

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/item.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 
 class TrendingNowListView extends StatelessWidget {
   const TrendingNowListView({super.key});
@@ -31,7 +31,11 @@ class TrendingNowListView extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return const SpacerVerticel(height: 10);
+          // return const SpacerVertical(height: 10);
+          return Divider(
+            color: ThemeColors.greyBorder,
+            height: 20.sp,
+          );
         },
         itemCount: dataList?.length ?? 0);
   }

@@ -55,7 +55,7 @@ class InsiderTradingData {
   final String typeOfOwner;
   // final String acquistionOrDisposition;
   // final String formType;
-  // final num price;
+  final String price;
   // final String securityName;
   final String link;
   // final num change;
@@ -85,7 +85,7 @@ class InsiderTradingData {
     required this.typeOfOwner,
     // required this.acquistionOrDisposition,
     // required this.formType,
-    // required this.price,
+    required this.price,
     // required this.securityName,
     required this.link,
     // required this.change,
@@ -117,7 +117,7 @@ class InsiderTradingData {
         typeOfOwner: json["typeOfOwner"],
         // acquistionOrDisposition: json["acquistionOrDisposition"],
         // formType: json["formType"],
-        // price: json["price"].toDouble(),
+        price: json["price"],
         // securityName: json["securityName"],
         link: json["link"],
         // change: json["change"].toDouble(),
@@ -147,7 +147,7 @@ class InsiderTradingData {
         "typeOfOwner": typeOfOwner,
         // "acquistionOrDisposition": acquistionOrDisposition,
         // "formType": formType,
-        // "price": price,
+        "price": price,
         // "securityName": securityName,
         "link": link,
         // "change": change,

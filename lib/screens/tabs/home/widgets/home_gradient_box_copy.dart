@@ -3,7 +3,7 @@
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
-// import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 // class HomeGradientBox extends StatelessWidget {
 //   final String name;
@@ -53,7 +53,7 @@
 //           crossAxisAlignment: CrossAxisAlignment.start,
 //           children: [
 //             Text(name, style: stylePTSansBold()),
-//             const SpacerVerticel(height: 12),
+//             const SpacerVertical(height: 12),
 //             Row(
 //               crossAxisAlignment: CrossAxisAlignment.end,
 //               children: [
@@ -62,7 +62,7 @@
 //                     crossAxisAlignment: CrossAxisAlignment.start,
 //                     children: [
 //                       Text(value, style: stylePTSansBold()),
-//                       const SpacerVerticel(height: 3),
+//                       const SpacerVertical(height: 3),
 //                       Text(
 //                         "$valueChanged ($valueChangedPer)",
 //                         style: stylePTSansBold(

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/widgets/theme_alert_dialog.dart';
 
@@ -28,7 +28,7 @@ class _DeleteAccountPopUpState extends State<DeleteAccountPopUp> {
             style: stylePTSansBold(
               fontSize: 19,
             )),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         Text(
             "We regret to hear that you've chosen to delete your account from our service. Please be aware that upon account deletion, all your information, content, and data will be permanently removed from our systems. If you wish to use our application again, you will need to create a new account. We appreciate your understanding and value your time with us.",
             style: stylePTSansRegular()),

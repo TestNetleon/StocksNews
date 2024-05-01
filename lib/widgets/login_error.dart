@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/screens/auth/login/login.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 //
@@ -44,7 +44,7 @@ class LoginError extends StatelessWidget {
                   style: stylePTSansRegular(fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
-                const SpacerVerticel(),
+                const SpacerVertical(),
                 ThemeButtonSmall(
                   onPressed: () async {
                     // Navigator.pushNamed(context, Login.path);

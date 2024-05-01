@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_news_item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/insider_social_tabs.dart';
@@ -12,8 +11,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/contain
 import 'package:stocks_news_new/screens/tabs/home/widgets/sentiments_graph.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:upgrader/upgrader.dart';
 //
 import 'widgets/home_inner_tabs.dart';
@@ -45,17 +43,18 @@ class HomeContainer extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.fromLTRB(
                 Dimen.padding.sp,
-                Dimen.padding.sp,
+                0,
+                // Dimen.padding.sp,
                 Dimen.padding.sp,
                 0,
               ),
               child: Column(
                 children: [
-                  TextInputFieldSearchCommon(
-                    hintText: "Search symbol, company name or news",
-                    searching: context.watch<SearchProvider>().isLoading,
-                    onChanged: (text) {},
-                  ),
+                  // TextInputFieldSearchCommon(
+                  //   hintText: "Search symbol, company name or news",
+                  //   searching: context.watch<SearchProvider>().isLoading,
+                  //   onChanged: (text) {},
+                  // ),
                   Visibility(
                     visible: provider.homeSliderRes?.sliderPosts?.isNotEmpty ??
                         false,
@@ -63,15 +62,6 @@ class HomeContainer extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20.sp),
                       child: const HomeTopNewsSlider(),
                     ),
-                  ),
-                  HomePartialLoading(
-                    loading: provider.isLoadingSentiment,
-                    error: !provider.isLoadingSentiment &&
-                            provider.homeSentimentRes == null
-                        ? HomeError.sentiment
-                        : null,
-                    onRefresh: provider.refreshWithCheck,
-                    child: const SentimentsGraph(),
                   ),
                   HomePartialLoading(
                     loading: provider.isLoadingTrending,
@@ -85,6 +75,15 @@ class HomeContainer extends StatelessWidget {
                         : null,
                     onRefresh: provider.refreshWithCheck,
                     child: const HomeInnerTabs(),
+                  ),
+                  HomePartialLoading(
+                    loading: provider.isLoadingSentiment,
+                    error: !provider.isLoadingSentiment &&
+                            provider.homeSentimentRes == null
+                        ? HomeError.sentiment
+                        : null,
+                    onRefresh: provider.refreshWithCheck,
+                    child: const SentimentsGraph(),
                   ),
                   HomePartialLoading(
                     loading: provider.isLoadingInsider,
@@ -103,9 +102,9 @@ class HomeContainer extends StatelessWidget {
                       children: [
                         MostRecentMentions(),
                         InsiderSocialTabs(),
-                        SpacerVerticel(),
+                        SpacerVertical(),
                         HomeNewsItem(),
-                        SpacerVerticel(),
+                        SpacerVertical(),
                       ],
                     ),
                   ),

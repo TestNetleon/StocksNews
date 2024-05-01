@@ -8,7 +8,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/item.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MostRecentMentions extends StatefulWidget {
   const MostRecentMentions({super.key});
@@ -74,7 +74,7 @@ class _MostRecentMentionsState extends State<MostRecentMentions> {
           "Discover trending stocks with our real-time data. This section highlights the most mentioned stocks in news in the past hour.",
           style: stylePTSansRegular(fontSize: 12),
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         // LayoutBuilder(
         //   builder: (context, constraints) {
         //     return Stack(
@@ -165,7 +165,7 @@ class _MostRecentMentionsState extends State<MostRecentMentions> {
             );
           },
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
       ],
     );
   }

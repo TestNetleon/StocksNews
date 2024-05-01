@@ -10,7 +10,7 @@ import 'package:stocks_news_new/screens/tabs/news/news_list.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import 'featuredNews/container.dart';
 
@@ -46,7 +46,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     if (_tabController == null) return const SizedBox();
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
         canSearch: true,
       ),
       // body: NewsList(),
@@ -110,7 +110,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                 ],
               ),
             ),
-            const SpacerVerticel(height: 10),
+            const SpacerVertical(height: 10),
             Expanded(
                 child: _selectedIndex == 0
                     ? const FeaturedNewsList()
@@ -210,7 +210,7 @@ class TabDivider extends StatelessWidget {
 // import 'package:stocks_news_new/widgets/base_container.dart';
 // import 'package:stocks_news_new/widgets/error_display_common.dart';
 // import 'package:stocks_news_new/widgets/screen_title.dart';
-// import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 // class News extends StatefulWidget {
 //   const News({super.key});
@@ -233,7 +233,7 @@ class TabDivider extends StatelessWidget {
 
 //     return BaseContainer(
 //       drawer: const BaseDrawer(),
-//       appbar: const AppBarHome(),
+//       appBar: const AppBarHome(),
 //       body: Padding(
 //         padding: EdgeInsets.fromLTRB(
 //           Dimen.padding.sp,
@@ -294,7 +294,7 @@ class TabDivider extends StatelessWidget {
 //                           ),
 //                         ),
 //                       ),
-//                       const SpacerVerticel(height: 10),
+//                       const SpacerVertical(height: 10),
 //                       const Expanded(child: FeaturedNewsList()),
 //                     ],
 //                   ),

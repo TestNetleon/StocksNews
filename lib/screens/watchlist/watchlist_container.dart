@@ -27,7 +27,7 @@ class WatchlistContainer extends StatelessWidget {
           return WatchlistItem(index: index, data: data);
         },
         separatorBuilder: (BuildContext context, int index) {
-          // return const SpacerVerticel(height: 12);
+          // return const SpacerVertical(height: 12);
           return Divider(
             color: ThemeColors.greyBorder,
             height: 12.sp,

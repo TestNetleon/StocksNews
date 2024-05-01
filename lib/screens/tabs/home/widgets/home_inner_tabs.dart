@@ -10,8 +10,8 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/home_trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/view_more_widget.dart';
 
 class HomeInnerTabs extends StatefulWidget {
   const HomeInnerTabs({super.key});
@@ -30,7 +30,6 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          // height: 36.sp,
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(color: ThemeColors.accent, width: 1.sp),
@@ -99,30 +98,54 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                   )
                 : Center(
                     child: ErrorDisplayNewWidget(
-                    error: provider.error,
-                    onRefresh: provider.getHomeTrendingData,
-                  )),
-        const SpacerVerticel(height: Dimen.itemSpacing),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: ThemeButtonSmall(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MoreStocks(
-                    type: _selectedIndex == 0
-                        ? StocksType.trending
-                        : _selectedIndex == 1
-                            ? StocksType.gainers
-                            : StocksType.losers,
+                      error: provider.error,
+                      onRefresh: provider.getHomeTrendingData,
+                    ),
                   ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+
+        // Align(
+        //   alignment: Alignment.centerLeft,
+        //   child: ThemeButtonSmall(
+        //     onPressed: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (_) => MoreStocks(
+        //             type: _selectedIndex == 0
+        //                 ? StocksType.trending
+        //                 : _selectedIndex == 1
+        //                     ? StocksType.gainers
+        //                     : StocksType.losers,
+        //           ),
+        //         ),
+        //       );
+        //     },
+        //     text: "View More",
+        //   ),
+        // ),
+
+        ViewMoreWidget(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => MoreStocks(
+                  type: _selectedIndex == 0
+                      ? StocksType.trending
+                      : _selectedIndex == 1
+                          ? StocksType.gainers
+                          : StocksType.losers,
                 ),
-              );
-            },
-            text: "View More",
-          ),
-        )
+              ),
+            );
+          },
+          text: _selectedIndex == 0
+              ? "View More Trending"
+              : _selectedIndex == 1
+                  ? "View More Top Gainers"
+                  : "View More Top Losers",
+        ),
       ],
     );
   }

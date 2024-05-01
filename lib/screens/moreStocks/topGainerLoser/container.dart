@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -42,7 +42,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
     List<GainersLosersDataRes>? data = provider.gainersLosers?.data;
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
           isPopback: true, showTrailing: false, canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -79,7 +79,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SpacerVerticel(height: 14);
+                      return const SpacerVertical(height: 14);
                     },
                     itemCount: data?.length ?? 0,
                   ),

@@ -8,7 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -56,63 +56,73 @@ class CompanyEarningStockDetail extends StatelessWidget {
             // style: styleGeorgiaBold(fontSize: 17),
           ),
           ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5.sp),
-                        child: Row(
-                          children: [
-                            AutoSizeText(
-                                maxLines: 1,
-                                "QUARTER",
-                                style: stylePTSansRegular(
-                                  fontSize: 12,
-                                  color: ThemeColors.greyText,
-                                )),
-                            Expanded(
-                              flex: 2,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: AutoSizeText(
-                                    maxLines: 1,
-                                    "EPS (Earnings Per Share)",
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    )),
-                              ),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5.sp),
+                      child: Row(
+                        children: [
+                          AutoSizeText(
+                            maxLines: 1,
+                            "QUARTER",
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
                             ),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: AutoSizeText(
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: AutoSizeText(
                                   maxLines: 1,
-                                  "REVENUE",
+                                  "EPS (Earnings Per Share)",
                                   style: stylePTSansRegular(
                                     fontSize: 12,
                                     color: ThemeColors.greyText,
-                                  ),
+                                  )),
+                            ),
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: AutoSizeText(
+                                maxLines: 1,
+                                "REVENUE",
+                                style: stylePTSansRegular(
+                                  fontSize: 12,
+                                  color: ThemeColors.greyText,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SpacerVerticel(height: 5),
-                      CompanyEarningItem(index: index),
-                    ],
-                  );
-                }
-                return CompanyEarningItem(index: index);
-              },
-              separatorBuilder: (context, index) {
-                return const SpacerVerticel(height: 10);
-              },
-              itemCount: earning?.data?.length ?? 0)
+                    ),
+                    const SpacerVertical(height: 5),
+                    CompanyEarningItem(index: index),
+                  ],
+                );
+              }
+              return CompanyEarningItem(index: index);
+            },
+            separatorBuilder: (context, index) {
+              // return const SpacerVertical(height: 10);
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 20.sp,
+              );
+            },
+            itemCount: earning?.data?.length ?? 0,
+          ),
+          Divider(
+            color: ThemeColors.greyBorder,
+            height: 20.sp,
+          ),
         ],
       ),
     );

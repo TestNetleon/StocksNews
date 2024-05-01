@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/custom_tab_item_label.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingGraphTabs extends StatefulWidget {
   const TrendingGraphTabs({super.key});
@@ -57,7 +57,7 @@ class _TrendingGraphTabsState extends State<TrendingGraphTabs> {
             ],
           ),
         ),
-        const SpacerVerticel(height: Dimen.padding),
+        const SpacerVertical(height: Dimen.padding),
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: _selectedIndex == 0

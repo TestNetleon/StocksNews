@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_outline.dart';
 
 class SignUpSuccess extends StatelessWidget {
@@ -26,17 +26,17 @@ class SignUpSuccess extends StatelessWidget {
             padding: const EdgeInsets.all(Dimen.authScreenPadding),
             child: Column(
               children: [
-                const SpacerVerticel(height: 16),
+                const SpacerVertical(height: 16),
                 Image.asset(
                   Images.signupSuccess,
                   width: ScreenUtil().screenWidth * .5,
                 ),
-                const SpacerVerticel(),
+                const SpacerVertical(),
                 Text(
                   "Sign Up Successful.",
                   style: stylePTSansBold(fontSize: 24),
                 ),
-                const SpacerVerticel(height: Dimen.itemSpacing),
+                const SpacerVertical(height: Dimen.itemSpacing),
                 Text(
                   "Your account has been created, lets start analyze stocks.",
                   style: stylePTSansRegular(
@@ -45,7 +45,7 @@ class SignUpSuccess extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SpacerVerticel(),
+                const SpacerVertical(),
                 ThemeButtonOutlined(
                   onPressed: () {
                     // Navigator.popUntil(context, (route) => route.isFirst);

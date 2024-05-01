@@ -9,7 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class StocksItemAll extends StatelessWidget {
@@ -34,7 +34,7 @@ class StocksItemAll extends StatelessWidget {
                   child: Row(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(25.sp),
+                        borderRadius: BorderRadius.circular(0.sp),
                         child: Container(
                           padding: EdgeInsets.all(5.sp),
                           width: 43.sp,
@@ -195,7 +195,7 @@ class StocksItemAll extends StatelessWidget {
             ),
           ),
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
       ],
     );
   }

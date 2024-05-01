@@ -11,7 +11,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingIndustriesContainer extends StatefulWidget {
   const TrendingIndustriesContainer({super.key});
@@ -37,7 +37,7 @@ class _TrendingIndustriesContainerState
     TrendingIndustriesProvider provider =
         context.watch<TrendingIndustriesProvider>();
     return BaseContainer(
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
           isPopback: true, showTrailing: true, canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -79,7 +79,7 @@ class _TrendingIndustriesContainerState
                               return TrendingIndustryItem(data: data);
                             },
                             separatorBuilder: (context, index) {
-                              return const SpacerVerticel(height: 10);
+                              return const SpacerVertical(height: 10);
                             },
                             itemCount: provider.data?.length ?? 0,
                           ),

@@ -12,7 +12,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import 'newsAuthor/index.dart';
 
@@ -96,8 +96,8 @@ class NewsItem extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVerticel(height: 5),
-                //  const SpacerVerticel(height: 10),
+                const SpacerVertical(height: 5),
+                //  const SpacerVertical(height: 10),
                 // Visibility(
                 //   visible: news?.authors != null &&
                 //       news?.authors?.isNotEmpty == true,
@@ -340,7 +340,7 @@ class NewsItemSeparated extends StatelessWidget {
               // ),
             ],
           ),
-          const SpacerVerticel(height: 10),
+          const SpacerVertical(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -354,8 +354,8 @@ class NewsItemSeparated extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SpacerVerticel(height: 5),
-                    //  const SpacerVerticel(height: 10),
+                    const SpacerVertical(height: 5),
+                    //  const SpacerVertical(height: 10),
                     // Visibility(
                     //   visible: news?.authors != null &&
                     //       news?.authors?.isNotEmpty == true,

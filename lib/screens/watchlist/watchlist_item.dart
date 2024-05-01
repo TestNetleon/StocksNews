@@ -9,7 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../widgets/cache_network_image.dart';
 
@@ -105,7 +105,7 @@ class WatchlistItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Text(
                     data.name,
                     style: stylePTSansRegular(
@@ -128,7 +128,7 @@ class WatchlistItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 Text(
                   "${data.changes.toCurrency()}%",
                   style: stylePTSansRegular(

@@ -6,7 +6,7 @@ import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../cap_heading.dart';
 
@@ -50,7 +50,7 @@ class NanoCapListView extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return const SpacerVerticel(height: 10);
+                  return const SpacerVertical(height: 10);
                 },
                 itemCount: provider.nanoCap?.length ?? 0),
       ],

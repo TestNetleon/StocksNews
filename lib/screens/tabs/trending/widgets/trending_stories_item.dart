@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class TrendingStoriesItem extends StatelessWidget {
@@ -32,7 +32,7 @@ class TrendingStoriesItem extends StatelessWidget {
                   style: stylePTSansRegular(fontSize: 16),
                 ),
 
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 RichText(
                   text: TextSpan(
                     children: [

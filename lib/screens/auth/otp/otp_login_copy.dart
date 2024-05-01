@@ -8,7 +8,7 @@
 // import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/widgets/base_container.dart';
 // import 'package:stocks_news_new/widgets/rounded_pinput.dart';
-// import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:stocks_news_new/widgets/theme_button.dart';
 // import 'package:validators/validators.dart';
 
@@ -75,23 +75,23 @@
 //               child: Column(
 //                 mainAxisAlignment: MainAxisAlignment.center,
 //                 children: [
-//                   const SpacerVerticel(height: 50),
+//                   const SpacerVertical(height: 50),
 //                   Text(
 //                     "Validate OTP",
 //                     style: stylePTSansBold(fontSize: 22),
 //                   ),
-//                   const SpacerVerticel(height: 8),
+//                   const SpacerVertical(height: 8),
 //                   Text(
 //                     "We have sent an OTP to your registered phone/email address",
 //                     style: stylePTSansRegular(
 //                         fontSize: 12, color: ThemeColors.greyText),
 //                   ),
-//                   const SpacerVerticel(height: 8),
+//                   const SpacerVertical(height: 8),
 //                   InputOTP(
 //                     pinController: _controller,
 //                     focusNode: FocusNode(),
 //                   ),
-//                   const SpacerVerticel(height: 12),
+//                   const SpacerVertical(height: 12),
 //                   Align(
 //                     alignment: Alignment.centerRight,
 //                     child: TextButton(
@@ -105,12 +105,12 @@
 //                       ),
 //                     ),
 //                   ),
-//                   const SpacerVerticel(height: 30),
+//                   const SpacerVertical(height: 30),
 //                   ThemeButton(
 //                     onPressed: _onVeryClick,
 //                     text: "Verify",
 //                   ),
-//                   const SpacerVerticel(),
+//                   const SpacerVertical(),
 //                 ],
 //               ),
 //             ),

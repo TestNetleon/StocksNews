@@ -11,7 +11,8 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_sto
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mention_with.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/analysis.dart';
 import 'widgets/companyBrief/container.dart';
@@ -35,70 +36,226 @@ class StockDetailsBase extends StatelessWidget {
     List<Mentions>? mentions = provider.dataMentions?.mentions;
     String? html = provider.dataMentions?.forecastAnalyst;
 
-    return Stack(
-      children: [
+    return CustomTabContainerNEW(
+      tabs: const [
+        "Overview",
+        "Company Earning",
+        "Key Stats",
+        "Stock Score/Grades",
+        // "Company Brief",
+        "Stock Analysis",
+        "Analysis Forecast",
+        "Technical Analysis",
+        "News Mentions",
+        "Recent Reddit Posts",
+        "Trending Stories",
+        "Popular Stocks"
+      ],
+      widgets: [
         SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(Dimen.padding.sp),
-            child: Column(
-              children: [
-                const StockTopDetail(),
-                const StockDetailTopGraph(),
-                const SpacerVerticel(),
-                const CompanyEarningStockDetail(),
-
-                const States(),
-                const SpacerVerticel(),
-                const StocksScoreGrades(),
-                const CompanyBrief(),
-                const Analysis(),
-                const SpacerVerticel(),
-                html == null || html.isEmpty
-                    ? const SizedBox()
-                    : AnalysisForecast(html: html),
-                const SpacerVerticel(),
-                const StocksTechnicalAnalysis(),
-
-                // const SpacerVerticel(),
-                // const TwitterSentiments(),
-                // const SpacerVerticel(),
-                // Visibility(
-                //     visible: redditPost?.isNotEmpty == true,
-                //     child: const RedditSentiments()),
-                const SpacerVerticel(),
-
-                Visibility(
-                    visible: mentions?.isNotEmpty == true,
-                    child: const StocksMentions()),
-                const SpacerVerticel(),
-
-                RedditTwitterIframe(
-                  redditRssId: companyInfo?.redditRssId,
-                  twitterRssId: companyInfo?.twitterRssId,
-                ),
-                const SpacerVerticel(),
-
-                const StocksTrendingStories(),
-                Visibility(
-                  visible: companyInfo?.description != null &&
-                      companyInfo?.description?.isNotEmpty == true,
-                  child: const SpacerVerticel(),
-                ),
-                // Visibility(
-                //   visible: companyInfo?.description != null &&
-                //       companyInfo?.description?.isNotEmpty == true,
-                //   child: const AboutStock(),
-                // ),
-                // const SpacerVerticel(),
-                Visibility(
-                  visible: tradingStock?.isNotEmpty == true,
-                  child: const StockMentionWith(),
-                ),
-                const SpacerVerticel(height: 90),
-              ],
-            ),
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const Column(
+            children: [
+              StockTopDetail(),
+              StockDetailTopGraph(),
+              CompanyBrief(),
+            ],
           ),
         ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const CompanyEarningStockDetail(),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const States(),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const StocksScoreGrades(),
+        ),
+        // SingleChildScrollView(
+        //   padding: EdgeInsets.all(Dimen.padding.sp),
+        //   child: const CompanyBrief(),
+        // ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const Analysis(),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: html == null || html.isEmpty
+              ? const SizedBox()
+              : AnalysisForecast(html: html),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const StocksTechnicalAnalysis(),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: Visibility(
+            visible: mentions?.isNotEmpty == true,
+            child: const StocksMentions(),
+          ),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: RedditTwitterIframe(
+            redditRssId: companyInfo?.redditRssId,
+            twitterRssId: companyInfo?.twitterRssId,
+          ),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: const StocksTrendingStories(),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.all(Dimen.padding.sp),
+          child: Visibility(
+            visible: tradingStock?.isNotEmpty == true,
+            child: const StockMentionWith(),
+          ),
+        ),
+      ],
+    );
+
+    return Column(
+      children: [
+        CustomTabContainerNEW(
+          tabs: [
+            "Home",
+            // "A",
+            // "B",
+            // "C",
+            // "D",
+            // "E",
+            // "F",
+            // "G",
+            // "H",
+            // "I",
+            // "J",
+            // "K",
+            // "L"
+          ],
+          widgets: [
+            const StockTopDetail(),
+            // const StockDetailTopGraph(),
+            // // const SpacerVertical(),
+            // const CompanyEarningStockDetail(),
+            // const States(),
+            // // const SpacerVertical(),
+            // const StocksScoreGrades(),
+            // const CompanyBrief(),
+            // const Analysis(),
+            // // const SpacerVertical(),
+            // html == null || html.isEmpty
+            //     ? const SizedBox()
+            //     : AnalysisForecast(html: html),
+            // // const SpacerVertical(),
+            // const StocksTechnicalAnalysis(),
+
+            // // const SpacerVertical(),
+            // // const TwitterSentiments(),
+            // // const SpacerVertical(),
+            // // Visibility(
+            // //     visible: redditPost?.isNotEmpty == true,
+            // //     child: const RedditSentiments()),
+            // // const SpacerVertical(),
+
+            // Visibility(
+            //     visible: mentions?.isNotEmpty == true,
+            //     child: const StocksMentions()),
+            // // const SpacerVertical(),
+
+            // RedditTwitterIframe(
+            //   redditRssId: companyInfo?.redditRssId,
+            //   twitterRssId: companyInfo?.twitterRssId,
+            // ),
+            // // const SpacerVertical(),
+
+            // const StocksTrendingStories(),
+            // // Visibility(
+            // //   visible: companyInfo?.description != null &&
+            // //       companyInfo?.description?.isNotEmpty == true,
+            // //   child: const SpacerVertical(),
+            // // ),
+            // // Visibility(
+            // //   visible: companyInfo?.description != null &&
+            // //       companyInfo?.description?.isNotEmpty == true,
+            // //   child: const AboutStock(),
+            // // ),
+            // // const SpacerVertical(),
+            // Visibility(
+            //   visible: tradingStock?.isNotEmpty == true,
+            //   child: const StockMentionWith(),
+            // ),
+            // // const SpacerVertical(height: 90),
+          ],
+        ),
+
+        // SingleChildScrollView(
+        //   child: Padding(
+        //     padding: EdgeInsets.all(Dimen.padding.sp),
+        //     child: Column(
+        //       children: [
+        //         const StockTopDetail(),
+        //         const StockDetailTopGraph(),
+        //         const SpacerVertical(),
+        //         const CompanyEarningStockDetail(),
+        //         const States(),
+        //         const SpacerVertical(),
+        //         const StocksScoreGrades(),
+        //         const CompanyBrief(),
+        //         const Analysis(),
+        //         const SpacerVertical(),
+        //         html == null || html.isEmpty
+        //             ? const SizedBox()
+        //             : AnalysisForecast(html: html),
+        //         const SpacerVertical(),
+        //         const StocksTechnicalAnalysis(),
+
+        //         // const SpacerVertical(),
+        //         // const TwitterSentiments(),
+        //         // const SpacerVertical(),
+        //         // Visibility(
+        //         //     visible: redditPost?.isNotEmpty == true,
+        //         //     child: const RedditSentiments()),
+        //         const SpacerVertical(),
+
+        //         Visibility(
+        //             visible: mentions?.isNotEmpty == true,
+        //             child: const StocksMentions()),
+        //         const SpacerVertical(),
+
+        //         RedditTwitterIframe(
+        //           redditRssId: companyInfo?.redditRssId,
+        //           twitterRssId: companyInfo?.twitterRssId,
+        //         ),
+        //         // const SpacerVertical(),
+
+        //         const StocksTrendingStories(),
+        //         Visibility(
+        //           visible: companyInfo?.description != null &&
+        //               companyInfo?.description?.isNotEmpty == true,
+        //           child: const SpacerVertical(),
+        //         ),
+        //         // Visibility(
+        //         //   visible: companyInfo?.description != null &&
+        //         //       companyInfo?.description?.isNotEmpty == true,
+        //         //   child: const AboutStock(),
+        //         // ),
+        //         // const SpacerVertical(),
+        //         Visibility(
+        //           visible: tradingStock?.isNotEmpty == true,
+        //           child: const StockMentionWith(),
+        //         ),
+        //         const SpacerVertical(height: 90),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+
         Positioned(
           bottom: 0,
           left: 0,

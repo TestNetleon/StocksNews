@@ -10,7 +10,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 //
 class BlogContainer extends StatelessWidget {
@@ -21,7 +21,7 @@ class BlogContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
@@ -55,7 +55,7 @@ class BlogContainer extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVerticel(height: 16);
+                      return const SpacerVertical(height: 16);
                     },
                   ),
                 ],
@@ -79,7 +79,7 @@ class AuthorContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
@@ -116,7 +116,7 @@ class AuthorContainer extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVerticel(height: 16);
+                      return const SpacerVertical(height: 16);
                     },
                   ),
                 ],
@@ -140,7 +140,7 @@ class CategoryContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
@@ -177,7 +177,7 @@ class CategoryContainer extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVerticel(height: 16);
+                      return const SpacerVertical(height: 16);
                     },
                   ),
                 ],
@@ -201,7 +201,7 @@ class TagsContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
@@ -238,7 +238,7 @@ class TagsContainer extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVerticel(height: 16);
+                      return const SpacerVertical(height: 16);
                     },
                   ),
                 ],

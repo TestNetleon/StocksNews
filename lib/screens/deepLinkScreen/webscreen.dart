@@ -52,7 +52,7 @@ class _AnalysisForecastState extends State<WebviewLink> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
         isPopback: true,
         showTrailing: false,
       ),

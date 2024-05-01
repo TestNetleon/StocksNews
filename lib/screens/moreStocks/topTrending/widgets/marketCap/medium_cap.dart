@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 import '../cap_heading.dart';
 
@@ -51,7 +51,11 @@ class MediumCapListView extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return const SpacerVerticel(height: 10);
+                  // return const SpacerVertical(height: 10);
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
                 },
                 itemCount: provider.mediumCap?.length ?? 0),
       ],

@@ -9,7 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class AlertsItem extends StatelessWidget {
   final int index;
@@ -77,7 +77,7 @@ class AlertsItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(25.sp),
+              borderRadius: BorderRadius.circular(0.sp),
               // child: Container(
               //   padding: EdgeInsets.all(5.sp),
               //   width: 43.sp,
@@ -106,7 +106,7 @@ class AlertsItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Text(
                     data.name,
                     style: stylePTSansRegular(
@@ -129,7 +129,7 @@ class AlertsItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 Text(
                   "${data.changes}%",
                   style: stylePTSansRegular(

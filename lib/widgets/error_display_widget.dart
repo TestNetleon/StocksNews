@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 //
 class ErrorDisplayNewWidget extends StatelessWidget {
@@ -21,12 +21,12 @@ class ErrorDisplayNewWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SpacerVerticel(),
+          const SpacerVertical(),
           Text(
             error ?? Const.errSomethingWrong,
             style: stylePTSansBold(),
           ),
-          const SpacerVerticel(),
+          const SpacerVertical(),
           // Visibility(
           //   visible: onRefresh != null,
           //   child: ThemeButton(
@@ -55,7 +55,7 @@ class ErrorDisplayNewWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SpacerVerticel(),
+          const SpacerVertical(),
         ],
       ),
     );

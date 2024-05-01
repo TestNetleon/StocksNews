@@ -12,9 +12,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_content.dart';
+import 'package:stocks_news_new/widgets/view_more_widget.dart';
 
 //
 class InsiderSocialTabs extends StatefulWidget {
@@ -75,20 +75,30 @@ class _InsiderSocialTabsState extends State<InsiderSocialTabs> {
               ? const HomeItemInsiderTrending()
               : const HomeRedditTwitterContentIndex(),
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
         Visibility(
           visible: _selectedIndex == 0,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: ThemeButtonSmall(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
-                );
-              },
-              text: "View More",
-            ),
+          child:
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: ThemeButtonSmall(
+              //     onPressed: () {
+              //       Navigator.pushReplacement(
+              //         context,
+              //         MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
+              //       );
+              //     },
+              //     text: "View More",
+              //   ),
+              // ),
+              ViewMoreWidget(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
+              );
+            },
+            text: "View More Insider Trending",
           ),
         )
       ],
@@ -179,7 +189,7 @@ class RedditTwitterHomeContentBase extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    // return const SpacerVerticel(height: 12);
+                    // return const SpacerVertical(height: 12);
                     return Divider(
                       color: ThemeColors.greyBorder,
                       height: 10.sp,

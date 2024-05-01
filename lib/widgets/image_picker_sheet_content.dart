@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class ImagePickerSheetContent extends StatelessWidget {
   final Function() onCameraClick;
@@ -22,7 +22,7 @@ class ImagePickerSheetContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SpacerVerticel(height: 16),
+          const SpacerVertical(height: 16),
           Align(
             alignment: Alignment.center,
             child: Text(
@@ -30,7 +30,7 @@ class ImagePickerSheetContent extends StatelessWidget {
               style: stylePTSansBold(fontSize: 18),
             ),
           ),
-          const SpacerVerticel(height: 10),
+          const SpacerVertical(height: 10),
           GestureDetector(
             onTap: onCameraClick,
             child: Container(

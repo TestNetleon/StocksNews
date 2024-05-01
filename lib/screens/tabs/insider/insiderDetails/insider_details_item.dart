@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 //
 class InsidersDetailsItem extends StatelessWidget {
@@ -64,7 +64,7 @@ class InsidersDetailsItem extends StatelessWidget {
                     ),
                     Visibility(
                         visible: leadingSubtitle != null,
-                        child: const SpacerVerticel(height: 5)),
+                        child: const SpacerVertical(height: 5)),
                     Visibility(
                       visible: leadingSubtitle != null,
                       child: Text(
@@ -112,7 +112,7 @@ class InsidersDetailsItem extends StatelessWidget {
                                   ? ThemeColors.sos
                                   : ThemeColors.white,
                         )),
-                    const SpacerVerticel(height: 5),
+                    const SpacerVertical(height: 5),
                     GestureDetector(
                       onTap: onTap,
                       child: Container(

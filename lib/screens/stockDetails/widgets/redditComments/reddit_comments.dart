@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -27,7 +27,7 @@ class RedditComments extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return const SpacerVerticel(height: 15);
+          return const SpacerVertical(height: 15);
         },
         itemCount: data?.length ?? 0);
   }

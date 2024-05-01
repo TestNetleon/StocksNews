@@ -11,7 +11,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../widgets/screen_title.dart';
 import 'alert_container.dart';
@@ -45,7 +45,7 @@ class _AlertBaseState extends State<AlertBase> {
     UserProvider userProvider = context.read<UserProvider>();
 
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
@@ -76,7 +76,7 @@ class _AlertBaseState extends State<AlertBase> {
               "In future if you don't want to receive any email then swipe left to delete stocks added into alert section.",
               style: stylePTSansRegular(fontSize: 12),
             ),
-            const SpacerVerticel(height: 5),
+            const SpacerVertical(height: 5),
             userProvider.user == null
                 ? const Expanded(
                     child: LoginError(

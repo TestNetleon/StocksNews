@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
@@ -11,7 +12,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class InsiderContent extends StatefulWidget {
   const InsiderContent({super.key});
@@ -119,7 +120,7 @@ class _InsiderContentState extends State<InsiderContent> {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            // return const SpacerVerticel(height: 12);
+            // return const SpacerVertical(height: 12);
             return Divider(
               color: ThemeColors.greyBorder,
               height: 20.sp,
@@ -150,73 +151,192 @@ class StocksItemTrending extends StatelessWidget {
 
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Column(
           children: [
-            Expanded(
-              // flex: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, InsiderDetailsType.path,
-                          arguments: {
-                            "companySlug": data?.companySlug,
-                            "companyName": data?.companyName,
-                          });
-                    },
-                    child: Text(
-                      "${data?.companyName.capitalizeWords()}",
-                      style: stylePTSansBold(fontSize: 14),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const SpacerVerticel(height: 5),
-                  InkWell(
-                    onTap: () {
-                      // Navigator.pushNamed(context, StockDetails.path,
-                      //     arguments: data?.symbol);
-                      Navigator.pushNamed(context, InsiderDetailsType.path,
-                          arguments: {
-                            "companySlug": data?.companySlug,
-                            "companyName": data?.companyName,
-                          });
-                    },
-                    child: Text(
-                      "${data?.exchangeShortName}: ${data?.symbol}",
-                      // "NYSL:TSLA",
-                      style: stylePTSansBold(
-                        fontSize: 13,
-                        color: ThemeColors.accent,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  // flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, InsiderDetailsType.path,
+                              arguments: {
+                                "companySlug": data?.companySlug,
+                                "companyName": data?.companyName,
+                              });
+                        },
+                        child: Text(
+                          "${data?.companyName.capitalizeWords()}",
+                          style: stylePTSansBold(fontSize: 14),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                      const SpacerVertical(height: 5),
+                      InkWell(
+                        onTap: () {
+                          // Navigator.pushNamed(context, StockDetails.path,
+                          //     arguments: data?.symbol);
+                          Navigator.pushNamed(context, InsiderDetailsType.path,
+                              arguments: {
+                                "companySlug": data?.companySlug,
+                                "companyName": data?.companyName,
+                              });
+                        },
+                        child: Text(
+                          "${data?.exchangeShortName}: ${data?.symbol}",
+                          // "NYSL:TSLA",
+                          style: stylePTSansBold(
+                            fontSize: 13,
+                            color: ThemeColors.accent,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SpacerVertical(height: 5),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, InsiderDetailsType.path,
+                              arguments: {
+                                "companySlug": data?.companySlug,
+                                "reportingSlug": data?.reportingSlug,
+                                "companyName": data?.companyName,
+                                "reportingName": data?.reportingName,
+                              });
+                        },
+                        child: Text(
+                          "${data?.reportingName.capitalizeWords()}",
+                          style: stylePTSansBold(
+                              fontSize: 14, color: ThemeColors.greyText),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SpacerVertical(height: 5),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Text(
+                      //         "${data?.typeOfOwner.capitalizeWords()}",
+                      //         style: stylePTSansRegular(
+                      //           color: ThemeColors.greyText,
+                      //           fontSize: 12,
+                      //         ),
+                      //         maxLines: 2,
+                      //         overflow: TextOverflow.ellipsis,
+                      //       ),
+                      //     ),
+                      //     Flexible(
+                      //       child: Text(
+                      //         "${data?.securitiesTransacted} Shares @ ${data?.price}",
+                      //         style: stylePTSansRegular(
+                      //           color: ThemeColors.greyText,
+                      //           fontSize: 12,
+                      //         ),
+                      //         maxLines: 2,
+                      //         overflow: TextOverflow.ellipsis,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
                   ),
-                  const SpacerVerticel(height: 15),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, InsiderDetailsType.path,
-                          arguments: {
-                            "companySlug": data?.companySlug,
-                            "reportingSlug": data?.reportingSlug,
-                            "companyName": data?.companyName,
-                            "reportingName": data?.reportingName,
-                          });
-                    },
-                    child: Text(
-                      "${data?.reportingName.capitalizeWords()}",
-                      style: stylePTSansBold(
-                          fontSize: 14, color: ThemeColors.greyText),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                ),
+                const SpacerHorizontal(width: 10),
+                // Expanded(
+                //   flex: 2,
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       // InkWell(
+                //       //   onTap: () {
+                //       //     Navigator.pushNamed(context, InsiderDetailsType.path,
+                //       //         arguments: {
+                //       //           "companySlug": data?.companySlug,
+                //       //           "reportingSlug": data?.reportingSlug,
+                //       //           "companyName": data?.companyName,
+                //       //           "reportingName": data?.reportingName,
+                //       //         });
+                //       //   },
+                //       //   child: Text(
+                //       //     "${data?.reportingName.capitalizeWords()}",
+                //       //     style: stylePTSansBold(fontSize: 14),
+                //       //     maxLines: 1,
+                //       //     overflow: TextOverflow.ellipsis,
+                //       //   ),
+                //       // ),
+                //       const SpacerVertical(height: 5),
+                //       // Text(
+                //       //   "${data?.typeOfOwner.capitalizeWords()}",
+                //       //   style: stylePTSansRegular(
+                //       //     color: ThemeColors.greyText,
+                //       //     fontSize: 12,
+                //       //   ),
+                //       //   maxLines: 2,
+                //       //   overflow: TextOverflow.ellipsis,
+                //       // ),
+                //     ],
+                //   ),
+                // ),
+
+                // const SpacerHorizontal(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("${data?.transactionType}",
+                        // "Buy",
+                        style: stylePTSansBold(
+                          fontSize: 14,
+                          color: data?.transactionType == "Buy"
+                              ? ThemeColors.accent
+                              : data?.transactionType == "Sell"
+                                  ? ThemeColors.sos
+                                  : ThemeColors.white,
+                        )),
+                    const SpacerVertical(height: 5),
+                    GestureDetector(
+                      onTap: () {
+                        provider.setOpen(
+                          provider.openIndex == index ? -1 : index,
+                        );
+                      },
+                      child: Container(
+                        // ignore: prefer_const_constructors
+                        decoration: BoxDecoration(
+                          // color: data?.transactionType == "Buy"
+                          //     ? ThemeColors.accent
+                          //     : data?.transactionType == "Sell"
+                          //         ? ThemeColors.sos
+                          //         : ThemeColors.white,
+
+                          color: ThemeColors.white,
+                        ),
+                        margin: EdgeInsets.only(left: 8.sp),
+                        padding: const EdgeInsets.all(3),
+                        child: Icon(
+                          provider.openIndex == index
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
+                          color: ThemeColors.background,
+                          size: 16.sp,
+                        ),
+                      ),
                     ),
-                  ),
-                  const SpacerVerticel(height: 5),
-                  Text(
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
                     "${data?.typeOfOwner.capitalizeWords()}",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
@@ -225,89 +345,16 @@ class StocksItemTrending extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
-            ),
-            const SpacerHorizontal(width: 10),
-            // Expanded(
-            //   flex: 2,
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       // InkWell(
-            //       //   onTap: () {
-            //       //     Navigator.pushNamed(context, InsiderDetailsType.path,
-            //       //         arguments: {
-            //       //           "companySlug": data?.companySlug,
-            //       //           "reportingSlug": data?.reportingSlug,
-            //       //           "companyName": data?.companyName,
-            //       //           "reportingName": data?.reportingName,
-            //       //         });
-            //       //   },
-            //       //   child: Text(
-            //       //     "${data?.reportingName.capitalizeWords()}",
-            //       //     style: stylePTSansBold(fontSize: 14),
-            //       //     maxLines: 1,
-            //       //     overflow: TextOverflow.ellipsis,
-            //       //   ),
-            //       // ),
-            //       const SpacerVerticel(height: 5),
-            //       // Text(
-            //       //   "${data?.typeOfOwner.capitalizeWords()}",
-            //       //   style: stylePTSansRegular(
-            //       //     color: ThemeColors.greyText,
-            //       //     fontSize: 12,
-            //       //   ),
-            //       //   maxLines: 2,
-            //       //   overflow: TextOverflow.ellipsis,
-            //       // ),
-            //     ],
-            //   ),
-            // ),
-
-            // const SpacerHorizontal(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text("${data?.transactionType}",
-                    // "Buy",
-                    style: stylePTSansBold(
-                      fontSize: 14,
-                      color: data?.transactionType == "Buy"
-                          ? ThemeColors.accent
-                          : data?.transactionType == "Sell"
-                              ? ThemeColors.sos
-                              : ThemeColors.white,
-                    )),
-                const SpacerVerticel(height: 5),
-                GestureDetector(
-                  onTap: () {
-                    provider.setOpen(
-                      provider.openIndex == index ? -1 : index,
-                    );
-                  },
-                  child: Container(
-                    // ignore: prefer_const_constructors
-                    decoration: BoxDecoration(
-                      // color: data?.transactionType == "Buy"
-                      //     ? ThemeColors.accent
-                      //     : data?.transactionType == "Sell"
-                      //         ? ThemeColors.sos
-                      //         : ThemeColors.white,
-
-                      color: ThemeColors.white,
-                    ),
-                    margin: EdgeInsets.only(left: 8.sp),
-                    padding: const EdgeInsets.all(3),
-                    child: Icon(
-                      provider.openIndex == index
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded,
-                      color: ThemeColors.background,
-                      size: 16.sp,
-                    ),
+                ),
+                Text(
+                  "${data?.securitiesTransacted} Shares @ ${data?.price}",
+                  style: stylePTSansRegular(
+                    color: ThemeColors.greyText,
+                    fontSize: 12,
                   ),
-                )
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ],
@@ -326,6 +373,8 @@ class StocksItemTrending extends StatelessWidget {
                 InnerRowItem(
                   lable: "Shares Bought/Sold",
                   value: "${data?.securitiesTransacted}",
+                  subLabel: "@ Price",
+                  subValue: "@ ${data?.price}",
                 ),
                 InnerRowItem(
                   lable: "Total Transaction",
@@ -356,11 +405,15 @@ class StocksItemTrending extends StatelessWidget {
 class InnerRowItem extends StatelessWidget {
   final String lable;
   final String? value;
+  final String? subLabel;
+  final String? subValue;
   final bool link;
 
   const InnerRowItem({
     required this.lable,
     this.value,
+    this.subLabel,
+    this.subValue,
     this.link = false,
     super.key,
   });
@@ -371,24 +424,43 @@ class InnerRowItem extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.sp),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
             children: [
-              Text(lable, style: stylePTSansBold(fontSize: 14)),
-              Flexible(
-                child: !link
-                    ? Text(value ?? '', style: stylePTSansBold(fontSize: 14))
-                    : InkWell(
-                        onTap: () => openUrl(value),
-                        child: Text(
-                          "See Details",
-                          style: stylePTSansBold(
-                              fontSize: 14,
-                              color: ThemeColors.accent,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(lable, style: stylePTSansBold(fontSize: 14)),
+                  Flexible(
+                    child: !link
+                        ? Text(value ?? '',
+                            style: stylePTSansBold(fontSize: 14))
+                        : InkWell(
+                            onTap: () => openUrl(value),
+                            child: Text(
+                              "See Details",
+                              style: stylePTSansBold(
+                                  fontSize: 14,
+                                  color: ThemeColors.accent,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
+                  ),
+                ],
               ),
+              if (subLabel != null && subValue != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(subLabel ?? "",
+                        style: stylePTSansRegular(fontSize: 12)),
+                    Flexible(
+                      child: Text(
+                        subValue ?? "",
+                        style: stylePTSansRegular(fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),

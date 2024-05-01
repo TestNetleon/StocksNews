@@ -75,7 +75,7 @@ class StocksTrendingStories extends StatelessWidget {
 //                 maxLines: 1,
 //                 overflow: TextOverflow.ellipsis,
 //               ),
-//               const SpacerVerticel(height: 5),
+//               const SpacerVertical(height: 5),
 //               Text(
 //                 "Tesla Inc",
 //                 style: stylePTSansRegular(

@@ -45,7 +45,7 @@ class _StockDetailsState extends State<StockDetails> {
     log("${provider.data == null}, ${provider.isLoading}");
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
         isPopback: true,
         canSearch: true,
       ),

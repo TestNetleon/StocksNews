@@ -6,7 +6,7 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingStories extends StatelessWidget {
   const TrendingStories({super.key});
@@ -29,7 +29,7 @@ class TrendingStories extends StatelessWidget {
         //   "Trending Stories",
         //   style: stylePTSansBold(fontSize: 14),
         // ),
-        // const SpacerVerticel(),
+        // const SpacerVertical(),
 
         // const ScreenTitle(title: "Trending Stories"),
         ListView.separated(
@@ -57,10 +57,10 @@ class TrendingStories extends StatelessWidget {
               color: ThemeColors.greyBorder,
               height: 20.sp,
             );
-            // return const SpacerVerticel(height: 12);
+            // return const SpacerVertical(height: 12);
           },
         ),
-        const SpacerVerticel(height: Dimen.itemSpacing),
+        const SpacerVertical(height: Dimen.itemSpacing),
         // Align(
         //   alignment: Alignment.centerLeft,
         //   child: ThemeButtonSmall(

@@ -6,7 +6,7 @@ import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class FAQItem extends StatelessWidget {
   final int index;
@@ -42,7 +42,7 @@ class FAQItem extends StatelessWidget {
                     style: stylePTSansBold(fontSize: 16),
                   ),
                 ),
-                const SpacerVerticel(height: 5),
+                const SpacerVertical(height: 5),
                 Icon(
                   provider.openIndex == index
                       ? Icons.remove_rounded

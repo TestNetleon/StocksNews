@@ -11,7 +11,7 @@ class Trending extends StatelessWidget {
   Widget build(BuildContext context) {
     return const BaseContainer(
       drawer: BaseDrawer(),
-      appbar: AppBarHome(canSearch: true),
+      appBar: AppBarHome(canSearch: true),
       body: TrendingView(),
     );
   }

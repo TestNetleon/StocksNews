@@ -10,7 +10,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
@@ -89,12 +89,12 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SpacerVerticel(height: 50),
+            const SpacerVertical(height: 50),
             Text(
               "OTP VERIFICATION",
               style: stylePTSansBold(fontSize: 22),
             ),
-            const SpacerVerticel(height: 8),
+            const SpacerVertical(height: 8),
             Text(
               "Please enter the 4-digit verification code that was sent to ${widget.email}. The code is valid for 30 minutes.",
               style: stylePTSansRegular(
@@ -102,12 +102,12 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
                 color: Colors.white,
               ),
             ),
-            const SpacerVerticel(),
+            const SpacerVertical(),
             Text(
               "Verification Code",
               style: stylePTSansRegular(fontSize: 14),
             ),
-            const SpacerVerticel(height: 5),
+            const SpacerVertical(height: 5),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -134,12 +134,12 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
                 ),
               ],
             ),
-            const SpacerVerticel(),
+            const SpacerVertical(),
             ThemeButton(
               onPressed: () => _verify(context, provider),
               text: "Verify",
             ),
-            const SpacerVerticel(),
+            const SpacerVertical(),
           ],
         ),
       ),

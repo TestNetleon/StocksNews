@@ -7,7 +7,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/filter_drop_down.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -23,9 +23,9 @@ class FilterInsiderCompany extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SpacerVerticel(height: 3),
+        const SpacerVertical(height: 3),
         const ScreenTitle(title: "Filter"),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         FilterDropDownTextField(
           heading: "Transaction Type",
           value: reportingSlug == ""
@@ -47,7 +47,7 @@ class FilterInsiderCompany extends StatelessWidget {
               ? provider.onChangeTransactionTypeCP(selectedItem: selectedItem)
               : provider.onChangeTransactionTypeIP(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         FilterDropDownTextField(
           heading: "Transaction Size",
           value: provider.valueTxnSizeCP.isEmpty
@@ -64,7 +64,7 @@ class FilterInsiderCompany extends StatelessWidget {
               ? provider.onChangeTransactionSizeCP(selectedItem: selectedItem)
               : provider.onChangeTransactionSizeIP(selectedItem: selectedItem),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         GestureDetector(
           onTap: () => provider.pickDate(isCP: reportingSlug == ""),
           child: Column(
@@ -74,7 +74,7 @@ class FilterInsiderCompany extends StatelessWidget {
                 "Transaction Date",
                 style: stylePTSansRegular(),
               ),
-              const SpacerVerticel(height: 5),
+              const SpacerVertical(height: 5),
               TextInputField(
                   style: stylePTSansRegular(
                       fontSize: 15, color: ThemeColors.background),
@@ -87,7 +87,7 @@ class FilterInsiderCompany extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         ThemeButton(
           color: ThemeColors.accent,
           onPressed: () {
@@ -112,7 +112,7 @@ class FilterInsiderCompany extends StatelessWidget {
           text: "FILTER",
           textColor: Colors.white,
         ),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
       ],
     );
   }

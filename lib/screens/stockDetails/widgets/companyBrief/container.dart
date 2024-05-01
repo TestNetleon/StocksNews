@@ -9,7 +9,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../states.dart';
 
@@ -37,15 +37,16 @@ class CompanyBrief extends StatelessWidget {
     StockDetailsRes? res = context.watch<StockDetailProvider>().data;
 
     String name =
-        "${res?.keyStats?.name ?? ""} (${res?.keyStats?.symbol ?? ""})";
+        // "${res?.keyStats?.name ?? ""} (${res?.keyStats?.symbol ?? ""})";
+        res?.keyStats?.name ?? "";
     return Padding(
       padding: EdgeInsets.only(bottom: 20.sp),
       child: Column(
         children: [
           ScreenTitle(
-            title: "Company Brief: $name",
-            subTitle:
-                "The Stock Score/Grades evaluate bankruptcy risk and assess the financial strength and fundamental health of a company",
+            title: "About $name",
+            // subTitle:
+            //     "The Stock Score/Grades evaluate bankruptcy risk and assess the financial strength and fundamental health of a company",
             // style: stylePTSansRegular(fontSize: 20),
           ),
           Visibility(
@@ -103,7 +104,7 @@ class CompanyBrief extends StatelessWidget {
           Visibility(
               visible: res?.companyInfo?.isin != null,
               child: StateItem(label: "ISIN", value: res?.companyInfo?.isin)),
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           Visibility(
             visible: res?.companyInfo?.description != null,
             child: Text(

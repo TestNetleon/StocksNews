@@ -24,7 +24,7 @@ import '../../utils/dialogs.dart';
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
-import '../../widgets/spacer_verticle.dart';
+import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_input_field.dart';
 import '../drawer/widgets/profile_image.dart';
 
@@ -227,7 +227,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           "Name",
           style: stylePTSansRegular(fontSize: 14),
         ),
-        const SpacerVerticel(height: 5),
+        const SpacerVertical(height: 5),
         ThemeInputField(
           controller: nameController,
           placeholder: "Enter your name",
@@ -235,12 +235,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           inputFormatters: [AlphabetInputFormatter()],
           textCapitalization: TextCapitalization.words,
         ),
-        const SpacerVerticel(height: 13),
+        const SpacerVertical(height: 13),
         Text(
           "Email",
           style: stylePTSansRegular(fontSize: 14),
         ),
-        const SpacerVerticel(height: 5),
+        const SpacerVertical(height: 5),
         ThemeInputField(
           controller: emailController,
           placeholder: "Enter your email id",
@@ -248,12 +248,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           inputFormatters: [emailFormatter],
           textCapitalization: TextCapitalization.none,
         ),
-        // const SpacerVerticel(height: 13),
+        // const SpacerVertical(height: 13),
         // Text(
         //   "Phone Number",
         //   style: stylePTSansRegular(fontSize: 14),
         // ),
-        // const SpacerVerticel(height: 5),
+        // const SpacerVertical(height: 5),
         // ThemeInputField(
         //   controller: mobileController,
         //   placeholder: "Enter your phone number",
@@ -263,7 +263,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         //     // LengthLimitingTextInputFormatter(10),
         //   ],
         // ),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         ThemeButton(
           onPressed: _onTap,
           text: "Save Changes",

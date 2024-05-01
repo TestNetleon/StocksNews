@@ -7,7 +7,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_tab.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../base.dart';
 import '../widgets/averages.dart';
@@ -120,7 +120,7 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
                       return Column(
                         children: [
                           TechnicalAnalystSummary(constraints: constraints),
-                          const SpacerVerticel(height: 30),
+                          const SpacerVertical(height: 30),
                           Row(
                             children: [
                               Expanded(

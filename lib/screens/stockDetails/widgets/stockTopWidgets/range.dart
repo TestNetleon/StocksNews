@@ -6,7 +6,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class StockDetailTopWidgetRange extends StatelessWidget {
   const StockDetailTopWidgetRange({super.key});
@@ -124,7 +124,7 @@ class StockDetailRangeBar extends StatelessWidget {
           title,
           style: stylePTSansBold(fontSize: 12, color: ThemeColors.greyText),
         ),
-        const SpacerVerticel(height: 5),
+        const SpacerVertical(height: 5),
         Row(
           children: [
             Text(

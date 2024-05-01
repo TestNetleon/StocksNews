@@ -13,7 +13,7 @@
 // import 'package:stocks_news_new/utils/validations.dart';
 // import 'package:stocks_news_new/widgets/base_container.dart';
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-// import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:stocks_news_new/widgets/theme_button.dart';
 // import 'package:stocks_news_new/widgets/theme_button_outline.dart';
 // import 'package:stocks_news_new/widgets/theme_input_field.dart';
@@ -100,19 +100,19 @@
 //               padding: const EdgeInsets.all(Dimen.authScreenPadding),
 //               child: Column(
 //                 children: [
-//                   const SpacerVerticel(height: 16),
+//                   const SpacerVertical(height: 16),
 //                   Text(
 //                     "Sign Up",
 //                     style: stylePTSansBold(fontSize: 24),
 //                   ),
-//                   const SpacerVerticel(height: 40),
+//                   const SpacerVertical(height: 40),
 //                   ThemeInputField(
 //                     controller: _emailController,
 //                     placeholder: "Enter your email address",
 //                     keyboardType: TextInputType.emailAddress,
 //                     inputFormatters: [emailFormatter],
 //                   ),
-//                   const SpacerVerticel(height: Dimen.itemSpacing),
+//                   const SpacerVertical(height: Dimen.itemSpacing),
 //                   ThemeInputField(
 //                     controller: _phoneController,
 //                     placeholder: "Enter phone number",
@@ -120,12 +120,12 @@
 //                     inputFormatters: [mobilrNumberAllow],
 //                     maxLength: 15,
 //                   ),
-//                   const SpacerVerticel(height: Dimen.itemSpacing),
+//                   const SpacerVertical(height: Dimen.itemSpacing),
 //                   ThemeButton(
 //                     onPressed: _onSignupClick,
 //                     text: "Sign Up",
 //                   ),
-//                   const SpacerVerticel(),
+//                   const SpacerVertical(),
 //                   Text(
 //                     "Already have an account?",
 //                     style: stylePTSansRegular(
@@ -133,7 +133,7 @@
 //                       color: ThemeColors.greyText,
 //                     ),
 //                   ),
-//                   const SpacerVerticel(height: Dimen.itemSpacing),
+//                   const SpacerVertical(height: Dimen.itemSpacing),
 //                   ThemeButtonOutlined(
 //                     onPressed: () {
 //                       Navigator.pop(context);
@@ -141,7 +141,7 @@
 //                     text: "Login",
 //                     textStyle: stylePTSansBold(),
 //                   ),
-//                   const SpacerVerticel(height: Dimen.itemSpacing),
+//                   const SpacerVertical(height: Dimen.itemSpacing),
 //                   ThemeButton(
 //                     onPressed: () async {
 //                       _handleSignIn();

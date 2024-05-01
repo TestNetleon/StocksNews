@@ -206,7 +206,7 @@ class InsiderCompanyContainer extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                // return const SpacerVerticel(height: 10);
+                // return const SpacerVertical(height: 10);
                 return Divider(
                   color: ThemeColors.greyBorder,
                   height: 12.sp,
@@ -421,7 +421,7 @@ class InsiderReportingContainer extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                // return const SpacerVerticel(height: 10);
+                // return const SpacerVertical(height: 10);
                 return Divider(
                   color: ThemeColors.greyBorder,
                   height: 12.sp,

@@ -57,7 +57,7 @@ class MostBullishItem extends StatelessWidget {
                 );
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(25.sp),
+                borderRadius: BorderRadius.circular(0.sp),
                 child: Container(
                   padding: EdgeInsets.all(5.sp),
                   width: 43.sp,
@@ -251,7 +251,7 @@ class MostBullishItem extends StatelessWidget {
             //         color: ThemeColors.accent,
             //       ),
             //     ),
-            //     const SpacerVerticel(height: 5),
+            //     const SpacerVertical(height: 5),
             //     Text(
             //       "-0.00%",
             //       style: stylePTSansRegular(

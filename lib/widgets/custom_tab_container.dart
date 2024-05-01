@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom_tab.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class CustomTabContainer extends StatefulWidget {
   const CustomTabContainer({
@@ -208,6 +208,7 @@ class CustomTabContainerNEW extends StatefulWidget {
     this.onChange,
     this.showDivider = false,
     this.isTabWidget,
+    this.tabsPadding,
     super.key,
   });
 //
@@ -216,6 +217,7 @@ class CustomTabContainerNEW extends StatefulWidget {
   final List<String> tabs;
   final List<Widget> widgets;
   final List<Widget>? isTabWidget;
+  final EdgeInsets? tabsPadding;
   final bool showDivider;
   final Function(int index)? onChange;
 
@@ -258,7 +260,7 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SpacerVerticel(height: 5),
+          const SpacerVertical(height: 5),
           // Visibility(
           //   child: Container(
           //     decoration: const BoxDecoration(
@@ -270,15 +272,18 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
           //     ),
           //   ),
           // ),
-          // SpacerVerticel(height: 5),
+          // SpacerVertical(height: 5),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.sp),
+            padding:
+                widget.tabsPadding ?? EdgeInsets.symmetric(horizontal: 10.sp),
             child: TabBar(
               tabAlignment: TabAlignment.start,
               physics: const BouncingScrollPhysics(),
               isScrollable: true,
-              labelPadding:
-                  EdgeInsets.symmetric(horizontal: 13.sp, vertical: 2.sp),
+              labelPadding: EdgeInsets.symmetric(
+                horizontal: 13.sp,
+                vertical: 2.sp,
+              ),
               indicator: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
@@ -308,7 +313,7 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
               ],
             ),
           ),
-          // const SpacerVerticel(height: 5),
+          // const SpacerVertical(height: 5),
           // Visibility(
           //   child: Container(
           //     decoration: const BoxDecoration(

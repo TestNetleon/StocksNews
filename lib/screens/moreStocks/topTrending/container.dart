@@ -18,8 +18,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgets/trending_now.dart';
 
 //
@@ -52,20 +52,23 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
     TopTrendingProvider provider = context.watch<TopTrendingProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appbar: const AppBarHome(
+      appBar: const AppBarHome(
           isPopback: true, showTrailing: false, canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: Column(
           children: [
-            const ScreenTitle(title: "Social Trending Stocks"),
+            // const ScreenTitle(title: "Social Trending Stocks"),
             Expanded(
-              child: CustomTabContainer(
+              child: CustomTabContainerNEW(
                 onChange: (index) =>
                     provider.onTabChanged(index: index, showProgress: false),
-                tabs:
-                    List.generate(tabs.length, (index) => tabs[index].tabName),
+                tabs: List.generate(
+                  tabs.length,
+                  (index) => tabs[index].tabName,
+                ),
+                tabsPadding: EdgeInsets.symmetric(horizontal: 0.sp),
                 widgets: List.generate(
                   tabs.length,
                   (index) => RefreshControll(
@@ -76,15 +79,17 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                 ? "now"
                                 : index == 1
                                     ? "recently"
-                                    : "cap"),
+                                    : "cap",
+                          ),
                     canLoadmore: index == 2 ? false : provider.canLoadMore,
                     onLoadMore: () => provider.getNowRecentlyData(
-                        loadMore: true,
-                        type: index == 0
-                            ? "now"
-                            : index == 1
-                                ? "recently"
-                                : "cap"),
+                      loadMore: true,
+                      type: index == 0
+                          ? "now"
+                          : index == 1
+                              ? "recently"
+                              : "cap",
+                    ),
                     child: provider.isLoading
                         ? Center(
                             child: Row(
@@ -120,16 +125,18 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                         provider.data?.isEmpty == true)
                                 ? Center(
                                     child: ErrorDisplayWidget(
-                                        error: index == 0
-                                            ? TopTrendingError.now
-                                            : TopTrendingError.now),
+                                      error: index == 0
+                                          ? TopTrendingError.now
+                                          : TopTrendingError.now,
+                                    ),
                                   )
                                 : SingleChildScrollView(
                                     child: Column(
                                       children: [
-                                        Divider(
-                                            color: ThemeColors.border,
-                                            height: 10.sp),
+                                        const SpacerVertical(height: 10),
+                                        // Divider(
+                                        //     color: ThemeColors.border,
+                                        //     height: 10.sp),
                                         Text(
                                           index == 0
                                               ? 'A stock is considered "trending" if it was talked about more in the last 24 hours than it was in the prior 24 hour are trending on Twitter, Reddit and StockTwits.'

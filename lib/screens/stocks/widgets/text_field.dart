@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TextFieldChangePercentage extends StatelessWidget {
   const TextFieldChangePercentage({super.key});
@@ -52,7 +52,7 @@ class TextFieldChangePercentage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SpacerVerticel(height: 2),
+              const SpacerVertical(height: 2),
               InkWell(
                 onTap: provider.decrementCounter,
                 child: Container(

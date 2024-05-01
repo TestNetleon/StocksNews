@@ -63,12 +63,12 @@ import 'widgets/trending_sectors.dart';
 //                     //   hintText: "Search symbol, company name or news",
 //                     //   onChanged: (text) {},
 //                     // ),
-//                     // const SpacerVerticel(),
+//                     // const SpacerVertical(),
 //                     // const TrendingGraphTabs(),
 //                     // const SentimentsGraph(),
-//                     // const SpacerVerticel(),
+//                     // const SpacerVertical(),
 //                     // const TrendingFilter(),
-//                     // const SpacerVerticel(),
+//                     // const SpacerVertical(),
 //                     TrendingPartialLoading(
 //                       loading: provider.isLoadingBullish,
 //                       error: !provider.isLoadingBullish &&
@@ -273,12 +273,12 @@ class _TrendingViewState extends State<TrendingView> {
     //             //   hintText: "Search symbol, company name or news",
     //             //   onChanged: (text) {},
     //             // ),
-    //             // const SpacerVerticel(),
+    //             // const SpacerVertical(),
     //             // const TrendingGraphTabs(),
     //             // const SentimentsGraph(),
-    //             // const SpacerVerticel(),
+    //             // const SpacerVertical(),
     //             // const TrendingFilter(),
-    //             // const SpacerVerticel(),
+    //             // const SpacerVertical(),
     //             TrendingPartialLoading(
     //               loading: provider.isLoadingBullish,
     //               error: !provider.isLoadingBullish &&

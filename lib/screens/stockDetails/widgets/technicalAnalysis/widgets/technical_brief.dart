@@ -5,8 +5,7 @@ import 'package:stocks_news_new/modals/technical_analysis_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/item_back.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 //
 class TechnicalAnalysisBrief extends StatelessWidget {
@@ -94,106 +93,106 @@ class SummaryBlock extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 5),
-        ItemBack(
-          child: Row(
-            children: [
-              SizedBox(
-                width: 120.sp,
-                child: Text(
-                  "Moving Averages:",
-                  style: stylePTSansBold(fontSize: 12),
+        const SpacerVertical(height: 10),
+        Row(
+          children: [
+            SizedBox(
+              width: 120.sp,
+              child: Text(
+                "Moving Averages:",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.end,
+                "${movingAverage?.type}",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: movingAverage?.type == "Strong Sell" ||
+                          movingAverage?.type == "Sell"
+                      ? Colors.red
+                      : movingAverage?.type == "Strong Buy" ||
+                              movingAverage?.type == "Buy"
+                          ? ThemeColors.accent
+                          : ThemeColors.buttonBlue,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.end,
-                  "${movingAverage?.type}",
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                    color: movingAverage?.type == "Strong Sell" ||
-                            movingAverage?.type == "Sell"
-                        ? Colors.red
-                        : movingAverage?.type == "Strong Buy" ||
-                                movingAverage?.type == "Buy"
-                            ? ThemeColors.accent
-                            : ThemeColors.buttonBlue,
-                  ),
+            ),
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.end,
+                "Buy: (${movingAverage?.totalBuy})",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: ThemeColors.accent,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.end,
-                  "Buy: (${movingAverage?.totalBuy})",
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                    color: ThemeColors.accent,
-                  ),
+            ),
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.end,
+                "Sell: (${movingAverage?.totalSell})",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: ThemeColors.sos,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.end,
-                  "Sell: (${movingAverage?.totalSell})",
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                    color: ThemeColors.sos,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        const SpacerVerticel(height: 10),
-        ItemBack(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 120.sp,
-                child: Text(
-                  "Technical Indicators:",
-                  style: stylePTSansBold(fontSize: 12),
+        // const SpacerVertical(height: 10),
+        Divider(
+          color: ThemeColors.greyBorder,
+          height: 20.sp,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 120.sp,
+              child: Text(
+                "Technical Indicators:",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.end,
+                "${technicalIndicator?.type}",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: technicalIndicator?.type == "Strong Sell" ||
+                          technicalIndicator?.type == "Sell"
+                      ? Colors.red
+                      : technicalIndicator?.type == "Strong Buy" ||
+                              technicalIndicator?.type == "Buy"
+                          ? ThemeColors.accent
+                          : ThemeColors.buttonBlue,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.end,
-                  "${technicalIndicator?.type}",
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                    color: technicalIndicator?.type == "Strong Sell" ||
-                            technicalIndicator?.type == "Sell"
-                        ? Colors.red
-                        : technicalIndicator?.type == "Strong Buy" ||
-                                technicalIndicator?.type == "Buy"
-                            ? ThemeColors.accent
-                            : ThemeColors.buttonBlue,
-                  ),
+            ),
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.end,
+                "Buy: (${technicalIndicator?.totalBuy})",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: ThemeColors.accent,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.end,
-                  "Buy: (${technicalIndicator?.totalBuy})",
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                    color: ThemeColors.accent,
-                  ),
+            ),
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.end,
+                "Sell: (${technicalIndicator?.totalSell})",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: ThemeColors.sos,
                 ),
               ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.end,
-                  "Sell: (${technicalIndicator?.totalSell})",
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                    color: ThemeColors.sos,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
@@ -225,7 +224,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
           "Technical Indicators",
           style: stylePTSansBold(fontSize: 16),
         ),
-        const SpacerVerticel(height: 2),
+        const SpacerVertical(height: 2),
         RichText(
           text: TextSpan(
             children: [
@@ -259,14 +258,14 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 2),
+        const SpacerVertical(height: 2),
         data?.isNotEmpty == true
             ? Text(
                 "${data?[0].date}",
                 style: stylePTSansBold(fontSize: 12),
               )
             : const SizedBox(),
-        const SpacerVerticel(height: 5),
+        const SpacerVertical(height: 5),
         ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -309,80 +308,80 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SpacerVerticel(height: 10),
-                    ItemBack(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 100.sp,
-                            child: Text(
-                              "${data?[index].name}",
-                              style: stylePTSansBold(fontSize: 12),
-                            ),
+                    const SpacerVertical(height: 10),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100.sp,
+                          child: Text(
+                            "${data?[index].name}",
+                            style: stylePTSansBold(fontSize: 12),
                           ),
-                          Expanded(
-                            child: Text(
-                              textAlign: TextAlign.end,
-                              "${data?[index].value}",
-                              style: stylePTSansBold(fontSize: 12),
-                            ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            textAlign: TextAlign.end,
+                            "${data?[index].value}",
+                            style: stylePTSansBold(fontSize: 12),
                           ),
-                          Expanded(
-                            child: Text(
-                              textAlign: TextAlign.end,
-                              "${data?[index].action}",
-                              style: stylePTSansBold(
-                                  fontSize: 12,
-                                  color: data?[index].action == "Sell"
-                                      ? ThemeColors.sos
-                                      : data?[index].action == "Buy"
-                                          ? ThemeColors.accent
-                                          : ThemeColors.white),
-                            ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            textAlign: TextAlign.end,
+                            "${data?[index].action}",
+                            style: stylePTSansBold(
+                                fontSize: 12,
+                                color: data?[index].action == "Sell"
+                                    ? ThemeColors.sos
+                                    : data?[index].action == "Buy"
+                                        ? ThemeColors.accent
+                                        : ThemeColors.white),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 );
               }
 
-              return ItemBack(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 100.sp,
-                      child: Text(
-                        "${data?[index].name}",
-                        style: stylePTSansBold(fontSize: 12),
-                      ),
+              return Row(
+                children: [
+                  SizedBox(
+                    width: 100.sp,
+                    child: Text(
+                      "${data?[index].name}",
+                      style: stylePTSansBold(fontSize: 12),
                     ),
-                    Expanded(
-                      child: Text(
-                        textAlign: TextAlign.end,
-                        "${data?[index].value}",
-                        style: stylePTSansBold(fontSize: 12),
-                      ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      textAlign: TextAlign.end,
+                      "${data?[index].value}",
+                      style: stylePTSansBold(fontSize: 12),
                     ),
-                    Expanded(
-                      child: Text(
-                        textAlign: TextAlign.end,
-                        "${data?[index].action}",
-                        style: stylePTSansBold(
-                            fontSize: 12,
-                            color: data?[index].action == "Sell"
-                                ? ThemeColors.sos
-                                : data?[index].action == "Buy"
-                                    ? ThemeColors.accent
-                                    : ThemeColors.white),
-                      ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      textAlign: TextAlign.end,
+                      "${data?[index].action}",
+                      style: stylePTSansBold(
+                          fontSize: 12,
+                          color: data?[index].action == "Sell"
+                              ? ThemeColors.sos
+                              : data?[index].action == "Buy"
+                                  ? ThemeColors.accent
+                                  : ThemeColors.white),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
             separatorBuilder: (context, index) {
-              return const SpacerVerticel(height: 10);
+              // return const SpacerVertical(height: 10);
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 20.sp,
+              );
             },
             itemCount: data?.length ?? 0)
       ],
@@ -414,7 +413,7 @@ class TechnicalMovingAverages extends StatelessWidget {
           "Moving Averages",
           style: stylePTSansBold(fontSize: 16),
         ),
-        const SpacerVerticel(height: 2),
+        const SpacerVertical(height: 2),
         RichText(
           text: TextSpan(
             children: [
@@ -448,14 +447,14 @@ class TechnicalMovingAverages extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVerticel(height: 2),
+        const SpacerVertical(height: 2),
         data?.isNotEmpty == true
             ? Text(
                 "${data?[0].date}",
                 style: stylePTSansBold(fontSize: 12),
               )
             : const SizedBox(),
-        const SpacerVerticel(height: 5),
+        const SpacerVertical(height: 5),
         ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -511,52 +510,52 @@ class TechnicalMovingAverages extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SpacerVerticel(height: 10),
-                    ItemBack(
-                      child: Row(
-                        children: [
-                          Text(
-                            "${data?[index].name}",
-                            style: stylePTSansBold(fontSize: 12),
-                          ),
-                          _item(
-                              subText: "${data?[index].smaStatus}",
-                              text: "${data?[index].sma}"),
-                          _item(
-                              subText: "${data?[index].emaStatus}",
-                              text: "${data?[index].ema}"),
-                          _item(
-                              subText: "${data?[index].wmaStatus}",
-                              text: "${data?[index].wma}"),
-                        ],
-                      ),
+                    const SpacerVertical(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          "${data?[index].name}",
+                          style: stylePTSansBold(fontSize: 12),
+                        ),
+                        _item(
+                            subText: "${data?[index].smaStatus}",
+                            text: "${data?[index].sma}"),
+                        _item(
+                            subText: "${data?[index].emaStatus}",
+                            text: "${data?[index].ema}"),
+                        _item(
+                            subText: "${data?[index].wmaStatus}",
+                            text: "${data?[index].wma}"),
+                      ],
                     ),
                   ],
                 );
               }
 
-              return ItemBack(
-                child: Row(
-                  children: [
-                    Text(
-                      "${data?[index].name}",
-                      style: stylePTSansBold(fontSize: 12),
-                    ),
-                    _item(
-                        subText: "${data?[index].smaStatus}",
-                        text: "${data?[index].sma}"),
-                    _item(
-                        subText: "${data?[index].emaStatus}",
-                        text: "${data?[index].ema}"),
-                    _item(
-                        subText: "${data?[index].wmaStatus}",
-                        text: "${data?[index].wma}"),
-                  ],
-                ),
+              return Row(
+                children: [
+                  Text(
+                    "${data?[index].name}",
+                    style: stylePTSansBold(fontSize: 12),
+                  ),
+                  _item(
+                      subText: "${data?[index].smaStatus}",
+                      text: "${data?[index].sma}"),
+                  _item(
+                      subText: "${data?[index].emaStatus}",
+                      text: "${data?[index].ema}"),
+                  _item(
+                      subText: "${data?[index].wmaStatus}",
+                      text: "${data?[index].wma}"),
+                ],
               );
             },
             separatorBuilder: (context, index) {
-              return const SpacerVerticel(height: 10);
+              // return const SpacerVertical(height: 10);
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 20.sp,
+              );
             },
             itemCount: data?.length ?? 0)
       ],

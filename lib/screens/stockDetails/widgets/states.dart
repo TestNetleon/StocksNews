@@ -69,8 +69,8 @@ class States extends StatelessWidget {
         //   onTap: () => _navigateIndustry(
         //       context, companyInfo?.industrySlug, companyInfo?.industry),
         // ),
-        StateItem(label: "Price Avg 50", value: keyStats?.priceAvg50),
-        StateItem(label: "Price Avg 200", value: keyStats?.priceAvg200),
+        StateItem(label: "Price Avg 50 EMA (D)", value: keyStats?.priceAvg50),
+        StateItem(label: "Price Avg 200 EMA (D)", value: keyStats?.priceAvg200),
         StateItem(label: "Exchange", value: keyStats?.exchange),
         StateItem(label: "Volume", value: keyStats?.volume),
         StateItem(label: "Average Volume", value: keyStats?.avgVolume),

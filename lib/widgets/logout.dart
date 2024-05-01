@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/widgets/theme_alert_dialog.dart';
 
@@ -25,9 +25,9 @@ class _LogoutDialogState extends State<LogoutDialog> {
             style: stylePTSansBold(
               fontSize: 19,
             )),
-        const SpacerVerticel(height: 10),
+        const SpacerVertical(height: 10),
         Text("Are you sure you want to sign out?", style: stylePTSansRegular()),
-        const SpacerVerticel(height: 20),
+        const SpacerVertical(height: 20),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,

@@ -5,7 +5,7 @@ import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_item.dart';
 import 'package:stocks_news_new/screens/contactUs/widgets/bullet_point.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class ContactUsContainer extends StatelessWidget {
   const ContactUsContainer({super.key});
@@ -25,12 +25,12 @@ class ContactUsContainer extends StatelessWidget {
           child: Column(
             children: [
               // ContactUsBulletPoint(point: "Interested in a demo."),
-              // SpacerVerticel(height: 5),
+              // SpacerVertical(height: 5),
               // const ContactUsBulletPoint(point: "Have a question or a comment?"),
-              // const SpacerVerticel(height: 5),
+              // const SpacerVertical(height: 5),
               // const ContactUsBulletPoint(
               //     point: "Simply fill out the form and we will be in touch."),
-              const SpacerVerticel(height: 5),
+              const SpacerVertical(height: 5),
 
               ListView.separated(
                   shrinkWrap: true,
@@ -44,7 +44,7 @@ class ContactUsContainer extends StatelessWidget {
                             : "${detail?.key}: ${detail?.value}");
                   },
                   separatorBuilder: (context, index) {
-                    return const SpacerVerticel(height: 5);
+                    return const SpacerVertical(height: 5);
                   },
                   itemCount: provider.data?.contactDetail?.length ?? 0),
               // ContactUsClickEvent(
@@ -53,21 +53,21 @@ class ContactUsContainer extends StatelessWidget {
               //   iconData: Icons.call,
               //   onTap: () {},
               // ),
-              // const SpacerVerticel(height: 10),
+              // const SpacerVertical(height: 10),
               // ContactUsClickEvent(
               //   heading: "EMAIL ID",
               //   subHeading: "demoEmailIdentity@gmail.com",
               //   iconData: Icons.email,
               //   onTap: () {},
               // ),
-              // const SpacerVerticel(height: 10),
+              // const SpacerVertical(height: 10),
               // const ContactUsClickEvent(
               //   heading: "Address",
               //   subHeading:
               //       "Demo addres, Plot 101, 3rd floot keshavMarg, Jaipur, Rajasthan, 203955",
               //   iconData: Icons.email,
               // ),
-              const SpacerVerticel(height: 30),
+              const SpacerVertical(height: 30),
               const ContactUsItem(),
             ],
           )),

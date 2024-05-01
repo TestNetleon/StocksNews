@@ -11,7 +11,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import 'package:validators/validators.dart';
@@ -83,17 +83,17 @@ class _CreateAccountState extends State<CreateAccount> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const SpacerVerticel(height: 16),
+                  // const SpacerVertical(height: 16),
                   Text(
                     "CREATE ACCOUNT",
                     style: stylePTSansBold(fontSize: 24),
                   ),
-                  const SpacerVerticel(height: 40),
+                  const SpacerVertical(height: 40),
                   Text(
                     "Email Address",
                     style: stylePTSansRegular(fontSize: 14),
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   ThemeInputField(
                     controller: _controller,
                     placeholder: "Enter email address",
@@ -101,7 +101,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     inputFormatters: [emailFormatter],
                     textCapitalization: TextCapitalization.none,
                   ),
-                  const SpacerVerticel(height: Dimen.itemSpacing),
+                  const SpacerVertical(height: Dimen.itemSpacing),
                   ThemeButton(
                     text: "Next",
                     onPressed: _onLoginClick,

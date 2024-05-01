@@ -19,7 +19,7 @@ class MyAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true, showTrailing: false),
+      appBar: const AppBarHome(isPopback: true, showTrailing: false),
       body: Stack(
         fit: StackFit.expand,
         alignment: Alignment.center,
@@ -37,7 +37,7 @@ class MyAccount extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        // SpacerVerticel(height: 30),
+                        // SpacerVertical(height: 30),
                         ScreenTitle(title: "My Account"),
 
                         MyAccountContainer(),

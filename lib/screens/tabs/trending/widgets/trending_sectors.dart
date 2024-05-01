@@ -5,7 +5,7 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_sectors_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingSectors extends StatelessWidget {
   const TrendingSectors({super.key});
@@ -29,7 +29,7 @@ class TrendingSectors extends StatelessWidget {
         //   "Trending Sectors",
         //   style: stylePTSansBold(fontSize: 14),
         // ),
-        // const SpacerVerticel(height: 5),
+        // const SpacerVertical(height: 5),
 
         // Text(
         //   "Top trending sectors in online chatter, Past 7 days",
@@ -43,7 +43,7 @@ class TrendingSectors extends StatelessWidget {
           "Top trending sectors in online chatter, Past 7 days",
           style: stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
         ),
-        const SpacerVerticel(),
+        const SpacerVertical(),
         ListView.separated(
           itemCount: data?.sectors?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
@@ -53,14 +53,14 @@ class TrendingSectors extends StatelessWidget {
             return TrendingSectorItem(data: sectorData);
           },
           separatorBuilder: (BuildContext context, int index) {
-            // return const SpacerVerticel(height: 8);
+            // return const SpacerVertical(height: 8);
             return const Divider(
               color: ThemeColors.greyBorder,
               height: 15,
             );
           },
         ),
-        // const SpacerVerticel(height: Dimen.itemSpacing),
+        // const SpacerVertical(height: Dimen.itemSpacing),
         // Align(
         //   alignment: Alignment.centerLeft,
         //   child: ThemeButtonSmall(

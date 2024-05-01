@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -97,7 +97,7 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SpacerVerticel(height: 15),
+                  const SpacerVertical(height: 15),
                   const ScreenTitle(
                     title: "Recent Reddit Posts",
                     // style: stylePTSansRegular(fontSize: 20),
@@ -108,7 +108,7 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
                         : constraints.maxWidth * 1.4,
                     child: WebViewWidget(controller: reddit),
                   ),
-                  const SpacerVerticel(height: 12),
+                  const SpacerVertical(height: 12),
                   ThemeButtonSmall(
                     onPressed: () {
                       Navigator.pushNamed(
@@ -128,7 +128,7 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SpacerVerticel(height: 15),
+                  const SpacerVertical(height: 15),
                   ScreenTitle(
                     title: "Recent X Tweets",
                     style: stylePTSansRegular(fontSize: 20),
@@ -139,7 +139,7 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
                         : constraints.maxWidth * .6,
                     child: WebViewWidget(controller: twitter),
                   ),
-                  const SpacerVerticel(height: 12),
+                  const SpacerVertical(height: 12),
                   ThemeButtonSmall(
                     onPressed: () {
                       Navigator.pushNamed(context, StockDetailiFrameItem.path,

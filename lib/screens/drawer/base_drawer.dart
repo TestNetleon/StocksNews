@@ -25,7 +25,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 //
 import '../watchlist/watchlist.dart';
@@ -81,7 +81,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
           );
         },
         separatorBuilder: (context, index) {
-          return const SpacerVerticel(height: 0);
+          return const SpacerVertical(height: 0);
         },
         itemCount: drawerItems.length);
   }
@@ -209,7 +209,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              const SpacerVerticel(height: 40),
+              const SpacerVertical(height: 40),
               !userPresent
                   ? Column(
                       mainAxisSize: MainAxisSize.min,
@@ -220,7 +220,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           style: stylePTSansRegular(fontSize: 12),
                           textAlign: TextAlign.center,
                         ),
-                        const SpacerVerticel(height: 10),
+                        const SpacerVertical(height: 10),
                         ThemeButtonSmall(
                           onPressed: () {
                             // Navigator.pushNamed(context, Login.path);
@@ -301,7 +301,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                     //   onChanged: (text) {},
                     // ),
                     _itemsWidget(),
-                    const SpacerVerticel(height: 10),
+                    const SpacerVertical(height: 10),
                     Visibility(
                       visible: userPresent,
                       child: Container(
@@ -345,7 +345,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         ),
                       ),
                     ),
-                    const SpacerVerticel(height: 20),
+                    const SpacerVertical(height: 20),
                     Align(
                       alignment: Alignment.center,
                       child: Text(

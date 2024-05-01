@@ -32,7 +32,7 @@ class Insider extends StatelessWidget {
 
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appbar: AppBarHome(
+      appBar: AppBarHome(
         filterClick: _filterClick,
         canSearch: true,
       ),

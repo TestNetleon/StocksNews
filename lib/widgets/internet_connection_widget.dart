@@ -7,7 +7,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class InternetConnectionWidget extends StatefulWidget {
   const InternetConnectionWidget({super.key});
@@ -73,7 +73,7 @@ class _InternetConnectionWidgetState extends State<InternetConnectionWidget> {
                     ),
                   ),
                 ),
-                SpacerVerticel(height: 14.sp),
+                SpacerVertical(height: 14.sp),
                 Text(
                   'No internet connection. Please check your connection and try again.',
                   style: stylePTSansBold(),

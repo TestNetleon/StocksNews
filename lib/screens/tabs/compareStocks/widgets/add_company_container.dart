@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class AddCompanyContainer extends StatelessWidget {
   final void Function()? onTap;
@@ -25,7 +25,7 @@ class AddCompanyContainer extends StatelessWidget {
               "Add a Company",
               style: stylePTSansBold(fontSize: 13),
             ),
-            const SpacerVerticel(height: 10),
+            const SpacerVertical(height: 10),
             CircleAvatar(
               child: InkWell(onTap: onTap, child: const Icon(Icons.add)),
             )

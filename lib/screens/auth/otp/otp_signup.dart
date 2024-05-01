@@ -10,7 +10,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
@@ -73,7 +73,7 @@ class _OTPSignupState extends State<OTPSignup> {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true, showTrailing: false),
+      appBar: const AppBarHome(isPopback: true, showTrailing: false),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -86,12 +86,12 @@ class _OTPSignupState extends State<OTPSignup> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerVerticel(height: 50),
+                  const SpacerVertical(height: 50),
                   Text(
                     "OTP VERIFICATION",
                     style: stylePTSansBold(fontSize: 22),
                   ),
-                  const SpacerVerticel(height: 8),
+                  const SpacerVertical(height: 8),
                   Text(
                     "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 30 minutes.",
                     style: stylePTSansRegular(
@@ -99,12 +99,12 @@ class _OTPSignupState extends State<OTPSignup> {
                       color: Colors.white,
                     ),
                   ),
-                  const SpacerVerticel(),
+                  const SpacerVertical(),
                   Text(
                     "Verification Code",
                     style: stylePTSansRegular(fontSize: 14),
                   ),
-                  const SpacerVerticel(height: 5),
+                  const SpacerVertical(height: 5),
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -131,12 +131,12 @@ class _OTPSignupState extends State<OTPSignup> {
                       ),
                     ],
                   ),
-                  const SpacerVerticel(),
+                  const SpacerVertical(),
                   ThemeButton(
                     onPressed: _onVeryClick,
                     text: "Verify",
                   ),
-                  const SpacerVerticel(),
+                  const SpacerVertical(),
                 ],
               ),
             ),

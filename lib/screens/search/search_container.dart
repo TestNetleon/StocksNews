@@ -10,7 +10,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/stocks_item.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class SearchContainer extends StatelessWidget {
   static const String path = "Home";
@@ -22,8 +22,8 @@ class SearchContainer extends StatelessWidget {
     HomeProvider homeProvider = context.watch<HomeProvider>();
     return Column(
       children: [
-        const SpacerVerticel(),
-        const ScreenTitle(title: "Top Search"),
+        const SpacerVertical(),
+        const ScreenTitle(title: "Top Searches"),
         ListView.separated(
           itemCount: provider.topSearch?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
@@ -40,10 +40,10 @@ class SearchContainer extends StatelessWidget {
             return StocksItem(top: top, gainer: true);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVerticel(height: 12);
+            return const SpacerVertical(height: 12);
           },
         ),
-        const SpacerVerticel(),
+        const SpacerVertical(),
         const ScreenTitle(title: "Top News"),
         ListView.separated(
           itemCount: homeProvider.homeInsiderRes?.news.length ?? 0,

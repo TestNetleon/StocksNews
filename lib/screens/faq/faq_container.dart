@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/screens/faq/faq_item.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class FAQContainer extends StatelessWidget {
   const FAQContainer({super.key});
@@ -24,7 +24,7 @@ class FAQContainer extends StatelessWidget {
         return FAQItem(index: index);
       },
       separatorBuilder: (BuildContext context, int index) {
-        return const SpacerVerticel(height: 12);
+        return const SpacerVertical(height: 12);
       },
     );
   }

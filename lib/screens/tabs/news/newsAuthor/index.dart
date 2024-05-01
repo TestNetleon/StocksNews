@@ -13,7 +13,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import '../../home/widgets/app_bar_home.dart';
 
@@ -30,7 +30,7 @@ class NewsAuthorIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appbar: const AppBarHome(showTrailing: false, isPopback: true),
+      appBar: const AppBarHome(showTrailing: false, isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
@@ -121,7 +121,7 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return const SpacerVerticel(height: 16);
+              return const SpacerVertical(height: 16);
             },
           )),
     );

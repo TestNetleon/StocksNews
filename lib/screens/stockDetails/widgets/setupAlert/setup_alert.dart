@@ -4,7 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_alert_dialog.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -29,7 +29,7 @@ class SetupPopup extends StatelessWidget {
         child: ThemeAlertDialog(
           children: [
             _header(context),
-            const SpacerVerticel(height: 3),
+            const SpacerVertical(height: 3),
             Text(
               "Setup Alert",
               style: stylePTSansBold(),
@@ -43,7 +43,7 @@ class SetupPopup extends StatelessWidget {
               "Alert Name",
               style: stylePTSansRegular(fontSize: 14),
             ),
-            const SpacerVerticel(height: 5),
+            const SpacerVertical(height: 5),
             topTextField,
             Divider(
               color: ThemeColors.border.withOpacity(0.4),
@@ -54,7 +54,7 @@ class SetupPopup extends StatelessWidget {
               "Stock",
               style: stylePTSansRegular(fontSize: 14),
             ),
-            const SpacerVerticel(height: 5),
+            const SpacerVertical(height: 5),
             bottomTextField,
             Divider(
               color: ThemeColors.border.withOpacity(0.4),
@@ -85,7 +85,7 @@ class SetupPopup extends StatelessWidget {
                 ),
               ],
             ),
-            const SpacerVerticel(height: 10),
+            const SpacerVertical(height: 10),
           ],
         ));
   }

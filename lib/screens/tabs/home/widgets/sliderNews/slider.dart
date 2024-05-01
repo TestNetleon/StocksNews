@@ -12,7 +12,7 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class HomeTopNewsSlider extends StatefulWidget {
   const HomeTopNewsSlider({super.key});
@@ -99,7 +99,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SpacerVerticel(height: 10),
+                            const SpacerVertical(height: 10),
                             Padding(
                               padding: EdgeInsets.only(bottom: 3.sp),
                               child: Row(

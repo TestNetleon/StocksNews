@@ -125,7 +125,7 @@ class _StockDetailiFrameItemState extends State<StockDetailiFrameItem> {
     }
 
     return BaseContainer(
-      appbar: const AppBarHome(isPopback: true, showTrailing: false),
+      appBar: const AppBarHome(isPopback: true, showTrailing: false),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
