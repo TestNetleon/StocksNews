@@ -10,7 +10,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
+
+import '../../widgets/cache_network_image.dart';
 
 class WatchlistItem extends StatelessWidget {
   final int index;
@@ -85,7 +86,12 @@ class WatchlistItem extends StatelessWidget {
                 padding: EdgeInsets.all(5.sp),
                 width: 43.sp,
                 height: 43.sp,
-                child: ThemeImageView(url: data.image),
+                // child: ThemeImageView(url: data.image),
+                child: CachedNetworkImagesWidget(
+                  data.image,
+                  // width: 30,
+                  // height: 30,
+                ),
               ),
             ),
             const SpacerHorizontal(width: 12),

@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class MostBearish extends StatelessWidget {
@@ -19,27 +19,27 @@ class MostBearish extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            // ColoredText(
-            //   text: "Most Bearish",
-            //   coloredLetters: const ["B"],
-            //   color: Colors.red,
-            //   style: stylePTSansBold(),
-            // ),
-            const Icon(Icons.trending_down_rounded, color: Colors.red),
-            const SpacerHorizontal(width: 5),
+        // Row(
+        //   children: [
+        //     // ColoredText(
+        //     //   text: "Most Bearish",
+        //     //   coloredLetters: const ["B"],
+        //     //   color: Colors.red,
+        //     //   style: stylePTSansBold(),
+        //     // ),
+        //     const Icon(Icons.trending_down_rounded, color: Colors.red),
+        //     const SpacerHorizontal(width: 5),
 
-            Text(
-              "Most Bearish",
-              style: styleGeorgiaBold(fontSize: 17),
-            ),
-          ],
-        ),
-        const SpacerVerticel(height: 5),
+        //     Text(
+        //       "Most Bearish",
+        //       style: styleGeorgiaBold(fontSize: 17),
+        //     ),
+        //   ],
+        // ),
+        // const SpacerVerticel(height: 5),
         Text(
           "This segment highlights stocks exhibiting the highest bearish sentiment, determined by predominantly negative news sentiment over the past 7 days, on average.",
-          style: stylePTSansRegular(fontSize: 12),
+          style: stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
         ),
         const SpacerVerticel(),
         ListView.separated(
@@ -57,7 +57,11 @@ class MostBearish extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVerticel(height: 12);
+            // return const SpacerVerticel(height: 12);
+            return const Divider(
+              color: ThemeColors.greyBorder,
+              height: 12,
+            );
           },
         ),
         const SpacerVerticel(height: Dimen.itemSpacing),

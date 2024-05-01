@@ -48,6 +48,15 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  int selectedIndex = 0;
+
+  List<String> tabs = [
+    'Most Bullish',
+    'Most Bearish',
+    'Trending Sectors',
+    'Trending Stories'
+  ];
+
   // bool selectedOne = false;
   // bool selectedTwo = false;
 

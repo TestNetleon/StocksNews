@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom_tab.dart';
+import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 class CustomTabContainer extends StatefulWidget {
   const CustomTabContainer({
@@ -195,3 +198,136 @@ class _CustomState extends State<CustomTabContainer>
 //     );
 //   }
 // }
+
+class CustomTabContainerNEW extends StatefulWidget {
+  const CustomTabContainerNEW({
+    required this.tabs,
+    required this.widgets,
+    this.rightWidget = const SizedBox(),
+    this.header,
+    this.onChange,
+    this.showDivider = false,
+    this.isTabWidget,
+    super.key,
+  });
+//
+  final Widget rightWidget;
+  final Widget? header;
+  final List<String> tabs;
+  final List<Widget> widgets;
+  final List<Widget>? isTabWidget;
+  final bool showDivider;
+  final Function(int index)? onChange;
+
+  @override
+  State<CustomTabContainerNEW> createState() => _CustomTabContainerNEWState();
+}
+
+class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
+    with SingleTickerProviderStateMixin {
+  bool sync = true;
+  TabController? _controller;
+  int _selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: widget.tabs.length, vsync: this);
+
+    _controller?.addListener(() {
+      setState(() {
+        _selectedIndex = _controller?.index ?? 0;
+      });
+      if (widget.onChange != null) {
+        widget.onChange!(_selectedIndex);
+      }
+
+      log("$_selectedIndex");
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: widget.tabs.length,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SpacerVerticel(height: 5),
+          // Visibility(
+          //   child: Container(
+          //     decoration: const BoxDecoration(
+          //       border: Border(
+          //         bottom: BorderSide(
+          //           color: ThemeColors.greyBorder,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // SpacerVerticel(height: 5),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.sp),
+            child: TabBar(
+              tabAlignment: TabAlignment.start,
+              physics: const BouncingScrollPhysics(),
+              isScrollable: true,
+              labelPadding:
+                  EdgeInsets.symmetric(horizontal: 13.sp, vertical: 2.sp),
+              indicator: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: ThemeColors.accent,
+                  ),
+                ),
+              ),
+
+              controller: _controller,
+              indicatorColor: ThemeColors.white,
+              automaticIndicatorColorAdjustment: true,
+
+              // enableFeedback: false,
+              onTap: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              tabs: [
+                ...widget.tabs.asMap().entries.map((entry) {
+                  return CustomTabNEW(
+                    index: entry.key,
+                    label: entry.value,
+                    selectedIndex: _selectedIndex,
+                  );
+                }),
+              ],
+            ),
+          ),
+          // const SpacerVerticel(height: 5),
+          // Visibility(
+          //   child: Container(
+          //     decoration: const BoxDecoration(
+          //       border: Border(
+          //         bottom: BorderSide(
+          //           color: ThemeColors.greyBorder,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          Expanded(
+            child: TabBarView(
+              controller: _controller,
+              children: widget.widgets,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

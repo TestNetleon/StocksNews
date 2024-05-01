@@ -59,7 +59,7 @@ class SocialSentimentsGraph extends StatelessWidget {
             "See which stocks are bearish vs bullish",
             style: styleGeorgiaBold(
               fontSize: 15,
-              decoration: TextDecoration.underline,
+              // decoration: TextDecoration.underline,
             ),
           ),
           const SpacerVerticel(),

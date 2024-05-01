@@ -7,7 +7,6 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sect
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/item_back.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
@@ -31,65 +30,63 @@ class TrendingSectorItem extends StatelessWidget {
         onTap: () {
           _navigateSector(context, data.sectorSlug, data.sector);
         },
-        child: ItemBack(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 0.sp),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: cnts.maxWidth * .5,
-                  child: Row(
-                    children: [
-                      // const Icon(
-                      //   Icons.monitor_rounded,
-                      //   color: ThemeColors.accent,
-                      // ),
-                      data.image == "" ||
-                              data.image ==
-                                  "https://app.stocks.news/front/images/no_image.png"
-                          ? Image.asset(
-                              Images.monitor,
-                              color: ThemeColors.accent,
-                              height: 25.sp,
-                              width: 25.sp,
-                            )
-                          : ThemeImageView(
-                              url: data.image ?? "",
-                              height: 30,
-                              width: 30,
-                            ),
-                      const SpacerHorizontal(width: 12),
-                      Flexible(
-                        child: Text(
-                          data.sector ?? "",
-                          style: stylePTSansRegular(fontSize: 14),
-                        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 0.sp),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: cnts.maxWidth * .5,
+                child: Row(
+                  children: [
+                    // const Icon(
+                    //   Icons.monitor_rounded,
+                    //   color: ThemeColors.accent,
+                    // ),
+                    data.image == "" ||
+                            data.image ==
+                                "https://app.stocks.news/front/images/no_image.png"
+                        ? Image.asset(
+                            Images.monitor,
+                            color: ThemeColors.accent,
+                            height: 25.sp,
+                            width: 25.sp,
+                          )
+                        : ThemeImageView(
+                            url: data.image ?? "",
+                            height: 30,
+                            width: 30,
+                          ),
+                    const SpacerHorizontal(width: 12),
+                    Flexible(
+                      child: Text(
+                        data.sector ?? "",
+                        style: stylePTSansRegular(fontSize: 14),
                       ),
-                    ],
-                  ),
-                ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    data.mentionType ?? "",
-                    style: stylePTSansRegular(
-                      fontSize: 12,
-                      color: ThemeColors.accent,
                     ),
-                    // textAlign: TextAlign.center,
+                  ],
+                ),
+              ),
+              const SpacerHorizontal(width: 10),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  data.mentionType ?? "",
+                  style: stylePTSansRegular(
+                    fontSize: 12,
+                    color: ThemeColors.accent,
                   ),
+                  // textAlign: TextAlign.center,
                 ),
-                const SpacerHorizontal(),
-                Text(
-                  "${data.totalMentions}",
-                  style: stylePTSansRegular(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+              ),
+              const SpacerHorizontal(),
+              Text(
+                "${data.totalMentions}",
+                style: stylePTSansRegular(fontSize: 14),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ),
       );

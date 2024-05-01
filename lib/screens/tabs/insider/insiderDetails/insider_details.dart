@@ -8,6 +8,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter_insider_company.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_container.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -109,25 +110,55 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
     return BaseContainer(
       drawer: const BaseDrawer(),
       appbar: AppBarHome(
-          isPopback: true,
-          filterClick: () => _filterClick(
-                companySlug: widget.companySlug,
-                reportingSlug: widget.reportingSlug,
-              )),
+        isPopback: true,
+        canSearch: true,
+        filterClick: () => _filterClick(
+          companySlug: widget.companySlug,
+          reportingSlug: widget.reportingSlug,
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Visibility(
-                visible: widget.companyName != "" && widget.reportingName == "",
-                child: ScreenTitle(
-                    title: "Insider Trading- ${widget.companyName}")),
+              visible: widget.companyName != "" && widget.reportingName == "",
+              child: ScreenTitle(
+                title: "Insider Trading- ${widget.companyName}",
+                optionalWidget: GestureDetector(
+                  onTap: () => _filterClick(
+                    companySlug: widget.companySlug,
+                    reportingSlug: widget.reportingSlug,
+                  ),
+                  child: const Icon(
+                    Icons.filter_alt,
+                    color: ThemeColors.white,
+                  ),
+                ),
+              ),
+            ),
             Visibility(
-                visible: widget.reportingName != "",
-                child: ScreenTitle(
-                    title: "Insider Trading- ${widget.reportingName}")),
+              visible: widget.reportingName != "",
+              child: ScreenTitle(
+                title: "Insider Trading- ${widget.reportingName}",
+                optionalWidget: GestureDetector(
+                  onTap: () => _filterClick(
+                    companySlug: widget.companySlug,
+                    reportingSlug: widget.reportingSlug,
+                  ),
+                  child: const Icon(
+                    Icons.filter_alt,
+                    color: ThemeColors.white,
+                  ),
+                ),
+              ),
+            ),
 
             // TextInputFieldSearch(
             //   hintText: "Find by insider name",

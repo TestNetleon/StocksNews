@@ -49,6 +49,25 @@ class _NewsListState extends State<NewsList> {
           // padding: EdgeInsets.all(12.sp),
           itemBuilder: (context, index) {
             NewsData? newsItemData = data![index];
+            if (index == 0) {
+              return NewsItemSeparated(
+                showCategory: newsItemData.authors?.isEmpty == true,
+                news: News(
+                  slug: newsItemData.slug,
+                  // publishedDate: newsItemData.publishedDate,
+                  title: newsItemData.title,
+                  image: newsItemData.image,
+                  site: newsItemData.site ?? '',
+                  authors: newsItemData.authors,
+
+                  postDate: DateFormat("MMMM dd, yyyy")
+                      .format(newsItemData.publishedDate),
+                  url: newsItemData.url,
+                  //  "November 29, 2023",
+                ),
+              );
+            }
+
             return NewsItem(
               showCategory: newsItemData.authors?.isEmpty == true,
               news: News(

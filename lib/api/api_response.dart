@@ -50,6 +50,7 @@ class ApiResponse {
 
 class Extra {
   final String? search;
+  final int? notificationCount;
   final List<KeyValueElement>? exchangeShortName;
   final List<KeyValueElement>? priceRange;
   final List<KeyValueElement>? transactionType;
@@ -64,6 +65,7 @@ class Extra {
     this.transactionType,
     this.cap,
     this.sector,
+    this.notificationCount,
     this.txnSize,
   });
 
@@ -93,6 +95,8 @@ class Extra {
             ? []
             : List<KeyValueElement>.from(
                 json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
+
+                notificationCount: json["notification_count"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -114,6 +118,7 @@ class Extra {
         "txn_size": txnSize == null
             ? []
             : List<dynamic>.from(txnSize!.map((x) => x.toJson())),
+            "notification_count":notificationCount,
       };
 }
 

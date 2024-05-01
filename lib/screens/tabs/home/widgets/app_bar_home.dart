@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
@@ -12,7 +15,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
+class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopback, showQR, canSearch;
   final void Function()? filterClick;
@@ -28,13 +31,32 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
+  State<AppBarHome> createState() => _AppBarHomeState();
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _AppBarHomeState extends State<AppBarHome> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      log("App bar init called-------");
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String? image = context.watch<UserProvider>().user?.image;
+    UserProvider provider = context.watch<UserProvider>();
+    String? image = provider.user?.image;
+    // bool notificationSeen = provider.user?.notificationSeen == true;
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+    log("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
     return AppBar(
       // backgroundColor: ThemeColors.lightRed,
       backgroundColor: ThemeColors.background,
       automaticallyImplyLeading: false,
-      leading: isPopback
+      leading: widget.isPopback
           ? IconButton(
               onPressed: () {
                 context.read<SearchProvider>().clearSearch();
@@ -63,12 +85,13 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                     ? const Icon(Icons.person)
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(30.r),
-                        child: ThemeImageView(url: image)),
+                        child: ThemeImageView(url: image),
+                      ),
               ),
             ),
       centerTitle: true,
       title: GestureDetector(
-        onTap: isHome
+        onTap: widget.isHome
             ? null
             : () {
                 // Navigator.pushReplacement(
@@ -90,7 +113,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Visibility(
-          visible: showQR,
+          visible: widget.showQR,
           child: IconButton(
             onPressed: () {
               Navigator.pushNamed(context, QrScan.path);
@@ -101,18 +124,18 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
+        // Visibility(
+        //   visible: widget.filterClick != null,
+        //   child: IconButton(
+        //     onPressed: widget.filterClick,
+        //     icon: const Icon(
+        //       Icons.filter_alt,
+        //       color: ThemeColors.white,
+        //     ),
+        //   ),
+        // ),
         Visibility(
-          visible: filterClick != null,
-          child: IconButton(
-            onPressed: filterClick,
-            icon: const Icon(
-              Icons.filter_alt,
-              color: ThemeColors.white,
-            ),
-          ),
-        ),
-        Visibility(
-          visible: canSearch,
+          visible: widget.canSearch,
           child: IconButton(
             onPressed: () {
               Navigator.pushNamed(context, Search.path);
@@ -123,22 +146,39 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
-        if (showTrailing)
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Notifications.path);
-            },
-            icon: const Icon(
-              Icons.add_alert,
-              color: ThemeColors.white,
-            ),
+        if (widget.showTrailing)
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  if (provider.user != null) {
+                    homeProvider.setNotification(true);
+                  }
+                  Navigator.pushNamed(context, Notifications.path);
+                },
+                icon: const Icon(
+                  Icons.notifications,
+                  color: ThemeColors.white,
+                ),
+              ),
+              Visibility(
+                visible:
+                    !homeProvider.notificationSeen && provider.user != null,
+                child: Positioned(
+                  right: 13.sp,
+                  top: 14.sp,
+                  child: CircleAvatar(
+                    radius: 4.sp,
+                    backgroundColor: ThemeColors.sos,
+                  ),
+                ),
+              ),
+            ],
           )
         else
           SizedBox(width: 20.sp),
       ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

@@ -14,6 +14,7 @@ class UserRes {
   final int? otp;
   final String? token;
   final String? type;
+  bool notificationSeen;
   String? image;
   String? name;
 //
@@ -27,6 +28,7 @@ class UserRes {
     required this.username,
     required this.token,
     required this.type,
+    this.notificationSeen = false,
     this.image,
     this.name,
   });

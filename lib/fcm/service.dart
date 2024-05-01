@@ -7,6 +7,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
@@ -19,6 +21,11 @@ import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
+  // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // provider.user?.notificationSeen = false;
+  HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+  // provider.notificationSeen = false;
+  provider.setNotification(false);
   Utils().showLog("Notification Title: ${message.notification?.title}");
   Utils().showLog("Notification body Body: ${message.notification?.body}");
   Utils().showLog("Data Payload: ${message.data}");
@@ -196,6 +203,10 @@ class FirebaseApi {
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
     FirebaseMessaging.onMessage.listen((message) async {
+      HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+      // provider.notificationSeen = false;
+      provider.setNotification(false);
+
       Utils().showLog("on Message called ==>${message.data}");
 
       final data = message.data;

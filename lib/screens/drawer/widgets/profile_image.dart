@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
 class ProfileImage extends StatelessWidget {
   final double imageSize;
@@ -33,11 +33,19 @@ class ProfileImage extends StatelessWidget {
             //   ),
             // ),
             child: ClipOval(
-              child: ThemeImageView(
-                url: url ?? "",
+              // child: ThemeImageView(
+              //   url: url ?? "",
+              //   height: imageSize,
+              //   width: imageSize,
+              //   placeholder: Images.userPlaceholder,
+              // ),
+
+              child: CachedNetworkImagesWidget(
+                url,
                 height: imageSize,
                 width: imageSize,
-                placeholder: Images.userPlaceholder,
+                showLoading: true,
+                placeHolder: Images.userPlaceholder,
               ),
             ),
           ),

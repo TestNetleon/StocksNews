@@ -17,11 +17,11 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
 import '../../../blogs/index.dart';
@@ -323,12 +323,19 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         //   height: 10.sp,
                         // ),
 
-                        SizedBox(
+                        // SizedBox(
+                        //   width: double.infinity,
+                        //   height: ScreenUtil().screenHeight * 0.3,
+                        //   child: ThemeImageView(
+                        //     url: provider.data?.postDetail?.image ?? "",
+                        //   ),
+                        // ),
+
+                        CachedNetworkImagesWidget(
+                          provider.data?.postDetail?.image ?? "",
+                          height: ScreenUtil().screenHeight * 0.27,
                           width: double.infinity,
-                          height: ScreenUtil().screenHeight * 0.3,
-                          child: ThemeImageView(
-                            url: provider.data?.postDetail?.image ?? "",
-                          ),
+                          // fit: BoxFit.contain,
                         ),
 
                         // Visibility(

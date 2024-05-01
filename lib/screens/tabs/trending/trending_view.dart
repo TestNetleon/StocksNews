@@ -7,14 +7,130 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish.dart'
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
-import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
+import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 import 'widgets/trending_partial_loading.dart';
 import 'widgets/trending_sectors.dart';
 
 //
+
+// class TrendingView extends StatefulWidget {
+//   const TrendingView({super.key});
+
+//   @override
+//   State<TrendingView> createState() => _TrendingViewState();
+// }
+
+// class _TrendingViewState extends State<TrendingView> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+//       // context.read<TrendingProvider>().getData();
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     TrendingProvider provider = context.watch<TrendingProvider>();
+
+//     return provider.isLoadingBullish
+//         ? Center(
+//             child: Text(
+//               "We are preparing…",
+//               style: styleGeorgiaRegular(
+//                 color: Colors.white,
+//               ),
+//             ),
+//           )
+//         : RefreshIndicator(
+//             onRefresh: () async {
+//               await provider.refreshData();
+//             },
+//             child: SingleChildScrollView(
+//               physics: const AlwaysScrollableScrollPhysics(),
+//               child: Padding(
+//                 padding: EdgeInsets.fromLTRB(
+//                   Dimen.padding.sp,
+//                   Dimen.padding.sp,
+//                   Dimen.padding.sp,
+//                   0,
+//                 ),
+//                 child: Column(
+//                   children: [
+//                     // const ScreenTitle(title: "Trending"),
+//                     // TextInputFieldSearchCommon(
+//                     //   hintText: "Search symbol, company name or news",
+//                     //   onChanged: (text) {},
+//                     // ),
+//                     // const SpacerVerticel(),
+//                     // const TrendingGraphTabs(),
+//                     // const SentimentsGraph(),
+//                     // const SpacerVerticel(),
+//                     // const TrendingFilter(),
+//                     // const SpacerVerticel(),
+//                     TrendingPartialLoading(
+//                       loading: provider.isLoadingBullish,
+//                       error: !provider.isLoadingBullish &&
+//                               provider.mostBullish?.mostBullish?.isEmpty == true
+//                           ? TrendingError.bullish
+//                           : null,
+//                       onRefresh: provider.refreshWithCheck,
+//                       child: Container(
+//                         margin: EdgeInsets.only(bottom: 20.sp),
+//                         child: const MostBullish(),
+//                       ),
+//                     ),
+
+//                     TrendingPartialLoading(
+//                       loading: provider.isLoadingBearish,
+//                       error: !provider.isLoadingBearish &&
+//                               (provider.mostBearish == null ||
+//                                   provider.mostBearish?.mostBearish?.isEmpty ==
+//                                       true)
+//                           ? TrendingError.bearish
+//                           : null,
+//                       onRefresh: provider.refreshWithCheck,
+//                       child: Container(
+//                         margin: EdgeInsets.only(bottom: 20.sp),
+//                         child: const MostBearish(),
+//                       ),
+//                     ),
+
+//                     TrendingPartialLoading(
+//                       loading: provider.isLoadingStories,
+//                       error: !provider.isLoadingStories &&
+//                               provider.trendingStories?.sectors?.isEmpty == true
+//                           ? TrendingError.sectors
+//                           : null,
+//                       onRefresh: provider.refreshWithCheck,
+//                       child: Container(
+//                         margin: EdgeInsets.only(bottom: 10.sp),
+//                         child: const TrendingSectors(),
+//                       ),
+//                     ),
+
+//                     TrendingPartialLoading(
+//                       loading: provider.isLoadingStories,
+//                       error: !provider.isLoadingStories &&
+//                               provider.trendingStories?.generalNews?.isEmpty ==
+//                                   true
+//                           ? TrendingError.stories
+//                           : null,
+//                       onRefresh: provider.refreshWithCheck,
+//                       child: Container(
+//                         margin: EdgeInsets.only(bottom: 20.sp),
+//                         child: const TrendingStories(),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           );
+//   }
+// }
+
 class TrendingView extends StatefulWidget {
   const TrendingView({super.key});
 
@@ -35,7 +151,7 @@ class _TrendingViewState extends State<TrendingView> {
   Widget build(BuildContext context) {
     TrendingProvider provider = context.watch<TrendingProvider>();
 
-    return provider.isLoadingBullish
+    return provider.isLoadingBullish && provider.mostBullish == null
         ? Center(
             child: Text(
               "We are preparing…",
@@ -44,33 +160,18 @@ class _TrendingViewState extends State<TrendingView> {
               ),
             ),
           )
-        : RefreshIndicator(
-            onRefresh: () async {
-              await provider.refreshData();
-            },
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  Dimen.padding.sp,
-                  Dimen.padding.sp,
-                  Dimen.padding.sp,
-                  0,
-                ),
-                child: Column(
-                  children: [
-                    const ScreenTitle(title: "Trending"),
-                    TextInputFieldSearchCommon(
-                      hintText: "Search symbol, company name or news",
-                      onChanged: (text) {},
-                    ),
-                    // const SpacerVerticel(),
-                    // const TrendingGraphTabs(),
-                    // const SentimentsGraph(),
-                    // const SpacerVerticel(),
-                    // const TrendingFilter(),
-                    const SpacerVerticel(),
-                    TrendingPartialLoading(
+        : CustomTabContainerNEW(
+            tabs: List.generate(
+                provider.tabs.length, (index) => provider.tabs[index]),
+            widgets: List.generate(
+              provider.tabs.length,
+              (index) {
+                if (index == 0) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      provider.getMostBullish();
+                    },
+                    child: TrendingPartialLoading(
                       loading: provider.isLoadingBullish,
                       error: !provider.isLoadingBullish &&
                               provider.mostBullish?.mostBullish?.isEmpty == true
@@ -78,12 +179,18 @@ class _TrendingViewState extends State<TrendingView> {
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 20.sp),
-                        child: const MostBullish(),
-                      ),
+                          margin: EdgeInsets.symmetric(horizontal: 10.sp),
+                          child: const MostBullish()),
                     ),
+                  );
+                }
 
-                    TrendingPartialLoading(
+                if (index == 1) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      provider.getMostBearish();
+                    },
+                    child: TrendingPartialLoading(
                       loading: provider.isLoadingBearish,
                       error: !provider.isLoadingBearish &&
                               (provider.mostBearish == null ||
@@ -93,12 +200,19 @@ class _TrendingViewState extends State<TrendingView> {
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 20.sp),
+                        margin: EdgeInsets.symmetric(horizontal: 10.sp),
                         child: const MostBearish(),
                       ),
                     ),
+                  );
+                }
 
-                    TrendingPartialLoading(
+                if (index == 2) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      provider.getTrendingStories();
+                    },
+                    child: TrendingPartialLoading(
                       loading: provider.isLoadingStories,
                       error: !provider.isLoadingStories &&
                               provider.trendingStories?.sectors?.isEmpty == true
@@ -106,12 +220,19 @@ class _TrendingViewState extends State<TrendingView> {
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 20.sp),
+                        margin: EdgeInsets.symmetric(horizontal: 10.sp),
                         child: const TrendingSectors(),
                       ),
                     ),
+                  );
+                }
 
-                    TrendingPartialLoading(
+                if (index == 3) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      provider.getTrendingStories();
+                    },
+                    child: TrendingPartialLoading(
                       loading: provider.isLoadingStories,
                       error: !provider.isLoadingStories &&
                               provider.trendingStories?.generalNews?.isEmpty ==
@@ -120,14 +241,102 @@ class _TrendingViewState extends State<TrendingView> {
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 20.sp),
+                        margin: EdgeInsets.symmetric(horizontal: 10.sp),
                         child: const TrendingStories(),
                       ),
                     ),
-                  ],
-                ),
-              ),
+                  );
+                }
+
+                return Container();
+              },
             ),
           );
+
+    // RefreshIndicator(
+    //     onRefresh: () async {
+    //       await provider.refreshData();
+    //     },
+    //     child: SingleChildScrollView(
+    //       physics: const AlwaysScrollableScrollPhysics(),
+    //       child: Padding(
+    //         padding: EdgeInsets.fromLTRB(
+    //           Dimen.padding.sp,
+    //           Dimen.padding.sp,
+    //           Dimen.padding.sp,
+    //           0,
+    //         ),
+    //         child: Column(
+    //           children: [
+    //             // const ScreenTitle(title: "Trending"),
+    //             // TextInputFieldSearchCommon(
+    //             //   hintText: "Search symbol, company name or news",
+    //             //   onChanged: (text) {},
+    //             // ),
+    //             // const SpacerVerticel(),
+    //             // const TrendingGraphTabs(),
+    //             // const SentimentsGraph(),
+    //             // const SpacerVerticel(),
+    //             // const TrendingFilter(),
+    //             // const SpacerVerticel(),
+    //             TrendingPartialLoading(
+    //               loading: provider.isLoadingBullish,
+    //               error: !provider.isLoadingBullish &&
+    //                       provider.mostBullish?.mostBullish?.isEmpty == true
+    //                   ? TrendingError.bullish
+    //                   : null,
+    //               onRefresh: provider.refreshWithCheck,
+    //               child: Container(
+    //                 margin: EdgeInsets.only(bottom: 20.sp),
+    //                 child: const MostBullish(),
+    //               ),
+    //             ),
+
+    //             TrendingPartialLoading(
+    //               loading: provider.isLoadingBearish,
+    //               error: !provider.isLoadingBearish &&
+    //                       (provider.mostBearish == null ||
+    //                           provider.mostBearish?.mostBearish?.isEmpty ==
+    //                               true)
+    //                   ? TrendingError.bearish
+    //                   : null,
+    //               onRefresh: provider.refreshWithCheck,
+    //               child: Container(
+    //                 margin: EdgeInsets.only(bottom: 20.sp),
+    //                 child: const MostBearish(),
+    //               ),
+    //             ),
+
+    //             TrendingPartialLoading(
+    //               loading: provider.isLoadingStories,
+    //               error: !provider.isLoadingStories &&
+    //                       provider.trendingStories?.sectors?.isEmpty == true
+    //                   ? TrendingError.sectors
+    //                   : null,
+    //               onRefresh: provider.refreshWithCheck,
+    //               child: Container(
+    //                 margin: EdgeInsets.only(bottom: 10.sp),
+    //                 child: const TrendingSectors(),
+    //               ),
+    //             ),
+
+    //             TrendingPartialLoading(
+    //               loading: provider.isLoadingStories,
+    //               error: !provider.isLoadingStories &&
+    //                       provider.trendingStories?.generalNews?.isEmpty ==
+    //                           true
+    //                   ? TrendingError.stories
+    //                   : null,
+    //               onRefresh: provider.refreshWithCheck,
+    //               child: Container(
+    //                 margin: EdgeInsets.only(bottom: 20.sp),
+    //                 child: const TrendingStories(),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   );
   }
 }

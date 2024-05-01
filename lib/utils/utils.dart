@@ -135,7 +135,7 @@ Future<void> openUrl(String? url,
   if (url == null || url.isEmpty) {
     showErrorMessage(message: "Exception: Could not launch.");
   } else {
-    log("$url");
+    log(url);
     try {
       if (!await launchUrl(Uri.parse(url), mode: mode)) {
         throw Exception('Could not launch $url');

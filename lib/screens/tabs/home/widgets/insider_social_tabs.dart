@@ -179,7 +179,11 @@ class RedditTwitterHomeContentBase extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return const SpacerVerticel(height: 12);
+                    // return const SpacerVerticel(height: 12);
+                    return Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 10.sp,
+                    );
                   },
                 ),
     );

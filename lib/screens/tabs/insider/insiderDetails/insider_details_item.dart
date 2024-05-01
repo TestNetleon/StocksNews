@@ -4,7 +4,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/item_back.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
@@ -35,129 +34,128 @@ class InsidersDetailsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ItemBack(
-      color: isEven(index) ? null : ThemeColors.background,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                visible: leading != null,
-                child: Expanded(
-                  flex: middle == null ? 3 : 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: leadingClick,
-                        child: Text(
-                          "${leading?.capitalizeWords()}",
-                          // "NYSL:TSLA",
-                          style: stylePTSansBold(
-                            fontSize: 14,
-                            color: ThemeColors.greyText,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Visibility(
-                          visible: leadingSubtitle != null,
-                          child: const SpacerVerticel(height: 5)),
-                      Visibility(
-                        visible: leadingSubtitle != null,
-                        child: Text(
-                          "${leadingSubtitle?.capitalizeWords()}",
-                          style: stylePTSansRegular(
-                            color: ThemeColors.greyText,
-                            fontSize: 12,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Visibility(
-                visible: middle != null,
-                child: Expanded(
-                  flex: 2,
-                  child: Text(
-                    "${middle?.capitalizeWords()}",
-                    style: stylePTSansBold(fontSize: 14),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Visibility(
-                visible: trailing != null,
-                child: Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("${trailing?.capitalizeWords()}",
-                          // "Buy",
-                          style: stylePTSansBold(
-                            fontSize: 14,
-                            color: trailing == "Buy"
-                                ? ThemeColors.accent
-                                : trailing == "Sell"
-                                    ? ThemeColors.sos
-                                    : ThemeColors.white,
-                          )),
-                      const SpacerVerticel(height: 5),
-                      GestureDetector(
-                        onTap: onTap,
-                        child: Container(
-                          // ignore: prefer_const_constructors
-                          decoration: BoxDecoration(
-                            // color: data?.transactionType == "Buy"
-                            //     ? ThemeColors.accent
-                            //     : data?.transactionType == "Sell"
-                            //         ? ThemeColors.sos
-                            //         : ThemeColors.white,
+    //      color: isEven(index) ? null : ThemeColors.background,
 
-                            color: ThemeColors.white,
-                          ),
-                          margin: EdgeInsets.only(left: 8.sp),
-                          padding: const EdgeInsets.all(3),
-                          child: Icon(
-                            isOpen == true
-                                ? Icons.arrow_upward_rounded
-                                : Icons.arrow_downward_rounded,
-                            color: ThemeColors.background,
-                            size: 16.sp,
-                          ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: leading != null,
+              child: Expanded(
+                flex: middle == null ? 3 : 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: leadingClick,
+                      child: Text(
+                        "${leading?.capitalizeWords()}",
+                        // "NYSL:TSLA",
+                        style: stylePTSansBold(
+                          fontSize: 14,
+                          color: ThemeColors.greyText,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ],
-                  ),
+                    ),
+                    Visibility(
+                        visible: leadingSubtitle != null,
+                        child: const SpacerVerticel(height: 5)),
+                    Visibility(
+                      visible: leadingSubtitle != null,
+                      child: Text(
+                        "${leadingSubtitle?.capitalizeWords()}",
+                        style: stylePTSansRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          AnimatedSize(
-            duration: const Duration(milliseconds: 150),
-            child: Container(
-              height: isOpen == true ? null : 0,
-              // height: open ? null : 0,
-              margin: EdgeInsets.only(
-                top: isOpen == true ? 10.sp : 0,
-                bottom: isOpen == true ? 10.sp : 0,
-              ),
-              child: Column(children: children),
             ),
+            const SpacerHorizontal(width: 10),
+            Visibility(
+              visible: middle != null,
+              child: Expanded(
+                flex: 2,
+                child: Text(
+                  "${middle?.capitalizeWords()}",
+                  style: stylePTSansBold(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ),
+            const SpacerHorizontal(width: 10),
+            Visibility(
+              visible: trailing != null,
+              child: Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("${trailing?.capitalizeWords()}",
+                        // "Buy",
+                        style: stylePTSansBold(
+                          fontSize: 14,
+                          color: trailing == "Buy"
+                              ? ThemeColors.accent
+                              : trailing == "Sell"
+                                  ? ThemeColors.sos
+                                  : ThemeColors.white,
+                        )),
+                    const SpacerVerticel(height: 5),
+                    GestureDetector(
+                      onTap: onTap,
+                      child: Container(
+                        // ignore: prefer_const_constructors
+                        decoration: BoxDecoration(
+                          // color: data?.transactionType == "Buy"
+                          //     ? ThemeColors.accent
+                          //     : data?.transactionType == "Sell"
+                          //         ? ThemeColors.sos
+                          //         : ThemeColors.white,
+
+                          color: ThemeColors.white,
+                        ),
+                        margin: EdgeInsets.only(left: 8.sp),
+                        padding: const EdgeInsets.all(3),
+                        child: Icon(
+                          isOpen == true
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
+                          color: ThemeColors.background,
+                          size: 16.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            height: isOpen == true ? null : 0,
+            // height: open ? null : 0,
+            margin: EdgeInsets.only(
+              top: isOpen == true ? 10.sp : 0,
+              bottom: isOpen == true ? 10.sp : 0,
+            ),
+            child: Column(children: children),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

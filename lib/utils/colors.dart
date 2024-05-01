@@ -17,6 +17,23 @@ class ThemeColors {
     },
   );
 //
+
+  static const MaterialColor blackShade = MaterialColor(
+    0xFF000000, // Black color
+    <int, Color>{
+      50: Color(0xFFE0E0E0), // Very Light Gray
+      100: Color(0xFFBDBDBD), // Light Gray
+      200: Color(0xFF9E9E9E), // Gray
+      300: Color(0xFF757575), // Medium Gray
+      400: Color(0xFF616161), // Dark Gray
+      500: Color(0xFF424242), // Base color (black)
+      600: Color(0xFF303030), // Darker Gray
+      700: Color(0xFF212121), // Very Dark Gray
+      800: Color(0xFF181818), // Almost Black
+      900: Color(0xFF000000), // Black
+    },
+  );
+
   static const primary = Color(0xFF000000);
   static const primaryLight = Color(0xFF2C2C2C);
   static const background = Color(0xFF121212);

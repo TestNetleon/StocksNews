@@ -14,7 +14,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
 import 'insider_details.dart';
 
@@ -207,7 +206,11 @@ class InsiderCompanyContainer extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                return const SpacerVerticel(height: 10);
+                // return const SpacerVerticel(height: 10);
+                return Divider(
+                  color: ThemeColors.greyBorder,
+                  height: 12.sp,
+                );
               },
               itemCount: provider.companyData?.data.length ?? 0),
         ));
@@ -418,7 +421,11 @@ class InsiderReportingContainer extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                return const SpacerVerticel(height: 10);
+                // return const SpacerVerticel(height: 10);
+                return Divider(
+                  color: ThemeColors.greyBorder,
+                  height: 12.sp,
+                );
               },
               itemCount: provider.reporterData?.data.length ?? 0),
         ));

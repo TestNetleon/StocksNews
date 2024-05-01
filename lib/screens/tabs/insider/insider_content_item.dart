@@ -8,157 +8,214 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 
-class InsiderContentItem extends StatefulWidget {
+import 'insiderDetails/insider_details.dart';
+
+class InsiderContentItem extends StatelessWidget {
   final InsiderTrading? data;
-  const InsiderContentItem({this.data, super.key});
+  final bool isOpen;
+  final Function() onTap;
+  const InsiderContentItem(
+      {this.data, super.key, this.isOpen = false, required this.onTap});
 
-  @override
-  State<InsiderContentItem> createState() => _InsiderContentItemState();
-}
-
-//
-class _InsiderContentItemState extends State<InsiderContentItem> {
-  bool open = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        InkWell(
-          onTap: () {
-            setState(() {
-              open = !open;
-            });
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${widget.data?.exchangeShortName}:${widget.data?.symbol}",
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   widget.data!.companyName.capitalizeWords(),
+                  //   style: stylePTSansRegular(
+                  //     color: ThemeColors.greyText,
+                  //     fontSize: 12,
+                  //   ),
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, InsiderDetailsType.path,
+                          arguments: {
+                            "companySlug": data?.companySlug,
+                            "companyName": data?.companyName,
+                          });
+                    },
+                    child: Text(
+                      "${data?.companyName.capitalizeWords()}",
+                      style: stylePTSansBold(fontSize: 14),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SpacerVerticel(height: 5),
+                  // Text(
+                  //   "${widget.data?.exchangeShortName}:${widget.data?.symbol}",
+                  //   style: stylePTSansBold(
+                  //     fontSize: 14,
+                  //     color: ThemeColors.accent,
+                  //   ),
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                  InkWell(
+                    onTap: () {
+                      // Navigator.pushNamed(context, StockDetails.path,
+                      //     arguments: data?.symbol);
+                      Navigator.pushNamed(context, InsiderDetailsType.path,
+                          arguments: {
+                            "companySlug": data?.companySlug,
+                            "companyName": data?.companyName,
+                          });
+                    },
+                    child: Text(
+                      "${data?.exchangeShortName}:${data?.symbol}",
+                      // "NYSL:TSLA",
                       style: stylePTSansBold(
-                        fontSize: 14,
+                        fontSize: 13,
                         color: ThemeColors.accent,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SpacerVerticel(height: 5),
-                    Text(
-                      widget.data!.companyName.capitalizeWords(),
-                      style: stylePTSansRegular(
-                        color: ThemeColors.greyText,
-                        fontSize: 12,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.data!.reportingName.capitalizeWords(),
-                      style: stylePTSansBold(fontSize: 14),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SpacerVerticel(height: 5),
-                    Text(
-                      widget.data!.typeOfOwner.capitalizeWords(),
-                      style: stylePTSansRegular(
-                        color: ThemeColors.greyText,
-                        fontSize: 12,
-                      ),
-                      maxLines: 2,
+                  ),
+                  const SpacerVerticel(height: 15),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, InsiderDetailsType.path,
+                          arguments: {
+                            "companySlug": data?.companySlug,
+                            "reportingSlug": data?.reportingSlug,
+                            "companyName": data?.companyName,
+                            "reportingName": data?.reportingName,
+                          });
+                    },
+                    child: Text(
+                      "${data?.reportingName.capitalizeWords()}",
+                      style: stylePTSansBold(
+                          fontSize: 14, color: ThemeColors.greyText),
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ],
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      widget.data!.transactionType,
-                      style: stylePTSansBold(
-                        fontSize: 14,
-                        color: widget.data?.transactionType == "Buy"
-                            ? ThemeColors.accent
-                            : widget.data?.transactionType == "Sell"
-                                ? ThemeColors.sos
-                                : ThemeColors.white,
-                      ),
+                  ),
+                  const SpacerVerticel(height: 5),
+                  Text(
+                    "${data?.typeOfOwner.capitalizeWords()}",
+                    style: stylePTSansRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 12,
                     ),
-                    const SpacerVerticel(height: 5),
-                    Container(
-                      // ignore: prefer_const_constructors
-                      decoration: BoxDecoration(
-                        // color: data?.transactionType == "Buy"
-                        //     ? ThemeColors.accent
-                        //     : data?.transactionType == "Sell"
-                        //         ? ThemeColors.sos
-                        //         : ThemeColors.white,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const SpacerHorizontal(width: 10),
+            // Expanded(
+            //   flex: 2,
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         widget.data!.reportingName.capitalizeWords(),
+            //         style: stylePTSansBold(fontSize: 14),
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //       ),
+            //       const SpacerVerticel(height: 5),
+            //       Text(
+            //         widget.data!.typeOfOwner.capitalizeWords(),
+            //         style: stylePTSansRegular(
+            //           color: ThemeColors.greyText,
+            //           fontSize: 12,
+            //         ),
+            //         maxLines: 2,
+            //         overflow: TextOverflow.ellipsis,
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // const SpacerHorizontal(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  data!.transactionType,
+                  style: stylePTSansBold(
+                    fontSize: 14,
+                    color: data?.transactionType == "Buy"
+                        ? ThemeColors.accent
+                        : data?.transactionType == "Sell"
+                            ? ThemeColors.sos
+                            : ThemeColors.white,
+                  ),
+                ),
+                const SpacerVerticel(height: 5),
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    // ignore: prefer_const_constructors
+                    decoration: BoxDecoration(
+                      // color: data?.transactionType == "Buy"
+                      //     ? ThemeColors.accent
+                      //     : data?.transactionType == "Sell"
+                      //         ? ThemeColors.sos
+                      //         : ThemeColors.white,
 
-                        color: ThemeColors.white,
-                      ),
-                      margin: EdgeInsets.only(left: 8.sp),
-                      padding: const EdgeInsets.all(3),
-                      child: Icon(
-                        open
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded,
-                        color: ThemeColors.background,
-                        size: 16.sp,
-                      ),
+                      color: ThemeColors.white,
                     ),
-                  ],
+                    margin: EdgeInsets.only(left: 8.sp),
+                    padding: const EdgeInsets.all(3),
+                    child: Icon(
+                      isOpen
+                          ? Icons.arrow_upward_rounded
+                          : Icons.arrow_downward_rounded,
+                      color: ThemeColors.background,
+                      size: 16.sp,
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
         AnimatedSize(
           duration: const Duration(milliseconds: 150),
           child: Container(
-              height: open ? null : 0,
+              height: isOpen ? null : 0,
               margin: EdgeInsets.only(
-                top: open ? 10.sp : 0,
-                bottom: open ? 10.sp : 0,
+                top: isOpen ? 10.sp : 0,
+                bottom: isOpen ? 10.sp : 0,
               ),
               child: Column(
                 children: [
                   InnerRowItem(
                     lable: "Shares Bought/Sold",
-                    value: "${widget.data!.securitiesTransacted}",
+                    value: "${data!.securitiesTransacted}",
                   ),
                   InnerRowItem(
                     lable: "Total Transaction",
-                    value: widget.data!.totalTransaction,
+                    value: data!.totalTransaction,
                   ),
                   InnerRowItem(
                     lable: "Shares Held After Transaction",
-                    value: widget.data!.securitiesOwned,
+                    value: data!.securitiesOwned,
                   ),
                   InnerRowItem(
                     lable: "Transaction Date",
-                    value: widget.data!.transactionDateNew,
+                    value: data!.transactionDateNew,
                   ),
                   InnerRowItem(
                     lable: "Details",
                     onDetailsClick: () {
-                      openUrl(widget.data!.link);
+                      openUrl(data!.link);
                     },
                   ),
                 ],

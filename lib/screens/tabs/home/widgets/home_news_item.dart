@@ -45,6 +45,25 @@ class HomeNewsItem extends StatelessWidget {
           padding: EdgeInsets.only(top: 12.sp),
           itemBuilder: (context, index) {
             News news = provider.homeInsiderRes!.news[index];
+
+            if (index == 0) {
+              return NewsItemSeparated(
+                showCategory: news.authors?.isEmpty == true,
+                news: News(
+                  slug: news.slug,
+                  // publishedDate: newsItemData.publishedDate,
+                  title: news.title,
+                  image: news.image,
+                  site: news.site,
+                  authors: news.authors,
+
+                  postDate: news.postDate,
+                  url: news.url,
+                  //  "November 29, 2023",
+                ),
+              );
+            }
+
             return NewsItem(
               news: news,
               showCategory: news.authors?.isEmpty == true,

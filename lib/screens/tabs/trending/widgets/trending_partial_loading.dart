@@ -22,27 +22,32 @@ class TrendingPartialLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (loading)
-          Container(
-            margin: EdgeInsets.all(20.sp),
-            child: const CircularProgressIndicator(
-              color: ThemeColors.accent,
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          if (loading)
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(20.sp),
+                child: const CircularProgressIndicator(
+                  color: ThemeColors.accent,
+                ),
+              ),
             ),
-          ),
-        if (error != null)
-          ErrorDisplayWidget(
-            smallHeight: true,
-            error: error,
-            onRefresh: onRefresh,
-          ),
-        if (!loading && error == null)
-          Container(
-            margin: EdgeInsets.only(top: 20.sp),
-            child: child,
-          )
-      ],
+          if (error != null)
+            ErrorDisplayWidget(
+              smallHeight: true,
+              error: error,
+              onRefresh: onRefresh,
+            ),
+          if (!loading && error == null)
+            Container(
+              margin: EdgeInsets.only(top: 20.sp),
+              child: child,
+            )
+        ],
+      ),
     );
   }
 }

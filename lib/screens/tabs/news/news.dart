@@ -10,11 +10,9 @@ import 'package:stocks_news_new/screens/tabs/news/news_list.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_verticle.dart';
 //
 import 'featuredNews/container.dart';
-import 'headerStocks/index.dart';
 
 class News extends StatefulWidget {
   const News({super.key});
@@ -62,8 +60,8 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const ScreenTitle(title: "Stock Market News"),
-            const NewsHeaderStocks(),
+            // const ScreenTitle(title: "Stock Market News"),
+            // const NewsHeaderStocks(),
 
             Container(
               decoration: BoxDecoration(
