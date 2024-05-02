@@ -5,9 +5,9 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class SectorIndustryItem extends StatelessWidget {
   final int index;
@@ -30,7 +30,10 @@ class SectorIndustryItem extends StatelessWidget {
               padding: EdgeInsets.all(5.sp),
               width: 43.sp,
               height: 43.sp,
-              child: ThemeImageView(url: "${data?.image}"),
+              // child: ThemeImageView(
+              //   url: "${data?.image}",
+              // ),
+              child: CachedNetworkImagesWidget(data?.image),
             ),
           ),
           const SpacerHorizontal(width: 12),

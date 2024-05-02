@@ -37,7 +37,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
     return LayoutBuilder(
       builder: (context, constraints) {
         double imageHeight = constraints.maxWidth * 0.7;
-        double dotSize = 8.sp;
+        double dotSize = 7.sp;
         return Stack(
           alignment: Alignment.center,
           children: [
@@ -95,7 +95,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                           children: [
                             Text(
                               i.title ?? "",
-                              style: styleGeorgiaBold(),
+                              style: styleGeorgiaBold(fontSize: 25),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                             ),

@@ -72,7 +72,31 @@ class _InsiderSocialTabsState extends State<InsiderSocialTabs> {
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: _selectedIndex == 0
-              ? const HomeItemInsiderTrending()
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                      child: Text(
+                        "Recent Insider Trades: Unveiling Market Insights through Real-Time Transactions",
+                        style: stylePTSansRegular(fontSize: 12),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //     Padding(
+                        //   padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                        //   child: Text(
+                        //     "Recent Insider Trades: Unveiling Market Insights through Real-Time Transactions",
+                        //     style: stylePTSansRegular(fontSize: 12),
+                        //   ),
+                        // ),
+                        const HomeItemInsiderTrending(),
+                      ],
+                    ),
+                  ],
+                )
               : const HomeRedditTwitterContentIndex(),
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
