@@ -39,6 +39,7 @@ import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
+import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/redditComments/i_frame_item.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
@@ -70,7 +71,7 @@ class Routes {
     Notifications.path: (_) => const Notifications(),
     Alerts.path: (_) => const Alerts(),
     WatchList.path: (_) => const WatchList(),
-
+    StartIndex.path: (_) => const StartIndex(),
     MyAccount.path: (_) => const MyAccount(),
     ContactUs.path: (_) => const ContactUs(),
     CompareStocks.path: (_) => const CompareStocks(),

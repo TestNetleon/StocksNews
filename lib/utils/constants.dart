@@ -42,6 +42,10 @@ class Images {
   static const String graphBear = "assets/images/graph_bear.png";
   static const String graphBull = "assets/images/graph_bull.png";
 
+  static const String start1 = "assets/images/1st_page.png";
+  static const String start2 = "assets/images/2nd_page.png";
+  static const String start3 = "assets/images/3rd_page.png";
+
   //share
   static const twitter = "assets/images/twitter_share.png";
   static const whatsapp = "assets/images/whatsapp_share.png";

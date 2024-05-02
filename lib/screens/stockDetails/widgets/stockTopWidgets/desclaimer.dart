@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
@@ -102,7 +101,12 @@ class StockDetailTopDisclaimer extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              commonShare(
+                title: provider.data?.keyStats?.symbol ?? "",
+                url: provider.data?.companyInfo?.website ?? "",
+              );
+            },
             child: const Icon(Icons.ios_share),
           )
           // Icon(Icons.ios_share)

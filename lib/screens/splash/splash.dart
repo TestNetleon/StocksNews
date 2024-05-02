@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+
+import '../tabs/tabs.dart';
 
 class Splash extends StatefulWidget {
   static const String path = "splash";
@@ -27,7 +30,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
-      _navigateToRequiredScreen();
     });
   }
 
@@ -42,13 +44,14 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     UserProvider provider = context.read<UserProvider>();
     UserRes? user = await Preference.getUser();
 
-    if (provider.user == null) {
+    if (provider.user == null && user != null) {
       log("-------FROM SPLASH USER UPDATING---------");
-      provider.setUser(user!);
+      provider.setUser(user);
     }
+    _navigateToRequiredScreen();
   }
 
-  void _navigateToRequiredScreen() {
+  void _navigateToRequiredScreen() async {
     // UserProvider provider = context.read<UserProvider>();
     // if (await provider.checkForUser()) {
     //   // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
@@ -56,8 +59,17 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     //   // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
     // }
 
-    Navigator.pushNamedAndRemoveUntil(
-        navigatorKey.currentContext!, Tabs.path, (route) => false);
+    kDebugMode ? Preference.setFirstTime(true) : null;
+
+    bool firstTime = await Preference.getFirstTime();
+    log("--First Time $firstTime");
+    if (firstTime) {
+      Navigator.pushReplacementNamed(
+          navigatorKey.currentContext!, StartIndex.path);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!, Tabs.path, (route) => false);
+    }
   }
 
   @override

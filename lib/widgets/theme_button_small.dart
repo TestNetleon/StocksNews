@@ -66,7 +66,11 @@ class ThemeButtonSmall extends StatelessWidget {
             visible: showArrow,
             child: Container(
               margin: EdgeInsets.only(left: 8.sp),
-              child: const Icon(Icons.arrow_forward, size: 20),
+              child: Icon(
+                Icons.arrow_forward,
+                size: 20,
+                color: textColor,
+              ),
             ),
           )
         ],

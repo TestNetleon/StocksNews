@@ -37,6 +37,7 @@ class StocksContainer extends StatelessWidget {
       appBar: AppBarHome(
         isPopback: true,
         filterClick: _filterClick,
+        canSearch: true,
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
