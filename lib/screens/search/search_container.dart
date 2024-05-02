@@ -51,6 +51,12 @@ class SearchContainer extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             News? news = homeProvider.homeInsiderRes?.news[index];
+
+            if (index == 0) {
+              return NewsItemSeparated(
+                  showCategory: news?.authors?.isEmpty == true, news: news);
+            }
+
             return NewsItem(
                 showCategory: news?.authors?.isEmpty == true, news: news);
           },

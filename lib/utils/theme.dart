@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+
 //
 final lightTheme = ThemeData(
   useMaterial3: false,
@@ -125,6 +126,43 @@ final lightTheme = ThemeData(
 //   );
 // }
 
+// TextStyle styleGeorgiaRegular({
+//   color = Colors.white,
+//   double fontSize = 15,
+//   height = 1.2,
+//   letterSpacing = 0.70,
+//   decoration,
+//   bool showSpacing = false,
+// }) {
+//   return TextStyle(
+//     fontSize: fontSize.sp,
+//     color: color,
+//     fontFamily: Fonts.merriWeather,
+//     fontWeight: FontWeight.normal,
+//     height: height,
+//     decoration: decoration,
+//     decorationColor: color,
+//     letterSpacing: showSpacing ? letterSpacing : 0.0,
+//   );
+// }
+
+// TextStyle styleGeorgiaBold({
+//   color = Colors.white,
+//   double fontSize = 16,
+//   letterSpacing = 0.70,
+//   decoration,
+// }) {
+//   return TextStyle(
+//     fontSize: fontSize.sp,
+//     color: color,
+//     fontFamily: Fonts.merriWeather,
+//     fontWeight: FontWeight.bold,
+//     decoration: decoration,
+//     decorationColor: color,
+//     // letterSpacing: letterSpacing,
+//   );
+// }
+
 TextStyle styleGeorgiaRegular({
   color = Colors.white,
   double fontSize = 15,
@@ -136,7 +174,7 @@ TextStyle styleGeorgiaRegular({
   return TextStyle(
     fontSize: fontSize.sp,
     color: color,
-    fontFamily: Fonts.merriWeather,
+    fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.normal,
     height: height,
     decoration: decoration,
@@ -154,7 +192,7 @@ TextStyle styleGeorgiaBold({
   return TextStyle(
     fontSize: fontSize.sp,
     color: color,
-    fontFamily: Fonts.merriWeather,
+    fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.bold,
     decoration: decoration,
     decorationColor: color,

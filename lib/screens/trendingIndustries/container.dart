@@ -6,12 +6,12 @@ import 'package:stocks_news_new/providers/trending_industries.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/graph/graph.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingIndustriesContainer extends StatefulWidget {
   const TrendingIndustriesContainer({super.key});
@@ -79,7 +79,11 @@ class _TrendingIndustriesContainerState
                               return TrendingIndustryItem(data: data);
                             },
                             separatorBuilder: (context, index) {
-                              return const SpacerVertical(height: 10);
+                              // return const SpacerVertical(height: 10);
+                              return Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 12.sp,
+                              );
                             },
                             itemCount: provider.data?.length ?? 0,
                           ),

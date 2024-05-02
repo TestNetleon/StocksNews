@@ -93,8 +93,8 @@ class NewsItem extends StatelessWidget {
                 Text(
                   news?.title ?? "",
                   style: styleGeorgiaRegular(fontSize: 16),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  // maxLines: 2,
+                  // overflow: TextOverflow.ellipsis,
                 ),
                 const SpacerVertical(height: 5),
                 //  const SpacerVertical(height: 10),
@@ -351,8 +351,8 @@ class NewsItemSeparated extends StatelessWidget {
                     Text(
                       news?.title ?? "",
                       style: styleGeorgiaRegular(fontSize: 16),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      // maxLines: 2,
+                      // overflow: TextOverflow.ellipsis,
                     ),
                     const SpacerVertical(height: 5),
                     //  const SpacerVertical(height: 10),

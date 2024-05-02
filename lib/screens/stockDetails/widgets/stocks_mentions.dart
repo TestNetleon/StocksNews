@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -14,10 +15,16 @@ class StocksMentions extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    List<Mentions>? mentions =
-        context.watch<StockDetailProvider>().dataMentions?.mentions;
-    if (mentions == null) {
+    StockDetailProvider provider = context.watch<StockDetailProvider>();
+
+    List<Mentions>? mentions = provider.dataMentions?.mentions;
+    if (provider.mentionLoading && mentions == null) {
       return const SizedBox();
+    }
+    if (!provider.mentionLoading && mentions == null) {
+      return Center(
+        child: ErrorDisplayWidget(),
+      );
     }
 
     return Column(
@@ -33,10 +40,10 @@ class StocksMentions extends StatelessWidget {
           child: PieChart(
             PieChartData(
               sections: List.generate(
-                mentions.length,
+                mentions?.length ?? 0,
                 (index) => PieChartSectionData(
-                  color: mentions[index].color,
-                  value: mentions[index].mentionCount?.toDouble(),
+                  color: mentions?[index].color,
+                  value: mentions?[index].mentionCount?.toDouble(),
                   title: '',
                   radius: 6,
                 ),
@@ -55,7 +62,7 @@ class StocksMentions extends StatelessWidget {
             return Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: mentions[index].color,
+                  backgroundColor: mentions?[index].color,
                   radius: 5.sp,
                 ),
                 const SpacerHorizontal(width: 10),
@@ -63,12 +70,12 @@ class StocksMentions extends StatelessWidget {
                   child: Wrap(
                     children: [
                       Text(
-                        mentions[index].website ?? "",
+                        mentions?[index].website ?? "",
                         style: stylePTSansBold(fontSize: 14),
                       ),
                       const SpacerHorizontal(width: 20),
                       Text(
-                        "${mentions[index].mentionCount}",
+                        "${mentions?[index].mentionCount}",
                         style: stylePTSansBold(fontSize: 14),
                       )
                     ],
@@ -80,7 +87,7 @@ class StocksMentions extends StatelessWidget {
           separatorBuilder: (context, index) {
             return const SpacerVertical(height: 12);
           },
-          itemCount: mentions.length,
+          itemCount: mentions?.length ?? 0,
         )
       ],
     );

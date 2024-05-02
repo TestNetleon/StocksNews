@@ -27,90 +27,83 @@ class TrendingIndustryItem extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(10.sp),
       onTap: () => _navigateSector(context, data.industrySlug, data.industry),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.sp),
-            border: Border.all(color: ThemeColors.greyBorder),
-            color: ThemeColors.primaryLight),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: [
-                  data.image == "" ||
-                          data.image ==
-                              "https://app.stocks.news/front/images/no_image.png"
-                      ? Image.asset(
-                          Images.monitor,
-                          color: ThemeColors.accent,
-                          height: 25.sp,
-                          width: 25.sp,
-                        )
-                      : ThemeImageView(
-                          url: data.image ?? "",
-                          height: 25,
-                          width: 25,
-                        ),
-                  const SpacerHorizontal(width: 3),
-                  Flexible(
-                    child: Text(
-                      data.industry ?? "",
-                      style: stylePTSansRegular(fontSize: 12),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: [
+                data.image == "" ||
+                        data.image ==
+                            "https://app.stocks.news/front/images/no_image.png"
+                    ? Image.asset(
+                        Images.monitor,
+                        color: ThemeColors.accent,
+                        height: 25.sp,
+                        width: 25.sp,
+                      )
+                    : ThemeImageView(
+                        url: data.image ?? "",
+                        height: 25,
+                        width: 25,
+                      ),
+                const SpacerHorizontal(width: 3),
+                Flexible(
+                  child: Text(
+                    data.industry ?? "",
+                    style: stylePTSansRegular(fontSize: 12),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SpacerHorizontal(width: 3),
+          SizedBox(
+            width: 50.sp,
+            child: AutoSizeText(
+              textAlign: TextAlign.center,
+              data.mentionType ?? "",
+              style: stylePTSansRegular(
+                fontSize: 12,
+                color: data.mentionType == "Very Bullish"
+                    ? ThemeColors.accent
+                    : ThemeColors.sos,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SpacerHorizontal(width: 3),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "${data.totalMentions ?? 0} ",
+                      style: stylePTSansRegular(
+                        fontSize: 12,
+                        color: ThemeColors.white,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SpacerHorizontal(width: 3),
-            SizedBox(
-              width: 50.sp,
-              child: AutoSizeText(
-                textAlign: TextAlign.center,
-                data.mentionType ?? "",
-                style: stylePTSansRegular(
-                  fontSize: 12,
-                  color: data.mentionType == "Very Bullish"
-                      ? ThemeColors.accent
-                      : ThemeColors.sos,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SpacerHorizontal(width: 3),
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "${data.totalMentions ?? 0} ",
-                        style: stylePTSansRegular(
-                          fontSize: 12,
-                          color: ThemeColors.white,
-                        ),
+                    TextSpan(
+                      text: "${data.mentionChange?.toCurrency() ?? 0}%",
+                      style: stylePTSansRegular(
+                        fontSize: 12,
+                        color: (data.mentionChange ?? 0) > 0
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
                       ),
-                      TextSpan(
-                        text: "${data.mentionChange?.toCurrency() ?? 0}%",
-                        style: stylePTSansRegular(
-                          fontSize: 12,
-                          color: (data.mentionChange ?? 0) > 0
-                              ? ThemeColors.accent
-                              : ThemeColors.sos,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

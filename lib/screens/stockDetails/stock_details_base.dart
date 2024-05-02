@@ -9,11 +9,8 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mentions.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_stories.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mention_with.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/analysis.dart';
 import 'widgets/companyBrief/container.dart';
 import 'widgets/companyEarning/container.dart';
@@ -120,160 +117,160 @@ class StockDetailsBase extends StatelessWidget {
       ],
     );
 
-    return Column(
-      children: [
-        CustomTabContainerNEW(
-          tabs: [
-            "Home",
-            // "A",
-            // "B",
-            // "C",
-            // "D",
-            // "E",
-            // "F",
-            // "G",
-            // "H",
-            // "I",
-            // "J",
-            // "K",
-            // "L"
-          ],
-          widgets: [
-            const StockTopDetail(),
-            // const StockDetailTopGraph(),
-            // // const SpacerVertical(),
-            // const CompanyEarningStockDetail(),
-            // const States(),
-            // // const SpacerVertical(),
-            // const StocksScoreGrades(),
-            // const CompanyBrief(),
-            // const Analysis(),
-            // // const SpacerVertical(),
-            // html == null || html.isEmpty
-            //     ? const SizedBox()
-            //     : AnalysisForecast(html: html),
-            // // const SpacerVertical(),
-            // const StocksTechnicalAnalysis(),
+//     return Column(
+//       children: [
+//         CustomTabContainerNEW(
+//           tabs: [
+//             "Home",
+//             // "A",
+//             // "B",
+//             // "C",
+//             // "D",
+//             // "E",
+//             // "F",
+//             // "G",
+//             // "H",
+//             // "I",
+//             // "J",
+//             // "K",
+//             // "L"
+//           ],
+//           widgets: [
+//             const StockTopDetail(),
+//             // const StockDetailTopGraph(),
+//             // // const SpacerVertical(),
+//             // const CompanyEarningStockDetail(),
+//             // const States(),
+//             // // const SpacerVertical(),
+//             // const StocksScoreGrades(),
+//             // const CompanyBrief(),
+//             // const Analysis(),
+//             // // const SpacerVertical(),
+//             // html == null || html.isEmpty
+//             //     ? const SizedBox()
+//             //     : AnalysisForecast(html: html),
+//             // // const SpacerVertical(),
+//             // const StocksTechnicalAnalysis(),
 
-            // // const SpacerVertical(),
-            // // const TwitterSentiments(),
-            // // const SpacerVertical(),
-            // // Visibility(
-            // //     visible: redditPost?.isNotEmpty == true,
-            // //     child: const RedditSentiments()),
-            // // const SpacerVertical(),
+//             // // const SpacerVertical(),
+//             // // const TwitterSentiments(),
+//             // // const SpacerVertical(),
+//             // // Visibility(
+//             // //     visible: redditPost?.isNotEmpty == true,
+//             // //     child: const RedditSentiments()),
+//             // // const SpacerVertical(),
 
-            // Visibility(
-            //     visible: mentions?.isNotEmpty == true,
-            //     child: const StocksMentions()),
-            // // const SpacerVertical(),
+//             // Visibility(
+//             //     visible: mentions?.isNotEmpty == true,
+//             //     child: const StocksMentions()),
+//             // // const SpacerVertical(),
 
-            // RedditTwitterIframe(
-            //   redditRssId: companyInfo?.redditRssId,
-            //   twitterRssId: companyInfo?.twitterRssId,
-            // ),
-            // // const SpacerVertical(),
+//             // RedditTwitterIframe(
+//             //   redditRssId: companyInfo?.redditRssId,
+//             //   twitterRssId: companyInfo?.twitterRssId,
+//             // ),
+//             // // const SpacerVertical(),
 
-            // const StocksTrendingStories(),
-            // // Visibility(
-            // //   visible: companyInfo?.description != null &&
-            // //       companyInfo?.description?.isNotEmpty == true,
-            // //   child: const SpacerVertical(),
-            // // ),
-            // // Visibility(
-            // //   visible: companyInfo?.description != null &&
-            // //       companyInfo?.description?.isNotEmpty == true,
-            // //   child: const AboutStock(),
-            // // ),
-            // // const SpacerVertical(),
-            // Visibility(
-            //   visible: tradingStock?.isNotEmpty == true,
-            //   child: const StockMentionWith(),
-            // ),
-            // // const SpacerVertical(height: 90),
-          ],
-        ),
+//             // const StocksTrendingStories(),
+//             // // Visibility(
+//             // //   visible: companyInfo?.description != null &&
+//             // //       companyInfo?.description?.isNotEmpty == true,
+//             // //   child: const SpacerVertical(),
+//             // // ),
+//             // // Visibility(
+//             // //   visible: companyInfo?.description != null &&
+//             // //       companyInfo?.description?.isNotEmpty == true,
+//             // //   child: const AboutStock(),
+//             // // ),
+//             // // const SpacerVertical(),
+//             // Visibility(
+//             //   visible: tradingStock?.isNotEmpty == true,
+//             //   child: const StockMentionWith(),
+//             // ),
+//             // // const SpacerVertical(height: 90),
+//           ],
+//         ),
 
-        // SingleChildScrollView(
-        //   child: Padding(
-        //     padding: EdgeInsets.all(Dimen.padding.sp),
-        //     child: Column(
-        //       children: [
-        //         const StockTopDetail(),
-        //         const StockDetailTopGraph(),
-        //         const SpacerVertical(),
-        //         const CompanyEarningStockDetail(),
-        //         const States(),
-        //         const SpacerVertical(),
-        //         const StocksScoreGrades(),
-        //         const CompanyBrief(),
-        //         const Analysis(),
-        //         const SpacerVertical(),
-        //         html == null || html.isEmpty
-        //             ? const SizedBox()
-        //             : AnalysisForecast(html: html),
-        //         const SpacerVertical(),
-        //         const StocksTechnicalAnalysis(),
+//         // SingleChildScrollView(
+//         //   child: Padding(
+//         //     padding: EdgeInsets.all(Dimen.padding.sp),
+//         //     child: Column(
+//         //       children: [
+//         //         const StockTopDetail(),
+//         //         const StockDetailTopGraph(),
+//         //         const SpacerVertical(),
+//         //         const CompanyEarningStockDetail(),
+//         //         const States(),
+//         //         const SpacerVertical(),
+//         //         const StocksScoreGrades(),
+//         //         const CompanyBrief(),
+//         //         const Analysis(),
+//         //         const SpacerVertical(),
+//         //         html == null || html.isEmpty
+//         //             ? const SizedBox()
+//         //             : AnalysisForecast(html: html),
+//         //         const SpacerVertical(),
+//         //         const StocksTechnicalAnalysis(),
 
-        //         // const SpacerVertical(),
-        //         // const TwitterSentiments(),
-        //         // const SpacerVertical(),
-        //         // Visibility(
-        //         //     visible: redditPost?.isNotEmpty == true,
-        //         //     child: const RedditSentiments()),
-        //         const SpacerVertical(),
+//         //         // const SpacerVertical(),
+//         //         // const TwitterSentiments(),
+//         //         // const SpacerVertical(),
+//         //         // Visibility(
+//         //         //     visible: redditPost?.isNotEmpty == true,
+//         //         //     child: const RedditSentiments()),
+//         //         const SpacerVertical(),
 
-        //         Visibility(
-        //             visible: mentions?.isNotEmpty == true,
-        //             child: const StocksMentions()),
-        //         const SpacerVertical(),
+//         //         Visibility(
+//         //             visible: mentions?.isNotEmpty == true,
+//         //             child: const StocksMentions()),
+//         //         const SpacerVertical(),
 
-        //         RedditTwitterIframe(
-        //           redditRssId: companyInfo?.redditRssId,
-        //           twitterRssId: companyInfo?.twitterRssId,
-        //         ),
-        //         // const SpacerVertical(),
+//         //         RedditTwitterIframe(
+//         //           redditRssId: companyInfo?.redditRssId,
+//         //           twitterRssId: companyInfo?.twitterRssId,
+//         //         ),
+//         //         // const SpacerVertical(),
 
-        //         const StocksTrendingStories(),
-        //         Visibility(
-        //           visible: companyInfo?.description != null &&
-        //               companyInfo?.description?.isNotEmpty == true,
-        //           child: const SpacerVertical(),
-        //         ),
-        //         // Visibility(
-        //         //   visible: companyInfo?.description != null &&
-        //         //       companyInfo?.description?.isNotEmpty == true,
-        //         //   child: const AboutStock(),
-        //         // ),
-        //         // const SpacerVertical(),
-        //         Visibility(
-        //           visible: tradingStock?.isNotEmpty == true,
-        //           child: const StockMentionWith(),
-        //         ),
-        //         const SpacerVertical(height: 90),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+//         //         const StocksTrendingStories(),
+//         //         Visibility(
+//         //           visible: companyInfo?.description != null &&
+//         //               companyInfo?.description?.isNotEmpty == true,
+//         //           child: const SpacerVertical(),
+//         //         ),
+//         //         // Visibility(
+//         //         //   visible: companyInfo?.description != null &&
+//         //         //       companyInfo?.description?.isNotEmpty == true,
+//         //         //   child: const AboutStock(),
+//         //         // ),
+//         //         // const SpacerVertical(),
+//         //         Visibility(
+//         //           visible: tradingStock?.isNotEmpty == true,
+//         //           child: const StockMentionWith(),
+//         //         ),
+//         //         const SpacerVertical(height: 90),
+//         //       ],
+//         //     ),
+//         //   ),
+//         // ),
 
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: ThemeColors.greyBorder),
-              color: ThemeColors.primaryLight,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5.sp),
-                topRight: Radius.circular(5.sp),
-              ),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 10.sp),
-            child: const AddToAlertWatchlist(),
-          ),
-        )
-      ],
-    );
+//         Positioned(
+//           bottom: 0,
+//           left: 0,
+//           right: 0,
+//           child: Container(
+//             decoration: BoxDecoration(
+//               border: Border.all(color: ThemeColors.greyBorder),
+//               color: ThemeColors.primaryLight,
+//               borderRadius: BorderRadius.only(
+//                 topLeft: Radius.circular(5.sp),
+//                 topRight: Radius.circular(5.sp),
+//               ),
+//             ),
+//             padding: EdgeInsets.symmetric(horizontal: 10.sp),
+//             child: const AddToAlertWatchlist(),
+//           ),
+//         )
+//       ],
+//     );
   }
 }
