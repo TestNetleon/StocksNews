@@ -388,7 +388,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           //   return null;
                           // },
                           textStyle:
-                              styleGeorgiaRegular(fontSize: 14, height: 1.5),
+                              styleGeorgiaRegular(fontSize: 18, height: 1.5),
                         ),
 
                         const SpacerVertical(height: 20),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analysis_forecast.dart';
@@ -11,6 +11,10 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_sto
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mention_with.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/error_display_common.dart';
+import '../../utils/colors.dart';
+import '../../widgets/spacer_vertical.dart';
+import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/analysis.dart';
 import 'widgets/companyBrief/container.dart';
 import 'widgets/companyEarning/container.dart';
@@ -29,8 +33,8 @@ class StockDetailsBase extends StatelessWidget {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
 
     CompanyInfo? companyInfo = provider.data?.companyInfo;
-    List<TradingStock>? tradingStock = provider.dataMentions?.tradingStock;
-    List<Mentions>? mentions = provider.dataMentions?.mentions;
+    // List<TradingStock>? tradingStock = provider.dataMentions?.tradingStock;
+    // List<Mentions>? mentions = provider.dataMentions?.mentions;
     String? html = provider.dataMentions?.forecastAnalyst;
 
     return CustomTabContainerNEW(
@@ -44,20 +48,42 @@ class StockDetailsBase extends StatelessWidget {
         "Analysis Forecast",
         "Technical Analysis",
         "News Mentions",
-        "Recent Reddit Posts",
+        "Recent Reddit Posts and X Tweets",
         "Trending Stories",
         "Popular Stocks"
       ],
       widgets: [
-        SingleChildScrollView(
-          padding: EdgeInsets.all(Dimen.padding.sp),
-          child: const Column(
-            children: [
-              StockTopDetail(),
-              StockDetailTopGraph(),
-              CompanyBrief(),
-            ],
-          ),
+        Stack(
+          children: [
+            SingleChildScrollView(
+              padding: EdgeInsets.all(Dimen.padding.sp),
+              child: const Column(
+                children: [
+                  StockTopDetail(),
+                  StockDetailTopGraph(),
+                  CompanyBrief(),
+                  SpacerVertical(height: 90),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: ThemeColors.greyBorder),
+                  color: ThemeColors.primaryLight,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5.sp),
+                    topRight: Radius.circular(5.sp),
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                child: const AddToAlertWatchlist(),
+              ),
+            )
+          ],
         ),
         SingleChildScrollView(
           padding: EdgeInsets.all(Dimen.padding.sp),
@@ -82,7 +108,10 @@ class StockDetailsBase extends StatelessWidget {
         SingleChildScrollView(
           padding: EdgeInsets.all(Dimen.padding.sp),
           child: html == null || html.isEmpty
-              ? const SizedBox()
+              ? const ErrorDisplayWidget(
+                  smallHeight: true,
+                  error: 'No analysis forecast found.',
+                )
               : AnalysisForecast(html: html),
         ),
         SingleChildScrollView(
@@ -91,9 +120,9 @@ class StockDetailsBase extends StatelessWidget {
         ),
         SingleChildScrollView(
           padding: EdgeInsets.all(Dimen.padding.sp),
-          child: Visibility(
-            visible: mentions?.isNotEmpty == true,
-            child: const StocksMentions(),
+          child: const Visibility(
+            // visible: mentions?.isNotEmpty == true,
+            child: StocksMentions(),
           ),
         ),
         SingleChildScrollView(
@@ -109,9 +138,9 @@ class StockDetailsBase extends StatelessWidget {
         ),
         SingleChildScrollView(
           padding: EdgeInsets.all(Dimen.padding.sp),
-          child: Visibility(
-            visible: tradingStock?.isNotEmpty == true,
-            child: const StockMentionWith(),
+          child: const Visibility(
+            // visible: tradingStock?.isNotEmpty == true,
+            child: StockMentionWith(),
           ),
         ),
       ],
