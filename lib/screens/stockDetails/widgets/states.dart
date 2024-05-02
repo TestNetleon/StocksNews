@@ -36,11 +36,9 @@ class States extends StatelessWidget {
     //     context.watch<StockDetailProvider>().data?.companyInfo;
     return Column(
       children: [
-        const ScreenTitle(
+        ScreenTitle(
           title: "Key Stats",
-          subTitle:
-              "Key stats represent essential financial metrics and indicators used to evaluate a company's performance and potential investment opportunities.",
-          // style: stylePTSansRegular(fontSize: 20),
+          subTitle: keyStats?.text,
         ),
         StateItem(label: "Symbol", value: keyStats?.symbol),
         StateItem(label: "Name", value: keyStats?.name),

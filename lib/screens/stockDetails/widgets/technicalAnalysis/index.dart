@@ -19,9 +19,7 @@ class StocksTechnicalAnalysis extends StatelessWidget {
       children: [
         ScreenTitle(
           title: "${provider.data?.keyStats?.symbol} Technical Analysis",
-          subTitle:
-              "In the Technical Analysis section for this stock, various timeframes, moving averages, and technical indicators offer insights into sentiment trends, helping forecast whether the prevailing sentiment suggests a buy or sell recommendation.",
-          // style: stylePTSansRegular(fontSize: 20),
+          subTitle: provider.technicalAnalysisRes?.text,
         ),
         provider.tALoading && provider.technicalAnalysisRes == null
             ? Row(

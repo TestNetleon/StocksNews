@@ -179,6 +179,8 @@ class KeyStats {
   final String? earningsAnnouncement;
   final String? sharesOutstanding;
   final num? timestamp;
+  final String? text;
+  final String? forecastText;
 
   final num? priceValue;
   final num? dayLowValue;
@@ -216,6 +218,8 @@ class KeyStats {
     this.yearHighValue,
     this.yearLowValue,
     this.priceValue,
+    this.text,
+    this.forecastText,
   });
 
   factory KeyStats.fromJson(Map<String, dynamic> json) => KeyStats(
@@ -248,6 +252,8 @@ class KeyStats {
         yearHighValue: json["yearHigh_value"],
         yearLowValue: json["yearLow_value"],
         priceValue: json["price_value"],
+        text: json["text"],
+        forecastText: json["forecast_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -280,5 +286,7 @@ class KeyStats {
         "yearLow_value": yearLowValue,
         "yearHigh_value": yearHighValue,
         "market_status": marketStatus,
+        "text": text,
+        "forecast_text": forecastText,
       };
 }

@@ -23,6 +23,8 @@ class StockDetailMentionRes {
   final List<News>? newsPost;
   // final List<TopPost>? topPosts;
   final String? forecastAnalyst;
+  final String? mentionText;
+  final String? forecastText;
 
   StockDetailMentionRes({
     // this.keyStats,
@@ -35,6 +37,8 @@ class StockDetailMentionRes {
     this.newsPost,
     // this.topPosts,
     this.forecastAnalyst,
+    this.forecastText,
+    this.mentionText,
   });
 
   factory StockDetailMentionRes.fromJson(Map<String, dynamic> json) =>
@@ -63,6 +67,8 @@ class StockDetailMentionRes {
             ? []
             : List<News>.from(json["top_posts"]!.map((x) => News.fromJson(x))),
         forecastAnalyst: json["forecast_analyst"],
+        forecastText: json["forecast_text"],
+        mentionText: json["mention_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -83,6 +89,8 @@ class StockDetailMentionRes {
             ? []
             : List<dynamic>.from(newsPost!.map((x) => x.toJson())),
         "forecast_analyst": forecastAnalyst,
+        "forecast_text": forecastText,
+        "mention_text": mentionText,
       };
 }
 

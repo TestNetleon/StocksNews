@@ -14,6 +14,7 @@ class AnalysisRes {
   final num analystRankingPercent;
   final num overallPercent;
   final num setimentPercent;
+  final String? text;
 
   AnalysisRes({
     required this.fundamentalPercent,
@@ -23,6 +24,7 @@ class AnalysisRes {
     required this.analystRankingPercent,
     required this.overallPercent,
     required this.setimentPercent,
+    required this.text,
   });
 
   factory AnalysisRes.fromJson(Map<String, dynamic> json) => AnalysisRes(
@@ -33,6 +35,7 @@ class AnalysisRes {
         analystRankingPercent: json["analyst_ranking_percent"],
         overallPercent: json["overall_percent"]?.toDouble(),
         setimentPercent: json["sentiment_percent"],
+        text: json["text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +46,6 @@ class AnalysisRes {
         "analyst_ranking_percent": analystRankingPercent,
         "overall_percent": overallPercent,
         "sentiment_percent": setimentPercent,
+        "text": text,
       };
 }

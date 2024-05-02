@@ -22,11 +22,9 @@ class Analysis extends StatelessWidget {
 
     return Column(
       children: [
-        const ScreenTitle(
+        ScreenTitle(
           title: "Stock Analysis",
-          subTitle:
-              "The Stock Analysis section offers a comprehensive ranking-based analysis alongside its peer stocks, aiding in the identification of potential future growth for the stock.",
-          // style: stylePTSansRegular(fontSize: 20),
+          subTitle: provider.analysisRes?.text,
         ),
         provider.analysisLoading && provider.analysisRes == null
             ? Row(

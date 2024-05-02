@@ -18,6 +18,7 @@ class TechnicalAnalysisRes {
   final List<MovingAverageArr> movingAverageArr;
   final MovingAverage movingAverage;
   final String interval;
+  final String text;
 
   TechnicalAnalysisRes({
     required this.summary,
@@ -26,6 +27,7 @@ class TechnicalAnalysisRes {
     required this.movingAverageArr,
     required this.movingAverage,
     required this.interval,
+    required this.text,
   });
 
   factory TechnicalAnalysisRes.fromJson(Map<String, dynamic> json) =>
@@ -39,6 +41,7 @@ class TechnicalAnalysisRes {
             .map((x) => MovingAverageArr.fromJson(x))),
         movingAverage: MovingAverage.fromJson(json["moving_average"]),
         interval: json["interval"],
+        text: json["text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +53,7 @@ class TechnicalAnalysisRes {
             List<dynamic>.from(movingAverageArr.map((x) => x.toJson())),
         "moving_average": movingAverage.toJson(),
         "interval": interval,
+        "text": text,
       };
 }
 

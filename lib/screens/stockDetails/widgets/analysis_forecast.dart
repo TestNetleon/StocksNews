@@ -44,14 +44,13 @@ class _AnalysisForecastState extends State<AnalysisForecast> {
 
   @override
   Widget build(BuildContext context) {
-    KeyStats? keyStats = context.watch<StockDetailProvider>().data?.keyStats;
+    StockDetailProvider provider = context.watch<StockDetailProvider>();
+    KeyStats? keyStats = provider.data?.keyStats;
     return Column(
       children: [
         ScreenTitle(
           title: "${keyStats?.name} (${keyStats?.symbol}) Analysis Forecast",
-          subTitle:
-              "The Analyst Forecasts section displays Wall Street analysts' predictions for stock price growth or decline in the next 12 months.",
-          // style: stylePTSansRegular(fontSize: 20),
+          subTitle: provider.dataMentions?.forecastText,
         ),
         Container(
           width: double.infinity,
