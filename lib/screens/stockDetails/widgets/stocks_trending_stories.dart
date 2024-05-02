@@ -28,6 +28,11 @@ class StocksTrendingStories extends StatelessWidget {
           padding: EdgeInsets.only(top: 12.sp),
           itemBuilder: (context, index) {
             News news = newsPost[index];
+
+            if (index == 0) {
+              return NewsItemSeparated(
+                  news: news, showCategory: news.authors?.isEmpty == true);
+            }
             return NewsItem(
                 news: news, showCategory: news.authors?.isEmpty == true);
           },

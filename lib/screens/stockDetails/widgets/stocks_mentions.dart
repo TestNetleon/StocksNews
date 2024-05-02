@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -18,12 +19,27 @@ class StocksMentions extends StatelessWidget {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
 
     List<Mentions>? mentions = provider.dataMentions?.mentions;
-    if (provider.mentionLoading && mentions == null) {
-      return const SizedBox();
+
+    if (provider.mentionLoading) {
+      return const Center(
+        child: CircularProgressIndicator(
+          color: ThemeColors.accent,
+        ),
+      );
     }
-    if (!provider.mentionLoading && mentions == null) {
+    if (!provider.mentionLoading && mentions?.isEmpty == true) {
       return Center(
-        child: ErrorDisplayWidget(),
+        child: ErrorDisplayWidget(
+          smallHeight: true,
+          error: "No mentions found.",
+          onRefresh: () async {
+            provider.getStockDetailsMentions(
+              symbol: provider.data?.keyStats?.symbol ?? "",
+              sectorSlug: provider.data?.companyInfo?.sectorSlug ?? '',
+              price: provider.data?.keyStats?.priceWithoutCur,
+            );
+          },
+        ),
       );
     }
 
