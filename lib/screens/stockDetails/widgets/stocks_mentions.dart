@@ -22,7 +22,7 @@ class StocksMentions extends StatelessWidget {
       return const SizedBox();
     }
     if (!provider.mentionLoading && mentions == null) {
-      return Center(
+      return const Center(
         child: ErrorDisplayWidget(),
       );
     }
@@ -77,7 +77,7 @@ class StocksMentions extends StatelessWidget {
                       Text(
                         "${mentions?[index].mentionCount}",
                         style: stylePTSansBold(fontSize: 14),
-                      )
+                      ),
                     ],
                   ),
                 )
