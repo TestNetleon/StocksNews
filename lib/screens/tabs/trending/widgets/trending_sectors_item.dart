@@ -25,71 +25,73 @@ class TrendingSectorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, cnts) {
-      return InkWell(
-        onTap: () {
-          _navigateSector(context, data.sectorSlug, data.sector);
-        },
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 0.sp),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: cnts.maxWidth * .5,
-                child: Row(
-                  children: [
-                    // const Icon(
-                    //   Icons.monitor_rounded,
-                    //   color: ThemeColors.accent,
-                    // ),
-                    data.image == "" ||
-                            data.image ==
-                                "https://app.stocks.news/front/images/no_image.png"
-                        ? Image.asset(
-                            Images.monitor,
-                            color: ThemeColors.accent,
-                            height: 25.sp,
-                            width: 25.sp,
-                          )
-                        : ThemeImageView(
-                            url: data.image ?? "",
-                            height: 30,
-                            width: 30,
-                          ),
-                    const SpacerHorizontal(width: 12),
-                    Flexible(
-                      child: Text(
-                        data.sector ?? "",
-                        style: stylePTSansRegular(fontSize: 14),
+    return LayoutBuilder(
+      builder: (context, cnts) {
+        return InkWell(
+          onTap: () {
+            _navigateSector(context, data.sectorSlug, data.sector);
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 0.sp),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: cnts.maxWidth * .5,
+                  child: Row(
+                    children: [
+                      // const Icon(
+                      //   Icons.monitor_rounded,
+                      //   color: ThemeColors.accent,
+                      // ),
+                      data.image == "" ||
+                              data.image ==
+                                  "https://app.stocks.news/front/images/no_image.png"
+                          ? Image.asset(
+                              Images.monitor,
+                              color: ThemeColors.accent,
+                              height: 25.sp,
+                              width: 25.sp,
+                            )
+                          : ThemeImageView(
+                              url: data.image ?? "",
+                              height: 25,
+                              width: 25,
+                            ),
+                      const SpacerHorizontal(width: 12),
+                      Flexible(
+                        child: Text(
+                          data.sector ?? "",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  data.mentionType ?? "",
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: ThemeColors.accent,
+                    ],
                   ),
-                  // textAlign: TextAlign.center,
                 ),
-              ),
-              const SpacerHorizontal(),
-              Text(
-                "${data.totalMentions}",
-                style: stylePTSansRegular(fontSize: 14),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+                const SpacerHorizontal(width: 10),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    data.mentionType ?? "",
+                    style: stylePTSansRegular(
+                      fontSize: 12,
+                      color: ThemeColors.accent,
+                    ),
+                    // textAlign: TextAlign.center,
+                  ),
+                ),
+                const SpacerHorizontal(),
+                Text(
+                  "${data.totalMentions}",
+                  style: stylePTSansRegular(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

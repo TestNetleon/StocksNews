@@ -18,8 +18,10 @@ class StocksTechnicalAnalysis extends StatelessWidget {
     return Column(
       children: [
         ScreenTitle(
-          title: "${provider.data?.keyStats?.symbol} Technical Analysis",
-          subTitle: provider.technicalAnalysisRes?.text,
+          // title: "${provider.data?.keyStats?.symbol} ",
+          title:
+              "${provider.data?.keyStats?.name} (${provider.data?.keyStats?.symbol})",
+          subTitle: provider.dataMentions?.technicalText,
         ),
         provider.tALoading && provider.technicalAnalysisRes == null
             ? Row(

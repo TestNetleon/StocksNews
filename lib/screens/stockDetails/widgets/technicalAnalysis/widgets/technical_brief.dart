@@ -66,7 +66,8 @@ class SummaryBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
-          color: ThemeColors.greyBorder,
+          color: ThemeColors.white,
+          thickness: 1,
           height: 30.sp,
         ),
         RichText(
@@ -122,7 +123,7 @@ class SummaryBlock extends StatelessWidget {
             Expanded(
               child: Text(
                 textAlign: TextAlign.end,
-                "Buy: (${movingAverage?.totalBuy})",
+                "Buy: ${movingAverage?.totalBuy}",
                 style: stylePTSansBold(
                   fontSize: 12,
                   color: ThemeColors.accent,
@@ -132,7 +133,7 @@ class SummaryBlock extends StatelessWidget {
             Expanded(
               child: Text(
                 textAlign: TextAlign.end,
-                "Sell: (${movingAverage?.totalSell})",
+                "Sell: ${movingAverage?.totalSell}",
                 style: stylePTSansBold(
                   fontSize: 12,
                   color: ThemeColors.sos,
@@ -175,7 +176,7 @@ class SummaryBlock extends StatelessWidget {
             Expanded(
               child: Text(
                 textAlign: TextAlign.end,
-                "Buy: (${technicalIndicator?.totalBuy})",
+                "Buy: ${technicalIndicator?.totalBuy}",
                 style: stylePTSansBold(
                   fontSize: 12,
                   color: ThemeColors.accent,
@@ -185,7 +186,7 @@ class SummaryBlock extends StatelessWidget {
             Expanded(
               child: Text(
                 textAlign: TextAlign.end,
-                "Sell: (${technicalIndicator?.totalSell})",
+                "Sell: ${technicalIndicator?.totalSell}",
                 style: stylePTSansBold(
                   fontSize: 12,
                   color: ThemeColors.sos,
@@ -217,7 +218,8 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
-          color: ThemeColors.greyBorder,
+          color: ThemeColors.white,
+          thickness: 1,
           height: 30.sp,
         ),
         Text(
@@ -225,47 +227,13 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
           style: stylePTSansBold(fontSize: 16),
         ),
         const SpacerVertical(height: 2),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Summary: ",
-                style: stylePTSansBold(
-                  fontSize: 12,
-                ),
-              ),
-              TextSpan(
-                text: "${technicalIndicator?.type}      ",
-                style: stylePTSansBold(
-                  fontSize: 12,
-                  color: technicalIndicator?.type == "Strong Sell" ||
-                          technicalIndicator?.type == "Sell"
-                      ? ThemeColors.sos
-                      : technicalIndicator?.type == "Strong Buy" ||
-                              technicalIndicator?.type == "Buy"
-                          ? ThemeColors.accent
-                          : ThemeColors.buttonBlue,
-                ),
-              ),
-              TextSpan(
-                text: "Buy: ${technicalIndicator?.totalBuy}      ",
-                style: stylePTSansBold(fontSize: 12, color: ThemeColors.accent),
-              ),
-              TextSpan(
-                text: "Sell: ${technicalIndicator?.totalSell}",
-                style: stylePTSansBold(fontSize: 12, color: ThemeColors.sos),
-              ),
-            ],
-          ),
-        ),
-        const SpacerVertical(height: 2),
         data?.isNotEmpty == true
             ? Text(
-                "${data?[0].date}",
+                "As Per - ${data?[0].date}",
                 style: stylePTSansBold(fontSize: 12),
               )
             : const SizedBox(),
-        const SpacerVertical(height: 5),
+        const SpacerVertical(height: 10),
         ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -280,7 +248,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                           child: Text(
                             "NAME",
                             textAlign: TextAlign.start,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -290,7 +258,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                           child: Text(
                             "VALUE",
                             textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -300,7 +268,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                           child: Text(
                             "ACTION",
                             textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -383,7 +351,51 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                 height: 20.sp,
               );
             },
-            itemCount: data?.length ?? 0)
+            itemCount: data?.length ?? 0),
+        const SpacerVertical(height: 10),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Summary: ",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+              TextSpan(
+                text: "${technicalIndicator?.type} ",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: technicalIndicator?.type == "Strong Sell" ||
+                          technicalIndicator?.type == "Sell"
+                      ? ThemeColors.sos
+                      : technicalIndicator?.type == "Strong Buy" ||
+                              technicalIndicator?.type == "Buy"
+                          ? ThemeColors.accent
+                          : ThemeColors.buttonBlue,
+                ),
+              ),
+              TextSpan(
+                text: "(",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+              TextSpan(
+                text: "Buy: ${technicalIndicator?.totalBuy}",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.accent),
+              ),
+              TextSpan(
+                text: ", ",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+              TextSpan(
+                text: "Sell: ${technicalIndicator?.totalSell}",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.sos),
+              ),
+              TextSpan(
+                text: ")",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -406,7 +418,8 @@ class TechnicalMovingAverages extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
-          color: ThemeColors.greyBorder,
+          color: ThemeColors.white,
+          thickness: 1,
           height: 30.sp,
         ),
         Text(
@@ -414,47 +427,13 @@ class TechnicalMovingAverages extends StatelessWidget {
           style: stylePTSansBold(fontSize: 16),
         ),
         const SpacerVertical(height: 2),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Summary: ",
-                style: stylePTSansBold(
-                  fontSize: 12,
-                ),
-              ),
-              TextSpan(
-                text: "${movingAverage?.type}      ",
-                style: stylePTSansBold(
-                  fontSize: 12,
-                  color: movingAverage?.type == "Strong Sell" ||
-                          movingAverage?.type == "Sell"
-                      ? ThemeColors.sos
-                      : movingAverage?.type == "Strong Buy" ||
-                              movingAverage?.type == "Buy"
-                          ? ThemeColors.accent
-                          : ThemeColors.buttonBlue,
-                ),
-              ),
-              TextSpan(
-                text: "Buy: ${movingAverage?.totalBuy}      ",
-                style: stylePTSansBold(fontSize: 12, color: ThemeColors.accent),
-              ),
-              TextSpan(
-                text: "Sell: ${movingAverage?.totalSell}      ",
-                style: stylePTSansBold(fontSize: 12, color: ThemeColors.sos),
-              ),
-            ],
-          ),
-        ),
-        const SpacerVertical(height: 2),
         data?.isNotEmpty == true
             ? Text(
-                "${data?[0].date}",
+                "As Per - ${data?[0].date}",
                 style: stylePTSansBold(fontSize: 12),
               )
             : const SizedBox(),
-        const SpacerVertical(height: 5),
+        const SpacerVertical(height: 10),
         ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -469,7 +448,7 @@ class TechnicalMovingAverages extends StatelessWidget {
                             "NAME",
                             textAlign: TextAlign.start,
                             maxLines: 1,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -480,7 +459,7 @@ class TechnicalMovingAverages extends StatelessWidget {
                             maxLines: 1,
                             "SIMPLE",
                             textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -491,7 +470,7 @@ class TechnicalMovingAverages extends StatelessWidget {
                             maxLines: 1,
                             "EXPONENTIAL",
                             textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -502,7 +481,7 @@ class TechnicalMovingAverages extends StatelessWidget {
                             maxLines: 1,
                             "WEIGHTED",
                             textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
+                            style: stylePTSansBold(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
@@ -518,14 +497,17 @@ class TechnicalMovingAverages extends StatelessWidget {
                           style: stylePTSansBold(fontSize: 12),
                         ),
                         _item(
-                            subText: "${data?[index].smaStatus}",
-                            text: "${data?[index].sma}"),
+                          subText: "${data?[index].smaStatus}",
+                          text: "${data?[index].smaNew}",
+                        ),
                         _item(
-                            subText: "${data?[index].emaStatus}",
-                            text: "${data?[index].ema}"),
+                          subText: "${data?[index].emaStatus}",
+                          text: "${data?[index].emaNew}",
+                        ),
                         _item(
-                            subText: "${data?[index].wmaStatus}",
-                            text: "${data?[index].wma}"),
+                          subText: "${data?[index].wmaStatus}",
+                          text: "${data?[index].wmaNew}",
+                        ),
                       ],
                     ),
                   ],
@@ -539,14 +521,17 @@ class TechnicalMovingAverages extends StatelessWidget {
                     style: stylePTSansBold(fontSize: 12),
                   ),
                   _item(
-                      subText: "${data?[index].smaStatus}",
-                      text: "${data?[index].sma}"),
+                    subText: "${data?[index].smaStatus}",
+                    text: "${data?[index].smaNew}",
+                  ),
                   _item(
-                      subText: "${data?[index].emaStatus}",
-                      text: "${data?[index].ema}"),
+                    subText: "${data?[index].emaStatus}",
+                    text: "${data?[index].emaNew}",
+                  ),
                   _item(
-                      subText: "${data?[index].wmaStatus}",
-                      text: "${data?[index].wma}"),
+                    subText: "${data?[index].wmaStatus}",
+                    text: "${data?[index].wmaNew}",
+                  ),
                 ],
               );
             },
@@ -557,7 +542,56 @@ class TechnicalMovingAverages extends StatelessWidget {
                 height: 20.sp,
               );
             },
-            itemCount: data?.length ?? 0)
+            itemCount: data?.length ?? 0),
+        const SpacerVertical(height: 10),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Summary: ",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+              TextSpan(
+                text: "${movingAverage?.type} ",
+                style: stylePTSansBold(
+                  fontSize: 12,
+                  color: movingAverage?.type == "Strong Sell" ||
+                          movingAverage?.type == "Sell"
+                      ? ThemeColors.sos
+                      : movingAverage?.type == "Strong Buy" ||
+                              movingAverage?.type == "Buy"
+                          ? ThemeColors.accent
+                          : ThemeColors.buttonBlue,
+                ),
+              ),
+              TextSpan(
+                text: "(",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+              TextSpan(
+                text: "Buy: ${movingAverage?.totalBuy}",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.accent),
+              ),
+              TextSpan(
+                text: ", ",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+              TextSpan(
+                text: "Sell: ${movingAverage?.totalSell}",
+                style: stylePTSansBold(fontSize: 12, color: ThemeColors.sos),
+              ),
+              TextSpan(
+                text: ")",
+                style: stylePTSansBold(fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+        // Divider(
+        //   color: ThemeColors.white,
+        //   thickness: 1,
+        //   height: 30.sp,
+        // ),
       ],
     );
   }

@@ -7,14 +7,14 @@ import 'package:stocks_news_new/widgets/optiona_parent.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class ScreenTitle extends StatelessWidget {
-  final String title;
+  final String? title;
   final TextStyle? style;
   final String? optionalText;
   final Widget? optionalWidget;
   final bool canPopBack;
   final String? subTitle;
   const ScreenTitle({
-    required this.title,
+    this.title,
     this.style,
     super.key,
     this.optionalText,
@@ -28,65 +28,66 @@ class ScreenTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        OptionalParent(
-          addParent: optionalText != null || optionalWidget != null,
-          parentBuilder: (child) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Text(
-                    title,
-                    style: style ?? styleGeorgiaBold(fontSize: 17),
-                  ),
-                ),
-                Visibility(
-                  visible: optionalText != null,
-                  child: Text(
-                    optionalText ?? "",
-                    style: style ?? stylePTSansRegular(fontSize: 12),
-                  ),
-                ),
-                Visibility(
-                  visible: optionalWidget != null,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10.sp),
-                    child: optionalWidget ?? const SizedBox(),
-                  ),
-                ),
-              ],
-            );
-          },
-          child: OptionalParent(
-            addParent: canPopBack,
+        if (title != null)
+          OptionalParent(
+            addParent: optionalText != null || optionalWidget != null,
             parentBuilder: (child) {
               return Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        size: 20.sp,
-                      )),
                   Expanded(
                     child: Text(
-                      title,
+                      title ?? "",
                       style: style ?? styleGeorgiaBold(fontSize: 17),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                  const SpacerHorizontal(width: 20),
+                  Visibility(
+                    visible: optionalText != null,
+                    child: Text(
+                      optionalText ?? "",
+                      style: style ?? stylePTSansRegular(fontSize: 12),
+                    ),
+                  ),
+                  Visibility(
+                    visible: optionalWidget != null,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10.sp),
+                      child: optionalWidget ?? const SizedBox(),
+                    ),
+                  ),
                 ],
               );
             },
-            child: Text(
-              title,
-              style: style ?? styleGeorgiaBold(fontSize: 17),
+            child: OptionalParent(
+              addParent: canPopBack,
+              parentBuilder: (child) {
+                return Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          size: 20.sp,
+                        )),
+                    Expanded(
+                      child: Text(
+                        title ?? "",
+                        style: style ?? styleGeorgiaBold(fontSize: 17),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SpacerHorizontal(width: 20),
+                  ],
+                );
+              },
+              child: Text(
+                title ?? "",
+                style: style ?? styleGeorgiaBold(fontSize: 17),
+              ),
             ),
           ),
-        ),
         Visibility(
           visible: subTitle != null,
           child: Container(

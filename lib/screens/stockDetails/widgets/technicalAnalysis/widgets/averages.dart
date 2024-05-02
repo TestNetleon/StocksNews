@@ -24,7 +24,7 @@ class TechnicalAnalystAverages extends StatelessWidget {
       children: [
         Text(
           "Moving Averages",
-          style: stylePTSansBold(fontSize: 13),
+          style: stylePTSansBold(fontSize: 16),
         ),
         const SpacerVertical(height: 10),
         // SizedBox(
@@ -79,9 +79,9 @@ class TechnicalAnalystAverages extends StatelessWidget {
                         ? ThemeColors.buttonLightGreen
                         : ThemeColors.buttonLightGreen,
           ),
-          padding: EdgeInsets.all(10.sp),
+          padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5),
           child: Text(
-            value.type,
+            value.type.toUpperCase(),
             style: stylePTSansBold(
               fontSize: 13,
               color: value.indicater <= -50

@@ -23,7 +23,7 @@ class Analysis extends StatelessWidget {
     return Column(
       children: [
         ScreenTitle(
-          title: "Stock Analysis",
+          // title: "Stock Analysis",
           subTitle: provider.analysisRes?.text,
         ),
         provider.analysisLoading && provider.analysisRes == null
@@ -62,59 +62,96 @@ class AlalysisBase extends StatelessWidget {
 
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-                child: AnalysisItem(
-                    label: "Overall",
-                    value: analysisRes?.overallPercent.toDouble())),
-            const SpacerHorizontal(width: Dimen.padding),
-            // Expanded(child: AnalysisItemLocked(label: "Fundamental")),
-
-            Expanded(
-                child: AnalysisItem(
-                    label: "Fundamental",
-                    value: analysisRes?.fundamentalPercent.toDouble())),
-          ],
+        AnalysisItem(
+          label: "Overall",
+          value: analysisRes?.overallPercent.toDouble(),
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
-        Row(
-          children: [
-            // Expanded(child: AnalysisItemLocked(label: "Short Technical")),
-            Expanded(
-                child: AnalysisItem(
-                    label: "Short Technical",
-                    value: analysisRes?.shortTermPercent.toDouble())),
-
-            const SpacerHorizontal(width: Dimen.padding),
-            // Expanded(child: AnalysisItemLocked(label: "Long Technical")),
-
-            Expanded(
-                child: AnalysisItem(
-                    label: "Long Technical",
-                    value: analysisRes?.longTermPercent.toDouble())),
-          ],
+        AnalysisItem(
+          label: "Fundamental",
+          value: analysisRes?.fundamentalPercent.toDouble(),
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
-        Row(
-          children: [
-            // Expanded(child: AnalysisItemLocked(label: "Analysis Renking")),
-
-            Expanded(
-                child: AnalysisItem(
-                    label: "Analysis Ranking",
-                    value: analysisRes?.analystRankingPercent.toDouble())),
-
-            const SpacerHorizontal(width: Dimen.padding),
-            // Expanded(child: AnalysisItemLocked(label: "Valuation")),
-
-            Expanded(
-                child: AnalysisItem(
-                    label: "Valuation",
-                    value: analysisRes?.valuationPercent.toDouble())),
-          ],
+        AnalysisItem(
+          label: "Short Technical",
+          value: analysisRes?.shortTermPercent.toDouble(),
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
+        AnalysisItem(
+          label: "Long Technical",
+          value: analysisRes?.longTermPercent.toDouble(),
+        ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+        AnalysisItem(
+          label: "Analysis Ranking",
+          value: analysisRes?.analystRankingPercent.toDouble(),
+        ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+        AnalysisItem(
+          label: "Valuation",
+          value: analysisRes?.valuationPercent.toDouble(),
+        ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: AnalysisItem(
+        //         label: "Overall",
+        //         value: analysisRes?.overallPercent.toDouble(),
+        //       ),
+        //     ),
+        //     const SpacerHorizontal(width: Dimen.padding),
+        //     // Expanded(child: AnalysisItemLocked(label: "Fundamental")),
+        //     Expanded(
+        //       child: AnalysisItem(
+        //         label: "Fundamental",
+        //         value: analysisRes?.fundamentalPercent.toDouble(),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // const SpacerVertical(height: Dimen.itemSpacing),
+        // Row(
+        //   children: [
+        //     // Expanded(child: AnalysisItemLocked(label: "Short Technical")),
+        //     Expanded(
+        //       child: AnalysisItem(
+        //         label: "Short Technical",
+        //         value: analysisRes?.shortTermPercent.toDouble(),
+        //       ),
+        //     ),
+        //     const SpacerHorizontal(width: Dimen.padding),
+        //     // Expanded(child: AnalysisItemLocked(label: "Long Technical")),
+        //     Expanded(
+        //       child: AnalysisItem(
+        //         label: "Long Technical",
+        //         value: analysisRes?.longTermPercent.toDouble(),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // const SpacerVertical(height: Dimen.itemSpacing),
+        // Row(
+        //   children: [
+        //     // Expanded(child: AnalysisItemLocked(label: "Analysis Renking")),
+        //     Expanded(
+        //       child: AnalysisItem(
+        //         label: "Analysis Ranking",
+        //         value: analysisRes?.analystRankingPercent.toDouble(),
+        //       ),
+        //     ),
+        //     const SpacerHorizontal(width: Dimen.padding),
+        //     // Expanded(child: AnalysisItemLocked(label: "Valuation")),
+        //     Expanded(
+        //       child: AnalysisItem(
+        //         label: "Valuation",
+        //         value: analysisRes?.valuationPercent.toDouble(),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // const SpacerVertical(height: Dimen.itemSpacing),
         SentimentSeekbarItem(
             label: "Neutral",
             // analysisRes!.setimentPercent == 0 ||
@@ -151,18 +188,18 @@ class AnalysisItem extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 child: Text(
                   label,
-                  style: stylePTSansRegular(fontSize: 12),
+                  style: stylePTSansBold(fontSize: 18).copyWith(height: 1),
                 ),
               ),
               const SpacerHorizontal(width: 5),
               Text(
                 "${value?.toCurrency()}",
-                style: stylePTSansRegular(fontSize: 18),
+                style: stylePTSansBold(fontSize: 18).copyWith(height: 1),
               ),
             ],
           ),

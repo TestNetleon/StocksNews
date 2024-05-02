@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class StocksTrendingStories extends StatelessWidget {
   const StocksTrendingStories({super.key});
@@ -17,10 +16,10 @@ class StocksTrendingStories extends StatelessWidget {
     if (newsPost == null || newsPost.isEmpty) return const SizedBox();
     return Column(
       children: [
-        const ScreenTitle(
-          title: "Trending Stories",
-          // style: stylePTSansRegular(fontSize: 20),
-        ),
+        // const ScreenTitle(
+        //   title: "Trending Stories",
+        //   // style: stylePTSansRegular(fontSize: 20),
+        // ),
         ListView.separated(
           itemCount: newsPost.length,
           physics: const NeverScrollableScrollPhysics(),

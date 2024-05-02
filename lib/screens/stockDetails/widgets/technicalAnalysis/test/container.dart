@@ -14,7 +14,6 @@ import '../widgets/averages.dart';
 import '../widgets/indicators.dart';
 import '../widgets/technical_brief.dart';
 
-//
 class TEstTechnicalAnalysis extends StatefulWidget {
   const TEstTechnicalAnalysis({super.key});
 
@@ -25,6 +24,7 @@ class TEstTechnicalAnalysis extends StatefulWidget {
 class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
     with SingleTickerProviderStateMixin {
   TabController? _controller;
+
   List<TabData> tabs = [
     TabData(tabName: "5min", label: "5 Mins"),
     TabData(tabName: "15min", label: "15 Mins"),
@@ -34,6 +34,7 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
     TabData(tabName: "1day", label: "Daily"),
     TabData(tabName: "1week", label: "Weekly"),
   ];
+
   int _selectedIndex = 0;
 
   @override
@@ -57,14 +58,33 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
       mainAxisSize: MainAxisSize.min,
       children: [
         TabBar(
-          tabAlignment: TabAlignment.center,
+          tabAlignment: TabAlignment.start,
           physics: const BouncingScrollPhysics(),
           isScrollable: true,
-          labelPadding: EdgeInsets.all(6.sp),
+          labelPadding: EdgeInsets.symmetric(
+            horizontal: 13.sp,
+            vertical: 2.sp,
+          ),
+          indicator: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: ThemeColors.accent,
+              ),
+            ),
+          ),
+
           controller: _controller,
-          indicatorColor: Colors.transparent,
-          automaticIndicatorColorAdjustment: false,
-          enableFeedback: false,
+          indicatorColor: ThemeColors.white,
+          automaticIndicatorColorAdjustment: true,
+
+          // tabAlignment: TabAlignment.center,
+          // physics: const BouncingScrollPhysics(),
+          // isScrollable: true,
+          // labelPadding: EdgeInsets.all(6.sp),
+          // controller: _controller,
+          // indicatorColor: Colors.transparent,
+          // automaticIndicatorColorAdjustment: false,
+          // enableFeedback: false,
           onTap: (value) {
             _selectedIndex = value;
             setState(() {});
@@ -76,13 +96,14 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
           },
           tabs: List.generate(
             tabs.length,
-            (index) => CustomTab(
+            (index) => CustomTabNEW(
               index: index,
-              lable: "${tabs[index].label}",
+              label: "${tabs[index].label}",
               selectedIndex: _selectedIndex,
             ),
           ),
         ),
+        const SpacerVertical(height: 10),
         provider.tabLoading
             ? SizedBox(
                 height: 300.sp,

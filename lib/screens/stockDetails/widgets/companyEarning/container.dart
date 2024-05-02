@@ -51,9 +51,8 @@ class CompanyEarningStockDetail extends StatelessWidget {
       child: Column(
         children: [
           ScreenTitle(
-            title: earning?.title ?? "",
+            // title: earning?.title ?? "",
             subTitle: earning?.text ?? "",
-            // style: styleGeorgiaBold(fontSize: 17),
           ),
           ListView.separated(
             shrinkWrap: true,

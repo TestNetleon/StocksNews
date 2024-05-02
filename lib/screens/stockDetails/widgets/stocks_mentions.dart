@@ -46,7 +46,7 @@ class StocksMentions extends StatelessWidget {
     return Column(
       children: [
         ScreenTitle(
-          title: "News Mentions",
+          // title: "News Mentions",
           subTitle: provider.dataMentions?.mentionText,
         ),
         SizedBox(

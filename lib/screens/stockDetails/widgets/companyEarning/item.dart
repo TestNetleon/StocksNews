@@ -34,10 +34,11 @@ class CompanyEarningItem extends StatelessWidget {
                   maxLines: 1,
                   data?.eps ?? "",
                   style: stylePTSansBold(
-                      fontSize: 12,
-                      color: data?.epsArrowClass == "green-arrow"
-                          ? ThemeColors.accent
-                          : Colors.red),
+                    fontSize: 12,
+                    color: data?.epsArrowClass == "green-arrow"
+                        ? ThemeColors.accent
+                        : Colors.red,
+                  ),
                 ),
               ),
               Visibility(
@@ -46,10 +47,11 @@ class CompanyEarningItem extends StatelessWidget {
                   maxLines: 1,
                   "(${data?.epsPercentChange ?? ""}) ${data?.epsArrow ?? ""}",
                   style: stylePTSansBold(
-                      fontSize: 10,
-                      color: data?.epsArrowClass == "green-arrow"
-                          ? ThemeColors.accent
-                          : Colors.red),
+                    fontSize: 10,
+                    color: data?.epsArrowClass == "green-arrow"
+                        ? ThemeColors.accent
+                        : Colors.red,
+                  ),
                 ),
               ),
             ],

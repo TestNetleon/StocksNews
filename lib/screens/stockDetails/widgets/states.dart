@@ -37,7 +37,7 @@ class States extends StatelessWidget {
     return Column(
       children: [
         ScreenTitle(
-          title: "Key Stats",
+          // title: "Key Stats",
           subTitle: keyStats?.text,
         ),
         StateItem(label: "Symbol", value: keyStats?.symbol),

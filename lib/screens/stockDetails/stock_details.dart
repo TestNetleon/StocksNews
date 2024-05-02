@@ -52,12 +52,14 @@ class _StockDetailsState extends State<StockDetails> {
       body: provider.isLoading && provider.data == null
           ? const SizedBox()
           : provider.data != null
-              ? RefreshIndicator(
-                  onRefresh: () async {
-                    _getData();
-                  },
-                  child: const StockDetailsBase(),
-                )
+              ? const StockDetailsBase()
+
+              // RefreshIndicator(
+              //     onRefresh: () async {
+              //       _getData();
+              //     },
+              //     child: const StockDetailsBase(),
+              //   )
               : ErrorDisplayWidget(
                   error: provider.error,
                   onRefresh: _getData,

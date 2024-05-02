@@ -49,7 +49,7 @@ class _AnalysisForecastState extends State<AnalysisForecast> {
     return Column(
       children: [
         ScreenTitle(
-          title: "${keyStats?.name} (${keyStats?.symbol}) Analysis Forecast",
+          title: "${keyStats?.name} (${keyStats?.symbol})",
           subTitle: provider.dataMentions?.forecastText,
         ),
         Container(

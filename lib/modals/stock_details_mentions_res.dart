@@ -25,6 +25,7 @@ class StockDetailMentionRes {
   final String? forecastAnalyst;
   final String? mentionText;
   final String? forecastText;
+  final String? technicalText;
 
   StockDetailMentionRes({
     // this.keyStats,
@@ -39,6 +40,7 @@ class StockDetailMentionRes {
     this.forecastAnalyst,
     this.forecastText,
     this.mentionText,
+    this.technicalText,
   });
 
   factory StockDetailMentionRes.fromJson(Map<String, dynamic> json) =>
@@ -69,6 +71,7 @@ class StockDetailMentionRes {
         forecastAnalyst: json["forecast_analyst"],
         forecastText: json["forecast_text"],
         mentionText: json["mention_text"],
+        technicalText: json["technical_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -91,6 +94,7 @@ class StockDetailMentionRes {
         "forecast_analyst": forecastAnalyst,
         "forecast_text": forecastText,
         "mention_text": mentionText,
+        "technical_text": technicalText,
       };
 }
 

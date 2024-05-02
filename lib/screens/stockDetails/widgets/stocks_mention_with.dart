@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
@@ -21,14 +19,14 @@ class StockMentionWith extends StatelessWidget {
   Widget build(BuildContext context) {
     List<TradingStock>? tradingStock =
         context.watch<StockDetailProvider>().dataMentions?.tradingStock;
-    CompanyInfo? companyInfo =
-        context.watch<StockDetailProvider>().data?.companyInfo;
+    // CompanyInfo? companyInfo =
+    //     context.watch<StockDetailProvider>().data?.companyInfo;
     return Column(
       children: [
-        ScreenTitle(
-          title: "Popular Stocks From ${companyInfo?.sector ?? "Sector"}",
-          // style: stylePTSansRegular(fontSize: 20),
-        ),
+        // ScreenTitle(
+        //   title: "Popular Stocks From ${companyInfo?.sector ?? "Sector"}",
+        //   // style: stylePTSansRegular(fontSize: 20),
+        // ),
         ListView.separated(
           itemCount: tradingStock?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),

@@ -48,7 +48,7 @@ class StocksScoreGrades extends StatelessWidget {
       child: Column(
         children: [
           ScreenTitle(
-            title: score?.title ?? "",
+            // title: score?.title ?? "",
             subTitle: score?.text,
             // style: stylePTSansRegular(fontSize: 20),
           ),
