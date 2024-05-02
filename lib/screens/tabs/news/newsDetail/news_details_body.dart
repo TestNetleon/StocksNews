@@ -25,7 +25,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
 import '../../../blogs/index.dart';
-import '../headerStocks/index.dart';
 import 'news_details_list.dart';
 
 class NewsDetailsBody extends StatefulWidget {
@@ -151,7 +150,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         //     thickness: 2.sp,
                         //   ),
                         // ),
-                        const NewsHeaderStocks(),
+                        // const NewsHeaderStocks(),
 
                         Text(
                           provider.data?.postDetail?.title ?? "",

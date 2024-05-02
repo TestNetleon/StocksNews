@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/sector_industry_res.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry_item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'graph/graph.dart';
 
@@ -50,7 +50,11 @@ class SectorIndustryList extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return const SpacerVertical(height: 20);
+          // return const SpacerVertical(height: 20);
+          return Divider(
+            color: ThemeColors.greyBorder,
+            height: 12.sp,
+          );
         },
       ),
     );

@@ -6,7 +6,6 @@ import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/modals/news_res.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
-import 'package:stocks_news_new/screens/tabs/news/headerStocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -40,7 +39,7 @@ class NewsAuthorIndex extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const NewsHeaderStocks(),
+            // const NewsHeaderStocks(),
             ScreenTitle(
                 title: type == BlogsType.author
                     ? "Articles by ${data?.name}"
@@ -103,6 +102,25 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
               if (newsItemData == null) {
                 return const SizedBox();
               }
+              if (index == 0) {
+                return NewsItemSeparated(
+                  showCategory: newsItemData.authors?.isEmpty == true,
+                  // showCategory: false,
+                  news: News(
+                      slug: newsItemData.slug,
+                      // publishedDate: newsItemData.publishedDate,
+                      title: newsItemData.title,
+                      image: newsItemData.image,
+                      site: newsItemData.site ?? '',
+                      postDate: DateFormat("MMMM dd, yyyy")
+                          .format(newsItemData.publishedDate),
+                      url: newsItemData.url,
+                      authors: newsItemData.authors
+                      //  "November 29, 2023",
+                      ),
+                );
+              }
+
               return NewsItem(
                 showCategory: newsItemData.authors?.isEmpty == true,
                 // showCategory: false,
