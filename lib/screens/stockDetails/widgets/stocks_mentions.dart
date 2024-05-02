@@ -45,11 +45,9 @@ class StocksMentions extends StatelessWidget {
 
     return Column(
       children: [
-        const ScreenTitle(
+        ScreenTitle(
           title: "News Mentions",
-          subTitle:
-              "The News Mentions section reveals the frequency of this stock's coverage by top news outlets, providing an indication of its media visibility.",
-          // style: stylePTSansRegular(fontSize: 20),
+          subTitle: provider.dataMentions?.mentionText,
         ),
         SizedBox(
           height: 130.sp,
