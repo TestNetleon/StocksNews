@@ -95,10 +95,11 @@ class SectorIndustryBase extends StatelessWidget {
                 // optionalText: 'Last Updated: 5/12/2022',
               ),
               Expanded(
-                  child: SectorIndustryList(
-                stockStates: stockStates,
-                name: name,
-              )),
+                child: SectorIndustryList(
+                  stockStates: stockStates,
+                  name: name,
+                ),
+              ),
             ],
           ),
         ),

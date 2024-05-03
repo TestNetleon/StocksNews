@@ -47,6 +47,7 @@ class _NewsListState extends State<NewsList> {
           itemCount: data?.length ?? 0,
           // shrinkWrap: true,
           // padding: EdgeInsets.all(12.sp),
+          padding: EdgeInsets.only(bottom: 12.sp, top: 12.sp),
           itemBuilder: (context, index) {
             NewsData? newsItemData = data![index];
             if (index == 0) {

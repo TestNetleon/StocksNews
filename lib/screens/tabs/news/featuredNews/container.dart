@@ -46,9 +46,8 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
         onLoadMore: () async => provider.getNews(loadMore: true),
         child: ListView.separated(
           itemCount: data?.length ?? 0,
-
           // shrinkWrap: true,
-          padding: EdgeInsets.only(bottom: 12.sp),
+          padding: EdgeInsets.only(bottom: 12.sp, top: 12.sp),
           itemBuilder: (context, index) {
             NewsData? newsItemData = data![index];
             if (index == 0) {
@@ -63,7 +62,6 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
                       image: newsItemData.image,
                       site: newsItemData.site ?? '',
                       authors: newsItemData.authors,
-
                       postDate: DateFormat("MMMM dd, yyyy")
                           .format(newsItemData.publishedDate),
                       url: newsItemData.url,

@@ -44,10 +44,7 @@ class SectorIndustryList extends StatelessWidget {
             );
           }
 
-          return SectorIndustryItem(
-            index: index,
-            data: data,
-          );
+          return SectorIndustryItem(index: index, data: data);
         },
         separatorBuilder: (context, index) {
           // return const SpacerVertical(height: 20);

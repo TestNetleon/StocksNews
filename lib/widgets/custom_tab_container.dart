@@ -207,6 +207,7 @@ class CustomTabContainerNEW extends StatefulWidget {
     this.header,
     this.onChange,
     this.showDivider = false,
+    this.scrollable,
     this.isTabWidget,
     this.tabsPadding,
     super.key,
@@ -219,6 +220,7 @@ class CustomTabContainerNEW extends StatefulWidget {
   final List<Widget>? isTabWidget;
   final EdgeInsets? tabsPadding;
   final bool showDivider;
+  final bool? scrollable;
   final Function(int index)? onChange;
 
   @override
@@ -230,11 +232,11 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
   bool sync = true;
   TabController? _controller;
   int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
     _controller = TabController(length: widget.tabs.length, vsync: this);
-
     _controller?.addListener(() {
       setState(() {
         _selectedIndex = _controller?.index ?? 0;
@@ -242,7 +244,6 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
       if (widget.onChange != null) {
         widget.onChange!(_selectedIndex);
       }
-
       log("$_selectedIndex");
     });
   }
@@ -277,25 +278,23 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
             padding:
                 widget.tabsPadding ?? EdgeInsets.symmetric(horizontal: 10.sp),
             child: TabBar(
-              tabAlignment: TabAlignment.start,
+              tabAlignment: widget.scrollable == true
+                  ? TabAlignment.start
+                  : TabAlignment.fill,
               physics: const BouncingScrollPhysics(),
-              isScrollable: true,
+              isScrollable: widget.scrollable ?? true,
               labelPadding: EdgeInsets.symmetric(
                 horizontal: 13.sp,
                 vertical: 2.sp,
               ),
               indicator: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(
-                    color: ThemeColors.accent,
-                  ),
+                  bottom: BorderSide(color: ThemeColors.accent),
                 ),
               ),
-
               controller: _controller,
               indicatorColor: ThemeColors.white,
               automaticIndicatorColorAdjustment: true,
-
               // enableFeedback: false,
               onTap: (index) {
                 setState(() {

@@ -356,21 +356,21 @@ class _StartIndexState extends State<StartIndex> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(10.sp),
-            //   child: ThemeButton(
-            //     textSize: 15,
-            //     onPressed: () {
-            //       Preference.setFirstTime(false);
+            Padding(
+              padding: EdgeInsets.all(10.sp),
+              child: ThemeButton(
+                textSize: 15,
+                onPressed: () {
+                  Preference.setFirstTime(false);
 
-            //       Navigator.pushNamedAndRemoveUntil(
-            //           navigatorKey.currentContext!,
-            //           Tabs.path,
-            //           (route) => false);
-            //     },
-            //     text: "Continue as Guest",
-            //   ),
-            // ),
+                  Navigator.pushNamedAndRemoveUntil(
+                      navigatorKey.currentContext!,
+                      Tabs.path,
+                      (route) => false);
+                },
+                text: "Continue as Guest",
+              ),
+            ),
           ],
         ),
       ),

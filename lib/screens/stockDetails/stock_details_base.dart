@@ -38,6 +38,7 @@ class StockDetailsBase extends StatelessWidget {
     String? html = provider.dataMentions?.forecastAnalyst;
 
     return CustomTabContainerNEW(
+      scrollable: true,
       tabs: const [
         "Overview",
         "Company Earning",

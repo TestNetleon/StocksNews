@@ -62,6 +62,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
             // const ScreenTitle(title: "Social Trending Stocks"),
             Expanded(
               child: CustomTabContainerNEW(
+                scrollable: true,
                 onChange: (index) =>
                     provider.onTabChanged(index: index, showProgress: false),
                 tabs: List.generate(

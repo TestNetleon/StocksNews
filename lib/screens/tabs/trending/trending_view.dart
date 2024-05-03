@@ -161,6 +161,7 @@ class _TrendingViewState extends State<TrendingView> {
             ),
           )
         : CustomTabContainerNEW(
+            scrollable: true,
             tabs: List.generate(
                 provider.tabs.length, (index) => provider.tabs[index]),
             widgets: List.generate(
