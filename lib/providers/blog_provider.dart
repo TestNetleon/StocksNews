@@ -194,6 +194,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         _blogsDetail = BlogsDetailRes.fromJson(response.data);
       } else {
         _blogsDetail = null;
+        _error = response.message;
         showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);

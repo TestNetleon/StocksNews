@@ -28,7 +28,10 @@ class _BlogDetailState extends State<BlogDetail> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true),
+      appBar: const AppBarHome(
+        isPopback: true,
+        showTrailing: false,
+      ),
       body: BlogDetailContainer(id: widget.id),
     );
   }

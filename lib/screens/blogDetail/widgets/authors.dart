@@ -35,7 +35,7 @@ class BlogDetailAuthor extends StatelessWidget {
             });
           },
           child: Text(
-            item.name?.capitalizeWords() ?? "",
+            item.name ?? "",
             style: stylePTSansRegular(
               color: ThemeColors.accent,
               fontSize: 12,

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -85,6 +86,19 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
     if (_homeInsiderRes == null) {
       getHomeInsiderData();
+    }
+  }
+
+  Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: apiUrl,
+        request: request,
+        showProgress: false,
+      );
+      sendPort.send(response);
+    } catch (e) {
+      sendPort.send(e);
     }
   }
 

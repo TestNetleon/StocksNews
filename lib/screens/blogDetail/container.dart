@@ -55,7 +55,7 @@ class BlogDetailContainer extends StatelessWidget {
                               provider.blogsDetail?.publishedDate ??
                                   DateTime.now()),
                           list1: provider.blogsDetail?.authors,
-                          list2: [],
+                          list2: const [],
                           blog: true,
                         ),
                       ),

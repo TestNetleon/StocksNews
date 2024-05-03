@@ -27,9 +27,10 @@ import '../login/login.dart';
 
 class SignUp extends StatefulWidget {
   final String? dntPop;
+  final String? state;
   static const String path = "SignUp";
 
-  const SignUp({super.key, this.dntPop});
+  const SignUp({super.key, this.dntPop, this.state});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -38,6 +39,13 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController _controller = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  @override
+  void initState() {
+    super.initState();
+
+    log("---State is ${widget.state}, ---Dont pop up is${widget.dntPop}---");
+  }
 
   // void _onLoginClick() {
   //   closeKeyboard();
@@ -87,7 +95,7 @@ class _SignUpState extends State<SignUp> {
           "fcm_token": fcmToken ?? "",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(request);
+        provider.googleLogin(request, dontPop: "true");
       }
     } catch (error) {
       print("Error in Signed In *******");
@@ -113,7 +121,7 @@ class _SignUpState extends State<SignUp> {
         "id": id ?? "",
         "fcm_token": fcmToken ?? "",
       };
-      provider.appleLogin(request);
+      provider.appleLogin(request, dontPop: "true");
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       showErrorMessage(message: "$error");
@@ -332,7 +340,12 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () {
                       log("${widget.dntPop}");
                       if (widget.dntPop != null) {
-                        Navigator.push(context, createRoute(const Login()));
+                        Navigator.push(
+                            context,
+                            createRoute(Login(
+                              dontPop: widget.dntPop,
+                              state: widget.state,
+                            )));
                       } else {
                         Navigator.pop(context);
                       }

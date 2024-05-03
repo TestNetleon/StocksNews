@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -332,7 +330,7 @@ class NewsDetailAuthor extends StatelessWidget {
               });
             },
             child: Text(
-              "${data?[i].name?.capitalizeWords()}",
+              "${data?[i].name}",
               style: stylePTSansRegular(
                 color: ThemeColors.accent,
                 fontSize: 12,
@@ -452,7 +450,7 @@ class NewsDetailAuthorAB extends StatelessWidget {
               });
             },
             child: Text(
-              "${data?[i].name?.capitalizeWords()}",
+              "${data?[i].name}",
               style: styleGeorgiaRegular(
                   color: ThemeColors.white,
                   fontSize: fontSize,

@@ -225,7 +225,11 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           onPressed: () {
                             // Navigator.pushNamed(context, Login.path);
                             Navigator.pop(context);
-                            Navigator.push(context, createRoute(const Login()));
+                            Navigator.push(
+                                context,
+                                createRoute(const Login(
+                                  dontPop: "true",
+                                )));
                           },
                           text: "Log in",
                           showArrow: false,

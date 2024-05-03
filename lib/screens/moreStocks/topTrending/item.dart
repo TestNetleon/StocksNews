@@ -74,7 +74,7 @@ class TopTrendingItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            data.name.capitalizeWords(),
+                            data.name,
                             style: stylePTSansBold(
                               color: ThemeColors.greyText,
                               fontSize: 10,

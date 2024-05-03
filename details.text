@@ -1,30 +1,3 @@
-1. blog work
-2. META graph decimal 2
-3. notification count
-4. bloomberg app like news listing page
-5. Socket on stock detail top value
-6. share on blogs
-11. iOS image
-
-========================================================================================
-Points 02-05-24
-- images on trending industries (rem)
-- trending, loser, gainers text (rem)
-- stock detail overview (rem)
-- starting screen API (rem)
-- continue as guest, login signup
---> Insider Trading
-- Chief Executive Officer
-- confirmation
-- officer remove word
-
-========================================================================================
-30/04/24
-- trending changes
-- home screen changes
-- homepage 3 tabs data changes
-- stocial trendin stocks
-
 
 
 
@@ -149,83 +122,27 @@ Subject Public Key Algorithm: 2048-bit RSA key
 
 
 
-================new work =============
-1. kuch news apne app me open hogi news detail page for few (pending)
-2. alert confirmation msg on pop up (done)
-3. alert screen text (done)
-4. default app bar (done)
-5. notification icon on screens (done)
-6. bottom tab in sock detail 
-7. Sector screen (ATER) value change (discussion values coming in .0063 digit and we r taking only 2 decimals)
-8. search notification 
-9. stock detail graph (done)
-10. bull and bear ke icon on stock detail (done)
-11. buy and sell text on detail (done)
-12. camera gallery icon on update (done)
-13. trending right align changes (done)
-14. withlist on trending (done, API remaining)
-15. compare screen divider 
-16. compare screen more than 3 item 
-17. 1st faq remove (API remaining)
-18. author photo on category page 
-19. blog detail and heading same (API)
-20. QR code remove 
-21. insider trading on click ticker insider detail (discuss)
-22. graph missing in insider trading (API)
-23. back button 
-24. Search By company name 
-25. Stocks Details - Stock Score/grades
-
-
-1. kuch news apne app me open hogi news detail page for few (done)
-2. detail page color combination for sel and buy (done)
-3. compare more than 4 (done)
-4. faq 1st item remove (done)
-5. responsive UI for i pad in progress 
-6. Twitter changed to X (done)
-7. home Stock bull slider gradient  (done)
-8. logo K logo (done)
-9. error message proper (remaining few screens)
-10. commas in volume (done) 
-11. home mention padding (done)
-12. old data show if no data everywhere (discussion)
-13. insider trading buy/sell color change (done)
-14. filter graph change on filter (done)
-15. please login to continue repleace msg
-16. divider on drawer or space down (done)
-17. speed optimization for trending page (done)
-18. speed optimization for sentiments screen (done)
-
-
-
-======
-
-
-
 Bitly App ID: Ao1seSO8XNS 
 
-
-
-============================
-notification icon 
-login pop up design
- 
-
-
-
- ====================24-04-24=============
- 1. few notification images cannot get.
- 2. search changes.
- 3. contact us address add
-
-
-----------------------------------
-
-
-- Home Trending change in price on top - DONE 
-- Add mentions label on home trending - DONE
-- Show price@ on home trending - DONE
 
 - Details page Tabs system 
 - subtitles on stock details should be dynamic from API
 - info on Chart bottomsheet
+1. blog work
+2. META graph decimal 2
+3. notification count
+4. bloomberg app like news listing page
+5. Socket on stock detail top value
+6. share on blogs
+11. iOS image
+========================================================================================
+- images on trending industries (rem)
+- trending, loser, gainers text (rem)
+- stock detail overview socket (rem)
+- starting screen API (rem)
+- continue as guest, login signup (done)
+--> Insider Trading (done)
+- Chief Executive Officer (rem)
+- officer remove word (rem)
+========================================================================================
+- refresh token

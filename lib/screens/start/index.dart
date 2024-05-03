@@ -150,15 +150,26 @@ class _StartIndexState extends State<StartIndex> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ThemeButtonSmall(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.sp, vertical: 5.sp),
                     fontBold: true,
                     color: ThemeColors.white,
                     textColor: ThemeColors.background,
                     onPressed: () {
-                      Navigator.push(context, createRoute(const Login()));
+                      Navigator.push(
+                        context,
+                        createRoute(
+                          const Login(
+                            dontPop: "true",
+                          ),
+                        ),
+                      );
                     },
                     text: "Log In",
                   ),
                   ThemeButtonSmall(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.sp, vertical: 5.sp),
                     fontBold: true,
                     color: ThemeColors.white,
                     textColor: ThemeColors.background,

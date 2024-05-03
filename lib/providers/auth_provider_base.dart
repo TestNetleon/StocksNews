@@ -16,7 +16,13 @@ mixin AuthProviderBase {
 //
   void handleSessionOut() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) => const Login(
+                  dontPop: "true",
+                )));
 
     Preference.logout();
     navigatorKey.currentContext!.read<UserProvider>().clearUser();

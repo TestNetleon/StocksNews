@@ -30,7 +30,8 @@ import 'package:validators/validators.dart';
 class Login extends StatefulWidget {
   static const String path = "Login";
   final String? state;
-  const Login({super.key, this.state});
+  final String? dontPop;
+  const Login({super.key, this.state, this.dontPop});
 
   @override
   State<Login> createState() => _LoginState();
@@ -45,6 +46,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
+    log("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
   }
 
   void _onLoginClick() {
@@ -62,7 +64,7 @@ class _LoginState extends State<Login> {
       "username": _controller.text.toLowerCase(),
       "type": "email",
     };
-    provider.login(request, state: widget.state);
+    provider.login(request, state: widget.state, dontPop: widget.dontPop);
   }
 
   void _handleSignIn() async {
@@ -86,7 +88,8 @@ class _LoginState extends State<Login> {
           "fcm_token": fcmToken ?? "",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(request, state: widget.state);
+        provider.googleLogin(request,
+            state: widget.state, dontPop: widget.dontPop);
       }
 
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
@@ -106,7 +109,8 @@ class _LoginState extends State<Login> {
         "id": id ?? "",
         "fcm_token": fcmToken ?? "",
       };
-      provider.appleLogin(request, state: widget.state);
+      provider.appleLogin(request,
+          state: widget.state, dontPop: widget.dontPop);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       showErrorMessage(message: "$error");
@@ -378,7 +382,15 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, SignUp.path);
+                          // Navigator.pushNamed(context, SignUp.path);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUp(
+                                  dntPop: widget.dontPop,
+                                  state: widget.state,
+                                ),
+                              ));
                         },
                         child: Text(
                           " Sign Up ",

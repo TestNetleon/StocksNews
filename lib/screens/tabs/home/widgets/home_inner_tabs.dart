@@ -9,7 +9,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/home_top_loser.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/view_more_widget.dart';
@@ -92,46 +91,46 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                 ? AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     child: _selectedIndex == 0
-                        ? Column(
+                        ? const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
-                                child: Text(
-                                  "Stocks mentioned more often today than yesterday.",
-                                  style: stylePTSansRegular(fontSize: 12),
-                                ),
-                              ),
-                              const HomeTrending(),
+                              // Padding(
+                              //   padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                              //   child: Text(
+                              //     "Stocks mentioned more often today than yesterday.",
+                              //     style: stylePTSansRegular(fontSize: 12),
+                              //   ),
+                              // ),
+                              HomeTrending(),
                             ],
                           )
                         : _selectedIndex == 1
-                            ? Column(
+                            ? const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
-                                    child: Text(
-                                      "Today's top gainers are stocks that have experienced the highest percentage increase in value during the current trading day, reflecting positive market performance for those particular securities.",
-                                      style: stylePTSansRegular(fontSize: 12),
-                                    ),
-                                  ),
-                                  const HomeTopGainer(),
+                                  // Padding(
+                                  //   padding:
+                                  //       EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                                  //   child: Text(
+                                  //     "Today's top gainers are stocks that have experienced the highest percentage increase in value during the current trading day, reflecting positive market performance for those particular securities.",
+                                  //     style: stylePTSansRegular(fontSize: 12),
+                                  //   ),
+                                  // ),
+                                  HomeTopGainer(),
                                 ],
                               )
-                            : Column(
+                            : const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
-                                    child: Text(
-                                      "Today's top losers in the stock market are the securities that have experienced the greatest percentage decline in value compared to their previous closing prices.",
-                                      style: stylePTSansRegular(fontSize: 12),
-                                    ),
-                                  ),
-                                  const HomeTopLoser(),
+                                  // Padding(
+                                  //   padding:
+                                  //       EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                                  //   child: Text(
+                                  //     "Today's top losers in the stock market are the securities that have experienced the greatest percentage decline in value compared to their previous closing prices.",
+                                  //     style: stylePTSansRegular(fontSize: 12),
+                                  //   ),
+                                  // ),
+                                  HomeTopLoser(),
                                 ],
                               ),
                   )

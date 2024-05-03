@@ -38,6 +38,8 @@ class SentimentsGraph extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // const Align(
+          //     alignment: Alignment.centerRight, child: InfoBottomSheet()),
           Text(
             "Average Market Sentiment",
             textAlign: TextAlign.center,

@@ -187,7 +187,7 @@ class FirebaseApi {
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       Utils().showLog("getInitialMessage");
 
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 4), () {
         handleMessage(message, whenAppKilled: true);
       });
     });

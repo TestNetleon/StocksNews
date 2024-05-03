@@ -63,30 +63,34 @@ class StocksItemTrending extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     children: [
+                      // TextSpan(
+                      //   text: "Mentions: ${trending.sentiment.toInt()} (",
+                      //   style: stylePTSansRegular(fontSize: 12),
+                      // ),
                       TextSpan(
-                        text: "Mentions: ${trending.sentiment.toInt()} (",
+                        text: "Mentions: ${trending.sentiment.toInt()}",
                         style: stylePTSansRegular(fontSize: 12),
                       ),
-                      WidgetSpan(
-                        child: Padding(
-                          padding: EdgeInsets.zero,
-                          child: trending.sentiment > trending.lastSentiment
-                              ? Icon(
-                                  Icons.arrow_drop_up,
-                                  color: Colors.green,
-                                  size: 18.sp,
-                                )
-                              : Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.red,
-                                  size: 18.sp,
-                                ),
-                        ),
-                      ),
-                      TextSpan(
-                        text: "${trending.rank})",
-                        style: stylePTSansRegular(fontSize: 12),
-                      ),
+                      // WidgetSpan(
+                      //   child: Padding(
+                      //     padding: EdgeInsets.zero,
+                      //     child: trending.sentiment > trending.lastSentiment
+                      //         ? Icon(
+                      //             Icons.arrow_drop_up,
+                      //             color: Colors.green,
+                      //             size: 18.sp,
+                      //           )
+                      //         : Icon(
+                      //             Icons.arrow_drop_down,
+                      //             color: Colors.red,
+                      //             size: 18.sp,
+                      //           ),
+                      //   ),
+                      // ),
+                      // TextSpan(
+                      //   text: "${trending.rank})",
+                      //   style: stylePTSansRegular(fontSize: 12),
+                      // ),
                     ],
                   ),
                 )

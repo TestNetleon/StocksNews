@@ -42,7 +42,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
     showProgress = false,
     loadMore = false,
   }) async {
-    navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
+    // navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
 
     if (loadMore) {
       _page++;
@@ -137,7 +137,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
     showProgress = false,
     loadMore = false,
   }) async {
-    navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
+    // navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
 
     if (loadMore) {
       _page++;
@@ -415,7 +415,7 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
     required BlogsType type,
     String? id,
   }) async {
-    navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
+    // navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
