@@ -76,7 +76,9 @@ class SectorIndustryItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Icon(
-                      Icons.arrow_upward,
+                      (data?.changesPercentage ?? 0) > 0
+                          ? Icons.arrow_upward
+                          : Icons.arrow_downward,
                       color: (data?.changesPercentage ?? 0) > 0
                           ? ThemeColors.accent
                           : Colors.red,
@@ -84,7 +86,7 @@ class SectorIndustryItem extends StatelessWidget {
                     ),
                     Flexible(
                       child: Text(
-                        "${data?.change.toCurrency()}(${data?.changesPercentage.toCurrency()}%)",
+                        "${data?.formattedChange} (${data?.changesPercentage.toCurrency()}%)",
                         style: stylePTSansRegular(
                           fontSize: 12,
                           color: (data?.changesPercentage ?? 0) > 0

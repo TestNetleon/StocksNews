@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -138,98 +140,11 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // const ScreenTitle(title: "News Detail"),
-                        // Padding(
-                        //   padding:
-                        //       EdgeInsets.symmetric(vertical: Dimen.itemSpacing.sp),
-                        //   child: Divider(
-                        //     color: ThemeColors.accent,
-                        //     height: 2.sp,
-                        //     thickness: 2.sp,
-                        //   ),
-                        // ),
-                        // const NewsHeaderStocks(),
-
                         Text(
                           provider.data?.postDetail?.title ?? "",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
-                        // Divider(
-                        //   color: ThemeColors.border,
-                        //   height: 10.sp,
-                        // ),
-
                         const SpacerVertical(height: 5),
-
-                        // Visibility(
-                        //   visible: foundSite,
-                        //   child: Padding(
-                        //     padding: EdgeInsets.only(bottom: 10.sp),
-                        //     child: Text(
-                        //       "Source - ${provider.data?.postDetail?.site} | $date",
-                        //       style: stylePTSansRegular(
-                        //           fontSize: 13, color: ThemeColors.greyText),
-                        //     ),
-                        //   ),
-                        // ),
-
-                        // Visibility(
-                        //   visible: (provider.data?.postDetail?.authors?.isEmpty ==
-                        //               true ||
-                        //           provider.data?.postDetail?.categories?.isEmpty ==
-                        //               true) &&
-                        //       !foundSite,
-                        //   child: Padding(
-                        //     padding: EdgeInsets.only(bottom: 10.sp),
-                        //     child: Text(
-                        //       date,
-                        //       style: stylePTSansRegular(
-                        //           fontSize: 13, color: ThemeColors.greyText),
-                        //     ),
-                        //   ),
-                        // ),
-                        // Divider(
-                        //   color: ThemeColors.border,
-                        //   height: 10.sp,
-                        // ),
-
-                        // Visibility(
-                        //   visible:
-                        //       provider.data?.postDetail?.authors?.isNotEmpty == true,
-                        //   child: Padding(
-                        //     padding: EdgeInsets.only(bottom: 10.sp),
-                        //     child: NewsDetailAuthor(
-                        //       type: BlogsType.author,
-                        //       title: "Author: ",
-                        //       data: provider.data?.postDetail?.authors,
-                        //     ),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(bottom: 3.sp),
-                        //   child: Wrap(
-                        //     runAlignment: WrapAlignment.start,
-                        //     alignment: WrapAlignment.center,
-                        //     children: [
-                        //       Visibility(
-                        //         visible: provider.data?.postDetail?.authors != null &&
-                        //             provider.data?.postDetail?.authors?.isNotEmpty ==
-                        //                 true,
-                        //         child: Text(
-                        //           "By ",
-                        //           style: styleGeorgiaRegular(
-                        //               color: ThemeColors.greyText, fontSize: 13),
-                        //         ),
-                        //       ),
-                        //       NewsDetailAuthorAB(
-                        //         underLines: false,
-                        //         type: BlogsType.author,
-                        //         title: "Author: ",
-                        //         data: provider.data?.postDetail?.authors,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         provider.data?.postDetail?.authors?.isNotEmpty ==
                                     true ||
                                 provider.data?.postDetail?.categories
@@ -240,61 +155,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 child: ListAlignment(
                                   date: date,
                                   list1: provider.data?.postDetail?.authors,
-                                  list2: provider.data?.postDetail?.categories,
+                                  // list2: provider.data?.postDetail?.categories,
                                 ),
                               )
-
-                            //  Padding(
-                            //     padding: EdgeInsets.only(bottom: 15.sp),
-                            //     child: Wrap(
-                            //       children: [
-                            //         Visibility(
-                            //           visible: provider.data?.postDetail?.authors
-                            //                   ?.isNotEmpty ==
-                            //               true,
-                            //           child: Text(
-                            //             "By ",
-                            //             style: stylePTSansRegular(
-                            //                 color: ThemeColors.greyText,
-                            //                 fontSize: 13),
-                            //           ),
-                            //         ),
-                            //         Visibility(
-                            //           visible: provider.data?.postDetail?.authors
-                            //                   ?.isNotEmpty ==
-                            //               true,
-                            //           child: Wrap(
-                            //             children: _buildTextWidgets(
-                            //                 provider.data?.postDetail?.authors,
-                            //                 type: BlogsType.author),
-                            //           ),
-                            //         ),
-                            //         Text(
-                            //           provider.data?.postDetail?.authors?.isEmpty ==
-                            //                   true
-                            //               ? " $date | "
-                            //               : provider.data?.postDetail?.categories
-                            //                           ?.isEmpty ==
-                            //                       true
-                            //                   ? " | $date "
-                            //                   : " | $date | ",
-                            //           style: stylePTSansRegular(
-                            //               color: ThemeColors.greyText, fontSize: 13),
-                            //         ),
-                            //         Visibility(
-                            //           visible: provider.data?.postDetail?.categories
-                            //                   ?.isNotEmpty ==
-                            //               true,
-                            //           child: Wrap(
-                            //             children: _buildTextWidgets(
-                            //                 provider.data?.postDetail?.categories,
-                            //                 type: BlogsType.category),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   )
-
                             : foundSite
                                 ? Padding(
                                     padding: EdgeInsets.only(bottom: 10.sp),
@@ -314,45 +177,13 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                           color: ThemeColors.greyText),
                                     ),
                                   ),
-
-                        // Divider(
-                        //   color: ThemeColors.border,
-                        //   height: 10.sp,
-                        // ),
-
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   height: ScreenUtil().screenHeight * 0.3,
-                        //   child: ThemeImageView(
-                        //     url: provider.data?.postDetail?.image ?? "",
-                        //   ),
-                        // ),
-
                         CachedNetworkImagesWidget(
                           provider.data?.postDetail?.image ?? "",
                           height: ScreenUtil().screenHeight * 0.27,
                           width: double.infinity,
                           // fit: BoxFit.contain,
                         ),
-
-                        // Visibility(
-                        //   visible:
-                        //       provider.data?.postDetail?.categories?.isNotEmpty ==
-                        //           true,
-                        //   child: Padding(
-                        //     padding: EdgeInsets.only(top: Dimen.itemSpacing.sp),
-                        //     child: NewsDetailAuthor(
-                        //       type: BlogsType.category,
-                        //       title: "Category: ",
-                        //       data: provider.data?.postDetail?.categories,
-                        //     ),
-                        //   ),
-                        // ),
                         SpacerVertical(height: Dimen.itemSpacing.sp),
-                        // Text(
-                        //   provider.data?.postDetail?.text ?? "",
-                        //   style: stylePTSansRegular(),
-                        // ),
                         HtmlWidget(
                           customStylesBuilder: (element) {
                             if (element.localName == 'a') {
@@ -370,24 +201,34 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             return a;
                           },
                           provider.data?.postDetail?.text ?? "",
-
-                          // customWidgetBuilder: (element) {
-                          //   if (element.localName == 'a') {
-                          //     return GestureDetector(
-                          //       onTap: () {
-                          //         openUrl(element.attributes['href']);
-                          //       },
-                          //       child: Text(element.text,
-                          //           style: styleGeorgiaRegular(
-                          //               color: ThemeColors.accent, fontSize: 15)),
-                          //     );
-                          //   }
-                          //   return null;
-                          // },
                           textStyle:
                               styleGeorgiaRegular(fontSize: 18, height: 1.5),
                         ),
-
+                        // const SpacerVertical(height: 20),
+                        Visibility(
+                          visible:
+                              (provider.data?.postDetail?.categories?.length ??
+                                      0) >
+                                  0,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 20.sp),
+                            child: Wrap(
+                              children: [
+                                Text(
+                                  "Posted under - ",
+                                  style: stylePTSansRegular(
+                                      fontSize: 13,
+                                      color: ThemeColors.greyText),
+                                ),
+                                const ListAlignment().buildList(
+                                  list: provider.data?.postDetail?.categories,
+                                  isLastList: true,
+                                  type: BlogsType.category,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         const SpacerVertical(height: 20),
                         Visibility(
                           visible:
@@ -399,37 +240,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             data: provider.data?.postDetail?.tags,
                           ),
                         ),
-                        // RichText(
-                        //   text: TextSpan(
-                        //     children: [
-                        //       TextSpan(
-                        //         text: "To discover the latest insights, ",
-                        //         style: stylePTSansRegular(
-                        //           fontSize: 13,
-                        //         ),
-                        //       ),
-                        //       TextSpan(
-                        //         text: "click here for the full article",
-                        //         style: stylePTSansRegular(
-                        //           fontSize: 13,
-                        //           color: ThemeColors.accent,
-                        //         ),
-                        //         recognizer: TapGestureRecognizer()
-                        //           ..onTap = () {
-                        //             openUrl(provider.data?.postDetail?.url);
-                        //           },
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // ThemeButtonSmall(
-                        //   showArrow: false,
-                        //   onPressed: () {},
-                        //   text: "Read More",
-                        // ),
                         const SpacerVertical(height: 25),
                         const ScreenTitle(title: "More News to Read"),
-
                         ListView.separated(
                           itemCount: provider.data?.otherPost?.length ?? 0,
                           shrinkWrap: true,
@@ -703,17 +515,19 @@ class ListAlignment extends StatelessWidget {
           visible: date != null,
           child: Text(
             list1?.isEmpty == true && list2?.isNotEmpty == true
-                ? " $date | "
+                ? " $date"
                 : list2?.isEmpty == true && list1?.isNotEmpty == true
-                    ? " | $date  "
+                    ? " | $date"
                     : list1?.isEmpty == true && list2?.isEmpty == true
                         ? "$date"
-                        : " | $date | ",
-            style:
-                stylePTSansRegular(color: ThemeColors.greyText, fontSize: 13),
+                        : " | $date",
+            style: stylePTSansRegular(
+              color: ThemeColors.greyText,
+              fontSize: 13,
+            ),
           ),
         ),
-        buildList(list: list2, isLastList: true, type: BlogsType.category),
+        // buildList(list: list2, isLastList: true, type: BlogsType.category),
       ],
     );
   }
@@ -776,8 +590,6 @@ class ListAlignment extends StatelessWidget {
       }
     }
 
-    return Wrap(
-      children: widgets,
-    );
+    return Wrap(children: widgets);
   }
 }

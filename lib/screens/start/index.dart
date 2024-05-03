@@ -210,14 +210,14 @@ class _StartIndexState extends State<StartIndex> {
             //     onPressed: () {
             //       Preference.setFirstTime(false);
 
-            //       Navigator.pushNamedAndRemoveUntil(
-            //           navigatorKey.currentContext!,
-            //           Tabs.path,
-            //           (route) => false);
-            //     },
-            //     text: "Continue as Guest",
-            //   ),
-            // ),
+                  Navigator.pushNamedAndRemoveUntil(
+                      navigatorKey.currentContext!,
+                      Tabs.path,
+                      (route) => false);
+                },
+                text: "Continue as Guest",
+              ),
+            ),
           ],
         ),
       ),

@@ -44,6 +44,7 @@ class SectorIndustryData {
   final String price;
   final num change;
   final num changesPercentage;
+  final String? formattedChange;
 
   SectorIndustryData({
     // required this.id,
@@ -53,6 +54,7 @@ class SectorIndustryData {
     required this.price,
     required this.change,
     required this.changesPercentage,
+    this.formattedChange,
   });
 
   factory SectorIndustryData.fromJson(Map<String, dynamic> json) =>
@@ -64,6 +66,7 @@ class SectorIndustryData {
         price: json["price"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        formattedChange: json["formatted_change"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,5 +77,6 @@ class SectorIndustryData {
         "price": price,
         "change": change,
         "changesPercentage": changesPercentage,
+        "formatted_change": formattedChange,
       };
 }

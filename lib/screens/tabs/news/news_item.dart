@@ -90,7 +90,7 @@ class NewsItem extends StatelessWidget {
               children: [
                 Text(
                   news?.title ?? "",
-                  style: styleGeorgiaRegular(fontSize: 16),
+                  style: styleGeorgiaBold(fontSize: 16),
                   // maxLines: 2,
                   // overflow: TextOverflow.ellipsis,
                 ),
@@ -339,126 +339,119 @@ class NewsItemSeparated extends StatelessWidget {
             ],
           ),
           const SpacerVertical(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Text(
+                news?.title ?? "",
+                style: styleGeorgiaBold(fontSize: 24),
+                // maxLines: 2,
+                // overflow: TextOverflow.ellipsis,
+              ),
+              const SpacerVertical(height: 5),
+              //  const SpacerVertical(height: 10),
+              // Visibility(
+              //   visible: news?.authors != null &&
+              //       news?.authors?.isNotEmpty == true,
+              //   child: Padding(
+              //     padding: EdgeInsets.only(bottom: 3.sp),
+              //     child: Row(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Visibility(
+              //           visible: news?.authors != null &&
+              //               news?.authors?.isNotEmpty == true,
+              //           child: Text(
+              //             "By ",
+              //             style: styleGeorgiaRegular(
+              //                 color: ThemeColors.greyText, fontSize: 11),
+              //           ),
+              //         ),
+              //         Flexible(
+              //           child: NewsDetailAuthorA(
+              //             underLines: false,
+              //             fontSize: 11,
+              //             type: BlogsType.author,
+              //             title: "Author: ",
+              //             data: news?.authors,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              Visibility(
+                visible: news?.authors?.isNotEmpty == true,
+                child: Wrap(
                   children: [
-                    Text(
-                      news?.title ?? "",
-                      style: styleGeorgiaRegular(fontSize: 16),
-                      // maxLines: 2,
-                      // overflow: TextOverflow.ellipsis,
-                    ),
-                    const SpacerVertical(height: 5),
-                    //  const SpacerVertical(height: 10),
-                    // Visibility(
-                    //   visible: news?.authors != null &&
-                    //       news?.authors?.isNotEmpty == true,
-                    //   child: Padding(
-                    //     padding: EdgeInsets.only(bottom: 3.sp),
-                    //     child: Row(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Visibility(
-                    //           visible: news?.authors != null &&
-                    //               news?.authors?.isNotEmpty == true,
-                    //           child: Text(
-                    //             "By ",
-                    //             style: styleGeorgiaRegular(
-                    //                 color: ThemeColors.greyText, fontSize: 11),
-                    //           ),
-                    //         ),
-                    //         Flexible(
-                    //           child: NewsDetailAuthorA(
-                    //             underLines: false,
-                    //             fontSize: 11,
-                    //             type: BlogsType.author,
-                    //             title: "Author: ",
-                    //             data: news?.authors,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     Visibility(
                       visible: news?.authors?.isNotEmpty == true,
-                      child: Wrap(
-                        children: [
-                          Visibility(
-                            visible: news?.authors?.isNotEmpty == true,
-                            child: Text(
-                              "By ",
-                              style: stylePTSansRegular(
-                                  color: ThemeColors.greyText, fontSize: 13),
-                            ),
-                          ),
-                          Wrap(
-                            children: _buildTextWidgets(news?.authors,
-                                type: BlogsType.author),
-                          ),
-                          Text(
-                            " | ${news?.postDate} ",
-                            style: stylePTSansRegular(
-                                color: ThemeColors.greyText, fontSize: 13),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: showCategory,
                       child: Text(
-                        news?.site == "" || news?.site == null
-                            ? "${news?.postDate}"
-                            : "Source - ${news?.site} | ${news?.postDate}",
+                        "By ",
                         style: stylePTSansRegular(
-                            fontSize: 13, color: ThemeColors.greyText),
+                            color: ThemeColors.greyText, fontSize: 13),
                       ),
-                      //  Container(
-                      //   margin: EdgeInsets.only(bottom: 5.sp),
-                      //   decoration: BoxDecoration(
-                      //     border:
-                      //         Border.all(color: ThemeColors.accent, width: 1.sp),
-                      //     borderRadius: BorderRadius.circular(4.sp),
-                      //   ),
-                      //   padding: EdgeInsets.symmetric(
-                      //     horizontal: 8.sp,
-                      //     vertical: 4.sp,
-                      //   ),
-                      //   child: Text(
-                      //     news?.site ?? "",
-                      //     style: stylePTSansRegular(fontSize: 10),
-                      //   ),
-                      // ),
                     ),
-                    // Visibility(
-                    //   visible: (news?.authors != null &&
-                    //               news?.authors?.isNotEmpty == true) &&
-                    //           news?.site == "" ||
-                    //       news?.site == null,
-                    //   child: Visibility(
-                    //     visible: !(news?.site == "" && news?.site == null),
-                    //     child: Text(
-                    //       "${news?.postDate}",
-                    //       style: stylePTSansRegular(
-                    //           fontSize: 11, color: ThemeColors.greyText),
-                    //     ),
-                    //   ),
-                    // ),
-
-                    // Text(
-                    //   news?.postDate ?? "",
-                    //   style: styleGeorgiaRegular(
-                    //     // color: ThemeColors.greyText,
-                    //     fontSize: 10,
-                    //   ),
-                    // ),
+                    Wrap(
+                      children: _buildTextWidgets(news?.authors,
+                          type: BlogsType.author),
+                    ),
+                    Text(
+                      " | ${news?.postDate} ",
+                      style: stylePTSansRegular(
+                          color: ThemeColors.greyText, fontSize: 13),
+                    ),
                   ],
                 ),
               ),
+              Visibility(
+                visible: showCategory,
+                child: Text(
+                  news?.site == "" || news?.site == null
+                      ? "${news?.postDate}"
+                      : "Source - ${news?.site} | ${news?.postDate}",
+                  style: stylePTSansRegular(
+                      fontSize: 13, color: ThemeColors.greyText),
+                ),
+                //  Container(
+                //   margin: EdgeInsets.only(bottom: 5.sp),
+                //   decoration: BoxDecoration(
+                //     border:
+                //         Border.all(color: ThemeColors.accent, width: 1.sp),
+                //     borderRadius: BorderRadius.circular(4.sp),
+                //   ),
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: 8.sp,
+                //     vertical: 4.sp,
+                //   ),
+                //   child: Text(
+                //     news?.site ?? "",
+                //     style: stylePTSansRegular(fontSize: 10),
+                //   ),
+                // ),
+              ),
+              // Visibility(
+              //   visible: (news?.authors != null &&
+              //               news?.authors?.isNotEmpty == true) &&
+              //           news?.site == "" ||
+              //       news?.site == null,
+              //   child: Visibility(
+              //     visible: !(news?.site == "" && news?.site == null),
+              //     child: Text(
+              //       "${news?.postDate}",
+              //       style: stylePTSansRegular(
+              //           fontSize: 11, color: ThemeColors.greyText),
+              //     ),
+              //   ),
+              // ),
+
+              // Text(
+              //   news?.postDate ?? "",
+              //   style: styleGeorgiaRegular(
+              //     // color: ThemeColors.greyText,
+              //     fontSize: 10,
+              //   ),
+              // ),
             ],
           ),
         ],
