@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,14 +18,18 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
+import '../login/login.dart';
+
 class SignUp extends StatefulWidget {
+  final String? dntPop;
   static const String path = "SignUp";
 
-  const SignUp({super.key});
+  const SignUp({super.key, this.dntPop});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -325,7 +330,12 @@ class _SignUpState extends State<SignUp> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      log("${widget.dntPop}");
+                      if (widget.dntPop != null) {
+                        Navigator.push(context, createRoute(const Login()));
+                      } else {
+                        Navigator.pop(context);
+                      }
                     },
                     child: RichText(
                       text: TextSpan(
