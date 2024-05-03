@@ -177,7 +177,6 @@ class _StartIndexState extends State<StartIndex> {
                 ],
               ),
             ),
-
             GestureDetector(
               onTap: () {
                 Preference.setFirstTime(false);
@@ -200,22 +199,6 @@ class _StartIndexState extends State<StartIndex> {
                         size: 14.sp, color: ThemeColors.greyText),
                   ],
                 ),
-              ),
-            ),
-
-            // Padding(
-            //   padding: EdgeInsets.all(10.sp),
-            //   child: ThemeButton(
-            //     textSize: 15,
-            //     onPressed: () {
-            //       Preference.setFirstTime(false);
-
-                  Navigator.pushNamedAndRemoveUntil(
-                      navigatorKey.currentContext!,
-                      Tabs.path,
-                      (route) => false);
-                },
-                text: "Continue as Guest",
               ),
             ),
           ],
