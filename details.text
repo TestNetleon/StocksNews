@@ -125,6 +125,20 @@ Subject Public Key Algorithm: 2048-bit RSA key
 Bitly App ID: Ao1seSO8XNS 
 
 
+- Home Trending change in price on top - DONE 
+- Add mentions label on home trending - DONE
+- Show price@ on home trending - DONE
+- subtitles on stock details should be dynamic from API -DONE
+- Details page Tabs system - DONE
+
+- Image Notification in iOS
+- Home Page missing Section (check skype and website)
+- Screenshot Change
+- Subtitles should be dynamic from API
+- info on Chart bottomsheet
+
+
+
 - Details page Tabs system 
 - subtitles on stock details should be dynamic from API
 - info on Chart bottomsheet
@@ -146,3 +160,5 @@ Bitly App ID: Ao1seSO8XNS
 - officer remove word (rem)
 ========================================================================================
 - refresh token
+
+
