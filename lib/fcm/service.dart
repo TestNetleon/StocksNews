@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -262,10 +265,32 @@ class FirebaseApi {
     await _firebaseMessaging.requestPermission();
     await _firebaseMessaging.getToken().then((value) async {
       Utils().showLog("FCM TOKEN  ******   $value");
-      Preference.saveFcmToken(value);
+      saveFCMapi(value: value);
     });
 
     initPushNotification();
     initLocalNotifications();
+  }
+}
+
+Future saveFCMapi({String? value}) async {
+  try {
+    Map request = {
+      "token": "",
+      "fcm_token": value ?? "",
+    };
+    ApiResponse response = await apiRequest(
+      url: Apis.saveFCM,
+      request: request,
+      showProgress: false,
+    );
+
+    if (response.status) {
+      Preference.saveFcmToken(value);
+    } else {
+      //
+    }
+  } catch (e) {
+    Utils().showLog("Catch error $e");
   }
 }

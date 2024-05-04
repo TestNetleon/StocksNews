@@ -81,7 +81,7 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
                     size: 20.sp,
                   ),
                   Text(
-                    "${keyStats?.change?.toCurrency()} (${keyStats?.changesPercentage?.toCurrency()}%)",
+                    "${keyStats?.changeWithCur} (${keyStats?.changesPercentage?.toCurrency()}%)",
                     style: stylePTSansBold(
                       fontSize: 12,
                       color: (keyStats?.change ?? 0) > 0

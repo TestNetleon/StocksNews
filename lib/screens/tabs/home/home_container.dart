@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/home_news_item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/insider_social_tabs.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/sentiments_graph.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:upgrader/upgrader.dart';
 //
 import 'widgets/home_inner_tabs.dart';
@@ -101,10 +98,10 @@ class HomeContainer extends StatelessWidget {
                     child: const Column(
                       children: [
                         MostRecentMentions(),
-                        InsiderSocialTabs(),
-                        SpacerVertical(),
-                        HomeNewsItem(),
-                        SpacerVertical(),
+                        // InsiderSocialTabs(),
+                        // SpacerVertical(),
+                        // HomeNewsItem(),
+                        // SpacerVertical(),
                       ],
                     ),
                   ),

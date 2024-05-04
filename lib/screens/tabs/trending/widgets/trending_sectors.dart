@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -7,13 +8,13 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_sectors_i
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingSectors extends StatelessWidget {
   const TrendingSectors({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TrendingProvider provider = context.watch<TrendingProvider>();
     TrendingRes? data = context.read<TrendingProvider>().trendingStories;
 
     return Column(
@@ -38,11 +39,17 @@ class TrendingSectors extends StatelessWidget {
         //   title: "Trending Sectors",
         //   subTitle: "Top trending sectors in online chatter, Past 7 days",
         // ),
-        Text(
-          "Top trending sectors in online chatter, Past 7 days",
-          style: stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+        Visibility(
+          visible: provider.mostBullish?.text?.sectors != '',
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.sp),
+            child: Text(
+              provider.mostBullish?.text?.sectors ?? "",
+              style:
+                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+            ),
+          ),
         ),
-        const SpacerVertical(),
         ListView.separated(
           itemCount: data?.sectors?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
@@ -52,8 +59,17 @@ class TrendingSectors extends StatelessWidget {
             if (index == 0) {
               return Column(
                 children: [
+                  Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 15.sp,
+                    thickness: 1,
+                  ),
                   const TrendingSectorItemHeader(),
-                  const SpacerVertical(height: 10),
+                  Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 15.sp,
+                    thickness: 1,
+                  ),
                   TrendingSectorItem(data: sectorData),
                 ],
               );
@@ -93,40 +109,75 @@ class TrendingSectorItemHeader extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              // SizedBox(
+              //   width: cnts.maxWidth * .5,
+              //   child: Container(
+              //     margin: EdgeInsets.only(left: 37.sp),
+              //     child: Text(
+              //       "Sectors",
+              //       style: stylePTSansBold(
+              //         fontSize: 14,
+              //         color: ThemeColors.greyText,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const SpacerHorizontal(width: 10),
+              // Expanded(
+              //   flex: 2,
+              //   child: Text(
+              //     "Type",
+              //     style: stylePTSansBold(
+              //       fontSize: 14,
+              //       color: ThemeColors.greyText,
+              //     ),
+              //     // textAlign: TextAlign.center,
+              //   ),
+              // ),
+              // const SpacerHorizontal(),
+              // Text(
+              //   "Mentions",
+              //   style: stylePTSansBold(
+              //     fontSize: 14,
+              //     color: ThemeColors.greyText,
+              //   ),
+              //   maxLines: 1,
+              //   overflow: TextOverflow.ellipsis,
+              // ),
+
+              const SpacerHorizontal(width: 5),
+              Container(
                 width: cnts.maxWidth * .5,
-                child: Container(
-                  margin: EdgeInsets.only(left: 37.sp),
-                  child: Text(
-                    "Sectors",
-                    style: stylePTSansBold(
-                      fontSize: 14,
-                      color: ThemeColors.greyText,
-                    ),
-                  ),
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  "Type",
-                  style: stylePTSansBold(
-                    fontSize: 14,
+                child: AutoSizeText(
+                  maxLines: 1,
+                  "SECTORS",
+                  style: stylePTSansRegular(
+                    fontSize: 12,
                     color: ThemeColors.greyText,
                   ),
-                  // textAlign: TextAlign.center,
                 ),
               ),
-              const SpacerHorizontal(),
-              Text(
-                "Mentions",
-                style: stylePTSansBold(
-                  fontSize: 14,
+              const SpacerHorizontal(width: 4),
+
+              Expanded(
+                child: AutoSizeText(
+                  maxLines: 1,
+                  "TYPE",
+                  style: stylePTSansRegular(
+                    fontSize: 12,
+                    color: ThemeColors.greyText,
+                  ),
+                ),
+              ),
+
+              AutoSizeText(
+                maxLines: 1,
+                "MENTIONS",
+                textAlign: TextAlign.end,
+                style: stylePTSansRegular(
+                  fontSize: 12,
                   color: ThemeColors.greyText,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

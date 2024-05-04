@@ -7,6 +7,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/alerts_res.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -24,6 +25,10 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
   List<AlertData>? get data => _data?.data;
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
+
+  TextRes? _textRes;
+  TextRes? get textRes => _textRes;
+
   // int? get page => _page;
   bool get isLoading => _status == Status.loading;
   void setStatus(status) {
@@ -69,6 +74,9 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
           _error = response.message;
           // showErrorMessage(message: response.message);
         }
+      }
+      if (response.extra is! List) {
+        _textRes = response.extra?.text;
       }
       setStatus(Status.loaded);
     } catch (e) {

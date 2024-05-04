@@ -191,9 +191,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
                 //   style: stylePTSansRegular(),
                 // ),
 
-                const ScreenTitle(
+                ScreenTitle(
                   title: "Most Recent Mentions",
-                  subTitle: "Most mentioned stocks in the last hour.",
+                  subTitle: provider.socialSentimentRes?.text?.mentionText,
                 ),
                 ListView.separated(
                   itemCount:

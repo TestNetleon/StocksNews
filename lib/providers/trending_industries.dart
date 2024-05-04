@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/trending_industries_graph_res.dart';
 import 'package:stocks_news_new/modals/trending_industries_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -28,6 +29,9 @@ class TrendingIndustriesProvider extends ChangeNotifier {
   List<int>? positiveMentions;
   List<int>? negativeMentions;
   List<int>? neutralMentions;
+
+  TextRes? _textRes;
+  TextRes? get textRes => _textRes;
 
   Status _isGraphLoading = Status.ideal;
   bool get isGraphLoading => _isGraphLoading == Status.loading;
@@ -76,7 +80,9 @@ class TrendingIndustriesProvider extends ChangeNotifier {
         negativeMentions = null;
         neutralMentions = null;
       }
-
+      if (response.extra is! List) {
+        _textRes = response.extra?.text;
+      }
       _isGraphLoading = Status.loaded;
     } catch (e) {
       labels = null;

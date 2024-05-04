@@ -181,7 +181,7 @@ class KeyStats {
   final num? timestamp;
   final String? text;
   final String? forecastText;
-
+  final String? changeWithCur;
   final num? priceValue;
   final num? dayLowValue;
   final num? dayHighValue;
@@ -196,6 +196,7 @@ class KeyStats {
     this.marketStatus,
     this.changesPercentage,
     this.change,
+    this.changeWithCur,
     this.dayLow,
     this.dayHigh,
     this.yearHigh,
@@ -227,6 +228,7 @@ class KeyStats {
         name: json["name"],
         price: json["price"],
         priceWithoutCur: json["price_without_cur"],
+        changeWithCur: json["change_with_cur"],
         changesPercentage: json["changesPercentage"],
         change: json["change"],
         dayLow: json["dayLow"],
@@ -260,6 +262,7 @@ class KeyStats {
         "symbol": symbol,
         "name": name,
         "price": price,
+        "change_with_cur": changeWithCur,
         "price_without_cur": priceWithoutCur,
         "changesPercentage": changesPercentage,
         "change": change,

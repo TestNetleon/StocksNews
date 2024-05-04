@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/modals/home_trending_res.dart';
+
 ApiResponse apiResponseFromJson(String str) =>
     ApiResponse.fromJson(json.decode(str));
 
@@ -57,6 +59,7 @@ class Extra {
   final List<KeyValueElement>? cap;
   final List<KeyValueElement>? sector;
   final List<KeyValueElement>? txnSize;
+  final TextRes? text;
 
   Extra({
     this.search,
@@ -66,38 +69,37 @@ class Extra {
     this.cap,
     this.sector,
     this.notificationCount,
+    this.text,
     this.txnSize,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
-        search: json["search"],
-        exchangeShortName: json["exchange_short_name"] == null
-            ? []
-            : List<KeyValueElement>.from(json["exchange_short_name"]!
-                .map((x) => KeyValueElement.fromJson(x))),
-        priceRange: json["price_range"] == null
-            ? []
-            : List<KeyValueElement>.from(
-                json["price_range"]!.map((x) => KeyValueElement.fromJson(x))),
-        transactionType: json["txn_type"] == null
-            ? []
-            : List<KeyValueElement>.from(
-                json["txn_type"]!.map((x) => KeyValueElement.fromJson(x))),
-        cap: json["market_cap"] == null
-            ? []
-            : List<KeyValueElement>.from(
-                json["market_cap"]!.map((x) => KeyValueElement.fromJson(x))),
-        sector: json["sector"] == null
-            ? []
-            : List<KeyValueElement>.from(
-                json["sector"]!.map((x) => KeyValueElement.fromJson(x))),
-        txnSize: json["txn_size"] == null
-            ? []
-            : List<KeyValueElement>.from(
-                json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
-
-                notificationCount: json["notification_count"]
-      );
+      search: json["search"],
+      text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
+      exchangeShortName: json["exchange_short_name"] == null
+          ? []
+          : List<KeyValueElement>.from(json["exchange_short_name"]!
+              .map((x) => KeyValueElement.fromJson(x))),
+      priceRange: json["price_range"] == null
+          ? []
+          : List<KeyValueElement>.from(
+              json["price_range"]!.map((x) => KeyValueElement.fromJson(x))),
+      transactionType: json["txn_type"] == null
+          ? []
+          : List<KeyValueElement>.from(
+              json["txn_type"]!.map((x) => KeyValueElement.fromJson(x))),
+      cap: json["market_cap"] == null
+          ? []
+          : List<KeyValueElement>.from(
+              json["market_cap"]!.map((x) => KeyValueElement.fromJson(x))),
+      sector: json["sector"] == null
+          ? []
+          : List<KeyValueElement>.from(
+              json["sector"]!.map((x) => KeyValueElement.fromJson(x))),
+      txnSize: json["txn_size"] == null
+          ? []
+          : List<KeyValueElement>.from(json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
+      notificationCount: json["notification_count"]);
 
   Map<String, dynamic> toJson() => {
         "search": search,
@@ -118,7 +120,8 @@ class Extra {
         "txn_size": txnSize == null
             ? []
             : List<dynamic>.from(txnSize!.map((x) => x.toJson())),
-            "notification_count":notificationCount,
+        "notification_count": notificationCount,
+        "text": text?.toJson(),
       };
 }
 

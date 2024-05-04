@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -9,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/home_top_loser.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/view_more_widget.dart';
@@ -91,46 +93,72 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                 ? AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     child: _selectedIndex == 0
-                        ? const Column(
+                        ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Padding(
-                              //   padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
-                              //   child: Text(
-                              //     "Stocks mentioned more often today than yesterday.",
-                              //     style: stylePTSansRegular(fontSize: 12),
-                              //   ),
-                              // ),
+                              Visibility(
+                                visible:
+                                    provider.homeTrendingRes?.text?.trending !=
+                                        '',
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                                  child: Text(
+                                    provider.homeTrendingRes?.text?.trending ??
+                                        "",
+                                    style: stylePTSansRegular(
+                                        fontSize: 14,
+                                        color: ThemeColors.greyText),
+                                  ),
+                                ),
+                              ),
                               HomeTrending(),
                             ],
                           )
                         : _selectedIndex == 1
-                            ? const Column(
+                            ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Padding(
-                                  //   padding:
-                                  //       EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
-                                  //   child: Text(
-                                  //     "Today's top gainers are stocks that have experienced the highest percentage increase in value during the current trading day, reflecting positive market performance for those particular securities.",
-                                  //     style: stylePTSansRegular(fontSize: 12),
-                                  //   ),
-                                  // ),
+                                  Visibility(
+                                    visible: provider
+                                            .homeTrendingRes?.text?.gainers !=
+                                        '',
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                                      child: Text(
+                                        provider.homeTrendingRes?.text
+                                                ?.gainers ??
+                                            "",
+                                        style: stylePTSansRegular(
+                                            fontSize: 14,
+                                            color: ThemeColors.greyText),
+                                      ),
+                                    ),
+                                  ),
                                   HomeTopGainer(),
                                 ],
                               )
-                            : const Column(
+                            : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Padding(
-                                  //   padding:
-                                  //       EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
-                                  //   child: Text(
-                                  //     "Today's top losers in the stock market are the securities that have experienced the greatest percentage decline in value compared to their previous closing prices.",
-                                  //     style: stylePTSansRegular(fontSize: 12),
-                                  //   ),
-                                  // ),
-                                  HomeTopLoser(),
+                                  Visibility(
+                                    visible: provider
+                                            .homeTrendingRes?.text?.losers !=
+                                        '',
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
+                                      child: Text(
+                                        provider.homeTrendingRes?.text
+                                                ?.losers ??
+                                            "",
+                                        style: stylePTSansRegular(
+                                            fontSize: 14,
+                                            color: ThemeColors.greyText),
+                                      ),
+                                    ),
+                                  ),
+                                  const HomeTopLoser(),
                                 ],
                               ),
                   )

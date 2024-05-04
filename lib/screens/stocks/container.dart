@@ -48,7 +48,17 @@ class StocksContainer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            const ScreenTitle(title: "Stocks"),
+            ScreenTitle(
+              title: "Stocks",
+              subTitle: provider.textRes?.subTitle,
+              optionalWidget: GestureDetector(
+                onTap: _filterClick,
+                child: const Icon(
+                  Icons.filter_alt,
+                  color: ThemeColors.white,
+                ),
+              ),
+            ),
             TextInputFieldSearch(
               hintText: "Search by symbol or company name",
               onSubmitted: (text) {

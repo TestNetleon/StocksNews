@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 
 TrendingRes trendingResFromJson(String str) =>
@@ -14,6 +15,7 @@ class TrendingRes {
   final List<Sector>? sectors;
   final List<SectorsPerformance>? sectorsPerformance;
   final String? trendingSymbolList;
+  final TextRes? text;
 //
   TrendingRes({
     required this.mostBullish,
@@ -22,6 +24,7 @@ class TrendingRes {
     required this.sectors,
     required this.sectorsPerformance,
     this.trendingSymbolList,
+    this.text,
   });
 
   factory TrendingRes.fromJson(Map<String, dynamic> json) => TrendingRes(
@@ -45,6 +48,7 @@ class TrendingRes {
             : List<SectorsPerformance>.from(json["sectorsPerformance"]
                 .map((x) => SectorsPerformance.fromJson(x))),
         trendingSymbolList: json["symbols_list"],
+        text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,6 +68,7 @@ class TrendingRes {
             ? null
             : List<dynamic>.from(sectorsPerformance!.map((x) => x.toJson())),
         "symbols_list": trendingSymbolList,
+        "text": text?.toJson(),
       };
 }
 

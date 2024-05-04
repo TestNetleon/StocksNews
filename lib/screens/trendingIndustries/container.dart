@@ -44,7 +44,10 @@ class _TrendingIndustriesContainerState
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: Column(
           children: [
-            const ScreenTitle(title: "Trending Industries"),
+            ScreenTitle(
+              title: "Trending Industries",
+              subTitle: provider.textRes?.subTitle,
+            ),
             Expanded(
               child: provider.isLoading
                   ? Center(
