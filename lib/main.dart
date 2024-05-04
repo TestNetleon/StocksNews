@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/fcm/service.dart';
-// import 'package:stocks_news_new/fcm/service.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-//
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
