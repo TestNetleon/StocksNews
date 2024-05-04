@@ -8,6 +8,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../../../widgets/info_bottom.dart';
+
 class SentimentsGraph extends StatelessWidget {
   const SentimentsGraph({super.key});
 
@@ -38,8 +40,8 @@ class SentimentsGraph extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // const Align(
-          //     alignment: Alignment.centerRight, child: InfoBottomSheet()),
+          const Align(
+              alignment: Alignment.centerRight, child: InfoBottomSheet()),
           Text(
             "Average Market Sentiment",
             textAlign: TextAlign.center,

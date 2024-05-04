@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/insider_company_graph.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
@@ -59,6 +60,12 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   int _indexReporting = -1;
   int get indexReporting => _indexReporting;
   String searchTransaction = "";
+
+  TextRes? _textRes;
+  TextRes? get textRes => _textRes;
+
+  TextRes? _textResI;
+  TextRes? get textResI => _textResI;
 
   String keyTxnTypeCP = "";
   String keyTxnSizeCP = "";
@@ -402,6 +409,17 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
           }
         }
       }
+
+      if (reportingSlug == "") {
+        if (response.extra is! List) {
+          _textRes = response.extra?.text;
+        }
+      } else {
+        if (response.extra is! List) {
+          _textResI = response.extra?.text;
+        }
+      }
+
       setStatus(Status.loaded);
     } catch (e) {
       if (reportingSlug == "") {

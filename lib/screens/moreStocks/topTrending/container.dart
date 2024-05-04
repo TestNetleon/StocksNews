@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
@@ -138,25 +140,27 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                         // Divider(
                                         //     color: ThemeColors.border,
                                         //     height: 10.sp),
-                                        Text(
-                                          index == 0
-                                              ? 'A stock is considered "trending" if it was talked about more in the last 24 hours than it was in the prior 24 hour are trending on Twitter, Reddit and StockTwits.'
-                                              : index == 1
-                                                  ? 'A stock is considered "trending" if it was talked about more in the last 24-48 hours are trending on Twitter, Reddit and StockTwits.'
-                                                  : 'This page lists stocks that are trending on Twitter, Reddit and StockTwits today, grouped by market capitalization.',
-                                          style:
-                                              stylePTSansRegular(fontSize: 12),
+                                        Visibility(
+                                          visible: index == 0 || index == 2,
+                                          child: Text(
+                                            index == 0
+                                                ? provider.textTop?.now ?? ""
+                                                : index == 2
+                                                    ? provider.textTop?.cap ??
+                                                        ""
+                                                    : "",
+                                            style: stylePTSansRegular(
+                                                fontSize: 13,
+                                                color: ThemeColors.greyText),
+                                          ),
                                         ),
                                         Visibility(
                                           visible: index != 0 && index != 2,
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 10.sp),
-                                            child: Text(
-                                              'This list is ordered based on how large the change is. A very obscure stock suddenly hitting the headlines will jump to the top of this list. Stocks frequently in public discussion (GME, AAPL, etc.) will tend towards the bottom of this list, because the total volume of discussion is mostly constant.',
-                                              style: stylePTSansRegular(
-                                                  fontSize: 12),
-                                            ),
+                                          child: HtmlWidget(
+                                            provider.textTop?.recently ?? "",
+                                            textStyle: stylePTSansRegular(
+                                                fontSize: 13,
+                                                color: ThemeColors.greyText),
                                           ),
                                         ),
                                         Visibility(

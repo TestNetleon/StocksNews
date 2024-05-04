@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 
 HomeInsiderRes homeInsiderResFromJson(String str) =>
@@ -12,14 +13,17 @@ class HomeInsiderRes {
   final List<InsiderTrading> insiderTrading;
   final List<RecentMention>? recentMentions;
   final List<News> news;
+  final TextRes? text;
 
   HomeInsiderRes({
     this.recentMentions,
     required this.insiderTrading,
     required this.news,
+    this.text,
   });
 
   factory HomeInsiderRes.fromJson(Map<String, dynamic> json) => HomeInsiderRes(
+        text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         insiderTrading: List<InsiderTrading>.from(
             json["insider_trading"].map((x) => InsiderTrading.fromJson(x))),
         news: List<News>.from(json["news"].map((x) => News.fromJson(x))),
@@ -36,6 +40,7 @@ class HomeInsiderRes {
         "recent_mentions": recentMentions == null
             ? []
             : List<dynamic>.from(recentMentions!.map((x) => x.toJson())),
+        "text": text?.toJson(),
       };
 }
 

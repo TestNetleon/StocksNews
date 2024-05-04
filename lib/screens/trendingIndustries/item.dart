@@ -47,7 +47,7 @@ class TrendingIndustryItem extends StatelessWidget {
                         height: 25,
                         width: 25,
                       ),
-                const SpacerHorizontal(width: 3),
+                const SpacerHorizontal(width: 8),
                 Flexible(
                   child: Text(
                     data.industry ?? "",

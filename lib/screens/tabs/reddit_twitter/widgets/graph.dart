@@ -5,6 +5,7 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/info_bottom.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -45,8 +46,8 @@ class SocialSentimentsGraph extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // const Align(
-          //     alignment: Alignment.centerRight, child: InfoBottomSheet()),
+          const Align(
+              alignment: Alignment.centerRight, child: InfoBottomSheet()),
           Text(
             "Average Market Sentiment",
             style: styleGeorgiaBold(fontSize: 18),
@@ -233,9 +234,9 @@ class SocialSentimentsGraph extends StatelessWidget {
                   ),
                   // const SpacerVertical(),
                 ],
-              )
+              ),
             ],
-          )
+          ),
 
           // Stack(
           //   alignment: Alignment.bottomCenter,

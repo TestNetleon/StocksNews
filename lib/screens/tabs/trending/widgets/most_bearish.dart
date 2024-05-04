@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
@@ -6,6 +8,7 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class MostBearish extends StatelessWidget {
@@ -13,8 +16,9 @@ class MostBearish extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    // TrendingProvider provider = context.watch<TrendingProvider>();
-    TrendingRes? data = context.watch<TrendingProvider>().mostBearish;
+    TrendingProvider provider = context.watch<TrendingProvider>();
+
+    TrendingRes? data = provider.mostBearish;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,17 +41,84 @@ class MostBearish extends StatelessWidget {
         //   ],
         // ),
         // const SpacerVertical(height: 5),
-        Text(
-          "This segment highlights stocks exhibiting the highest bearish sentiment, determined by predominantly negative news sentiment over the past 7 days, on average.",
-          style: stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+        Visibility(
+          visible: provider.mostBullish?.text?.mostBullish != '',
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.sp),
+            child: Text(
+              provider.mostBullish?.text?.mostBullish ?? "",
+              style:
+                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+            ),
+          ),
         ),
-        const SpacerVertical(),
         ListView.separated(
           itemCount: data?.mostBearish?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
             MostBullishData? bearishData = data?.mostBearish![index];
+            if (index == 0) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 15.sp,
+                    thickness: 1,
+                  ),
+                  Row(
+                    children: [
+                      const SpacerHorizontal(width: 5),
+                      Expanded(
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          "COMPANY",
+                          style: stylePTSansRegular(
+                            fontSize: 12,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ),
+                      const SpacerHorizontal(width: 40),
+                      Expanded(
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          "PRICE",
+                          style: stylePTSansRegular(
+                            fontSize: 12,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ),
+                      AutoSizeText(
+                        maxLines: 1,
+                        "MENTIONS",
+                        textAlign: TextAlign.end,
+                        style: stylePTSansRegular(
+                          fontSize: 12,
+                          color: ThemeColors.greyText,
+                        ),
+                      ),
+                      const SpacerHorizontal(width: 10),
+                    ],
+                  ),
+                  Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 15.sp,
+                    thickness: 1,
+                  ),
+                  MostBullishItem(
+                    alertForBearish: bearishData?.isAlertAdded ?? 0,
+                    watlistForBearish: bearishData?.isWatchlistAdded ?? 0,
+                    data: bearishData!,
+                    up: false,
+                    index: index,
+                  ),
+                ],
+              );
+            }
+
             return MostBullishItem(
               alertForBearish: bearishData?.isAlertAdded ?? 0,
               watlistForBearish: bearishData?.isWatchlistAdded ?? 0,

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -39,6 +40,8 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoading => _status == Status.loading;
   bool get isSearching => _status == Status.searching;
   String? get error => _error ?? Const.errSomethingWrong;
+  TextRes? _textRes;
+  TextRes? get textRes => _textRes;
 
   String keyTxnType = "";
   String keyCap = "";
@@ -179,6 +182,9 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
         _data = null;
         _error = response.message;
         // showErrorMessage(message: response.message);
+      }
+      if (response.extra is! List) {
+        _textRes = response.extra?.text;
       }
       setStatus(Status.loaded);
     } catch (e) {

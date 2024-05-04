@@ -6,6 +6,8 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 
+import 'home_trending_res.dart';
+
 SocialSentimentsRes socialSentimentsResFromJson(String str) =>
     SocialSentimentsRes.fromJson(json.decode(str));
 //
@@ -18,16 +20,20 @@ class SocialSentimentsRes {
   final num avgSentiment;
   final num commentVolume;
   final num sentimentTrending;
+  final TextRes? text;
+
   SocialSentimentsRes({
     required this.data,
     this.recentMentions,
     required this.avgSentiment,
     required this.commentVolume,
     required this.sentimentTrending,
+    this.text,
   });
 
   factory SocialSentimentsRes.fromJson(Map<String, dynamic> json) =>
       SocialSentimentsRes(
+        text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         data: List<SocialSentimentItemRes>.from(
             json["data"].map((x) => SocialSentimentItemRes.fromJson(x))),
         recentMentions: json["recent_mentions"] == null
@@ -40,6 +46,7 @@ class SocialSentimentsRes {
       );
 
   Map<String, dynamic> toJson() => {
+        "text": text?.toJson(),
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "recent_mentions": recentMentions == null
             ? []

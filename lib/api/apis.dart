@@ -13,6 +13,7 @@ class Apis {
   static const verifyLoginOtp = "/check-login-otp";
   static const home = "/home";
   static const homeNew = "/home-new";
+  static const saveFCM = "/save-fcm-token";
 
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";

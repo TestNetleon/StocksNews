@@ -52,7 +52,7 @@ class CompanyEarningStockDetail extends StatelessWidget {
         children: [
           ScreenTitle(
             // title: earning?.title ?? "",
-            subTitle: earning?.text ?? "",
+            subTitle: earning?.text,
           ),
           ListView.separated(
             shrinkWrap: true,

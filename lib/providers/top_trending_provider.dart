@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -57,6 +58,9 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
 
   Status _addLoading = Status.ideal;
   bool get addLoading => _addLoading == Status.loading;
+
+  TextRes? _textTop;
+  TextRes? get textTop => _textTop;
 
   void setStatus(status) {
     _status = status;
@@ -228,12 +232,23 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
         } else {
           _res?.data?.addAll(TopTrendingRes.fromJson(response.data).data ?? []);
         }
+        if (type == "now") {
+          if (response.extra is! List) {
+            _textTop = response.extra?.text;
+          }
+        }
       } else {
         if (_page == 1) {
           _error = response.message;
           _res = null;
         }
+        if (type == "now") {
+          if (response.extra is! List) {
+            _textTop = response.extra?.text;
+          }
+        }
       }
+
       setStatus(Status.loaded);
     } catch (e) {
       _res = null;

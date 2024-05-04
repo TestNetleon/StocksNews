@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -38,6 +39,9 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   String valueExchange = "";
   String valueSearch = "";
   final TextEditingController controller = TextEditingController();
+
+  TextRes? _textRes;
+  TextRes? get textRes => _textRes;
 
   // int? get page => _page;
   bool get isLoading => _status == Status.loading;
@@ -168,6 +172,10 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
         _data = null;
         _error = response.message;
       }
+      if (response.extra is! List) {
+        _textRes = response.extra?.text;
+      }
+
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;

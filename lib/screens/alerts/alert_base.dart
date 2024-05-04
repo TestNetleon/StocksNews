@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,25 +57,34 @@ class _AlertBaseState extends State<AlertBase> {
         child: Column(
           children: [
             const ScreenTitle(title: "Alerts"),
-            Text(
-              "Choose sentiment spike or mentions spike or both to receive email alerts and app notification for the selected stock.",
-              style: stylePTSansRegular(fontSize: 12),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.sp),
-              padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),
-              decoration: const BoxDecoration(
-                  color: ThemeColors.greyBorder,
-                  border: Border(
-                      left: BorderSide(color: ThemeColors.white, width: 3))),
+            Visibility(
+              visible: provider.textRes?.subTitle != '',
               child: Text(
-                "Note: Please be aware that you will receive an email and app notification only once a day, around 8:00 AM (EST), in the event of any spike.",
+                provider.textRes?.subTitle ?? "",
                 style: stylePTSansRegular(fontSize: 12),
               ),
             ),
-            Text(
-              "In future if you don't want to receive any email then swipe left to delete stocks added into alert section.",
-              style: stylePTSansRegular(fontSize: 12),
+            Visibility(
+              visible: provider.textRes?.note != '',
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10.sp),
+                padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),
+                decoration: const BoxDecoration(
+                    color: ThemeColors.greyBorder,
+                    border: Border(
+                        left: BorderSide(color: ThemeColors.white, width: 3))),
+                child: Text(
+                  provider.textRes?.note ?? "",
+                  style: stylePTSansRegular(fontSize: 12),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: provider.textRes?.other != '',
+              child: Text(
+                provider.textRes?.other ?? "",
+                style: stylePTSansRegular(fontSize: 12),
+              ),
             ),
             const SpacerVertical(height: 5),
             userProvider.user == null

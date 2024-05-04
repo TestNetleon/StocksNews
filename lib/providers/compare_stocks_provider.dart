@@ -7,6 +7,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
+import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -24,6 +25,8 @@ class CompareStocksProvider extends ChangeNotifier {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
+  TextRes? _textRes;
+  TextRes? get textRes => _textRes;
 
   bool wholeListEmpty = false;
 
@@ -70,6 +73,9 @@ class CompareStocksProvider extends ChangeNotifier {
         wholeListEmpty = true;
 
         showErrorMessage(message: res.message);
+      }
+      if (res.extra is List) {
+        _textRes = res.extra?.text;
       }
       setStatus(Status.loaded);
     } catch (e) {

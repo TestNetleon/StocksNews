@@ -6,6 +6,7 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingStories extends StatelessWidget {
@@ -13,7 +14,7 @@ class TrendingStories extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    // TrendingProvider provider = context.watch<TrendingProvider>();
+    TrendingProvider provider = context.watch<TrendingProvider>();
     TrendingRes? data = context.read<TrendingProvider>().trendingStories;
 
     return Column(
@@ -32,6 +33,19 @@ class TrendingStories extends StatelessWidget {
         // const SpacerVertical(),
 
         // const ScreenTitle(title: "Trending Stories"),
+
+        Visibility(
+          visible: provider.mostBullish?.text?.generalNews != '',
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.sp),
+            child: Text(
+              provider.mostBullish?.text?.generalNews ?? "",
+              style:
+                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+            ),
+          ),
+        ),
+
         ListView.separated(
           itemCount: data?.generalNews?.length ?? 0,
           physics: const NeverScrollableScrollPhysics(),

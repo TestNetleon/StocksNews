@@ -64,11 +64,15 @@ class _MostRecentMentionsState extends State<MostRecentMentions> {
 
   @override
   Widget build(BuildContext context) {
+    HomeProvider provider = context.watch<HomeProvider>();
     List<RecentMention>? recentMentions =
-        context.watch<HomeProvider>().homeInsiderRes?.recentMentions;
+        provider.homeInsiderRes?.recentMentions;
     return Column(
       children: [
-        const ScreenTitle(title: "Most Recent Mentions"),
+        ScreenTitle(
+          title: "Most Recent Mentions",
+          subTitle: provider.homeInsiderRes?.text?.recentMentions,
+        ),
         // Text(
         //   "Discover trending stocks with our real-time data. This section highlights the most mentioned stocks in news in the past hour.",
         //   style: stylePTSansRegular(fontSize: 12),

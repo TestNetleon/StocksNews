@@ -64,7 +64,10 @@ class CompareStocksContainer extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ScreenTitle(title: "Compare Stocks"),
+                      ScreenTitle(
+                        title: "Compare Stocks",
+                        subTitle: provider.textRes?.subTitle,
+                      ),
                       Visibility(
                         visible: company.isEmpty,
                         child: AddCompanyContainer(
