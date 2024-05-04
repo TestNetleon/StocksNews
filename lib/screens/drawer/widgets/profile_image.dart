@@ -23,30 +23,20 @@ class ProfileImage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(right: 4.sp),
-          child: Container(
-            // padding: EdgeInsets.all(9.sp),
-            // decoration: BoxDecoration(
-            //   shape: BoxShape.circle,
-            //   border: Border.all(
-            //     width: 4.sp,
-            //     color: ThemeColors.greyBorder.withOpacity(0.8),
-            //   ),
+          child: ClipOval(
+            // child: ThemeImageView(
+            //   url: url ?? "",
+            //   height: imageSize,
+            //   width: imageSize,
+            //   placeholder: Images.userPlaceholder,
             // ),
-            child: ClipOval(
-              // child: ThemeImageView(
-              //   url: url ?? "",
-              //   height: imageSize,
-              //   width: imageSize,
-              //   placeholder: Images.userPlaceholder,
-              // ),
 
-              child: CachedNetworkImagesWidget(
-                url,
-                height: imageSize,
-                width: imageSize,
-                showLoading: true,
-                placeHolder: Images.userPlaceholder,
-              ),
+            child: CachedNetworkImagesWidget(
+              url,
+              height: imageSize,
+              width: imageSize,
+              showLoading: true,
+              placeHolder: Images.userPlaceholder,
             ),
           ),
         ),

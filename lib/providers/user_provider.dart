@@ -10,11 +10,13 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 import 'package:stocks_news_new/screens/auth/otp/otp_signup.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
@@ -84,7 +86,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future login(request, {String? state}) async {
+  Future login(request, {String? state, String? dontPop}) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -99,6 +101,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           navigatorKey.currentContext!,
           createRoute(OTPLogin(
             state: state,
+            dontPop: dontPop,
           )),
         );
       } else {
@@ -110,7 +113,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future googleLogin(request, {String? state}) async {
+  Future googleLogin(request, {String? state, String? dontPop}) async {
     setStatus(Status.loading);
     CompareStocksProvider compareProvider =
         navigatorKey.currentContext!.read<CompareStocksProvider>();
@@ -120,6 +123,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
     WatchlistProvider watchlistProvider =
         navigatorKey.currentContext!.read<WatchlistProvider>();
+
+    NotificationProvider notificationProvider =
+        navigatorKey.currentContext!.read<NotificationProvider>();
     try {
       ApiResponse response = await apiRequest(
         url: Apis.googleLogin,
@@ -133,14 +139,24 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         //     navigatorKey.currentContext!, (route) => route.isFirst);
         // Navigator.pushNamedAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+        if (dontPop == null) {
+          Navigator.pop(navigatorKey.currentContext!);
 
-        Navigator.pop(navigatorKey.currentContext!);
-        if (state == "compare") {
-          await compareProvider.getCompareStock();
-        } else if (state == "alert") {
-          await alertProvider.getAlerts(showProgress: true);
-        } else if (state == "watchList") {
-          await watchlistProvider.getData(showProgress: true);
+          if (state == "compare") {
+            await compareProvider.getCompareStock();
+          } else if (state == "alert") {
+            await alertProvider.getAlerts(showProgress: true);
+          } else if (state == "watchList") {
+            await watchlistProvider.getData(showProgress: true);
+          } else if (state == "notification") {
+            await notificationProvider.getData(showProgress: true);
+          }
+        } else {
+          // kDebugMode ? Preference.setFirstTime(true) : null;
+          Preference.setFirstTime(false);
+
+          Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!, Tabs.path, (route) => false);
         }
       } else {
         showErrorMessage(message: response.message);
@@ -152,7 +168,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future appleLogin(request, {String? state}) async {
+  Future appleLogin(request, {String? state, String? dontPop}) async {
     setStatus(Status.loading);
     CompareStocksProvider compareProvider =
         navigatorKey.currentContext!.read<CompareStocksProvider>();
@@ -162,6 +178,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
     WatchlistProvider watchlistProvider =
         navigatorKey.currentContext!.read<WatchlistProvider>();
+
+    NotificationProvider notificationProvider =
+        navigatorKey.currentContext!.read<NotificationProvider>();
     try {
       ApiResponse response = await apiRequest(
         url: Apis.appleLogin,
@@ -173,14 +192,23 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         Preference.saveUser(response.data);
         // Navigator.pushNamedAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+        if (dontPop == null) {
+          Navigator.pop(navigatorKey.currentContext!);
+          if (state == "compare") {
+            await compareProvider.getCompareStock();
+          } else if (state == "alert") {
+            await alertProvider.getAlerts(showProgress: true);
+          } else if (state == "watchList") {
+            await watchlistProvider.getData(showProgress: true);
+          } else if (state == "notification") {
+            await notificationProvider.getData(showProgress: true);
+          }
+        } else {
+          // kDebugMode ? Preference.setFirstTime(true) : null;
+          Preference.setFirstTime(false);
 
-        Navigator.pop(navigatorKey.currentContext!);
-        if (state == "compare") {
-          await compareProvider.getCompareStock();
-        } else if (state == "alert") {
-          await alertProvider.getAlerts(showProgress: true);
-        } else if (state == "watchList") {
-          await watchlistProvider.getData(showProgress: true);
+          Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!, Tabs.path, (route) => false);
         }
       } else {
         showErrorMessage(message: response.message);
@@ -259,6 +287,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // Preference.saveUser(response.data);
         // _navigateToRequiredScreen(response);
         Preference.saveUser(response.data);
+
+        // kDebugMode ? Preference.setFirstTime(true) : null;
+        Preference.setFirstTime(false);
+
         Navigator.pushNamed(navigatorKey.currentContext!, SignUpSuccess.path);
         notifyListeners();
       } else {
@@ -270,7 +302,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future verifyLoginOtp(request, {String? state}) async {
+  Future verifyLoginOtp(request, {String? state, String? dontPop}) async {
     setStatus(Status.loading);
     CompareStocksProvider compareProvider =
         navigatorKey.currentContext!.read<CompareStocksProvider>();
@@ -281,6 +313,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     WatchlistProvider watchlistProvider =
         navigatorKey.currentContext!.read<WatchlistProvider>();
 
+    NotificationProvider notificationProvider =
+        navigatorKey.currentContext!.read<NotificationProvider>();
     try {
       ApiResponse response = await apiRequest(
         url: Apis.verifyLoginOtp,
@@ -290,19 +324,30 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
-        if (state == "compare") {
-          await compareProvider.getCompareStock();
-        } else if (state == "alert") {
-          await alertProvider.getAlerts(showProgress: true);
-        } else if (state == "watchList") {
-          await watchlistProvider.getData(showProgress: true);
-        }
 
-        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
-        // Navigator.pushNamedAndRemoveUntil(
-        //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-        Navigator.pop(navigatorKey.currentContext!);
-        Navigator.pop(navigatorKey.currentContext!);
+        if (dontPop == null) {
+          if (state == "compare") {
+            await compareProvider.getCompareStock();
+          } else if (state == "alert") {
+            await alertProvider.getAlerts(showProgress: true);
+          } else if (state == "watchList") {
+            await watchlistProvider.getData(showProgress: true);
+          } else if (state == "notification") {
+            await notificationProvider.getData(showProgress: true);
+          }
+
+          // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
+          // Navigator.pushNamedAndRemoveUntil(
+          //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+          Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+        } else {
+          // kDebugMode ? Preference.setFirstTime(true) : null;
+          Preference.setFirstTime(false);
+
+          Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!, Tabs.path, (route) => false);
+        }
 
         notifyListeners();
       } else {

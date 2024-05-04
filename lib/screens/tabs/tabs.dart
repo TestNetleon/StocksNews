@@ -123,6 +123,7 @@ class _TabsState extends State<Tabs> {
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
     final newsProvider = context.read<FeaturedNewsProvider>();
+    final latestNewsProvider = context.read<NewsProvider>();
 
     // switch (currentIndex) {
     //   case 0:
@@ -162,8 +163,9 @@ class _TabsState extends State<Tabs> {
         redditTwitterProvider.getRedditTwitterData(reset: true);
         break;
       case 4:
-        // context.read<HeaderNewsProvider>().getHeaderNews();
         newsProvider.getNews(showProgress: true);
+        latestNewsProvider.getNews();
+
         break;
       case 5:
         _compareStocks(context);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -52,7 +51,7 @@ class InsidersDetailsItem extends StatelessWidget {
                     InkWell(
                       onTap: leadingClick,
                       child: Text(
-                        "${leading?.capitalizeWords()}",
+                        "$leading",
                         // "NYSL:TSLA",
                         style: stylePTSansBold(
                           fontSize: 14,
@@ -68,7 +67,7 @@ class InsidersDetailsItem extends StatelessWidget {
                     Visibility(
                       visible: leadingSubtitle != null,
                       child: Text(
-                        "${leadingSubtitle?.capitalizeWords()}",
+                        "$leadingSubtitle",
                         style: stylePTSansRegular(
                           color: ThemeColors.greyText,
                           fontSize: 12,
@@ -87,7 +86,7 @@ class InsidersDetailsItem extends StatelessWidget {
               child: Expanded(
                 flex: 2,
                 child: Text(
-                  "${middle?.capitalizeWords()}",
+                  "$middle",
                   style: stylePTSansBold(fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -102,7 +101,7 @@ class InsidersDetailsItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${trailing?.capitalizeWords()}",
+                    Text("$trailing",
                         // "Buy",
                         style: stylePTSansBold(
                           fontSize: 14,

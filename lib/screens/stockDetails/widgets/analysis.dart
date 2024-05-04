@@ -198,7 +198,7 @@ class AnalysisItem extends StatelessWidget {
               ),
               const SpacerHorizontal(width: 5),
               Text(
-                "${value?.toCurrency()}",
+                "${value?.toCurrency() ?? 0}",
                 style: stylePTSansBold(fontSize: 18).copyWith(height: 1),
               ),
             ],

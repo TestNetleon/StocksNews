@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,8 @@ import 'package:stocks_news_new/widgets/theme_input_field.dart';
 class OTPLogin extends StatefulWidget {
   static const String path = "OTPLogin";
   final String? state;
-  const OTPLogin({super.key, this.state});
+  final String? dontPop;
+  const OTPLogin({super.key, this.state, this.dontPop});
 
   @override
   State<OTPLogin> createState() => _OTPLoginState();
@@ -34,6 +37,7 @@ class _OTPLoginState extends State<OTPLogin> {
     //   UserRes? user = context.read<UserProvider>().user;
     //   _controller.text = "${user?.otp}";
     // });
+    log("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
   }
 
   @override
@@ -53,7 +57,8 @@ class _OTPLoginState extends State<OTPLogin> {
       "fcm_token": fcmToken ?? "",
     };
 
-    provider.verifyLoginOtp(request, state: widget.state);
+    provider.verifyLoginOtp(request,
+        state: widget.state, dontPop: widget.dontPop);
   }
 
   void _onResendOtpClick() {

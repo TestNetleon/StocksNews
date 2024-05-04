@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -170,13 +169,13 @@ class StocksItemTrending extends StatelessWidget {
                               });
                         },
                         child: Text(
-                          "${data?.companyName.capitalizeWords()}",
+                          "${data?.companyName}",
                           style: stylePTSansBold(fontSize: 14),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SpacerVertical(height: 5),
+                      const SpacerVertical(height: 3),
                       InkWell(
                         onTap: () {
                           // Navigator.pushNamed(context, StockDetails.path,
@@ -198,7 +197,7 @@ class StocksItemTrending extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SpacerVertical(height: 5),
+                      const SpacerVertical(height: 15),
                       InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, InsiderDetailsType.path,
@@ -210,14 +209,14 @@ class StocksItemTrending extends StatelessWidget {
                               });
                         },
                         child: Text(
-                          "${data?.reportingName.capitalizeWords()}",
+                          "${data?.reportingName}",
                           style: stylePTSansBold(
                               fontSize: 14, color: ThemeColors.greyText),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SpacerVertical(height: 5),
+                      const SpacerVertical(height: 3),
                       // Row(
                       //   children: [
                       //     Expanded(
@@ -336,7 +335,7 @@ class StocksItemTrending extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "${data?.typeOfOwner.capitalizeWords()}",
+                    "${data?.typeOfOwner}",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
                       fontSize: 12,

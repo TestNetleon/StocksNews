@@ -193,7 +193,7 @@ class NewsDetailAuthorA extends StatelessWidget {
               });
             },
             child: Text(
-              "${data?[i].name?.capitalizeWords()}",
+              "${data?[i].name}",
               style: styleGeorgiaRegular(
                   color: ThemeColors.white,
                   fontSize: fontSize,

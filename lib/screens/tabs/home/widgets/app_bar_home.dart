@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -112,18 +111,18 @@ class _AppBarHomeState extends State<AppBarHome> {
         ),
       ),
       actions: [
-        Visibility(
-          visible: widget.showQR,
-          child: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, QrScan.path);
-            },
-            icon: const Icon(
-              Icons.qr_code,
-              color: ThemeColors.white,
-            ),
-          ),
-        ),
+        // Visibility(
+        //   visible: widget.showQR,
+        //   child: IconButton(
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, QrScan.path);
+        //     },
+        //     icon: const Icon(
+        //       Icons.qr_code,
+        //       color: ThemeColors.white,
+        //     ),
+        //   ),
+        // ),
         // Visibility(
         //   visible: widget.filterClick != null,
         //   child: IconButton(
@@ -146,38 +145,37 @@ class _AppBarHomeState extends State<AppBarHome> {
             ),
           ),
         ),
-        if (widget.showTrailing)
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              IconButton(
-                onPressed: () {
-                  if (provider.user != null) {
-                    homeProvider.setNotification(true);
-                  }
-                  Navigator.pushNamed(context, Notifications.path);
-                },
-                icon: const Icon(
-                  Icons.notifications,
-                  color: ThemeColors.white,
-                ),
-              ),
-              Visibility(
-                visible:
-                    !homeProvider.notificationSeen && provider.user != null,
-                child: Positioned(
-                  right: 13.sp,
-                  top: 14.sp,
-                  child: CircleAvatar(
-                    radius: 4.sp,
-                    backgroundColor: ThemeColors.sos,
+        widget.showTrailing
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      if (provider.user != null) {
+                        homeProvider.setNotification(true);
+                      }
+                      Navigator.pushNamed(context, Notifications.path);
+                    },
+                    icon: const Icon(
+                      Icons.notifications,
+                      color: ThemeColors.white,
+                    ),
                   ),
-                ),
-              ),
-            ],
-          )
-        else
-          SizedBox(width: 20.sp),
+                  Visibility(
+                    visible:
+                        !homeProvider.notificationSeen && provider.user != null,
+                    child: Positioned(
+                      right: 13.sp,
+                      top: 14.sp,
+                      child: CircleAvatar(
+                        radius: 4.sp,
+                        backgroundColor: ThemeColors.sos,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
       ],
     );
   }

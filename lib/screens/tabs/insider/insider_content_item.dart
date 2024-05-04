@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -50,13 +49,13 @@ class InsiderContentItem extends StatelessWidget {
                               });
                         },
                         child: Text(
-                          "${data?.companyName.capitalizeWords()}",
+                          "${data?.companyName}",
                           style: stylePTSansBold(fontSize: 14),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SpacerVertical(height: 5),
+                      const SpacerVertical(height: 3),
                       // Text(
                       //   "${widget.data?.exchangeShortName}:${widget.data?.symbol}",
                       //   style: stylePTSansBold(
@@ -87,7 +86,7 @@ class InsiderContentItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SpacerVertical(height: 5),
+                      const SpacerVertical(height: 15),
                       InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, InsiderDetailsType.path,
@@ -99,14 +98,14 @@ class InsiderContentItem extends StatelessWidget {
                               });
                         },
                         child: Text(
-                          "${data?.reportingName.capitalizeWords()}",
+                          "${data?.reportingName}",
                           style: stylePTSansBold(
                               fontSize: 14, color: ThemeColors.greyText),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SpacerVertical(height: 5),
+                      const SpacerVertical(height: 3),
                       // Text(
                       //   "${data?.typeOfOwner.capitalizeWords()}",
                       //   style: stylePTSansRegular(
@@ -193,7 +192,7 @@ class InsiderContentItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "${data?.typeOfOwner.capitalizeWords()}",
+                    "${data?.typeOfOwner}",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
                       fontSize: 12,

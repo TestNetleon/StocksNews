@@ -10,6 +10,7 @@ import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
+import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
@@ -53,6 +54,8 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../screens/whatWeDo/index.dart';
 
@@ -215,7 +218,15 @@ class Routes {
   }
 
   static Route _errorRoute() {
-    return MaterialPageRoute(builder: (context) => const Splash());
+    return MaterialPageRoute(
+        builder: (context) => BaseContainer(
+              body: Center(
+                child: Text(
+                  "ERROR PAGE....",
+                  style: stylePTSansBold(),
+                ),
+              ),
+            ));
   }
 
   static List<SingleChildWidget> get providers {
@@ -241,6 +252,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => AlertProvider()),
       ChangeNotifierProvider(create: (_) => NewsDetailProvider()),
       ChangeNotifierProvider(create: (_) => NewsTypeProvider()),
+      ChangeNotifierProvider(create: (_) => NotificationProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

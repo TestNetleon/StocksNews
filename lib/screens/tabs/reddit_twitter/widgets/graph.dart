@@ -45,6 +45,8 @@ class SocialSentimentsGraph extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // const Align(
+          //     alignment: Alignment.centerRight, child: InfoBottomSheet()),
           Text(
             "Average Market Sentiment",
             style: styleGeorgiaBold(fontSize: 18),

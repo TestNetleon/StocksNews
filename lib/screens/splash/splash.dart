@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -52,24 +50,17 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _navigateToRequiredScreen() async {
-    // UserProvider provider = context.read<UserProvider>();
-    // if (await provider.checkForUser()) {
-    //   // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+    // bool firstTime = await Preference.getFirstTime();
+    // log("--First Time $firstTime");
+    // if (firstTime) {
+    //   Navigator.pushReplacementNamed(
+    //       navigatorKey.currentContext!, StartIndex.path);
     // } else {
-    //   // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    //   Navigator.pushNamedAndRemoveUntil(
+    //       navigatorKey.currentContext!, Tabs.path, (route) => false);
     // }
-
-    kDebugMode ? Preference.setFirstTime(true) : null;
-
-    bool firstTime = await Preference.getFirstTime();
-    log("--First Time $firstTime");
-    if (firstTime) {
-      Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, StartIndex.path);
-    } else {
-      Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
-    }
+    Navigator.pushNamedAndRemoveUntil(
+        navigatorKey.currentContext!, Tabs.path, (route) => false);
   }
 
   @override

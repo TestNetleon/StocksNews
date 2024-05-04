@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/item.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -70,11 +69,11 @@ class _MostRecentMentionsState extends State<MostRecentMentions> {
     return Column(
       children: [
         const ScreenTitle(title: "Most Recent Mentions"),
-        Text(
-          "Discover trending stocks with our real-time data. This section highlights the most mentioned stocks in news in the past hour.",
-          style: stylePTSansRegular(fontSize: 12),
-        ),
-        const SpacerVertical(height: 10),
+        // Text(
+        //   "Discover trending stocks with our real-time data. This section highlights the most mentioned stocks in news in the past hour.",
+        //   style: stylePTSansRegular(fontSize: 12),
+        // ),
+        // const SpacerVertical(height: 10),
         // LayoutBuilder(
         //   builder: (context, constraints) {
         //     return Stack(
