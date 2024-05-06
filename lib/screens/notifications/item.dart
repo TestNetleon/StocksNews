@@ -81,6 +81,8 @@ class NotificationsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     String date =
         DateFormat("MMM dd, yyyy").format(data.createdAt ?? DateTime.now());
+
+    String time = DateFormat("h:mm a").format(data.createdAt ?? DateTime.now());
     return InkWell(
       onTap: () => _onTap(context),
       // onTap: data.type == "dashboard"
@@ -165,7 +167,7 @@ class NotificationsItem extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  date,
+                  "$date $time",
                   style: stylePTSansRegular(
                       fontSize: 12, color: ThemeColors.greyText),
                 ),

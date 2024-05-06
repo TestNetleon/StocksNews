@@ -66,12 +66,18 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         await Preference.getFirstTime();
     log("--First Time $firstTime");
     if (firstTime) {
-      Navigator.pushAndRemoveUntil(
+      if (welcome?.isEmpty == true || welcome == null) {
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+      } else {
+        Navigator.pushAndRemoveUntil(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => StartIndex(welcome: welcome),
           ),
-          (route) => false);
+          (route) => false,
+        );
+      }
     } else {
       Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!, Tabs.path, (route) => false);
