@@ -167,7 +167,7 @@ class NotificationsItem extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "$date $time",
+                  "$date at $time",
                   style: stylePTSansRegular(
                       fontSize: 12, color: ThemeColors.greyText),
                 ),
