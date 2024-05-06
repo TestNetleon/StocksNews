@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/ipo/index.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/sentiments_graph.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -14,6 +15,7 @@ import 'package:upgrader/upgrader.dart';
 //
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
+import 'widgets/stockBuzz/index.dart';
 
 class HomeContainer extends StatelessWidget {
   const HomeContainer({super.key});
@@ -61,14 +63,27 @@ class HomeContainer extends StatelessWidget {
                       child: const HomeTopNewsSlider(),
                     ),
                   ),
+                  // HomePartialLoading(
+                  //   loading: provider.isLoadingIpo,
+                  //   error: !provider.isLoadingIpo && provider.ipoRes == null
+                  //       ? HomeError.ipo
+                  //       : null,
+                  //   onRefresh: provider.refreshWithCheck,
+                  //   child: const IpoIndex(),
+                  // ),
+
                   HomePartialLoading(
-                    loading: provider.isLoadingIpo,
-                    error: !provider.isLoadingIpo && provider.ipoRes == null
-                        ? HomeError.ipo
+                    loading: provider.isLoadingTrending,
+                    error: !provider.isLoadingTrending &&
+                            provider.homeTrendingRes == null
+                        ? HomeError.stockBuzz
                         : null,
                     onRefresh: provider.refreshWithCheck,
-                    child: const IpoIndex(),
+                    child: const StockInBuzz(),
                   ),
+
+                  HomeMyAlerts(),
+
                   HomePartialLoading(
                     loading: provider.isLoadingTrending,
                     error: !provider.isLoadingTrending &&

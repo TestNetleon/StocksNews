@@ -279,6 +279,7 @@ Future saveFCMapi({String? value}) async {
     Map request = {
       "token": "",
       "fcm_token": value ?? "",
+      "platform": Platform.operatingSystem,
     };
     ApiResponse response = await apiRequest(
       url: Apis.saveFCM,

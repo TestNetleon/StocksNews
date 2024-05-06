@@ -340,7 +340,7 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () {
                       log("${widget.dntPop}");
                       if (widget.dntPop != null) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             createRoute(Login(
                               dontPop: widget.dntPop,

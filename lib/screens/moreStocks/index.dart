@@ -10,7 +10,9 @@ class MoreStocks extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return type == StocksType.gainers || type == StocksType.losers
+    return type == StocksType.gainers ||
+            type == StocksType.losers ||
+            type == StocksType.actives
         ? GainerLoserContainer(type: type)
         : const TopTrendingContainer();
     //  ChangeNotifierProvider.value(

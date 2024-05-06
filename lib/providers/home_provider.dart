@@ -60,7 +60,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingTrending => _statusTrending == Status.loading;
   bool get isLoadingInsider => _statusInsider == Status.loading;
   bool get isLoadingIpo => _statusIpo == Status.loading;
-
+  int _openIndex = -1;
+  int get openIndex => _openIndex;
   bool topLoading = false;
   String? get error => _error ?? Const.errSomethingWrong;
 
@@ -73,6 +74,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   setNotification(value) {
     notificationSeen = value;
+    notifyListeners();
+  }
+
+  void open(int index) {
+    _openIndex = index;
     notifyListeners();
   }
 

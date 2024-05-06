@@ -17,17 +17,21 @@ class HomeTrendingRes {
   final List<HomeTrendingData> trending;
   final List<Top> gainers;
   final List<Top> losers;
+  final List<Top> popular;
+
   final TextRes? text;
 
   HomeTrendingRes({
     required this.trending,
     required this.gainers,
     required this.losers,
+    required this.popular,
     this.text,
   });
 
   factory HomeTrendingRes.fromJson(Map<String, dynamic> json) =>
       HomeTrendingRes(
+        popular: List<Top>.from(json["actives"].map((x) => Top.fromJson(x))),
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         trending: List<HomeTrendingData>.from(
             json["trending"].map((x) => HomeTrendingData.fromJson(x))),
@@ -38,6 +42,7 @@ class HomeTrendingRes {
   Map<String, dynamic> toJson() => {
         "trending": List<dynamic>.from(trending.map((x) => x.toJson())),
         "gainers": List<dynamic>.from(gainers.map((x) => x.toJson())),
+        "actives": List<dynamic>.from(gainers.map((x) => x.toJson())),
         "losers": List<dynamic>.from(losers.map((x) => x.toJson())),
         "text": text?.toJson(),
       };

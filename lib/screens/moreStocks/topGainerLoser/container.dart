@@ -52,7 +52,9 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             ScreenTitle(
                 title: widget.type == StocksType.gainers
                     ? "Today’s Top Gainers"
-                    : "Today’s Top Losers"),
+                    : widget.type == StocksType.losers
+                        ? "Today’s Top Losers"
+                        : "Today's Popular Stocks"),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,

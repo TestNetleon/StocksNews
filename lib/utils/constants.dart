@@ -10,7 +10,7 @@ enum PolicyType { tC, privacy, disclaimer, aboutUs, contactUs }
 
 enum Status { ideal, loading, loaded, loadingMore, searching, refreshing }
 
-enum StocksType { trending, gainers, losers }
+enum StocksType { trending, gainers, losers, actives }
 
 enum StockStates { sector, industry }
 
@@ -105,6 +105,7 @@ class HomeError {
   static const trending = "Trending is $unavailable";
   static const gainers = "Top Gainers are $unavailable";
   static const ipo = "IPO data is $unavailable";
+  static const stockBuzz = "Stock in Buzz data is $unavailable";
 
   static const loosers = "Top Losers are $unavailable";
   static const insiderTrading = "Insider Trending is $unavailable";

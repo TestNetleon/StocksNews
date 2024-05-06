@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/ipo_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/ipo/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 class IpoIndex extends StatelessWidget {
@@ -7,11 +11,16 @@ class IpoIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeProvider provider = context.watch<HomeProvider>();
     return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return Container();
+          IpoRes? data = provider.ipoRes?[index];
+          return IpoItem(
+            index: index,
+            data: data,
+          );
         },
         separatorBuilder: (context, index) {
           return Divider(
@@ -19,6 +28,6 @@ class IpoIndex extends StatelessWidget {
             color: ThemeColors.greyBorder,
           );
         },
-        itemCount: 5);
+        itemCount: provider.ipoRes?.length ?? 0);
   }
 }
