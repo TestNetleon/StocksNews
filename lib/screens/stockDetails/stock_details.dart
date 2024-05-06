@@ -52,7 +52,12 @@ class _StockDetailsState extends State<StockDetails> {
         ),
         body: provider.isLoading && provider.data == null
             ? const Loading()
-            : !provider.isLoading && provider.data == null
+            : !provider.isLoading &&
+                    provider.data == null &&
+                    provider.otherData == null &&
+                    provider.analysisRes == null &&
+                    provider.technicalAnalysisRes == null &&
+                    provider.dataMentions == null
                 ? ErrorDisplayWidget(
                     error: provider.error,
                     onRefresh: _getData,
