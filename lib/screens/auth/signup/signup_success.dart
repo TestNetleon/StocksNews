@@ -33,12 +33,12 @@ class SignUpSuccess extends StatelessWidget {
                 ),
                 const SpacerVertical(),
                 Text(
-                  "Sign Up Successful.",
+                  "Sign Up Successful",
                   style: stylePTSansBold(fontSize: 24),
                 ),
                 const SpacerVertical(height: Dimen.itemSpacing),
                 Text(
-                  "Your account has been created, lets start analyze stocks.",
+                  "Your account has been created. Let's begin analyzing stocks.",
                   style: stylePTSansRegular(
                     fontSize: 14,
                     color: ThemeColors.greyText,
@@ -53,7 +53,7 @@ class SignUpSuccess extends StatelessWidget {
                     Navigator.pushNamedAndRemoveUntil(
                         context, Tabs.path, (route) => false);
                   },
-                  text: "Home",
+                  text: "Go to Dashboard",
                   textStyle: stylePTSansBold(),
                 ),
               ],

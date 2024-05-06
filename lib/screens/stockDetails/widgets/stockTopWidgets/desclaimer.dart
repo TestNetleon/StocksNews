@@ -104,7 +104,7 @@ class StockDetailTopDisclaimer extends StatelessWidget {
             onTap: () {
               commonShare(
                 title: provider.data?.keyStats?.symbol ?? "",
-                url: provider.data?.companyInfo?.website ?? "",
+                url: provider.data?.shareUrl ?? "",
               );
             },
             child: const Icon(Icons.ios_share),

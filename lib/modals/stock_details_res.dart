@@ -12,6 +12,7 @@ class StockDetailsRes {
   final CompanyInfo? companyInfo;
   num? isAlertAdded;
   num? isWatchlistAdded;
+  String? shareUrl;
 
   // final List<TradingStock>? tradingStock;
   // final List<Mentions>? mentions;
@@ -25,6 +26,7 @@ class StockDetailsRes {
     this.companyInfo,
     this.isAlertAdded,
     this.isWatchlistAdded,
+    this.shareUrl,
     // this.tradingStock,
     // this.mentions,
     // this.redditPost,
@@ -43,6 +45,7 @@ class StockDetailsRes {
             : CompanyInfo.fromJson(json["company_info"]),
         isAlertAdded: json["is_alert_added"],
         isWatchlistAdded: json["is_watchlist_added"],
+        shareUrl: json["share_url"],
         // tradingStock: json["trading_stock"] == null
         //     ? []
         //     : List<TradingStock>.from(
@@ -67,6 +70,7 @@ class StockDetailsRes {
         "company_info": companyInfo?.toJson(),
         "is_alert_added": isAlertAdded,
         "is_watchlist_added": isWatchlistAdded,
+        "share_url": shareUrl,
         // "trading_stock": tradingStock == null
         //     ? []
         //     : List<dynamic>.from(tradingStock!.map((x) => x.toJson())),
