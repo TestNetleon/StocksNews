@@ -66,6 +66,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingIpo => _statusIpo == Status.loading;
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
 
+  int? userAlert;
+
   int _openIndex = -1;
   int get openIndex => _openIndex;
   bool topLoading = false;
@@ -115,7 +117,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
     }
-    if (_homeTrendingRes == null) {
+    if (_homeAlertData == null) {
       getHomeAlerts();
     }
     if (_homeInsiderRes == null) {
@@ -155,6 +157,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       } else {
         _homeAlertData = null;
       }
+      userAlert = response.extra.userAlert;
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     } catch (e) {

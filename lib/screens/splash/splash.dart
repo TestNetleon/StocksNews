@@ -1,14 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../tabs/tabs.dart';
@@ -24,9 +30,13 @@ class Splash extends StatefulWidget {
 
 //
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
+  List<WelcomeRes>? welcome;
+
   @override
   void initState() {
     super.initState();
+    getWelcomeData();
+
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
@@ -47,6 +57,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       log("-------FROM SPLASH USER UPDATING---------");
       provider.setUser(user);
     }
+
     _navigateToRequiredScreen();
   }
 
@@ -55,14 +66,43 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         await Preference.getFirstTime();
     log("--First Time $firstTime");
     if (firstTime) {
-      Navigator.pushReplacementNamed(
-          navigatorKey.currentContext!, StartIndex.path);
+      Navigator.pushAndRemoveUntil(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => StartIndex(welcome: welcome),
+          ),
+          (route) => false);
     } else {
       Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!, Tabs.path, (route) => false);
     }
     // Navigator.pushNamedAndRemoveUntil(
     //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+  }
+
+  Future getWelcomeData() async {
+    try {
+      Map request = {
+        "token": "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.welcome,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        welcome = welcomeResFromJson(jsonEncode(response.data));
+        setState(() {});
+      } else {
+        //
+        welcome = null;
+      }
+    } catch (e) {
+      welcome = null;
+
+      Utils().showLog("Catch error $e");
+    }
   }
 
   @override
