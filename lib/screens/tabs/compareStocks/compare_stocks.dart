@@ -18,7 +18,7 @@ class CompareStocks extends StatelessWidget {
         context.read<SearchProvider>().clearSearch();
       },
       child: const BaseContainer(
-        appBar: AppBarHome(),
+        appBar: AppBarHome(canSearch: true),
         drawer: BaseDrawer(),
         body: CompareStocksContainer(),
       ),

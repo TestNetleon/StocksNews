@@ -80,10 +80,11 @@ class TrendingIndustryItem extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: RichText(
+                textAlign: TextAlign.right,
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "${data.totalMentions ?? 0} ",
+                      text: "${data.totalMentions ?? 0}\n",
                       style: stylePTSansRegular(
                         fontSize: 12,
                         color: ThemeColors.white,

@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/search/search_container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
 import '../drawer/base_drawer.dart';
 
@@ -38,23 +39,25 @@ class _SearchState extends State<Search> {
       child: BaseContainer(
         drawer: const BaseDrawer(),
         appBar: const AppBarHome(isPopback: true, showTrailing: false),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(Dimen.padding.sp),
-            child: Column(
-              children: [
-                TextInputFieldSearchCommon(
-                  searchFocusNode: provider.searchFocusNode,
-                  hintText: "Search symbol, company name or news",
-                  searching: context.watch<SearchProvider>().isLoading,
-                  onChanged: (text) {},
-                  editable: true,
+        body: provider.isLoading
+            ? const Loading()
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(Dimen.padding.sp),
+                  child: Column(
+                    children: [
+                      TextInputFieldSearchCommon(
+                        searchFocusNode: provider.searchFocusNode,
+                        hintText: "Search symbol, company name or news",
+                        searching: context.watch<SearchProvider>().isLoading,
+                        onChanged: (text) {},
+                        editable: true,
+                      ),
+                      if (provider.topSearch != null) const SearchContainer(),
+                    ],
+                  ),
                 ),
-                if (provider.topSearch != null) const SearchContainer(),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

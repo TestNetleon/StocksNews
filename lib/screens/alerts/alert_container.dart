@@ -15,7 +15,7 @@ class AlertContainer extends StatelessWidget {
     AlertProvider provider = context.watch<AlertProvider>();
 //
     return RefreshControll(
-      onRefresh: () => provider.getAlerts(showProgress: true),
+      onRefresh: () => provider.getAlerts(showProgress: false),
       canLoadmore: provider.canLoadMore,
       onLoadMore: () => provider.getAlerts(loadMore: true),
       child: ListView.separated(

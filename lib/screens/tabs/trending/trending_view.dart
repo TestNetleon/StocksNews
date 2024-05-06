@@ -153,11 +153,21 @@ class _TrendingViewState extends State<TrendingView> {
 
     return provider.isLoadingBullish && provider.mostBullish == null
         ? Center(
-            child: Text(
-              "We are preparing…",
-              style: styleGeorgiaRegular(
-                color: Colors.white,
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  Images.progressGIF,
+                  width: 100,
+                  height: 100,
+                ),
+                Text(
+                  "We are preparing…",
+                  style: styleGeorgiaRegular(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           )
         : CustomTabContainerNEW(
@@ -180,8 +190,9 @@ class _TrendingViewState extends State<TrendingView> {
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10.sp),
-                          child: const MostBullish()),
+                        margin: EdgeInsets.symmetric(horizontal: 10.sp),
+                        child: const MostBullish(),
+                      ),
                     ),
                   );
                 }

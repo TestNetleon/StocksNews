@@ -59,7 +59,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.watchlist,
         request: request,
-        showProgress: showProgress,
+        showProgress: false,
       );
 
       if (response.status) {

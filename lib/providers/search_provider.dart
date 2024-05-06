@@ -126,8 +126,13 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
       };
-      ApiResponse response =
-          await apiRequest(url: Apis.getMostSearch, request: request);
+
+      ApiResponse response = await apiRequest(
+        url: Apis.getMostSearch,
+        request: request,
+        showProgress: false,
+      );
+
       if (response.status) {
         _topSearch = topSearchFromJson(jsonEncode(response.data));
         FocusScope.of(navigatorKey.currentContext!)

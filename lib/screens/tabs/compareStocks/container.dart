@@ -47,6 +47,7 @@ class CompareStocksContainer extends StatelessWidget {
         hasData: true,
         error: provider.error,
         errorDispCommon: true,
+        showPreparingText: true,
         child: RefreshIndicator(
           onRefresh: () => provider.getCompareStock(),
           child: userProvider.user == null
@@ -76,8 +77,9 @@ class CompareStocksContainer extends StatelessWidget {
                                 : null),
                       ),
                       HeaderList(
-                          onTap: () =>
-                              company.length < 5 ? _showPopUp(context) : null),
+                        onTap: () =>
+                            company.length < 5 ? _showPopUp(context) : null,
+                      ),
                       const FooterList(),
                     ],
                   ),

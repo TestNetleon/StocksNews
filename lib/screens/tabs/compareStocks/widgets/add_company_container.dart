@@ -13,16 +13,20 @@ class AddCompanyContainer extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(10.sp),
+        width: 100.sp,
+        height: 100.sp,
+        alignment: Alignment.center,
+        // padding: EdgeInsets.all(10.sp),
         decoration: BoxDecoration(
             color: ThemeColors.primaryLight,
             borderRadius: BorderRadius.circular(5.sp),
             border: Border.all(color: ThemeColors.dividerDark)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Add a Company",
+              "Add New Stock",
               style: stylePTSansBold(fontSize: 13),
             ),
             const SpacerVertical(height: 10),

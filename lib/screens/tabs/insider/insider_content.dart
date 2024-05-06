@@ -39,9 +39,10 @@ class _InsiderContentState extends State<InsiderContent> {
           (provider.data?.data.isNotEmpty ?? false) &&
           !provider.isLoading,
       error: provider.error,
-      onRefresh: () => provider.getData(showProgress: true),
+      showPreparingText: true,
+      onRefresh: () => provider.getData(showProgress: false),
       child: RefreshControll(
-        onRefresh: () => provider.getData(showProgress: true),
+        onRefresh: () => provider.getData(showProgress: false),
         canLoadmore: provider.canLoadMore,
         onLoadMore: () => provider.getData(loadMore: true, clear: false),
         child: ListView.separated(

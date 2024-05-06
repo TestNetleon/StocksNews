@@ -11,7 +11,7 @@ class BottomSheetContainerPlain extends StatelessWidget {
 
   final Widget child;
   final bool showClose;
-//
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,11 +27,7 @@ class BottomSheetContainerPlain extends StatelessWidget {
                 onTap: () => Navigator.pop(context),
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Icon(
-                    Icons.close,
-                    size: 30.sp,
-                    // color: ThemeColors.background,
-                  ),
+                  child: Icon(Icons.close, size: 30.sp),
                 ),
               ),
             ),

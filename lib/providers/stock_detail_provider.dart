@@ -103,6 +103,7 @@ class StockDetailProvider with ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.stockDetails,
         request: request,
+        showProgress: false,
       );
       if (response.status) {
         _data = stockDetailsResFromJson(jsonEncode(response.data));
@@ -153,6 +154,7 @@ class StockDetailProvider with ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.getOtherData,
         request: request,
+        showProgress: false,
       );
       if (response.status) {
         _otherData = stocksOtherDetailsFromJson(jsonEncode(response.data));
@@ -223,7 +225,10 @@ class StockDetailProvider with ChangeNotifier {
         "interval": interval,
       };
       ApiResponse response = await apiRequest(
-          url: Apis.technicalAnalysis, request: request, showProgress: false);
+        url: Apis.technicalAnalysis,
+        request: request,
+        showProgress: false,
+      );
       if (response.status) {
         _technicalAnalysisRes =
             technicalAnalysisResFromJson(jsonEncode(response.data));

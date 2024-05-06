@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
@@ -20,16 +21,21 @@ class ProgressDialog extends StatelessWidget {
                   maxWidth: ScreenUtil().screenWidth * .7,
                 ),
                 padding: EdgeInsets.all(18.sp),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
+                // decoration: BoxDecoration(
+                //   color: Colors.white,
+                //   borderRadius: BorderRadius.circular(8.r),
+                // ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const CircularProgressIndicator(
-                      strokeWidth: 4,
+                    Image.asset(
+                      Images.progressGIF,
+                      width: 100,
+                      height: 100,
                     ),
+                    // const CircularProgressIndicator(
+                    //   strokeWidth: 4,
+                    // ),
                     const SpacerHorizontal(width: 16),
                     Flexible(
                       child: Text(
@@ -44,15 +50,10 @@ class ProgressDialog extends StatelessWidget {
                   ],
                 ),
               )
-            : Container(
-                width: 60.sp,
-                height: 60.sp,
-                padding: EdgeInsets.all(18.sp),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.sp),
-                ),
-                child: const CircularProgressIndicator(strokeWidth: 3),
+            : Image.asset(
+                Images.progressGIF,
+                width: 100,
+                height: 100,
               ),
       ),
     );

@@ -8,9 +8,9 @@ import 'package:stocks_news_new/screens/trendingIndustries/graph/graph.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class TrendingIndustriesContainer extends StatefulWidget {
@@ -50,14 +50,7 @@ class _TrendingIndustriesContainerState
             ),
             Expanded(
               child: provider.isLoading
-                  ? Center(
-                      child: Text(
-                        "We are preparing …",
-                        style: styleGeorgiaRegular(
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
+                  ? const Loading()
                   : provider.data != null && provider.data?.isNotEmpty == true
                       ? RefreshIndicator(
                           onRefresh: provider.getData,

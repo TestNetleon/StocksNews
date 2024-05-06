@@ -30,7 +30,7 @@ class _WatchListState extends State<WatchList> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       UserProvider provider = context.read<UserProvider>();
       if (provider.user != null) {
-        context.read<WatchlistProvider>().getData(showProgress: true);
+        context.read<WatchlistProvider>().getData(showProgress: false);
       }
     });
   }
@@ -62,10 +62,7 @@ class _WatchListState extends State<WatchList> {
             //   onChanged: (text) {},
             // ),
             userProvider.user == null
-                ? const Expanded(
-                    child: LoginError(
-                    state: "watchList",
-                  ))
+                ? const Expanded(child: LoginError(state: "watchList"))
                 : Expanded(
                     child: BaseUiContainer(
                       isLoading: provider.isLoading && provider.data == null,
@@ -73,7 +70,8 @@ class _WatchListState extends State<WatchList> {
                           provider.data != null && provider.data!.isNotEmpty,
                       error: provider.error,
                       errorDispCommon: true,
-                      onRefresh: () => provider.getData(showProgress: true),
+                      showPreparingText: true,
+                      onRefresh: () => provider.getData(showProgress: false),
                       child: const WatchlistContainer(),
                     ),
                   ),

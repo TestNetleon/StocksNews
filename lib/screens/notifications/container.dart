@@ -32,7 +32,7 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       UserRes? res = context.read<UserProvider>().user;
       if (res != null) {
-        context.read<NotificationProvider>().getData(showProgress: true);
+        context.read<NotificationProvider>().getData(showProgress: false);
       }
     });
   }
@@ -70,9 +70,10 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
                       hasData: data != null && data.isNotEmpty,
                       isLoading: provider.isLoading,
                       errorDispCommon: true,
-                      onRefresh: () => provider.getData(showProgress: true),
+                      showPreparingText: true,
+                      onRefresh: () => provider.getData(showProgress: false),
                       child: RefreshControll(
-                        onRefresh: () => provider.getData(showProgress: true),
+                        onRefresh: () => provider.getData(showProgress: false),
                         canLoadmore: provider.canLoadMore,
                         onLoadMore: () => provider.getData(loadMore: true),
                         child: ListView.separated(
