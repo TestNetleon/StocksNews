@@ -269,7 +269,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 20.sp),
+              // padding: EdgeInsets.only(left: 20.sp),
               height: 80,
               // width: 300,
               child: LineChart(avgData()),
