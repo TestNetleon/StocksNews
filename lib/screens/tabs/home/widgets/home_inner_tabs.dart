@@ -32,16 +32,51 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: ThemeColors.accent, width: 1.sp),
-            ),
-          ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomTabLabel(
-                "Trending",
-                coloredLetters: const ['T'],
+              // CustomTabLabel(
+              //   "Trending",
+              //   coloredLetters: const ['T'],
+              //   selected: _selectedIndex == 0,
+              //   onTap: () {
+              //     setState(() {
+              //       _selectedIndex = 0;
+              //     });
+              //   },
+              // ),
+              // VerticalDivider(
+              //   color: ThemeColors.accent,
+              //   width: 1.sp,
+              //   thickness: 1.sp,
+              // ),
+              // CustomTabLabel(
+              //   "Top Gainers",
+              //   coloredLetters: const ['G'],
+              //   selected: _selectedIndex == 1,
+              //   onTap: () {
+              //     setState(() {
+              //       _selectedIndex = 1;
+              //     });
+              //   },
+              // ),
+              // VerticalDivider(
+              //   color: ThemeColors.accent,
+              //   width: 1.sp,
+              //   thickness: 1.sp,
+              // ),
+              // CustomTabLabel(
+              //   "Top Losers",
+              //   coloredLetters: const ['L'],
+              //   selected: _selectedIndex == 2,
+              //   onTap: () {
+              //     setState(() {
+              //       _selectedIndex = 2;
+              //     });
+              //   },
+              // ),
+              CutomTabHome(
+                label: "Top Losers",
                 selected: _selectedIndex == 0,
                 onTap: () {
                   setState(() {
@@ -49,14 +84,8 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                   });
                 },
               ),
-              VerticalDivider(
-                color: ThemeColors.accent,
-                width: 1.sp,
-                thickness: 1.sp,
-              ),
-              CustomTabLabel(
-                "Top Gainers",
-                coloredLetters: const ['G'],
+              CutomTabHome(
+                label: "Top Losers",
                 selected: _selectedIndex == 1,
                 onTap: () {
                   setState(() {
@@ -64,14 +93,8 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                   });
                 },
               ),
-              VerticalDivider(
-                color: ThemeColors.accent,
-                width: 1.sp,
-                thickness: 1.sp,
-              ),
-              CustomTabLabel(
-                "Top Losers",
-                coloredLetters: const ['L'],
+              CutomTabHome(
+                label: "Top Losers",
                 selected: _selectedIndex == 2,
                 onTap: () {
                   setState(() {
@@ -82,6 +105,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
             ],
           ),
         ),
+
         provider.topLoading
             ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 40.sp),

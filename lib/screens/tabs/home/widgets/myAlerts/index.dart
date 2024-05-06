@@ -22,14 +22,14 @@ class HomeMyAlerts extends StatelessWidget {
             ),
             const SpacerVertical(height: 10),
             SizedBox(
-              height: constraints.maxWidth * 0.8,
+              height: constraints.maxWidth * 0.45,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return const FittedBox(
                       alignment: Alignment.topCenter,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.scaleDown,
                       child: HomeMyAlertItem());
                 },
                 separatorBuilder: (context, index) {

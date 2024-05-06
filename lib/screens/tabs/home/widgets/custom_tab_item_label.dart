@@ -114,3 +114,42 @@ class CustomTabLabelNews extends StatelessWidget {
     );
   }
 }
+
+class CutomTabHome extends StatelessWidget {
+  final bool selected;
+  final String label;
+  final Function() onTap;
+
+  const CutomTabHome({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+//
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            border: selected
+                ? Border(
+                    bottom: BorderSide(color: ThemeColors.accent, width: 1.sp),
+                  )
+                : null,
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5.sp),
+          child: Text(
+            label,
+            style: stylePTSansBold(
+              color: selected ? ThemeColors.accent : Colors.white,
+              // index == selectedIndex ? ThemeColors.border : ThemeColors.primary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
