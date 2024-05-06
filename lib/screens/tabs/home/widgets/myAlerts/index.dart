@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
@@ -15,42 +16,47 @@ class HomeMyAlerts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<HomeAlertsRes>? homeAlert =
-        context.watch<HomeProvider>().homeAlertData;
+    HomeProvider provider = context.watch<HomeProvider>();
+    List<HomeAlertsRes>? homeAlert = provider.homeAlertData;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SpacerVertical(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    "Stock Alerts",
-                    style: stylePTSansBold(),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, Alerts.path);
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        "View All",
-                        style: stylePTSansBold(fontSize: 12),
+            Visibility(
+              visible: provider.userAlert != 0,
+              child: Padding(
+                padding: EdgeInsets.only(top: 15.sp),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "Stock Alerts",
+                        style: stylePTSansBold(),
                       ),
-                      const SpacerHorizontal(width: 5),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 15.sp,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, Alerts.path);
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            "View All",
+                            style: stylePTSansBold(fontSize: 12),
+                          ),
+                          const SpacerHorizontal(width: 5),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 15.sp,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
             const SpacerVertical(height: 10),
             SizedBox(

@@ -74,7 +74,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
             //   },
             // ),
             CutomTabHome(
-              label: "Top Losers",
+              label: "Trending",
               selected: _selectedIndex == 0,
               onTap: () {
                 setState(() {
@@ -83,7 +83,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
               },
             ),
             CutomTabHome(
-              label: "Top Losers",
+              label: "Top Gainers",
               selected: _selectedIndex == 1,
               onTap: () {
                 setState(() {

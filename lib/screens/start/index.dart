@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/screens/auth/login/login.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -17,8 +18,9 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 class StartIndex extends StatefulWidget {
+  final List<WelcomeRes>? welcome;
   static const path = "StartIndex";
-  const StartIndex({super.key});
+  const StartIndex({super.key, this.welcome});
 
   @override
   State<StartIndex> createState() => _StartIndexState();
@@ -83,7 +85,7 @@ class _StartIndexState extends State<StartIndex> {
           children: [
             Expanded(
               child: CarouselSlider.builder(
-                itemCount: array.length,
+                itemCount: widget.welcome?.length ?? 0,
                 itemBuilder: (context, index, realIndex) {
                   return Container(
                     color: array[index].color,
@@ -107,7 +109,7 @@ class _StartIndexState extends State<StartIndex> {
                           ),
 
                           Text(
-                            array[index].title,
+                            widget.welcome?[index].title ?? "",
                             style: stylePTSansBold(
                               fontSize: 45,
                             ),
@@ -117,7 +119,7 @@ class _StartIndexState extends State<StartIndex> {
                           //   style: styleGeorgiaBold(fontSize: 45),
                           // ),
                           GradientText(
-                            array[index].colorText,
+                            widget.welcome?[index].colorText ?? "",
                             style: stylePTSansBold(fontSize: 45),
                             colors: const [
                               Color.fromARGB(255, 32, 97, 34),
@@ -129,7 +131,7 @@ class _StartIndexState extends State<StartIndex> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 30.sp),
                             child: Text(
-                              array[index].description,
+                              widget.welcome?[index].description ?? "",
                               textAlign: TextAlign.center,
                               style: styleGeorgiaBold(
                                   fontSize: 15, color: ThemeColors.greyText),

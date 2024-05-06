@@ -60,6 +60,7 @@ class Extra {
   final List<KeyValueElement>? sector;
   final List<KeyValueElement>? txnSize;
   final TextRes? text;
+  final int? userAlert;
 
   Extra({
     this.search,
@@ -71,10 +72,12 @@ class Extra {
     this.notificationCount,
     this.text,
     this.txnSize,
+    this.userAlert,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
       search: json["search"],
+      userAlert: json["user_alerts"],
       text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
       exchangeShortName: json["exchange_short_name"] == null
           ? []
@@ -103,6 +106,7 @@ class Extra {
 
   Map<String, dynamic> toJson() => {
         "search": search,
+        "user_alerts": userAlert,
         "exchange_short_name": exchangeShortName == null
             ? []
             : List<dynamic>.from(exchangeShortName!.map((x) => x.toJson())),

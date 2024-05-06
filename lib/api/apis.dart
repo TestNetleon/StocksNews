@@ -15,6 +15,7 @@ class Apis {
   static const homeNew = "/home-new";
   static const saveFCM = "/save-fcm-token";
   static const ipoCalendar = "/ipo-calendar";
+  static const welcome = "/welcome-screen";
 
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";
