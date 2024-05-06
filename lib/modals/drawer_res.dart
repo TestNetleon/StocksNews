@@ -19,9 +19,9 @@ class DrawerRes {
 List<DrawerRes> drawerItems = [
   DrawerRes(iconData: Icons.home_filled, text: "Home"),
   DrawerRes(iconData: Icons.stacked_line_chart_rounded, text: "Stocks"),
+  DrawerRes(iconData: Icons.add_alert, text: "Stock Alerts"),
+  DrawerRes(iconData: Icons.star, text: "Stock Watchlist"),
   DrawerRes(iconData: Icons.trending_up_rounded, text: "Trending Industries"),
-  DrawerRes(iconData: Icons.add_alert, text: "Alerts"),
-  DrawerRes(iconData: Icons.star, text: "Watchlist"),
   DrawerRes(iconData: Icons.notifications_active, text: "Notifications"),
   DrawerRes(iconData: Icons.person, text: "My Account"),
   DrawerRes(iconData: Icons.help_outline_rounded, text: "FAQs"),

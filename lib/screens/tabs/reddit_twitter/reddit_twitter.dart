@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
@@ -65,12 +66,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
             // const ScreenTitle(title: "Social Sentiment"),
             Expanded(
               child: provider.isLoading && provider.socialSentimentRes == null
-                  ? Center(
-                      child: Text(
-                        "We are preparing …",
-                        style: styleGeorgiaRegular(color: Colors.white),
-                      ),
-                    )
+                  ? const Loading()
                   : provider.socialSentimentRes == null && !provider.isLoading
                       ? Center(
                           child: ErrorDisplayNewWidget(

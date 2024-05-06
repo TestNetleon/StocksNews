@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -36,7 +37,7 @@ class _AlertBaseState extends State<AlertBase> {
   void _getData() {
     UserProvider provider = context.read<UserProvider>();
     if (provider.user != null) {
-      context.read<AlertProvider>().getAlerts(showProgress: true);
+      context.read<AlertProvider>().getAlerts(showProgress: false);
     }
   }
 
@@ -56,7 +57,7 @@ class _AlertBaseState extends State<AlertBase> {
         ),
         child: Column(
           children: [
-            const ScreenTitle(title: "Alerts"),
+            const ScreenTitle(title: "Stock Alerts"),
             Visibility(
               visible: provider.textRes?.subTitle != '',
               child: Text(
@@ -70,9 +71,14 @@ class _AlertBaseState extends State<AlertBase> {
                 margin: EdgeInsets.symmetric(vertical: 10.sp),
                 padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),
                 decoration: const BoxDecoration(
-                    color: ThemeColors.greyBorder,
-                    border: Border(
-                        left: BorderSide(color: ThemeColors.white, width: 3))),
+                  color: ThemeColors.greyBorder,
+                  border: Border(
+                    left: BorderSide(
+                      color: ThemeColors.white,
+                      width: 3,
+                    ),
+                  ),
+                ),
                 child: Text(
                   provider.textRes?.note ?? "",
                   style: stylePTSansRegular(fontSize: 12),
@@ -101,7 +107,18 @@ class _AlertBaseState extends State<AlertBase> {
                           provider.data != null && provider.data!.isNotEmpty,
                       error: provider.error,
                       errorDispCommon: true,
-                      onRefresh: () => provider.getAlerts(showProgress: true),
+                      showPreparingText: true,
+                      // onRefresh: () => provider.getAlerts(showProgress: false),
+                      navBtnText: "Add First Stock Alert",
+                      onNavigate: () {
+                        Navigator.popUntil(context, (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const Tabs(index: 1),
+                          ),
+                        );
+                      },
                       child: const AlertContainer(),
                     ),
                   ),

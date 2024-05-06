@@ -39,7 +39,7 @@ class _SearchState extends State<Search> {
       child: BaseContainer(
         drawer: const BaseDrawer(),
         appBar: const AppBarHome(isPopback: true, showTrailing: false),
-        body: provider.isLoading
+        body: provider.isLoading && provider.topSearch == null
             ? const Loading()
             : SingleChildScrollView(
                 child: Padding(

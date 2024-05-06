@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 import '../utils/colors.dart';
 import '../utils/constants.dart';
@@ -11,14 +12,18 @@ class ErrorDisplayWidget extends StatelessWidget {
   const ErrorDisplayWidget({
     this.error,
     this.onRefresh,
+    this.onNavigate,
     this.postJobButton,
     this.smallHeight = false,
     this.showHeight = true,
     this.fontSize = 18,
+    this.navBtnText,
     super.key,
   });
   final String? error;
+  final String? navBtnText;
   final Function()? onRefresh;
+  final Function()? onNavigate;
   final bool? postJobButton;
   final bool smallHeight;
   final bool showHeight;
@@ -65,6 +70,17 @@ class ErrorDisplayWidget extends StatelessWidget {
                           size: 25,
                         ),
                       ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: onNavigate != null,
+                    child: ThemeButtonSmall(
+                      onPressed: () {
+                        if (onNavigate != null) onNavigate!();
+                      },
+                      text: navBtnText ?? "",
+                      showArrow: false,
+                      // fullWidth: false,
                     ),
                   )
                 ],

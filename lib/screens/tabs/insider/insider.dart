@@ -53,7 +53,7 @@ class Insider extends StatelessWidget {
                 onTap: _filterClick,
                 child: const Icon(
                   Icons.filter_alt,
-                  color: ThemeColors.white,
+                  color: ThemeColors.accent,
                 ),
               ),
             ),

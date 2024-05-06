@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -16,7 +17,7 @@ import '../../widgets/cache_network_image.dart';
 class WatchlistItem extends StatelessWidget {
   final int index;
   final WatchlistData data;
-//
+
   const WatchlistItem({
     super.key,
     required this.index,
@@ -28,6 +29,7 @@ class WatchlistItem extends StatelessWidget {
     return Slidable(
       key: ValueKey(index.toString()),
       groupTag: "A",
+      closeOnScroll: true,
       endActionPane: ActionPane(
         extentRatio: .4,
         motion: const ScrollMotion(),
@@ -35,13 +37,22 @@ class WatchlistItem extends StatelessWidget {
           const SpacerHorizontal(),
           SlidableAction(
             onPressed: (_) {
-              context
-                  .read<WatchlistProvider>()
-                  .deleteItem(data.id, data.symbol);
+              showConfirmAlertDialog(
+                context: context,
+                title: "Removing Stock",
+                message:
+                    "Do you want to remove this stock from your watchlist?",
+                okText: "Remove",
+                onclick: () {
+                  context
+                      .read<WatchlistProvider>()
+                      .deleteItem(data.id, data.symbol);
+                },
+              );
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
-            label: 'Delete',
+            label: 'Remove',
           ),
           // Expanded(
           //   child: InkWell(
@@ -74,8 +85,11 @@ class WatchlistItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, StockDetails.path,
-              arguments: data.symbol);
+          Navigator.pushNamed(
+            context,
+            StockDetails.path,
+            arguments: data.symbol,
+          );
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

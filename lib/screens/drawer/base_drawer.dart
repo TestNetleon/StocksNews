@@ -163,9 +163,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
     // Define a map to store the routes based on the index
     Map<int, String> routes = {
       1: StocksIndex.path,
-      2: TrendingIndustries.path,
-      3: Alerts.path,
-      4: WatchList.path,
+      2: Alerts.path,
+      3: WatchList.path,
+      4: TrendingIndustries.path,
       5: Notifications.path,
       6: MyAccount.path,
       7: FAQ.path,
