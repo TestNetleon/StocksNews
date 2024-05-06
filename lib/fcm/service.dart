@@ -185,12 +185,12 @@ class FirebaseApi {
   Future initPushNotification() async {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
-            alert: true, badge: true, sound: true);
+            alert: true, badge: false, sound: true);
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       Utils().showLog("getInitialMessage");
 
-      Future.delayed(const Duration(seconds: 4), () {
+      Future.delayed(Duration(seconds: 4), () {
         handleMessage(message, whenAppKilled: true);
       });
     });
@@ -205,6 +205,7 @@ class FirebaseApi {
       );
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+
     FirebaseMessaging.onMessage.listen((message) async {
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
       // provider.notificationSeen = false;
