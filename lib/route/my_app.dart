@@ -180,6 +180,7 @@ class _MyAppState extends State<MyApp> {
         );
       },
       child: const Splash(),
+      // child: const SignUpSuccess(),
       // child: const WebPageUI(),
     );
   }
