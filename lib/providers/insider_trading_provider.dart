@@ -54,6 +54,11 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   String valueTxnSize = "";
 
   TextEditingController date = TextEditingController();
+  TextEditingController type = TextEditingController();
+  TextEditingController capController = TextEditingController();
+  TextEditingController sectorController = TextEditingController();
+  TextEditingController txnSizeController = TextEditingController();
+
   String dateSend = "";
   Future<void> pickDate() async {
     final DateTime? picked = await showDatePicker(
@@ -75,6 +80,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     keyTxnType = selectedItem?.key ?? "";
     valueTxnType = selectedItem?.value ?? "";
     log("Key TransactionType=> $keyTxnType");
+    type.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -82,6 +88,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     keyCap = selectedItem?.key ?? "";
     valueCap = selectedItem?.value ?? "";
     log("Key Cap=> $keyCap");
+    capController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -89,6 +96,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     keySector = selectedItem?.key ?? "";
     valueSector = selectedItem?.value ?? "";
     log("Key Sector=> $keySector");
+    sectorController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -96,6 +104,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     keyTxnSize = selectedItem?.key ?? "";
     valueTxnSize = selectedItem?.value ?? "";
     log("Key TransactionSize=> $keyTxnSize");
+    txnSizeController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 

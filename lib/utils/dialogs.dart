@@ -218,11 +218,12 @@ void showPlatformBottomSheet(
     showClose = true}) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10.sp),
-          topRight: Radius.circular(10.sp),
-        ),
-        side: const BorderSide(color: ThemeColors.greyBorder)),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10.sp),
+        topRight: Radius.circular(10.sp),
+      ),
+      side: const BorderSide(color: ThemeColors.greyBorder),
+    ),
     context: context,
     backgroundColor: backgroundColor,
     isScrollControlled: true,
