@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class FAQBase extends StatefulWidget {
@@ -50,7 +51,7 @@ class _FAQBaseState extends State<FAQBase> {
   Widget _getWidget() {
     FaqProvide provider = context.watch<FaqProvide>();
     return provider.isLoading
-        ? const SizedBox()
+        ? const Loading()
         : provider.data != null
             ? RefreshIndicator(
                 onRefresh: () => provider.getFAQs(),

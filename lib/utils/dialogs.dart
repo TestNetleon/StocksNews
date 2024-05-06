@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -155,33 +156,37 @@ Future<dynamic> showConfirmAlertDialog(
     okText = "Ok",
     cancelText = "Cancel",
     onclick}) {
-  return showDialog(
+  return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.sp),
-            side: const BorderSide(color: ThemeColors.border)),
-        backgroundColor: ThemeColors.primaryLight,
+      return CupertinoAlertDialog(
+        title: Text(title,
+            style: stylePTSansBold(fontSize: 17, color: Colors.black)),
+        // shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(5.sp),
+        //     side: const BorderSide(color: ThemeColors.border)),
+        // backgroundColor: ThemeColors.primaryLight,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Visibility(
-                visible: title != "",
-                child: Text(title, style: stylePTSansBold(fontSize: 17))),
+            // Visibility(
+            //     visible: title != "",
+            //     child: Text(title,
+            //         style: stylePTSansBold(fontSize: 17, color: Colors.black))),
             Visibility(visible: title != "", child: SizedBox(height: 12.sp)),
-            Text(message, style: stylePTSansBold()),
+            Text(message, style: stylePTSansRegular(color: Colors.black)),
           ],
         ),
-        actionsPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.fromLTRB(16.sp, 12.sp, 16.sp, 20.sp),
-        buttonPadding: EdgeInsets.zero,
+        // actionsPadding: EdgeInsets.zero,
+        // contentPadding: EdgeInsets.fromLTRB(16.sp, 12.sp, 16.sp, 20.sp),
+        // buttonPadding: EdgeInsets.zero,
         actions: [
           Padding(
             padding: EdgeInsets.only(bottom: 2.sp),
             child: TextButton(
-              child: Text(cancelText, style: stylePTSansBold()),
+              child:
+                  Text(cancelText, style: stylePTSansBold(color: Colors.black)),
               onPressed: () {
                 FocusManager.instance.primaryFocus?.unfocus();
                 Navigator.pop(context);
@@ -194,7 +199,7 @@ Future<dynamic> showConfirmAlertDialog(
           Padding(
             padding: EdgeInsets.only(right: 8.sp, bottom: 2.sp),
             child: TextButton(
-              child: Text(okText, style: stylePTSansBold()),
+              child: Text(okText, style: stylePTSansBold(color: Colors.black)),
               onPressed: () {
                 FocusManager.instance.primaryFocus?.unfocus();
                 Navigator.pop(context);

@@ -14,6 +14,8 @@ class BaseUiContainer extends StatelessWidget {
     this.errorDispCommon = false,
     this.showPreparingText = false,
     this.onRefresh,
+    this.onNavigate,
+    this.navBtnText,
     super.key,
   });
 //
@@ -23,7 +25,9 @@ class BaseUiContainer extends StatelessWidget {
   final bool isLoading;
   final bool showPreparingText;
   final bool errorDispCommon;
+  final String? navBtnText;
   final dynamic Function()? onRefresh;
+  final dynamic Function()? onNavigate;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +43,15 @@ class BaseUiContainer extends StatelessWidget {
                   return ErrorDisplayWidget(
                     error: error ?? Const.errNoRecord,
                     onRefresh: onRefresh,
+                    onNavigate: onNavigate,
+                    navBtnText: navBtnText,
                   );
                 },
                 child: ErrorDisplayNewWidget(
                   error: error ?? Const.errNoRecord,
                   onRefresh: onRefresh,
+                  onNavigate: onNavigate,
+                  navBtnText: navBtnText,
                 ),
               );
   }

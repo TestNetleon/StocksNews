@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/alerts_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -25,6 +26,7 @@ class AlertsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       key: ValueKey(index.toString()),
+      closeOnScroll: true,
       groupTag: "A",
       endActionPane: ActionPane(
         extentRatio: .4,
@@ -33,11 +35,22 @@ class AlertsItem extends StatelessWidget {
           const SpacerHorizontal(),
           SlidableAction(
             onPressed: (_) {
-              context.read<AlertProvider>().deleteItem(data.id, data.symbol);
+              showConfirmAlertDialog(
+                context: context,
+                title: "Removing Stock",
+                message:
+                    "Do you want to remove receiving alerts for this stock?",
+                okText: "Remove",
+                onclick: () {
+                  context
+                      .read<AlertProvider>()
+                      .deleteItem(data.id, data.symbol);
+                },
+              );
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
-            label: 'Delete',
+            label: 'Remove',
           ),
           // Expanded(
           //   child: InkWell(

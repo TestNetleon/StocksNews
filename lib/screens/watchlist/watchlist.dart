@@ -56,7 +56,7 @@ class _WatchListState extends State<WatchList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const ScreenTitle(title: "Watchlist"),
+            const ScreenTitle(title: "Stock Watchlist"),
             // TextInputFieldSearch(
             //   hintText: "Add ticker in watchlist",
             //   onChanged: (text) {},

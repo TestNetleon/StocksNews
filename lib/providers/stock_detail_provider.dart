@@ -356,8 +356,10 @@ class StockDetailProvider with ChangeNotifier {
       "symbol": _data?.keyStats?.symbol ?? "",
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.addWatchlist, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.addWatchlist,
+        request: request,
+      );
       if (response.status) {
         data?.isWatchlistAdded = 1;
       }

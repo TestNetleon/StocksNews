@@ -50,7 +50,7 @@ class _StockDetailsState extends State<StockDetails> {
           isPopback: true,
           canSearch: true,
         ),
-        body: provider.isLoading
+        body: provider.isLoading && provider.data == null
             ? const Loading()
             : !provider.isLoading && provider.data == null
                 ? ErrorDisplayWidget(

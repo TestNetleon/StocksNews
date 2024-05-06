@@ -50,7 +50,11 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? ""
     };
     try {
-      ApiResponse response = await apiRequest(url: Apis.faQs, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.faQs,
+        request: request,
+        showProgress: false,
+      );
       if (response.status) {
         _data = faQsResFromJson(jsonEncode(response.data));
       } else {
