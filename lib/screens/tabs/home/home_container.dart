@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/container.dart';
@@ -24,7 +22,6 @@ class HomeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
-    UserRes? res = context.watch<UserProvider>().user;
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -86,17 +83,14 @@ class HomeContainer extends StatelessWidget {
                   // const SpacerVertical(height: 10),
                   // const HomeBanner(),
 
-                  Visibility(
-                    visible: res != null,
-                    child: HomePartialLoading(
-                      loading: provider.isLoadingHomeAlert,
-                      error: !provider.isLoadingHomeAlert &&
-                              provider.homeAlertData == null
-                          ? HomeError.homeAlert
-                          : null,
-                      onRefresh: provider.refreshWithCheck,
-                      child: const HomeMyAlerts(),
-                    ),
+                  HomePartialLoading(
+                    loading: provider.isLoadingHomeAlert,
+                    error: !provider.isLoadingHomeAlert &&
+                            provider.homeAlertData == null
+                        ? HomeError.homeAlert
+                        : null,
+                    onRefresh: provider.refreshWithCheck,
+                    child: const HomeMyAlerts(),
                   ),
                   HomePartialLoading(
                     loading: provider.isLoadingTrending,
