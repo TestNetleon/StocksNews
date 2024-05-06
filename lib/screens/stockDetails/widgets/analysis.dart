@@ -8,6 +8,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -27,21 +28,22 @@ class Analysis extends StatelessWidget {
           subTitle: provider.analysisRes?.text,
         ),
         provider.analysisLoading && provider.analysisRes == null
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CircularProgressIndicator(
-                    color: ThemeColors.accent,
-                  ),
-                  const SpacerHorizontal(width: 5),
-                  Flexible(
-                    child: Text(
-                      "Fetching stock analysis data...",
-                      style: stylePTSansRegular(color: ThemeColors.accent),
-                    ),
-                  ),
-                ],
-              )
+            ? const Loading(text: 'Fetching stock analysis data...')
+            //  Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       const CircularProgressIndicator(
+            //         color: ThemeColors.accent,
+            //       ),
+            //       const SpacerHorizontal(width: 5),
+            //       Flexible(
+            //         child: Text(
+            //           "Fetching stock analysis data...",
+            //           style: stylePTSansRegular(color: ThemeColors.accent),
+            //         ),
+            //       ),
+            //     ],
+            //   )
             : provider.data != null
                 ? const AlalysisBase()
                 : Text(

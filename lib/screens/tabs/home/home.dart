@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/home_container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 
 class Home extends StatelessWidget {
   static const String path = "Home";
@@ -23,14 +23,7 @@ class Home extends StatelessWidget {
         canSearch: true,
       ),
       body: provider.isLoadingSlider
-          ? Center(
-              child: Text(
-                "We are preparing …",
-                style: styleGeorgiaRegular(
-                  color: Colors.white,
-                ),
-              ),
-            )
+          ? const Loading()
           :
           // provider.data != null
           //     ?

@@ -65,7 +65,10 @@ class CompareStocksProvider extends ChangeNotifier {
     };
     try {
       ApiResponse res = await apiRequest(
-          url: Apis.compare, request: request, showProgress: showProgress);
+        url: Apis.compare,
+        request: request,
+        showProgress: false,
+      );
       if (res.status) {
         _company = compareStockResFromJson(jsonEncode(res.data));
       } else {

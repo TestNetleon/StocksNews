@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/ipo/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/sentiments_graph.dart';

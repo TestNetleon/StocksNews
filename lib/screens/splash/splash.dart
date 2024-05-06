@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -52,7 +51,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _navigateToRequiredScreen() async {
-    bool firstTime = await Preference.getFirstTime();
+    bool firstTime = // kDebugMode ? true :
+        await Preference.getFirstTime();
     log("--First Time $firstTime");
     if (firstTime) {
       Navigator.pushReplacementNamed(

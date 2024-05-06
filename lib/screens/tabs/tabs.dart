@@ -18,6 +18,7 @@ import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:vibration/vibration.dart';
 
 //
 class Tabs extends StatefulWidget {
@@ -80,14 +81,15 @@ class _TabsState extends State<Tabs> {
         //                     ? const WatchList()
         //                     : const News(),
         bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: ThemeColors.greyText,
+          unselectedItemColor: ThemeColors.white,
           selectedItemColor: ThemeColors.accent,
+          backgroundColor: ThemeColors.tabBack,
           showUnselectedLabels: true,
           showSelectedLabels: true,
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           unselectedLabelStyle: stylePTSansBold(
-            color: ThemeColors.greyText,
+            color: ThemeColors.white,
             fontSize: 9,
           ),
           selectedLabelStyle: stylePTSansBold(
@@ -118,12 +120,18 @@ class _TabsState extends State<Tabs> {
     );
   }
 
-  void activeContainerApiCalls({required int currentIndex}) {
+  void activeContainerApiCalls({required int currentIndex}) async {
     final trendingProvider = context.read<TrendingProvider>();
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
     final newsProvider = context.read<FeaturedNewsProvider>();
     final latestNewsProvider = context.read<NewsProvider>();
+
+    bool isVibe = await Vibration.hasVibrator() ?? false;
+    if (isVibe) {
+      // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
+      Vibration.vibrate(pattern: [50, 100, 50, 200], intensities: [1, 100]);
+    }
 
     // switch (currentIndex) {
     //   case 0:
@@ -157,13 +165,13 @@ class _TabsState extends State<Tabs> {
         trendingProvider.refreshData();
         break;
       case 2:
-        insiderProvider.getData(showProgress: true);
+        insiderProvider.getData(showProgress: false);
         break;
       case 3:
         redditTwitterProvider.getRedditTwitterData(reset: true);
         break;
       case 4:
-        newsProvider.getNews(showProgress: true);
+        newsProvider.getNews(showProgress: false);
         latestNewsProvider.getNews();
 
         break;

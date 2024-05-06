@@ -50,6 +50,7 @@ class Images {
   static const String newsGIT = "assets/images/news.gif";
   static const String bearBullGIF = "assets/images/bull_bear.gif";
   static const String alertBellGIF = "assets/images/alert_bell.gif";
+  static const String progressGIF = "assets/images/progress.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

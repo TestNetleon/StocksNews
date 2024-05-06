@@ -34,6 +34,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
     return PopupMenuButton<AddType>(
       constraints: BoxConstraints.loose(Size(200.sp, 170.sp)),
       iconSize: 20.sp,
+      icon: const Icon(Icons.more_vert_rounded),
       color: ThemeColors.primaryLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.sp),

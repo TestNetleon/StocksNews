@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
@@ -25,37 +26,40 @@ class HeaderItem extends StatelessWidget {
           Navigator.pushNamed(context, StockDetails.path,
               arguments: company?.symbol);
         },
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(20.sp, 10.sp, 10.sp, 10.sp),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
+        child: Stack(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 20.sp),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(0.sp),
-                    child: Container(
-                      padding: EdgeInsets.all(5.sp),
-                      width: 43.sp,
-                      height: 43.sp,
-                      child: ThemeImageView(url: company?.image ?? ""),
-                    ),
+                  Container(
+                    padding: EdgeInsets.all(5.sp),
+                    width: 43.sp,
+                    height: 43.sp,
+                    child: ThemeImageView(url: company?.image ?? ""),
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    company?.symbol ?? "",
+                    "${company?.symbol}",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
                     style: stylePTSansBold(fontSize: 13),
                   ),
                 ],
               ),
-              const SpacerHorizontal(width: 10),
-              InkWell(
+            ),
+            const SpacerHorizontal(width: 10),
+            Positioned(
+              top: 2,
+              right: 2,
+              child: InkWell(
                 onTap: onTap,
                 child: const Icon(Icons.close),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

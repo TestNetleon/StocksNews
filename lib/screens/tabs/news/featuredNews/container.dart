@@ -39,6 +39,7 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
       hasData: provider.data != null && provider.data!.isNotEmpty,
       error: provider.error,
       errorDispCommon: true,
+      showPreparingText: true,
       onRefresh: () async => provider.getNews(showProgress: false),
       child: RefreshControll(
         onRefresh: () async => provider.getNews(showProgress: false),

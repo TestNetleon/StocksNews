@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/optiona_parent.dart';
 
 class BaseUiContainer extends StatelessWidget {
@@ -29,14 +29,7 @@ class BaseUiContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return isLoading
         ? showPreparingText
-            ? Center(
-                child: Text(
-                  "We are preparing …",
-                  style: styleGeorgiaRegular(
-                    color: Colors.white,
-                  ),
-                ),
-              )
+            ? const Loading()
             : const SizedBox()
         : hasData
             ? child

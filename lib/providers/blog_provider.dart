@@ -189,6 +189,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.blogDetails,
         request: request,
+        showProgress: false,
       );
       if (response.status) {
         _blogsDetail = BlogsDetailRes.fromJson(response.data);

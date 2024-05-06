@@ -243,14 +243,7 @@ class TabDivider extends StatelessWidget {
 //           0,
 //         ),
 //         child: provider.isLoading
-//             ? Center(
-//                 child: Text(
-//                   "We are preparing …",
-//                   style: styleGeorgiaRegular(
-//                     color: Colors.white,
-//                   ),
-//                 ),
-//               )
+//             ? Loading()
 //             : !provider.isLoading && provider.tabs == null
 //                 ? ErrorDisplayWidget(
 //                     error: provider.error,
