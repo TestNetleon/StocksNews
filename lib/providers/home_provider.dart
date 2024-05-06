@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_sentiment_res.dart';
 import 'package:stocks_news_new/modals/home_slider_res.dart';
@@ -38,6 +39,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Status _statusIpo = Status.ideal;
   Status get statusIpo => _statusIpo;
 
+  Status _statusHomeAlert = Status.ideal;
+  Status get statusHomeAlert => _statusHomeAlert;
+
   // HomeRes? get data => _home;
 
   HomeSliderRes? _homeSliderRes;
@@ -60,10 +64,15 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingTrending => _statusTrending == Status.loading;
   bool get isLoadingInsider => _statusInsider == Status.loading;
   bool get isLoadingIpo => _statusIpo == Status.loading;
+  bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
+
   int _openIndex = -1;
   int get openIndex => _openIndex;
   bool topLoading = false;
   String? get error => _error ?? Const.errSomethingWrong;
+
+  List<HomeAlertsRes>? _homeAlertData;
+  List<HomeAlertsRes>? get homeAlertData => _homeAlertData;
 
   bool notificationSeen = false;
 
@@ -87,6 +96,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     getIpoData();
     getHomeSentimentData();
     getHomeTrendingData();
+    getHomeAlerts();
+
     getHomeInsiderData();
   }
 
@@ -104,6 +115,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
     }
+    if (_homeTrendingRes == null) {
+      getHomeAlerts();
+    }
     if (_homeInsiderRes == null) {
       getHomeInsiderData();
     }
@@ -119,6 +133,35 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       sendPort.send(response);
     } catch (e) {
       sendPort.send(e);
+    }
+  }
+
+  Future getHomeAlerts() async {
+    _statusHomeAlert = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeAlert,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _homeAlertData = homeAlertsResFromJson(jsonEncode(response.data));
+      } else {
+        _homeAlertData = null;
+      }
+      _statusHomeAlert = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _homeAlertData = null;
+      log(e.toString());
+      _statusHomeAlert = Status.loaded;
+      notifyListeners();
     }
   }
 

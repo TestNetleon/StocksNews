@@ -1,110 +1,116 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeMyAlertItem extends StatefulWidget {
-  const HomeMyAlertItem({super.key});
+  final HomeAlertsRes data;
+  const HomeMyAlertItem({super.key, required this.data});
 
   @override
   State<HomeMyAlertItem> createState() => _HomeMyAlertItemState();
 }
 
 class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
-  List<Map<String, dynamic>> chartData = [
-    {
-      "date": "2024-05-03 15:55:00",
-      "open": 183.485,
-      "low": 183.05,
-      "high": 183.485,
-      "close": 183.39,
-      "volume": 5429232
-    },
-    {
-      "date": "2024-05-03 15:50:00",
-      "open": 184,
-      "low": 183.44,
-      "high": 184.15,
-      "close": 183.49,
-      "volume": 3047110
-    },
-    {
-      "date": "2024-05-03 15:45:00",
-      "open": 184.245,
-      "low": 183.9,
-      "high": 184.26,
-      "close": 183.995,
-      "volume": 2281059
-    },
-    {
-      "date": "2024-05-03 15:40:00",
-      "open": 184.635,
-      "low": 184.21,
-      "high": 184.64,
-      "close": 184.245,
-      "volume": 1267832
-    },
-    {
-      "date": "2024-05-03 15:35:00",
-      "open": 184.71,
-      "low": 184.43,
-      "high": 184.7299,
-      "close": 184.64,
-      "volume": 1447898
-    },
-    {
-      "date": "2024-05-03 15:30:00",
-      "open": 185,
-      "low": 184.7,
-      "high": 185.01,
-      "close": 184.7199,
-      "volume": 1413845
-    },
-    {
-      "date": "2024-05-03 15:25:00",
-      "open": 184.68,
-      "low": 184.67,
-      "high": 185.02,
-      "close": 184.995,
-      "volume": 1427314
-    },
-    {
-      "date": "2024-05-03 15:20:00",
-      "open": 184.6399,
-      "low": 184.26,
-      "high": 184.82,
-      "close": 184.69,
-      "volume": 1890735
-    },
-    {
-      "date": "2024-05-03 15:15:00",
-      "open": 184.86,
-      "low": 184.63,
-      "high": 185.015,
-      "close": 184.64,
-      "volume": 1214182
-    },
-    {
-      "date": "2024-05-03 15:10:00",
-      "open": 184.975,
-      "low": 184.79,
-      "high": 185.09,
-      "close": 184.87,
-      "volume": 2475133
-    },
-  ];
+  // List<Map<String, dynamic>> chartData = [
+  //   {
+  //     "date": "2024-05-03 15:55:00",
+  //     "open": 183.485,
+  //     "low": 183.05,
+  //     "high": 183.485,
+  //     "close": 183.39,
+  //     "volume": 5429232
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:50:00",
+  //     "open": 184,
+  //     "low": 183.44,
+  //     "high": 184.15,
+  //     "close": 183.49,
+  //     "volume": 3047110
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:45:00",
+  //     "open": 184.245,
+  //     "low": 183.9,
+  //     "high": 184.26,
+  //     "close": 183.995,
+  //     "volume": 2281059
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:40:00",
+  //     "open": 184.635,
+  //     "low": 184.21,
+  //     "high": 184.64,
+  //     "close": 184.245,
+  //     "volume": 1267832
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:35:00",
+  //     "open": 184.71,
+  //     "low": 184.43,
+  //     "high": 184.7299,
+  //     "close": 184.64,
+  //     "volume": 1447898
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:30:00",
+  //     "open": 185,
+  //     "low": 184.7,
+  //     "high": 185.01,
+  //     "close": 184.7199,
+  //     "volume": 1413845
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:25:00",
+  //     "open": 184.68,
+  //     "low": 184.67,
+  //     "high": 185.02,
+  //     "close": 184.995,
+  //     "volume": 1427314
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:20:00",
+  //     "open": 184.6399,
+  //     "low": 184.26,
+  //     "high": 184.82,
+  //     "close": 184.69,
+  //     "volume": 1890735
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:15:00",
+  //     "open": 184.86,
+  //     "low": 184.63,
+  //     "high": 185.015,
+  //     "close": 184.64,
+  //     "volume": 1214182
+  //   },
+  //   {
+  //     "date": "2024-05-03 15:10:00",
+  //     "open": 184.975,
+  //     "low": 184.79,
+  //     "high": 185.09,
+  //     "close": 184.87,
+  //     "volume": 2475133
+  //   },
+  // ];
 
   LineChartData avgData() {
+    List<Chart> reversedData = widget.data.chart.reversed.toList();
+
     List<FlSpot> spots = [];
 
     // Extracting data for X and Y axes
-    for (int i = 0; i < chartData.length; i++) {
-      spots.add(FlSpot(i.toDouble(), chartData[i]['close']));
+    for (int i = 0; i < reversedData.length; i++) {
+      spots.add(FlSpot(i.toDouble(), reversedData[i].close));
     }
 
     return LineChartData(
@@ -124,19 +130,21 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
       borderData: FlBorderData(show: false),
       titlesData: const FlTitlesData(show: false),
       minX: 0,
-      maxX: chartData.length.toDouble() - 1,
-      minY: chartData
-          .map((data) => data['close'])
+      maxX: reversedData.length.toDouble() - 1,
+      minY: reversedData
+          .map((data) => data.close)
           .reduce((a, b) => a < b ? a : b)
           .toDouble(),
-      maxY: chartData
-          .map((data) => data['close'])
+      maxY: reversedData
+          .map((data) => data.close)
           .reduce((a, b) => a > b ? a : b)
           .toDouble(),
       lineBarsData: [
         LineChartBarData(
           spots: spots,
-          color: ThemeColors.accent,
+          color: widget.data.previousClose > widget.data.chart.first.close
+              ? ThemeColors.sos
+              : ThemeColors.accent,
           isCurved: true,
           barWidth: 2,
           isStrokeCapRound: false,
@@ -149,7 +157,9 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                ThemeColors.accent.withOpacity(0.1),
+                widget.data.previousClose > widget.data.chart.first.close
+                    ? ThemeColors.sos.withOpacity(0.1)
+                    : ThemeColors.accent.withOpacity(0.1),
                 ThemeColors.background,
               ],
             ),
@@ -173,7 +183,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
       // },
       child: Container(
         // height: 400,
-        width: 200,
+        width: 220.sp,
 
         decoration: BoxDecoration(
           // color: ThemeColors.greyBorder,
@@ -191,29 +201,68 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
           children: [
             Padding(
               padding: EdgeInsets.all(10.sp),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
-                    backgroundColor: ThemeColors.greyBorder,
+                  Row(
+                    children: [
+                      CachedNetworkImagesWidget(
+                        widget.data.image,
+                        height: 40.sp,
+                        width: 40.sp,
+                      ),
+                      const SpacerHorizontal(width: 8),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.data.symbol,
+                              style: styleGeorgiaBold(fontSize: 14),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SpacerVertical(height: 5),
+                            Text(
+                              widget.data.name,
+                              style: styleGeorgiaRegular(
+                                color: ThemeColors.greyText,
+                                fontSize: 12,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SpacerHorizontal(width: 8),
-                  Column(
+                  const SpacerVertical(height: 5),
+                  Text(
+                    widget.data.price,
+                    style: stylePTSansBold(fontSize: 20),
+                  ),
+                  Row(
                     children: [
                       Text(
-                        "AAPL",
-                        style: styleGeorgiaBold(fontSize: 14),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        widget.data.change,
+                        style: stylePTSansBold(
+                            fontSize: 13,
+                            color: widget.data.changesPercentage > 0
+                                ? ThemeColors.accent
+                                : widget.data.changesPercentage == 0
+                                    ? ThemeColors.white
+                                    : ThemeColors.sos),
                       ),
-                      const SpacerVertical(height: 5),
                       Text(
-                        "Apple Inc.",
-                        style: styleGeorgiaRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 12,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                        "  (${widget.data.changesPercentage.toCurrency()})%",
+                        style: stylePTSansBold(
+                            fontSize: 13,
+                            color: widget.data.changesPercentage > 0
+                                ? ThemeColors.accent
+                                : widget.data.changesPercentage == 0
+                                    ? ThemeColors.white
+                                    : ThemeColors.sos),
                       ),
                     ],
                   ),

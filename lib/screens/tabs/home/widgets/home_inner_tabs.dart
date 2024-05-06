@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -31,79 +30,77 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // CustomTabLabel(
-              //   "Trending",
-              //   coloredLetters: const ['T'],
-              //   selected: _selectedIndex == 0,
-              //   onTap: () {
-              //     setState(() {
-              //       _selectedIndex = 0;
-              //     });
-              //   },
-              // ),
-              // VerticalDivider(
-              //   color: ThemeColors.accent,
-              //   width: 1.sp,
-              //   thickness: 1.sp,
-              // ),
-              // CustomTabLabel(
-              //   "Top Gainers",
-              //   coloredLetters: const ['G'],
-              //   selected: _selectedIndex == 1,
-              //   onTap: () {
-              //     setState(() {
-              //       _selectedIndex = 1;
-              //     });
-              //   },
-              // ),
-              // VerticalDivider(
-              //   color: ThemeColors.accent,
-              //   width: 1.sp,
-              //   thickness: 1.sp,
-              // ),
-              // CustomTabLabel(
-              //   "Top Losers",
-              //   coloredLetters: const ['L'],
-              //   selected: _selectedIndex == 2,
-              //   onTap: () {
-              //     setState(() {
-              //       _selectedIndex = 2;
-              //     });
-              //   },
-              // ),
-              CutomTabHome(
-                label: "Top Losers",
-                selected: _selectedIndex == 0,
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = 0;
-                  });
-                },
-              ),
-              CutomTabHome(
-                label: "Top Losers",
-                selected: _selectedIndex == 1,
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = 1;
-                  });
-                },
-              ),
-              CutomTabHome(
-                label: "Top Losers",
-                selected: _selectedIndex == 2,
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = 2;
-                  });
-                },
-              ),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // CustomTabLabel(
+            //   "Trending",
+            //   coloredLetters: const ['T'],
+            //   selected: _selectedIndex == 0,
+            //   onTap: () {
+            //     setState(() {
+            //       _selectedIndex = 0;
+            //     });
+            //   },
+            // ),
+            // VerticalDivider(
+            //   color: ThemeColors.accent,
+            //   width: 1.sp,
+            //   thickness: 1.sp,
+            // ),
+            // CustomTabLabel(
+            //   "Top Gainers",
+            //   coloredLetters: const ['G'],
+            //   selected: _selectedIndex == 1,
+            //   onTap: () {
+            //     setState(() {
+            //       _selectedIndex = 1;
+            //     });
+            //   },
+            // ),
+            // VerticalDivider(
+            //   color: ThemeColors.accent,
+            //   width: 1.sp,
+            //   thickness: 1.sp,
+            // ),
+            // CustomTabLabel(
+            //   "Top Losers",
+            //   coloredLetters: const ['L'],
+            //   selected: _selectedIndex == 2,
+            //   onTap: () {
+            //     setState(() {
+            //       _selectedIndex = 2;
+            //     });
+            //   },
+            // ),
+            CutomTabHome(
+              label: "Top Losers",
+              selected: _selectedIndex == 0,
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 0;
+                });
+              },
+            ),
+            CutomTabHome(
+              label: "Top Losers",
+              selected: _selectedIndex == 1,
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 1;
+                });
+              },
+            ),
+            CutomTabHome(
+              label: "Top Losers",
+              selected: _selectedIndex == 2,
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 2;
+                });
+              },
+            ),
+          ],
         ),
 
         provider.topLoading

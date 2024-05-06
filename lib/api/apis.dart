@@ -20,6 +20,7 @@ class Apis {
   static const homeSentiment = "/home-sentiment";
   static const homeTrending = "/home-trending";
   static const homeInsider = "/home-insider";
+  static const homeAlert = "/home-alerts";
 
   static const search = "/search";
   static const searchWithNews = "/search_with_news";

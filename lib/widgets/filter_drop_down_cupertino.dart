@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FilterDropDownCupertino extends StatefulWidget {
@@ -51,7 +52,9 @@ class _FilterDropDownCupertinoState extends State<FilterDropDownCupertino> {
                 log("$selectedIndex ** ");
                 // }
               } catch (e) {
-                print(e);
+                if (kDebugMode) {
+                  print(e);
+                }
               }
               Navigator.of(context).pop(); // Close the modal bottom sheet
             },

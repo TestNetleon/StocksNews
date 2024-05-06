@@ -51,6 +51,7 @@ class Images {
   static const String bearBullGIF = "assets/images/bull_bear.gif";
   static const String alertBellGIF = "assets/images/alert_bell.gif";
   static const String progressGIF = "assets/images/progress.gif";
+  static const String alertTickGIF = "assets/images/alert_tick.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
@@ -107,6 +108,7 @@ class HomeError {
   static const gainers = "Top Gainers are $unavailable";
   static const ipo = "IPO data is $unavailable";
   static const stockBuzz = "Stock in Buzz data is $unavailable";
+  static const homeAlert = "Alert data is $unavailable";
 
   static const loosers = "Top Losers are $unavailable";
   static const insiderTrading = "Insider Trending is $unavailable";
