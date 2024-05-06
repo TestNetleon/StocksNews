@@ -146,7 +146,7 @@ class TrendingSectorItemHeader extends StatelessWidget {
               // ),
 
               const SpacerHorizontal(width: 5),
-              Container(
+              SizedBox(
                 width: cnts.maxWidth * .5,
                 child: AutoSizeText(
                   maxLines: 1,

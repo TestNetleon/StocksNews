@@ -31,6 +31,8 @@ bool isPhone = true;
 
 class Images {
   static const String logo = "assets/images/logo.png";
+  static const String logoP = "assets/images/logo_holder.png";
+
   static const String signupSuccess = "assets/images/signup_success.png";
   static const String google = "assets/images/google.png";
   static const String apple = "assets/images/apple.png";
@@ -41,6 +43,13 @@ class Images {
   static const String bull = "assets/images/stock_bull.png";
   static const String graphBear = "assets/images/graph_bear.png";
   static const String graphBull = "assets/images/graph_bull.png";
+
+  //GIF
+  static const String trendingGIF = "assets/images/trending.gif";
+  static const String discussedGIF = "assets/images/most_discussed.gif";
+  static const String newsGIT = "assets/images/news.gif";
+  static const String bearBullGIF = "assets/images/bull_bear.gif";
+  static const String alertBellGIF = "assets/images/alert_bell.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
@@ -95,6 +104,8 @@ class HomeError {
   static const sentiment = "Market sentiment is $unavailable";
   static const trending = "Trending is $unavailable";
   static const gainers = "Top Gainers are $unavailable";
+  static const ipo = "IPO data is $unavailable";
+
   static const loosers = "Top Losers are $unavailable";
   static const insiderTrading = "Insider Trending is $unavailable";
   static const mentions = "Most recent mentions are $unavailable";

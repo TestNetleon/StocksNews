@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:isolate';
 
@@ -10,6 +11,7 @@ import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_sentiment_res.dart';
 import 'package:stocks_news_new/modals/home_slider_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
+import 'package:stocks_news_new/modals/ipo_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -33,6 +35,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Status _statusInsider = Status.ideal;
   Status get statusInsider => _statusInsider;
 
+  Status _statusIpo = Status.ideal;
+  Status get statusIpo => _statusIpo;
+
   // HomeRes? get data => _home;
 
   HomeSliderRes? _homeSliderRes;
@@ -47,10 +52,14 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   HomeInsiderRes? _homeInsiderRes;
   HomeInsiderRes? get homeInsiderRes => _homeInsiderRes;
 
+  List<IpoRes>? _ipoRes;
+  List<IpoRes>? get ipoRes => _ipoRes;
+
   bool get isLoadingSlider => _statusSlider == Status.loading;
   bool get isLoadingSentiment => _statusSentiment == Status.loading;
   bool get isLoadingTrending => _statusTrending == Status.loading;
   bool get isLoadingInsider => _statusInsider == Status.loading;
+  bool get isLoadingIpo => _statusIpo == Status.loading;
 
   bool topLoading = false;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -69,6 +78,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future refreshData() async {
     getHomeSlider();
+    getIpoData();
     getHomeSentimentData();
     getHomeTrendingData();
     getHomeInsiderData();
@@ -77,6 +87,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Future refreshWithCheck() async {
     if (_homeSliderRes == null) {
       getHomeSlider();
+    }
+
+    if (_ipoRes == null) {
+      getIpoData();
     }
     if (_homeSentimentRes == null) {
       getHomeSentimentData();
@@ -99,6 +113,35 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       sendPort.send(response);
     } catch (e) {
       sendPort.send(e);
+    }
+  }
+
+  Future getIpoData() async {
+    _statusIpo = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.ipoCalendar,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _ipoRes = ipoResFromJson(jsonEncode(response.data));
+      } else {
+        _ipoRes = null;
+      }
+      _statusIpo = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _ipoRes = null;
+      log(e.toString());
+      _statusIpo = Status.loaded;
+      notifyListeners();
     }
   }
 

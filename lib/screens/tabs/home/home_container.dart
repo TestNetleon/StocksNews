@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/ipo/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/sentiments_graph.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -59,6 +60,14 @@ class HomeContainer extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20.sp),
                       child: const HomeTopNewsSlider(),
                     ),
+                  ),
+                  HomePartialLoading(
+                    loading: provider.isLoadingIpo,
+                    error: !provider.isLoadingIpo && provider.ipoRes == null
+                        ? HomeError.ipo
+                        : null,
+                    onRefresh: provider.refreshWithCheck,
+                    child: const IpoIndex(),
                   ),
                   HomePartialLoading(
                     loading: provider.isLoadingTrending,

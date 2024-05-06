@@ -38,7 +38,7 @@ class CachedNetworkImagesWidget extends StatelessWidget {
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.sp),
               child: Image.asset(
-                Images.logo,
+                Images.logoP,
                 width: width?.sp,
                 fit: BoxFit.contain,
               ),
@@ -52,7 +52,7 @@ class CachedNetworkImagesWidget extends StatelessWidget {
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.sp),
               child: Image.asset(
-                Images.logo,
+                Images.logoP,
                 width: width?.sp,
                 fit: BoxFit.contain,
               ),

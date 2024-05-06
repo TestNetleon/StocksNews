@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/auth/login/login.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -31,6 +32,11 @@ class _StartIndexState extends State<StartIndex> {
       colorText: "Stocks!",
       description: "Stocks mentioned more often today than yesterday.",
       color: ThemeColors.background,
+      // lottieFile:
+      //     "https://lottie.host/e313273f-6091-474d-84db-a8635c17ad46/Z1ytoZt3Vp.json",
+      // lottieFile:
+      //     "https://lottie.host/e0a7a0db-24c4-4d04-9f89-fa8d995ebed5/U5BCDolXsb.json",
+      lottieFile: Images.trendingGIF,
     ),
     StartClass(
       title: "Track Insider",
@@ -38,18 +44,31 @@ class _StartIndexState extends State<StartIndex> {
       description:
           "These insiders have been the most active in trading stocks.",
       color: ThemeColors.background,
+      lottieFile: Images.bearBullGIF,
+
+      // lottieFile:
+      //     "https://lottie.host/e6984867-8de5-4c6b-9802-d31e3838d0c2/gya8lFmcM4.json",
     ),
     StartClass(
       title: "Most Discussed",
       colorText: 'Stocks!',
       description: "See most discussed stock data from social media.",
       color: ThemeColors.background,
+      lottieFile: Images.discussedGIF,
     ),
     StartClass(
       title: "Latest Stock",
       colorText: 'News!',
       description: "Read latest news from wide range of media sources.",
       color: ThemeColors.background,
+      lottieFile: Images.newsGIT,
+    ),
+    StartClass(
+      title: "Set Stocks",
+      colorText: 'Alerts!',
+      description: "Read latest news from wide range of media sources.",
+      color: ThemeColors.background,
+      lottieFile: Images.alertBellGIF,
     ),
   ];
 
@@ -69,40 +88,56 @@ class _StartIndexState extends State<StartIndex> {
                   return Container(
                     color: array[index].color,
                     alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          array[index].title,
-                          style: stylePTSansBold(
-                            fontSize: 45,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          // Visibility(
+                          //     visible: array[index].lottieFile != null,
+                          //     child: Lottie.network(
+                          //         height: 300.sp,
+                          //         array[index].lottieFile ?? "")),
+
+                          Visibility(
+                            visible: array[index].lottieFile != null,
+                            child: Image.asset(
+                              array[index].lottieFile ?? "",
+                              height: 250.sp,
+                            ),
                           ),
-                        ),
-                        // Text(
-                        //   array[index].colorText,
-                        //   style: styleGeorgiaBold(fontSize: 45),
-                        // ),
-                        GradientText(
-                          array[index].colorText,
-                          style: stylePTSansBold(fontSize: 45),
-                          colors: const [
-                            Colors.purple,
-                            Colors.red,
-                            Colors.orange,
-                          ],
-                        ),
-                        const SpacerVertical(height: 30),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30.sp),
-                          child: Text(
-                            array[index].description,
-                            textAlign: TextAlign.center,
-                            style: styleGeorgiaBold(
-                                fontSize: 15, color: ThemeColors.greyText),
+
+                          Text(
+                            array[index].title,
+                            style: stylePTSansBold(
+                              fontSize: 45,
+                            ),
                           ),
-                        ),
-                        const SpacerVertical(height: 80),
-                      ],
+                          // Text(
+                          //   array[index].colorText,
+                          //   style: styleGeorgiaBold(fontSize: 45),
+                          // ),
+                          GradientText(
+                            array[index].colorText,
+                            style: stylePTSansBold(fontSize: 45),
+                            colors: const [
+                              Color.fromARGB(255, 32, 97, 34),
+                              Color.fromARGB(255, 28, 235, 35),
+                              Color.fromARGB(255, 138, 235, 141),
+                            ],
+                          ),
+                          const SpacerVertical(height: 30),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30.sp),
+                            child: Text(
+                              array[index].description,
+                              textAlign: TextAlign.center,
+                              style: styleGeorgiaBold(
+                                  fontSize: 15, color: ThemeColors.greyText),
+                            ),
+                          ),
+                          const SpacerVertical(height: 80),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -223,11 +258,13 @@ class StartClass {
   String title;
   String colorText;
   String description;
+  String? lottieFile;
   Color color;
   StartClass({
     required this.title,
     required this.description,
     required this.color,
     required this.colorText,
+    this.lottieFile,
   });
 }

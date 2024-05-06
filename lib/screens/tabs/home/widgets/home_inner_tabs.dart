@@ -111,7 +111,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                                   ),
                                 ),
                               ),
-                              HomeTrending(),
+                              const HomeTrending(),
                             ],
                           )
                         : _selectedIndex == 1
@@ -135,7 +135,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                                       ),
                                     ),
                                   ),
-                                  HomeTopGainer(),
+                                  const HomeTopGainer(),
                                 ],
                               )
                             : Column(

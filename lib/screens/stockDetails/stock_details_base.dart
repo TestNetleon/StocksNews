@@ -41,7 +41,7 @@ class StockDetailsBase extends StatelessWidget {
       scrollable: true,
       tabs: const [
         "Overview",
-        "Company Earning",
+        "Company Earnings",
         "Key Stats",
         "Stock Score/Grades",
         // "Company Brief",
