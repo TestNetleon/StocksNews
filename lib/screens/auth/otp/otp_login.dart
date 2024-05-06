@@ -94,7 +94,7 @@ class _OTPLoginState extends State<OTPLogin> {
                   ),
                   const SpacerVertical(height: 8),
                   Text(
-                    "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 30 minutes.",
+                    "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
                     style: stylePTSansRegular(
                       fontSize: 14,
                       color: Colors.white,
