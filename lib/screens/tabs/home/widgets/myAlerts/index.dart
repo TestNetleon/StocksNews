@@ -28,7 +28,7 @@ class HomeMyAlerts extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    "My Stock Alerts",
+                    "Stock Alerts",
                     style: stylePTSansBold(),
                   ),
                 ),
