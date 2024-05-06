@@ -96,7 +96,7 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
             ),
             const SpacerVertical(height: 8),
             Text(
-              "Please enter the 4-digit verification code that was sent to ${widget.email}. The code is valid for 30 minutes.",
+              "Please enter the 4-digit verification code that was sent to ${widget.email}. The code is valid for 10 minutes.",
               style: stylePTSansRegular(
                 fontSize: 14,
                 color: Colors.white,
