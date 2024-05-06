@@ -66,7 +66,7 @@ class _StartIndexState extends State<StartIndex> {
     StartClass(
       title: "Set Stocks",
       colorText: 'Alerts!',
-      description: "Read latest news from wide range of media sources.",
+      description: "Set stock alert in case of mention spike.",
       color: ThemeColors.background,
       lottieFile: Images.alertBellGIF,
     ),
