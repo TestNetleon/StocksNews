@@ -29,10 +29,13 @@ class FilterDropDownTextField extends StatelessWidget {
         ),
         const SpacerVertical(height: 5),
         DropdownButtonFormField<KeyValueElement>(
+          isExpanded: true,
           style: stylePTSansRegular(color: ThemeColors.background),
           decoration: InputDecoration(
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 10.sp, vertical: 13.sp),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 10.sp,
+              vertical: 13.sp,
+            ),
             fillColor: ThemeColors.white,
             filled: true,
             enabledBorder: OutlineInputBorder(

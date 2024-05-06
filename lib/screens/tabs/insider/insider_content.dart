@@ -368,12 +368,12 @@ class StocksItemTrending extends StatelessWidget {
             ),
             child: Column(
               children: [
-                InnerRowItem(
-                  lable: "Shares Bought/Sold",
-                  value: "${data?.securitiesTransacted}",
-                  subLabel: "@ Price",
-                  subValue: "@ ${data?.price}",
-                ),
+                // InnerRowItem(
+                //   lable: "Shares Bought/Sold",
+                //   value: "${data?.securitiesTransacted}",
+                //   subLabel: "@ Price",
+                //   subValue: "@ ${data?.price}",
+                // ),
                 InnerRowItem(
                   lable: "Total Transaction",
                   value: "${data?.totalTransaction}",
