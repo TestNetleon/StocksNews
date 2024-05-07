@@ -15,9 +15,9 @@ class StockTopDetail extends StatelessWidget {
       children: [
         StockDetailTopWidgetDetail(),
         SpacerVertical(height: 4),
-        StockDetailTopDisclaimer(),
-        SpacerVertical(height: 10),
-        StockDetailTopWidgetRange(),
+        // StockDetailTopDisclaimer(),
+        // SpacerVertical(height: 10),
+        // StockDetailTopWidgetRange(),
       ],
     );
   }

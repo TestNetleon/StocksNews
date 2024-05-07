@@ -22,6 +22,7 @@ class Apis {
   static const homeTrending = "/home-trending";
   static const homeInsider = "/home-insider";
   static const homeAlert = "/home-alerts";
+  static const newsAlertGraphData = "/stock-historical-chart";
 
   static const search = "/search";
   static const searchWithNews = "/search_with_news";

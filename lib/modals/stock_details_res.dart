@@ -178,6 +178,8 @@ class KeyStats {
   final String? open;
   final String? marketStatus;
   final String? previousClose;
+  final num? previousCloseNUM;
+
   final num? eps;
   final num? pe;
   final String? earningsAnnouncement;
@@ -198,6 +200,7 @@ class KeyStats {
     this.price,
     this.priceWithoutCur,
     this.marketStatus,
+    this.previousCloseNUM,
     this.changesPercentage,
     this.change,
     this.changeWithCur,
@@ -239,6 +242,7 @@ class KeyStats {
         dayHigh: json["dayHigh"],
         yearHigh: json["yearHigh"],
         yearLow: json["yearLow"],
+        previousCloseNUM: json['previousClose_without_cur'],
         marketCap: json["marketCap"],
         priceAvg50: json["priceAvg50"],
         priceAvg200: json["priceAvg200"],
@@ -275,6 +279,7 @@ class KeyStats {
         "yearHigh": yearHigh,
         "yearLow": yearLow,
         "marketCap": marketCap,
+        "previousClose_without_cur": previousCloseNUM,
         "priceAvg50": priceAvg50,
         "priceAvg200": priceAvg200,
         "exchange": exchange,

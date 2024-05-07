@@ -95,7 +95,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future refreshData() async {
     getHomeSlider();
-    getIpoData();
+    // getIpoData();
     getHomeSentimentData();
     getHomeTrendingData();
     getHomeAlerts();

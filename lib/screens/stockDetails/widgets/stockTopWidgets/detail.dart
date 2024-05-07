@@ -98,3 +98,94 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
     );
   }
 }
+
+// class StockDetailTopWidgetDetail extends StatelessWidget {
+//   const StockDetailTopWidgetDetail({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     StockDetailProvider provider = context.watch<StockDetailProvider>();
+// //
+//     KeyStats? keyStats = provider.data?.keyStats;
+//     CompanyInfo? companyInfo = provider.data?.companyInfo;
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Visibility(
+//               visible: companyInfo?.image != null,
+//               child: ClipRRect(
+//                 borderRadius: BorderRadius.circular(0.sp),
+//                 child: Container(
+//                   padding: EdgeInsets.all(5.sp),
+//                   width: 43.sp,
+//                   height: 43.sp,
+//                   child: ThemeImageView(url: companyInfo?.image ?? ""),
+
+//                   //  Image.asset(
+//                   //   Images.userPlaceholder,
+//                   //   fit: BoxFit.cover,
+//                   // ),
+//                 ),
+//               ),
+//             ),
+//             const SpacerHorizontal(width: 10),
+//             Visibility(
+//               visible: keyStats?.symbol != null || keyStats?.name != null,
+//               child: Flexible(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Text(
+//                       keyStats?.symbol ?? "",
+//                       style: styleGeorgiaBold(fontSize: 18),
+//                     ),
+//                     const SpacerVertical(height: 5),
+//                     Text(
+//                       keyStats?.name ?? "",
+//                       style: styleGeorgiaRegular(
+//                         color: ThemeColors.greyText,
+//                         fontSize: 14,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         const SpacerVertical(height: 10),
+//         Text(keyStats?.price ?? "", style: stylePTSansBold(fontSize: 23)),
+//         const SpacerVertical(height: 2),
+//         Visibility(
+//           visible: keyStats?.change != null,
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Icon(
+//                 (keyStats?.change ?? 0) > 0
+//                     ? Icons.arrow_drop_up
+//                     : Icons.arrow_drop_down,
+//                 color: (keyStats?.change ?? 0) > 0
+//                     ? ThemeColors.accent
+//                     : Colors.red,
+//                 size: 20.sp,
+//               ),
+//               Text(
+//                 "${keyStats?.changeWithCur} (${keyStats?.changesPercentage?.toCurrency()}%)",
+//                 style: stylePTSansBold(
+//                   fontSize: 12,
+//                   color: (keyStats?.change ?? 0) > 0
+//                       ? ThemeColors.accent
+//                       : Colors.red,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

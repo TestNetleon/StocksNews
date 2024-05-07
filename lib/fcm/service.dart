@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -263,10 +264,11 @@ class FirebaseApi {
   }
 
   Future<void> initNotifications() async {
+    String? address = await _getUserLocation();
     await _firebaseMessaging.requestPermission();
     await _firebaseMessaging.getToken().then((value) async {
       Utils().showLog("FCM TOKEN  ******   $value");
-      saveFCMapi(value: value);
+      saveFCMapi(value: value, address: address);
     });
 
     initPushNotification();
@@ -274,12 +276,39 @@ class FirebaseApi {
   }
 }
 
-Future saveFCMapi({String? value}) async {
+Future<String?> _getUserLocation() async {
+  LocationPermission permission = await Geolocator.requestPermission();
+  if (permission == LocationPermission.denied) {
+    return null;
+  }
+
+  // Get current position
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+
+  // Reverse geocoding
+  try {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark place = placemarks[0];
+
+    String address =
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    Utils().showLog("Address:  $address");
+    return address;
+  } catch (e) {
+    Utils().showLog('Error: $e');
+    return null;
+  }
+}
+
+Future saveFCMapi({String? value, String? address}) async {
   try {
     Map request = {
       "token": "",
       "fcm_token": value ?? "",
       "platform": Platform.operatingSystem,
+      "address": address ?? "",
     };
     ApiResponse response = await apiRequest(
       url: Apis.saveFCM,
