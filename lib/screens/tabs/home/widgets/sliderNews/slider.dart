@@ -88,7 +88,8 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                       // onTap: () => openUrl(i.url),
                       child: Container(
                         width: constraints.maxWidth,
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.sp, vertical: 10.sp),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,

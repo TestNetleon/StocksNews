@@ -88,7 +88,7 @@ class _StartIndexState extends State<StartIndex> {
                 itemCount: widget.welcome?.length ?? 0,
                 itemBuilder: (context, index, realIndex) {
                   return Container(
-                    color: array[index].color,
+                    color: Colors.transparent,
                     alignment: Alignment.center,
                     child: SingleChildScrollView(
                       child: Column(
@@ -220,7 +220,7 @@ class _StartIndexState extends State<StartIndex> {
                         ),
                       );
                     },
-                    text: "Create new account",
+                    text: "Create New Account",
                   ),
                 ],
               ),

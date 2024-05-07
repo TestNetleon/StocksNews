@@ -136,6 +136,7 @@ class _LoginState extends State<Login> {
           showLater: Platform.isIOS,
         ),
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(Dimen.authScreenPadding),
             child: Column(

@@ -22,32 +22,33 @@ class BaseContainer extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        closeKeyboard();
-      },
-      child: Scaffold(
-        appBar: appBar,
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-        drawer: drawer,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                ThemeColors.accent.withOpacity(0.1),
-                ThemeColors.background,
-                ThemeColors.background,
-                ThemeColors.accent.withOpacity(0.1),
-              ],
-            ),
-          ),
-          child: SafeArea(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            ThemeColors.accent.withOpacity(0.1),
+            ThemeColors.background,
+            ThemeColors.background,
+            ThemeColors.accent.withOpacity(0.1),
+          ],
+        ),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          closeKeyboard();
+        },
+        child: Scaffold(
+          backgroundColor: ThemeColors.transparent,
+          appBar: appBar,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          drawer: drawer,
+          body: SafeArea(
             child: body,
           ),
+          bottomNavigationBar: bottomNavigationBar,
         ),
-        bottomNavigationBar: bottomNavigationBar,
       ),
     );
   }
