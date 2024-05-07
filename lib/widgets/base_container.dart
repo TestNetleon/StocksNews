@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class BaseContainer extends StatelessWidget {
@@ -29,8 +30,22 @@ class BaseContainer extends StatelessWidget {
         appBar: appBar,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         drawer: drawer,
-        body: SafeArea(
-          child: body,
+        body: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                ThemeColors.accent.withOpacity(0.1),
+                ThemeColors.background,
+                ThemeColors.background,
+                ThemeColors.accent.withOpacity(0.1),
+              ],
+            ),
+          ),
+          child: SafeArea(
+            child: body,
+          ),
         ),
         bottomNavigationBar: bottomNavigationBar,
       ),
