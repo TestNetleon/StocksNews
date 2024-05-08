@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/stockTopWidgets/range.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import 'stockTopWidgets/desclaimer.dart';
 import 'stockTopWidgets/detail.dart';
 
 class StockTopDetail extends StatelessWidget {

@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -158,14 +160,9 @@ class StockDetailProvider with ChangeNotifier {
 
     List<FlSpot> spots = [];
 
-    // Extracting data for X and Y axes
     for (int i = 0; i < reversedData.length; i++) {
       spots.add(FlSpot(i.toDouble(), reversedData[i].close));
-      // log("Close at ${reversedData[i].close}");
     }
-
-    log("reversed first index ${spots[0].y}");
-    log("reversed graphChart ${_graphChart?[0].close}");
 
     return LineChartData(
       lineTouchData: LineTouchData(
@@ -173,8 +170,8 @@ class StockDetailProvider with ChangeNotifier {
         touchTooltipData: LineTouchTooltipData(
           tooltipRoundedRadius: 20.0,
           showOnTopOfTheChartBoxArea: true,
-          fitInsideHorizontally: true,
-          tooltipMargin: 0,
+          fitInsideHorizontally: false,
+          tooltipMargin: 4,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map(
               (LineBarSpot touchedSpot) {
@@ -190,14 +187,52 @@ class StockDetailProvider with ChangeNotifier {
           },
         ),
       ),
+      titlesData: FlTitlesData(
+        leftTitles: const AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: false,
+        )),
+        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: true,
+          getTitlesWidget: (value, meta) {
+            int index = value.toInt();
+            if (index >= 0 && index < (spots.length)) {
+              return Text(
+                DateFormat('HH:mm').format(reversedData[index].date),
+                style: stylePTSansRegular(fontSize: 8),
+              );
+            }
+            return Text(
+              "-",
+              style: stylePTSansRegular(fontSize: 10),
+            );
+          },
+        )),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            interval: 1,
+            reservedSize: 30.sp,
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toCurrency(),
+                style: stylePTSansRegular(fontSize: 8),
+              );
+            },
+          ),
+        ),
+      ),
       gridData: FlGridData(
         show: true, // Show grid
         drawHorizontalLine: true,
+
         drawVerticalLine: true,
 
-        checkToShowHorizontalLine: (value) {
-          return true;
-        },
+        // checkToShowHorizontalLine: (value) {
+        //   return true;
+        // },
 
         getDrawingHorizontalLine: (value) {
           return FlLine(
@@ -212,40 +247,26 @@ class StockDetailProvider with ChangeNotifier {
           );
         },
       ),
-      borderData: FlBorderData(show: true),
-      titlesData: const FlTitlesData(
-        show: true,
-        leftTitles: AxisTitles(),
-        rightTitles: AxisTitles(),
-        topTitles: AxisTitles(),
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(interval: 1, showTitles: true),
-        ),
-      ),
-      // extraLinesData: const ExtraLinesData(
-      //   extraLinesOnTop: true,
-      // ),
       minX: 0,
       maxX: reversedData.length.toDouble() - 1,
       minY: reversedData
           .map((data) => data.close)
-          .reduce((a, b) => a < b ? a : b)
-          .toDouble(),
+          .reduce((a, b) => a < b ? a : b),
       maxY: reversedData
           .map((data) => data.close)
-          .reduce((a, b) => a > b ? a : b)
-          .toDouble(),
+          .reduce((a, b) => a > b ? a : b),
+      baselineX: reversedData.length.toDouble(),
+      baselineY: reversedData.length.toDouble(),
       lineBarsData: [
         LineChartBarData(
           spots: spots,
-          color: (_data?.keyStats?.previousCloseNUM ?? 0) >
-                  reversedData.first.close
+          color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.first.y
               ? ThemeColors.sos
               : ThemeColors.accent,
           isCurved: true,
-          barWidth: 2,
+          barWidth: 1.5,
           dotData: const FlDotData(
-            show: true, // hide dots
+            show: false, // hide dots
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -253,8 +274,7 @@ class StockDetailProvider with ChangeNotifier {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                (_data?.keyStats?.previousCloseNUM ?? 0) >
-                        reversedData.first.close
+                (_data?.keyStats?.previousCloseNUM ?? 0) > spots.first.y
                     ? ThemeColors.sos.withOpacity(0.1)
                     : ThemeColors.accent.withOpacity(0.1),
                 ThemeColors.background,
@@ -268,7 +288,7 @@ class StockDetailProvider with ChangeNotifier {
 
   Future getStockGraphData({
     required String symbol,
-    String interval = '1M',
+    String interval = '15M',
     showProgress = false,
     String? from,
   }) async {

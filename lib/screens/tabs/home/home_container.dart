@@ -49,10 +49,7 @@ class HomeContainer extends StatelessWidget {
                 Visibility(
                   visible:
                       provider.homeSliderRes?.sliderPosts?.isNotEmpty ?? false,
-                  child: Container(
-                    // margin: EdgeInsets.only(top: 20.sp),
-                    child: const HomeTopNewsSlider(),
-                  ),
+                  child: const HomeTopNewsSlider(),
                 ),
 
                 Padding(

@@ -268,7 +268,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               // padding: EdgeInsets.only(left: 20.sp),
               height: 80,
               // width: 300,

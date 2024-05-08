@@ -22,7 +22,6 @@ import 'widgets/redditComments/reddit_twitter_iframe.dart';
 import 'widgets/scoreGrades/container.dart';
 import 'widgets/stock_top_detail.dart';
 import 'widgets/technicalAnalysis/index.dart';
-import 'widgets/top_graph.dart';
 
 //
 class StockDetailsBase extends StatelessWidget {
