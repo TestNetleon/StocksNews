@@ -39,106 +39,109 @@ class HomeContainer extends StatelessWidget {
             durationUntilAlertAgain: Duration.zero,
           ),
           child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                Dimen.padding.sp,
-                0,
-                // Dimen.padding.sp,
-                Dimen.padding.sp,
-                0,
-              ),
-              child: Column(
-                children: [
-                  // TextInputFieldSearchCommon(
-                  //   hintText: "Search symbol, company name or news",
-                  //   searching: context.watch<SearchProvider>().isLoading,
-                  //   onChanged: (text) {},
-                  // ),
-                  Visibility(
-                    visible: provider.homeSliderRes?.sliderPosts?.isNotEmpty ??
-                        false,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20.sp),
-                      child: const HomeTopNewsSlider(),
-                    ),
-                  ),
-                  // HomePartialLoading(
-                  //   loading: provider.isLoadingIpo,
-                  //   error: !provider.isLoadingIpo && provider.ipoRes == null
-                  //       ? HomeError.ipo
-                  //       : null,
-                  //   onRefresh: provider.refreshWithCheck,
-                  //   child: const IpoIndex(),
-                  // ),
+            child: Column(
+              children: [
+                // TextInputFieldSearchCommon(
+                //   hintText: "Search symbol, company name or news",
+                //   searching: context.watch<SearchProvider>().isLoading,
+                //   onChanged: (text) {},
+                // ),
+                Visibility(
+                  visible:
+                      provider.homeSliderRes?.sliderPosts?.isNotEmpty ?? false,
+                  child: const HomeTopNewsSlider(),
+                ),
 
-                  HomePartialLoading(
-                    loading: provider.isLoadingTrending,
-                    error: !provider.isLoadingTrending &&
-                            provider.homeTrendingRes == null
-                        ? HomeError.stockBuzz
-                        : null,
-                    onRefresh: provider.refreshWithCheck,
-                    child: const StockInBuzz(),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    Dimen.padding.sp,
+                    0,
+                    // Dimen.padding.sp,
+                    Dimen.padding.sp,
+                    0,
                   ),
-                  // const SpacerVertical(height: 10),
-                  // const HomeBanner(),
+                  child: Column(
+                    children: [
+                      // HomePartialLoading(
+                      //   loading: provider.isLoadingIpo,
+                      //   error: !provider.isLoadingIpo && provider.ipoRes == null
+                      //       ? HomeError.ipo
+                      //       : null,
+                      //   onRefresh: provider.refreshWithCheck,
+                      //   child: const IpoIndex(),
+                      // ),
 
-                  HomePartialLoading(
-                    loading: provider.isLoadingHomeAlert,
-                    error: !provider.isLoadingHomeAlert &&
-                            provider.homeAlertData == null
-                        ? HomeError.homeAlert
-                        : null,
-                    onRefresh: provider.refreshWithCheck,
-                    child: const HomeMyAlerts(),
+                      HomePartialLoading(
+                        loading: provider.isLoadingTrending,
+                        error: !provider.isLoadingTrending &&
+                                provider.homeTrendingRes == null
+                            ? HomeError.stockBuzz
+                            : null,
+                        onRefresh: provider.refreshWithCheck,
+                        child: const StockInBuzz(),
+                      ),
+                      // const SpacerVertical(height: 10),
+                      // const HomeBanner(),
+
+                      HomePartialLoading(
+                        loading: provider.isLoadingHomeAlert,
+                        error: !provider.isLoadingHomeAlert &&
+                                provider.homeAlertData == null
+                            ? HomeError.homeAlert
+                            : null,
+                        onRefresh: provider.refreshWithCheck,
+                        child: const HomeMyAlerts(),
+                      ),
+                      HomePartialLoading(
+                        loading: provider.isLoadingTrending,
+                        error: !provider.isLoadingTrending &&
+                                provider.homeTrendingRes == null
+                            ? provider.homeTrendingRes?.gainers.isEmpty == true
+                                ? HomeError.gainers
+                                : provider.homeTrendingRes?.losers.isEmpty ==
+                                        true
+                                    ? HomeError.loosers
+                                    : HomeError.trending
+                            : null,
+                        onRefresh: provider.refreshWithCheck,
+                        child: const HomeInnerTabs(),
+                      ),
+                      HomePartialLoading(
+                        loading: provider.isLoadingSentiment,
+                        error: !provider.isLoadingSentiment &&
+                                provider.homeSentimentRes == null
+                            ? HomeError.sentiment
+                            : null,
+                        onRefresh: provider.refreshWithCheck,
+                        child: const SentimentsGraph(),
+                      ),
+                      HomePartialLoading(
+                        loading: provider.isLoadingInsider,
+                        error: !provider.isLoadingInsider &&
+                                provider.homeInsiderRes == null
+                            ? provider.homeInsiderRes?.news.isEmpty == true
+                                ? HomeError.news
+                                : provider.homeInsiderRes?.recentMentions
+                                            ?.isEmpty ==
+                                        true
+                                    ? HomeError.mentions
+                                    : HomeError.insiderTrading
+                            : null,
+                        onRefresh: provider.refreshWithCheck,
+                        child: const Column(
+                          children: [
+                            MostRecentMentions(),
+                            // InsiderSocialTabs(),
+                            // SpacerVertical(),
+                            // HomeNewsItem(),
+                            // SpacerVertical(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  HomePartialLoading(
-                    loading: provider.isLoadingTrending,
-                    error: !provider.isLoadingTrending &&
-                            provider.homeTrendingRes == null
-                        ? provider.homeTrendingRes?.gainers.isEmpty == true
-                            ? HomeError.gainers
-                            : provider.homeTrendingRes?.losers.isEmpty == true
-                                ? HomeError.loosers
-                                : HomeError.trending
-                        : null,
-                    onRefresh: provider.refreshWithCheck,
-                    child: const HomeInnerTabs(),
-                  ),
-                  HomePartialLoading(
-                    loading: provider.isLoadingSentiment,
-                    error: !provider.isLoadingSentiment &&
-                            provider.homeSentimentRes == null
-                        ? HomeError.sentiment
-                        : null,
-                    onRefresh: provider.refreshWithCheck,
-                    child: const SentimentsGraph(),
-                  ),
-                  HomePartialLoading(
-                    loading: provider.isLoadingInsider,
-                    error: !provider.isLoadingInsider &&
-                            provider.homeInsiderRes == null
-                        ? provider.homeInsiderRes?.news.isEmpty == true
-                            ? HomeError.news
-                            : provider.homeInsiderRes?.recentMentions
-                                        ?.isEmpty ==
-                                    true
-                                ? HomeError.mentions
-                                : HomeError.insiderTrading
-                        : null,
-                    onRefresh: provider.refreshWithCheck,
-                    child: const Column(
-                      children: [
-                        MostRecentMentions(),
-                        // InsiderSocialTabs(),
-                        // SpacerVertical(),
-                        // HomeNewsItem(),
-                        // SpacerVertical(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

@@ -72,11 +72,13 @@ class BlogItem extends StatelessWidget {
                               data: blogItem?.authors, type: BlogsType.author),
                         ),
                         Text(
-                          // " | ${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",
-                          "${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",
-
+                          blogItem?.authors?.isNotEmpty == true
+                              ? " | ${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} "
+                              : "${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",
                           style: stylePTSansRegular(
-                              color: ThemeColors.greyText, fontSize: 13),
+                            color: ThemeColors.greyText,
+                            fontSize: 13,
+                          ),
                         ),
                       ],
                     ),

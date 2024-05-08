@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/screens/stockDetails/newTopGraph/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analysis_forecast.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mentions.dart';
@@ -21,7 +22,6 @@ import 'widgets/redditComments/reddit_twitter_iframe.dart';
 import 'widgets/scoreGrades/container.dart';
 import 'widgets/stock_top_detail.dart';
 import 'widgets/technicalAnalysis/index.dart';
-import 'widgets/top_graph.dart';
 
 //
 class StockDetailsBase extends StatelessWidget {
@@ -59,7 +59,8 @@ class StockDetailsBase extends StatelessWidget {
               content: Column(
                 children: [
                   StockTopDetail(),
-                  StockDetailTopGraph(),
+                  // StockDetailTopGraph(),
+                  NewTopGraphIndex(),
                   CompanyBrief(),
                   // SpacerVertical(height: 90),
                 ],

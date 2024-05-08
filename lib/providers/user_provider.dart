@@ -22,6 +22,8 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../widgets/ios_emailerror.dart';
+
 //
 class UserProvider extends ChangeNotifier with AuthProviderBase {
   UserRes? _user;
@@ -211,7 +213,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
               navigatorKey.currentContext!, Tabs.path, (route) => false);
         }
       } else {
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
+        if (response.message == "Invalid email address") {
+          showIosEmailError(state: state, dontPop: dontPop);
+        }
       }
       setStatus(Status.loaded);
     } catch (e) {

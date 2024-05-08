@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class BaseContainer extends StatelessWidget {
@@ -26,6 +27,7 @@ class BaseContainer extends StatelessWidget {
         closeKeyboard();
       },
       child: Scaffold(
+        backgroundColor: ThemeColors.transparent,
         appBar: appBar,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         drawer: drawer,
@@ -37,3 +39,15 @@ class BaseContainer extends StatelessWidget {
     );
   }
 }
+  // decoration: BoxDecoration(
+  //       gradient: LinearGradient(
+  //         begin: Alignment.topLeft,
+  //         end: Alignment.bottomRight,
+  //         colors: [
+  //           ThemeColors.accent.withOpacity(0.1),
+  //           ThemeColors.background,
+  //           ThemeColors.background,
+  //           ThemeColors.accent.withOpacity(0.1),
+  //         ],
+  //       ),
+  //     ),

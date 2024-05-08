@@ -53,7 +53,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     UserProvider provider = context.read<UserProvider>();
     UserRes? user = await Preference.getUser();
 
-    if (provider.user == null && user != null) {
+    if (user != null) {
       log("-------FROM SPLASH USER UPDATING---------");
       provider.setUser(user);
     }

@@ -1,20 +1,26 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/analysis_res.dart';
+import 'package:stocks_news_new/modals/stock_detail_graph.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/modals/technical_analysis_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 
 //
 class StockDetailProvider with ChangeNotifier {
@@ -41,7 +47,14 @@ class StockDetailProvider with ChangeNotifier {
   StockDetailMentionRes? _dataMentions;
   StockDetailMentionRes? get dataMentions => _dataMentions;
 
+  Status _statusGraph = Status.ideal;
+  Status get statusGraph => _statusGraph;
+  bool get isLoadingGraph => _statusGraph == Status.loading;
+
   bool get otherLoading => _status == Status.loading;
+
+  List<StockDetailGraph>? _graphChart;
+  List<StockDetailGraph>? get graphChart => _graphChart;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -137,6 +150,191 @@ class StockDetailProvider with ChangeNotifier {
       _error = Const.errSomethingWrong;
       log(e.toString());
       setStatus(Status.loaded);
+    }
+  }
+
+  LineChartData avgData({String? from}) {
+    log("----- avg data called ----- $from");
+
+    List<StockDetailGraph> reversedData = _graphChart?.reversed.toList() ?? [];
+
+    List<FlSpot> spots = [];
+
+    for (int i = 0; i < reversedData.length; i++) {
+      spots.add(FlSpot(i.toDouble(), reversedData[i].close));
+    }
+
+    return LineChartData(
+      lineTouchData: LineTouchData(
+        enabled: true,
+        touchTooltipData: LineTouchTooltipData(
+          tooltipRoundedRadius: 20.0,
+          showOnTopOfTheChartBoxArea: true,
+          fitInsideHorizontally: false,
+          tooltipMargin: 4,
+          getTooltipItems: (touchedSpots) {
+            return touchedSpots.map(
+              (LineBarSpot touchedSpot) {
+                return LineTooltipItem(
+                  spots[touchedSpot.spotIndex].y.toStringAsFixed(2),
+                  stylePTSansRegular(color: ThemeColors.blackShade),
+                );
+              },
+            ).toList();
+          },
+          getTooltipColor: (touchedSpot) {
+            return Colors.white;
+          },
+        ),
+      ),
+      titlesData: FlTitlesData(
+        leftTitles: const AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: false,
+        )),
+        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: true,
+          getTitlesWidget: (value, meta) {
+            int index = value.toInt();
+            if (index >= 0 && index < (spots.length)) {
+              return Text(
+                DateFormat('HH:mm').format(reversedData[index].date),
+                style: stylePTSansRegular(fontSize: 8),
+              );
+            }
+            return Text(
+              "-",
+              style: stylePTSansRegular(fontSize: 10),
+            );
+          },
+        )),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            interval: 1,
+            reservedSize: 30.sp,
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toCurrency(),
+                style: stylePTSansRegular(fontSize: 8),
+              );
+            },
+          ),
+        ),
+      ),
+      gridData: FlGridData(
+        show: true, // Show grid
+        drawHorizontalLine: true,
+
+        drawVerticalLine: true,
+
+        // checkToShowHorizontalLine: (value) {
+        //   return true;
+        // },
+
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: ThemeColors.white.withOpacity(0.3),
+            strokeWidth: 1,
+          );
+        },
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: ThemeColors.white.withOpacity(0.3),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      minX: 0,
+      maxX: reversedData.length.toDouble() - 1,
+      minY: reversedData
+          .map((data) => data.close)
+          .reduce((a, b) => a < b ? a : b),
+      maxY: reversedData
+          .map((data) => data.close)
+          .reduce((a, b) => a > b ? a : b),
+      baselineX: reversedData.length.toDouble(),
+      baselineY: reversedData.length.toDouble(),
+      lineBarsData: [
+        LineChartBarData(
+          spots: spots,
+          color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.first.y
+              ? ThemeColors.sos
+              : ThemeColors.accent,
+          isCurved: true,
+          barWidth: 1.5,
+          dotData: const FlDotData(
+            show: false, // hide dots
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                (_data?.keyStats?.previousCloseNUM ?? 0) > spots.first.y
+                    ? ThemeColors.sos.withOpacity(0.1)
+                    : ThemeColors.accent.withOpacity(0.1),
+                ThemeColors.background,
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future getStockGraphData({
+    required String symbol,
+    String interval = '15M',
+    showProgress = false,
+    String? from,
+  }) async {
+    _statusGraph = Status.loading;
+    notifyListeners();
+
+    String newInterval = interval == "1M"
+        ? "1min"
+        : interval == "5M"
+            ? "5min"
+            : interval == "15M"
+                ? "15min"
+                : interval == "30M"
+                    ? "30min"
+                    : interval == "1H"
+                        ? "1hour"
+                        : "4hour";
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol,
+        "interval": newInterval,
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.newsAlertGraphData,
+        request: request,
+        showProgress: showProgress,
+      );
+      if (response.status) {
+        _graphChart = stockDetailGraphFromJson(jsonEncode(response.data));
+        notifyListeners();
+        log(" in API reversed graphChart ${_graphChart?[0].close}");
+
+        avgData(from: "API");
+      } else {
+        showErrorMessage(message: response.message);
+      }
+      _statusGraph = Status.loaded;
+
+      notifyListeners();
+    } catch (e) {
+      log(e.toString());
+      _statusGraph = Status.loaded;
+
+      notifyListeners();
     }
   }
 
