@@ -53,8 +53,11 @@ class StockDetailProvider with ChangeNotifier {
 
   bool get otherLoading => _status == Status.loading;
 
-  List<StockDetailGraph>? _graphChart;
-  List<StockDetailGraph>? get graphChart => _graphChart;
+  List<StockDetailGraphData>? _graphChart;
+  List<StockDetailGraphData>? get graphChart => _graphChart;
+
+  List<StockDetailGraphData>? _extraData;
+  List<StockDetailGraphData>? get extraData => _extraData;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -154,9 +157,8 @@ class StockDetailProvider with ChangeNotifier {
   }
 
   LineChartData avgData({String? from}) {
-    log("----- avg data called ----- $from");
-
-    List<StockDetailGraph> reversedData = _graphChart?.reversed.toList() ?? [];
+    List<StockDetailGraphData> reversedData =
+        _graphChart?.reversed.toList() ?? [];
 
     List<FlSpot> spots = [];
 
@@ -194,14 +196,21 @@ class StockDetailProvider with ChangeNotifier {
         )),
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         bottomTitles: AxisTitles(
+            // axisNameWidget: Text(
+            //   "Time",
+            //   style: stylePTSansRegular(fontSize: 15),
+            // ),
             sideTitles: SideTitles(
           showTitles: true,
           getTitlesWidget: (value, meta) {
             int index = value.toInt();
             if (index >= 0 && index < (spots.length)) {
-              return Text(
-                DateFormat('HH:mm').format(reversedData[index].date),
-                style: stylePTSansRegular(fontSize: 8),
+              return Padding(
+                padding: EdgeInsets.only(top: 8.sp, left: 5.sp),
+                child: Text(
+                  DateFormat('HH:mm').format(reversedData[index].date),
+                  style: stylePTSansRegular(fontSize: 8),
+                ),
               );
             }
             return Text(
@@ -211,24 +220,39 @@ class StockDetailProvider with ChangeNotifier {
           },
         )),
         rightTitles: AxisTitles(
+          // axisNameWidget: Text(
+          //   "Price",
+          //   style: stylePTSansRegular(fontSize: 15),
+          // ),
           sideTitles: SideTitles(
-            interval: 1,
-            reservedSize: 30.sp,
+            // interval: reversedData.length < 100 ? 1 : 5,
+            reservedSize: 20,
             showTitles: true,
-            getTitlesWidget: (value, meta) {
-              return Text(
-                value.toCurrency(),
-                style: stylePTSansRegular(fontSize: 8),
+            getTitlesWidget: (double value, TitleMeta meta) {
+              return Padding(
+                padding: EdgeInsets.only(bottom: 8.sp, left: 5.sp),
+                child: Text(
+                  "${value.round()}",
+                  style: stylePTSansRegular(fontSize: 8),
+                ),
               );
+
+              // return Padding(
+              //   padding: EdgeInsets.only(bottom: 8.sp, left: 5.sp),
+              //   child: Text(
+              //     "${value.round()}",
+              //     style: stylePTSansRegular(fontSize: 8),
+              //   ),
+              // );
             },
           ),
         ),
       ),
       gridData: FlGridData(
         show: true, // Show grid
-        drawHorizontalLine: true,
+        // drawHorizontalLine: true,
 
-        drawVerticalLine: true,
+        // drawVerticalLine: true,
 
         // checkToShowHorizontalLine: (value) {
         //   return true;
@@ -255,8 +279,8 @@ class StockDetailProvider with ChangeNotifier {
       maxY: reversedData
           .map((data) => data.close)
           .reduce((a, b) => a > b ? a : b),
-      baselineX: reversedData.length.toDouble(),
-      baselineY: reversedData.length.toDouble(),
+      baselineX: 50,
+      baselineY: 100,
       lineBarsData: [
         LineChartBarData(
           spots: spots,
@@ -319,7 +343,7 @@ class StockDetailProvider with ChangeNotifier {
         showProgress: showProgress,
       );
       if (response.status) {
-        _graphChart = stockDetailGraphFromJson(jsonEncode(response.data));
+        _graphChart = stockDetailGraphFromJson(jsonEncode(response.data)).data;
         notifyListeners();
         log(" in API reversed graphChart ${_graphChart?[0].close}");
 
