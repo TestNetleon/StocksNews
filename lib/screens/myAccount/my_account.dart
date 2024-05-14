@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/myAccount/widgets/delete_account.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../../utils/constants.dart';
 import '../../widgets/screen_title.dart';
@@ -18,6 +19,11 @@ class MyAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': 'My Account'},
+    );
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, showTrailing: false),
       body: Stack(

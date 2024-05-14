@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'container.dart';
 
 class BlogDetail extends StatefulWidget {
@@ -22,6 +22,11 @@ class _BlogDetailState extends State<BlogDetail> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BlogProvider>().getBlogDetailData(blogId: widget.id);
+
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': 'My Account'},
+      );
     });
   }
 

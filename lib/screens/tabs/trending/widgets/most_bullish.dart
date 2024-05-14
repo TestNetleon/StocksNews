@@ -8,6 +8,7 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class MostBullish extends StatelessWidget {
   const MostBullish({super.key});
@@ -16,6 +17,12 @@ class MostBullish extends StatelessWidget {
   Widget build(BuildContext context) {
     TrendingProvider provider = context.watch<TrendingProvider>();
     TrendingRes? data = provider.mostBullish;
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Trending - Most Bullish"},
+    );
+
 //
     return Column(
       mainAxisSize: MainAxisSize.min,

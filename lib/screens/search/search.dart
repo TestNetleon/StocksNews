@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
 import '../drawer/base_drawer.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class Search extends StatefulWidget {
   static const String path = "Home";
@@ -25,6 +26,10 @@ class _SearchState extends State<Search> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<SearchProvider>().getSearchDefaults();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Search"},
+      );
     });
   }
 

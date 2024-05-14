@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class FeaturedNewsList extends StatefulWidget {
   const FeaturedNewsList({super.key});
@@ -24,6 +25,10 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // context.read<NewsProvider>().getNews(showProgress: true);
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "News - Featured"},
+      );
     });
   }
 

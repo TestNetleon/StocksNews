@@ -37,9 +37,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
               child: LineChart(
                 duration: const Duration(milliseconds: 150), // Optional
                 curve: Curves.linear, // Optional
-                provider.avgData(
-                  from: "UI",
-                ),
+                provider.avgData(from: "UI"),
               ),
             ),
             const SpacerVertical(height: 5),
@@ -54,7 +52,6 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                       onTap: () {
                         _selectedIndex = index;
                         setState(() {});
-
                         provider.getStockGraphData(
                             symbol: provider.data?.keyStats?.symbol ?? "",
                             interval: interval?[_selectedIndex] ?? "15M");

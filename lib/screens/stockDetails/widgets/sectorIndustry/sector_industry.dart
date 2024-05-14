@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 //
 class SectorIndustry extends StatefulWidget {
@@ -33,6 +34,10 @@ class _SectorIndustryState extends State<SectorIndustry> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getStateIndustry();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Trending Industries - Sectors"},
+      );
     });
   }
 

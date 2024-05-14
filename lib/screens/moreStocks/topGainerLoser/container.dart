@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'item.dart';
 
@@ -33,6 +34,17 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
       context
           .read<MoreStocksProvider>()
           .getGainersLosers(showProgress: true, type: widget.type.name);
+
+      String title = widget.type == StocksType.gainers
+          ? "Today’s Top Gainers"
+          : widget.type == StocksType.losers
+              ? "Today’s Top Losers"
+              : "Today's Popular Stocks";
+
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': title},
+      );
     });
   }
 
@@ -40,6 +52,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
   Widget build(BuildContext context) {
     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
     List<GainersLosersDataRes>? data = provider.gainersLosers?.data;
+
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
       appBar: const AppBarHome(

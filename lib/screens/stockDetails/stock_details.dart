@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class StockDetails extends StatefulWidget {
   final String symbol;
@@ -26,6 +27,10 @@ class _StockDetailsState extends State<StockDetails> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getData();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Stock Detail"},
+      );
     });
   }
 

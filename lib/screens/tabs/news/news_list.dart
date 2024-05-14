@@ -9,10 +9,11 @@ import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class NewsList extends StatefulWidget {
   const NewsList({super.key});
-//
+
   @override
   State<NewsList> createState() => _NewsListState();
 }
@@ -23,6 +24,10 @@ class _NewsListState extends State<NewsList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // context.read<NewsProvider>().getNews(showProgress: true);
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "News - From Sources"},
+      );
     });
   }
 

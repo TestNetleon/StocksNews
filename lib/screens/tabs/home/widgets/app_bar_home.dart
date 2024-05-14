@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +38,7 @@ class _AppBarHomeState extends State<AppBarHome> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      log("App bar init called-------");
+      // log("App bar init called-------");
     });
   }
 
@@ -50,7 +48,7 @@ class _AppBarHomeState extends State<AppBarHome> {
     String? image = provider.user?.image;
     // bool notificationSeen = provider.user?.notificationSeen == true;
     HomeProvider homeProvider = context.watch<HomeProvider>();
-    log("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
+    // log("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
     return AppBar(
       // backgroundColor: ThemeColors.lightRed,
       backgroundColor: ThemeColors.background,
