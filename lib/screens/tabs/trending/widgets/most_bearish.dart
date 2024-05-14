@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class MostBearish extends StatelessWidget {
   const MostBearish({super.key});
@@ -19,6 +20,11 @@ class MostBearish extends StatelessWidget {
     TrendingProvider provider = context.watch<TrendingProvider>();
 
     TrendingRes? data = provider.mostBearish;
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Trending - Most Bearish"},
+    );
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,

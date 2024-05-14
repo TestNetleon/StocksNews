@@ -13,8 +13,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
-//
 class CompareStocksContainer extends StatelessWidget {
   const CompareStocksContainer({super.key});
 
@@ -34,6 +34,11 @@ class CompareStocksContainer extends StatelessWidget {
 
     CompareStocksProvider provider = context.watch<CompareStocksProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Compare Stocks"},
+    );
 
     return Padding(
       padding: EdgeInsets.fromLTRB(

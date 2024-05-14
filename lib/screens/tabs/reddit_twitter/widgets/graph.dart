@@ -183,11 +183,6 @@ class SocialSentimentsGraph extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SpacerVertical(height: 5),
-                  Text(
-                    "Comment Volume",
-                    style: stylePTSansRegular(fontSize: 14),
-                  ),
-                  const SpacerVertical(height: 5),
                   Row(
                     children: [
                       Icon(
@@ -205,16 +200,16 @@ class SocialSentimentsGraph extends StatelessWidget {
                     ],
                   ),
                   // const SpacerVertical(),
+                  const SpacerVertical(height: 5),
+                  Text(
+                    "Comment Volume",
+                    style: stylePTSansRegular(fontSize: 14),
+                  ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const SpacerVertical(height: 5),
-                  Text(
-                    "Sentiment Trending",
-                    style: stylePTSansRegular(fontSize: 14),
-                  ),
                   const SpacerVertical(height: 5),
                   Row(
                     children: [
@@ -233,6 +228,11 @@ class SocialSentimentsGraph extends StatelessWidget {
                     ],
                   ),
                   // const SpacerVertical(),
+                  const SpacerVertical(height: 5),
+                  Text(
+                    "Sentiment Trending",
+                    style: stylePTSansRegular(fontSize: 14),
+                  ),
                 ],
               ),
             ],

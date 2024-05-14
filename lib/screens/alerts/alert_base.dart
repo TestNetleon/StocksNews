@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
 import '../../widgets/screen_title.dart';
 import 'alert_container.dart';
 
@@ -29,6 +29,10 @@ class _AlertBaseState extends State<AlertBase> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getData();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Stock Alerts"},
+      );
     });
   }
 

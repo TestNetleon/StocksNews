@@ -8,6 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TrendingStories extends StatelessWidget {
   const TrendingStories({super.key});
@@ -16,6 +17,11 @@ class TrendingStories extends StatelessWidget {
   Widget build(BuildContext context) {
     TrendingProvider provider = context.watch<TrendingProvider>();
     TrendingRes? data = context.read<TrendingProvider>().trendingStories;
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Trending - Trending Stories"},
+    );
 
     return Column(
       mainAxisSize: MainAxisSize.min,

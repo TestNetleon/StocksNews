@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class NotificationsContainer extends StatefulWidget {
   static const String path = "Notifications";
@@ -34,6 +35,10 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
       if (res != null) {
         context.read<NotificationProvider>().getData(showProgress: false);
       }
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Notifications"},
+      );
     });
   }
 

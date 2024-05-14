@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "661986825229-0de23kv34v919suf1ticnuth3f8rn9i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stocks.news",
+            "certificate_hash": "3508c22e06cc69d03638d89023ab3385c53688a6"
+          }
+        },
+        {
           "client_id": "661986825229-foi7pbrdmiugrlmouvtnghuqenbr9sc1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -45,6 +53,13 @@
             {
               "client_id": "661986825229-i37lf3ga0052qdc52artb1h13pd0o8cv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "661986825229-jrjm8ffa2meg5ld2drpmg9pgsg4mh6nq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.stocks.news"
+              }
             }
           ]
         }

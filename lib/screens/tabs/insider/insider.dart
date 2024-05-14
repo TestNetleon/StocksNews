@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 //
 class Insider extends StatelessWidget {
@@ -29,6 +30,11 @@ class Insider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Insider Trending"},
+    );
 
     return BaseContainer(
       drawer: const BaseDrawer(),

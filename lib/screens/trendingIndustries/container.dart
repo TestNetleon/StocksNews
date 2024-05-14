@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TrendingIndustriesContainer extends StatefulWidget {
   const TrendingIndustriesContainer({super.key});
@@ -29,6 +30,10 @@ class _TrendingIndustriesContainerState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TrendingIndustriesProvider>().getData();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Trending Industries"},
+      );
     });
   }
 

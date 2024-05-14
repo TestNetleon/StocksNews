@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class WatchList extends StatefulWidget {
   static const path = "WatchList";
@@ -32,6 +33,10 @@ class _WatchListState extends State<WatchList> {
       if (provider.user != null) {
         context.read<WatchlistProvider>().getData(showProgress: false);
       }
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Stock WatchList"},
+      );
     });
   }
 

@@ -22,6 +22,7 @@ import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgets/trending_now.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 //
 class TopTrendingContainer extends StatefulWidget {
@@ -45,6 +46,11 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
       context
           .read<TopTrendingProvider>()
           .getNowRecentlyData(showProgress: false, type: "now", reset: true);
+
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Top Trending"},
+      );
     });
   }
 

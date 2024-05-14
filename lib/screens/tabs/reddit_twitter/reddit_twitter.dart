@@ -20,7 +20,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_item.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-//
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'widgets/graph.dart';
 
 class RedditTwitter extends StatefulWidget {
@@ -48,9 +48,10 @@ class _RedditTwitterState extends State<RedditTwitter> {
   @override
   Widget build(BuildContext context) {
     RedditTwitterProvider provider = context.watch<RedditTwitterProvider>();
-    // if (provider.socialSentimentRes == null && !provider.isLoading) {
-    //   return
-    // }
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Sentiments"},
+    );
     return BaseContainer(
       drawer: const BaseDrawer(),
       appBar: const AppBarHome(canSearch: true),

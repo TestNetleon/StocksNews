@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/screens/blogs/container.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class Blog extends StatefulWidget {
   final BlogsType type;
@@ -25,6 +26,11 @@ class _BlogState extends State<Blog> {
       context
           .read<BlogProvider>()
           .getData(showProgress: true, type: widget.type, id: widget.id);
+
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': 'Blogs'},
+      );
     });
   }
 

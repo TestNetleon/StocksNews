@@ -55,7 +55,6 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                       onTap: () {
                         _selectedIndex = index;
                         setState(() {});
-
                         provider.getStockGraphData(
                           symbol: provider.data?.keyStats?.symbol ?? "",
                           range: range?[_selectedIndex] ?? "1H",

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stocks/container.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class StocksIndex extends StatefulWidget {
   static const path = "StocksIndex";
@@ -17,6 +18,10 @@ class _StocksIndexState extends State<StocksIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<AllStocksProvider>().getData(showProgress: true);
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Stocks"},
+      );
     });
   }
 
