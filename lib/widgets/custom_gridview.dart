@@ -45,3 +45,51 @@ class CustomGridView extends StatelessWidget {
     );
   }
 }
+
+// class CustomGridView extends StatelessWidget {
+//   const CustomGridView({
+//     required this.length,
+//     required this.getChild,
+//     this.paddingVertical = 16,
+//     this.paddingHorizontal = 8,
+//     super.key,
+//   });
+
+//   final double paddingVertical, paddingHorizontal;
+//   final int length;
+//   final Widget Function(int index) getChild;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.separated(
+//       shrinkWrap: true,
+//       physics: const NeverScrollableScrollPhysics(),
+//       padding: EdgeInsets.symmetric(vertical: paddingVertical),
+//       itemBuilder: (context, index) {
+//         final int startIndex = index * 3;
+//         final int endIndex = startIndex + 3 <= length ? startIndex + 3 : length;
+//         final List<Widget> rowChildren = [];
+
+//         for (int i = startIndex; i < endIndex; i++) {
+//           rowChildren.add(Expanded(child: getChild(i)));
+//           if (i < endIndex - 1) {
+//             rowChildren.add(SizedBox(width: paddingHorizontal));
+//           }
+//         }
+
+//         return Padding(
+//           padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
+//           child: Row(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: rowChildren,
+//           ),
+//         );
+//       },
+//       separatorBuilder: (context, index) {
+//         return SizedBox(height: paddingVertical * 1.2);
+//       },
+//       itemCount: ((length - 1) ~/ 3) + 1,
+//     );
+//   }
+// }

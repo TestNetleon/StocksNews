@@ -6,9 +6,7 @@ import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -50,10 +48,22 @@ class CompanyEarningStockDetail extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 20.sp),
       child: Column(
         children: [
-          ScreenTitle(
-            // title: earning?.title ?? "",
-            subTitle: earning?.text,
+          // ScreenTitle(
+          //   // title: earning?.title ?? "",
+          //   subTitle: earning?.text,
+          // ),
+          Visibility(
+            visible: earning?.text != '',
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20.sp),
+              child: Text(
+                earning?.text ?? "",
+                style: stylePTSansRegular(
+                    fontSize: 13, color: ThemeColors.greyText),
+              ),
+            ),
           ),
+
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -61,48 +71,55 @@ class CompanyEarningStockDetail extends StatelessWidget {
               if (index == 0) {
                 return Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5.sp),
-                      child: Row(
-                        children: [
-                          AutoSizeText(
-                            maxLines: 1,
-                            "QUARTER",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
+                    Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 15.sp,
+                      thickness: 1,
+                    ),
+                    Row(
+                      children: [
+                        AutoSizeText(
+                          maxLines: 1,
+                          "QUARTER",
+                          style: stylePTSansRegular(
+                            fontSize: 12,
+                            color: ThemeColors.greyText,
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: AutoSizeText(
-                                  maxLines: 1,
-                                  "EPS (Earnings Per Share)",
-                                  style: stylePTSansRegular(
-                                    fontSize: 12,
-                                    color: ThemeColors.greyText,
-                                  )),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: AutoSizeText(
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: AutoSizeText(
                                 maxLines: 1,
-                                "REVENUE",
+                                "EPS (Earnings Per Share)",
                                 style: stylePTSansRegular(
                                   fontSize: 12,
                                   color: ThemeColors.greyText,
-                                ),
+                                )),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: AutoSizeText(
+                              maxLines: 1,
+                              "REVENUE",
+                              style: stylePTSansRegular(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SpacerVertical(height: 5),
+                    Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 15.sp,
+                      thickness: 1,
+                    ),
+                    // const SpacerVertical(height: 5),
                     CompanyEarningItem(index: index),
                   ],
                 );

@@ -264,10 +264,10 @@ class FirebaseApi {
   }
 
   Future<void> initNotifications() async {
-    String? address = await _getUserLocation();
     await _firebaseMessaging.requestPermission();
     await _firebaseMessaging.getToken().then((value) async {
       Utils().showLog("FCM TOKEN  ******   $value");
+      String? address = await _getUserLocation();
       saveFCMapi(value: value, address: address);
     });
 

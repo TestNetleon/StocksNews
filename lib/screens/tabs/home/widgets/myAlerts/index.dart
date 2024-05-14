@@ -59,7 +59,7 @@ class HomeMyAlerts extends StatelessWidget {
             ),
             const SpacerVertical(height: 10),
             SizedBox(
-              height: constraints.maxWidth * 0.6,
+              height: constraints.maxWidth * 0.62,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,

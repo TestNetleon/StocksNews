@@ -384,14 +384,25 @@ class _LoginState extends State<Login> {
                       GestureDetector(
                         onTap: () {
                           // Navigator.pushNamed(context, SignUp.path);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SignUp(
-                                  dntPop: widget.dontPop,
-                                  state: widget.state,
-                                ),
-                              ));
+                          if (widget.dontPop != null) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUp(
+                                    dntPop: widget.dontPop,
+                                    state: widget.state,
+                                  ),
+                                ));
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUp(
+                                    dntPop: widget.dontPop,
+                                    state: widget.state,
+                                  ),
+                                ));
+                          }
                         },
                         child: Text(
                           " Sign Up ",

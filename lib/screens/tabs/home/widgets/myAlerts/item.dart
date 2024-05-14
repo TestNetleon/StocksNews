@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -269,10 +270,13 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
               ),
             ),
             SizedBox(
-              // padding: EdgeInsets.only(left: 20.sp),
-              height: 80,
-              // width: 300,
-              child: LineChart(avgData()),
+              height: 80.sp,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.sp),
+                    bottomRight: Radius.circular(10.sp),
+                  ),
+                  child: LineChart(avgData())),
             ),
           ],
         ),

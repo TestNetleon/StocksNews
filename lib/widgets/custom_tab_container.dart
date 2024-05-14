@@ -210,6 +210,7 @@ class CustomTabContainerNEW extends StatefulWidget {
     this.scrollable,
     this.isTabWidget,
     this.tabsPadding,
+    this.physics = const AlwaysScrollableScrollPhysics(),
     super.key,
   });
 //
@@ -221,6 +222,7 @@ class CustomTabContainerNEW extends StatefulWidget {
   final EdgeInsets? tabsPadding;
   final bool showDivider;
   final bool? scrollable;
+  final ScrollPhysics physics;
   final Function(int index)? onChange;
 
   @override
@@ -326,6 +328,7 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
           // ),
           Expanded(
             child: TabBarView(
+              physics: widget.physics,
               controller: _controller,
               children: widget.widgets,
             ),

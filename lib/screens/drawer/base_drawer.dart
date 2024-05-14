@@ -204,6 +204,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
     UserRes? user = context.watch<UserProvider>().user;
     return SafeArea(
       child: Drawer(
+        backgroundColor: ThemeColors.background,
         width: ScreenUtil().screenWidth / 1.2,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),

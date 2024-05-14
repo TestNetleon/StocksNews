@@ -52,8 +52,8 @@ class _AppBarHomeState extends State<AppBarHome> {
     HomeProvider homeProvider = context.watch<HomeProvider>();
     log("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
     return AppBar(
-      // backgroundColor: ThemeColors.lightRed,
       backgroundColor: ThemeColors.background,
+      elevation: 0,
       automaticallyImplyLeading: false,
       leading: widget.isPopback
           ? IconButton(

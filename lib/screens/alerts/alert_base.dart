@@ -57,14 +57,17 @@ class _AlertBaseState extends State<AlertBase> {
           children: [
             const ScreenTitle(title: "Stock Alerts"),
             Visibility(
-              visible: provider.textRes?.subTitle != '',
+              visible:
+                  provider.textRes?.subTitle != '' && userProvider.user != null,
               child: Text(
                 provider.textRes?.subTitle ?? "",
                 style: stylePTSansRegular(fontSize: 12),
               ),
             ),
             Visibility(
-              visible: provider.textRes?.note != '',
+              visible: provider.textRes?.note != '' &&
+                  userProvider.user != null &&
+                  provider.isLoading,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10.sp),
                 padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),
@@ -84,7 +87,8 @@ class _AlertBaseState extends State<AlertBase> {
               ),
             ),
             Visibility(
-              visible: provider.textRes?.other != '',
+              visible:
+                  provider.textRes?.other != '' && userProvider.user != null,
               child: Text(
                 provider.textRes?.other ?? "",
                 style: stylePTSansRegular(fontSize: 12),

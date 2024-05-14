@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebviewLink extends StatefulWidget {
@@ -18,12 +19,17 @@ class WebviewLink extends StatefulWidget {
 //
 class _AnalysisForecastState extends State<WebviewLink> {
   WebViewController controller = WebViewController();
-
+  bool loading = false;
   @override
   void initState() {
     super.initState();
 
     _setData(url: widget.url, stringURL: widget.stringURL);
+  }
+
+  setLoading(value) {
+    loading = value;
+    setState(() {});
   }
 
   void _setData({Uri? url, String? stringURL}) {
@@ -37,12 +43,16 @@ class _AnalysisForecastState extends State<WebviewLink> {
             log("progress $progress");
           },
           onPageStarted: (String url) {
+            setLoading(true);
             log("page finished $url");
           },
           onPageFinished: (String url) {
+            setLoading(false);
             log("page finished $url");
           },
-          onWebResourceError: (WebResourceError error) {},
+          onWebResourceError: (WebResourceError error) {
+            setLoading(false);
+          },
         ),
       )
       ..loadRequest(
@@ -56,9 +66,11 @@ class _AnalysisForecastState extends State<WebviewLink> {
         isPopback: true,
         showTrailing: false,
       ),
-      body: WebViewWidget(
-        controller: controller,
-      ),
+      body: loading
+          ? const ProgressDialog()
+          : WebViewWidget(
+              controller: controller,
+            ),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 //
 class StockDetailProvider with ChangeNotifier {
@@ -53,11 +53,11 @@ class StockDetailProvider with ChangeNotifier {
 
   bool get otherLoading => _status == Status.loading;
 
-  List<StockDetailGraphData>? _graphChart;
-  List<StockDetailGraphData>? get graphChart => _graphChart;
+  List<StockDetailGraph>? _graphChart;
+  List<StockDetailGraph>? get graphChart => _graphChart;
 
-  List<StockDetailGraphData>? _extraData;
-  List<StockDetailGraphData>? get extraData => _extraData;
+  List<StockDetailGraph>? _extraData;
+  List<StockDetailGraph>? get extraData => _extraData;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -151,41 +151,122 @@ class StockDetailProvider with ChangeNotifier {
     } catch (e) {
       _data = null;
       _error = Const.errSomethingWrong;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
 
-  LineChartData avgData({String? from}) {
-    List<StockDetailGraphData> reversedData =
-        _graphChart?.reversed.toList() ?? [];
+  double calculateInterval(List<StockDetailGraph> data) {
+    // Get the range of close prices
+    double maxClose = data
+        .map((e) => e.close)
+        .reduce((max, value) => max > value ? max : value);
+    double minClose = data
+        .map((e) => e.close)
+        .reduce((min, value) => min < value ? min : value);
+    double closeRange = maxClose - minClose;
+
+    return closeRange / 4.5;
+  }
+
+  LineChartData avgData({bool showDate = true}) {
+    List<StockDetailGraph> reversedData = _graphChart?.reversed.toList() ?? [];
 
     List<FlSpot> spots = [];
 
     for (int i = 0; i < reversedData.length; i++) {
       spots.add(FlSpot(i.toDouble(), reversedData[i].close));
     }
+    // double interval = (reversedData.length / 5).ceil().toDouble();
+    // double interval = calculateInterval(reversedData);
+    // double average = 0;
+
+    // Calculate the average of the close values
+    // if (reversedData.isNotEmpty) {
+    //   double sum = 0;
+    //   for (int i = 0; i < reversedData.length; i++) {
+    //     sum += reversedData[i].close;
+    //   }
+    //   average = sum / reversedData.length;
+    //   Utils().showLog("average => $average");
+    // }
+    // Utils().showLog("Length => ${reversedData.length}");
+    // Utils().showLog("interval => $interval");
+    Utils().showLog("previous Close => ${_data?.keyStats?.previousCloseNUM}");
+    Utils().showLog("Newest Close => ${reversedData.last.close}");
 
     return LineChartData(
       lineTouchData: LineTouchData(
+        getTouchLineEnd: (barData, spotIndex) {
+          return double.infinity;
+        },
+        getTouchLineStart: (barData, spotIndex) {
+          return 0.0;
+        },
+        getTouchedSpotIndicator: (barData, spotIndexes) {
+          return spotIndexes.map((spotIndex) {
+            return TouchedSpotIndicatorData(
+              FlLine(
+                color: Colors.grey[400],
+                strokeWidth: 1,
+                dashArray: [5, 5],
+              ),
+              FlDotData(
+                show: true,
+                checkToShowDot: (spot, barData) {
+                  return true;
+                },
+              ),
+            );
+          }).toList();
+        },
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
-          tooltipRoundedRadius: 20.0,
+          tooltipHorizontalOffset: 10,
+          tooltipRoundedRadius: 10.0,
           showOnTopOfTheChartBoxArea: true,
-          fitInsideHorizontally: false,
-          tooltipMargin: 4,
+          fitInsideHorizontally: true,
+          fitInsideVertically: true,
+          maxContentWidth: 300,
+          tooltipPadding:
+              EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
+          tooltipMargin: 1,
           getTooltipItems: (touchedSpots) {
             return touchedSpots.map(
               (LineBarSpot touchedSpot) {
                 return LineTooltipItem(
-                  spots[touchedSpot.spotIndex].y.toStringAsFixed(2),
-                  stylePTSansRegular(color: ThemeColors.blackShade),
+                  // children: [
+                  //   TextSpan(
+                  //     text: "\$${touchedSpot.y.toStringAsFixed(2)}",
+                  //     style: styleGeorgiaBold(
+                  //       // color: (_data?.keyStats?.previousCloseNUM ?? 0) >
+                  //       //         spots.last.y
+                  //       //     ? ThemeColors.sos
+                  //       //     : ThemeColors.accent,
+                  //       color: ThemeColors.accent,
+                  //     ),
+                  //   ),
+                  //   const TextSpan(text: "\n"), // Add a new line
+
+                  //   TextSpan(
+                  //     text:
+                  //         "Y: ${DateFormat('HH:mm').format(reversedData[touchedSpot.x.toInt()].date)}",
+                  //     style: styleGeorgiaBold(
+                  //         fontSize: 12, color: ThemeColors.background),
+                  //   ),
+                  // ],
+
+                  !showDate
+                      ? '\$${touchedSpot.y.toStringAsFixed(2)} | ${DateFormat('dd MMM, yyyy').format(reversedData[touchedSpot.x.toInt()].date)}'
+                      : '\$${touchedSpot.y.toStringAsFixed(2)} | ${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
+
+                  stylePTSansBold(color: ThemeColors.white, fontSize: 10),
                 );
               },
             ).toList();
           },
           getTooltipColor: (touchedSpot) {
-            return Colors.white;
+            return Colors.transparent;
           },
         ),
       ),
@@ -196,12 +277,13 @@ class StockDetailProvider with ChangeNotifier {
         )),
         topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         bottomTitles: AxisTitles(
+
             // axisNameWidget: Text(
             //   "Time",
             //   style: stylePTSansRegular(fontSize: 15),
             // ),
             sideTitles: SideTitles(
-          showTitles: true,
+          showTitles: false,
           getTitlesWidget: (value, meta) {
             int index = value.toInt();
             if (index >= 0 && index < (spots.length)) {
@@ -217,22 +299,25 @@ class StockDetailProvider with ChangeNotifier {
               "-",
               style: stylePTSansRegular(fontSize: 10),
             );
+            // return Padding(
+            //   padding: EdgeInsets.only(top: 8.sp, left: 5.sp),
+            //   child: Text(
+            //     "$value",
+            //     style: stylePTSansRegular(fontSize: 8),
+            //   ),
+            // );
           },
         )),
         rightTitles: AxisTitles(
-          // axisNameWidget: Text(
-          //   "Price",
-          //   style: stylePTSansRegular(fontSize: 15),
-          // ),
           sideTitles: SideTitles(
-            // interval: reversedData.length < 100 ? 1 : 5,
-            reservedSize: 20,
-            showTitles: true,
+            // interval: interval,
+            reservedSize: 32,
+            showTitles: false,
             getTitlesWidget: (double value, TitleMeta meta) {
               return Padding(
                 padding: EdgeInsets.only(bottom: 8.sp, left: 5.sp),
                 child: Text(
-                  "${value.round()}",
+                  value.toStringAsFixed(2),
                   style: stylePTSansRegular(fontSize: 8),
                 ),
               );
@@ -249,24 +334,16 @@ class StockDetailProvider with ChangeNotifier {
         ),
       ),
       gridData: FlGridData(
-        show: true, // Show grid
-        // drawHorizontalLine: true,
-
-        // drawVerticalLine: true,
-
-        // checkToShowHorizontalLine: (value) {
-        //   return true;
-        // },
-
+        show: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: ThemeColors.white.withOpacity(0.3),
+            color: ThemeColors.white.withOpacity(0.16),
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: ThemeColors.white.withOpacity(0.3),
+            color: ThemeColors.white.withOpacity(0.16),
             strokeWidth: 1,
           );
         },
@@ -279,33 +356,50 @@ class StockDetailProvider with ChangeNotifier {
       maxY: reversedData
           .map((data) => data.close)
           .reduce((a, b) => a > b ? a : b),
-      baselineX: 50,
-      baselineY: 100,
       lineBarsData: [
         LineChartBarData(
           spots: spots,
-          color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.first.y
+          // color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
+          //     ? ThemeColors.sos
+          //     : ThemeColors.accent,
+          color: spots.first.y > spots.last.y
               ? ThemeColors.sos
               : ThemeColors.accent,
+
+          // color: ThemeColors.accent,
           isCurved: true,
           barWidth: 1.5,
-          dotData: const FlDotData(
-            show: false, // hide dots
-          ),
+          dotData: const FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                (_data?.keyStats?.previousCloseNUM ?? 0) > spots.first.y
+                // (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
+                //     ? ThemeColors.sos.withOpacity(0.1)
+                //     : ThemeColors.accent.withOpacity(0.1),
+                spots.first.y > spots.last.y
                     ? ThemeColors.sos.withOpacity(0.1)
                     : ThemeColors.accent.withOpacity(0.1),
+
+                // ThemeColors.accent.withOpacity(0.1),
                 ThemeColors.background,
               ],
             ),
           ),
         ),
+        // LineChartBarData(
+        //   spots: [
+        //     FlSpot(0, average),
+        //     FlSpot(spots.length.toDouble() - 1, average)
+        //   ],
+        //   isCurved: false,
+        //   barWidth: 1,
+        //   color: ThemeColors.greyBorder,
+        //   belowBarData: BarAreaData(show: false),
+        //   dashArray: [5, 5],
+        // ),
       ],
     );
   }
@@ -313,41 +407,57 @@ class StockDetailProvider with ChangeNotifier {
   Future getStockGraphData({
     required String symbol,
     String interval = '15M',
+    String range = '1H',
     showProgress = false,
     String? from,
   }) async {
     _statusGraph = Status.loading;
     notifyListeners();
 
-    String newInterval = interval == "1M"
-        ? "1min"
-        : interval == "5M"
-            ? "5min"
-            : interval == "15M"
-                ? "15min"
-                : interval == "30M"
-                    ? "30min"
-                    : interval == "1H"
-                        ? "1hour"
-                        : "4hour";
+    // String newInterval = interval == "1M"
+    //     ? "1min"
+    //     : interval == "5M"
+    //         ? "5min"
+    //         : interval == "15M"
+    //             ? "15min"
+    //             : interval == "30M"
+    //                 ? "30min"
+    //                 : interval == "1H"
+    //                     ? "1hour"
+    //                     : "4hour";
+
+    String newRange = range == "1H"
+        ? "1hour"
+        : range == "1D"
+            ? "1day"
+            : range == "1W"
+                ? "1week"
+                : range == "1M"
+                    ? "1month"
+                    : range == "1Y"
+                        ? "1year"
+                        : "1hour";
+
     try {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol,
-        "interval": newInterval,
+        // "interval": newInterval,
+        "range": newRange,
       };
+
       ApiResponse response = await apiRequest(
         url: Apis.newsAlertGraphData,
         request: request,
         showProgress: showProgress,
       );
       if (response.status) {
-        _graphChart = stockDetailGraphFromJson(jsonEncode(response.data)).data;
+        _graphChart = stockDetailGraphFromJson(jsonEncode(response.data));
         notifyListeners();
-        log(" in API reversed graphChart ${_graphChart?[0].close}");
+        Utils().showLog(" in API reversed graphChart ${_graphChart?[0].close}");
 
-        avgData(from: "API");
+        avgData(showDate: newRange != "1Y");
       } else {
         showErrorMessage(message: response.message);
       }
@@ -355,7 +465,7 @@ class StockDetailProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       _statusGraph = Status.loaded;
 
       notifyListeners();
@@ -387,7 +497,7 @@ class StockDetailProvider with ChangeNotifier {
       setStatus(Status.loaded);
     } catch (e) {
       _otherData = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -418,7 +528,7 @@ class StockDetailProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _analysisRes = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       _error = Const.errSomethingWrong;
 
       analysisLoading = false;
@@ -467,7 +577,7 @@ class StockDetailProvider with ChangeNotifier {
       _error = Const.errSomethingWrong;
 
       _technicalAnalysisRes = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       if (!fromTab) {
         tALoading = false;
       } else {
@@ -500,7 +610,8 @@ class StockDetailProvider with ChangeNotifier {
       if (response.status) {
         _dataMentions =
             stockDetailMentionResFromJson(jsonEncode(response.data));
-        log("-- Mention log showing in stock provider -> ${_dataMentions?.mentions?.length}");
+        Utils().showLog(
+            "-- Mention Utils().showLog showing in stock provider -> ${_dataMentions?.mentions?.length}");
         // // Assign random colors to mentions
         math.Random random = math.Random();
         _dataMentions?.mentions?.forEach((mention) {
@@ -524,7 +635,7 @@ class StockDetailProvider with ChangeNotifier {
       _error = Const.errSomethingWrong;
 
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       mentionLoading = true;
       notifyListeners();
     }
@@ -562,7 +673,7 @@ class StockDetailProvider with ChangeNotifier {
       setStatus(Status.loaded);
       return ApiResponse(status: response.status);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
 
       showErrorMessage(message: Const.errSomethingWrong);
@@ -592,7 +703,7 @@ class StockDetailProvider with ChangeNotifier {
       setStatus(Status.loaded);
       return ApiResponse(status: response.status);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
 
       showErrorMessage(message: Const.errSomethingWrong);

@@ -90,7 +90,7 @@ class SectorIndustryBase extends StatelessWidget {
             children: [
               ScreenTitle(
                 title: stockStates == StockStates.sector
-                    ? "Sectors - $titleName"
+                    ? "Sector Performance - $titleName"
                     : "Industry - $titleName",
                 // optionalText: 'Last Updated: 5/12/2022',
               ),

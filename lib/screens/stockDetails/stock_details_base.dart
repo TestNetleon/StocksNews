@@ -39,6 +39,7 @@ class StockDetailsBase extends StatelessWidget {
     return Stack(
       children: [
         CustomTabContainerNEW(
+          physics: const NeverScrollableScrollPhysics(),
           scrollable: true,
           tabs: const [
             "Overview",
@@ -55,54 +56,132 @@ class StockDetailsBase extends StatelessWidget {
             "Popular Stocks"
           ],
           widgets: [
-            const StockDetailsTabContainer(
+            StockDetailsTabContainer(
               content: Column(
                 children: [
-                  StockTopDetail(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Dimen.padding.sp,
+                      right: Dimen.padding.sp,
+                    ),
+                    child: StockTopDetail(),
+                  ),
                   // StockDetailTopGraph(),
-                  NewTopGraphIndex(),
-                  CompanyBrief(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 8.sp,
+                      right: 8.sp,
+                    ),
+                    child: NewTopGraphIndex(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Dimen.padding.sp,
+                      right: Dimen.padding.sp,
+                    ),
+                    child: CompanyBrief(),
+                  ),
                   // SpacerVertical(height: 90),
                 ],
               ),
             ),
-            const StockDetailsTabContainer(
-              content: CompanyEarningStockDetail(),
-            ),
-            const StockDetailsTabContainer(
-              content: States(),
-            ),
-            const StockDetailsTabContainer(
-              content: StocksScoreGrades(),
-            ),
-            const StockDetailsTabContainer(
-              content: Analysis(),
-            ),
-            StockDetailsTabContainer(
-              content: html == null || html.isEmpty
-                  ? const ErrorDisplayWidget(
-                      smallHeight: true,
-                      error: 'No analysis forecast found.',
-                    )
-                  : AnalysisForecast(html: html),
-            ),
-            const StockDetailsTabContainer(
-              content: StocksTechnicalAnalysis(),
-            ),
-            const StockDetailsTabContainer(
-              content: StocksMentions(),
-            ),
-            StockDetailsTabContainer(
-              content: RedditTwitterIframe(
-                redditRssId: companyInfo?.redditRssId,
-                twitterRssId: companyInfo?.twitterRssId,
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: CompanyEarningStockDetail(),
               ),
             ),
-            const StockDetailsTabContainer(
-              content: StocksTrendingStories(),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: States(),
+              ),
             ),
-            const StockDetailsTabContainer(
-              content: StockMentionWith(),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: StocksScoreGrades(),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: Analysis(),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: StockDetailsTabContainer(
+                content: html == null || html.isEmpty
+                    ? const ErrorDisplayWidget(
+                        smallHeight: true,
+                        error: 'No analysis forecast found.',
+                      )
+                    : AnalysisForecast(html: html),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: StocksTechnicalAnalysis(),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: StocksMentions(),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: StockDetailsTabContainer(
+                content: RedditTwitterIframe(
+                  redditRssId: companyInfo?.redditRssId,
+                  twitterRssId: companyInfo?.twitterRssId,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: StocksTrendingStories(),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Dimen.padding.sp,
+                right: Dimen.padding.sp,
+              ),
+              child: const StockDetailsTabContainer(
+                content: StockMentionWith(),
+              ),
             ),
           ],
         ),
@@ -147,8 +226,8 @@ class StockDetailsTabContainer extends StatelessWidget {
           // padding: EdgeInsets.all(Dimen.padding.sp),
           padding: EdgeInsets.only(
             top: Dimen.padding.sp,
-            left: Dimen.padding.sp,
-            right: Dimen.padding.sp,
+            // left: Dimen.padding.sp,
+            // right: Dimen.padding.sp,
             bottom: 90.sp,
           ),
           child: content,

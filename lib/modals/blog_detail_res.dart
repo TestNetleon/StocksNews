@@ -16,6 +16,7 @@ class BlogsDetailRes {
   final String id;
   final String name;
   final String description;
+  final String slug;
   final List<DetailListType>? authors;
   // final List<BlogItemRes> categories;
   // final List<BlogItemRes> tags;
@@ -27,6 +28,7 @@ class BlogsDetailRes {
     required this.name,
     required this.description,
     this.authors,
+    required this.slug,
     // required this.categories,
     // required this.tags,
     this.publishedDate,
@@ -37,6 +39,7 @@ class BlogsDetailRes {
         id: json["_id"],
         name: json["name"],
         description: json["description"],
+        slug: json["slug"],
         authors: json["authors"] == null
             ? []
             : List<DetailListType>.from(
@@ -55,6 +58,7 @@ class BlogsDetailRes {
         "_id": id,
         "name": name,
         "description": description,
+        "slug": slug,
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),

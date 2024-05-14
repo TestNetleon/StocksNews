@@ -25,7 +25,7 @@ class FAQItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Dimen.radius.r),
         border: Border.all(color: ThemeColors.greyBorder),
-        color: ThemeColors.background,
+        // color: ThemeColors.background,
       ),
       padding: EdgeInsets.all(Dimen.itemSpacing.sp),
       child: Column(

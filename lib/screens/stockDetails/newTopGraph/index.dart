@@ -16,8 +16,10 @@ class NewTopGraphIndex extends StatefulWidget {
 }
 
 class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
-  List<String>? interval = ['1M', '5M', '15M', '30M', '1H', '4H'];
-  int _selectedIndex = 2;
+  // List<String>? interval = ['1M', '5M', '15M', '30M', '1H', '4H'];
+  List<String>? range = ['1H', '1D', '1W', '1M', '1Y'];
+
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +28,24 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
         (provider.graphChart?.isEmpty == true || provider.graphChart == null)) {
       return const SizedBox();
     }
-
+    // KeyStats? stats = context.watch<StockDetailProvider>().data?.keyStats;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
           children: [
+            const SpacerVertical(height: 20),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10.sp, horizontal: 5.sp),
+              margin: EdgeInsets.symmetric(vertical: 10.sp),
               height: constraints.maxWidth * 0.8,
               child: LineChart(
-                duration: const Duration(milliseconds: 150), // Optional
-                curve: Curves.linear, // Optional
-                provider.avgData(
-                  from: "UI",
-                ),
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.linear,
+                provider.avgData(showDate: _selectedIndex != 4),
               ),
             ),
             const SpacerVertical(height: 5),
             SizedBox(
-              height: 30.sp,
+              height: 28.sp,
               child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -56,20 +57,26 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                         setState(() {});
 
                         provider.getStockGraphData(
-                            symbol: provider.data?.keyStats?.symbol ?? "",
-                            interval: interval?[_selectedIndex] ?? "15M");
+                          symbol: provider.data?.keyStats?.symbol ?? "",
+                          range: range?[_selectedIndex] ?? "1H",
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 10.sp, vertical: 5.sp),
+                            horizontal: 15.sp, vertical: 5.sp),
                         decoration: BoxDecoration(
-                            border: _selectedIndex == index
-                                ? Border.all(color: ThemeColors.greyBorder)
-                                : null,
-                            borderRadius: BorderRadius.circular(10.sp)),
+                            border: Border.all(
+                                color: _selectedIndex == index
+                                    ? ThemeColors.accent
+                                    : ThemeColors.greyBorder),
+                            borderRadius: BorderRadius.circular(5.sp)),
                         child: Text(
-                          "${interval?[index]}",
-                          style: styleGeorgiaRegular(fontSize: 13),
+                          "${range?[index]}",
+                          style: styleGeorgiaRegular(
+                              fontSize: 13,
+                              color: _selectedIndex == index
+                                  ? ThemeColors.accent
+                                  : ThemeColors.white),
                         ),
                       ),
                     );
@@ -77,9 +84,13 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                   separatorBuilder: (context, index) {
                     return const SpacerHorizontal(width: 15);
                   },
-                  itemCount: interval?.length ?? 0),
+                  itemCount: range?.length ?? 0),
             ),
-            const SpacerVertical(height: 15),
+            // const SpacerVertical(height: 10),
+
+            // StockDetailTopDisclaimer(),
+
+            const SpacerVertical(height: 40),
           ],
         );
       },

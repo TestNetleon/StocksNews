@@ -26,15 +26,38 @@ class BaseContainer extends StatelessWidget {
       onTap: () {
         closeKeyboard();
       },
-      child: Scaffold(
-        backgroundColor: ThemeColors.transparent,
-        appBar: appBar,
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-        drawer: drawer,
-        body: SafeArea(
-          child: body,
+      child: Container(
+        decoration: BoxDecoration(
+          // gradient: LinearGradient(
+          //   begin: Alignment.center,
+          //   end: Alignment.bottomCenter,
+          //   colors: [
+          //     ThemeColors.background,
+          //     ThemeColors.accent.withOpacity(0.1),
+          //   ],
+          // ),
+
+          gradient: RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 0.5,
+            // tileMode: TileMode.decal,
+            colors: [
+              ThemeColors.accent.withOpacity(0.4),
+              ThemeColors.accent.withOpacity(0.1),
+            ],
+          ),
         ),
-        bottomNavigationBar: bottomNavigationBar,
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          backgroundColor: ThemeColors.transparent,
+          appBar: appBar,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          drawer: drawer,
+          body: SafeArea(
+            child: body,
+          ),
+          bottomNavigationBar: bottomNavigationBar,
+        ),
       ),
     );
   }

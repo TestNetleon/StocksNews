@@ -85,7 +85,9 @@ class _TabsState extends State<Tabs> {
         bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: ThemeColors.white,
           selectedItemColor: ThemeColors.accent,
-          backgroundColor: ThemeColors.tabBack,
+          // backgroundColor: ThemeColors.tabBack,
+          backgroundColor: ThemeColors.transparent,
+
           showUnselectedLabels: true,
           showSelectedLabels: true,
           currentIndex: _selectedIndex,

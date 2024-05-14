@@ -139,7 +139,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
                   ),
                   child: const Icon(
                     Icons.filter_alt,
-                    color: ThemeColors.white,
+                    color: ThemeColors.accent,
                   ),
                 ),
               ),
@@ -156,7 +156,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
                   ),
                   child: const Icon(
                     Icons.filter_alt,
-                    color: ThemeColors.white,
+                    color: ThemeColors.accent,
                   ),
                 ),
               ),
