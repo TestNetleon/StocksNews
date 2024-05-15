@@ -33,8 +33,9 @@ class BlogDetailContainer extends StatelessWidget {
           Expanded(
             child: BaseUiContainer(
               error: provider.error,
-              hasData: provider.blogsDetail != null,
-              isLoading: provider.isLoading,
+              hasData:
+                  provider.blogsDetail != null && !provider.isLoadingDetail,
+              isLoading: provider.isLoadingDetail,
               onRefresh: () => provider.getBlogDetailData(blogId: id),
               child: RefreshIndicator(
                 onRefresh: () => provider.getBlogDetailData(blogId: id),

@@ -134,7 +134,7 @@ class _TabsState extends State<Tabs> {
     bool isVibe = await Vibration.hasVibrator() ?? false;
     if (isVibe) {
       // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
-      Vibration.vibrate(pattern: [50, 100, 50, 200], intensities: [1, 100]);
+      Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
     }
 
     // switch (currentIndex) {

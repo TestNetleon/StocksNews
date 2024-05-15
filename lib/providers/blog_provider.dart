@@ -20,6 +20,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
 
   String? _error;
   Status _status = Status.ideal;
+
+  Status _statusDetail = Status.ideal;
+
   int _page = 1;
   BlogsRes? blogRes;
   BlogsRes? authorRes;
@@ -39,6 +42,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   BlogsDetailRes? get blogsDetail => _blogsDetail;
 
   bool get isLoading => _status == Status.loading;
+  bool get isLoadingDetail => _statusDetail == Status.loading;
 
   void setStatus(status) {
     _status = status;
@@ -179,7 +183,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getBlogDetailData({required String blogId}) async {
-    setStatus(Status.loading);
+    // setStatus(Status.loading);
+    _statusDetail = Status.loading;
+    notifyListeners();
     try {
       Map request = {
         "token":
@@ -198,12 +204,16 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         _error = response.message;
         showErrorMessage(message: response.message);
       }
-      setStatus(Status.loaded);
+      // setStatus(Status.loaded);
+      _statusDetail = Status.loaded;
+      notifyListeners();
     } catch (e) {
       _blogsDetail = null;
 
       log(e.toString());
-      setStatus(Status.loaded);
+      // setStatus(Status.loaded);
+      _statusDetail = Status.loaded;
+      notifyListeners();
     }
   }
 }

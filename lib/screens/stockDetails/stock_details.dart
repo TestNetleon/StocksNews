@@ -54,6 +54,7 @@ class _StockDetailsState extends State<StockDetails> {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
     log("${provider.data == null}, ${provider.isLoading}");
     return BaseContainer(
+        moreGradient: true,
         drawer: const BaseDrawer(),
         appBar: const AppBarHome(
           isPopback: true,

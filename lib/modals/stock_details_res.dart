@@ -193,6 +193,13 @@ class KeyStats {
   final num? dayHighValue;
   final num? yearLowValue;
   final num? yearHighValue;
+  final String? ask;
+  final String? bid;
+  final String? enterpriseValueOverEbitda;
+  final String? dividendYield;
+  final String? bookValuePerShare;
+  final String? revenue;
+  final String? revenueDate;
 
   KeyStats({
     required this.symbol,
@@ -228,6 +235,13 @@ class KeyStats {
     this.priceValue,
     this.text,
     this.forecastText,
+    this.ask,
+    this.bid,
+    this.enterpriseValueOverEbitda,
+    this.dividendYield,
+    this.bookValuePerShare,
+    this.revenue,
+    this.revenueDate,
   });
 
   factory KeyStats.fromJson(Map<String, dynamic> json) => KeyStats(
@@ -264,6 +278,13 @@ class KeyStats {
         priceValue: json["price_value"],
         text: json["text"],
         forecastText: json["forecast_text"],
+        ask: json["ask"],
+        bid: json["bid"],
+        enterpriseValueOverEbitda: json["enterpriseValueOverEBITDA"],
+        dividendYield: json["dividendYield"],
+        bookValuePerShare: json["bookValuePerShare"],
+        revenue: json["revenue"],
+        revenueDate: json["revenue_date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -300,5 +321,12 @@ class KeyStats {
         "market_status": marketStatus,
         "text": text,
         "forecast_text": forecastText,
+        "ask": ask,
+        "bid": bid,
+        "enterpriseValueOverEBITDA": enterpriseValueOverEbitda,
+        "dividendYield": dividendYield,
+        "bookValuePerShare": bookValuePerShare,
+        "revenue": revenue,
+        "revenue_date": revenueDate,
       };
 }

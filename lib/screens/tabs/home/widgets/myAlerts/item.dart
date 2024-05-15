@@ -118,8 +118,6 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
       gridData: FlGridData(
         show: false,
         drawHorizontalLine: false,
-        verticalInterval: 1,
-        horizontalInterval: 1,
         getDrawingVerticalLine: (value) {
           return const FlLine(
             color: ThemeColors.transparent,
@@ -141,6 +139,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
           .toDouble(),
       lineBarsData: [
         LineChartBarData(
+          show: true,
           spots: spots,
           color: widget.data.previousClose > widget.data.chart.first.close
               ? ThemeColors.sos
@@ -269,14 +268,18 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 80.sp,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10.sp),
-                    bottomRight: Radius.circular(10.sp),
-                  ),
-                  child: LineChart(avgData())),
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.sp),
+                bottomRight: Radius.circular(10.sp),
+              ),
+              child: Container(
+                padding: EdgeInsets.only(top: 10.sp),
+                height: 90.sp,
+                child: LineChart(
+                  avgData(),
+                ),
+              ),
             ),
           ],
         ),

@@ -183,7 +183,7 @@ class _StatesState extends State<States> {
     return CustomGridView(
       paddingVerticle: 15.sp,
       paddingHorizontal: 5.sp,
-      length: 20,
+      length: 25,
       getChild: (index) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -229,14 +229,31 @@ class _StatesState extends State<States> {
                 label: "Avg 200 EMA (D)", value: keyStats?.priceAvg200),
           // if (index == 10)
           //   StateItemNEW(label: "Exchange", value: keyStats?.exchange),
-
           if (index == 17)
-            StateItemNEW(label: "Market Cap.", value: keyStats?.marketCap),
+            StateItemNEW(label: "Revenue", value: keyStats?.revenue),
           if (index == 18)
+            StateItemNEW(
+                label: "Book value/Share", value: keyStats?.bookValuePerShare),
+          if (index == 19)
+            StateItemNEW(
+                label: "Dividend (yield)", value: keyStats?.dividendYield),
+          if (index == 20)
+            StateItemNEW(
+                label: "EV/Ebitda", value: keyStats?.enterpriseValueOverEbitda),
+          if (index == 21)
+            StateItemNEW(
+                label: "Bid/Ask", value: "${keyStats?.bid}/${keyStats?.ask}"),
+          // if (index == 22) StateItemNEW(label: "Fair Value", value: "-"),
+          // if (index == 23)
+          //   StateItemNEW(label: "Analyst target price", value: "-"),
+
+          if (index == 22)
+            StateItemNEW(label: "Market Cap.", value: keyStats?.marketCap),
+          if (index == 23)
             StateItemNEW(
                 label: "Shares Outstanding",
                 value: keyStats?.sharesOutstanding),
-          if (index == 19)
+          if (index == 24)
             StateItemNEW(
                 label: "Earnings Announcement",
                 value: keyStats?.earningsAnnouncement),

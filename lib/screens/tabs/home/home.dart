@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/tabs/home/home_container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
@@ -79,23 +74,23 @@ class Home extends StatelessWidget {
 //   }
 // }
 
-void loginIOS() {
-  showCupertinoModalBottomSheet(
-    context: navigatorKey.currentContext!,
-    builder: (context) {
-      return Container(
-        constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 70),
-        color: ThemeColors.greyBorder,
-        child: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  loginIOS();
-                },
-                child: Text("AAAA")),
-          ],
-        ),
-      );
-    },
-  );
-}
+// void loginIOS() {
+//   showCupertinoModalBottomSheet(
+//     context: navigatorKey.currentContext!,
+//     builder: (context) {
+//       return Container(
+//         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 70),
+//         color: ThemeColors.greyBorder,
+//         child: Column(
+//           children: [
+//             ElevatedButton(
+//                 onPressed: () {
+//                   loginIOS();
+//                 },
+//                 child: const Text("AAAA")),
+//           ],
+//         ),
+//       );
+//     },
+//   );
+// }

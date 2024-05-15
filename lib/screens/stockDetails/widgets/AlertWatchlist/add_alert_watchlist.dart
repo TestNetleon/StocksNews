@@ -45,6 +45,9 @@ class AddToAlertWatchlist extends StatelessWidget {
                       context,
                       createRoute(const Login()),
                     );
+
+                    // await loginSheet();
+
                     if (context.read<UserProvider>().user == null) {
                       return;
                     }
