@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
@@ -110,28 +111,28 @@ class Routes {
     var routingData = settings.name;
     switch (routingData) {
       case TCandPolicy.path:
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return TCandPolicy(policyType: settings.arguments as PolicyType);
           },
         );
 
       case NewsDetails.path:
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return NewsDetails(slug: settings.arguments as String?);
           },
         );
 
       case StockDetails.path:
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return StockDetails(symbol: settings.arguments as String);
           },
         );
 
       case StockDetailiFrameItem.path:
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return StockDetailiFrameItem(
                 type: settings.arguments as CommentType);
@@ -142,7 +143,7 @@ class Routes {
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? id = arguments?['id'] as String?;
         BlogsType? type = arguments?['type'] as BlogsType?;
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return Blog(
               type: type ?? BlogsType.blog,
@@ -152,14 +153,14 @@ class Routes {
         );
 
       case BlogDetail.path:
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return BlogDetail(id: settings.arguments as String);
           },
         );
 
       case Tabs.path:
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return Tabs(index: (settings.arguments as int?) ?? 0);
           },
@@ -170,7 +171,7 @@ class Routes {
 
         DetailListType data = arguments["data"] as DetailListType;
         BlogsType type = arguments["type"] as BlogsType;
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return NewsAuthorIndex(
               data: data,
@@ -185,7 +186,7 @@ class Routes {
         String name = arguments["name"] as String;
         String titleName = arguments["titleName"] as String;
 
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return SectorIndustry(
               name: name,
@@ -203,7 +204,7 @@ class Routes {
         final companyName = arguments['companyName'] as String?;
         final reportingName = arguments['reportingName'] as String?;
 
-        return MaterialPageRoute(
+        return MaterialWithModalsPageRoute(
           builder: (context) {
             return InsiderDetailsType(
               companySlug: companySlug ?? "",
@@ -218,7 +219,7 @@ class Routes {
   }
 
   static Route _errorRoute() {
-    return MaterialPageRoute(
+    return MaterialWithModalsPageRoute(
         builder: (context) => BaseContainer(
               body: Center(
                 child: Text(
