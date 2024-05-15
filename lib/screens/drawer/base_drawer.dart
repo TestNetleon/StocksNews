@@ -18,6 +18,7 @@ import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 // import 'package:stocks_news_new/screens/whatWeDo/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
