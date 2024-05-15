@@ -318,6 +318,7 @@ Future saveFCMapi({String? value, String? address}) async {
 
     if (response.status) {
       Preference.saveFcmToken(value);
+      Preference.saveLocation(address);
     } else {
       //
     }

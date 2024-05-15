@@ -5,14 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
 //
 class MyAccountOTP extends StatefulWidget {
@@ -103,37 +102,60 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
               ),
             ),
             const SpacerVertical(),
-            Text(
-              "Verification Code",
-              style: stylePTSansRegular(fontSize: 14),
+            // Text(
+            //   "Verification Code",
+            //   style: stylePTSansRegular(fontSize: 14),
+            // ),
+            // const SpacerVertical(height: 5),
+            // Stack(
+            //   alignment: Alignment.center,
+            //   children: [
+            //     ThemeInputField(
+            //       controller: otpController,
+            //       placeholder: "",
+            //       // keyboardType: TextInputType.phone,
+            //       inputFormatters: [mobilrNumberAllow],
+            //       maxLength: 4,
+            //     ),
+            //     Container(
+            //       margin: EdgeInsets.only(right: 8.sp),
+            //       alignment: Alignment.centerRight,
+            //       child: TextButton(
+            //         onPressed: () => _onResendOtpClick(context, provider),
+            //         child: Text(
+            //           "Resend",
+            //           style: stylePTSansBold(
+            //             fontSize: 14,
+            //             color: ThemeColors.accent,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
+            CommonPinput(
+              controller: otpController,
+              onCompleted: (p0) {
+                _verify(context, provider);
+              },
             ),
-            const SpacerVertical(height: 5),
-            Stack(
+
+            Container(
+              margin: EdgeInsets.only(right: 8.sp),
               alignment: Alignment.center,
-              children: [
-                ThemeInputField(
-                  controller: otpController,
-                  placeholder: "",
-                  // keyboardType: TextInputType.phone,
-                  inputFormatters: [mobilrNumberAllow],
-                  maxLength: 4,
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 8.sp),
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () => _onResendOtpClick(context, provider),
-                    child: Text(
-                      "Resend",
-                      style: stylePTSansBold(
-                        fontSize: 14,
-                        color: ThemeColors.accent,
-                      ),
-                    ),
+              child: TextButton(
+                onPressed: () => _onResendOtpClick(context, provider),
+                child: Text(
+                  "Resend",
+                  style: stylePTSansBold(
+                    fontSize: 14,
+                    color: ThemeColors.accent,
                   ),
                 ),
-              ],
+              ),
             ),
+
             const SpacerVertical(),
             ThemeButton(
               onPressed: () => _verify(context, provider),

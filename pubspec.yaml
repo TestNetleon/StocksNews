@@ -50,7 +50,7 @@ dependencies:
   # connectivity_plus: ^5.0.1
   package_info_plus: ^5.0.1
   syncfusion_flutter_gauges: ^25.1.42
-  pinput: ^3.0.1
+  pinput: ^4.0.0
   flutter_slidable: ^3.0.1
   change_app_package_name: ^1.1.0
   firebase_core: ^2.27.0

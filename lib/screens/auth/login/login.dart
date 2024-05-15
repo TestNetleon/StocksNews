@@ -74,6 +74,7 @@ class _LoginState extends State<Login> {
 
     try {
       String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
 
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       log(account.toString());
@@ -86,6 +87,8 @@ class _LoginState extends State<Login> {
           "id": account.id,
           "photoUrl": account.photoUrl ?? "",
           "fcm_token": fcmToken ?? "",
+          "platform": Platform.operatingSystem,
+          "address": address ?? "",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request,
@@ -102,12 +105,17 @@ class _LoginState extends State<Login> {
   void _handleSignInApple(id, displayName, email) async {
     try {
       String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+
       UserProvider provider = context.read<UserProvider>();
+
       Map request = {
         "displayName": displayName ?? "",
         "email": email ?? "",
         "id": id ?? "",
         "fcm_token": fcmToken ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
       };
       provider.appleLogin(request,
           state: widget.state, dontPop: widget.dontPop);

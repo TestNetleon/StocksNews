@@ -108,9 +108,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       getHomeSlider();
     }
 
-    if (_ipoRes == null) {
-      getIpoData();
-    }
+    // if (_ipoRes == null) {
+    //   getIpoData();
+    // }
     if (_homeSentimentRes == null) {
       getHomeSentimentData();
     }

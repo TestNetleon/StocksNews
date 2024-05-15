@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/widgets/theme_alert_dialog.dart';
@@ -46,7 +47,8 @@ class _LogoutDialogState extends State<LogoutDialog> {
                 Map request = {
                   'token': context.read<UserProvider>().user?.token ?? "",
                 };
-                Navigator.pop(context);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Tabs.path, (route) => false);
                 context.read<UserProvider>().logoutUser(request);
               },
               child: Text(

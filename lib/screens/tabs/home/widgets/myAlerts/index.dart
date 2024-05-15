@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item.dart';
@@ -17,13 +21,16 @@ class HomeMyAlerts extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
     List<HomeAlertsRes>? homeAlert = provider.homeAlertData;
+
+    UserRes? userRes = context.watch<UserProvider>().user;
+    log("$userRes");
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-              visible: provider.userAlert != 0,
+              // visible: provider.userAlert != 0,
               child: Padding(
                 padding: EdgeInsets.only(top: 15.sp),
                 child: Row(
@@ -31,13 +38,15 @@ class HomeMyAlerts extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        "Featured Stocks",
+                        userRes == null ? "Featured Stocks" : "Stock Alerts",
                         style: stylePTSansBold(),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, Alerts.path);
+                        userRes == null
+                            ? null
+                            : Navigator.pushNamed(context, Alerts.path);
                       },
                       child: Row(
                         children: [
@@ -63,6 +72,7 @@ class HomeMyAlerts extends StatelessWidget {
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   HomeAlertsRes? data = homeAlert?[index];
                   if (data == null) {

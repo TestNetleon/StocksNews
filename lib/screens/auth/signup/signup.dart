@@ -80,6 +80,7 @@ class _SignUpState extends State<SignUp> {
     try {
       print("Signed In ******* ##");
       String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
 
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       print("Signed In *******");
@@ -93,6 +94,8 @@ class _SignUpState extends State<SignUp> {
           "id": account.id,
           "photoUrl": account.photoUrl ?? "",
           "fcm_token": fcmToken ?? "",
+          "platform": Platform.operatingSystem,
+          "address": address ?? "",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, dontPop: "true");
@@ -114,12 +117,16 @@ class _SignUpState extends State<SignUp> {
   void _handleSignInApple(id, displayName, email) async {
     try {
       String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+
       UserProvider provider = context.read<UserProvider>();
       Map request = {
         "displayName": displayName ?? "",
         "email": email ?? "",
         "id": id ?? "",
         "fcm_token": fcmToken ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
       };
       provider.appleLogin(request, dontPop: "true");
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}

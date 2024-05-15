@@ -16,7 +16,7 @@ class SocialSentimentMentions extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => Navigator.pushNamed(context, StockDetails.path,
           arguments: data.symbol),
       child: Column(

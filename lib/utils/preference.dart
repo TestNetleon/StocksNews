@@ -43,4 +43,14 @@ class Preference {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("@fcmToken", token);
   }
+
+  static Future<String?> getLocation() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("@location");
+  }
+
+  static void saveLocation(address) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("@location", address);
+  }
 }

@@ -69,9 +69,7 @@ class _AlertBaseState extends State<AlertBase> {
               ),
             ),
             Visibility(
-              visible: provider.textRes?.note != '' &&
-                  userProvider.user != null &&
-                  provider.isLoading,
+              visible: provider.textRes?.note != null,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10.sp),
                 padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),

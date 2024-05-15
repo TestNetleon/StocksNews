@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/auth/login/login.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
@@ -226,11 +227,13 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           onPressed: () {
                             // Navigator.pushNamed(context, Login.path);
                             Navigator.pop(context);
-                            Navigator.push(
-                                context,
-                                createRoute(const Login(
-                                  dontPop: "true",
-                                )));
+                            // Navigator.push(
+                            //     context,
+                            //     createRoute(const Login(
+                            //       dontPop: "true",
+                            //     )));
+
+                            loginSheet(dontPop: 'true');
                           },
                           text: "Log in",
                           showArrow: false,
