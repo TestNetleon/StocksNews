@@ -59,6 +59,10 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location to get mark in/out location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs location to get mark in/out location</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes to login on website</string>
 	<key>NSMicrophoneUsageDescription</key>
