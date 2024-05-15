@@ -25,15 +25,6 @@ echo "# StocksNews" >> README.md
 
 
 
-==== Stock Details Remaining========
-1. Analysis Forecast
-2. Mentions
-3. Technical Analysis
-4. Twitter Sentiment/Activity
-5. Recent Tweets
-6. Reddit Sentiment/Activity
-7. Recent Reddit Comments
-8. Trending Stories
 
 
 
@@ -131,54 +122,6 @@ Subject Public Key Algorithm: 2048-bit RSA key
 Bitly App ID: Ao1seSO8XNS 
 
 
-- Home Trending change in price on top - DONE 
-- Add mentions label on home trending - DONE
-- Show price@ on home trending - DONE
-- subtitles on stock details should be dynamic from API -DONE
-- Details page Tabs system - DONE
-
-- Image Notification in iOS
-- Home Page missing Section (check skype and website)
-- Screenshot Change
-- Subtitles should be dynamic from API
-- info on Chart bottomsheet
 
 
 
-- Details page Tabs system 
-- subtitles on stock details should be dynamic from API
-- info on Chart bottomsheet
-1. blog work
-2. META graph decimal 2
-3. notification count
-4. bloomberg app like news listing page
-5. Socket on stock detail top value
-6. share on blogs
-11. iOS image
-========================================================================================
-- images on trending industries (rem)
-- trending, loser, gainers text (rem)
-- stock detail overview socket (rem)
-- starting screen API (rem)
-- continue as guest, login signup (done)
---> Insider Trading (done)
-- Chief Executive Officer (rem)
-- officer remove word (rem)
-========================================================================================
- - refresh token
- - stock in buzz
- - whats in my watchlists
- - alerts
- - K on dashboard to navigate on Home
- - IPO show 
-
--- My Alert
-
-- OTP Fill WITH 4 INPUT - UI CHANGE
-- Trending Industries UI change
-- Internet connection on splash
-- location get
-
-
-- vibration on click
-- alert box

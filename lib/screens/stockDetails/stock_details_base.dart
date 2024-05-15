@@ -64,7 +64,7 @@ class StockDetailsBase extends StatelessWidget {
                       left: Dimen.padding.sp,
                       right: Dimen.padding.sp,
                     ),
-                    child: StockTopDetail(),
+                    child: const StockTopDetail(),
                   ),
                   // StockDetailTopGraph(),
                   Padding(
@@ -72,14 +72,14 @@ class StockDetailsBase extends StatelessWidget {
                       left: 8.sp,
                       right: 8.sp,
                     ),
-                    child: NewTopGraphIndex(),
+                    child: const NewTopGraphIndex(),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
                       left: Dimen.padding.sp,
                       right: Dimen.padding.sp,
                     ),
-                    child: CompanyBrief(),
+                    child: const CompanyBrief(),
                   ),
                   // SpacerVertical(height: 90),
                 ],
