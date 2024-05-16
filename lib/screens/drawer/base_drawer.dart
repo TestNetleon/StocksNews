@@ -148,9 +148,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
   // }
 
   _onitemTap({required int index}) {
-    Timer(const Duration(milliseconds: 200), () {
-      Scaffold.of(context).closeDrawer();
-    });
+    Scaffold.of(context).closeDrawer();
 
     if (drawerItems[index].isSelected) {
       return; // Do nothing if the item is already selected
