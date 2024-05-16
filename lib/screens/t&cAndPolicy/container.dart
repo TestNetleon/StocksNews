@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +39,22 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
     });
   }
 
+  void _triggerEvents() {
+    if (widget.policyType == PolicyType.aboutUs) {
+      FirebaseInAppMessaging.instance.triggerEvent("about_click");
+      log("about_click");
+    } else if (widget.policyType == PolicyType.tC) {
+      FirebaseInAppMessaging.instance.triggerEvent("terms_click");
+      log("terms_click");
+    } else if (widget.policyType == PolicyType.privacy) {
+      FirebaseInAppMessaging.instance.triggerEvent("privacy_click");
+      log("privacy_click");
+    } else {
+      FirebaseInAppMessaging.instance.triggerEvent("disclaimer_click");
+      log("disclaimer_click");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TermsAndPolicyProvider provider = context.watch<TermsAndPolicyProvider>();
@@ -64,15 +84,18 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ScreenTitle(
-              title: widget.policyType == PolicyType.aboutUs
-                  ? "About Us"
-                  : widget.policyType == PolicyType.tC
-                      ? "Terms & Conditions"
-                      : widget.policyType == PolicyType.privacy
-                          ? "Privacy Policy"
-                          : "Disclaimer",
-              // optionalText: 'Last Updated: 5/12/2022',
+            GestureDetector(
+              onTap: _triggerEvents,
+              child: ScreenTitle(
+                title: widget.policyType == PolicyType.aboutUs
+                    ? "About Stocks.news"
+                    : widget.policyType == PolicyType.tC
+                        ? "Terms & Conditions"
+                        : widget.policyType == PolicyType.privacy
+                            ? "Privacy Policy"
+                            : "Disclaimer",
+                // optionalText: 'Last Updated: 5/12/2022',
+              ),
             ),
             _getWidget(provider),
           ],
