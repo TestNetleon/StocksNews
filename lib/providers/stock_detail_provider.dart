@@ -37,7 +37,7 @@ class StockDetailProvider with ChangeNotifier {
 
   StocksOtherDetailsRes? _otherData;
   StocksOtherDetailsRes? get otherData => _otherData;
-
+  String? graphError = '';
   bool analysisLoading = false;
   bool mentionLoading = false;
   bool tALoading = false;
@@ -411,6 +411,7 @@ class StockDetailProvider with ChangeNotifier {
     showProgress = false,
     String? from,
   }) async {
+    _graphChart = null;
     _statusGraph = Status.loading;
     notifyListeners();
 
@@ -456,9 +457,10 @@ class StockDetailProvider with ChangeNotifier {
         _graphChart = stockDetailGraphFromJson(jsonEncode(response.data));
         notifyListeners();
         Utils().showLog(" in API reversed graphChart ${_graphChart?[0].close}");
-
         avgData(showDate: newRange != "1Y");
+        graphError = '';
       } else {
+        graphError = response.message;
         showErrorMessage(message: response.message);
       }
       _statusGraph = Status.loaded;
@@ -467,6 +469,7 @@ class StockDetailProvider with ChangeNotifier {
     } catch (e) {
       Utils().showLog(e.toString());
       _statusGraph = Status.loaded;
+      graphError = '';
 
       notifyListeners();
     }

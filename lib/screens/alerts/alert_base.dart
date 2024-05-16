@@ -60,43 +60,6 @@ class _AlertBaseState extends State<AlertBase> {
         child: Column(
           children: [
             const ScreenTitle(title: "Stock Alerts"),
-            Visibility(
-              visible:
-                  provider.textRes?.subTitle != '' && userProvider.user != null,
-              child: Text(
-                provider.textRes?.subTitle ?? "",
-                style: stylePTSansRegular(fontSize: 12),
-              ),
-            ),
-            Visibility(
-              visible: provider.textRes?.note != null,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 10.sp),
-                padding: EdgeInsets.symmetric(vertical: 5.sp, horizontal: 5.sp),
-                decoration: const BoxDecoration(
-                  color: ThemeColors.greyBorder,
-                  border: Border(
-                    left: BorderSide(
-                      color: ThemeColors.white,
-                      width: 3,
-                    ),
-                  ),
-                ),
-                child: Text(
-                  provider.textRes?.note ?? "",
-                  style: stylePTSansRegular(fontSize: 12),
-                ),
-              ),
-            ),
-            Visibility(
-              visible:
-                  provider.textRes?.other != '' && userProvider.user != null,
-              child: Text(
-                provider.textRes?.other ?? "",
-                style: stylePTSansRegular(fontSize: 12),
-              ),
-            ),
-            const SpacerVertical(height: 5),
             userProvider.user == null
                 ? const Expanded(
                     child: LoginError(
@@ -105,25 +68,71 @@ class _AlertBaseState extends State<AlertBase> {
                     ),
                   )
                 : Expanded(
-                    child: BaseUiContainer(
-                      isLoading: provider.isLoading && provider.data == null,
-                      hasData:
-                          provider.data != null && provider.data!.isNotEmpty,
-                      error: provider.error,
-                      errorDispCommon: true,
-                      showPreparingText: true,
-                      // onRefresh: () => provider.getAlerts(showProgress: false),
-                      navBtnText: "Add First Stock Alert",
-                      onNavigate: () {
-                        Navigator.popUntil(context, (route) => route.isFirst);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const Tabs(index: 1),
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: provider.textRes?.subTitle != '' &&
+                              userProvider.user != null,
+                          child: Text(
+                            provider.textRes?.subTitle ?? "",
+                            style: stylePTSansRegular(fontSize: 12),
                           ),
-                        );
-                      },
-                      child: const AlertContainer(),
+                        ),
+                        Visibility(
+                          visible: provider.textRes?.note != null,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 10.sp),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5.sp, horizontal: 5.sp),
+                            decoration: const BoxDecoration(
+                              color: ThemeColors.greyBorder,
+                              border: Border(
+                                left: BorderSide(
+                                  color: ThemeColors.white,
+                                  width: 3,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              provider.textRes?.note ?? "",
+                              style: stylePTSansRegular(fontSize: 12),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: provider.textRes?.other != '' &&
+                              userProvider.user != null,
+                          child: Text(
+                            provider.textRes?.other ?? "",
+                            style: stylePTSansRegular(fontSize: 12),
+                          ),
+                        ),
+                        const SpacerVertical(height: 5),
+                        Expanded(
+                          child: BaseUiContainer(
+                            isLoading:
+                                provider.isLoading && provider.data == null,
+                            hasData: provider.data != null &&
+                                provider.data!.isNotEmpty,
+                            error: provider.error,
+                            errorDispCommon: true,
+                            showPreparingText: true,
+                            // onRefresh: () => provider.getAlerts(showProgress: false),
+                            navBtnText: "Add First Stock Alert",
+                            onNavigate: () {
+                              Navigator.popUntil(
+                                  context, (route) => route.isFirst);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const Tabs(index: 1),
+                                ),
+                              );
+                            },
+                            child: const AlertContainer(),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
           ],

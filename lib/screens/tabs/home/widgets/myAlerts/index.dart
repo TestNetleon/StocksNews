@@ -8,6 +8,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
+import 'package:stocks_news_new/screens/allFeatured/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -45,7 +46,12 @@ class HomeMyAlerts extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         userRes == null
-                            ? null
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AllFeaturedIndex(),
+                                ))
                             : Navigator.pushNamed(context, Alerts.path);
                       },
                       child: Row(
@@ -79,17 +85,18 @@ class HomeMyAlerts extends StatelessWidget {
                     return const SizedBox();
                   }
                   return FittedBox(
-                      alignment: Alignment.topCenter,
-                      fit: BoxFit.scaleDown,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, StockDetails.path,
-                              arguments: data.symbol);
-                        },
-                        child: HomeMyAlertItem(
-                          data: data,
-                        ),
-                      ));
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.scaleDown,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, StockDetails.path,
+                            arguments: data.symbol);
+                      },
+                      child: HomeMyAlertItem(
+                        data: data,
+                      ),
+                    ),
+                  );
                 },
                 separatorBuilder: (context, index) {
                   return const SpacerHorizontal(width: 12);

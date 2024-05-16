@@ -27,11 +27,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/createAccount/create_account.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
-import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
-import 'package:stocks_news_new/screens/auth/otp/otp_signup.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
@@ -58,18 +54,19 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
+import '../providers/featured_ticker.dart';
 import '../screens/whatWeDo/index.dart';
 
 class Routes {
   static var routes = {
     Splash.path: (_) => const Splash(),
-    Login.path: (_) => const Login(),
-    SignUp.path: (_) => const SignUp(),
+    // Login.path: (_) => const Login(),
+    // SignUp.path: (_) => const SignUp(),
     CreateAccount.path: (_) => const CreateAccount(),
     SignUpSuccess.path: (_) => const SignUpSuccess(),
     // Tabs.path: (_) => const Tabs(),
-    OTPSignup.path: (_) => const OTPSignup(),
-    OTPLogin.path: (_) => const OTPLogin(),
+    // OTPSignup.path: (_) => const OTPSignup(),
+    // OTPLogin.path: (_) => const OTPLogin(),
     Search.path: (_) => const Search(),
     FAQ.path: (_) => const FAQ(),
     Notifications.path: (_) => const Notifications(),
@@ -254,6 +251,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewsDetailProvider()),
       ChangeNotifierProvider(create: (_) => NewsTypeProvider()),
       ChangeNotifierProvider(create: (_) => NotificationProvider()),
+      ChangeNotifierProvider(create: (_) => FeaturedTickerProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

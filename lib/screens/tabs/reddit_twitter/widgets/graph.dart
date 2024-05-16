@@ -152,7 +152,7 @@ class SocialSentimentsGraph extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 0,
+                    bottom: 14.sp,
                     left: 0,
                     right: 0,
                     child: Row(

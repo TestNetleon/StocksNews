@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
@@ -102,26 +104,42 @@ class StockMentionWithItem extends StatelessWidget {
             ),
           ),
           const SpacerHorizontal(width: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                "${item.price}",
-                style: stylePTSansBold(fontSize: 14),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SpacerHorizontal(width: 8),
-              Text(
-                "${item.change! > 0 ? '+' : ''}${item.change?.toCurrency()}",
-                style: stylePTSansRegular(
-                  fontSize: 12,
-                  color:
-                      item.change! > 0 ? ThemeColors.accent : ThemeColors.sos,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "${item.price}",
+                  style: stylePTSansBold(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
-          )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      item.change?.toCurrency() ?? "",
+                      style: stylePTSansRegular(
+                        fontSize: 11,
+                        color: item.change! > 0
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
+                      ),
+                    ),
+                    Text(
+                      " (${item.changesPercentage?.toCurrency()}%)",
+                      style: stylePTSansRegular(
+                        fontSize: 11,
+                        color: item.change! > 0
+                            ? ThemeColors.accent
+                            : ThemeColors.sos,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

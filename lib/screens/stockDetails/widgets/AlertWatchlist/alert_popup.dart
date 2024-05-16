@@ -325,7 +325,7 @@ class _AlertPopupState extends State<AlertPopup> {
           child: Row(
             children: [
               Icon(
-                Icons.notifications,
+                Icons.add_alert_outlined,
                 size: 15.sp,
                 color: ThemeColors.accent,
               ),

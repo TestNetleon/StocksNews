@@ -41,7 +41,8 @@ class AlertWatchlistButton extends StatelessWidget {
               style: stylePTSansBold(fontSize: 12),
             ),
             Visibility(
-              visible: iconData == Icons.notifications && name == "Alert Added",
+              visible:
+                  iconData == Icons.add_alert_outlined && name == "Alert Added",
               child: Padding(
                 padding: EdgeInsets.only(left: 2.sp),
                 child: Icon(
@@ -52,7 +53,8 @@ class AlertWatchlistButton extends StatelessWidget {
               ),
             ),
             Visibility(
-              visible: iconData == Icons.star && name == "Watchlist Added",
+              visible:
+                  iconData == Icons.star_border && name == "Watchlist Added",
               child: Padding(
                 padding: EdgeInsets.only(left: 2.sp),
                 child: Icon(

@@ -19,7 +19,7 @@ class HomeAlertsRes {
   final String change;
   final num changesPercentage;
   final num previousClose;
-  final List<Chart> chart;
+  final List<Chart>? chart;
 
   HomeAlertsRes({
     required this.symbol,
@@ -29,7 +29,7 @@ class HomeAlertsRes {
     required this.change,
     required this.changesPercentage,
     required this.previousClose,
-    required this.chart,
+    this.chart,
   });
 
   factory HomeAlertsRes.fromJson(Map<String, dynamic> json) => HomeAlertsRes(
@@ -40,7 +40,9 @@ class HomeAlertsRes {
         change: json["change"],
         previousClose: json["previousClose"],
         changesPercentage: json["changesPercentage"]?.toDouble(),
-        chart: List<Chart>.from(json["chart"].map((x) => Chart.fromJson(x))),
+        chart: json["chart"] == null
+            ? []
+            : List<Chart>.from(json["chart"]!.map((x) => Chart.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,7 +53,9 @@ class HomeAlertsRes {
         "price": price,
         "change": change,
         "changesPercentage": changesPercentage,
-        "chart": List<dynamic>.from(chart.map((x) => x.toJson())),
+        "chart": chart == null
+            ? []
+            : List<dynamic>.from(chart!.map((x) => x.toJson())),
       };
 }
 

@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
-import 'package:stocks_news_new/screens/auth/signup/signup.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -193,14 +192,15 @@ class _StartIndexState extends State<StartIndex> {
                     color: ThemeColors.white,
                     textColor: ThemeColors.background,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        createRoute(
-                          const Login(
-                            dontPop: "true",
-                          ),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   createRoute(
+                      //     const Login(
+                      //       dontPop: "true",
+                      //     ),
+                      //   ),
+                      // );
+                      loginSheet(dontPop: "true");
                     },
                     text: "Log In",
                   ),
@@ -211,14 +211,15 @@ class _StartIndexState extends State<StartIndex> {
                     color: ThemeColors.white,
                     textColor: ThemeColors.background,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        createRoute(
-                          const SignUp(
-                            dntPop: "true",
-                          ),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   createRoute(
+                      //     const SignUp(
+                      //       dntPop: "true",
+                      //     ),
+                      //   ),
+                      // );
+                      signupSheet(dontPop: "true");
                     },
                     text: "Create New Account",
                   ),

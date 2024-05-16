@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +11,8 @@ import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/back_press.dart';
@@ -16,7 +23,6 @@ import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
-import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 // import 'package:stocks_news_new/screens/whatWeDo/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -27,6 +33,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 //
+import '../../utils/utils.dart';
 import '../watchlist/watchlist.dart';
 
 class BaseDrawer extends StatefulWidget {
@@ -146,7 +153,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
   // }
 
   _onitemTap({required int index}) {
-    Navigator.pop(context);
+    // Timer(const Duration(milliseconds: 30), () {
+    Scaffold.of(context).closeDrawer();
+    // });
 
     if (drawerItems[index].isSelected) {
       return; // Do nothing if the item is already selected
@@ -161,36 +170,44 @@ class _BaseDrawerState extends State<BaseDrawer> {
 
     // Define a map to store the routes based on the index
     Map<int, String> routes = {
-      1: StocksIndex.path,
-      2: Alerts.path,
-      3: WatchList.path,
-      4: TrendingIndustries.path,
-      5: Notifications.path,
-      6: MyAccount.path,
-      7: FAQ.path,
-      8: TCandPolicy.path,
-      9: ContactUs.path,
-      10: TCandPolicy.path,
-      11: TCandPolicy.path,
-      12: TCandPolicy.path,
-      13: IndexBlog.path,
+      // 1: StocksIndex.path,
+      // 2: Alerts.path,
+      // 3: WatchList.path,
+      // 4: TrendingIndustries.path,
+      // 5: Notifications.path,
+      // 6: MyAccount.path,
+      // 7: FAQ.path,
+      // 8: TCandPolicy.path,
+      // 9: ContactUs.path,
+      // 10: TCandPolicy.path,
+      // 11: TCandPolicy.path,
+      // 12: TCandPolicy.path,
+      // 13: IndexBlog.path,
+
+      0: StocksIndex.path,
+      // 1: Alerts.path,
+      // 2: WatchList.path,
+      1: TrendingIndustries.path,
+      2: Notifications.path,
+      3: MyAccount.path,
+      4: FAQ.path,
+      5: TCandPolicy.path,
+      6: ContactUs.path,
+      // 7: TCandPolicy.path,
+      // 8: TCandPolicy.path,
+      7: TCandPolicy.path,
+      8: IndexBlog.path,
       // 14: WhatWeDoIndex.path,
     };
 
     // Check if the index is within the valid range
-    if (index >= 1 && index <= 13) {
+    if (index >= 0 && index <= 10) {
       String path = routes[index]!;
-      if (index == 8 || index == 10 || index == 11 || index == 12) {
+      if (index == 5 || index == 7) {
         Navigator.pushNamed(
           context,
           path,
-          arguments: index == 8
-              ? PolicyType.aboutUs
-              : index == 10
-                  ? PolicyType.tC
-                  : index == 11
-                      ? PolicyType.privacy
-                      : PolicyType.disclaimer,
+          arguments: index == 5 ? PolicyType.aboutUs : PolicyType.disclaimer,
         );
       } else {
         Navigator.pushNamed(context, path);
@@ -209,35 +226,58 @@ class _BaseDrawerState extends State<BaseDrawer> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              const SpacerVertical(height: 40),
+              const SpacerVertical(height: 20),
               !userPresent
                   ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Please log in to continue",
-                          style: stylePTSansRegular(fontSize: 12),
+                          "Welcome",
+                          style: stylePTSansBold(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
-                        const SpacerVertical(height: 10),
-                        ThemeButtonSmall(
-                          onPressed: () {
-                            // Navigator.pushNamed(context, Login.path);
-                            Navigator.pop(context);
-                            // Navigator.push(
-                            //     context,
-                            //     createRoute(const Login(
-                            //       dontPop: "true",
-                            //     )));
-
-                            // loginSheet(dontPop: 'true');
-                            loginIOS();
-                          },
-                          text: "Log in",
-                          showArrow: false,
-                          // fullWidth: false,
-                        )
+                        const SpacerVertical(height: 5),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ThemeButtonSmall(
+                              onPressed: () {
+                                // Navigator.pushNamed(context, Login.path);
+                                Timer(const Duration(milliseconds: 200), () {
+                                  Scaffold.of(context).closeDrawer();
+                                });
+                                loginSheet(dontPop: 'true');
+                                // Navigator.push(
+                                //     context,
+                                //     createRoute(const Login(
+                                //       dontPop: "true",
+                                //     )));
+                              },
+                              text: "Log in",
+                              showArrow: false,
+                              // fullWidth: false,
+                            ),
+                            const SpacerHorizontal(width: 10),
+                            ThemeButtonSmall(
+                              onPressed: () {
+                                // Navigator.pushNamed(context, Login.path);
+                                Timer(const Duration(milliseconds: 200), () {
+                                  Scaffold.of(context).closeDrawer();
+                                });
+                                signupSheet(dontPop: 'true');
+                                // Navigator.push(
+                                //     context,
+                                //     createRoute(const Login(
+                                //       dontPop: "true",
+                                //     )));
+                              },
+                              text: "Sign Up",
+                              showArrow: false,
+                              // fullWidth: false,
+                            )
+                          ],
+                        ),
                       ],
                     )
                   : Padding(
@@ -285,17 +325,19 @@ class _BaseDrawerState extends State<BaseDrawer> {
                       ),
                     ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.sp,
-                  vertical: 20.sp,
+                padding: EdgeInsets.fromLTRB(
+                  20.sp,
+                  0,
+                  20.sp,
+                  20.sp,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Divider(
-                        color: ThemeColors.greyText,
-                        height: 20.sp,
-                        thickness: 1),
+                    // Divider(
+                    //     color: ThemeColors.greyBorder,
+                    //     height: 20.sp,
+                    //     thickness: 1),
                     // TextInputFieldSearchCommon(
                     //   openConstraints: false,
                     //   contentPadding: EdgeInsets.symmetric(
@@ -307,6 +349,75 @@ class _BaseDrawerState extends State<BaseDrawer> {
                     //   searching: context.watch<SearchProvider>().isLoading,
                     //   onChanged: (text) {},
                     // ),
+                    const SpacerVertical(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Scaffold.of(context).closeDrawer();
+                            Navigator.pushNamed(context, Alerts.path);
+                          },
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.add_alert_outlined,
+                                size: 22.sp,
+                              ),
+                              const SpacerVertical(height: 5),
+                              Text(
+                                "4",
+                                style: stylePTSansBold(),
+                              ),
+                              const SpacerVertical(height: 5),
+                              Text(
+                                "Stock Alerts",
+                                style: stylePTSansRegular(
+                                    fontSize: 13,
+                                    color: const Color.fromARGB(
+                                        255, 184, 187, 193)),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SpacerHorizontal(width: 40),
+                        InkWell(
+                          onTap: () {
+                            Scaffold.of(context).closeDrawer();
+                            Navigator.pushNamed(context, WatchList.path);
+                          },
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.star_border,
+                                size: 22.sp,
+                              ),
+                              const SpacerVertical(height: 5),
+                              Text(
+                                "13",
+                                style: stylePTSansBold(),
+                              ),
+                              const SpacerVertical(height: 5),
+                              Text(
+                                "Stock Watchlist",
+                                style: stylePTSansRegular(
+                                  fontSize: 13,
+                                  color:
+                                      const Color.fromARGB(255, 184, 187, 193),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    // const SpacerVertical(height: 5),
+                    const SpacerVertical(height: 25),
+
+                    // Divider(
+                    //     color: ThemeColors.greyBorder,
+                    //     height: 20.sp,
+                    //     thickness: 1),
                     _itemsWidget(),
                     const SpacerVertical(height: 10),
                     Visibility(
@@ -352,13 +463,129 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         ),
                       ),
                     ),
-                    const SpacerVertical(height: 20),
+                    const SpacerVertical(height: 5),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    openUrl(
+                                        'https://play.google.com/store/apps/details?id=com.stocks.news');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(15.sp),
+                                    decoration: const BoxDecoration(
+                                        color: Color.fromARGB(255, 36, 36, 36),
+                                        shape: BoxShape.circle),
+                                    child: Icon(
+                                      Icons.reviews_outlined,
+                                      size: 24.sp,
+                                    ),
+                                  ),
+                                ),
+                                const SpacerVertical(height: 5),
+                                Text(
+                                  "Review app",
+                                  style: stylePTSansRegular(
+                                    color: ThemeColors.greyText,
+                                    fontSize: 13,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    commonShare(
+                                        title: '',
+                                        url: "https://app.stocks.news/");
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(15.sp),
+                                    decoration: const BoxDecoration(
+                                        color: Color.fromARGB(255, 36, 36, 36),
+                                        shape: BoxShape.circle),
+                                    child: Icon(
+                                      Icons.ios_share_outlined,
+                                      size: 24.sp,
+                                    ),
+                                  ),
+                                ),
+                                const SpacerVertical(height: 5),
+                                Text(
+                                  "Share app",
+                                  style: stylePTSansRegular(
+                                    color: ThemeColors.greyText,
+                                    fontSize: 13,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SpacerVertical(height: 30),
+
+                    Align(
+                      alignment: Alignment.center,
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'and',
+                                style: stylePTSansRegular(
+                                    fontSize: 14, color: ThemeColors.greyText)),
+                            TextSpan(
+                                text: ' Terms & Conditions',
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Scaffold.of(context).closeDrawer();
+                                    Navigator.push(
+                                      context,
+                                      createRoute(
+                                        const TCandPolicy(
+                                          policyType: PolicyType.tC,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                style: stylePTSansRegular(fontSize: 14)),
+                          ],
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Scaffold.of(context).closeDrawer();
+                              Navigator.push(
+                                context,
+                                createRoute(
+                                  const TCandPolicy(
+                                    policyType: PolicyType.tC,
+                                  ),
+                                ),
+                              );
+                            },
+                          text: "Privacy Policy ",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                    const SpacerVertical(height: 5),
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Version: $version",
+                        "App Version: $version",
                         style: stylePTSansRegular(
-                            fontSize: 10, color: ThemeColors.greyText),
+                          fontSize: 12,
+                          color: ThemeColors.greyText,
+                        ),
                       ),
                     ),
                     // GestureDetector(

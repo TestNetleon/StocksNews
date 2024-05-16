@@ -137,7 +137,7 @@ class TradingStock {
   final String? price;
   final num? change;
   final String? image;
-  // final num? changesPercentage;
+  final num? changesPercentage;
   // final DateTime? updatedAt;
   // final DateTime? createdAt;
   // final List<Mention>? mentions;
@@ -153,7 +153,7 @@ class TradingStock {
     this.price,
     this.change,
     this.image,
-    // this.changesPercentage,
+    this.changesPercentage,
     // this.updatedAt,
     // this.createdAt,
     // this.mentions,
@@ -170,7 +170,7 @@ class TradingStock {
         price: json["price"],
         change: json["change"],
         image: json["image"],
-        // changesPercentage: json["changesPercentage"]?.toDouble(),
+        changesPercentage: json["changesPercentage"]?.toDouble(),
         // updatedAt: json["updated_at"] == null
         //     ? null
         //     : DateTime.parse(json["updated_at"]),
@@ -195,7 +195,7 @@ class TradingStock {
         "price": price,
         "change": change,
         "image": image,
-        // "changesPercentage": changesPercentage,
+        "changesPercentage": changesPercentage,
         // "updated_at": updatedAt?.toIso8601String(),
         // "created_at": createdAt?.toIso8601String(),
         // "mentions": mentions == null

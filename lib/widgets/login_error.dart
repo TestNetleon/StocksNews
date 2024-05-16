@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
+
+import '../screens/auth/bottomSheets/login_sheet.dart';
 
 //
 class LoginError extends StatelessWidget {
@@ -49,11 +49,14 @@ class LoginError extends StatelessWidget {
                 ThemeButtonSmall(
                   onPressed: () async {
                     // Navigator.pushNamed(context, Login.path);
-                    // FirebaseInAppMessaging.instance.triggerEvent("test_click");
-                    await Navigator.push(
-                      context,
-                      createRoute(Login(state: state)),
-                    );
+
+                    // await Navigator.push(
+                    //   context,
+                    //   createRoute(Login(
+                    //     state: state,
+                    //   )),
+                    // );
+                    await loginSheet(state: state);
                   },
                   text: "Log in",
                   showArrow: false,

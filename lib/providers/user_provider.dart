@@ -13,14 +13,13 @@ import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
-import 'package:stocks_news_new/screens/auth/otp/otp_signup.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_login.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 import '../widgets/ios_emailerror.dart';
 
@@ -70,6 +69,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     return _user != null;
   }
 
+  void updateEmail(value) {
+    _user?.username = value;
+    notifyListeners();
+  }
+
   void logout() async {
     showConfirmAlertDialog(
       context: navigatorKey.currentContext,
@@ -88,7 +92,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future login(request, {String? state, String? dontPop}) async {
+  Future login(
+    request, {
+    String? state,
+    String? dontPop,
+    bool editEmail = false,
+  }) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -99,14 +108,25 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         // Navigator.pushNamed(navigatorKey.currentContext!, OTPLogin.path);
-        Navigator.push(
-          navigatorKey.currentContext!,
-          createRoute(OTPLogin(
-            state: state,
-            dontPop: dontPop,
-          )),
-        );
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   createRoute(OTPLogin(
+        //     state: state,
+        //     dontPop: dontPop,
+        //   )),
+        // );
+        if (editEmail) {
+          log("****************");
+          Navigator.pop(navigatorKey.currentContext!);
+          showErrorMessage(message: response.message, snackbar: false);
+        } else {
+          await otpLoginSheet(state: state, dontPop: dontPop);
+        }
       } else {
+        if (editEmail) {
+          showErrorMessage(message: response.message, snackbar: false);
+          Navigator.pop(navigatorKey.currentContext!);
+        }
         showErrorMessage(message: response.message);
       }
     } catch (e) {
@@ -225,7 +245,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future signup(request) async {
+  Future signup(
+    request, {
+    bool editEmail = false,
+  }) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -235,8 +258,18 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
       if (response.status) {
         _user = UserRes.fromJson(response.data);
-        Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
+        // Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
+        if (editEmail) {
+          Navigator.pop(navigatorKey.currentContext!);
+          showErrorMessage(message: response.message, snackbar: false);
+        } else {
+          otpSignupSheet();
+        }
       } else {
+        if (editEmail) {
+          showErrorMessage(message: response.message, snackbar: false);
+          Navigator.pop(navigatorKey.currentContext!);
+        }
         showErrorMessage(message: response.message);
       }
     } catch (e) {

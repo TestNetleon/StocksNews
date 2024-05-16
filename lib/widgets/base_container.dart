@@ -9,6 +9,7 @@ class BaseContainer extends StatelessWidget {
     this.bottomNavigationBar,
     this.showSync = false,
     this.drawer,
+    this.moreGradient = false,
     super.key,
     this.resizeToAvoidBottomInset,
   });
@@ -19,6 +20,7 @@ class BaseContainer extends StatelessWidget {
   final Widget body;
   final bool showSync;
   final bool? resizeToAvoidBottomInset;
+  final bool moreGradient;
 //
   @override
   Widget build(BuildContext context) {
@@ -28,22 +30,21 @@ class BaseContainer extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          // gradient: LinearGradient(
-          //   begin: Alignment.center,
-          //   end: Alignment.bottomCenter,
-          //   colors: [
-          //     ThemeColors.background,
-          //     ThemeColors.accent.withOpacity(0.1),
-          //   ],
-          // ),
-
           gradient: RadialGradient(
             center: Alignment.bottomCenter,
-            radius: 0.5,
-            // tileMode: TileMode.decal,
-            colors: [
-              ThemeColors.accent.withOpacity(0.4),
-              ThemeColors.accent.withOpacity(0.1),
+            // radius: 0.6,
+            // stops: [
+            //   0.0,
+            //   0.9,
+            // ],
+            radius: moreGradient ? 0.7 : 0.6,
+            stops: const [
+              0.0,
+              0.9,
+            ],
+            colors: const [
+              Color.fromARGB(255, 0, 125, 17),
+              Colors.black,
             ],
           ),
         ),
@@ -62,15 +63,3 @@ class BaseContainer extends StatelessWidget {
     );
   }
 }
-  // decoration: BoxDecoration(
-  //       gradient: LinearGradient(
-  //         begin: Alignment.topLeft,
-  //         end: Alignment.bottomRight,
-  //         colors: [
-  //           ThemeColors.accent.withOpacity(0.1),
-  //           ThemeColors.background,
-  //           ThemeColors.background,
-  //           ThemeColors.accent.withOpacity(0.1),
-  //         ],
-  //       ),
-  //     ),

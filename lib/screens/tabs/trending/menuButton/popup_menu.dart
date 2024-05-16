@@ -3,11 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import 'package:provider/provider.dart';
@@ -44,10 +43,13 @@ class PopUpMenuButtonCommon extends StatelessWidget {
         PopupMenuItem<AddType>(
           onTap: provider.user == null
               ? () async {
-                  await Navigator.push(
-                    context,
-                    createRoute(const Login()),
-                  );
+                  // await Navigator.push(
+                  //   context,
+                  //   createRoute(const Login()),
+                  // );
+
+                  await loginSheet();
+
                   if (context.read<UserProvider>().user == null) {
                     return;
                   }
@@ -58,7 +60,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.notifications,
+                Icons.add_alert_outlined,
                 size: !isPhone ? 35 : 16.sp,
                 color: ThemeColors.white,
               ),
@@ -88,10 +90,12 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           onTap: provider.user == null
               // ? () => _login(context)
               ? () async {
-                  await Navigator.push(
-                    context,
-                    createRoute(const Login()),
-                  );
+                  // await Navigator.push(
+                  //   context,
+                  //   createRoute(const Login()),
+                  // );
+                  await loginSheet();
+
                   if (context.read<UserProvider>().user == null) {
                     return;
                   }
@@ -102,7 +106,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.star,
+                Icons.star_border,
                 size: !isPhone ? 35 : 16.sp,
                 color: ThemeColors.white,
               ),
