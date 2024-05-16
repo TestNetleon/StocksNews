@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
@@ -104,7 +105,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
   // ];
 
   LineChartData avgData() {
-    List<Chart> reversedData = widget.data.chart.reversed.toList();
+    List<Chart> reversedData = widget.data.chart?.reversed.toList() ?? [];
 
     List<FlSpot> spots = [];
 
@@ -141,9 +142,10 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
         LineChartBarData(
           show: true,
           spots: spots,
-          color: widget.data.previousClose > widget.data.chart.first.close
-              ? ThemeColors.sos
-              : ThemeColors.accent,
+          color:
+              widget.data.previousClose > (widget.data.chart?.first.close ?? 0)
+                  ? ThemeColors.sos
+                  : ThemeColors.accent,
           isCurved: true,
           barWidth: 2,
           isStrokeCapRound: false,
@@ -156,10 +158,11 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                widget.data.previousClose > widget.data.chart.first.close
+                widget.data.previousClose >
+                        (widget.data.chart?.first.close ?? 0)
                     ? ThemeColors.sos.withOpacity(0.1)
                     : ThemeColors.accent.withOpacity(0.1),
-                ThemeColors.background,
+                const Color.fromARGB(255, 48, 48, 48),
               ],
             ),
           ),
@@ -185,9 +188,12 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
         width: 220.sp,
 
         decoration: BoxDecoration(
+          // color: const Color.fromARGB(255, 48, 48, 48),
           // color: ThemeColors.greyBorder,
           borderRadius: BorderRadius.circular(10.sp),
           gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
               Color.fromARGB(255, 23, 23, 23),
               // ThemeColors.greyBorder,
@@ -268,19 +274,21 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                 ],
               ),
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10.sp),
-                bottomRight: Radius.circular(10.sp),
-              ),
-              child: Container(
-                padding: EdgeInsets.only(top: 10.sp),
-                height: 90.sp,
-                child: LineChart(
-                  avgData(),
-                ),
-              ),
-            ),
+            widget.data.chart == null || widget.data.chart?.isEmpty == true
+                ? const SizedBox()
+                : ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.sp),
+                      bottomRight: Radius.circular(10.sp),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 10.sp, bottom: 4.sp),
+                      height: 80.sp,
+                      child: LineChart(
+                        avgData(),
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

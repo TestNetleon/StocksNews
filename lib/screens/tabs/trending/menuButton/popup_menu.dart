@@ -60,7 +60,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.notifications,
+                Icons.add_alert_outlined,
                 size: !isPhone ? 35 : 16.sp,
                 color: ThemeColors.white,
               ),
@@ -106,7 +106,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Icons.star,
+                Icons.star_border,
                 size: !isPhone ? 35 : 16.sp,
                 color: ThemeColors.white,
               ),

@@ -23,7 +23,7 @@ class _AnalysisForecastState extends State<WebviewLink> {
   @override
   void initState() {
     super.initState();
-
+    log("-------${widget.url}---- ${widget.stringURL}---------");
     _setData(url: widget.url, stringURL: widget.stringURL);
   }
 

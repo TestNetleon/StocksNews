@@ -38,11 +38,11 @@ class BaseContainer extends StatelessWidget {
             //   0.9,
             // ],
             radius: moreGradient ? 0.7 : 0.6,
-            stops: [
+            stops: const [
               0.0,
               0.9,
             ],
-            colors: [
+            colors: const [
               Color.fromARGB(255, 0, 125, 17),
               Colors.black,
             ],

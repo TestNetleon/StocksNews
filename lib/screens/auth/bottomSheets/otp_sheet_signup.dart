@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -14,11 +15,13 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
+import 'edit_email.dart';
+
 otpSignupSheet({
   String? state,
   String? dontPop,
-}) {
-  showModalBottomSheet(
+}) async {
+  await showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5.sp),
@@ -44,21 +47,34 @@ class OTPSignupBottom extends StatefulWidget {
 
 class _OTPSignupBottomState extends State<OTPSignupBottom> {
   final TextEditingController _controller = TextEditingController();
-  // final TextEditingController _emailOtpcontroller = TextEditingController();
-  // final TextEditingController _phoneOtpcontroller = TextEditingController();
+
+  int startTiming = 30;
+  Timer? _timer;
+
+  void _startTime() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        startTiming = startTiming - 1;
+        Utils().showLog("Start Timer ? $startTiming");
+        if (startTiming == 0) {
+          startTiming = 30;
+          _timer?.cancel();
+          Utils().showLog("Timer Stopped ? $startTiming");
+        }
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   UserRes? user = context.read<UserProvider>().user;
-    //   _controller.text = "${user?.otp}";
-    // });
+    _startTime();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -150,19 +166,21 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SpacerVertical(height: 50),
+                // const SpacerVertical(height: 50),
                 Text(
                   "OTP VERIFICATION",
                   style: stylePTSansBold(fontSize: 22),
                 ),
                 const SpacerVertical(height: 8),
-                Text(
-                  "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
-                  style: stylePTSansRegular(
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
+                // Text(
+                //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
+                //   style: stylePTSansRegular(
+                //     fontSize: 14,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                EditEmail(email: "${provider.user?.username}"),
+
                 const SpacerVertical(),
                 // Text(
                 //   "Verification Code",
@@ -203,20 +221,49 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                   },
                 ),
 
-                Container(
-                  margin: EdgeInsets.only(right: 8.sp),
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: _onResendOtpClick,
-                    child: Text(
-                      "Resend",
-                      style: stylePTSansBold(
-                        fontSize: 14,
-                        color: ThemeColors.accent,
+                startTiming == 30
+                    ? Container(
+                        margin: EdgeInsets.only(
+                          right: 8.sp,
+                          top: 20.sp,
+                        ),
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: _onResendOtpClick,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: "Resend OTP",
+                              style: stylePTSansBold(
+                                  fontSize: 15, color: ThemeColors.accent),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        margin: EdgeInsets.only(
+                          right: 8.sp,
+                          top: 20.sp,
+                        ),
+                        alignment: Alignment.center,
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "$startTiming S",
+                                style: stylePTSansBold(
+                                  fontSize: 15,
+                                  color: ThemeColors.accent,
+                                ),
+                              ),
+                            ],
+                            text: "Resend OTP in ",
+                            style: stylePTSansRegular(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
 
                 const SpacerVertical(),
                 ThemeButton(
@@ -224,6 +271,10 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                   text: "Verify and Log In",
                 ),
                 const SpacerVertical(),
+                EditEmailClick(
+                  email: "${provider.user?.username}",
+                  fromLoginOTP: false,
+                ),
               ],
             ),
           ),

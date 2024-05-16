@@ -24,10 +24,19 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-    if (provider.isLoadingGraph &&
-        (provider.graphChart?.isEmpty == true || provider.graphChart == null)) {
+    if (provider.isLoadingGraph) {
       return const SizedBox();
     }
+    if (provider.graphChart == null && !provider.isLoadingGraph) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 40.sp),
+        child: Text(
+          "${provider.graphError}",
+          style: stylePTSansRegular(),
+        ),
+      );
+    }
+
     // KeyStats? stats = context.watch<StockDetailProvider>().data?.keyStats;
     return LayoutBuilder(
       builder: (context, constraints) {

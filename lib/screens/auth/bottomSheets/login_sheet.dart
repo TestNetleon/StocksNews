@@ -24,13 +24,14 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import 'package:validators/validators.dart';
 
+import 'aggree_conditions.dart';
 import 'signup_sheet.dart';
 
 loginSheet({
   String? state,
   String? dontPop,
-}) {
-  showModalBottomSheet(
+}) async {
+  await showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5.sp),
@@ -281,6 +282,9 @@ class _LoginBottomState extends State<LoginBottom> {
                     ),
                   ),
                 ),
+
+                const SpacerVertical(),
+                const AgreeConditions(),
                 // Visibility(
                 //     visible: Platform.isIOS,
                 //     child: Container(
@@ -355,7 +359,6 @@ class _LoginBottomState extends State<LoginBottom> {
                 //     // ),
                 //     ),
 
-                const SpacerVertical(height: Dimen.itemSpacing),
                 // TextButton(
                 //   onPressed: () {
                 //     Navigator.pushNamed(context, SignUp.path);
@@ -372,82 +375,84 @@ class _LoginBottomState extends State<LoginBottom> {
 
                 Visibility(
                   visible: Platform.isIOS,
-                  child: ThemeButton(
-                    onPressed: () async {
-                      try {
-                        // flutter: AuthorizationAppleID(000150.6a1410656f504cdcb3d81a2c25231878.1000, Netleon, Technologies, netleonweb@gmail.com, null)
-                        // if(Platform.isIOS && Platform.version)
-                        final AuthorizationCredentialAppleID credential =
-                            await SignInWithApple.getAppleIDCredential(
-                          scopes: [
-                            AppleIDAuthorizationScopes.email,
-                            AppleIDAuthorizationScopes.fullName,
-                          ],
-                        );
-                        _handleSignInApple(
-                          credential.userIdentifier,
-                          credential.givenName != null
-                              ? "${credential.givenName} ${credential.familyName}"
-                              : null,
-                          credential.email,
-                        );
-                      } catch (e) {
-                        if (e
-                            .toString()
-                            .contains("SignInWithAppleNotSupportedException")) {
-                          showErrorMessage(
-                            message:
-                                "Sign in with Apple not supported in this device",
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: Dimen.itemSpacing),
+                    child: ThemeButton(
+                      onPressed: () async {
+                        try {
+                          // flutter: AuthorizationAppleID(000150.6a1410656f504cdcb3d81a2c25231878.1000, Netleon, Technologies, netleonweb@gmail.com, null)
+                          // if(Platform.isIOS && Platform.version)
+                          final AuthorizationCredentialAppleID credential =
+                              await SignInWithApple.getAppleIDCredential(
+                            scopes: [
+                              AppleIDAuthorizationScopes.email,
+                              AppleIDAuthorizationScopes.fullName,
+                            ],
                           );
+                          _handleSignInApple(
+                            credential.userIdentifier,
+                            credential.givenName != null
+                                ? "${credential.givenName} ${credential.familyName}"
+                                : null,
+                            credential.email,
+                          );
+                        } catch (e) {
+                          if (e.toString().contains(
+                              "SignInWithAppleNotSupportedException")) {
+                            showErrorMessage(
+                              message:
+                                  "Sign in with Apple not supported in this device",
+                            );
+                          }
                         }
-                      }
-                      // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
-                      // after they have been validated with Apple (see `Integration` section for more information on how to do this)
-                    },
-                    color: ThemeColors.white,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            left: 0,
-                            child: Image.asset(
-                              Images.apple,
-                              width: 16.sp,
-                              height: 16.sp,
-                              fit: BoxFit.contain,
-                              color: ThemeColors.background,
+                        // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+                        // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+                      },
+                      color: ThemeColors.white,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Positioned(
+                              left: 0,
+                              child: Image.asset(
+                                Images.apple,
+                                width: 16.sp,
+                                height: 16.sp,
+                                fit: BoxFit.contain,
+                                color: ThemeColors.background,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "Continue with Apple",
-                            style: stylePTSansRegular(
-                                fontSize: 15, color: ThemeColors.background),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                            Text(
+                              "Continue with Apple",
+                              style: stylePTSansRegular(
+                                  fontSize: 15, color: ThemeColors.background),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
 
                 Padding(
-                  padding: EdgeInsets.all(12.sp),
+                  padding: EdgeInsets.all(15.sp),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Don't have an account?",
                         style: stylePTSansRegular(
-                          fontSize: 13,
+                          fontSize: 15,
                           color: ThemeColors.white,
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Navigator.pop(context);
-                          signupSheet(
+                          await signupSheet(
                             dontPop: widget.dontPop,
                             state: widget.state,
                           );
@@ -480,7 +485,7 @@ class _LoginBottomState extends State<LoginBottom> {
                         child: Text(
                           " Sign Up ",
                           style: stylePTSansRegular(
-                            fontSize: 13,
+                            fontSize: 15,
                             color: ThemeColors.accent,
                           ),
                         ),

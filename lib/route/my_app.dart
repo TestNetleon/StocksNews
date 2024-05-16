@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // _handleIncomingLinks();
-      // _handleInitialUri();
+      _handleInitialUri();
 
       Timer(const Duration(milliseconds: 7200), () {
         _checkForConnection();

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -12,14 +13,17 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
+
+import 'edit_email.dart';
 
 otpLoginSheet({
   String? state,
   String? dontPop,
-}) {
-  showModalBottomSheet(
+}) async {
+  await showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5.sp),
@@ -50,6 +54,23 @@ class OTPLoginBottom extends StatefulWidget {
 class _OTPLoginBottomState extends State<OTPLoginBottom> {
   final TextEditingController _controller = TextEditingController();
 
+  int startTiming = 30;
+  Timer? _timer;
+
+  void _startTime() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        startTiming = startTiming - 1;
+        Utils().showLog("Start Timer ? $startTiming");
+        if (startTiming == 0) {
+          startTiming = 30;
+          _timer?.cancel();
+          Utils().showLog("Timer Stopped ? $startTiming");
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,12 +78,15 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
     //   UserRes? user = context.read<UserProvider>().user;
     //   _controller.text = "${user?.otp}";
     // });
-    log("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
+
+    _startTime();
+    log("---State is ${widget.state}, ---Don't pop up is${widget.dontPop}---");
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -85,6 +109,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
   }
 
   void _onResendOtpClick() {
+    _startTime();
     UserProvider provider = context.read<UserProvider>();
     Map request = {
       "username": provider.user?.username ?? "",
@@ -151,19 +176,21 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SpacerVertical(height: 50),
+                // const SpacerVertical(height: 50),
                 Text(
                   "OTP VERIFICATION",
                   style: stylePTSansBold(fontSize: 22),
                 ),
                 const SpacerVertical(height: 8),
-                Text(
-                  "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
-                  style: stylePTSansRegular(
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
+                // Text(
+                //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
+                //   style: stylePTSansRegular(
+                //     fontSize: 14,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                EditEmail(email: "${provider.user?.username}"),
+
                 const SpacerVertical(),
                 // Text(
                 //   "Verification Code",
@@ -204,20 +231,49 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                   },
                 ),
 
-                Container(
-                  margin: EdgeInsets.only(right: 8.sp),
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: _onResendOtpClick,
-                    child: Text(
-                      "Resend",
-                      style: stylePTSansBold(
-                        fontSize: 14,
-                        color: ThemeColors.accent,
+                startTiming == 30
+                    ? Container(
+                        margin: EdgeInsets.only(
+                          right: 8.sp,
+                          top: 20.sp,
+                        ),
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: _onResendOtpClick,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: "Resend OTP",
+                              style: stylePTSansBold(
+                                  fontSize: 15, color: ThemeColors.accent),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        margin: EdgeInsets.only(
+                          right: 8.sp,
+                          top: 20.sp,
+                        ),
+                        alignment: Alignment.center,
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "$startTiming S",
+                                style: stylePTSansBold(
+                                  fontSize: 15,
+                                  color: ThemeColors.accent,
+                                ),
+                              ),
+                            ],
+                            text: "Resend OTP in ",
+                            style: stylePTSansRegular(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
 
                 const SpacerVertical(),
                 ThemeButton(
@@ -225,6 +281,11 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                   text: "Verify and Log In",
                 ),
                 const SpacerVertical(),
+                EditEmailClick(
+                  email: "${provider.user?.username}",
+                  state: widget.state,
+                  dontPop: widget.dontPop,
+                ),
               ],
             ),
           ),

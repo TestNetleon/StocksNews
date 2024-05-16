@@ -7,11 +7,10 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import 'alert_popup.dart';
@@ -37,16 +36,16 @@ class AddToAlertWatchlist extends StatelessWidget {
           AlertWatchlistButton(
             backgroundColor:
                 alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
-            iconData: Icons.notifications,
+            iconData: Icons.add_alert_outlined,
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
             onTap: userProvider.user == null
                 ? () async {
-                    await Navigator.push(
-                      context,
-                      createRoute(const Login()),
-                    );
+                    // await Navigator.push(
+                    //   context,
+                    //   createRoute(const Login()),
+                    // );
 
-                    // await loginSheet();
+                    await loginSheet();
 
                     if (context.read<UserProvider>().user == null) {
                       return;
@@ -78,14 +77,16 @@ class AddToAlertWatchlist extends StatelessWidget {
           AlertWatchlistButton(
             backgroundColor:
                 watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
-            iconData: Icons.star,
+            iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: userProvider.user == null
                 ? () async {
-                    await Navigator.push(
-                      context,
-                      createRoute(const Login()),
-                    );
+                    // await Navigator.push(
+                    //   context,
+                    //   createRoute(const Login()),
+                    // );
+
+                    await loginSheet();
                     if (context.read<UserProvider>().user == null) {
                       return;
                     }

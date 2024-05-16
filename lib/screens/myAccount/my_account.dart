@@ -35,7 +35,7 @@ class MyAccount extends StatelessWidget {
             child: provider.user == null
                 ? const Column(
                     children: [
-                      ScreenTitle(title: "My Account"),
+                      ScreenTitle(title: "My Profile"),
                       Expanded(child: LoginError())
                     ],
                   )
@@ -44,7 +44,7 @@ class MyAccount extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         // SpacerVertical(height: 30),
-                        ScreenTitle(title: "My Account"),
+                        ScreenTitle(title: "My Profile"),
 
                         MyAccountContainer(),
                       ],

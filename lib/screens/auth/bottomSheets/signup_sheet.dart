@@ -22,12 +22,13 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../route/my_app.dart';
+import 'aggree_conditions.dart';
 
-void signupSheet({
+signupSheet({
   String? state,
   String? dontPop,
-}) {
-  showModalBottomSheet(
+}) async {
+  await showModalBottomSheet(
     backgroundColor: ThemeColors.transparent,
     // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
     isScrollControlled: true,
@@ -65,7 +66,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
   void initState() {
     super.initState();
 
-    log("---State is ${widget.state}, ---Dont pop up is${widget.dntPop}---");
+    log("---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
   // void _onLoginClick() {
@@ -119,7 +120,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "address": address ?? "",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(request, dontPop: "true");
+        provider.googleLogin(request, dontPop: 'true', state: widget.state);
       }
     } catch (error) {
       print("Error in Signed In *******");
@@ -149,7 +150,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "platform": Platform.operatingSystem,
         "address": address ?? "",
       };
-      provider.appleLogin(request, dontPop: "true");
+      provider.appleLogin(request, dontPop: 'true', state: widget.state);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       showErrorMessage(message: "$error");
@@ -217,10 +218,11 @@ class _SignUpBottomState extends State<SignUpBottom> {
               children: [
                 // const SpacerVertical(height: 16),
                 Text(
-                  "SIGN UP",
+                  "Welcome to stocks.news",
                   style: stylePTSansBold(fontSize: 24),
                 ),
                 const SpacerVertical(height: 40),
+
                 ThemeButton(
                   onPressed: () {
                     // Navigator.pushNamed(context, CreateAccount.path);
@@ -266,6 +268,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
                       ],
                     ),
                     const SpacerVertical(),
+
+                    const SpacerVertical(height: 5),
                     ThemeButton(
                       onPressed: () async {
                         _handleSignIn();
@@ -294,8 +298,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         ),
                       ),
                     ),
-                    // const SpacerVertical(height: ),
-
+                    const SpacerVertical(),
+                    const AgreeConditions(),
                     Visibility(
                       visible: Platform.isIOS,
                       child: Padding(
@@ -405,42 +409,48 @@ class _SignUpBottomState extends State<SignUpBottom> {
                     //     )),
                   ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    loginSheet(
-                      dontPop: widget.dntPop,
-                      state: widget.state,
-                    );
-                    // log("${widget.dntPop}");
-                    // if (widget.dntPop != null) {
-                    //   // Navigator.pushReplacement(
-                    //   //     context,
-                    //   //     createRoute(Login(
-                    //   //       dontPop: widget.dntPop,
-                    //   //       state: widget.state,
-                    //   //     )));
-                    //   Navigator.pop(context);
-                    //   loginSheet(dontPop: widget.dntPop, state: widget.state);
-                    // } else {
-                    //   Navigator.pop(context);
-                    // }
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Already have an account? ",
-                          style: stylePTSansRegular(
-                            fontSize: 13,
-                            color: ThemeColors.accent,
+                const SpacerVertical(height: 15),
+                Align(
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                      loginSheet(
+                        dontPop: widget.dntPop,
+                        state: widget.state,
+                      );
+                      // log("${widget.dntPop}");
+                      // if (widget.dntPop != null) {
+                      //   // Navigator.pushReplacement(
+                      //   //     context,
+                      //   //     createRoute(Login(
+                      //   //       dontPop: widget.dntPop,
+                      //   //       state: widget.state,
+                      //   //     )));
+                      //   Navigator.pop(context);
+                      //   loginSheet(dontPop: widget.dntPop, state: widget.state);
+                      // } else {
+                      //   Navigator.pop(context);
+                      // }
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Already have an account? ",
+                            style: stylePTSansRegular(
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: "Log In",
-                          style: stylePTSansRegular(fontSize: 13),
-                        ),
-                      ],
+                          TextSpan(
+                            text: "Log In",
+                            style: stylePTSansRegular(
+                              fontSize: 15,
+                              color: ThemeColors.accent,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

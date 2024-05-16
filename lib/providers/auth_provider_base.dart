@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 
 mixin AuthProviderBase {
@@ -17,12 +17,13 @@ mixin AuthProviderBase {
   void handleSessionOut() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
-    Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-            builder: (context) => const Login(
-                  dontPop: "true",
-                )));
+    // Navigator.pushReplacement(
+    //     navigatorKey.currentContext!,
+    //     MaterialPageRoute(
+    //         builder: (context) => const Login(
+    //               dontPop: "true",
+    //             )));
+    loginSheet(dontPop: "true");
 
     Preference.logout();
     navigatorKey.currentContext!.read<UserProvider>().clearUser();

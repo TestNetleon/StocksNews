@@ -69,6 +69,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     return _user != null;
   }
 
+  void updateEmail(value) {
+    _user?.username = value;
+    notifyListeners();
+  }
+
   void logout() async {
     showConfirmAlertDialog(
       context: navigatorKey.currentContext,
@@ -87,7 +92,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future login(request, {String? state, String? dontPop}) async {
+  Future login(
+    request, {
+    String? state,
+    String? dontPop,
+    bool editEmail = false,
+  }) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -105,9 +115,18 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         //     dontPop: dontPop,
         //   )),
         // );
-
-        otpLoginSheet(state: state, dontPop: dontPop);
+        if (editEmail) {
+          log("****************");
+          Navigator.pop(navigatorKey.currentContext!);
+          showErrorMessage(message: response.message, snackbar: false);
+        } else {
+          await otpLoginSheet(state: state, dontPop: dontPop);
+        }
       } else {
+        if (editEmail) {
+          showErrorMessage(message: response.message, snackbar: false);
+          Navigator.pop(navigatorKey.currentContext!);
+        }
         showErrorMessage(message: response.message);
       }
     } catch (e) {
@@ -226,7 +245,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future signup(request) async {
+  Future signup(
+    request, {
+    bool editEmail = false,
+  }) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -237,8 +259,17 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         // Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
-        otpSignupSheet();
+        if (editEmail) {
+          Navigator.pop(navigatorKey.currentContext!);
+          showErrorMessage(message: response.message, snackbar: false);
+        } else {
+          otpSignupSheet();
+        }
       } else {
+        if (editEmail) {
+          showErrorMessage(message: response.message, snackbar: false);
+          Navigator.pop(navigatorKey.currentContext!);
+        }
         showErrorMessage(message: response.message);
       }
     } catch (e) {
