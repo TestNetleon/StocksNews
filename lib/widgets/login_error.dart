@@ -16,6 +16,7 @@ class LoginError extends StatelessWidget {
     this.smallHeight = false,
     super.key,
   });
+
   final String? error;
   final String? state;
   final Function()? onRefresh;
@@ -48,12 +49,10 @@ class LoginError extends StatelessWidget {
                 ThemeButtonSmall(
                   onPressed: () async {
                     // Navigator.pushNamed(context, Login.path);
-
+                    // FirebaseInAppMessaging.instance.triggerEvent("test_click");
                     await Navigator.push(
                       context,
-                      createRoute(Login(
-                        state: state,
-                      )),
+                      createRoute(Login(state: state)),
                     );
                   },
                   text: "Log in",

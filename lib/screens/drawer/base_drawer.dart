@@ -6,9 +6,7 @@ import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
-import 'package:stocks_news_new/screens/auth/login/login.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/back_press.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
@@ -24,7 +22,6 @@ import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -234,7 +231,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             //       dontPop: "true",
                             //     )));
 
-                            loginSheet(dontPop: 'true');
+                            // loginSheet(dontPop: 'true');
+                            loginIOS();
                           },
                           text: "Log in",
                           showArrow: false,

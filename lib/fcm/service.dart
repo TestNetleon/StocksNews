@@ -44,7 +44,6 @@ class FirebaseApi {
     importance: Importance.max,
     playSound: true,
   );
-
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
   void handleMessage(RemoteMessage? message, {whenAppKilled = false}) {

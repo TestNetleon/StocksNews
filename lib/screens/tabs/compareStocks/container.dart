@@ -61,9 +61,8 @@ class CompareStocksContainer extends StatelessWidget {
                   children: [
                     ScreenTitle(title: "Compare Stocks"),
                     Expanded(
-                        child: LoginError(
-                      state: "compare",
-                    )),
+                      child: LoginError(state: "compare"),
+                    ),
                   ],
                 )
               : SingleChildScrollView(
