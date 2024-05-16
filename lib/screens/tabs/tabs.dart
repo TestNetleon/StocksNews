@@ -20,8 +20,9 @@ import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:vibration/vibration.dart';
 
+// import 'package:vibration/vibration.dart';
+//TODO
 //
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
@@ -131,11 +132,11 @@ class _TabsState extends State<Tabs> {
     final newsProvider = context.read<FeaturedNewsProvider>();
     final latestNewsProvider = context.read<NewsProvider>();
 
-    bool isVibe = await Vibration.hasVibrator() ?? false;
-    if (isVibe) {
-      // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
-      Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
-    }
+    // bool isVibe = await Vibration.hasVibrator() ?? false;
+    // if (isVibe) {
+    //   // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
+    //   Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+    // }
 
     // switch (currentIndex) {
     //   case 0:
