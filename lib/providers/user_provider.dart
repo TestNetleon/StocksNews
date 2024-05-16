@@ -267,10 +267,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         }
       } else {
         if (editEmail) {
-          showErrorMessage(message: response.message, snackbar: false);
           Navigator.pop(navigatorKey.currentContext!);
+          showErrorMessage(message: response.message, snackbar: false);
+        } else {
+          showErrorMessage(message: response.message);
         }
-        showErrorMessage(message: response.message);
       }
     } catch (e) {
       log(e.toString());

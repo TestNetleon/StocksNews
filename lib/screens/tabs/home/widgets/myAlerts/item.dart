@@ -282,8 +282,8 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                       bottomRight: Radius.circular(10.sp),
                     ),
                     child: Container(
-                      padding: EdgeInsets.only(top: 10.sp, bottom: 4.sp),
-                      height: 80.sp,
+                      padding: EdgeInsets.only(top: 10.sp, bottom: 15.sp),
+                      height: 88.sp,
                       child: LineChart(
                         avgData(),
                       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,21 +81,24 @@ class _EditEmailClickState extends State<EditEmailClick> {
     UserProvider provider = context.watch<UserProvider>();
     return Column(
       children: [
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: widget.email,
-                style:
-                    stylePTSansRegular(fontSize: 14, color: ThemeColors.accent),
-              ),
-              TextSpan(
-                text: " is not your email address. Then click here to edit.",
-                style: stylePTSansRegular(fontSize: 14),
-              ),
-            ],
-            text: "If ",
-            style: stylePTSansRegular(fontSize: 14),
+        Visibility(
+          visible: !widget.fromLoginOTP,
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: widget.email,
+                  style: stylePTSansRegular(
+                      fontSize: 14, color: ThemeColors.accent),
+                ),
+                TextSpan(
+                  text: " is not your email address, click here to edit it.",
+                  style: stylePTSansRegular(fontSize: 14),
+                ),
+              ],
+              text: "If ",
+              style: stylePTSansRegular(fontSize: 14),
+            ),
           ),
         ),
         const SpacerVertical(

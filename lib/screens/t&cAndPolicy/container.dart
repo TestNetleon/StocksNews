@@ -66,7 +66,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
           children: [
             ScreenTitle(
               title: widget.policyType == PolicyType.aboutUs
-                  ? "About Stocks.news"
+                  ? "About Us"
                   : widget.policyType == PolicyType.tC
                       ? "Terms & Conditions"
                       : widget.policyType == PolicyType.privacy
