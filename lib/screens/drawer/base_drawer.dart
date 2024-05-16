@@ -236,6 +236,12 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           style: stylePTSansBold(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
+                        Text(
+                          "Analyze, Compare, Set Alerts for stocks.",
+                          style: stylePTSansRegular(
+                              fontSize: 14, color: ThemeColors.greyText),
+                          textAlign: TextAlign.center,
+                        ),
                         const SpacerVertical(height: 5),
                         Row(
                           mainAxisSize: MainAxisSize.min,
@@ -450,8 +456,10 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.power_settings_new_rounded,
-                                    size: 20.sp),
+                                Icon(
+                                  Icons.power_settings_new_rounded,
+                                  size: 20.sp,
+                                ),
                                 const SpacerHorizontal(width: 5),
                                 Text(
                                   "Logout",
