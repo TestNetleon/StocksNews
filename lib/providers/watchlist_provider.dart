@@ -7,6 +7,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/watchlist_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -117,7 +118,9 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
               .read<StockDetailProvider>()
               .changeWatchList(0);
         }
-
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
         showErrorMessage(message: response.message, type: SnackbarType.info);
       } else {
         showErrorMessage(message: response.message);
@@ -144,6 +147,9 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
       );
       if (response.status) {
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
         showErrorMessage(message: response.message);
       } else {
         showErrorMessage(message: response.message);

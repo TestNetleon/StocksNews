@@ -36,6 +36,7 @@ class _StockDetailsState extends State<StockDetails> {
 
   void _getData() {
     context.read<StockDetailProvider>().getStockDetails(symbol: widget.symbol);
+
     context
         .read<StockDetailProvider>()
         .getStockGraphData(symbol: widget.symbol);

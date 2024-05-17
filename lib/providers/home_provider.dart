@@ -13,6 +13,7 @@ import 'package:stocks_news_new/modals/home_sentiment_res.dart';
 import 'package:stocks_news_new/modals/home_slider_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/ipo_res.dart';
+import 'package:stocks_news_new/modals/stock_infocus.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -42,6 +43,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Status _statusHomeAlert = Status.ideal;
   Status get statusHomeAlert => _statusHomeAlert;
 
+  Status _statusFocus = Status.ideal;
+  Status get statusFocus => _statusFocus;
+
   // HomeRes? get data => _home;
 
   HomeSliderRes? _homeSliderRes;
@@ -65,6 +69,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingInsider => _statusInsider == Status.loading;
   bool get isLoadingIpo => _statusIpo == Status.loading;
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
+  bool get isLoadingStockFocus => _statusFocus == Status.loading;
 
   int? userAlert;
 
@@ -76,7 +81,26 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   List<HomeAlertsRes>? _homeAlertData;
   List<HomeAlertsRes>? get homeAlertData => _homeAlertData;
 
+  StockInFocusRes? _focusRes;
+  StockInFocusRes? get focusRes => _focusRes;
+
   bool notificationSeen = false;
+
+  int totalAlerts = 0;
+  int totalWatchList = 0;
+
+  void setTotalsAlerts(int value) {
+    totalAlerts = value;
+    log("TOTAL ALERTS => $totalAlerts");
+
+    notifyListeners();
+  }
+
+  void setTotalsWatchList(int value) {
+    totalWatchList = value;
+    log("TOTAL WATCHLIST => $totalWatchList");
+    notifyListeners();
+  }
 
   // void setStatus(status) {
   //   _status = status;
@@ -96,6 +120,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Future refreshData() async {
     getHomeSlider();
     // getIpoData();
+    getStockInFocus();
     getHomeSentimentData();
     getHomeTrendingData();
     getHomeAlerts();
@@ -113,6 +138,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // }
     if (_homeSentimentRes == null) {
       getHomeSentimentData();
+    }
+    if (_focusRes == null) {
+      getStockInFocus();
     }
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
@@ -135,6 +163,36 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       sendPort.send(response);
     } catch (e) {
       sendPort.send(e);
+    }
+  }
+
+  Future getStockInFocus() async {
+    _statusFocus = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.stockFocus,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _focusRes = stockInFocusResFromJson(jsonEncode(response.data));
+      } else {
+        _focusRes = null;
+      }
+      _statusFocus = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _focusRes = null;
+
+      log(e.toString());
+      _statusFocus = Status.loaded;
+      notifyListeners();
     }
   }
 
@@ -218,6 +276,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         // UserProvider provider =
         //     navigatorKey.currentContext!.read<UserProvider>();
         notificationSeen = response.extra.notificationCount == 0;
+        totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
+        totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
+
         notifyListeners();
       } else {
         _homeSliderRes = null;

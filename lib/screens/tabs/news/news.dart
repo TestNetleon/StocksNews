@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_list.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -39,10 +37,10 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     // if (_tabController == null) return const SizedBox();
     return BaseContainer(
-      drawer: const BaseDrawer(),
-      appBar: const AppBarHome(
-        canSearch: true,
-      ),
+      // drawer: const BaseDrawer(),
+      // appBar: const AppBarHome(
+      //   canSearch: true,
+      // ),
       // body: NewsList(),
       body: Padding(
           padding: EdgeInsets.fromLTRB(

@@ -39,7 +39,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
           ? "Today’s Top Gainers"
           : widget.type == StocksType.losers
               ? "Today’s Top Losers"
-              : "Today's Popular Stocks";
+              : "Popular Stocks";
 
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
@@ -67,7 +67,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                     ? "Today’s Top Gainers"
                     : widget.type == StocksType.losers
                         ? "Today’s Top Losers"
-                        : "Today's Popular Stocks"),
+                        : "Popular Stocks"),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,

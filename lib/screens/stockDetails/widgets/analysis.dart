@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/analysis_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -12,6 +13,8 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../widgets/theme_image_view.dart';
 
 //
 class Analysis extends StatelessWidget {
@@ -60,6 +63,8 @@ class AlalysisBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    StockDetailProvider provider = context.watch<StockDetailProvider>();
+
     AnalysisRes? analysisRes = context.watch<StockDetailProvider>().analysisRes;
 
     return Column(
@@ -162,8 +167,110 @@ class AlalysisBase extends StatelessWidget {
             //     : analysisRes.setimentPercent == 50
             //         ? "Neutral"
             //         : "Bullish",
-            value: (analysisRes?.setimentPercent.toDouble() ?? 1.0) / 100)
+            value: (analysisRes?.setimentPercent.toDouble() ?? 1.0) / 100),
+
+        const SpacerVertical(height: 20),
+        const ScreenTitle(
+          title: "Stock Peers",
+        ),
+
+        ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return PeerStockItem(
+                data: provider.analysisRes?.peersData?[index],
+                index: index,
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 12.sp,
+              );
+            },
+            itemCount: provider.analysisRes?.peersData?.length ?? 0)
       ],
+    );
+  }
+}
+
+class PeerStockItem extends StatelessWidget {
+  final PeersDatum? data;
+  final int index;
+  const PeerStockItem({super.key, required this.index, this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          StockDetails.path,
+          arguments: data?.symbol,
+        );
+      },
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(0.sp),
+            child: Container(
+              padding: EdgeInsets.all(5.sp),
+              width: 43.sp,
+              height: 43.sp,
+              child: ThemeImageView(url: data?.image ?? ""),
+            ),
+          ),
+          const SpacerHorizontal(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data?.symbol ?? "",
+                  style: styleGeorgiaBold(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  data?.name ?? "",
+                  style: styleGeorgiaRegular(
+                    color: ThemeColors.greyText,
+                    fontSize: 12,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const SpacerHorizontal(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(data?.price ?? "", style: stylePTSansBold(fontSize: 14)),
+              const SpacerVertical(height: 2),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text:
+                          "${data?.change} (${data?.changesPercentage.toCurrency()})%",
+                      style: stylePTSansRegular(
+                        fontSize: 12,
+                        color: (data?.changesPercentage ?? 0) > 0
+                            ? Colors.green
+                            : Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

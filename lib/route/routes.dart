@@ -55,6 +55,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../providers/featured_ticker.dart';
+import '../providers/trending_industries.dart';
 import '../screens/whatWeDo/index.dart';
 
 class Routes {
@@ -252,6 +253,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewsTypeProvider()),
       ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ChangeNotifierProvider(create: (_) => FeaturedTickerProvider()),
+      ChangeNotifierProvider(create: (_) => TrendingIndustriesProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

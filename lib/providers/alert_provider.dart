@@ -9,6 +9,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/alerts_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -116,6 +117,10 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
               .read<StockDetailProvider>()
               .changeAlert(0);
         }
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
       } else {
         //
       }

@@ -14,6 +14,7 @@ import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/modals/technical_analysis_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -664,7 +665,9 @@ class StockDetailProvider with ChangeNotifier {
           await apiRequest(url: Apis.createAlert, request: request);
       if (response.status) {
         data?.isAlertAdded = 1;
-
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
         // notifyListeners();
       }
       Navigator.pop(navigatorKey.currentContext!);
@@ -674,7 +677,7 @@ class StockDetailProvider with ChangeNotifier {
           message: response.message,
           type: response.status ? SnackbarType.info : SnackbarType.error);
       setStatus(Status.loaded);
-      return ApiResponse(status: response.status);
+      return ApiResponse(status: response.status, data: response.data);
     } catch (e) {
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
@@ -698,13 +701,17 @@ class StockDetailProvider with ChangeNotifier {
       );
       if (response.status) {
         data?.isWatchlistAdded = 1;
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
       }
       showErrorMessage(
           message: response.message,
           type: response.status ? SnackbarType.info : SnackbarType.error);
 
       setStatus(Status.loaded);
-      return ApiResponse(status: response.status);
+      return ApiResponse(status: response.status, data: response.data);
     } catch (e) {
       Utils().showLog(e.toString());
       setStatus(Status.loaded);

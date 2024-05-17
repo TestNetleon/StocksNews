@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -13,6 +14,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:upgrader/upgrader.dart';
 //
 import 'widgets/home_inner_tabs.dart';
+import 'widgets/inFocus/stocks_focus.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
 
@@ -70,6 +72,16 @@ class HomeContainer extends StatelessWidget {
                       //   onRefresh: provider.refreshWithCheck,
                       //   child: const IpoIndex(),
                       // ),
+
+                      Visibility(
+                        visible: provider.focusRes != null,
+                        child: HomePartialLoading(
+                          loading: provider.isLoadingStockFocus,
+                          error: null,
+                          onRefresh: provider.refreshWithCheck,
+                          child: const StocksInFocus(),
+                        ),
+                      ),
 
                       HomePartialLoading(
                         loading: provider.isLoadingTrending,

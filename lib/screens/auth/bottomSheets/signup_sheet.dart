@@ -9,10 +9,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/create_account_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
-//
+
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -20,8 +19,12 @@ import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
+import 'package:validators/validators.dart';
 
 import '../../../route/my_app.dart';
+import '../../../utils/utils.dart';
+import '../../../utils/validations.dart';
+import '../../../widgets/theme_input_field.dart';
 import 'aggree_conditions.dart';
 
 signupSheet({
@@ -69,6 +72,27 @@ class _SignUpBottomState extends State<SignUpBottom> {
     log("---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
+  void _onLoginClick() {
+    closeKeyboard();
+    if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
+      showErrorMessage(
+        message: "Please enter valid email address",
+      );
+      return;
+    }
+
+    // else if (isNumeric(_controller.text) &&
+    //     (isEmpty(_controller.text) || !isLength(_controller.text, 3))) {
+    //   showErrorMessage(message: "Please enter valid phone number");
+    //   return;
+    // }
+
+    UserProvider provider = context.read<UserProvider>();
+
+    Map request = {"username": _controller.text.toLowerCase()};
+
+    provider.signup(request);
+  }
   // void _onLoginClick() {
   //   closeKeyboard();
   //   if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
@@ -223,25 +247,42 @@ class _SignUpBottomState extends State<SignUpBottom> {
                 ),
                 const SpacerVertical(height: 40),
 
+                // ThemeButton(
+                //   onPressed: () {
+                //     // Navigator.pushNamed(context, CreateAccount.path);
+                //     createAccountSheet();
+                //   },
+                //   child: SizedBox(
+                //     width: double.infinity,
+                //     child: Stack(
+                //       alignment: Alignment.center,
+                //       children: [
+                //         const Positioned(left: 0, child: Icon(Icons.person)),
+                //         Text(
+                //           "Sign Up with Email Address",
+                //           style: stylePTSansRegular(fontSize: 14),
+                //           textAlign: TextAlign.center,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                Text(
+                  "Email Address",
+                  style: stylePTSansRegular(fontSize: 14),
+                ),
+                const SpacerVertical(height: 5),
+                ThemeInputField(
+                  controller: _controller,
+                  placeholder: "Enter email address",
+                  keyboardType: TextInputType.emailAddress,
+                  inputFormatters: [emailFormatter],
+                  textCapitalization: TextCapitalization.none,
+                ),
+                const SpacerVertical(height: Dimen.itemSpacing),
                 ThemeButton(
-                  onPressed: () {
-                    // Navigator.pushNamed(context, CreateAccount.path);
-                    createAccountSheet();
-                  },
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        const Positioned(left: 0, child: Icon(Icons.person)),
-                        Text(
-                          "Sign Up with Email Address",
-                          style: stylePTSansRegular(fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
+                  text: "Next",
+                  onPressed: _onLoginClick,
                 ),
                 const SpacerVertical(),
                 Column(

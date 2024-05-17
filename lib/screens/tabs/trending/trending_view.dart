@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
+import '../../trendingIndustries/index.dart';
 import 'widgets/trending_partial_loading.dart';
 import 'widgets/trending_sectors.dart';
 
@@ -258,6 +259,10 @@ class _TrendingViewState extends State<TrendingView> {
                       ),
                     ),
                   );
+                }
+
+                if (index == 4) {
+                  return const TrendingIndustries();
                 }
 
                 return Container();

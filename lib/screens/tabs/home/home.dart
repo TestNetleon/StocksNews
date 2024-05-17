@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/home_container.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -22,12 +20,12 @@ class Home extends StatelessWidget {
     );
 
     return BaseContainer(
-      drawer: const BaseDrawer(),
-      // appBar: AppBarHome(showQR: userProvider.user != null, isHome: true),
-      appBar: const AppBarHome(
-        isHome: true,
-        canSearch: true,
-      ),
+      // drawer: const BaseDrawer(),
+      // // appBar: AppBarHome(showQR: userProvider.user != null, isHome: true),
+      // appBar: const AppBarHome(
+      //   isHome: true,
+      //   canSearch: true,
+      // ),
       body: provider.isLoadingSlider
           ? const Loading()
           :

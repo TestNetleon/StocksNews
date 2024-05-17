@@ -60,6 +60,8 @@ class Images {
   //share
   static const twitter = "assets/images/twitter_share.png";
   static const whatsapp = "assets/images/whatsapp_share.png";
+  static const whatsappC = "assets/images/whatsapp_circle.png";
+
   static const facebook = "assets/images/facebook_share.png";
   static const linkedin = "assets/images/linkedin_share.png";
   static const telegram = "assets/images/telegram_share.png";

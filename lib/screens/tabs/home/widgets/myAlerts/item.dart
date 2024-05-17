@@ -173,124 +173,113 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // onTap: () {
-      //   Navigator.push(context, MaterialPageRoute(
-      //     builder: (context) {
-      //       return FLtryChart(
-      //         chartData: chartData,
-      //       );
-      //     },
-      //   ));
-      // },
-      child: Container(
-        // height: 400,
-        width: 220.sp,
+    return Container(
+      // height: 400,
+      width: 220.sp,
 
-        decoration: BoxDecoration(
-          // color: const Color.fromARGB(255, 48, 48, 48),
-          // color: ThemeColors.greyBorder,
-          borderRadius: BorderRadius.circular(10.sp),
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 23, 23, 23),
-              // ThemeColors.greyBorder,
-              Color.fromARGB(255, 48, 48, 48),
-            ],
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      CachedNetworkImagesWidget(
-                        widget.data.image,
-                        height: 40.sp,
-                        width: 40.sp,
-                      ),
-                      const SpacerHorizontal(width: 8),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.data.symbol,
-                              style: styleGeorgiaBold(fontSize: 14),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SpacerVertical(height: 5),
-                            Text(
-                              widget.data.name,
-                              style: styleGeorgiaRegular(
-                                color: ThemeColors.greyText,
-                                fontSize: 12,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    widget.data.price,
-                    style: stylePTSansBold(fontSize: 20),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        widget.data.change,
-                        style: stylePTSansBold(
-                            fontSize: 13,
-                            color: widget.data.changesPercentage > 0
-                                ? ThemeColors.accent
-                                : widget.data.changesPercentage == 0
-                                    ? ThemeColors.white
-                                    : ThemeColors.sos),
-                      ),
-                      Text(
-                        "  (${widget.data.changesPercentage.toCurrency()})%",
-                        style: stylePTSansBold(
-                            fontSize: 13,
-                            color: widget.data.changesPercentage > 0
-                                ? ThemeColors.accent
-                                : widget.data.changesPercentage == 0
-                                    ? ThemeColors.white
-                                    : ThemeColors.sos),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            widget.data.chart == null || widget.data.chart?.isEmpty == true
-                ? const SizedBox()
-                : ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10.sp),
-                      bottomRight: Radius.circular(10.sp),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.only(top: 10.sp, bottom: 15.sp),
-                      height: 88.sp,
-                      child: LineChart(
-                        avgData(),
-                      ),
-                    ),
-                  ),
+      decoration: BoxDecoration(
+        // color: const Color.fromARGB(255, 48, 48, 48),
+        // color: ThemeColors.greyBorder,
+        borderRadius: BorderRadius.circular(10.sp),
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 23, 23, 23),
+            // ThemeColors.greyBorder,
+            Color.fromARGB(255, 48, 48, 48),
           ],
         ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10.sp),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CachedNetworkImagesWidget(
+                      widget.data.image,
+                      height: 40.sp,
+                      width: 40.sp,
+                    ),
+                    const SpacerHorizontal(width: 8),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data.symbol,
+                            style: styleGeorgiaBold(fontSize: 14),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SpacerVertical(height: 5),
+                          Text(
+                            widget.data.name,
+                            style: styleGeorgiaRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 12,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  widget.data.price,
+                  style: stylePTSansBold(fontSize: 20),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      widget.data.change,
+                      style: stylePTSansBold(
+                          fontSize: 13,
+                          color: widget.data.changesPercentage > 0
+                              ? ThemeColors.accent
+                              : widget.data.changesPercentage == 0
+                                  ? ThemeColors.white
+                                  : ThemeColors.sos),
+                    ),
+                    Text(
+                      "  (${widget.data.changesPercentage.toCurrency()})%",
+                      style: stylePTSansBold(
+                          fontSize: 13,
+                          color: widget.data.changesPercentage > 0
+                              ? ThemeColors.accent
+                              : widget.data.changesPercentage == 0
+                                  ? ThemeColors.white
+                                  : ThemeColors.sos),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          widget.data.chart == null || widget.data.chart?.isEmpty == true
+              ? const SizedBox()
+              : ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.sp),
+                    bottomRight: Radius.circular(10.sp),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10.sp, bottom: 15.sp),
+                    height: 88.sp,
+                    child: LineChart(
+                      avgData(),
+                    ),
+                  ),
+                ),
+        ],
       ),
     );
   }

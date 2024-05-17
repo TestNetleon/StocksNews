@@ -8,8 +8,9 @@ import 'container.dart';
 
 class BlogDetail extends StatefulWidget {
   static const path = "BlogDetail";
-  final String id;
-  const BlogDetail({super.key, required this.id});
+  final String? id;
+  final String? slug;
+  const BlogDetail({super.key, this.id, this.slug});
 
   @override
   State<BlogDetail> createState() => _BlogDetailState();
@@ -21,7 +22,9 @@ class _BlogDetailState extends State<BlogDetail> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BlogProvider>().getBlogDetailData(blogId: widget.id);
+      context
+          .read<BlogProvider>()
+          .getBlogDetailData(blogId: widget.id ?? "", slug: widget.slug);
 
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
@@ -37,7 +40,7 @@ class _BlogDetailState extends State<BlogDetail> {
         isPopback: true,
         showTrailing: false,
       ),
-      body: BlogDetailContainer(id: widget.id),
+      body: BlogDetailContainer(id: widget.id ?? ""),
     );
   }
 }

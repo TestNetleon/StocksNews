@@ -18,7 +18,6 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
 //
@@ -95,36 +94,25 @@ class StocksContainer extends StatelessWidget {
                       if (index == 0) {
                         return Column(
                           children: [
+                            Divider(
+                              color: ThemeColors.greyBorder,
+                              height: 15.sp,
+                              thickness: 1,
+                            ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                const SpacerHorizontal(width: 5),
                                 Expanded(
                                   child: AutoSizeText(
-                                      maxLines: 1,
-                                      "COMPANY",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      )),
+                                    maxLines: 1,
+                                    "COMPANY",
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
                                 ),
-                                const SpacerHorizontal(width: 10),
-                                // Expanded(
-                                //   child: AutoSizeText(
-                                //     maxLines: 1,
-                                //     overflowReplacement: Text(
-                                //       "EXChg.",
-                                //       style: stylePTSansRegular(
-                                //         fontSize: 12,
-                                //         color: ThemeColors.greyText,
-                                //       ),
-                                //     ),
-                                //     "EXCHANGE",
-                                //     style: stylePTSansRegular(
-                                //       fontSize: 12,
-                                //       color: ThemeColors.greyText,
-                                //     ),
-                                //   ),
-                                // ),
+                                const SpacerHorizontal(width: 24),
                                 Expanded(
                                   child: AutoSizeText(
                                     maxLines: 1,
@@ -135,9 +123,14 @@ class StocksContainer extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                const SpacerHorizontal(width: 10),
                               ],
                             ),
-                            const SpacerVertical(height: Dimen.itemSpacing),
+                            Divider(
+                              color: ThemeColors.greyBorder,
+                              height: 15.sp,
+                              thickness: 1,
+                            ),
                             StocksItemAll(data: data, index: index),
                           ],
                         );

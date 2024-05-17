@@ -11,8 +11,10 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
@@ -20,6 +22,8 @@ import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+
+import '../../providers/trending_industries.dart';
 
 // import 'package:vibration/vibration.dart';
 //TODO
@@ -70,6 +74,11 @@ class _TabsState extends State<Tabs> {
         }
       },
       child: BaseContainer(
+        appBar: const AppBarHome(
+          canSearch: true,
+          showTrailing: true,
+        ),
+        drawer: const BaseDrawer(),
         body: Screens.screens.elementAt(_selectedIndex),
 
         //  _selectedIndex == 0
@@ -167,6 +176,8 @@ class _TabsState extends State<Tabs> {
         _home(context);
         break;
       case 1:
+        context.read<TrendingIndustriesProvider>().getData();
+
         trendingProvider.refreshData();
         break;
       case 2:

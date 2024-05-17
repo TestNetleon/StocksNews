@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/reddit_twitter_res.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/days.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/recent_mention_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -53,8 +51,8 @@ class _RedditTwitterState extends State<RedditTwitter> {
       parameters: {'screen_name': "Sentiments"},
     );
     return BaseContainer(
-      drawer: const BaseDrawer(),
-      appBar: const AppBarHome(canSearch: true),
+      // drawer: const BaseDrawer(),
+      // appBar: const AppBarHome(canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,

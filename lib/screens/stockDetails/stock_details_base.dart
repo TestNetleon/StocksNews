@@ -53,7 +53,7 @@ class StockDetailsBase extends StatelessWidget {
             "News Mentions",
             "Recent Reddit Posts and X Tweets",
             "Trending Stories",
-            "Popular Stocks"
+            "Popular Stocks",
           ],
           widgets: [
             StockDetailsTabContainer(

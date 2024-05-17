@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -37,11 +35,11 @@ class Insider extends StatelessWidget {
     );
 
     return BaseContainer(
-      drawer: const BaseDrawer(),
-      appBar: AppBarHome(
-        filterClick: _filterClick,
-        canSearch: true,
-      ),
+      // drawer: const BaseDrawer(),
+      // appBar: AppBarHome(
+      //   filterClick: _filterClick,
+      //   canSearch: true,
+      // ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,

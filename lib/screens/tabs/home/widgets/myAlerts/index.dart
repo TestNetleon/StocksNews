@@ -33,26 +33,28 @@ class HomeMyAlerts extends StatelessWidget {
             Visibility(
               // visible: provider.userAlert != 0,
               child: Padding(
-                padding: EdgeInsets.only(top: 15.sp),
+                padding: const EdgeInsets.only(top: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
                       child: Text(
-                        userRes == null ? "Featured Stocks" : "Stock Alerts",
+                        userRes != null && provider.totalAlerts != 0
+                            ? "Stock Alerts"
+                            : "Featured Stocks",
                         style: stylePTSansBold(),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        userRes == null
-                            ? Navigator.push(
+                        userRes != null && provider.totalAlerts != 0
+                            ? Navigator.pushNamed(context, Alerts.path)
+                            : Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       const AllFeaturedIndex(),
-                                ))
-                            : Navigator.pushNamed(context, Alerts.path);
+                                ));
                       },
                       child: Row(
                         children: [

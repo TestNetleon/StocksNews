@@ -38,6 +38,9 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
         error: provider.error,
         hasData: provider.data?.isNotEmpty == true && !provider.isLoading,
         isLoading: provider.isLoading,
+        onRefresh: () {
+          provider.getFeaturedTicker(showProgress: true);
+        },
         child: const AllFeaturedContainer(),
       ),
     );

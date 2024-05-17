@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/container.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 class CompareStocks extends StatelessWidget {
@@ -18,8 +16,8 @@ class CompareStocks extends StatelessWidget {
         context.read<SearchProvider>().clearSearch();
       },
       child: const BaseContainer(
-        appBar: AppBarHome(canSearch: true),
-        drawer: BaseDrawer(),
+        // appBar: AppBarHome(canSearch: true),
+        // drawer: BaseDrawer(),
         body: CompareStocksContainer(),
       ),
     );

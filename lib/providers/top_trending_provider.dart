@@ -15,6 +15,8 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
+import 'home_provider.dart';
+
 class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
   TopTrendingRes? _res;
   TopTrendingRes? get res => _res;
@@ -102,6 +104,9 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
             element.isAlertAdded = 1;
           });
         }
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
         notifyListeners();
       }
       Navigator.pop(navigatorKey.currentContext!);
@@ -145,6 +150,10 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
             element.isWatchlistAdded = 1;
           });
         }
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
+
         notifyListeners();
       }
       showErrorMessage(

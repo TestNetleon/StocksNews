@@ -9,12 +9,24 @@ String homeSliderResToJson(HomeSliderRes data) => json.encode(data.toJson());
 
 class HomeSliderRes {
   final List<SliderPost>? sliderPosts;
+  final int totalAlerts;
+  final int totalWatchList;
+  final String? whatsappLink;
+  final String? telegramLink;
 
   HomeSliderRes({
     this.sliderPosts,
+    this.whatsappLink,
+    this.telegramLink,
+    required this.totalAlerts,
+    required this.totalWatchList,
   });
 //
   factory HomeSliderRes.fromJson(Map<String, dynamic> json) => HomeSliderRes(
+        totalAlerts: json["total_alerts"],
+        whatsappLink: json["whats-app-link"],
+        telegramLink: json['telegram-link'],
+        totalWatchList: json["total_watchlist"],
         sliderPosts: json["slider_posts"] == null
             ? []
             : List<SliderPost>.from(
@@ -25,6 +37,10 @@ class HomeSliderRes {
         "slider_posts": sliderPosts == null
             ? []
             : List<dynamic>.from(sliderPosts!.map((x) => x.toJson())),
+        "total_alerts": totalAlerts,
+        "total_watchlist": totalWatchList,
+        "telegram-link": telegramLink,
+        "whats-app-link": whatsappLink,
       };
 }
 

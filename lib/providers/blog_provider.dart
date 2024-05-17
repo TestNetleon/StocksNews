@@ -182,7 +182,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getBlogDetailData({required String blogId}) async {
+  Future getBlogDetailData({required String blogId, String? slug}) async {
     // setStatus(Status.loading);
     _statusDetail = Status.loading;
     notifyListeners();
@@ -191,6 +191,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "blog_id": blogId,
+        "slug": slug ?? "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.blogDetails,

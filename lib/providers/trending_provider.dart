@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -54,7 +55,8 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     'Most Bullish',
     'Most Bearish',
     'Trending Sectors',
-    'Trending Stories'
+    'Trending Stories',
+    "Trending Industries"
   ];
 
   // bool selectedOne = false;
@@ -105,6 +107,9 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
           //
           _mostBearish?.mostBearish?[index].isAlertAdded = 1;
         }
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
         notifyListeners();
       }
       Navigator.pop(navigatorKey.currentContext!);
@@ -144,6 +149,9 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
           //
           _mostBearish?.mostBearish?[index].isWatchlistAdded = 1;
         }
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
       }
       showErrorMessage(
           message: response.message,
