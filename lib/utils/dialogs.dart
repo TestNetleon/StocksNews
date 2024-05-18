@@ -55,31 +55,32 @@ void showErrorMessage(
     ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(snackBar);
   } else {
     showDialog(
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return AlertDialog(
-            insetPadding: EdgeInsets.all(10.sp),
-            backgroundColor: const Color.fromARGB(255, 39, 39, 39),
-            content: Text(
-              message,
-              style: stylePTSansRegular(fontSize: 14),
-            ),
-            actions: <Widget>[
-              GestureDetector(
-                child: Padding(
-                  padding: EdgeInsets.all(10.sp),
-                  child: Text(
-                    "Okay",
-                    style: stylePTSansRegular(fontSize: 14),
-                  ),
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return AlertDialog(
+          insetPadding: EdgeInsets.all(10.sp),
+          backgroundColor: const Color.fromARGB(255, 39, 39, 39),
+          content: Text(
+            message,
+            style: stylePTSansRegular(fontSize: 14),
+          ),
+          actions: <Widget>[
+            GestureDetector(
+              child: Padding(
+                padding: EdgeInsets.all(10.sp),
+                child: Text(
+                  "Okay",
+                  style: stylePTSansRegular(fontSize: 14),
                 ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
               ),
-            ],
-          );
-        });
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
   // } else {
   //   showDialog(

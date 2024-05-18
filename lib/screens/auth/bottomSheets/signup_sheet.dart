@@ -75,9 +75,13 @@ class _SignUpBottomState extends State<SignUpBottom> {
 
   void _onLoginClick() {
     closeKeyboard();
-    if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
+
+    if (!isEmail(_controller.text)
+        // && !isNumeric(_controller.text)
+        ) {
       showErrorMessage(
         message: "Please enter valid email address",
+        snackbar: false,
       );
       return;
     }
@@ -275,14 +279,14 @@ class _SignUpBottomState extends State<SignUpBottom> {
                 // const SpacerVertical(height: 5),
                 ThemeInputField(
                   controller: _controller,
-                  placeholder: "Enter email address",
+                  placeholder: "Enter email address to sign up",
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [emailFormatter],
                   textCapitalization: TextCapitalization.none,
                 ),
                 const SpacerVertical(height: Dimen.itemSpacing),
                 ThemeButton(
-                  text: "Next",
+                  text: "Create my account",
                   onPressed: _onLoginClick,
                 ),
                 const SpacerVertical(),
@@ -486,7 +490,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                             ),
                           ),
                           TextSpan(
-                            text: "Log In",
+                            text: "Log in",
                             style: stylePTSansRegular(
                               fontSize: 15,
                               color: ThemeColors.accent,

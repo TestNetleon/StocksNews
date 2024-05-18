@@ -22,6 +22,7 @@ otpSignupSheet({
   String? dontPop,
 }) async {
   await showModalBottomSheet(
+    useSafeArea: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5.sp),

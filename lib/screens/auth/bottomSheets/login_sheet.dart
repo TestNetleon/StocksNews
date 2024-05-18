@@ -222,14 +222,14 @@ class _LoginBottomState extends State<LoginBottom> {
                 // const SpacerVertical(height: 5),
                 ThemeInputField(
                   controller: _controller,
-                  placeholder: "Enter email address",
+                  placeholder: "Enter email address to log in",
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [emailFormatter],
                   textCapitalization: TextCapitalization.none,
                 ),
                 const SpacerVertical(height: Dimen.itemSpacing),
                 ThemeButton(
-                  text: "Next",
+                  text: "Log in",
                   onPressed: _onLoginClick,
                 ),
                 const SpacerVertical(),
@@ -485,7 +485,7 @@ class _LoginBottomState extends State<LoginBottom> {
                           // }
                         },
                         child: Text(
-                          " Sign Up ",
+                          " Sign up ",
                           style: stylePTSansRegular(
                             fontSize: 15,
                             color: ThemeColors.accent,

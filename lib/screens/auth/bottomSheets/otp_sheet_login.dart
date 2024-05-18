@@ -24,6 +24,7 @@ otpLoginSheet({
   String? dontPop,
 }) async {
   await showModalBottomSheet(
+    useSafeArea: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5.sp),
@@ -278,7 +279,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 const SpacerVertical(),
                 ThemeButton(
                   onPressed: _onVeryClick,
-                  text: "Verify and Log In",
+                  text: "Verify and Log in",
                 ),
                 const SpacerVertical(),
                 EditEmailClick(
