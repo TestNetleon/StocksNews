@@ -14,6 +14,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -92,25 +93,34 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
   }
 
   void _onVeryClick() async {
-    UserProvider provider = context.read<UserProvider>();
-    String? fcmToken = await Preference.getFcmToken();
-    String? address = await Preference.getLocation();
+    if (_controller.text.isEmpty) {
+      popUpAlert(
+          message: "Please enter a valid OTP.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+    } else {
+      UserProvider provider = context.read<UserProvider>();
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
 
-    Map request = {
-      "username": provider.user?.username ?? "",
-      "type": "email",
-      "otp": _controller.text,
-      "fcm_token": fcmToken ?? "",
-      "platform": Platform.operatingSystem,
-      "address": address ?? "",
-    };
+      Map request = {
+        "username": provider.user?.username ?? "",
+        "type": "email",
+        "otp": _controller.text,
+        "fcm_token": fcmToken ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
+      };
 
-    provider.verifyLoginOtp(request,
-        state: widget.state, dontPop: widget.dontPop);
+      provider.verifyLoginOtp(request,
+          state: widget.state, dontPop: widget.dontPop);
+    }
   }
 
   void _onResendOtpClick() {
     _startTime();
+    _controller.text = '';
+    setState(() {});
     UserProvider provider = context.read<UserProvider>();
     Map request = {
       "username": provider.user?.username ?? "",
@@ -149,6 +159,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         ),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // SizedBox(
           //   width: MediaQuery.of(context).size.width * .45,
@@ -174,20 +185,20 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
               fit: BoxFit.contain,
             ),
           ),
-          const SpacerVertical(height: 10),
+          const SpacerVertical(height: 30),
           Image.asset(
             Images.otpSuccessGIT,
-            height: 75.sp,
-            width: 75.sp,
+            height: 95.sp,
+            width: 95.sp,
           ),
           Padding(
             padding: const EdgeInsets.all(Dimen.authScreenPadding),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // const SpacerVertical(height: 50),
                 Text(
-                  "OTP VERIFICATION",
+                  "VERIFICATION OTP SENT",
                   style: stylePTSansBold(fontSize: 22),
                 ),
                 const SpacerVertical(height: 8),

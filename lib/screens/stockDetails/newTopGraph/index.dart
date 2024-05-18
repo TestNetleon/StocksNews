@@ -24,7 +24,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-    if (provider.isLoadingGraph) {
+    if (provider.isLoadingGraph && provider.graphChart == null) {
       return const SizedBox();
     }
     if (provider.graphChart == null && !provider.isLoadingGraph) {
@@ -65,6 +65,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                         _selectedIndex = index;
                         setState(() {});
                         provider.getStockGraphData(
+                          clearData: false,
                           symbol: provider.data?.keyStats?.symbol ?? "",
                           range: range?[_selectedIndex] ?? "1H",
                         );

@@ -28,11 +28,13 @@ class DrawerTileWidget extends StatelessWidget {
               border: Border.all(
                   color: drawerItems[index].isSelected
                       ? ThemeColors.lightGreen.withOpacity(0.3)
-                      : ThemeColors.background,
+                      // : ThemeColors.background,
+                      : Colors.black,
                   width: 3),
               color: drawerItems[index].isSelected
                   ? ThemeColors.accent
-                  : ThemeColors.background,
+                  // : ThemeColors.background,
+                  : Colors.black,
               borderRadius: BorderRadius.circular(50.sp)),
           child: InkWell(
             borderRadius: BorderRadius.circular(50.sp),

@@ -42,12 +42,15 @@ List<DrawerRes> drawerItems = [
   // DrawerRes(
   // iconData: Icons.notifications_active_outlined, text: "Notifications"),
   DrawerRes(iconData: Icons.person_2_outlined, text: "My Profile"),
-  DrawerRes(iconData: Icons.help_outline_rounded, text: "FAQs"),
+
+  DrawerRes(iconData: Icons.newspaper_sharp, text: "Blogs"),
+
   DrawerRes(iconData: Icons.newspaper_outlined, text: "About Stocks.news"),
   DrawerRes(iconData: Icons.mail_outline_sharp, text: "Contact Us"),
+  DrawerRes(iconData: Icons.help_outline_rounded, text: "FAQs"),
+
   // DrawerRes(iconData: Icons.edit_note_rounded, text: "Terms and Conditions"),
   // DrawerRes(iconData: Icons.policy_outlined, text: "Privacy Policy"),
   // DrawerRes(iconData: Icons.warning_amber_rounded, text: "Disclaimer"),
-  DrawerRes(iconData: Icons.newspaper_sharp, text: "Blogs"),
   // DrawerRes(iconData: Icons.logout_outlined, text: "Logout"),
 ];

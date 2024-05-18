@@ -69,7 +69,7 @@ class _TrendingIndustriesContainerState
                           onRefresh: provider.getData,
                           child: ListView.separated(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.only(bottom: 16.sp),
                             itemBuilder: (context, index) {
                               TrendingIndustriesRes? data =

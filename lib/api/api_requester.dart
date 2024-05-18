@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -13,11 +12,9 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_alert_dialog.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 String? validAuthToken;
 
@@ -228,7 +225,17 @@ Future<ApiResponse> apiRequest({
           ? false
           : true;
       if (!session) {
-        _showLogout();
+        // _showLogout();
+
+        popUpAlert(
+          canPop: false,
+          message:
+              "Someone else has logged into this account. Please log in again.",
+          title: "Session Out",
+          icon: Images.alertPopGIF,
+          okText: "LOGOUT",
+          onTap: _handleSessionOut,
+        );
       }
 
       return ApiResponse.fromJson(jsonDecode(response.body));
@@ -277,33 +284,33 @@ void _handleSessionOut() {
   navigatorKey.currentContext!.read<UserProvider>().clearUser();
 }
 
-Future<dynamic> _showLogout() => showDialog(
-      context: navigatorKey.currentContext!,
-      builder: (context) => PopScope(
-        canPop: false,
-        child: ThemeAlertDialog(
-          contentPadding: EdgeInsets.fromLTRB(18.sp, 16.sp, 10.sp, 10.sp),
-          children: [
-            Text(
-              "Session Out",
-              style: stylePTSansBold(fontSize: 19),
-            ),
-            const SpacerVertical(height: 10),
-            Text(
-              "Someone else has logged into this account. Please log in again.",
-              style: stylePTSansRegular(),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: _handleSessionOut,
-                child: Text(
-                  "LOGOUT",
-                  style: stylePTSansRegular(fontSize: 14),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+// Future<dynamic> _showLogout() => showDialog(
+//       context: navigatorKey.currentContext!,
+//       builder: (context) => PopScope(
+//         canPop: false,
+//         child: ThemeAlertDialog(
+//           contentPadding: EdgeInsets.fromLTRB(18.sp, 16.sp, 10.sp, 10.sp),
+//           children: [
+//             Text(
+//               "Session Out",
+//               style: stylePTSansBold(fontSize: 19),
+//             ),
+//             const SpacerVertical(height: 10),
+//             Text(
+//               "Someone else has logged into this account. Please log in again.",
+//               style: stylePTSansRegular(),
+//             ),
+//             Align(
+//               alignment: Alignment.centerRight,
+//               child: TextButton(
+//                 onPressed: _handleSessionOut,
+//                 child: Text(
+//                   "LOGOUT",
+//                   style: stylePTSansRegular(fontSize: 14),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );

@@ -410,9 +410,10 @@ class StockDetailProvider with ChangeNotifier {
     String interval = '15M',
     String range = '1H',
     showProgress = false,
+    bool clearData = true,
     String? from,
   }) async {
-    _graphChart = null;
+    if (clearData) _graphChart = null;
     _statusGraph = Status.loading;
     notifyListeners();
 

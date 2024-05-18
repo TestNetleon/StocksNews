@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -291,10 +292,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
           // showErrorMessage(message: response.message, snackbar: false);
-          popUpAlert(
-              message: "${response.message}",
-              title: "Alert",
-              icon: Images.otpSuccessGIT);
+          // popUpAlert(
+          //     message: "${response.message}",
+          //     title: "Alert",
+          //     icon: Images.otpSuccessGIT);
         } else {
           otpSignupSheet();
         }
@@ -312,6 +313,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       }
     } catch (e) {
       log(e.toString());
+      popUpAlert(
+          message: "Something went wrong",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       setStatus(Status.loaded);
     }
   }
@@ -370,10 +375,18 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         Navigator.pushNamed(navigatorKey.currentContext!, SignUpSuccess.path);
         notifyListeners();
       } else {
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
     } catch (e) {
       log(e.toString());
+      popUpAlert(
+          message: "Something went wrong",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       setStatus(Status.loaded);
     }
   }
@@ -427,15 +440,25 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
         notifyListeners();
       } else {
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
     } catch (e) {
       log(e.toString());
+      popUpAlert(
+          message: "Something went wrong",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       setStatus(Status.loaded);
     }
   }
 
   Future logoutUser(request) async {
+    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+
     try {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
@@ -448,6 +471,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
         Preference.logout();
         clearUser();
+        provider.setTotalsAlerts(0);
+        provider.setTotalsWatchList(0);
+
         showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);

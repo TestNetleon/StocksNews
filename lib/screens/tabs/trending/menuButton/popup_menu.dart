@@ -33,11 +33,12 @@ class PopUpMenuButtonCommon extends StatelessWidget {
     return PopupMenuButton<AddType>(
       constraints: BoxConstraints.loose(Size(200.sp, 170.sp)),
       iconSize: 20.sp,
+      position: PopupMenuPosition.under,
       icon: const Icon(Icons.more_vert_rounded),
-      color: ThemeColors.primaryLight,
+      color: ThemeColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.sp),
-        side: const BorderSide(color: ThemeColors.border),
+        // side: const BorderSide(color: ThemeColors.border),
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<AddType>>[
         PopupMenuItem<AddType>(
@@ -62,14 +63,14 @@ class PopUpMenuButtonCommon extends StatelessWidget {
               Icon(
                 Icons.add_alert_outlined,
                 size: !isPhone ? 35 : 16.sp,
-                color: ThemeColors.white,
+                color: ThemeColors.background,
               ),
               const SpacerHorizontal(width: 2),
               Text(
                 alertString,
-                style: stylePTSansRegular(
+                style: stylePTSansBold(
                   fontSize: 14,
-                  color: ThemeColors.white,
+                  color: ThemeColors.background,
                 ),
               ),
               Visibility(
@@ -86,6 +87,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
             ],
           ),
         ),
+        const PopupMenuDivider(height: 0),
         PopupMenuItem<AddType>(
           onTap: provider.user == null
               // ? () => _login(context)
@@ -108,13 +110,13 @@ class PopUpMenuButtonCommon extends StatelessWidget {
               Icon(
                 Icons.star_border,
                 size: !isPhone ? 35 : 16.sp,
-                color: ThemeColors.white,
+                color: ThemeColors.background,
               ),
               const SpacerHorizontal(width: 2),
               Text(
                 watchlistString,
-                style:
-                    stylePTSansRegular(fontSize: 14, color: ThemeColors.white),
+                style: stylePTSansBold(
+                    fontSize: 14, color: ThemeColors.background),
               ),
               Visibility(
                 visible: watchlistString == "Watchlist Added",

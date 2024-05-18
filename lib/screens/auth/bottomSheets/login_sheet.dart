@@ -439,7 +439,7 @@ class _LoginBottomState extends State<LoginBottom> {
                     ),
                   ),
                 ),
-                SpacerVertical(),
+                const SpacerVertical(),
                 const AgreeConditions(),
 
                 Padding(

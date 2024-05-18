@@ -29,6 +29,7 @@ class EditEmail extends StatelessWidget {
     // );
 
     return RichText(
+      textAlign: TextAlign.center,
       text: TextSpan(
         children: [
           TextSpan(
@@ -36,11 +37,11 @@ class EditEmail extends StatelessWidget {
             style: stylePTSansRegular(fontSize: 14, color: ThemeColors.accent),
           ),
           TextSpan(
-            text: " The code is valid for 10 minutes.",
+            text: "\n The code is valid for 10 minutes.",
             style: stylePTSansRegular(fontSize: 14),
           ),
         ],
-        text: "Please enter the 4-digit verification code that was send to ",
+        text: "Please enter the 4-digit verification code that was sent to ",
         style: stylePTSansRegular(fontSize: 14),
       ),
     );

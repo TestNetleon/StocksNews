@@ -9,6 +9,10 @@ void popUpAlert({
   required String message,
   required String title,
   required String icon,
+  Function()? onTap,
+  bool cancel = false,
+  String? okText,
+  bool canPop = true,
 }) {
   showDialog(
     context: navigatorKey.currentContext!,
@@ -17,6 +21,10 @@ void popUpAlert({
         message: message,
         title: title,
         icon: icon,
+        onTap: onTap,
+        cancel: cancel,
+        okText: okText,
+        canPop: canPop,
       );
     },
   );
@@ -24,16 +32,25 @@ void popUpAlert({
 
 class AlertPopupCustom extends StatelessWidget {
   final String message, title, icon;
+  final String? okText;
+  final Function()? onTap;
+  final bool cancel;
+  final bool canPop;
   const AlertPopupCustom({
     super.key,
     required this.message,
     required this.title,
     required this.icon,
+    this.cancel = false,
+    this.onTap,
+    this.okText,
+    this.canPop = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return PopScope(
+      canPop: canPop,
       child: Dialog(
         backgroundColor: ThemeColors.transparent,
         shape:
@@ -69,22 +86,39 @@ class AlertPopupCustom extends StatelessWidget {
                       const SpacerVertical(height: 8),
                       Text(
                         message,
+                        textAlign: TextAlign.center,
                         style:
                             stylePTSansRegular(color: ThemeColors.background),
                       ),
                       const SpacerVertical(height: 5),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "OK",
-                            style:
-                                stylePTSansBold(color: ThemeColors.background),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Visibility(
+                            visible: cancel,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: stylePTSansBold(
+                                    color: ThemeColors.background),
+                              ),
+                            ),
                           ),
-                        ),
+                          TextButton(
+                            onPressed: onTap ??
+                                () {
+                                  Navigator.of(context).pop();
+                                },
+                            child: Text(
+                              okText ?? "OK",
+                              style: stylePTSansBold(
+                                  color: ThemeColors.background),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

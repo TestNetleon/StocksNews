@@ -418,7 +418,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         ),
                       ),
                     ),
-                    SpacerVertical(),
+                    const SpacerVertical(),
                     const AgreeConditions(),
 
                     // Visibility(
