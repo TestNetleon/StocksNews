@@ -19,7 +19,7 @@ class Loading extends StatelessWidget {
             height: 100,
           ),
           Text(
-            text ?? "We are preparing …",
+            text ?? "We are preparing, Please wait...",
             style: styleGeorgiaRegular(color: ThemeColors.accent),
           ),
         ],

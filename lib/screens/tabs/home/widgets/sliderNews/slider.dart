@@ -1,5 +1,10 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -53,15 +58,53 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                   left: 0,
                   child: Container(
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            ThemeColors.background,
-                            ThemeColors.background.withOpacity(0.1)
-                          ],
-                        ),
-                      ),
+                          gradient: LinearGradient(
+                        colors: [
+                          Colors.black,
+                          ThemeColors.background.withOpacity(0.1),
+                        ],
+                      )),
                       width: 40.sp,
                       height: imageHeight),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Colors.black,
+                          ThemeColors.background.withOpacity(0.1),
+
+                          // Colors.green, Colors.red,
+                        ],
+                      ),
+                    ),
+                    width: 30.sp,
+                    height: double.infinity,
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        ThemeColors.background.withOpacity(0.1),
+                        Colors.black,
+                      ],
+                    )),
+                    width: double.infinity,
+                    height: 30.sp,
+                  ),
                 ),
               ],
             ),
@@ -140,7 +183,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
               }).toList(),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 5.sp,
               child: AnimatedSmoothIndicator(
                 activeIndex: _activeIndex,
                 count: sliderPosts?.length ?? 0,

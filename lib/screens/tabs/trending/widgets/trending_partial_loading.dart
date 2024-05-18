@@ -35,7 +35,7 @@ class TrendingPartialLoading extends StatelessWidget {
               height: 100,
             ),
             Text(
-              "We are preparing …",
+              "We are preparing, Please wait...",
               style: styleGeorgiaRegular(
                 color: ThemeColors.accent,
               ),

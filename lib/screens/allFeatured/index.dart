@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/featured_ticker.dart';
 import 'package:stocks_news_new/screens/allFeatured/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class AllFeaturedIndex extends StatefulWidget {
   const AllFeaturedIndex({super.key});
@@ -34,14 +37,26 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
         canSearch: true,
         showTrailing: true,
       ),
-      body: BaseUiContainer(
-        error: provider.error,
-        hasData: provider.data?.isNotEmpty == true && !provider.isLoading,
-        isLoading: provider.isLoading,
-        onRefresh: () {
-          provider.getFeaturedTicker(showProgress: true);
-        },
-        child: const AllFeaturedContainer(),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(
+            Dimen.itemSpacing, Dimen.itemSpacing, Dimen.itemSpacing, 0),
+        child: Column(
+          children: [
+            const ScreenTitle(title: "Featured Stocks"),
+            Expanded(
+              child: BaseUiContainer(
+                error: provider.error,
+                hasData:
+                    provider.data?.isNotEmpty == true && !provider.isLoading,
+                isLoading: provider.isLoading,
+                onRefresh: () {
+                  provider.getFeaturedTicker(showProgress: true);
+                },
+                child: const AllFeaturedContainer(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

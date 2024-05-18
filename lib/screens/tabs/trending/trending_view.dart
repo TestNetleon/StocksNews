@@ -163,7 +163,7 @@ class _TrendingViewState extends State<TrendingView> {
                   height: 100,
                 ),
                 Text(
-                  "We are preparing…",
+                  "We are preparing, Please wait...",
                   style: styleGeorgiaRegular(
                     color: Colors.white,
                   ),

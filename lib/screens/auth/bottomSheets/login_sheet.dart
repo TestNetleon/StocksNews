@@ -283,8 +283,7 @@ class _LoginBottomState extends State<LoginBottom> {
                   ),
                 ),
 
-                const SpacerVertical(),
-                const AgreeConditions(),
+                // const SpacerVertical(),
                 // Visibility(
                 //     visible: Platform.isIOS,
                 //     child: Container(
@@ -436,6 +435,8 @@ class _LoginBottomState extends State<LoginBottom> {
                     ),
                   ),
                 ),
+                SpacerVertical(),
+                const AgreeConditions(),
 
                 Padding(
                   padding: EdgeInsets.all(15.sp),

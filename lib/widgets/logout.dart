@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
                 };
                 Navigator.pop(context);
                 context.read<UserProvider>().logoutUser(request);
+                context.read<HomeProvider>().getHomeAlerts(userAvail: false);
               },
               child: Text(
                 "LOGOUT",
@@ -55,7 +57,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

@@ -65,7 +65,7 @@ class SocialSentimentsGraph extends StatelessWidget {
               // decoration: TextDecoration.underline,
             ),
           ),
-          const SpacerVertical(),
+          // const SpacerVertical(),
           LayoutBuilder(
             builder: (context, constraints) => Container(
               padding: const EdgeInsets.all(0),
@@ -237,6 +237,7 @@ class SocialSentimentsGraph extends StatelessWidget {
               ),
             ],
           ),
+          const SpacerVertical(),
 
           // Stack(
           //   alignment: Alignment.bottomCenter,

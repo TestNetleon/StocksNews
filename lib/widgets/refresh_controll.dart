@@ -36,7 +36,10 @@ class _RefreshControllState extends State<RefreshControll> {
         builder: (BuildContext context, LoadStatus? mode) {
           Widget body;
           if (mode == LoadStatus.idle) {
-            body = const CircularProgressIndicator();
+            body = const CircularProgressIndicator(
+              strokeWidth: 4,
+              color: ThemeColors.accent,
+            );
           } else if (mode == LoadStatus.loading) {
             body = const CircularProgressIndicator(
               strokeWidth: 4,

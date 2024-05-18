@@ -339,8 +339,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         ),
                       ),
                     ),
-                    const SpacerVertical(),
-                    const AgreeConditions(),
+                    // const SpacerVertical(),
                     Visibility(
                       visible: Platform.isIOS,
                       child: Padding(
@@ -407,6 +406,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         ),
                       ),
                     ),
+                    SpacerVertical(),
+                    const AgreeConditions(),
 
                     // Visibility(
                     //     visible: Platform.isIOS,

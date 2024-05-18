@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/featured_ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
 import '../../modals/home_alert_res.dart';
@@ -20,7 +21,7 @@ class AllFeaturedContainer extends StatelessWidget {
       canLoadmore: provider.canLoadMore,
       onLoadMore: () async => provider.getFeaturedTicker(loadMore: true),
       child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.sp),
+        padding: const EdgeInsets.only(bottom: Dimen.itemSpacing),
         itemBuilder: (context, index) {
           HomeAlertsRes? data = provider.data?[index];
           if (data == null) {

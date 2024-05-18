@@ -62,7 +62,7 @@ class SentimentsGraph extends StatelessWidget {
               // decoration: TextDecoration.underline,
             ),
           ),
-          const SpacerVertical(),
+          // const SpacerVertical(),
           LayoutBuilder(
             builder: (context, constraints) => Container(
               padding: const EdgeInsets.all(0),
@@ -181,7 +181,7 @@ class SentimentsGraph extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerVertical(height: 5),
+                  // const SpacerVertical(height: 5),
                   Row(
                     children: [
                       Icon(
@@ -243,6 +243,7 @@ class SentimentsGraph extends StatelessWidget {
               )
             ],
           ),
+          SpacerVertical()
         ],
       ),
     );

@@ -196,13 +196,13 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getHomeAlerts() async {
+  Future getHomeAlerts({bool userAvail = true}) async {
     _statusHomeAlert = Status.loading;
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     try {
       Map request = {
-        "token": provider.user?.token ?? "",
+        "token": userAvail ? provider.user?.token ?? "" : "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.homeAlert,

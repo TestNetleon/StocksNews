@@ -7,12 +7,12 @@ import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/modals/news_res.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import '../../home/widgets/app_bar_home.dart';
 
@@ -139,7 +139,10 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return const SpacerVertical(height: 16);
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 16.sp,
+              );
             },
           )),
     );
