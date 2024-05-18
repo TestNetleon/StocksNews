@@ -32,6 +32,7 @@ loginSheet({
   String? dontPop,
 }) async {
   await showModalBottomSheet(
+    useSafeArea: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5.sp),
@@ -213,12 +214,12 @@ class _LoginBottomState extends State<LoginBottom> {
                   "WELCOME BACK",
                   style: stylePTSansBold(fontSize: 24),
                 ),
-                const SpacerVertical(height: 40),
-                Text(
-                  "Email Address",
-                  style: stylePTSansRegular(fontSize: 14),
-                ),
-                const SpacerVertical(height: 5),
+                const SpacerVertical(height: 30),
+                // Text(
+                //   "Email Address",
+                //   style: stylePTSansRegular(fontSize: 14),
+                // ),
+                // const SpacerVertical(height: 5),
                 ThemeInputField(
                   controller: _controller,
                   placeholder: "Enter email address",
