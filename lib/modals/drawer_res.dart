@@ -49,5 +49,5 @@ List<DrawerRes> drawerItems = [
   // DrawerRes(iconData: Icons.policy_outlined, text: "Privacy Policy"),
   // DrawerRes(iconData: Icons.warning_amber_rounded, text: "Disclaimer"),
   DrawerRes(iconData: Icons.newspaper_sharp, text: "Blogs"),
-  DrawerRes(iconData: Icons.logout_outlined, text: "Logout"),
+  // DrawerRes(iconData: Icons.logout_outlined, text: "Logout"),
 ];

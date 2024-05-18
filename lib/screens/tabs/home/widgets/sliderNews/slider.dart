@@ -55,17 +55,46 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                   fit: BoxFit.cover,
                 ),
                 Positioned(
+                  top: 0,
+                  bottom: 0,
                   left: 0,
                   child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          ThemeColors.background.withOpacity(0.1),
+                          Colors.black,
+                          // Colors.green,
+                          // Colors.red,
+                        ],
+                      ),
+                    ),
+                    width: 30.sp,
+                    height: double.infinity,
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomLeft,
                         colors: [
                           Colors.black,
                           ThemeColors.background.withOpacity(0.1),
+                          // Colors.green,
+                          // Colors.red,
                         ],
-                      )),
-                      width: 40.sp,
-                      height: imageHeight),
+                      ),
+                    ),
+                    width: double.infinity,
+                    height: 30.sp,
+                  ),
                 ),
                 Positioned(
                   top: 0,
@@ -84,7 +113,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                         ],
                       ),
                     ),
-                    width: 30.sp,
+                    width: 20.sp,
                     height: double.infinity,
                   ),
                 ),
