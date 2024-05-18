@@ -243,7 +243,7 @@ class SentimentsGraph extends StatelessWidget {
               )
             ],
           ),
-          SpacerVertical()
+          const SpacerVertical()
         ],
       ),
     );

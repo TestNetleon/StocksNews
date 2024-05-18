@@ -7,12 +7,12 @@ import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../widgets/cache_network_image.dart';
+import '../../widgets/custom/alert_popup.dart';
 
 class WatchlistItem extends StatelessWidget {
   final int index;
@@ -37,16 +37,30 @@ class WatchlistItem extends StatelessWidget {
           const SpacerHorizontal(),
           SlidableAction(
             onPressed: (_) {
-              showConfirmAlertDialog(
-                context: context,
-                title: "Removing Stock",
+              // showConfirmAlertDialog(
+              //   context: context,
+              //   title: "Removing Stock",
+              //   message:
+              //       "Do you want to remove this stock from your watchlist?",
+              //   okText: "Remove",
+              //   onclick: () {
+              //     context
+              //         .read<WatchlistProvider>()
+              //         .deleteItem(data.id, data.symbol);
+              //   },
+              // );
+              popUpAlert(
+                cancel: true,
+                okText: "Remove",
                 message:
                     "Do you want to remove this stock from your watchlist?",
-                okText: "Remove",
-                onclick: () {
+                title: "Removing Stock",
+                icon: Images.alertPopGIF,
+                onTap: () {
                   context
                       .read<WatchlistProvider>()
                       .deleteItem(data.id, data.symbol);
+                  Navigator.pop(context);
                 },
               );
             },

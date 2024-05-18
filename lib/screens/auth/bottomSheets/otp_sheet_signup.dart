@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
+import '../../../widgets/custom/alert_popup.dart';
 import 'edit_email.dart';
 
 otpSignupSheet({
@@ -80,26 +81,35 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
   }
 
   void _onVeryClick() async {
-    closeKeyboard();
-    UserProvider provider = context.read<UserProvider>();
+    if (_controller.text.isEmpty) {
+      popUpAlert(
+          message: "Please enter a valid OTP.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+    } else {
+      closeKeyboard();
+      UserProvider provider = context.read<UserProvider>();
 
-    String? fcmToken = await Preference.getFcmToken();
-    String? address = await Preference.getLocation();
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
 
-    Map request = {
-      "username": provider.user?.username ?? "",
-      "otp": _controller.text,
-      "type": "email",
-      "fcm_token": fcmToken ?? "",
-      "platform": Platform.operatingSystem,
-      "address": address ?? "",
-    };
+      Map request = {
+        "username": provider.user?.username ?? "",
+        "otp": _controller.text,
+        "type": "email",
+        "fcm_token": fcmToken ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
+      };
 
-    provider.verifySignupOtp(request);
+      provider.verifySignupOtp(request);
+    }
   }
 
   void _onResendOtpClick() {
     closeKeyboard();
+    _controller.text = '';
+
     UserProvider provider = context.read<UserProvider>();
     Map request = {
       "username": provider.user?.username ?? "",
@@ -161,11 +171,11 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
               fit: BoxFit.contain,
             ),
           ),
-          const SpacerVertical(height: 10),
+          const SpacerVertical(height: 30),
           Image.asset(
             Images.otpSuccessGIT,
-            height: 75.sp,
-            width: 75.sp,
+            height: 95.sp,
+            width: 95.sp,
           ),
           Padding(
             padding: const EdgeInsets.all(Dimen.authScreenPadding),

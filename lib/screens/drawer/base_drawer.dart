@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +75,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
 
   Widget _itemsWidget() {
     return ListView.separated(
-        padding: EdgeInsets.symmetric(vertical: 10.sp),
+        // padding: EdgeInsets.symmetric(vertical: 10.sp),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
@@ -190,13 +188,14 @@ class _BaseDrawerState extends State<BaseDrawer> {
       // 1: TrendingIndustries.path,
       // 2: Notifications.path,
       1: MyAccount.path,
-      2: FAQ.path,
+      2: IndexBlog.path,
       3: TCandPolicy.path,
       4: ContactUs.path,
+      5: FAQ.path,
+
       // 7: TCandPolicy.path,
       // 8: TCandPolicy.path,
       // 6: TCandPolicy.path,
-      5: IndexBlog.path,
       // 14: WhatWeDoIndex.path,
     };
 
@@ -217,7 +216,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
     UserRes? user = context.watch<UserProvider>().user;
     return SafeArea(
       child: Drawer(
-        backgroundColor: ThemeColors.background,
+        backgroundColor: Colors.black,
         width: ScreenUtil().screenWidth / 1.2,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -437,23 +436,24 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         children: [
                           Ink(
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: ThemeColors.background, width: 3),
-                                color: ThemeColors.background,
+                                border:
+                                    Border.all(color: Colors.black, width: 3),
+                                color: Colors.black,
                                 borderRadius: BorderRadius.circular(50.sp)),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(50.sp),
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const LogoutDialog();
-                                  },
-                                );
+                                // showDialog(
+                                //   context: context,
+                                //   builder: (context) {
+                                //     return const LogoutDialog();
+                                //   },
+                                // );
+                                logoutPopUp();
                               },
                               child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(10.sp, 0, 6.sp, 6.sp),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.sp, vertical: 6.sp),
                                 child: Row(
                                   children: [
                                     Padding(
