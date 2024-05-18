@@ -18,13 +18,14 @@ class HomePartialLoading extends StatelessWidget {
   final bool marginTop;
   final String? error;
   final Function()? onRefresh;
-//
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         if (loading)
-          Container(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
             margin: EdgeInsets.all(20.sp),
             child: const CircularProgressIndicator(
               color: ThemeColors.accent,
@@ -37,7 +38,8 @@ class HomePartialLoading extends StatelessWidget {
             onRefresh: onRefresh,
           ),
         if (!loading && error == null)
-          Container(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
             margin: EdgeInsets.only(top: 20.sp),
             child: child,
           )

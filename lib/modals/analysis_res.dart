@@ -5,10 +5,8 @@ AnalysisRes analysisResFromJson(String str) =>
 
 String analysisResToJson(AnalysisRes data) => json.encode(data.toJson());
 
-//
 class AnalysisRes {
   final List<PeersDatum>? peersData;
-
   final num fundamentalPercent;
   final num shortTermPercent;
   final num longTermPercent;

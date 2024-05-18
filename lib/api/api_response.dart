@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:stocks_news_new/modals/home_trending_res.dart';
+import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 
 ApiResponse apiResponseFromJson(String str) =>
     ApiResponse.fromJson(json.decode(str));
@@ -44,9 +45,7 @@ class ApiResponse {
             // ? List<dynamic>.from(json["data"].map((x) => dynamic.fromJson(x)))
             : json["extra"] == null
                 ? null
-                : Extra.fromJson(
-                    json["extra"],
-                  ),
+                : Extra.fromJson(json["extra"]),
       );
 }
 
@@ -61,6 +60,7 @@ class Extra {
   final List<KeyValueElement>? txnSize;
   final TextRes? text;
   final int? userAlert;
+  final InAppNotification? inAppMsg;
 
   Extra({
     this.search,
@@ -73,36 +73,42 @@ class Extra {
     this.text,
     this.txnSize,
     this.userAlert,
+    this.inAppMsg,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
-      search: json["search"],
-      userAlert: json["user_alerts"],
-      text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
-      exchangeShortName: json["exchange_short_name"] == null
-          ? []
-          : List<KeyValueElement>.from(json["exchange_short_name"]!
-              .map((x) => KeyValueElement.fromJson(x))),
-      priceRange: json["price_range"] == null
-          ? []
-          : List<KeyValueElement>.from(
-              json["price_range"]!.map((x) => KeyValueElement.fromJson(x))),
-      transactionType: json["txn_type"] == null
-          ? []
-          : List<KeyValueElement>.from(
-              json["txn_type"]!.map((x) => KeyValueElement.fromJson(x))),
-      cap: json["market_cap"] == null
-          ? []
-          : List<KeyValueElement>.from(
-              json["market_cap"]!.map((x) => KeyValueElement.fromJson(x))),
-      sector: json["sector"] == null
-          ? []
-          : List<KeyValueElement>.from(
-              json["sector"]!.map((x) => KeyValueElement.fromJson(x))),
-      txnSize: json["txn_size"] == null
-          ? []
-          : List<KeyValueElement>.from(json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
-      notificationCount: json["notification_count"]);
+        search: json["search"],
+        userAlert: json["user_alerts"],
+        text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
+        exchangeShortName: json["exchange_short_name"] == null
+            ? []
+            : List<KeyValueElement>.from(json["exchange_short_name"]!
+                .map((x) => KeyValueElement.fromJson(x))),
+        priceRange: json["price_range"] == null
+            ? []
+            : List<KeyValueElement>.from(
+                json["price_range"]!.map((x) => KeyValueElement.fromJson(x))),
+        transactionType: json["txn_type"] == null
+            ? []
+            : List<KeyValueElement>.from(
+                json["txn_type"]!.map((x) => KeyValueElement.fromJson(x))),
+        cap: json["market_cap"] == null
+            ? []
+            : List<KeyValueElement>.from(
+                json["market_cap"]!.map((x) => KeyValueElement.fromJson(x))),
+        sector: json["sector"] == null
+            ? []
+            : List<KeyValueElement>.from(
+                json["sector"]!.map((x) => KeyValueElement.fromJson(x))),
+        txnSize: json["txn_size"] == null
+            ? []
+            : List<KeyValueElement>.from(
+                json["txn_size"]!.map((x) => KeyValueElement.fromJson(x))),
+        notificationCount: json["notification_count"],
+        inAppMsg: json["in_app_notification"] == null
+            ? null
+            : InAppNotification.fromJson(json["in_app_notification"]),
+      );
 
   Map<String, dynamic> toJson() => {
         "search": search,
@@ -126,6 +132,7 @@ class Extra {
             : List<dynamic>.from(txnSize!.map((x) => x.toJson())),
         "notification_count": notificationCount,
         "text": text?.toJson(),
+        "in_app_notification": inAppMsg?.toJson(),
       };
 }
 

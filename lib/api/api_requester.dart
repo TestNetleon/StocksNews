@@ -6,11 +6,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/in_app_messages.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -27,148 +29,6 @@ Map<String, String> getHeaders() {
 
   return headers;
 }
-
-// Future apiRequest({
-//   RequestType type = RequestType.post,
-//   required String url,
-//   Map? request,
-//   callback,
-//   header,
-//   baseUrl = Apis.baseUrl,
-//   showProgress = true,
-// }) async {
-//   Utils().showLog("URL  =  $baseUrl$url");
-//   Utils().showLog("HEADERS  =  ${getHeaders().toString()}");
-//   try {
-//     Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
-//   } catch (e) {
-//     // log("Error in showing request");
-//     //
-//   }
-
-//   // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-//   // if (request != null && user != null && user.token != null) {
-//   //   request["token"] = user.token;
-//   // }
-
-//   Map<String, String> headers = getHeaders();
-//   if (header != null) {
-//     headers.addAll(header);
-//   }
-
-//   Future.delayed(Duration.zero, () {
-//     if (showProgress) showGlobalProgressDialog();
-//   });
-
-//   try {
-//     late http.Response response;
-//     if (type == RequestType.post) {
-//       response = await http.post(
-//         Uri.parse(baseUrl + url),
-//         // body: request != null ? jsonEncode(request) : null,
-//         body: request,
-//         headers: headers,
-//       );
-//     } else if (type == RequestType.get) {
-//       response = await http.get(
-//         Uri.parse(baseUrl + url),
-//         headers: headers,
-//       );
-//     }
-//     Utils().showLog("RESPONSE  =  ${response.body}");
-//     if (jsonDecode(response.body)['data'] != null) {
-//       if (jsonDecode(response.body)['data'] is! List &&
-//           jsonDecode(response.body)['data']["login_status"] != null &&
-//           jsonDecode(response.body)['data']["login_status"] == false) {
-//         log("ENTERED HERE");
-//         showSessionOutDialog(
-//           jsonDecode(response.body)['message'],
-//           () => {
-//             if (true) showGlobalProgressDialog(),
-//             Future.delayed(const Duration(seconds: 1), () {
-//               if (true) closeGlobalProgressDialog();
-//               _handleSessionOut();
-//             })
-//           },
-//         );
-//       } else if (response.statusCode == 200) {
-//         if (showProgress) closeGlobalProgressDialog();
-//         bool session = jsonDecode(response.body)['status'] == false &&
-//                 jsonDecode(response.body)['message'] ==
-//                     "User with the provided token does not exist."
-//             ? false
-//             : true;
-
-//         log("SESSION $session");
-//         if (!session) {
-//           _showLogout();
-//         }
-//         return ApiResponse.fromJson(jsonDecode(response.body));
-//       } else {
-//         if (showProgress) closeGlobalProgressDialog();
-//         bool session = jsonDecode(response.body)['status'] == false &&
-//                 jsonDecode(response.body)['message'] ==
-//                     "User with the provided token does not exist."
-//             ? false
-//             : true;
-
-//         log("SESSION $session");
-//         // if (!session) {
-//         //   _showLogout();
-//         // }
-
-//         return ApiResponse(
-//           status: false,
-//           message: session
-//               ? jsonDecode(response.body)['error'] ?? Const.errSomethingWrong
-//               : Const.errSomethingWrong,
-//           session: session,
-//         );
-//       }
-//     } else if (response.statusCode == 200) {
-//       if (showProgress) closeGlobalProgressDialog();
-//       bool session = jsonDecode(response.body)['status'] == false &&
-//               jsonDecode(response.body)['message'] ==
-//                   "User with the provided token does not exist."
-//           ? false
-//           : true;
-//       // if (session) {
-//       //   _refreshToken();
-//       // }
-
-//       log("SESSION $session");
-//       return ApiResponse.fromJson(jsonDecode(response.body));
-//     } else {
-//       if (showProgress) closeGlobalProgressDialog();
-//       bool session = jsonDecode(response.body)['status'] == false &&
-//               jsonDecode(response.body)['message'] ==
-//                   "User with the provided token does not exist."
-//           ? false
-//           : true;
-
-//       log("SESSION $session");
-//       // if (!session) {
-//       //   _showLogout();
-//       // }
-//       return ApiResponse(
-//         status: false,
-//         message: session
-//             ? jsonDecode(response.body)['error'] ?? Const.errSomethingWrong
-//             : Const.errSomethingWrong,
-//         session: session,
-//       );
-//     }
-//   } on SocketException {
-//     // Internet error
-//     if (showProgress) closeGlobalProgressDialog();
-//     return ApiResponse(status: false, message: Const.noInternet);
-//   } catch (e) {
-//     // Unexpected Error
-//     Utils().showLog(e.toString());
-//     if (showProgress) closeGlobalProgressDialog();
-//     return ApiResponse(status: false, message: Const.errSomethingWrong);
-//   }
-// }
 
 Future<ApiResponse> apiRequest({
   RequestType type = RequestType.post,
@@ -238,7 +98,23 @@ Future<ApiResponse> apiRequest({
         );
       }
 
-      return ApiResponse.fromJson(jsonDecode(response.body));
+      ApiResponse res = ApiResponse.fromJson(jsonDecode(response.body));
+
+      // _checkForInAppMessage((res.extra as Extra).inAppMsg);
+
+      // // if (false) {
+      // if ((res.extra as Extra).inAppMsg != null) {
+      //   // TODO: Need to apply everywhere
+      //   InAppNotification? obj = (res.extra as Extra).inAppMsg;
+      //   showAlert(
+      //     title: obj?.title,
+      //     description: obj?.description,
+      //     image: obj?.image,
+      //     onClick: () {},
+      //   );
+      // }
+
+      return res;
     } else {
       log('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
@@ -284,33 +160,13 @@ void _handleSessionOut() {
   navigatorKey.currentContext!.read<UserProvider>().clearUser();
 }
 
-// Future<dynamic> _showLogout() => showDialog(
-//       context: navigatorKey.currentContext!,
-//       builder: (context) => PopScope(
-//         canPop: false,
-//         child: ThemeAlertDialog(
-//           contentPadding: EdgeInsets.fromLTRB(18.sp, 16.sp, 10.sp, 10.sp),
-//           children: [
-//             Text(
-//               "Session Out",
-//               style: stylePTSansBold(fontSize: 19),
-//             ),
-//             const SpacerVertical(height: 10),
-//             Text(
-//               "Someone else has logged into this account. Please log in again.",
-//               style: stylePTSansRegular(),
-//             ),
-//             Align(
-//               alignment: Alignment.centerRight,
-//               child: TextButton(
-//                 onPressed: _handleSessionOut,
-//                 child: Text(
-//                   "LOGOUT",
-//                   style: stylePTSansRegular(fontSize: 14),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
+void _checkForInAppMessage(InAppNotification? inAppMsg) {
+  if (inAppMsg != null) {
+    showAlert(
+      title: inAppMsg.title,
+      description: inAppMsg.description,
+      image: inAppMsg.image,
+      onClick: () {},
+    );
+  }
+}
