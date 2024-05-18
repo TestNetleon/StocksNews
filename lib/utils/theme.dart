@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -13,12 +15,12 @@ final lightTheme = ThemeData(
     backgroundColor: ThemeColors.background,
     width: double.infinity,
   ),
-  appBarTheme: const AppBarTheme(
+  appBarTheme: AppBarTheme(
     // iconTheme: IconThemeData(color: Colors.black),
     // backgroundColor: Colors.white,
     // foregroundColor: Colors.transparent,
     elevation: 0,
-    titleTextStyle: TextStyle(
+    titleTextStyle: const TextStyle(
       color: Colors.white,
       fontSize: 18,
       fontWeight: FontWeight.w700,
@@ -26,8 +28,10 @@ final lightTheme = ThemeData(
     ),
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: ThemeColors.background,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness:
+          Platform.isAndroid ? Brightness.light : Brightness.dark,
+      statusBarBrightness:
+          Platform.isAndroid ? Brightness.light : Brightness.dark,
     ),
   ),
   fontFamily: Fonts.roboto,
