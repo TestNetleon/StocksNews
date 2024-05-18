@@ -162,6 +162,11 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
             ),
           ),
           const SpacerVertical(height: 10),
+          Image.asset(
+            Images.otpSuccessGIT,
+            height: 75.sp,
+            width: 75.sp,
+          ),
           Padding(
             padding: const EdgeInsets.all(Dimen.authScreenPadding),
             child: Column(

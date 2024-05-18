@@ -154,6 +154,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
           //   width: MediaQuery.of(context).size.width * .45,
           //   child: Image.asset(Images.logo),
           // ),
+
           Container(
             height: 6.sp,
             width: 50.sp,
@@ -164,6 +165,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
             ),
           ),
           const SpacerVertical(height: 16),
+
           Container(
             width: MediaQuery.of(context).size.width * .45,
             constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
@@ -173,6 +175,11 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
             ),
           ),
           const SpacerVertical(height: 10),
+          Image.asset(
+            Images.otpSuccessGIT,
+            height: 75.sp,
+            width: 75.sp,
+          ),
           Padding(
             padding: const EdgeInsets.all(Dimen.authScreenPadding),
             child: Column(

@@ -124,10 +124,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         } else {
           otpLoginSheet(state: state, dontPop: dontPop);
           Timer(const Duration(seconds: 1), () {
-            popUpAlert(
-                message: "${response.message}",
-                title: "Alert",
-                icon: Images.otpSuccessGIT);
+            // popUpAlert(
+            //     message: "${response.message}",
+            //     title: "Alert",
+            //     icon: Images.otpSuccessGIT);
           });
         }
       } else {
@@ -136,10 +136,18 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
           Navigator.pop(navigatorKey.currentContext!);
         }
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
     } catch (e) {
       log(e.toString());
+      popUpAlert(
+          message: "Something went wrong",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       setStatus(Status.loaded);
     }
   }
@@ -190,11 +198,19 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
               navigatorKey.currentContext!, Tabs.path, (route) => false);
         }
       } else {
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
       setStatus(Status.loaded);
     } catch (e) {
       log(e.toString());
+      popUpAlert(
+          message: "Something went wrong",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       setStatus(Status.loaded);
     }
   }
@@ -250,6 +266,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       log(e.toString());
+      popUpAlert(
+          message: "Something went wrong",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       setStatus(Status.loaded);
     }
   }
@@ -282,17 +302,13 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
           // showErrorMessage(message: response.message, snackbar: false);
-          popUpAlert(
-              message: "${response.message}",
-              title: "Alert",
-              icon: Images.alertPopGIF);
         } else {
           // showErrorMessage(message: response.message);
-          popUpAlert(
-              message: "${response.message}",
-              title: "Alert",
-              icon: Images.alertPopGIF);
         }
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
     } catch (e) {
       log(e.toString());
