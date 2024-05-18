@@ -32,6 +32,7 @@ signupSheet({
   String? dontPop,
 }) async {
   await showModalBottomSheet(
+    useSafeArea: true,
     backgroundColor: ThemeColors.transparent,
     // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
     isScrollControlled: true,
@@ -245,7 +246,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                   "Welcome to stocks.news",
                   style: stylePTSansBold(fontSize: 24),
                 ),
-                const SpacerVertical(height: 40),
+                const SpacerVertical(height: 30),
 
                 // ThemeButton(
                 //   onPressed: () {
@@ -267,11 +268,11 @@ class _SignUpBottomState extends State<SignUpBottom> {
                 //     ),
                 //   ),
                 // ),
-                Text(
-                  "Email Address",
-                  style: stylePTSansRegular(fontSize: 14),
-                ),
-                const SpacerVertical(height: 5),
+                // Text(
+                //   "Email Address",
+                //   style: stylePTSansRegular(fontSize: 14),
+                // ),
+                // const SpacerVertical(height: 5),
                 ThemeInputField(
                   controller: _controller,
                   placeholder: "Enter email address",

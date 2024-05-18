@@ -15,7 +15,7 @@ class AgreeConditions extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: 'By signing up you agree to our ',
-        style: stylePTSansRegular(fontSize: 13),
+        style: stylePTSansRegular(fontSize: 13, height: 1.4),
         children: [
           TextSpan(
             recognizer: TapGestureRecognizer()
@@ -29,15 +29,13 @@ class AgreeConditions extends StatelessWidget {
                   ),
                 );
               },
-            text: 'Terms & Conditions',
+            text: 'terms and conditions',
             style: stylePTSansRegular(
-              fontSize: 13,
-              color: ThemeColors.accent,
-            ),
+                fontSize: 13, color: ThemeColors.accent, height: 1.4),
           ),
           TextSpan(
             text: ' and ',
-            style: stylePTSansRegular(fontSize: 13),
+            style: stylePTSansRegular(fontSize: 13, height: 1.4),
           ),
           TextSpan(
             recognizer: TapGestureRecognizer()
@@ -51,11 +49,13 @@ class AgreeConditions extends StatelessWidget {
                   ),
                 );
               },
-            text: 'Privacy Policy',
+            text: 'privacy policy',
             style: stylePTSansRegular(
-              fontSize: 13,
-              color: ThemeColors.accent,
-            ),
+                fontSize: 13, color: ThemeColors.accent, height: 1.4),
+          ),
+          TextSpan(
+            text: '.',
+            style: stylePTSansRegular(fontSize: 13, height: 1.4),
           ),
         ],
       ),

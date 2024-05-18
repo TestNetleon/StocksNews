@@ -14,9 +14,9 @@ final lightTheme = ThemeData(
     width: double.infinity,
   ),
   appBarTheme: const AppBarTheme(
-    iconTheme: IconThemeData(color: Colors.black),
-    backgroundColor: Colors.white,
-    foregroundColor: Colors.transparent,
+    // iconTheme: IconThemeData(color: Colors.black),
+    // backgroundColor: Colors.white,
+    // foregroundColor: Colors.transparent,
     elevation: 0,
     titleTextStyle: TextStyle(
       color: Colors.white,
@@ -26,8 +26,8 @@ final lightTheme = ThemeData(
     ),
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: ThemeColors.background,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.dark,
     ),
   ),
   fontFamily: Fonts.roboto,
