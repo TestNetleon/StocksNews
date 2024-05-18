@@ -60,7 +60,8 @@ class FAQItem extends StatelessWidget {
               padding: EdgeInsets.only(top: Dimen.itemSpacing.sp),
               child: Text(
                 faq.answer,
-                style: stylePTSansRegular(fontSize: 14),
+                style: stylePTSansRegular(
+                    fontSize: 14, color: ThemeColors.greyText),
               ),
             ),
           ),

@@ -118,7 +118,8 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
                       const SpacerHorizontal(width: 5),
                       Flexible(
                         child: Text(
-                          "We are preparing, Please wait...",
+                          "We are preparing data for you. Please wait...",
+                          textAlign: TextAlign.center,
                           style: stylePTSansRegular(color: ThemeColors.accent),
                         ),
                       ),

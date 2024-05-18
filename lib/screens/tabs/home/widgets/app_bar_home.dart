@@ -72,7 +72,8 @@ class _AppBarHomeState extends State<AppBarHome> {
               },
               icon: Container(
                 decoration: BoxDecoration(
-                  color: ThemeColors.accent,
+                  color:
+                      image == null || image == '' ? ThemeColors.accent : null,
                   borderRadius: BorderRadius.circular(30.r),
                 ),
                 padding: image == null || image == ''
