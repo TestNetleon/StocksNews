@@ -42,7 +42,7 @@ class HomePartialLoading extends StatelessWidget {
             duration: const Duration(milliseconds: 300),
             margin: EdgeInsets.only(top: 20.sp),
             child: child,
-          )
+          ),
       ],
     );
   }

@@ -13,18 +13,21 @@ class HomeSliderRes {
   final int totalWatchList;
   final String? whatsappLink;
   final String? telegramLink;
+  final TextSliderRes text;
 
   HomeSliderRes({
     this.sliderPosts,
     this.whatsappLink,
     this.telegramLink,
     required this.totalAlerts,
+    required this.text,
     required this.totalWatchList,
   });
 //
   factory HomeSliderRes.fromJson(Map<String, dynamic> json) => HomeSliderRes(
         totalAlerts: json["total_alerts"],
         whatsappLink: json["whats-app-link"],
+        text: TextSliderRes.fromJson(json["text"]),
         telegramLink: json['telegram-link'],
         totalWatchList: json["total_watchlist"],
         sliderPosts: json["slider_posts"] == null
@@ -38,6 +41,7 @@ class HomeSliderRes {
             ? []
             : List<dynamic>.from(sliderPosts!.map((x) => x.toJson())),
         "total_alerts": totalAlerts,
+        "text": text.toJson(),
         "total_watchlist": totalWatchList,
         "telegram-link": telegramLink,
         "whats-app-link": whatsappLink,
@@ -82,5 +86,21 @@ class SliderPost {
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
+      };
+}
+
+class TextSliderRes {
+  final String drawerHeader;
+
+  TextSliderRes({
+    required this.drawerHeader,
+  });
+
+  factory TextSliderRes.fromJson(Map<String, dynamic> json) => TextSliderRes(
+        drawerHeader: json["drawer_header"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "drawer_header": drawerHeader,
       };
 }

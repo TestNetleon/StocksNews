@@ -17,6 +17,7 @@ class CompanyEarningStockDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
     Earning? earning = provider.otherData?.earning;
+
     if (provider.otherLoading &&
         provider.otherData?.earning?.data?.isEmpty == true) {
       return Padding(
@@ -139,8 +140,67 @@ class CompanyEarningStockDetail extends StatelessWidget {
             color: ThemeColors.greyBorder,
             height: 20.sp,
           ),
+
+          // Container(
+          //   height: 300,
+          //   color: ThemeColors.greyBorder,
+          //   width: double.infinity,
+          //   child: BarChart(
+          //     BarChartData(
+          //       titlesData: FlTitlesData(
+          //           leftTitles: AxisTitles(
+          //             sideTitles: SideTitles(showTitles: false),
+          //           ),
+          //           bottomTitles: AxisTitles(
+          //             sideTitles: SideTitles(
+          //               showTitles: true,
+          //               // getTextStyles: (context, value) => const TextStyle(
+          //               //     color: Colors.black,
+          //               //     fontWeight: FontWeight.bold,
+          //               //     fontSize: 14),
+          //             ),
+          //           )),
+          //       borderData: FlBorderData(show: false),
+          //       barGroups:
+          //           _createBarGroups(data: provider.otherData?.earning?.data),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
   }
+
+  // List<BarChartGroupData> _createBarGroups({List<EarningData>? data}) {
+  //   final List<String> quarters = [
+  //     "Q2 - 2023",
+  //     "Q3 - 2023",
+  //     "Q4 - 2023",
+  //     "Q1 - 2024"
+  //   ];
+
+  //   // final List<String?> quarters = data?.map((e) => e.quarter).toList() ?? [];
+
+  //   final List<double> eps = [0.59, 0.71, 0.46, 0.74];
+  //   final List<double> revenue = [11.972, 11.953, 10.849, 11.3]; // In billions
+
+  //   return List.generate(quarters.length, (index) {
+  //     return BarChartGroupData(
+  //       x: index,
+  //       barRods: [
+  //         BarChartRodData(
+  //           toY: eps[index],
+  //           color: Colors.amber,
+  //           width: 15,
+  //         ),
+  //         BarChartRodData(
+  //           toY: revenue[index],
+  //           color: Colors.black,
+  //           width: 15,
+  //         ),
+  //       ],
+  //       barsSpace: 10,
+  //     );
+  //   });
+  // }
 }

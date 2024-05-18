@@ -236,7 +236,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            "Analyze, Compare, Set Alerts for Stocks",
+                            provider.homeSliderRes?.text.drawerHeader ?? "",
                             style: stylePTSansRegular(
                                 fontSize: 14, color: ThemeColors.greyText),
                             textAlign: TextAlign.center,
