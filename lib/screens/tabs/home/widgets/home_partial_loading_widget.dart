@@ -40,7 +40,7 @@ class HomePartialLoading extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 20.sp),
             child: child,
-          )
+          ),
       ],
     );
   }
