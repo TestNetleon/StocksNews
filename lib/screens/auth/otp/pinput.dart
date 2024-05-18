@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -23,6 +24,9 @@ class CommonPinput extends StatelessWidget {
           style: stylePTSansRegular(color: ThemeColors.white, fontSize: 30),
         ),
         showCursor: true,
+        separatorBuilder: (index) {
+          return const SpacerHorizontal(width: 15);
+        },
         mouseCursor: SystemMouseCursors.basic,
         defaultPinTheme: PinTheme(
           width: 56.sp,

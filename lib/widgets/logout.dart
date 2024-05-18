@@ -68,6 +68,7 @@ import '../utils/colors.dart';
 void logoutPopUp() {
   showDialog(
     context: navigatorKey.currentContext!,
+    barrierColor: ThemeColors.transparentDark,
     builder: (context) {
       return const LogoutPopUpCustom();
     },

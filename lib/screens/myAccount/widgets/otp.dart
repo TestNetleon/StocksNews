@@ -99,6 +99,7 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
               style: stylePTSansRegular(
                 fontSize: 14,
                 color: Colors.white,
+                height: 1.4,
               ),
             ),
             const SpacerVertical(),

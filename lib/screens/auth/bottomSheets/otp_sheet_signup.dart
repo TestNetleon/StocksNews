@@ -196,7 +196,6 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                 //   ),
                 // ),
                 EditEmail(email: "${provider.user?.username}"),
-
                 const SpacerVertical(),
                 // Text(
                 //   "Verification Code",
@@ -229,14 +228,12 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                 //     ),
                 //   ],
                 // ),
-
                 CommonPinput(
                   controller: _controller,
                   onCompleted: (p0) {
                     _onVeryClick();
                   },
                 ),
-
                 startTiming == 30
                     ? Container(
                         margin: EdgeInsets.only(
@@ -266,7 +263,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "$startTiming S",
+                                text: "${startTiming}S",
                                 style: stylePTSansBold(
                                   fontSize: 15,
                                   color: ThemeColors.accent,
@@ -280,7 +277,6 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                           ),
                         ),
                       ),
-
                 const SpacerVertical(),
                 ThemeButton(
                   onPressed: _onVeryClick,

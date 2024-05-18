@@ -41,6 +41,7 @@ class ThemeColors {
   static const accent = Color(0xFF35BA46);
 
   static const transparent = Color.fromARGB(78, 0, 0, 0);
+  static const transparentDark = Color.fromARGB(220, 0, 0, 0);
   static const border = Color.fromRGBO(216, 216, 216, 1);
   static const divider = Color.fromRGBO(214, 213, 213, 1);
   static const dividerDark = Color.fromRGBO(151, 151, 151, 1);

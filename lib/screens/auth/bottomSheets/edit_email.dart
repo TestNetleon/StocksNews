@@ -33,16 +33,33 @@ class EditEmail extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: "$email.",
-            style: stylePTSansRegular(fontSize: 14, color: ThemeColors.accent),
+            text: email,
+            style: stylePTSansRegular(
+              fontSize: 14,
+              color: ThemeColors.accent,
+              height: 1.4,
+            ),
+          ),
+          TextSpan(
+            text: ".",
+            style: stylePTSansRegular(
+              fontSize: 14,
+              height: 1.4,
+            ),
           ),
           TextSpan(
             text: "\n The code is valid for 10 minutes.",
-            style: stylePTSansRegular(fontSize: 14),
+            style: stylePTSansRegular(
+              fontSize: 14,
+              height: 1.5,
+            ),
           ),
         ],
         text: "Please enter the 4-digit verification code that was sent to ",
-        style: stylePTSansRegular(fontSize: 14),
+        style: stylePTSansRegular(
+          fontSize: 14,
+          height: 1.5,
+        ),
       ),
     );
   }

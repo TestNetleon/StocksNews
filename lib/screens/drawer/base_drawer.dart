@@ -480,7 +480,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         ],
                       ),
                     ),
-
                     const SpacerVertical(height: 10),
                     // Visibility(
                     //   visible: userPresent,
@@ -527,9 +526,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                     //     ),
                     //   ),
                     // ),
-
                     const SpacerVertical(height: 5),
-
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.sp),
                       child: Row(
@@ -602,53 +599,60 @@ class _BaseDrawerState extends State<BaseDrawer> {
                       ),
                     ),
                     const SpacerVertical(height: 20),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () {
-                              openUrl(provider.homeSliderRes?.telegramLink);
-                            },
-                            child: Container(
-                              color: const Color(0xFF000000),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(6.sp, 9.sp, 6.sp, 9.sp),
-                                child: Image.asset(
-                                  Images.telegram,
-                                  height: 40.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SpacerHorizontal(width: 10),
-                        Flexible(
-                          child: GestureDetector(
-                            onTap: () {
-                              openUrl(provider.homeSliderRes?.whatsappLink);
-                            },
-                            child: Container(
-                              color: const Color(0xFF000000),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(6.sp, 9.sp, 6.sp, 9.sp),
-                                child: ClipRRect(
-                                  child: Image.asset(
-                                    Images.whatsappC,
-                                    height: 40.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // TODO:Social
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Flexible(
+                    //       child: GestureDetector(
+                    //         onTap: () {
+                    //           openUrl(provider.homeSliderRes?.telegramLink);
+                    //         },
+                    //         child: Column(
+                    //           children: [
+                    //             Container(
+                    //               color: const Color(0xFF000000),
+                    //               child: Padding(
+                    //                 padding: EdgeInsets.fromLTRB(
+                    //                     6.sp, 9.sp, 6.sp, 9.sp),
+                    //                 child: Image.asset(
+                    //                   Images.telegram,
+                    //                   height: 40.sp,
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Text(
+                    //               "Join us on Telegram",
+                    //               style: styleGeorgiaRegular(),
+                    //             )
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     const SpacerHorizontal(width: 10),
+                    //     Flexible(
+                    //       child: GestureDetector(
+                    //         onTap: () {
+                    //           openUrl(provider.homeSliderRes?.whatsappLink);
+                    //         },
+                    //         child: Container(
+                    //           color: const Color(0xFF000000),
+                    //           child: Padding(
+                    //             padding:
+                    //                 EdgeInsets.fromLTRB(6.sp, 9.sp, 6.sp, 9.sp),
+                    //             child: ClipRRect(
+                    //               child: Image.asset(
+                    //                 Images.whatsappC,
+                    //                 height: 40.sp,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const SpacerVertical(height: 20),
-
                     Align(
                       alignment: Alignment.center,
                       child: RichText(

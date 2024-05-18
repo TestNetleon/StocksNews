@@ -16,6 +16,7 @@ void popUpAlert({
 }) {
   showDialog(
     context: navigatorKey.currentContext!,
+    barrierColor: ThemeColors.transparentDark,
     builder: (context) {
       return AlertPopupCustom(
         message: message,
