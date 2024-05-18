@@ -24,6 +24,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import 'package:validators/validators.dart';
 
+import '../../../widgets/custom/alert_popup.dart';
 import 'aggree_conditions.dart';
 import 'signup_sheet.dart';
 
@@ -75,11 +76,13 @@ class _LoginBottomState extends State<LoginBottom> {
   void _onLoginClick() {
     closeKeyboard();
     if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
-      showErrorMessage(message: "Please enter valid email address");
-      return;
-    } else if (isNumeric(_controller.text) &&
-        (isEmpty(_controller.text) || !isLength(_controller.text, 3))) {
-      showErrorMessage(message: "Please enter valid phone number");
+      // showErrorMessage(message: "Please enter valid email address");
+      popUpAlert(
+        message: "Please enter valid email address.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+
       return;
     }
     UserProvider provider = context.read<UserProvider>();

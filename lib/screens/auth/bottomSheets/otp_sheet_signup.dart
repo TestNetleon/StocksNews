@@ -269,7 +269,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                 const SpacerVertical(),
                 ThemeButton(
                   onPressed: _onVeryClick,
-                  text: "Verify and Log In",
+                  text: "Verify and Log in",
                 ),
                 const SpacerVertical(),
                 EditEmailClick(

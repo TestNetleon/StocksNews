@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -20,6 +21,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../widgets/ios_emailerror.dart';
 
@@ -118,13 +120,20 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         if (editEmail) {
           log("****************");
           Navigator.pop(navigatorKey.currentContext!);
-          showErrorMessage(message: response.message, snackbar: false);
+          // showErrorMessage(message: response.message, snackbar: false);
         } else {
-          await otpLoginSheet(state: state, dontPop: dontPop);
+          otpLoginSheet(state: state, dontPop: dontPop);
+          Timer(const Duration(seconds: 1), () {
+            popUpAlert(
+                message: "${response.message}",
+                title: "Alert",
+                icon: Images.otpSuccessGIT);
+          });
         }
       } else {
         if (editEmail) {
-          showErrorMessage(message: response.message, snackbar: false);
+          // showErrorMessage(message: response.message, snackbar: false);
+
           Navigator.pop(navigatorKey.currentContext!);
         }
         showErrorMessage(message: response.message);
@@ -261,16 +270,28 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
-          showErrorMessage(message: response.message, snackbar: false);
+          // showErrorMessage(message: response.message, snackbar: false);
+          popUpAlert(
+              message: "${response.message}",
+              title: "Alert",
+              icon: Images.otpSuccessGIT);
         } else {
           otpSignupSheet();
         }
       } else {
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
-          showErrorMessage(message: response.message, snackbar: false);
+          // showErrorMessage(message: response.message, snackbar: false);
+          popUpAlert(
+              message: "${response.message}",
+              title: "Alert",
+              icon: Images.alertPopGIF);
         } else {
-          showErrorMessage(message: response.message);
+          // showErrorMessage(message: response.message);
+          popUpAlert(
+              message: "${response.message}",
+              title: "Alert",
+              icon: Images.alertPopGIF);
         }
       }
     } catch (e) {

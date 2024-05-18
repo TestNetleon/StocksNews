@@ -52,6 +52,8 @@ class Images {
   static const String alertBellGIF = "assets/images/alert_bell.gif";
   static const String progressGIF = "assets/images/progress.gif";
   static const String alertTickGIF = "assets/images/alert_tick.gif";
+  static const String alertPopGIF = "assets/images/alerts_GIF.gif";
+  static const String otpSuccessGIT = "assets/images/otp_success.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

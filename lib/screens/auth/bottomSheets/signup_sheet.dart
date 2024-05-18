@@ -17,6 +17,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
@@ -79,9 +80,15 @@ class _SignUpBottomState extends State<SignUpBottom> {
     if (!isEmail(_controller.text)
         // && !isNumeric(_controller.text)
         ) {
-      showErrorMessage(
-        message: "Please enter valid email address",
-        snackbar: false,
+      // showErrorMessage(
+      //   message: "Please enter valid email address",
+      //   snackbar: false,
+      // );
+
+      popUpAlert(
+        message: "Please enter valid email address.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
       );
       return;
     }
@@ -286,7 +293,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                 ),
                 const SpacerVertical(height: Dimen.itemSpacing),
                 ThemeButton(
-                  text: "Create my account",
+                  text: "Create account",
                   onPressed: _onLoginClick,
                 ),
                 const SpacerVertical(),

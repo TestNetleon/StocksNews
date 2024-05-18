@@ -122,6 +122,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
+
     return Container(
       constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
       decoration: BoxDecoration(

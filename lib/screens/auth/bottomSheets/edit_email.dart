@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:validators/validators.dart';
 
@@ -205,11 +203,16 @@ class _EditEmailClickState extends State<EditEmailClick> {
   void _onPressed() {
     UserProvider provider = context.read<UserProvider>();
     if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
-      showErrorMessage(
-        duration: 10,
-        snackbar: false,
-        message: "Please enter valid email address",
-      );
+      // showErrorMessage(
+      //   duration: 10,
+      //   snackbar: false,
+      //   message: "Please enter valid email address",
+      // );
+
+      popUpAlert(
+          message: "Please enter valid email address.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
 
       return;
     }
