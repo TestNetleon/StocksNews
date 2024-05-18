@@ -6,10 +6,11 @@ import 'dart:io';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/dummy.dart';
+// import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
+import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -279,8 +280,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ),
         );
       },
-      // child: const Splash(),
-      child: const DemoWeb(),
+      child: const Splash(),
+      // child: const DemoWeb(),
     );
   }
 }
