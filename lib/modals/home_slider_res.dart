@@ -14,6 +14,7 @@ class HomeSliderRes {
   final String? whatsappLink;
   final String? telegramLink;
   final String? shareUrl;
+  final String? shareText;
   final TextSliderRes text;
 
   HomeSliderRes({
@@ -21,6 +22,7 @@ class HomeSliderRes {
     this.whatsappLink,
     this.telegramLink,
     this.shareUrl,
+    this.shareText,
     required this.totalAlerts,
     required this.text,
     required this.totalWatchList,
@@ -32,6 +34,7 @@ class HomeSliderRes {
         text: TextSliderRes.fromJson(json["text"]),
         telegramLink: json['telegram-link'],
         shareUrl: json["share-url"],
+        shareText: json["share_text"],
         totalWatchList: json["total_watchlist"],
         sliderPosts: json["slider_posts"] == null
             ? []
@@ -45,6 +48,7 @@ class HomeSliderRes {
             : List<dynamic>.from(sliderPosts!.map((x) => x.toJson())),
         "total_alerts": totalAlerts,
         "share-url": shareUrl,
+        "share_text": shareText,
         "text": text.toJson(),
         "total_watchlist": totalWatchList,
         "telegram-link": telegramLink,

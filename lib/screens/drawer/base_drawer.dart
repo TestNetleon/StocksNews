@@ -571,8 +571,11 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                 GestureDetector(
                                   onTap: () {
                                     commonShare(
-                                        title: '',
-                                        url: provider.homeSliderRes?.shareUrl);
+                                      title:
+                                          provider.homeSliderRes?.shareText ??
+                                              "",
+                                      url: provider.homeSliderRes?.shareUrl,
+                                    );
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(15.sp),
