@@ -6,7 +6,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 class StocksIndex extends StatefulWidget {
   static const path = "StocksIndex";
-  const StocksIndex({super.key});
+  final String? inAppMsgId;
+  const StocksIndex({this.inAppMsgId, super.key});
 
   @override
   State<StocksIndex> createState() => _StocksIndexState();
@@ -17,7 +18,10 @@ class _StocksIndexState extends State<StocksIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<AllStocksProvider>().getData(showProgress: true);
+      context.read<AllStocksProvider>().getData(
+            showProgress: true,
+            inAppMsgId: widget.inAppMsgId,
+          );
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stocks"},

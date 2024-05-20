@@ -26,7 +26,7 @@ class HomeContainer extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
-        provider.refreshData();
+        provider.refreshData(null);
         // provider.getHomeData();
         // provider.getHomeNewData();
       },

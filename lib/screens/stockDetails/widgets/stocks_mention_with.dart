@@ -61,8 +61,12 @@ class StockMentionWithItem extends StatelessWidget {
       return const SizedBox();
     }
     return InkWell(
-      onTap: () => Navigator.pushReplacementNamed(context, StockDetails.path,
-          arguments: item.symbol),
+      onTap: () => Navigator.pushReplacementNamed(
+        context,
+        StockDetails.path,
+        // arguments: item.symbol,
+        arguments: {"slug": item.symbol},
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

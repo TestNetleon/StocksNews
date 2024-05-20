@@ -29,8 +29,12 @@ class RecentMentionsItem extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(0.sp, 0.sp, 0.sp, 0.sp),
         child: InkWell(
           borderRadius: BorderRadius.circular(10.sp),
-          onTap: () => Navigator.pushNamed(context, StockDetails.path,
-              arguments: data.symbol),
+          onTap: () => Navigator.pushNamed(
+            context,
+            StockDetails.path,
+            // arguments: data.symbol,
+            arguments: {"slug": data.symbol},
+          ),
           child: Ink(
             padding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 15.sp),
             width: constraints.maxWidth,

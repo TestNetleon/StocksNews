@@ -11,7 +11,9 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 class NewsDetails extends StatelessWidget {
   static const String path = "NewsDetails";
   final String? slug;
-  const NewsDetails({super.key, this.slug});
+  final String? inAppMsgId;
+
+  const NewsDetails({super.key, this.inAppMsgId, this.slug});
 //
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,10 @@ class NewsDetails extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(10.sp, 10.sp, 10.sp, 0),
-          child: NewsDetailsBody(slug: slug),
+          child: NewsDetailsBody(
+            slug: slug,
+            inAppMsgId: inAppMsgId,
+          ),
         ),
       ),
     );

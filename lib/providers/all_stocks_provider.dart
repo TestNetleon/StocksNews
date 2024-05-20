@@ -122,6 +122,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     loadMore = false,
     String? search,
     clear = true,
+    inAppMsgId,
   }) async {
     log("Can load more $canLoadMore");
     if (search != null) {
@@ -148,6 +149,11 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
         "price_range": keyPrice,
         "change_percentage": controller.text,
       };
+
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId!});
+      }
+
       ApiResponse response = await apiRequest(
         url: Apis.stocks,
         request: request,

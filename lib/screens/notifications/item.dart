@@ -40,8 +40,11 @@ class NotificationsItem extends StatelessWidget {
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         log("--navigate to news detail---");
 
-        Navigator.pushNamed(navigatorKey.currentContext!, NewsDetails.path,
-            arguments: slug);
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          NewsDetails.path,
+          arguments: {"slug": slug},
+        );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         log("--navigate to landing page---");
 
@@ -67,8 +70,12 @@ class NotificationsItem extends StatelessWidget {
       } else {
         log("--navigate to stock detail---");
 
-        Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
-            arguments: type);
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          StockDetails.path,
+          // arguments: type,
+          arguments: {"slug": type},
+        );
       }
     } catch (e) {
       log("Exception ===>> $e");

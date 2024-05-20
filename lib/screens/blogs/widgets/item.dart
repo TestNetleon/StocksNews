@@ -28,7 +28,7 @@ class BlogItem extends StatelessWidget {
         Navigator.pushNamed(
           context,
           BlogDetail.path,
-          arguments: blogItem?.id,
+          arguments: {"slug": blogItem?.id},
         );
       },
       child: Row(

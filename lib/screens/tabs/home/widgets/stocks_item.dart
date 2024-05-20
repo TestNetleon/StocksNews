@@ -18,7 +18,12 @@ class StocksItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, StockDetails.path, arguments: top.symbol);
+        Navigator.pushNamed(
+          context,
+          StockDetails.path,
+          // arguments: top.symbol,
+          arguments: {"slug": top.symbol},
+        );
       },
       child: Row(
         children: [

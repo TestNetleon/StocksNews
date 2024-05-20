@@ -60,6 +60,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     loadMore = false,
     BlogsType type = BlogsType.blog,
     String id = "",
+    inAppMsgId,
   }) async {
     log("TYPE IS ===> ${type.name}");
 
@@ -109,6 +110,10 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
                           "",
                       "page": "$_page",
                     };
+
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId!});
+      }
 
       ApiResponse response = await apiRequest(
         url: Apis.blogs,
@@ -182,7 +187,11 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getBlogDetailData({required String blogId, String? slug}) async {
+  Future getBlogDetailData({
+    required String blogId,
+    String? slug,
+    inAppMsgId,
+  }) async {
     // setStatus(Status.loading);
     _statusDetail = Status.loading;
     notifyListeners();
@@ -193,6 +202,11 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         "blog_id": blogId,
         "slug": slug ?? "",
       };
+
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId!});
+      }
+
       ApiResponse response = await apiRequest(
         url: Apis.blogDetails,
         request: request,

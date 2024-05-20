@@ -99,8 +99,12 @@ class AlertsItem extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, StockDetails.path,
-              arguments: data.symbol);
+          Navigator.pushNamed(
+            context,
+            StockDetails.path,
+            // arguments: data.symbol,
+            arguments: {"slug": data.symbol},
+          );
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

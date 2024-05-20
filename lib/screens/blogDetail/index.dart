@@ -10,22 +10,23 @@ class BlogDetail extends StatefulWidget {
   static const path = "BlogDetail";
   final String? id;
   final String? slug;
-  const BlogDetail({super.key, this.id, this.slug});
+  final String? inAppMsgId;
+  const BlogDetail({super.key, this.id, this.slug, this.inAppMsgId});
 
   @override
   State<BlogDetail> createState() => _BlogDetailState();
 }
 
-//
 class _BlogDetailState extends State<BlogDetail> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context
-          .read<BlogProvider>()
-          .getBlogDetailData(blogId: widget.id ?? "", slug: widget.slug);
-
+      context.read<BlogProvider>().getBlogDetailData(
+            blogId: widget.id ?? "",
+            slug: widget.slug,
+            inAppMsgId: widget.inAppMsgId,
+          );
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': 'My Account'},

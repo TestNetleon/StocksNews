@@ -22,8 +22,12 @@ class HeaderItem extends StatelessWidget {
           border: Border.all(color: ThemeColors.dividerDark)),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, StockDetails.path,
-              arguments: company?.symbol);
+          Navigator.pushNamed(
+            context,
+            StockDetails.path,
+            // arguments: company?.symbol,
+            arguments: {"slug": company?.symbol},
+          );
         },
         child: Stack(
           // crossAxisAlignment: CrossAxisAlignment.start,

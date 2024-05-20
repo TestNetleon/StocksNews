@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
@@ -78,7 +81,7 @@ class Routes {
     ContactUs.path: (_) => const ContactUs(),
     CompareStocks.path: (_) => const CompareStocks(),
     QrScan.path: (_) => const QrScan(),
-    StocksIndex.path: (_) => const StocksIndex(),
+    // StocksIndex.path: (_) => const StocksIndex(),
     IndexBlog.path: (_) => const IndexBlog(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
@@ -107,6 +110,8 @@ class Routes {
 
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
+
+    log("=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
     switch (routingData) {
       case TCandPolicy.path:
         return MaterialWithModalsPageRoute(
@@ -114,21 +119,36 @@ class Routes {
             return TCandPolicy(policyType: settings.arguments as PolicyType);
           },
         );
-
+      case StocksIndex.path:
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return StocksIndex(inAppMsgId: settings.arguments as String?);
+          },
+        );
       case NewsDetails.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
-            return NewsDetails(slug: settings.arguments as String?);
+            var data = settings.arguments as Map<String, dynamic>;
+            return NewsDetails(
+              slug: data['slug'],
+              inAppMsgId: data['inAppMsgId'],
+            );
+            // return NewsDetails(
+            //   slug: settings.arguments["slug"],
+            // );
           },
         );
-
       case StockDetails.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
-            return StockDetails(symbol: settings.arguments as String);
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            return StockDetails(
+              symbol: arguments!['slug'],
+              inAppMsgId: arguments['inAppMsgId'],
+            );
+            // return StockDetails(symbol: settings.arguments as String);
           },
         );
-
       case StockDetailiFrameItem.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
@@ -136,34 +156,36 @@ class Routes {
                 type: settings.arguments as CommentType);
           },
         );
-
       case Blog.path:
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? id = arguments?['id'] as String?;
+        String? inAppMsgId = arguments?['inAppMsgId'] as String?;
         BlogsType? type = arguments?['type'] as BlogsType?;
         return MaterialWithModalsPageRoute(
           builder: (context) {
             return Blog(
               type: type ?? BlogsType.blog,
               id: id ?? "",
+              inAppMsgId: inAppMsgId,
             );
           },
         );
-
       case BlogDetail.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
-            return BlogDetail(id: settings.arguments as String);
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            return BlogDetail(
+              slug: arguments!['slug'],
+              inAppMsgId: arguments['inAppMsgId'],
+            );
           },
         );
-
       case Tabs.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
             return Tabs(index: (settings.arguments as int?) ?? 0);
           },
         );
-
       case NewsAuthorIndex.path:
         final arguments = settings.arguments as Map<String, dynamic>;
 
@@ -177,7 +199,6 @@ class Routes {
             );
           },
         );
-
       case SectorIndustry.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         StockStates type = arguments["type"] as StockStates;
@@ -193,7 +214,6 @@ class Routes {
             );
           },
         );
-
       case InsiderDetailsType.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         final companySlug = arguments['companySlug'] as String?;

@@ -24,7 +24,8 @@ class StocksItemTrending extends StatelessWidget {
         Navigator.pushNamed(
           context,
           StockDetails.path,
-          arguments: trending.symbol,
+          // arguments: trending.symbol,
+          arguments: {"slug": trending.symbol},
         );
       },
       child: Row(

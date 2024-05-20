@@ -24,7 +24,12 @@ class MoreStocksListItem extends StatelessWidget {
   });
 
   void _onTap(context) {
-    Navigator.pushNamed(context, StockDetails.path, arguments: data.symbol);
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      // arguments: data.symbol,
+      arguments: {"slug": data.symbol},
+    );
   }
 
   @override
@@ -33,7 +38,12 @@ class MoreStocksListItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, StockDetails.path, arguments: data.symbol);
+        Navigator.pushNamed(
+          context,
+          StockDetails.path,
+          // arguments: data.symbol,
+          arguments: {"slug": data.symbol},
+        );
       },
       child: Column(
         children: [

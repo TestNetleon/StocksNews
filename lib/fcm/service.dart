@@ -79,7 +79,7 @@ class FirebaseApi {
     //           navigatorKey.currentContext!, Tabs.path, (route) => false);
     //     } else {
     //       Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
-    //           arguments: type);
+    //           arguments: {"slug": type},);
     //     }
     //   } catch (e) {
     //     log("Exception ===>> $e");
@@ -116,8 +116,11 @@ class FirebaseApi {
         Navigator.pushNamedAndRemoveUntil(
             navigatorKey.currentContext!, Tabs.path, (route) => false);
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushNamed(navigatorKey.currentContext!, NewsDetails.path,
-            arguments: slug);
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          NewsDetails.path,
+          arguments: {"slug": slug},
+        );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
           navigatorKey.currentContext!,
@@ -137,8 +140,11 @@ class FirebaseApi {
           ),
         );
       } else {
-        Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
-            arguments: type);
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          StockDetails.path,
+          arguments: {"slug": type},
+        );
       }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
