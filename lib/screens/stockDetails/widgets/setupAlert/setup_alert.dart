@@ -12,6 +12,7 @@ class SetupPopup extends StatelessWidget {
   final bool selectedOne, selectedTwo;
   final Widget topTextField;
   final Widget bottomTextField;
+  final String text;
   final void Function() onCreateAlert;
 //
   const SetupPopup(
@@ -20,7 +21,8 @@ class SetupPopup extends StatelessWidget {
       required this.selectedTwo,
       required this.topTextField,
       required this.bottomTextField,
-      required this.onCreateAlert});
+      required this.onCreateAlert,
+      required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +32,17 @@ class SetupPopup extends StatelessWidget {
           children: [
             _header(context),
             const SpacerVertical(height: 3),
-            Text(
-              "Setup Alert",
-              style: stylePTSansBold(),
-            ),
+            // Text(
+            //   "Setup Alert",
+            //   style: stylePTSansBold(),
+            // ),
             Divider(
               color: ThemeColors.border.withOpacity(0.4),
               thickness: 1,
               height: 30.sp,
             ),
             Text(
-              "Alert Name",
+              "Alert Name (Optional)",
               style: stylePTSansRegular(fontSize: 14),
             ),
             const SpacerVertical(height: 5),
@@ -50,17 +52,17 @@ class SetupPopup extends StatelessWidget {
               thickness: 1,
               height: 30.sp,
             ),
-            Text(
-              "Stock",
-              style: stylePTSansRegular(fontSize: 14),
-            ),
-            const SpacerVertical(height: 5),
-            bottomTextField,
-            Divider(
-              color: ThemeColors.border.withOpacity(0.4),
-              thickness: 1,
-              height: 30.sp,
-            ),
+            // Text(
+            //   "Stock",
+            //   style: stylePTSansRegular(fontSize: 14),
+            // ),
+            // const SpacerVertical(height: 5),
+            // bottomTextField,
+            // Divider(
+            //   color: ThemeColors.border.withOpacity(0.4),
+            //   thickness: 1,
+            //   height: 30.sp,
+            // ),
             Row(
               children: [
                 Expanded(
@@ -101,9 +103,13 @@ class SetupPopup extends StatelessWidget {
                 size: 20.sp,
                 color: ThemeColors.accent,
               ),
-              Text(
-                "Set New Alert",
-                style: stylePTSansBold(color: ThemeColors.accent, fontSize: 18),
+              const SpacerHorizontal(width: 5),
+              Flexible(
+                child: Text(
+                  "Alert for $text",
+                  style:
+                      stylePTSansBold(color: ThemeColors.accent, fontSize: 18),
+                ),
               ),
             ],
           ),

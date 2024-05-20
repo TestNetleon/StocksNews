@@ -26,7 +26,9 @@ class StocksContainer extends StatelessWidget {
 
   void _filterClick() {
     showPlatformBottomSheet(
-        context: navigatorKey.currentContext!, content: const FilterStocks());
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+        context: navigatorKey.currentContext!,
+        content: const FilterStocks());
   }
 
   @override

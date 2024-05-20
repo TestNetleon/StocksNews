@@ -14,6 +14,7 @@ import '../providers/user_provider.dart';
 
 void showIosEmailError({String? state, String? dontPop}) {
   showPlatformBottomSheet(
+      padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
       context: navigatorKey.currentContext!,
       content: IOSemailError(
         state: state,

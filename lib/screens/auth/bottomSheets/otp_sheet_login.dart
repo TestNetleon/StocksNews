@@ -16,7 +16,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import 'edit_email.dart';
 
@@ -296,10 +295,10 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                       ),
 
                 const SpacerVertical(),
-                ThemeButton(
-                  onPressed: _onVeryClick,
-                  text: "Verify and Log in",
-                ),
+                // ThemeButton(
+                //   onPressed: _onVeryClick,
+                //   text: "Verify and Log in",
+                // ),
                 const SpacerVertical(),
                 EditEmailClick(
                   email: "${provider.user?.username}",

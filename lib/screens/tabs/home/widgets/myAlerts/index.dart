@@ -10,6 +10,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/allFeatured/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
+import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -88,6 +89,73 @@ class HomeMyAlerts extends StatelessWidget {
                   if (data == null) {
                     return const SizedBox();
                   }
+
+                  if (homeAlert?.length == 1 && userRes != null) {
+                    return Row(
+                      children: [
+                        FittedBox(
+                          alignment: Alignment.topCenter,
+                          fit: BoxFit.scaleDown,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, StockDetails.path,
+                                  arguments: data.symbol);
+                            },
+                            child: HomeMyAlertItem(
+                              data: data,
+                            ),
+                          ),
+                        ),
+                        const SpacerHorizontal(width: 10),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.all(10.sp),
+                            height: constraints.maxWidth * 0.60,
+                            width: 220.sp,
+                            decoration: BoxDecoration(
+                              // color: const Color.fromARGB(255, 48, 48, 48),
+                              // color: ThemeColors.greyBorder,
+                              borderRadius: BorderRadius.circular(10.sp),
+                              gradient: const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color.fromARGB(255, 23, 23, 23),
+                                  // ThemeColors.greyBorder,
+                                  Color.fromARGB(255, 48, 48, 48),
+                                ],
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Add new alert",
+                                  style: stylePTSansBold(),
+                                ),
+                                const SpacerVertical(height: 10),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, StocksIndex.path);
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.all(15.sp),
+                                      decoration: const BoxDecoration(
+                                        color: Color.fromARGB(255, 76, 76, 76),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(Icons.add)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+
                   return FittedBox(
                     alignment: Alignment.topCenter,
                     fit: BoxFit.scaleDown,

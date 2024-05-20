@@ -233,7 +233,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         children: [
                           const SpacerVertical(height: 10),
                           Text(
-                            "Welcome",
+                            "Welcome to stocks.news",
                             style: stylePTSansBold(fontSize: 20),
                             textAlign: TextAlign.center,
                           ),

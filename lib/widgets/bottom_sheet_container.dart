@@ -7,20 +7,29 @@ class BottomSheetContainerPlain extends StatelessWidget {
     required this.child,
     this.showClose = true,
     super.key,
+    this.padding,
   });
 
   final Widget child;
+  final EdgeInsets? padding;
   final bool showClose;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+      padding: padding == null
+          ? EdgeInsets.zero
+          : EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Align(alignment: Alignment.center, child: BottomSheetTick()),
+            Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.only(top: padding == null ? 7.sp : 0),
+                  child: const BottomSheetTick(),
+                )),
             Visibility(
               visible: showClose,
               child: GestureDetector(

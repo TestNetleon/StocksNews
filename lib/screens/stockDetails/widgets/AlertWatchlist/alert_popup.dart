@@ -6,11 +6,13 @@ import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
+import '../../../../utils/constants.dart';
 import '../setupAlert/setup_alert.dart';
 
 //
@@ -64,6 +66,17 @@ class _AlertPopupState extends State<AlertPopup> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(18.sp),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromARGB(255, 23, 23, 23),
+            // ThemeColors.greyBorder,
+            Color.fromARGB(255, 48, 48, 48),
+          ],
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         // insetPadding: widget.insetPadding,
@@ -128,14 +141,21 @@ class _AlertPopupState extends State<AlertPopup> {
             height: 30.sp,
           ),
           ThemeButton(
-            color: ThemeColors.accent,
+            color: selectedOne == false && selectedTwo == false
+                ? ThemeColors.white
+                : ThemeColors.accent,
             onPressed: selectedOne == false && selectedTwo == false
-                ? null
+                ? () {
+                    popUpAlert(
+                        message: "Please select at least one alert type.",
+                        title: "Alert",
+                        icon: Images.alertPopGIF);
+                  }
                 : () => _showAlertPopup(context),
-            text: "Continue",
+            text: "Add to Alert",
             textColor: selectedOne == false && selectedTwo == false
                 ? ThemeColors.background
-                : ThemeColors.border,
+                : ThemeColors.white,
           ),
           const SpacerVertical(height: 10),
         ],
@@ -223,6 +243,7 @@ class _AlertPopupState extends State<AlertPopup> {
         context: context,
         builder: (context) {
           return SetupPopup(
+            text: symbolController.text,
             onCreateAlert: _onCreateAlert,
             topTextField: ThemeInputField(
               controller: controller,
@@ -323,8 +344,9 @@ class _AlertPopupState extends State<AlertPopup> {
                 size: 20.sp,
                 color: ThemeColors.accent,
               ),
+              const SpacerHorizontal(width: 5),
               Text(
-                "Set New Alert",
+                "Set New Alert for ${widget.symbol}",
                 style: stylePTSansBold(color: ThemeColors.accent, fontSize: 18),
               ),
             ],

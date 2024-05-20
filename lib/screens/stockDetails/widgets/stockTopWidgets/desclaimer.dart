@@ -103,7 +103,8 @@ class StockDetailTopDisclaimer extends StatelessWidget {
           GestureDetector(
             onTap: () {
               commonShare(
-                title: provider.data?.keyStats?.symbol ?? "",
+                title:
+                    "${provider.data?.keyStats?.name} (${provider.data?.keyStats?.symbol})",
                 url: provider.data?.shareUrl ?? "",
               );
             },

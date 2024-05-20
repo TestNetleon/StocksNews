@@ -222,6 +222,7 @@ class TopTrendingItem extends StatelessWidget {
 
   void _showAlertPopup(BuildContext context) {
     showPlatformBottomSheet(
+      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       context: context,
       showClose: false,
       content: AlertPopup(

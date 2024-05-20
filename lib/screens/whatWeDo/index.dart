@@ -23,7 +23,11 @@ class WhatWeDoIndex extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: WhatWeDoProvider(),
       child: const BaseContainer(
-          appBar: AppBarHome(isPopback: true), body: WhatWeDoContainer()),
+          appBar: AppBarHome(
+            isPopback: true,
+            canSearch: true,
+          ),
+          body: WhatWeDoContainer()),
     );
   }
 }

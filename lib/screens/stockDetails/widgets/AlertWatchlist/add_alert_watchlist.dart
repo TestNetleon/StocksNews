@@ -85,8 +85,6 @@ class AddToAlertWatchlist extends StatelessWidget {
                         _showAlertPopup(navigatorKey.currentContext!, symbol);
                       }
                     : () {
-                        _vibrate();
-
                         Navigator.pushNamed(context, Alerts.path);
                       },
           ),
@@ -133,8 +131,6 @@ class AddToAlertWatchlist extends StatelessWidget {
                             .addToWishList();
                       }
                     : () {
-                        _vibrate();
-
                         Navigator.pushNamed(context, WatchList.path);
                       },
           ),
@@ -157,6 +153,7 @@ class AddToAlertWatchlist extends StatelessWidget {
     // );
 
     showPlatformBottomSheet(
+      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       context: context,
       showClose: false,
       content: AlertPopup(

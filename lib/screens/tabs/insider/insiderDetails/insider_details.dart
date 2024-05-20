@@ -96,6 +96,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
 
   void _filterClick({String? companySlug, String? reportingSlug}) {
     showPlatformBottomSheet(
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
         context: context,
         content: FilterInsiderCompany(
           companySlug: companySlug,

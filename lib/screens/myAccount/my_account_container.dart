@@ -175,6 +175,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
   void _selectOption() {
     showPlatformBottomSheet(
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
         context: context,
         content: MyAccountImageType(
           onCamera: () => _pickImage(source: ImageSource.camera),

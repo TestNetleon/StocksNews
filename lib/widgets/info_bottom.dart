@@ -13,6 +13,7 @@ class InfoBottomSheet extends StatelessWidget {
 
   void _showBottomSheet({String? text}) {
     showPlatformBottomSheet(
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
         context: navigatorKey.currentContext!,
         content: Padding(
           padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 10.sp),

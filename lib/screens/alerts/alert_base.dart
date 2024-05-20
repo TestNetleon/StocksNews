@@ -46,7 +46,7 @@ class _AlertBaseState extends State<AlertBase> {
   @override
   Widget build(BuildContext context) {
     AlertProvider provider = context.watch<AlertProvider>();
-    UserProvider userProvider = context.read<UserProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
 
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),

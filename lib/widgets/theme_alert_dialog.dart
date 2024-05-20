@@ -24,11 +24,22 @@ class ThemeAlertDialog extends StatelessWidget {
           side: BorderSide(
               color: ThemeColors.greyText.withOpacity(0.5), width: 2)),
       elevation: 5,
-      backgroundColor: ThemeColors.primaryLight,
-      contentPadding:
-          contentPadding ?? EdgeInsets.fromLTRB(18.sp, 16.sp, 18.sp, 10.sp),
-      content: SizedBox(
-        width: ScreenUtil().screenWidth,
+      // backgroundColor: ThemeColors.primaryLight,
+      contentPadding: EdgeInsets.zero,
+      content: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 23, 23, 23),
+              // ThemeColors.greyBorder,
+              Color.fromARGB(255, 48, 48, 48),
+            ],
+          ),
+        ),
+        padding:
+            contentPadding ?? EdgeInsets.fromLTRB(18.sp, 16.sp, 18.sp, 10.sp),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

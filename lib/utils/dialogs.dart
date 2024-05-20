@@ -220,12 +220,14 @@ Future<dynamic> showConfirmAlertDialog(
   );
 }
 
-void showPlatformBottomSheet(
-    {required BuildContext context,
-    required Widget content,
-    Color backgroundColor = ThemeColors.primaryLight,
-    bool? enableDrag,
-    showClose = true}) {
+void showPlatformBottomSheet({
+  required BuildContext context,
+  required Widget content,
+  Color backgroundColor = ThemeColors.primaryLight,
+  bool? enableDrag,
+  showClose = true,
+  EdgeInsets? padding,
+}) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -242,7 +244,11 @@ void showPlatformBottomSheet(
       return Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: BottomSheetContainerPlain(showClose: showClose, child: content),
+        child: BottomSheetContainerPlain(
+          showClose: showClose,
+          padding: padding,
+          child: content,
+        ),
       );
     },
   );

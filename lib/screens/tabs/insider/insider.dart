@@ -20,6 +20,7 @@ class Insider extends StatelessWidget {
 
   void _filterClick() {
     showPlatformBottomSheet(
+      padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
       context: navigatorKey.currentContext!,
       content: const FilterInsiders(),
     );
