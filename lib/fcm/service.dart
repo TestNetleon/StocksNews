@@ -43,6 +43,7 @@ class FirebaseApi {
     "StocksNews_New",
     importance: Importance.max,
     playSound: true,
+    sound: RawResourceAndroidNotificationSound('notifications'),
   );
   final _localNotifications = FlutterLocalNotificationsPlugin();
 
