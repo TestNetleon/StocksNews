@@ -424,7 +424,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                     ),
                     // const SpacerVertical(height: 5),
                     const SpacerVertical(height: 25),
-
                     // Divider(
                     //     color: ThemeColors.greyBorder,
                     //     height: 20.sp,
@@ -436,10 +435,10 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         children: [
                           Ink(
                             decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 3),
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(50.sp)),
+                              border: Border.all(color: Colors.black, width: 3),
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(50.sp),
+                            ),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(50.sp),
                               onTap: () {

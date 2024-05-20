@@ -9,6 +9,11 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/blogDetail/index.dart';
+import 'package:stocks_news_new/screens/blogs/index.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
+import 'package:stocks_news_new/screens/stocks/index.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -16,6 +21,7 @@ import 'package:stocks_news_new/utils/in_app_messages.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 String? validAuthToken;
@@ -26,7 +32,6 @@ Map<String, String> getHeaders() {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Authorization': '1GLPFYDIPWQi3IPQsM34z5tJpDAcKaOD0Jrvs11F8JmY4J1fJi',
   };
-
   return headers;
 }
 
@@ -41,13 +46,20 @@ Future<ApiResponse> apiRequest({
   optionalParent = false,
   Duration timeoutDuration = const Duration(seconds: 30),
 }) async {
-  log("URL  =  ${baseUrl + url}");
-  log("HEADERS  =  ${getHeaders().toString()}");
-  log("REQUEST  =  ${jsonEncode(request)}");
   Map<String, String> headers = getHeaders();
   if (header != null) {
     headers.addAll(header);
   }
+  String? fcmToken = await Preference.getFcmToken();
+  if (fcmToken != null) {
+    Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
+    headers.addAll(fcmHeaders);
+  }
+
+  Utils().showLog("URL  =  ${baseUrl + url}");
+  Utils().showLog("HEADERS  =  ${headers.toString()}");
+  Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
+
   Future.delayed(
     Duration.zero,
     () {
@@ -75,7 +87,7 @@ Future<ApiResponse> apiRequest({
           )
           .timeout(timeoutDuration);
     }
-    log("RESPONSE  =  ${response.body}");
+    Utils().showLog("RESPONSE  =  ${response.body}");
     if (response.statusCode == 200) {
       if (showProgress) closeGlobalProgressDialog();
 
@@ -100,23 +112,15 @@ Future<ApiResponse> apiRequest({
 
       ApiResponse res = ApiResponse.fromJson(jsonDecode(response.body));
 
-      // _checkForInAppMessage((res.extra as Extra).inAppMsg);
-
-      // // if (false) {
-      // if ((res.extra as Extra).inAppMsg != null) {
-      //   // TODO: Need to apply everywhere
-      //   InAppNotification? obj = (res.extra as Extra).inAppMsg;
-      //   showAlert(
-      //     title: obj?.title,
-      //     description: obj?.description,
-      //     image: obj?.image,
-      //     onClick: () {},
-      //   );
-      // }
+      // TO show in app messages only, comment this if want to hide
+      if (res.extra is Extra) {
+        InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
+        _checkForInAppMessage(inAppMsg);
+      }
 
       return res;
     } else {
-      log('Status Code Error ${response.statusCode}');
+      Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
       return ApiResponse(
         status: false,
@@ -124,22 +128,22 @@ Future<ApiResponse> apiRequest({
       );
     }
   } on TimeoutException {
-    log('Request Timed Out');
+    Utils().showLog('Request Timed Out');
     if (showProgress) closeGlobalProgressDialog();
     return ApiResponse(
       status: false,
       message: Const.timedOut,
     );
   } on SocketException {
-    log('Internet Error');
+    Utils().showLog('Internet Error');
     if (showProgress) closeGlobalProgressDialog();
     return ApiResponse(
       status: false,
       message: Const.noInternet,
     );
   } catch (e) {
-    log('Catch error');
-    log(e.toString());
+    Utils().showLog('Catch error => ${e.toString()}');
+    Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     return ApiResponse(
       status: false,
@@ -161,12 +165,86 @@ void _handleSessionOut() {
 }
 
 void _checkForInAppMessage(InAppNotification? inAppMsg) {
-  if (inAppMsg != null) {
-    showAlert(
+  if (inAppMsg == null) return;
+  if (inAppMsg.popupType == InAppMsgType.card.name) {
+    showInAppCard(
       title: inAppMsg.title,
       description: inAppMsg.description,
       image: inAppMsg.image,
-      onClick: () {},
+      onClick: () => navigateToRequiredScreen(inAppMsg),
+    );
+  } else if (inAppMsg.popupType == InAppMsgType.modal.name) {
+    showInAppModal(
+      title: inAppMsg.title,
+      description: inAppMsg.description,
+      image: inAppMsg.image,
+      onClick: () => navigateToRequiredScreen(inAppMsg),
+    );
+  } else if (inAppMsg.popupType == InAppMsgType.image_only.name) {
+    showInAppImageOnly(
+      image: inAppMsg.image,
+      onClick: () => navigateToRequiredScreen(inAppMsg),
+    );
+  } else if (inAppMsg.popupType == InAppMsgType.top_banner.name) {
+    showInAppTopBanner(
+      title: inAppMsg.title,
+      description: inAppMsg.description,
+      image: inAppMsg.image,
+      onClick: () => navigateToRequiredScreen(inAppMsg),
+    );
+  }
+}
+
+void navigateToRequiredScreen(InAppNotification? inAppMsg) {
+  log("Here ***");
+  if (inAppMsg?.redirectOn == "none" || inAppMsg?.redirectOn == null) {
+    Navigator.pop(navigatorKey.currentContext!);
+    return;
+  }
+  // Navigator.pop(navigatorKey.currentContext!);
+
+  if (inAppMsg?.redirectOn == 'home') {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs(index: 0)),
+    );
+  } else if (inAppMsg?.redirectOn == 'stock') {
+    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
+  } else if (inAppMsg?.redirectOn == 'stock_detail') {
+    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      StockDetails.path,
+      arguments: inAppMsg?.slug,
+    );
+  } else if (inAppMsg?.redirectOn == 'news') {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs(index: 4)),
+    );
+  } else if (inAppMsg?.redirectOn == 'news_detail') {
+    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      NewsDetails.path,
+      arguments: inAppMsg?.slug,
+    );
+  } else if (inAppMsg?.redirectOn == 'blog') {
+    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      Blog.path,
+      arguments: {"type": BlogsType.blog, "id": ""},
+    );
+  } else if (inAppMsg?.redirectOn == 'blog_detail') {
+    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      BlogDetail.path,
+      arguments: inAppMsg?.slug,
     );
   }
 }
