@@ -192,7 +192,10 @@ class FirebaseApi {
   Future initPushNotification() async {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
-            alert: true, badge: false, sound: true);
+      alert: true,
+      badge: false,
+      sound: true,
+    );
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       Utils().showLog("getInitialMessage");
@@ -250,6 +253,7 @@ class FirebaseApi {
               _androidChannel.id,
               _androidChannel.name,
               playSound: true,
+              sound: const RawResourceAndroidNotificationSound('notifications'),
               enableVibration: true,
               importance: Importance.max,
 

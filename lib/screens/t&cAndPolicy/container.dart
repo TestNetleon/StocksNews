@@ -59,7 +59,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
     TermsAndPolicyProvider provider = context.watch<TermsAndPolicyProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true, showTrailing: false),
+      appBar: const AppBarHome(isPopback: true, canSearch: true),
       body:
 
           // Column(

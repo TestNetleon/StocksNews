@@ -55,8 +55,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
 
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(
-          isPopback: true, showTrailing: false, canSearch: true),
+      appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
