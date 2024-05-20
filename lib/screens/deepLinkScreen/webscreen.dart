@@ -64,7 +64,7 @@ class _AnalysisForecastState extends State<WebviewLink> {
     return BaseContainer(
       appBar: const AppBarHome(
         isPopback: true,
-        showTrailing: false,
+        canSearch: true,
       ),
       body: loading
           ? const ProgressDialog()

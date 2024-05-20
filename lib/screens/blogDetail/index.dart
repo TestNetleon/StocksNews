@@ -39,7 +39,7 @@ class _BlogDetailState extends State<BlogDetail> {
     return BaseContainer(
       appBar: const AppBarHome(
         isPopback: true,
-        showTrailing: false,
+        canSearch: true,
       ),
       body: BlogDetailContainer(id: widget.id ?? ""),
     );

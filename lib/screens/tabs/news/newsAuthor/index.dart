@@ -29,7 +29,7 @@ class NewsAuthorIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(showTrailing: false, isPopback: true),
+      appBar: const AppBarHome(canSearch: true, isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
