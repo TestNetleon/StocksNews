@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,8 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
   Status _addLoading = Status.ideal;
   bool get addLoading => _addLoading == Status.loading;
 
+  final AudioPlayer _player = AudioPlayer();
+
   TextRes? _textTop;
   TextRes? get textTop => _textTop;
 
@@ -104,6 +107,8 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
             element.isAlertAdded = 1;
           });
         }
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsAlerts(response.data['total_alerts']);
@@ -150,6 +155,8 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
             element.isWatchlistAdded = 1;
           });
         }
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);

@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../utils/colors.dart';
@@ -39,9 +40,7 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context
-          .read<WhatWeDoProvider>()
-          .getWhatWeDO(type: "disclaimer", reset: true);
+      context.read<WhatWeDoProvider>().getWhatWeDO(reset: true);
     });
   }
 
@@ -54,7 +53,7 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
             ? ErrorDisplayWidget(
                 error: provider.error,
                 onRefresh: () {
-                  provider.getWhatWeDO(type: "disclaimer");
+                  provider.getWhatWeDO();
                 },
               )
             : Padding(
@@ -64,26 +63,28 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                   children: [
                     const ScreenTitle(title: "What We Do"),
                     Expanded(
-                        child: CustomTabContainer(
-                      isTabWidget: List.generate(
-                          provider.tabs.length,
-                          (index) => CustomTabWhatWeDO(
-                              index: index,
-                              lable: provider.tabs[index].name,
-                              selectedIndex: provider.selectedIndex)),
-                      tabs: List.generate(provider.tabs.length,
-                          (index) => provider.tabs[index].name),
-                      widgets: List.generate(
-                        provider.tabs.length,
-                        (index) => SingleChildScrollView(
-                          child: HtmlWidget(
-                            provider.data?.description ?? "",
-                            textStyle: stylePTSansRegular(height: 1.5),
-                          ),
+                      child: CustomTabContainerNEW(
+                        onChange: (index) => provider.onTapChange(index),
+                        scrollable: true,
+                        tabs: List.generate(provider.data?.length ?? 0,
+                            (index) => '${provider.data?[index].title}'),
+                        widgets: List.generate(
+                          provider.data?.length ?? 0,
+                          (index) => SingleChildScrollView(
+                              child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.sp),
+                            child: HtmlWidget(
+                              onLoadingBuilder:
+                                  (context, element, loadingProgress) {
+                                return const ProgressDialog();
+                              },
+                              provider.res?.page.description ?? "",
+                              textStyle: stylePTSansRegular(height: 1.5),
+                            ),
+                          )),
                         ),
                       ),
-                      onChange: (index) => provider.onTapChange(index),
-                    )),
+                    ),
                   ],
                 ),
               );

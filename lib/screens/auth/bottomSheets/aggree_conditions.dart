@@ -29,7 +29,7 @@ class AgreeConditions extends StatelessWidget {
                   ),
                 );
               },
-            text: 'terms and conditions',
+            text: 'terms of service',
             style: stylePTSansRegular(
                 fontSize: 13, color: ThemeColors.accent, height: 1.4),
           ),

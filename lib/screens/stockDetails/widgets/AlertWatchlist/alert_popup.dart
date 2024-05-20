@@ -284,31 +284,25 @@ class _AlertPopupState extends State<AlertPopup> {
   }) {
     return InkWell(
       onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text(
-            heading,
-            style: stylePTSansBold(fontSize: 13),
+          Icon(
+            isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+            size: 35.sp,
+            color: isSelected ? ThemeColors.accent : ThemeColors.border,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.sp),
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.start,
+          const SpacerHorizontal(width: 10),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  isSelected
-                      ? Icons.check_box
-                      : Icons.check_box_outline_blank_rounded,
-                  size: 22.sp,
-                  color: isSelected ? ThemeColors.accent : ThemeColors.border,
+                Text(
+                  heading,
+                  style: stylePTSansBold(fontSize: 13),
                 ),
-                const SpacerHorizontal(width: 8),
-                Expanded(
-                  child: Text(
-                    description,
-                    style: stylePTSansRegular(fontSize: 13),
-                  ),
+                Text(
+                  description,
+                  style: stylePTSansRegular(fontSize: 13),
                 ),
               ],
             ),
@@ -326,12 +320,12 @@ class _AlertPopupState extends State<AlertPopup> {
             children: [
               Icon(
                 Icons.add_alert_outlined,
-                size: 15.sp,
+                size: 20.sp,
                 color: ThemeColors.accent,
               ),
               Text(
-                "New Alert",
-                style: stylePTSansBold(color: ThemeColors.accent, fontSize: 12),
+                "Set New Alert",
+                style: stylePTSansBold(color: ThemeColors.accent, fontSize: 18),
               ),
             ],
           ),

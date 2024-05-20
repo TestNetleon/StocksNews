@@ -22,6 +22,7 @@ import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/screens/whatWeDo/index.dart';
 // import 'package:stocks_news_new/screens/whatWeDo/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -190,17 +191,18 @@ class _BaseDrawerState extends State<BaseDrawer> {
       1: MyAccount.path,
       2: IndexBlog.path,
       3: TCandPolicy.path,
-      4: ContactUs.path,
-      5: FAQ.path,
+      4: WhatWeDoIndex.path,
+      5: ContactUs.path,
+      6: FAQ.path,
 
       // 7: TCandPolicy.path,
       // 8: TCandPolicy.path,
       // 6: TCandPolicy.path,
-      // 14: WhatWeDoIndex.path,
+      //
     };
 
     // Check if the index is within the valid range
-    if (index >= 0 && index <= 5) {
+    if (index >= 0 && index <= 6) {
       String path = routes[index]!;
       if (index == 3) {
         Navigator.pushNamed(context, path, arguments: PolicyType.aboutUs);
@@ -571,7 +573,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                   onTap: () {
                                     commonShare(
                                         title: '',
-                                        url: "https://app.stocks.news/");
+                                        url: provider.homeSliderRes?.shareUrl);
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(15.sp),
@@ -694,7 +696,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                 style: stylePTSansRegular(
                                     fontSize: 13, color: ThemeColors.greyText)),
                             TextSpan(
-                                text: ' Terms & Conditions',
+                                text: ' Terms of Service',
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Scaffold.of(context).closeDrawer();

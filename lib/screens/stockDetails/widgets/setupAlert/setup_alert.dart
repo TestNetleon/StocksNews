@@ -98,12 +98,12 @@ class SetupPopup extends StatelessWidget {
             children: [
               Icon(
                 Icons.add_alert_outlined,
-                size: 15.sp,
+                size: 20.sp,
                 color: ThemeColors.accent,
               ),
               Text(
-                "New Alert",
-                style: stylePTSansBold(color: ThemeColors.accent, fontSize: 12),
+                "Set New Alert",
+                style: stylePTSansBold(color: ThemeColors.accent, fontSize: 18),
               ),
             ],
           ),

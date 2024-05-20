@@ -12,6 +12,7 @@ import 'package:validators/validators.dart';
 import '../../utils/constants.dart';
 import '../../utils/theme.dart';
 import '../../utils/validations.dart';
+import '../../widgets/custom/comment_formatter.dart';
 import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_button.dart';
 import '../../widgets/theme_input_field.dart';
@@ -117,6 +118,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
             maxLength: 250,
             controller: comments,
             placeholder: "Enter your comment",
+            inputFormatters: [CustomCommentInputFormatter()],
             keyboardType: TextInputType.text,
           ),
           const SpacerVertical(height: 25),

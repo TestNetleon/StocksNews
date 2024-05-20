@@ -89,6 +89,7 @@ dependencies:
   firebase_in_app_messaging: ^0.7.4+17
   modal_bottom_sheet: ^3.0.0
   app_links: ^6.0.2
+  audioplayers: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -116,6 +117,12 @@ flutter:
     - assets/fonts/ptSans/
     - assets/
     - assets/images/
+    - assets/audios/
+    - assets/audios/alert_watchlist.mp3
+
+
+
+
     # - assets/icons/
 
   fonts:

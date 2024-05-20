@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,7 @@ import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:vibration/vibration.dart';
 
 import 'alert_popup.dart';
 import 'button.dart';
@@ -19,6 +22,16 @@ import 'button.dart';
 //
 class AddToAlertWatchlist extends StatelessWidget {
   const AddToAlertWatchlist({super.key});
+
+  void _vibrate() async {
+    bool isVibe = await Vibration.hasVibrator() ?? false;
+    if (isVibe) {
+      // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
+      Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+    } else {
+      log("$isVibe");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +57,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                     //   context,
                     //   createRoute(const Login()),
                     // );
-
+                    _vibrate();
                     await loginSheet();
 
                     if (context.read<UserProvider>().user == null) {
@@ -67,9 +80,13 @@ class AddToAlertWatchlist extends StatelessWidget {
                   }
                 : alertOn == 0
                     ? () {
+                        _vibrate();
+
                         _showAlertPopup(navigatorKey.currentContext!, symbol);
                       }
                     : () {
+                        _vibrate();
+
                         Navigator.pushNamed(context, Alerts.path);
                       },
           ),
@@ -81,6 +98,8 @@ class AddToAlertWatchlist extends StatelessWidget {
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: userProvider.user == null
                 ? () async {
+                    _vibrate();
+
                     // await Navigator.push(
                     //   context,
                     //   createRoute(const Login()),
@@ -100,16 +119,22 @@ class AddToAlertWatchlist extends StatelessWidget {
                             ?.isWatchlistAdded ??
                         0;
                     if (wlistOn == 0) {
-                      context.read<StockDetailProvider>().addToWishList();
+                      await context.read<StockDetailProvider>().addToWishList();
                     } else {
                       Navigator.pushNamed(context, WatchList.path);
                     }
                   }
                 : watchlistOn == 0
-                    ? () {
-                        context.read<StockDetailProvider>().addToWishList();
+                    ? () async {
+                        _vibrate();
+
+                        await context
+                            .read<StockDetailProvider>()
+                            .addToWishList();
                       }
                     : () {
+                        _vibrate();
+
                         Navigator.pushNamed(context, WatchList.path);
                       },
           ),

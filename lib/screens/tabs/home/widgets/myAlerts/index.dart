@@ -40,7 +40,9 @@ class HomeMyAlerts extends StatelessWidget {
                     Flexible(
                       child: Text(
                         userRes != null && provider.totalAlerts != 0
-                            ? "Stock Alerts"
+                            ? provider.totalAlerts == 1
+                                ? "Stock Alert"
+                                : "Stock Alerts"
                             : "Featured Stocks",
                         style: stylePTSansBold(),
                       ),

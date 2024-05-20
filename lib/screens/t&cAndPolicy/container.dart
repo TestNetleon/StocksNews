@@ -89,7 +89,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                 title: widget.policyType == PolicyType.aboutUs
                     ? "About Stocks.news"
                     : widget.policyType == PolicyType.tC
-                        ? "Terms & Conditions"
+                        ? "Terms of Service"
                         : widget.policyType == PolicyType.privacy
                             ? "Privacy Policy"
                             : "Disclaimer",

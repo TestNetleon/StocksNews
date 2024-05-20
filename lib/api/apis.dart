@@ -17,6 +17,8 @@ class Apis {
   static const ipoCalendar = "/ipo-calendar";
   static const welcome = "/welcome-screen";
   static const stockFocus = "/stock-in-focus";
+  static const menuWhatWeDo = "/menu-what-we-do";
+  static const whatWeDo = "/what-we-do";
 
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";

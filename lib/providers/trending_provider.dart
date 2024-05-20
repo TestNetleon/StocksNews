@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +44,8 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingBullish => _statusBullish == Status.loading;
   bool get isLoadingBearish => _statusBearish == Status.loading;
   bool get isLoadingStories => _statusStories == Status.loading;
+
+  final AudioPlayer _player = AudioPlayer();
 
   void setStatus(status) {
     _status = status;
@@ -107,6 +110,10 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
           //
           _mostBearish?.mostBearish?[index].isAlertAdded = 1;
         }
+        await _player.play(
+          AssetSource(AudioFiles.alertWeathlist),
+        );
+
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsAlerts(response.data['total_alerts']);
@@ -149,6 +156,9 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
           //
           _mostBearish?.mostBearish?[index].isWatchlistAdded = 1;
         }
+
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
@@ -162,7 +172,6 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       log(e.toString());
       setStatus(Status.loaded);
-
       showErrorMessage(message: Const.errSomethingWrong);
     }
   }

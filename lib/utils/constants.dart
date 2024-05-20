@@ -69,6 +69,10 @@ class Images {
   static const telegram = "assets/images/telegram_share.png";
 }
 
+class AudioFiles {
+  static const alertWeathlist = "audios/alert_watchlist.mp3";
+}
+
 class AppIcons {
   // static const String angleDown = "assets/icons/angle-down.svg";
 }

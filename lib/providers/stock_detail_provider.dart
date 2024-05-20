@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:audioplayers/audioplayers.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,7 +60,7 @@ class StockDetailProvider with ChangeNotifier {
 
   List<StockDetailGraph>? _extraData;
   List<StockDetailGraph>? get extraData => _extraData;
-
+  final AudioPlayer _player = AudioPlayer();
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
   void setStatus(status) {
@@ -666,6 +667,8 @@ class StockDetailProvider with ChangeNotifier {
           await apiRequest(url: Apis.createAlert, request: request);
       if (response.status) {
         data?.isAlertAdded = 1;
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsAlerts(response.data['total_alerts']);
@@ -702,6 +705,7 @@ class StockDetailProvider with ChangeNotifier {
       );
       if (response.status) {
         data?.isWatchlistAdded = 1;
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
         navigatorKey.currentContext!
             .read<HomeProvider>()

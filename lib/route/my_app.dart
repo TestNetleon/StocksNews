@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -238,30 +237,30 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   }
   // }
 
-  void _navigate(uri, {bool gotoHome = false}) {
-    if (!gotoHome) {
-      log("ALREADY OPENED");
+  // void _navigate(uri, {bool gotoHome = false}) {
+  //   if (!gotoHome) {
+  //     log("ALREADY OPENED");
 
-      Timer(Duration(seconds: Platform.isIOS ? 1 : 5), () {
-        Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => WebviewLink(url: uri),
-            ));
-      });
-    } else {
-      log("ABOUT TO OPEN");
-      // Navigator.pushNamedAndRemoveUntil(
-      //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-      Timer(const Duration(seconds: 5), () {
-        Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => WebviewLink(url: uri),
-            ));
-      });
-    }
-  }
+  //     Timer(Duration(seconds: Platform.isIOS ? 1 : 5), () {
+  //       Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(
+  //             builder: (context) => WebviewLink(url: uri),
+  //           ));
+  //     });
+  //   } else {
+  //     log("ABOUT TO OPEN");
+  //     // Navigator.pushNamedAndRemoveUntil(
+  //     //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+  //     Timer(const Duration(seconds: 5), () {
+  //       Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(
+  //             builder: (context) => WebviewLink(url: uri),
+  //           ));
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

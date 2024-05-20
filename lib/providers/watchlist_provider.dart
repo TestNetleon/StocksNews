@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -25,6 +26,8 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoading => _status == Status.loading;
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
+
+  final AudioPlayer _player = AudioPlayer();
 
   void setStatus(status) {
     _status = status;
@@ -147,6 +150,8 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
       );
       if (response.status) {
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
