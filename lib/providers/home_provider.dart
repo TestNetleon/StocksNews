@@ -215,7 +215,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       } else {
         _homeAlertData = null;
       }
-      userAlert = response.extra.userAlert;
+      userAlert = response.extra?.userAlert;
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     } catch (e) {
@@ -275,7 +275,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
         // UserProvider provider =
         //     navigatorKey.currentContext!.read<UserProvider>();
-        notificationSeen = response.extra.notificationCount == 0;
+        notificationSeen = response.extra?.notificationCount == 0;
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
 
