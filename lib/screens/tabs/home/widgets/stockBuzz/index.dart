@@ -117,8 +117,12 @@ class StockBuzzItem extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(50.sp),
               onTap: () {
-                Navigator.pushNamed(context, StockDetails.path,
-                    arguments: symbol);
+                Navigator.pushNamed(
+                  context,
+                  StockDetails.path,
+                  // arguments: symbol,
+                  arguments: {"slug": symbol},
+                );
               },
               child: Container(
                 padding: EdgeInsets.all(20.sp),

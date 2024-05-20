@@ -133,10 +133,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future getNews({
-    showProgress = false,
-    loadMore = false,
-  }) async {
+  Future getNews({showProgress = false, loadMore = false, inAppMsgId}) async {
     // navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
 
     if (loadMore) {
@@ -146,12 +143,16 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
       _page = 1;
       setStatus(Status.loading);
     }
+
     try {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page"
       };
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId});
+      }
 
       ApiResponse response = await apiRequest(
         url: Apis.featuredNews,

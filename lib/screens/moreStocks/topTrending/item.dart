@@ -47,7 +47,8 @@ class TopTrendingItem extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     StockDetails.path,
-                    arguments: data.symbol,
+                    // arguments: data.symbol,
+                    arguments: {"slug": data.symbol},
                   );
                 },
                 child: Row(

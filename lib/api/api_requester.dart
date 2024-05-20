@@ -196,55 +196,68 @@ void _checkForInAppMessage(InAppNotification? inAppMsg) {
 }
 
 void navigateToRequiredScreen(InAppNotification? inAppMsg) {
-  log("Here ***");
   if (inAppMsg?.redirectOn == "none" || inAppMsg?.redirectOn == null) {
     Navigator.pop(navigatorKey.currentContext!);
     return;
   }
-  // Navigator.pop(navigatorKey.currentContext!);
 
   if (inAppMsg?.redirectOn == 'home') {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 0)),
+      MaterialPageRoute(
+        builder: (_) => Tabs(
+          index: 0,
+          inAppMsgId: inAppMsg?.id,
+        ),
+      ),
     );
   } else if (inAppMsg?.redirectOn == 'stock') {
+    log("Navigating to Stocks");
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
+    Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      StocksIndex.path,
+      arguments: inAppMsg?.id,
+    );
   } else if (inAppMsg?.redirectOn == 'stock_detail') {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
       navigatorKey.currentContext!,
       StockDetails.path,
-      arguments: inAppMsg?.slug,
+      arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'news') {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 4)),
+      MaterialPageRoute(
+        builder: (_) => Tabs(
+          index: 4,
+          inAppMsgId: inAppMsg?.id,
+        ),
+      ),
     );
   } else if (inAppMsg?.redirectOn == 'news_detail') {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
       navigatorKey.currentContext!,
       NewsDetails.path,
-      arguments: inAppMsg?.slug,
+      arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog') {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
       navigatorKey.currentContext!,
       Blog.path,
-      arguments: {"type": BlogsType.blog, "id": ""},
+      arguments: {"type": BlogsType.blog, "id": "", "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog_detail') {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
       navigatorKey.currentContext!,
       BlogDetail.path,
-      arguments: inAppMsg?.slug,
+      arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   }
 }

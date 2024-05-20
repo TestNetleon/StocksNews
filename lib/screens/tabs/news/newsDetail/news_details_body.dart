@@ -28,7 +28,8 @@ import 'news_details_list.dart';
 
 class NewsDetailsBody extends StatefulWidget {
   final String? slug;
-  const NewsDetailsBody({super.key, this.slug});
+  final String? inAppMsgId;
+  const NewsDetailsBody({super.key, this.slug, this.inAppMsgId});
 
   @override
   State<NewsDetailsBody> createState() => _NewsDetailsBodyState();
@@ -42,9 +43,11 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // context.read<ScrollControllerProvider>().isVisible = true;
-      context
-          .read<NewsDetailProvider>()
-          .getNewsDetailData(showProgress: false, slug: widget.slug);
+      context.read<NewsDetailProvider>().getNewsDetailData(
+            showProgress: false,
+            slug: widget.slug,
+            inAppMsgId: widget.inAppMsgId,
+          );
     });
   }
 

@@ -26,12 +26,14 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../providers/trending_industries.dart';
 
 import 'package:vibration/vibration.dart';
+
 //TODO
 //
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int index;
-  const Tabs({super.key, this.index = 0});
+  final String? inAppMsgId;
+  const Tabs({super.key, this.index = 0, this.inAppMsgId});
 
   @override
   State<Tabs> createState() => _TabsState();
@@ -173,7 +175,7 @@ class _TabsState extends State<Tabs> {
 
     switch (currentIndex) {
       case 0:
-        _home(context);
+        _home(context, widget.inAppMsgId);
         break;
       case 1:
         context.read<TrendingIndustriesProvider>().getData();
@@ -187,7 +189,10 @@ class _TabsState extends State<Tabs> {
         redditTwitterProvider.getRedditTwitterData(reset: true);
         break;
       case 4:
-        newsProvider.getNews(showProgress: false);
+        newsProvider.getNews(
+          showProgress: false,
+          inAppMsgId: widget.inAppMsgId,
+        );
         latestNewsProvider.getNews();
 
         break;
@@ -206,9 +211,9 @@ class _TabsState extends State<Tabs> {
 //   }
 // }
 
-void _home(BuildContext context) async {
+void _home(BuildContext context, String? inAppMsgId) async {
   final HomeProvider homeProvider = context.read<HomeProvider>();
-  homeProvider.refreshData();
+  homeProvider.refreshData(inAppMsgId);
   // homeProvider.getHomeData();
   // homeProvider.getHomeNewData();
 }

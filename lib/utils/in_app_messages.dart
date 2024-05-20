@@ -22,7 +22,7 @@ void showInAppCard({required title, description, image, onClick}) {
                 child: GestureDetector(
                   onTap: onClick,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (image != null)
@@ -114,6 +114,7 @@ void showInAppModal({required title, description, image, onClick}) {
                 child: GestureDetector(
                   onTap: onClick,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
@@ -227,6 +228,7 @@ void showInAppTopBanner({required title, description, image, onClick}) {
           child: Opacity(
             opacity: a1.value,
             child: Dialog(
+              insetPadding: EdgeInsets.symmetric(horizontal: 16.sp),
               alignment: Alignment.topCenter,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),

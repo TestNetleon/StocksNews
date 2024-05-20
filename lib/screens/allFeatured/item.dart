@@ -18,7 +18,12 @@ class AllFeaturedItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, StockDetails.path, arguments: data.symbol);
+        Navigator.pushNamed(
+          context,
+          StockDetails.path,
+          // arguments: data.symbol,
+          arguments: {"slug": data.symbol},
+        );
       },
       child: Row(
         children: [

@@ -184,8 +184,12 @@ class _TextInputFieldSearchState extends State<TextInputFieldSearch> {
                       onTap: () {
                         closeKeyboard();
                         provider.clearSearch();
-                        Navigator.pushNamed(context, StockDetails.path,
-                            arguments: data?.symbol);
+                        Navigator.pushNamed(
+                          context,
+                          StockDetails.path,
+                          // arguments: data?.symbol,
+                          arguments: {"slug": data?.symbol},
+                        );
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 6.sp),

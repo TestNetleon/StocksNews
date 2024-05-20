@@ -26,7 +26,11 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
   int _activeIndex = 0;
 
   void _newsDetail({String? slug}) {
-    Navigator.pushNamed(context, NewsDetails.path, arguments: slug);
+    Navigator.pushNamed(
+      context,
+      NewsDetails.path,
+      arguments: {"slug": slug},
+    );
   }
 
   @override

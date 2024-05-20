@@ -10,8 +10,14 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 class Blog extends StatefulWidget {
   final BlogsType type;
   final String id;
+  final String? inAppMsgId;
   static const path = "Blog";
-  const Blog({super.key, this.type = BlogsType.blog, this.id = ""});
+  const Blog({
+    super.key,
+    this.type = BlogsType.blog,
+    this.id = "",
+    this.inAppMsgId,
+  });
 
   @override
   State<Blog> createState() => _BlogState();
@@ -23,10 +29,12 @@ class _BlogState extends State<Blog> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context
-          .read<BlogProvider>()
-          .getData(showProgress: true, type: widget.type, id: widget.id);
-
+      context.read<BlogProvider>().getData(
+            showProgress: true,
+            type: widget.type,
+            id: widget.id,
+            inAppMsgId: widget.inAppMsgId,
+          );
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': 'Blogs'},

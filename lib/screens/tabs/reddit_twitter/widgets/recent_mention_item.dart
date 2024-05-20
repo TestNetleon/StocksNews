@@ -17,8 +17,12 @@ class SocialSentimentMentions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, StockDetails.path,
-          arguments: data.symbol),
+      onTap: () => Navigator.pushNamed(
+        context,
+        StockDetails.path,
+        // arguments: data.symbol,
+        arguments: {"slug": data.symbol},
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

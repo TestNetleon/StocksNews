@@ -29,8 +29,12 @@ class StocksItemAll extends StatelessWidget {
             children: [
               Expanded(
                 child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, StockDetails.path,
-                      arguments: data?.symbol ?? ""),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    StockDetails.path,
+                    // arguments: data?.symbol ?? "",
+                    arguments: {"slug": data?.symbol ?? ""},
+                  ),
                   child: Row(
                     children: [
                       ClipRRect(

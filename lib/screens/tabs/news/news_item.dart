@@ -29,12 +29,19 @@ class NewsItem extends StatelessWidget {
 
   void _gotoDetail(BuildContext context) {
     if (fromMoreNews) {
-      Navigator.pushReplacementNamed(context, NewsDetails.path,
-          arguments: news?.slug);
+      Navigator.pushReplacementNamed(
+        context,
+        NewsDetails.path,
+        arguments: {"slug": news?.slug},
+      );
       return;
     }
 
-    Navigator.pushNamed(context, NewsDetails.path, arguments: news?.slug);
+    Navigator.pushNamed(
+      context,
+      NewsDetails.path,
+      arguments: {"slug": news?.slug},
+    );
     // Navigator.pushNamed(context, NewsAuthorIndex.path,
     //     arguments: "Author Name");
   }
@@ -241,12 +248,19 @@ class NewsItemSeparated extends StatelessWidget {
 
   void _gotoDetail(BuildContext context) {
     if (fromMoreNews) {
-      Navigator.pushReplacementNamed(context, NewsDetails.path,
-          arguments: news?.slug);
+      Navigator.pushReplacementNamed(
+        context,
+        NewsDetails.path,
+        arguments: {"slug": news?.slug},
+      );
       return;
     }
 
-    Navigator.pushNamed(context, NewsDetails.path, arguments: news?.slug);
+    Navigator.pushNamed(
+      context,
+      NewsDetails.path,
+      arguments: {"slug": news?.slug},
+    );
     // Navigator.pushNamed(context, NewsAuthorIndex.path,
     //     arguments: "Author Name");
   }

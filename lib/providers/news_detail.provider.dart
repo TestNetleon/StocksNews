@@ -28,7 +28,11 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future getNewsDetailData({showProgress = false, String? slug}) async {
+  Future getNewsDetailData({
+    showProgress = false,
+    String? slug,
+    inAppMsgId,
+  }) async {
     setStatus(Status.loading);
     try {
       Map request = {
@@ -36,6 +40,9 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "slug": slug ?? "",
       };
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId!});
+      }
       ApiResponse response = await apiRequest(
         url: Apis.newsDetails,
         request: request,

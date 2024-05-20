@@ -13,8 +13,13 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 class StockDetails extends StatefulWidget {
   final String symbol;
+  final String? inAppMsgId;
   static const String path = "StockDetails";
-  const StockDetails({super.key, required this.symbol});
+  const StockDetails({
+    super.key,
+    required this.symbol,
+    this.inAppMsgId,
+  });
 
   @override
   State<StockDetails> createState() => _StockDetailsState();
@@ -41,9 +46,11 @@ class _StockDetailsState extends State<StockDetails> {
         .read<StockDetailProvider>()
         .getStockGraphData(symbol: widget.symbol);
 
-    context
-        .read<StockDetailProvider>()
-        .getStockOtherDetails(symbol: widget.symbol);
+    context.read<StockDetailProvider>().getStockOtherDetails(
+          symbol: widget.symbol,
+          inAppMsgId: widget.inAppMsgId,
+        );
+
     context.read<StockDetailProvider>().analysisData(symbol: widget.symbol);
     context
         .read<StockDetailProvider>()

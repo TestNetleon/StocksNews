@@ -478,10 +478,12 @@ class StockDetailProvider with ChangeNotifier {
     }
   }
 
-  Future getStockOtherDetails(
-      {required String symbol, loadOther = true}) async {
+  Future getStockOtherDetails({
+    required String symbol,
+    loadOther = true,
+    inAppMsgId,
+  }) async {
     _otherData = null;
-
     setStatus(Status.loading);
     try {
       Map request = {
@@ -489,6 +491,10 @@ class StockDetailProvider with ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol,
       };
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId!});
+      }
+
       ApiResponse response = await apiRequest(
         url: Apis.getOtherData,
         request: request,

@@ -117,15 +117,14 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future refreshData() async {
+  Future refreshData(String? inAppMsgId) async {
     getHomeSlider();
     // getIpoData();
     getStockInFocus();
     getHomeSentimentData();
     getHomeTrendingData();
     getHomeAlerts();
-
-    getHomeInsiderData();
+    getHomeInsiderData(inAppMsgId);
   }
 
   Future refreshWithCheck() async {
@@ -149,7 +148,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       getHomeAlerts();
     }
     if (_homeInsiderRes == null) {
-      getHomeInsiderData();
+      getHomeInsiderData(null);
     }
   }
 
@@ -353,7 +352,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getHomeInsiderData() async {
+  Future getHomeInsiderData(inAppMsgId) async {
     _statusInsider = Status.loading;
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -361,6 +360,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       Map request = {
         "token": provider.user?.token ?? "",
       };
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId});
+      }
       ApiResponse response = await apiRequest(
         url: Apis.homeInsider,
         request: request,
