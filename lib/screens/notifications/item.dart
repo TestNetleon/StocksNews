@@ -63,7 +63,7 @@ class NotificationsItem extends StatelessWidget {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => BlogDetail(
-              id: slug ?? "",
+              slug: slug ?? "",
             ),
           ),
         );

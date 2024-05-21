@@ -40,7 +40,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FlutterDeepLinkingEnabled</key>
-	<true/>
+	<false/>
 	<key>GIDClientID</key>
 	<string>1002137160130-nv5ivhj78mj381datskquc70f3a2eek8.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>

@@ -8,10 +8,10 @@ import 'container.dart';
 
 class BlogDetail extends StatefulWidget {
   static const path = "BlogDetail";
-  final String? id;
+  // final String? id;
   final String? slug;
   final String? inAppMsgId;
-  const BlogDetail({super.key, this.id, this.slug, this.inAppMsgId});
+  const BlogDetail({super.key, this.slug, this.inAppMsgId});
 
   @override
   State<BlogDetail> createState() => _BlogDetailState();
@@ -23,7 +23,7 @@ class _BlogDetailState extends State<BlogDetail> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BlogProvider>().getBlogDetailData(
-            blogId: widget.id ?? "",
+            // blogId: widget.id ?? "",
             slug: widget.slug,
             inAppMsgId: widget.inAppMsgId,
           );
@@ -41,7 +41,7 @@ class _BlogDetailState extends State<BlogDetail> {
         isPopback: true,
         canSearch: true,
       ),
-      body: BlogDetailContainer(id: widget.id ?? ""),
+      body: BlogDetailContainer(slug: widget.slug ?? ""),
     );
   }
 }

@@ -16,9 +16,9 @@ import '../tabs/news/newsDetail/news_details_body.dart';
 
 //
 class BlogDetailContainer extends StatelessWidget {
-  final String id;
+  final String slug;
 
-  const BlogDetailContainer({super.key, required this.id});
+  const BlogDetailContainer({super.key, required this.slug});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +36,9 @@ class BlogDetailContainer extends StatelessWidget {
               hasData:
                   provider.blogsDetail != null && !provider.isLoadingDetail,
               isLoading: provider.isLoadingDetail,
-              onRefresh: () => provider.getBlogDetailData(blogId: id),
+              onRefresh: () => provider.getBlogDetailData(slug: slug),
               child: RefreshIndicator(
-                onRefresh: () => provider.getBlogDetailData(blogId: id),
+                onRefresh: () => provider.getBlogDetailData(slug: slug),
                 child: Stack(
                   children: [
                     SingleChildScrollView(

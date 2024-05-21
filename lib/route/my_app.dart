@@ -15,7 +15,6 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 final _appLinks = AppLinks();
 //
@@ -44,8 +43,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // _handleIncomingLinks();
-      // _handleInitialUri();
       _getAppLinks();
       Timer(const Duration(milliseconds: 7200), () {
         _checkForConnection();
@@ -59,20 +56,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     setState(() {
       _appLifecycleState = state;
     });
-    log('App Lifecycle State: $_appLifecycleState');
   }
 
   void _getAppLinks() {
-    log("=======APP STATE IS $_appLifecycleState");
     _appLinks.uriLinkStream.listen((event) {
-      Utils().showLog("----EVENT $event");
-
       String type = containsSpecificPath(event);
-
-      log("Deep link type $type");
-
       String slug = extractLastPathComponent(event);
-
       if (_appLifecycleState == null) {
         Timer(const Duration(seconds: 5), () {
           _navigation(uri: event, slug: slug, type: type);
@@ -109,7 +98,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           navigatorKey.currentContext!,
           MaterialPageRoute(
               builder: (context) => BlogDetail(
-                    id: "",
+                    // id: "",
                     slug: slug,
                   )));
     } else if (type == "news") {

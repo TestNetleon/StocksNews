@@ -135,7 +135,7 @@ class FirebaseApi {
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => BlogDetail(
-              id: slug ?? "",
+              slug: slug ?? "",
             ),
           ),
         );
