@@ -66,6 +66,7 @@ class BlogDataRes {
 
 class BlogItemRes {
   final String id;
+  final String slug;
   final String name;
   final DateTime? publishedDate;
   final List<DetailListType>? authors;
@@ -75,6 +76,7 @@ class BlogItemRes {
   BlogItemRes({
     required this.id,
     required this.name,
+    required this.slug,
     this.authors,
     this.publishedDate,
     this.image,
@@ -91,6 +93,7 @@ class BlogItemRes {
             ? null
             : DateTime.parse(json["published_date"]),
         image: json["image"],
+        slug: json["slug"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,5 +104,6 @@ class BlogItemRes {
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
         "published_date": publishedDate?.toIso8601String(),
         "image": image,
+        "slug": slug,
       };
 }
