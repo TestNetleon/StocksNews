@@ -11,6 +11,8 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../../../../widgets/cache_network_image.dart';
+
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopback, showQR, canSearch;
@@ -82,13 +84,15 @@ class _AppBarHomeState extends State<AppBarHome> {
                 child: image == null || image == ''
                     ? const Icon(Icons.person)
                     : ClipRRect(
-                        // child: CachedNetworkImagesWidget(image),
-                        child: Image.asset(
-                          Images.dotsMenu,
-                          color: ThemeColors.white,
-                          height: 20.sp,
-                          width: 20.sp,
-                        ),
+                        borderRadius: BorderRadius.circular(30.r),
+
+                        child: CachedNetworkImagesWidget(image),
+                        // child: Image.asset(
+                        //   Images.dotsMenu,
+                        //   color: ThemeColors.white,
+                        //   height: 20.sp,
+                        //   width: 20.sp,
+                        // ),
                       ),
               ),
               // icon: Image.asset(
