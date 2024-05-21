@@ -98,8 +98,12 @@ class HomeMyAlerts extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, StockDetails.path,
-                                  arguments: data.symbol);
+                              Navigator.pushNamed(
+                                context,
+                                StockDetails.path,
+                                // arguments: data.symbol,
+                                arguments: {"slug": data.symbol},
+                              );
                             },
                             child: HomeMyAlertItem(
                               data: data,
