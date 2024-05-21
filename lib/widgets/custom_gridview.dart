@@ -93,3 +93,93 @@ class CustomGridView extends StatelessWidget {
 //     );
 //   }
 // }
+
+class CustomGridView4 extends StatelessWidget {
+  const CustomGridView4({
+    required this.length,
+    required this.getChild,
+    this.paddingVerticle = 16,
+    this.paddingHorizontal = 8,
+    super.key,
+  });
+
+  final double paddingVerticle, paddingHorizontal;
+  final int length;
+  final Widget Function(int index) getChild;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(vertical: paddingVerticle.sp),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal.sp),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(4, (i) {
+              int childIndex = index * 4 + i;
+              return Expanded(
+                child: childIndex < length
+                    ? getChild(childIndex)
+                    : const SizedBox(),
+              );
+            }),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: (paddingVerticle * 1.2).sp);
+      },
+      itemCount: ((length / 4).ceil()),
+    );
+  }
+}
+
+class CustomGridViewPerChild extends StatelessWidget {
+  const CustomGridViewPerChild({
+    required this.length,
+    required this.getChild,
+    this.paddingVertical = 16,
+    this.paddingHorizontal = 8,
+    this.childrenPerRow = 2,
+    super.key,
+  });
+
+  final double paddingVertical, paddingHorizontal;
+  final int length;
+  final int childrenPerRow;
+  final Widget Function(int index) getChild;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(vertical: paddingVertical.sp),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal.sp),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(childrenPerRow, (i) {
+              int childIndex = index * childrenPerRow + i;
+              return Expanded(
+                child: childIndex < length
+                    ? getChild(childIndex)
+                    : const SizedBox(),
+              );
+            }),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: (paddingVertical * 1.2).sp);
+      },
+      itemCount: ((length / childrenPerRow).ceil()),
+    );
+  }
+}

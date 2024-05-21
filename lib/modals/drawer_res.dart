@@ -14,6 +14,20 @@ class DrawerRes {
   });
 }
 
+class DrawerResNew {
+  bool isSelected, showBadge;
+  String icon;
+  String text;
+  int? badgeCount;
+  DrawerResNew({
+    required this.icon,
+    this.isSelected = false,
+    required this.text,
+    this.showBadge = false,
+    this.badgeCount,
+  });
+}
+
 //
 // List<DrawerRes> drawerItems = [
 //   DrawerRes(iconData: Icons.home_filled, text: "Home"),

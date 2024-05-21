@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -47,6 +48,7 @@ class _AlertBaseState extends State<AlertBase> {
   Widget build(BuildContext context) {
     AlertProvider provider = context.watch<AlertProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
@@ -59,7 +61,10 @@ class _AlertBaseState extends State<AlertBase> {
         ),
         child: Column(
           children: [
-            const ScreenTitle(title: "Stock Alerts"),
+            ScreenTitle(
+                title: homeProvider.totalAlerts == 1
+                    ? "Stock Alert"
+                    : "Stock Alerts"),
             userProvider.user == null
                 ? const Expanded(
                     child: LoginError(
