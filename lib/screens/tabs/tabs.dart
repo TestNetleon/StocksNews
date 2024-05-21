@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -143,10 +145,13 @@ class _TabsState extends State<Tabs> {
     final newsProvider = context.read<FeaturedNewsProvider>();
     final latestNewsProvider = context.read<NewsProvider>();
 
-    bool isVibe = await Vibration.hasVibrator() ?? false;
-    if (isVibe) {
-      // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
-      Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+    if (Platform.isAndroid) {
+      bool isVibe = await Vibration.hasVibrator() ?? false;
+      if (isVibe) {
+        Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+      }
+    } else {
+      Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
     }
 
     // switch (currentIndex) {
