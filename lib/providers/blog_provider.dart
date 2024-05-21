@@ -188,7 +188,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getBlogDetailData({
-    required String blogId,
+    // required String blogId,
     String? slug,
     inAppMsgId,
   }) async {
@@ -199,7 +199,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "blog_id": blogId,
+        // "blog_id": blogId,
         "slug": slug ?? "",
       };
 
