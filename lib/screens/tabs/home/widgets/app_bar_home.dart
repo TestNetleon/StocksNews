@@ -10,7 +10,8 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
+
+import '../../../../widgets/cache_network_image.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -83,6 +84,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                 child: image == null || image == ''
                     ? const Icon(Icons.person)
                     : ClipRRect(
+                        borderRadius: BorderRadius.circular(30.r),
+
                         child: CachedNetworkImagesWidget(image),
                         // child: Image.asset(
                         //   Images.dotsMenu,
