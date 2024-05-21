@@ -44,6 +44,7 @@ class Images {
   static const String graphBear = "assets/images/graph_bear.png";
   static const String graphBull = "assets/images/graph_bull.png";
   static const String dotsMenu = "assets/images/dots-menu.png";
+  static const String info = "assets/images/info.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
