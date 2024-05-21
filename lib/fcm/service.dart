@@ -169,7 +169,10 @@ class FirebaseApi {
 
   Future initLocalNotifications() async {
     const android = AndroidInitializationSettings("mipmap/ic_launcher_round");
-    DarwinInitializationSettings iOS = const DarwinInitializationSettings();
+    DarwinInitializationSettings iOS = const DarwinInitializationSettings(
+      defaultPresentSound: true,
+      requestSoundPermission: true,
+    );
     InitializationSettings settings =
         InitializationSettings(android: android, iOS: iOS);
 
@@ -266,7 +269,10 @@ class FirebaseApi {
                       data["message"].toString(),
                     ),
             ),
-            iOS: const DarwinNotificationDetails(),
+            iOS: const DarwinNotificationDetails(
+                // sound: "notifications",
+                // presentSound: true,
+                ),
           ),
           payload: jsonEncode(message.toMap()),
         );
