@@ -914,7 +914,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         },
                         child: Ink(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 10.sp, vertical: 3.sp),
+                              horizontal: 10.sp, vertical: 5.sp),
                           decoration: BoxDecoration(
                               color: ThemeColors.greyBorder.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(20.sp),
@@ -923,7 +923,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           child: Text(
                             "More services",
                             style: stylePTSansRegular(
-                                fontSize: 12, color: ThemeColors.greyText),
+                                fontSize: 12, color: ThemeColors.white),
                           ),
                         ),
                       ),

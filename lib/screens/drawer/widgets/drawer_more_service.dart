@@ -126,13 +126,13 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
     double scrollOffset = 0.0;
     switch (index) {
       case 1:
-        scrollOffset = ScreenUtil().screenHeight * 0.585;
+        scrollOffset = ScreenUtil().screenHeight * 0.591;
         break;
       case 2:
-        scrollOffset = ScreenUtil().screenHeight * 0.918;
+        scrollOffset = ScreenUtil().screenHeight * 0.923;
         break;
       case 3:
-        scrollOffset = ScreenUtil().screenHeight * 1.16;
+        scrollOffset = ScreenUtil().screenHeight * 1.162;
         break;
       case 4:
         scrollOffset = ScreenUtil().screenHeight * 1.4;
@@ -151,11 +151,11 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
   }
 
   int _getTabIndex(double offset) {
-    if (offset < ScreenUtil().screenHeight * 0.585) {
+    if (offset < ScreenUtil().screenHeight * 0.591) {
       return 0;
-    } else if (offset < ScreenUtil().screenHeight * 0.918) {
+    } else if (offset < ScreenUtil().screenHeight * 0.923) {
       return 1;
-    } else if (offset < ScreenUtil().screenHeight * 1.16) {
+    } else if (offset < ScreenUtil().screenHeight * 1.162) {
       return 2;
     } else if (offset < ScreenUtil().screenHeight * 1.4) {
       return 3;
