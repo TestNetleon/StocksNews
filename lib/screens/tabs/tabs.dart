@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
@@ -152,7 +153,8 @@ class _TabsState extends State<Tabs> {
         Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
       }
     } else {
-      Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
+      // Vibration.vibrate(pattern: [0, 500], intensities: [1, 10]);
+      HapticFeedback.lightImpact();
     }
 
     // switch (currentIndex) {

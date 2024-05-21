@@ -1,8 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
@@ -24,12 +26,16 @@ class AddToAlertWatchlist extends StatelessWidget {
   const AddToAlertWatchlist({super.key});
 
   void _vibrate() async {
-    bool isVibe = await Vibration.hasVibrator() ?? false;
-    if (isVibe) {
-      // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
-      Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+    if (Platform.isAndroid) {
+      bool isVibe = await Vibration.hasVibrator() ?? false;
+      if (isVibe) {
+        // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
+        Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+      } else {
+        log("$isVibe");
+      }
     } else {
-      log("$isVibe");
+      HapticFeedback.lightImpact();
     }
   }
 

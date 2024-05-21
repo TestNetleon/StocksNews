@@ -172,6 +172,7 @@ class FirebaseApi {
     DarwinInitializationSettings iOS = const DarwinInitializationSettings();
     InitializationSettings settings =
         InitializationSettings(android: android, iOS: iOS);
+
     await _localNotifications.initialize(
       settings,
       onDidReceiveNotificationResponse: (details) {
@@ -186,6 +187,7 @@ class FirebaseApi {
 
     final playform = _localNotifications.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
+
     await playform?.createNotificationChannel(_androidChannel);
   }
 
@@ -256,7 +258,6 @@ class FirebaseApi {
               sound: const RawResourceAndroidNotificationSound('notifications'),
               enableVibration: true,
               importance: Importance.max,
-
               icon: "mipmap/ic_launcher_round", //CHANGE ICON
               styleInformation: image != null
                   ? information
