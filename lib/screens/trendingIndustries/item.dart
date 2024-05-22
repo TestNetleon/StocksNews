@@ -39,13 +39,13 @@ class TrendingIndustryItem extends StatelessWidget {
                     ? Image.asset(
                         Images.monitor,
                         color: ThemeColors.accent,
-                        height: 25.sp,
-                        width: 25.sp,
+                        height: 43,
+                        width: 43,
                       )
                     : ThemeImageView(
                         url: data.image ?? "",
-                        height: 25,
-                        width: 25,
+                        height: 43,
+                        width: 43,
                       ),
                 const SpacerHorizontal(width: 8),
                 Flexible(

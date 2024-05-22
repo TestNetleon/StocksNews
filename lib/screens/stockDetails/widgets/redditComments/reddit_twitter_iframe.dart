@@ -133,7 +133,7 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
                   SizedBox(
                     height: isPhone
                         ? constraints.maxWidth * 2.45
-                        : constraints.maxWidth * 1.4,
+                        : constraints.maxWidth * .9,
                     child: WebViewWidget(controller: reddit),
                   ),
                   const SpacerVertical(height: 12),

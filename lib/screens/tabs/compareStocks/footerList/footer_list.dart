@@ -97,14 +97,14 @@ class _FooterListState extends State<FooterList> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 10.sp, bottom: 10.sp),
-                      height: constraints.maxWidth * 0.6,
+                      height: constraints.maxWidth * 0.4,
                       decoration: const BoxDecoration(
                           border: Border(
                               bottom: BorderSide(color: ThemeColors.accent))),
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.only(top: 10.sp),
+                        // padding: EdgeInsets.only(top: 10.sp),
                         itemCount: company.length + 1,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {

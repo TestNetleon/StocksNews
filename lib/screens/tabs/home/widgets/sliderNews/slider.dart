@@ -40,7 +40,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        double imageHeight = constraints.maxWidth * 0.7;
+        double imageHeight = constraints.maxWidth * 0.6;
         double dotSize = 7.sp;
         return Stack(
           alignment: Alignment.center,

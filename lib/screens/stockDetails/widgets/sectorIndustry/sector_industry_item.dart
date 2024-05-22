@@ -31,9 +31,9 @@ class SectorIndustryItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(0.sp),
             child: Container(
-              padding: EdgeInsets.all(5.sp),
-              width: 43.sp,
-              height: 43.sp,
+              padding: const EdgeInsets.all(5),
+              width: 43,
+              height: 43,
               // child: ThemeImageView(
               //   url: "${data?.image}",
               // ),
@@ -86,7 +86,7 @@ class SectorIndustryItem extends StatelessWidget {
                       color: (data?.changesPercentage ?? 0) > 0
                           ? ThemeColors.accent
                           : Colors.red,
-                      size: 16.sp,
+                      size: 16,
                     ),
                     Flexible(
                       child: Text(

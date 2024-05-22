@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 //
@@ -176,7 +175,7 @@ TextStyle styleGeorgiaRegular({
   bool showSpacing = false,
 }) {
   return TextStyle(
-    fontSize: fontSize.sp,
+    fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.normal,
@@ -194,7 +193,7 @@ TextStyle styleGeorgiaBold({
   decoration,
 }) {
   return TextStyle(
-    fontSize: fontSize.sp,
+    fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.bold,
@@ -212,7 +211,7 @@ TextStyle stylePTSansRegular({
   decoration,
 }) {
   return TextStyle(
-    fontSize: fontSize.sp,
+    fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.normal,
@@ -230,7 +229,7 @@ TextStyle stylePTSansBold({
   decoration,
 }) {
   return TextStyle(
-    fontSize: fontSize.sp,
+    fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
     fontWeight: FontWeight.bold,

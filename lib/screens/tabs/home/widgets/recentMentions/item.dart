@@ -36,7 +36,7 @@ class RecentMentionsItem extends StatelessWidget {
             arguments: {"slug": data.symbol},
           ),
           child: Ink(
-            padding: EdgeInsets.symmetric(vertical: 15.sp, horizontal: 15.sp),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             width: constraints.maxWidth,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.sp),
@@ -57,12 +57,13 @@ class RecentMentionsItem extends StatelessWidget {
                 Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(5.sp),
+                        padding: EdgeInsets.all(5),
                         margin: EdgeInsets.only(right: 10.sp),
-                        width: 43.sp,
-                        height: 43.sp,
+                        width: 43,
+                        height: 43,
                         child: ThemeImageView(url: data.image ?? ""),
                       ),
                       Expanded(

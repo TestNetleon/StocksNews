@@ -131,7 +131,7 @@ class _MostRecentMentionsState extends State<MostRecentMentions> {
         // ),
         LayoutBuilder(
           builder: (context, constraints) {
-            double imageHeight = constraints.maxWidth * 0.4;
+            double imageHeight = constraints.maxWidth * 0.2;
             return CarouselSlider(
               carouselController: _carouselController,
               options: CarouselOptions(

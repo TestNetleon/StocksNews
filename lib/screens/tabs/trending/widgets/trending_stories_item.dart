@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -68,8 +67,8 @@ class TrendingStoriesItem extends StatelessWidget {
           ClipRRect(
             // borderRadius: BorderRadius.circular(Dimen.radius.r.sp),
             child: SizedBox(
-              width: ScreenUtil().screenWidth * .22,
-              height: ScreenUtil().screenWidth * .22,
+              width: 100,
+              height: 100,
               child: ThemeImageView(url: data.image ?? ""),
               // Image.network(news!.image, fit: BoxFit.cover),
             ),

@@ -153,9 +153,9 @@ class FilterInsiders extends StatelessWidget {
               Text("Transaction Type", style: stylePTSansRegular()),
               const SpacerVertical(height: 5),
               TextInputField(
-                suffix: Icon(
+                suffix: const Icon(
                   Icons.arrow_drop_down,
-                  size: 23.sp,
+                  size: 23,
                   color: ThemeColors.background,
                 ),
                 style: stylePTSansRegular(
@@ -196,9 +196,9 @@ class FilterInsiders extends StatelessWidget {
               Text("Market Cap", style: stylePTSansRegular()),
               const SpacerVertical(height: 5),
               TextInputField(
-                suffix: Icon(
+                suffix: const Icon(
                   Icons.arrow_drop_down,
-                  size: 23.sp,
+                  size: 23,
                   color: ThemeColors.background,
                 ),
                 style: stylePTSansRegular(
@@ -240,9 +240,9 @@ class FilterInsiders extends StatelessWidget {
               Text("Sector", style: stylePTSansRegular()),
               const SpacerVertical(height: 5),
               TextInputField(
-                suffix: Icon(
+                suffix: const Icon(
                   Icons.arrow_drop_down,
-                  size: 23.sp,
+                  size: 23,
                   color: ThemeColors.background,
                 ),
                 style: stylePTSansRegular(
@@ -283,9 +283,9 @@ class FilterInsiders extends StatelessWidget {
               Text("Transaction Size", style: stylePTSansRegular()),
               const SpacerVertical(height: 5),
               TextInputField(
-                suffix: Icon(
+                suffix: const Icon(
                   Icons.arrow_drop_down,
-                  size: 23.sp,
+                  size: 23,
                   color: ThemeColors.background,
                 ),
                 style: stylePTSansRegular(
@@ -314,7 +314,7 @@ class FilterInsiders extends StatelessWidget {
               ),
               const SpacerVertical(height: 5),
               TextInputField(
-                suffix: Icon(Icons.calendar_month, size: 23.sp),
+                suffix: const Icon(Icons.calendar_month, size: 23),
                 style: stylePTSansRegular(
                   fontSize: 15,
                   color: ThemeColors.background,

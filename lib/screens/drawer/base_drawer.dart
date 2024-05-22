@@ -373,9 +373,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           },
                           child: Column(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.add_alert_outlined,
-                                size: 22.sp,
+                                size: 22,
                               ),
                               const SpacerVertical(height: 5),
                               Text(
@@ -403,9 +403,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           },
                           child: Column(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star_border,
-                                size: 22.sp,
+                                size: 22,
                               ),
                               const SpacerVertical(height: 5),
                               Text(
@@ -461,9 +461,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(right: 2.sp),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.logout_outlined,
-                                        size: 20.sp,
+                                        size: 20,
                                         color: ThemeColors.sos,
                                       ),
                                     ),
@@ -550,9 +550,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                     decoration: const BoxDecoration(
                                         color: Color.fromARGB(255, 36, 36, 36),
                                         shape: BoxShape.circle),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.reviews_outlined,
-                                      size: 24.sp,
+                                      size: 24,
                                     ),
                                   ),
                                 ),
@@ -584,9 +584,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                     decoration: const BoxDecoration(
                                         color: Color.fromARGB(255, 36, 36, 36),
                                         shape: BoxShape.circle),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.ios_share_outlined,
-                                      size: 24.sp,
+                                      size: 24,
                                     ),
                                   ),
                                 ),

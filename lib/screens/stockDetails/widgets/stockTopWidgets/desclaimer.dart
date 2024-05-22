@@ -81,9 +81,9 @@ class StockDetailTopDisclaimer extends StatelessWidget {
                   visible: keyStats?.marketStatus != null,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.watch_later,
-                        size: 15.sp,
+                        size: 15,
                         color: ThemeColors.greyText,
                       ),
                       const SpacerHorizontal(width: 5),

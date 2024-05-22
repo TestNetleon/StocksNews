@@ -15,7 +15,7 @@ class LinearBarCommon extends StatelessWidget {
       animation: true,
       animationDuration: 2500,
       percent: value / 100,
-      lineHeight: !isPhone ? 14.sp : 16.sp,
+      lineHeight: !isPhone ? 14 : 16,
       barRadius: Radius.circular(5.sp),
       padding: EdgeInsets.only(right: 20.sp, top: 1.sp),
       backgroundColor: ThemeColors.greyBorder,

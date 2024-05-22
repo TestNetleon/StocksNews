@@ -69,7 +69,7 @@ class StockInBuzz extends StatelessWidget {
             const SpacerVertical(height: 10),
 
             SizedBox(
-              height: constraints.maxWidth * 0.2,
+              height: 100,
               child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -113,9 +113,9 @@ class StockBuzzItem extends StatelessWidget {
           // ),
 
           ClipRRect(
-            borderRadius: BorderRadius.circular(50.sp),
+            borderRadius: BorderRadius.circular(50),
             child: InkWell(
-              borderRadius: BorderRadius.circular(50.sp),
+              borderRadius: BorderRadius.circular(50),
               onTap: () {
                 Navigator.pushNamed(
                   context,
@@ -125,16 +125,16 @@ class StockBuzzItem extends StatelessWidget {
                 );
               },
               child: Container(
-                padding: EdgeInsets.all(20.sp),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.sp),
+                  borderRadius: BorderRadius.circular(50),
                   border: Border.all(color: ThemeColors.white),
                   // color: ThemeColors.greyBorder,
                 ),
                 child: CachedNetworkImagesWidget(
                   image,
-                  height: 43.sp,
-                  width: 43.sp,
+                  height: 43,
+                  width: 43,
                 ),
               ),
             ),
@@ -148,7 +148,7 @@ class StockBuzzItem extends StatelessWidget {
                 color: up ? ThemeColors.accent : ThemeColors.sos,
                 child: Icon(
                   up ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                  size: 20.sp,
+                  size: 20,
                 ),
               ),
             ),

@@ -32,7 +32,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
 
     return PopupMenuButton<AddType>(
       constraints: BoxConstraints.loose(Size(200.sp, 170.sp)),
-      iconSize: 20.sp,
+      iconSize: !isPhone ? 16.sp : 20.sp,
       position: PopupMenuPosition.under,
       icon: const Icon(Icons.more_vert_rounded),
       color: ThemeColors.white,
@@ -62,7 +62,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
             children: [
               Icon(
                 Icons.add_alert_outlined,
-                size: !isPhone ? 35 : 16.sp,
+                size: !isPhone ? 18 : 16,
                 color: ThemeColors.background,
               ),
               const SpacerHorizontal(width: 2),
@@ -79,7 +79,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                   padding: EdgeInsets.only(left: 2.sp),
                   child: Icon(
                     Icons.check,
-                    size: !isPhone ? 35 : 16.sp,
+                    size: !isPhone ? 18 : 16,
                     color: ThemeColors.accent,
                   ),
                 ),
@@ -109,7 +109,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
             children: [
               Icon(
                 Icons.star_border,
-                size: !isPhone ? 35 : 16.sp,
+                size: !isPhone ? 18 : 16,
                 color: ThemeColors.background,
               ),
               const SpacerHorizontal(width: 2),
@@ -124,7 +124,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                   padding: EdgeInsets.only(left: 2.sp),
                   child: Icon(
                     Icons.check,
-                    size: !isPhone ? 35 : 16.sp,
+                    size: !isPhone ? 18 : 16,
                     color: ThemeColors.accent,
                   ),
                 ),

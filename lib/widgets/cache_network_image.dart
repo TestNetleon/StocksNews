@@ -25,8 +25,8 @@ class CachedNetworkImagesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      width: width?.sp,
-      height: height?.sp,
+      width: width,
+      height: height,
       fit: fit,
       imageUrl: imagesUrl ?? "",
       placeholder: (context, url) => showLoading

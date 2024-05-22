@@ -77,7 +77,7 @@ class StocksMentions extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: mentions?[index].color,
-                  radius: 5.sp,
+                  radius: 5,
                 ),
                 const SpacerHorizontal(width: 10),
                 Expanded(

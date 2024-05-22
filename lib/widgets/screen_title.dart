@@ -67,9 +67,9 @@ class ScreenTitle extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back_ios,
-                          size: 20.sp,
+                          size: 20,
                         )),
                     Expanded(
                       child: Text(
@@ -99,12 +99,12 @@ class ScreenTitle extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: Dimen.itemSpacing.sp),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
           child: Divider(
             color: ThemeColors.accent,
-            height: 2.sp,
-            thickness: 2.sp,
+            height: 2,
+            thickness: 2,
           ),
         ),
       ],

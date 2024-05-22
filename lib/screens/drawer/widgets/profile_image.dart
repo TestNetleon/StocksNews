@@ -22,7 +22,7 @@ class ProfileImage extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: EdgeInsets.only(right: 4.sp),
+          padding: const EdgeInsets.only(right: 4),
           child: ClipOval(
             // child: ThemeImageView(
             //   url: url ?? "",
@@ -49,11 +49,11 @@ class ProfileImage extends StatelessWidget {
               decoration: const BoxDecoration(
                   shape: BoxShape.circle, color: ThemeColors.accent),
               child: Padding(
-                padding: EdgeInsets.all(4.sp),
+                padding: const EdgeInsets.all(4),
                 child: ClipOval(
                   child: Icon(
                     Icons.camera_alt,
-                    size: cameraSize.sp,
+                    size: cameraSize,
                   ),
                 ),
               ),

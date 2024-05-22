@@ -79,13 +79,15 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                                     ? ThemeColors.accent
                                     : ThemeColors.greyBorder),
                             borderRadius: BorderRadius.circular(5.sp)),
-                        child: Text(
-                          "${range?[index]}",
-                          style: styleGeorgiaRegular(
-                              fontSize: 13,
-                              color: _selectedIndex == index
-                                  ? ThemeColors.accent
-                                  : ThemeColors.white),
+                        child: Center(
+                          child: Text(
+                            "${range?[index]}",
+                            style: styleGeorgiaRegular(
+                                fontSize: 13,
+                                color: _selectedIndex == index
+                                    ? ThemeColors.accent
+                                    : ThemeColors.white),
+                          ),
                         ),
                       ),
                     );

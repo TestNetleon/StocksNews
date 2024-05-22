@@ -337,8 +337,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
                               left: 0,
                               child: Image.asset(
                                 Images.google,
-                                width: 16.sp,
-                                height: 16.sp,
+                                width: 16,
+                                height: 16,
                                 fit: BoxFit.contain,
                               ),
                             ),
@@ -399,8 +399,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
                                   left: 0,
                                   child: Image.asset(
                                     Images.apple,
-                                    width: 16.sp,
-                                    height: 16.sp,
+                                    width: 16,
+                                    height: 16,
                                     fit: BoxFit.contain,
                                     color: ThemeColors.background,
                                   ),

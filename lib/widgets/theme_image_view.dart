@@ -23,8 +23,8 @@ class ThemeImageView extends StatelessWidget {
     return Image.network(
       url,
       fit: fit,
-      height: height?.sp,
-      width: width?.sp,
+      height: height,
+      width: width,
       errorBuilder: (_, __, ___) {
         return Image.asset(
           placeholder ?? Images.placeholder,

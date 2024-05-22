@@ -40,9 +40,9 @@ class StocksItemAll extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(0.sp),
                         child: Container(
-                          padding: EdgeInsets.all(5.sp),
-                          width: 43.sp,
-                          height: 43.sp,
+                          padding: const EdgeInsets.all(5),
+                          width: 43,
+                          height: 43,
                           child: ThemeImageView(url: data?.image ?? ""),
                         ),
                       ),
@@ -112,7 +112,7 @@ class StocksItemAll extends StatelessWidget {
                                     (data?.change ?? 0) > 0
                                         ? Icons.arrow_upward
                                         : Icons.arrow_downward,
-                                    size: 15.sp,
+                                    size: 15,
                                     color: (data?.change ?? 0) > 0
                                         ? ThemeColors.accent
                                         : Colors.red,
@@ -154,7 +154,7 @@ class StocksItemAll extends StatelessWidget {
                             provider.openIndex == index
                                 ? Icons.arrow_upward_rounded
                                 : Icons.arrow_downward_rounded,
-                            size: 16.sp,
+                            size: 16,
                           ),
                         ),
                       ],

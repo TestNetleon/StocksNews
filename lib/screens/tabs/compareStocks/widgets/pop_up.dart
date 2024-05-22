@@ -107,18 +107,18 @@ class _CompareStocksPopupState extends State<CompareStocksPopup> {
                         autocorrect: false,
                         textCapitalization: TextCapitalization.sentences,
                         style: stylePTSansRegular(
-                          fontSize: 14.sp,
+                          fontSize: 14,
                           color: ThemeColors.background,
                         ),
                         decoration: InputDecoration(
                           hintText: "Search stock to compare",
                           hintStyle: stylePTSansRegular(
-                            fontSize: 14.sp,
+                            fontSize: 14,
                             color: ThemeColors.greyText,
                           ),
                           constraints: const BoxConstraints(
                             minHeight: 0,
-                            maxHeight: 50,
+                            // maxHeight: 50,
                           ),
                           contentPadding: EdgeInsets.fromLTRB(
                             10.sp,

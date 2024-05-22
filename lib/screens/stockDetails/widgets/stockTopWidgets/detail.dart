@@ -26,9 +26,9 @@ class StockDetailTopWidgetDetail extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(0.sp),
             child: Container(
-              padding: EdgeInsets.all(5.sp),
-              width: 43.sp,
-              height: 43.sp,
+              padding: const EdgeInsets.all(5),
+              width: 43,
+              height: 43,
               child: ThemeImageView(url: companyInfo?.image ?? ""),
 
               //  Image.asset(
