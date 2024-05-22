@@ -30,10 +30,13 @@ class GapUpDownStocks extends StatelessWidget {
         child: CustomTabContainerNEW(
           scrollable: false,
           tabsPadding: EdgeInsets.zero,
-          tabs: ["Gap Up Stocks", "Gap Down Stocks"],
+          tabs: [
+            "Gap Up Stocks",
+            //  "Gap Down Stocks"
+          ],
           widgets: [
             GapUpStocks(),
-            GapDownStocks(),
+            // GapDownStocks(),
           ],
         ),
       ),
