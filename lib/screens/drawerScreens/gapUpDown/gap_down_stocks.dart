@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
@@ -9,7 +8,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../../../widgets/spacer_vertical.dart';
 import '../../moreStocks/topGainerLoser/item.dart';
 
 class GapDownStocks extends StatefulWidget {

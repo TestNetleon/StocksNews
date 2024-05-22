@@ -11,6 +11,8 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../../../../widgets/cache_network_image.dart';
+
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopback, showQR, canSearch;
@@ -44,7 +46,7 @@ class _AppBarHomeState extends State<AppBarHome> {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-    // String? image = provider.user?.image;
+    String? image = provider.user?.image;
     // bool notificationSeen = provider.user?.notificationSeen == true;
     HomeProvider homeProvider = context.watch<HomeProvider>();
     // log("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
@@ -70,28 +72,28 @@ class _AppBarHomeState extends State<AppBarHome> {
                 context.read<SearchProvider>().clearSearch();
                 Scaffold.of(context).openDrawer();
               },
-              // icon: Container(
-              //   decoration: BoxDecoration(
-              //     color:
-              //         image == null || image == '' ? ThemeColors.accent : null,
-              //     borderRadius: BorderRadius.circular(30.r),
-              //   ),
-              //   padding: image == null || image == ''
-              //       ? EdgeInsets.all(3.sp)
-              //       : EdgeInsets.all(0.9.sp),
-              //   child: image == null || image == ''
-              //       ? const Icon(Icons.person)
-              //       : ClipRRect(
-              //           borderRadius: BorderRadius.circular(30.r),
-              //           child: CachedNetworkImagesWidget(image),
-              //         ),
-              // ),
-              icon: Image.asset(
-                Images.dotsMenu,
-                color: ThemeColors.white,
-                height: 18.sp,
-                width: 18.sp,
+              icon: Container(
+                decoration: BoxDecoration(
+                  color:
+                      image == null || image == '' ? ThemeColors.accent : null,
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+                padding: image == null || image == ''
+                    ? EdgeInsets.all(3.sp)
+                    : EdgeInsets.all(0.9.sp),
+                child: image == null || image == ''
+                    ? const Icon(Icons.person)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(30.r),
+                        child: CachedNetworkImagesWidget(image),
+                      ),
               ),
+              // icon: Image.asset(
+              //   Images.dotsMenu,
+              //   color: ThemeColors.white,
+              //   height: 18.sp,
+              //   width: 18.sp,
+              // ),
             ),
       centerTitle: true,
       title: GestureDetector(

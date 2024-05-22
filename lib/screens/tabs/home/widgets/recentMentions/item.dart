@@ -60,7 +60,7 @@ class RecentMentionsItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         margin: EdgeInsets.only(right: 10.sp),
                         width: 43,
                         height: 43,

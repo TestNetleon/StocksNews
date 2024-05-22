@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
@@ -83,7 +83,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const SpacerVertical(height: 14);
+                    return Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 12.sp,
+                    );
                   },
                   itemCount: gainers?.length ?? 0,
                 ),

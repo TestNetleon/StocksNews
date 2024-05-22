@@ -143,8 +143,8 @@ class _TabsState extends State<Tabs> {
     final trendingProvider = context.read<TrendingProvider>();
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
-    final newsProvider = context.read<FeaturedNewsProvider>();
-    final latestNewsProvider = context.read<NewsProvider>();
+    // final newsProvider = context.read<FeaturedNewsProvider>();
+    // final latestNewsProvider = context.read<NewsProvider>();
 
     if (Platform.isAndroid) {
       bool isVibe = await Vibration.hasVibrator() ?? false;

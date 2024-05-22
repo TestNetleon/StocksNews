@@ -56,7 +56,7 @@ class GainerLoserItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0.sp),
                   child: Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     width: 43,
                     height: 43,
                     child: ThemeImageView(url: data.image ?? ""),

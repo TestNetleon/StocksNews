@@ -38,6 +38,7 @@ import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -61,6 +62,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../providers/featured_ticker.dart';
+import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
 import '../providers/trending_industries.dart';
 import '../screens/drawerScreens/lowPriceStocks/index.dart';
@@ -91,6 +93,8 @@ class Routes {
     // StocksIndex.path: (_) => const StocksIndex(),
     IndexBlog.path: (_) => const IndexBlog(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
+    HighLowPEIndex.path: (_) => const HighLowPEIndex(),
+
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
   };
 
@@ -234,7 +238,7 @@ class Routes {
         // StocksType type = arguments["type"] as StocksType;
         return MaterialWithModalsPageRoute(
           builder: (context) {
-            return GapUpDownStocks();
+            return const GapUpDownStocks();
           },
         );
       case InsiderDetailsType.path:
@@ -300,6 +304,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewsCategoryProvider()),
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
       ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
+      ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

@@ -13,16 +13,16 @@ String lowPriceStocksResToJson(List<LowPriceStocksRes> data) =>
 
 class LowPriceStocksRes {
   // final String id;
-  final String symbol;
-  final String name;
+  final String? symbol;
+  final String? name;
   // final String exchange;
   // final String exchangeShortName;
   // final String type;
-  final String description;
+  final String? description;
   // final String sector;
-  final String image;
-  final String price;
-  final String mktCap;
+  final String? image;
+  final String? price;
+  final String? mktCap;
   // final bool twitStatus;
   // final bool redditStatus;
   // final num status;
@@ -31,8 +31,8 @@ class LowPriceStocksRes {
   // final String industry;
   // final bool sentimentStatus;
   // final bool stockNewsStatus;
-  final String change;
-  final num changesPercentage;
+  final String? change;
+  final num? changesPercentage;
   // final String? industrySlug;
   // final String? sectorSlug;
   // final String? slug;
@@ -61,16 +61,16 @@ class LowPriceStocksRes {
 
   LowPriceStocksRes({
     // required this.id,
-    required this.symbol,
-    required this.name,
+    this.symbol,
+    this.name,
     // required this.exchange,
     // required this.exchangeShortName,
     // required this.type,
-    required this.description,
+    this.description,
     // required this.sector,
-    required this.image,
-    required this.price,
-    required this.mktCap,
+    this.image,
+    this.price,
+    this.mktCap,
     // required this.twitStatus,
     // required this.redditStatus,
     // required this.status,
@@ -79,8 +79,8 @@ class LowPriceStocksRes {
     // required this.industry,
     // required this.sentimentStatus,
     // required this.stockNewsStatus,
-    required this.change,
-    required this.changesPercentage,
+    this.change,
+    this.changesPercentage,
     // this.industrySlug,
     // this.sectorSlug,
     // this.slug,
