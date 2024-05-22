@@ -85,6 +85,8 @@ class Apis {
   static const getOtherData = "/stock-other-details";
   static const newsTab = "/category-list";
   static const marketTickers = "/market-tickers";
+
+  static const gapUpStocks = "/get-up-stocks";
 }
 
 //

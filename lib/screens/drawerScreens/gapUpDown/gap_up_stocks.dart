@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
+import 'package:stocks_news_new/modals/gap_up_res.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../../moreStocks/topGainerLoser/item.dart';
 
 class GapUpStocks extends StatefulWidget {
   const GapUpStocks({super.key});
@@ -29,12 +29,12 @@ class _GapUpStocksState extends State<GapUpStocks> {
   @override
   Widget build(BuildContext context) {
     GapUpDownProvider provider = context.watch<GapUpDownProvider>();
-    // List<GainersLosersDataRes>? up = provider.gainersLosers?.data;
+    List<GapUpData>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,
-      // hasData: up != null && up.isNotEmpty,
-      hasData: true,
+      hasData: data != null && data.isNotEmpty,
+      // hasData: true,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
@@ -49,15 +49,11 @@ class _GapUpStocksState extends State<GapUpStocks> {
             top: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
-            // if (up == null || up.isEmpty) {
-            //   return const SizedBox();
-            // }
-            // return GainerLoserItem(
-            //   data: up[index],
-            //   index: index,
-            // );
-            return GainerLoserItem(
-              data: GainersLosersDataRes(symbol: "Abc", name: "name"),
+            if (data == null || data.isEmpty) {
+              return const SizedBox();
+            }
+            return UpDownStocksItem(
+              data: data[index],
               index: index,
             );
           },
