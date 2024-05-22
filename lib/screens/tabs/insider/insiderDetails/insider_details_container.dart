@@ -40,7 +40,7 @@ class InsiderCompanyContainer extends StatelessWidget {
             companySlug: companySlug ?? "",
           );
         },
-        child: RefreshControll(
+        child: RefreshControl(
           onRefresh: () async {
             provider.getData(
               showProgress: true,
@@ -50,7 +50,7 @@ class InsiderCompanyContainer extends StatelessWidget {
               companySlug: companySlug ?? "",
             );
           },
-          canLoadmore: provider.canLoadMoreCompany,
+          canLoadMore: provider.canLoadMoreCompany,
           onLoadMore: () => provider.getData(
             loadMore: true,
             companySlug: companySlug ?? "",
@@ -240,7 +240,7 @@ class InsiderReportingContainer extends StatelessWidget {
               companySlug: companySlug ?? "",
               reportingSlug: reportingSlug ?? "");
         },
-        child: RefreshControll(
+        child: RefreshControl(
           onRefresh: () async {
             provider.insiderGraphDataInsider(
                 companySlug: companySlug ?? "",
@@ -250,7 +250,7 @@ class InsiderReportingContainer extends StatelessWidget {
                 companySlug: companySlug ?? "",
                 reportingSlug: reportingSlug ?? "");
           },
-          canLoadmore: provider.canLoadMoreReporter,
+          canLoadMore: provider.canLoadMoreReporter,
           onLoadMore: () => provider.getData(
               loadMore: true,
               companySlug: companySlug ?? "",

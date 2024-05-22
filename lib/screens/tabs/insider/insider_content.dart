@@ -41,9 +41,9 @@ class _InsiderContentState extends State<InsiderContent> {
       error: provider.error,
       showPreparingText: true,
       onRefresh: () => provider.getData(showProgress: false),
-      child: RefreshControll(
+      child: RefreshControl(
         onRefresh: () => provider.getData(showProgress: false),
-        canLoadmore: provider.canLoadMore,
+        canLoadMore: provider.canLoadMore,
         onLoadMore: () => provider.getData(loadMore: true, clear: false),
         child: ListView.separated(
           itemCount: provider.data?.data.length ?? 0,

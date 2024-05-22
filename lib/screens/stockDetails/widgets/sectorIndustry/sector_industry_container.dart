@@ -20,10 +20,10 @@ class SectorIndustryList extends StatelessWidget {
   Widget build(BuildContext context) {
     SectorIndustryProvider provider = context.watch<SectorIndustryProvider>();
 
-    return RefreshControll(
+    return RefreshControl(
       onRefresh: () => provider.getStateIndustry(
           name: name, stockStates: stockStates, showProgress: true),
-      canLoadmore: provider.canLoadMore,
+      canLoadMore: provider.canLoadMore,
       onLoadMore: () => provider.getStateIndustry(
           name: name, stockStates: stockStates, loadMore: true),
       child: ListView.separated(

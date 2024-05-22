@@ -76,9 +76,9 @@ class StocksContainer extends StatelessWidget {
                     (provider.data?.isNotEmpty ?? false) &&
                     !provider.isLoading,
                 error: provider.error,
-                child: RefreshControll(
+                child: RefreshControl(
                   onRefresh: () => provider.getData(showProgress: true),
-                  canLoadmore: provider.canLoadMore,
+                  canLoadMore: provider.canLoadMore,
                   onLoadMore: () =>
                       provider.getData(loadMore: true, clear: false),
                   child: ListView.separated(

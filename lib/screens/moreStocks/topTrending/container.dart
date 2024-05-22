@@ -79,7 +79,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                 tabsPadding: EdgeInsets.symmetric(horizontal: 0.sp),
                 widgets: List.generate(
                   tabs.length,
-                  (index) => RefreshControll(
+                  (index) => RefreshControl(
                     onRefresh: () => index == 2
                         ? provider.getCapData()
                         : provider.getNowRecentlyData(
@@ -89,7 +89,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                     ? "recently"
                                     : "cap",
                           ),
-                    canLoadmore: index == 2 ? false : provider.canLoadMore,
+                    canLoadMore: index == 2 ? false : provider.canLoadMore,
                     onLoadMore: () => provider.getNowRecentlyData(
                       loadMore: true,
                       type: index == 0

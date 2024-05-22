@@ -14,9 +14,9 @@ class WatchlistContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     WatchlistProvider provider = context.watch<WatchlistProvider>();
 //
-    return RefreshControll(
+    return RefreshControl(
       onRefresh: () => provider.getData(showProgress: true),
-      canLoadmore: provider.canLoadMore,
+      canLoadMore: provider.canLoadMore,
       onLoadMore: () => provider.getData(loadMore: true),
       child: ListView.separated(
         itemCount: provider.data?.length ?? 0,

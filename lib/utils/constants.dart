@@ -10,7 +10,7 @@ enum PolicyType { tC, privacy, disclaimer, aboutUs, contactUs }
 
 enum Status { ideal, loading, loaded, loadingMore, searching, refreshing }
 
-enum StocksType { trending, gainers, losers, actives }
+enum StocksType { trending, gainers, losers, actives, gapUp, gapDown }
 
 enum StockStates { sector, industry }
 

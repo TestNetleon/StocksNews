@@ -45,9 +45,9 @@ class _NewsListState extends State<NewsList> {
       errorDispCommon: true,
       showPreparingText: true,
       onRefresh: () async => provider.getNews(showProgress: false),
-      child: RefreshControll(
+      child: RefreshControl(
         onRefresh: () async => provider.getNews(showProgress: false),
-        canLoadmore: provider.canLoadMore,
+        canLoadMore: provider.canLoadMore,
         onLoadMore: () async => provider.getNews(loadMore: true),
         child: ListView.separated(
           itemCount: data?.length ?? 0,
