@@ -34,7 +34,6 @@ class _GapUpStocksState extends State<GapUpStocks> {
     return BaseUiContainer(
       error: provider.error,
       hasData: data != null && data.isNotEmpty,
-      // hasData: true,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
