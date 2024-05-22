@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -36,7 +37,8 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.precision_manufacturing_outlined,
     text: "Gap Up/Down Stocks",
-    onTap: () {},
+    onTap: () =>
+        Navigator.pushNamed(navigatorKey.currentContext!, GapUpDownStocks.path),
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,

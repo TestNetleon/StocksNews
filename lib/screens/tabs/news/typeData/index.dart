@@ -17,9 +17,9 @@ class NewsTypeData extends StatelessWidget {
   Widget build(BuildContext context) {
     NewsCategoryProvider provider = context.watch<NewsCategoryProvider>();
 
-    return RefreshControll(
+    return RefreshControl(
       onRefresh: () async => provider.onRefresh(),
-      canLoadmore: provider.canLoadMore,
+      canLoadMore: provider.canLoadMore,
       onLoadMore: () async => provider.onLoadMore(),
       child: ListView.separated(
         itemCount: provider.data?.length ?? 0,

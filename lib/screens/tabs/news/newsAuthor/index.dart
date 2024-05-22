@@ -89,9 +89,9 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
       error: provider.error,
       errorDispCommon: true,
       onRefresh: () async => _callAPI(showProgress: true),
-      child: RefreshControll(
+      child: RefreshControl(
           onRefresh: () async => _callAPI(showProgress: true),
-          canLoadmore: provider.canLoadMore,
+          canLoadMore: provider.canLoadMore,
           onLoadMore: () async => _callAPI(loadMore: true),
           child: ListView.separated(
             itemCount: provider.data?.length ?? 0,

@@ -8,6 +8,7 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
@@ -36,6 +37,7 @@ import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -219,17 +221,22 @@ class Routes {
             );
           },
         );
-
       case GainersLosersIndex.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         StocksType type = arguments["type"] as StocksType;
-
         return MaterialWithModalsPageRoute(
           builder: (context) {
             return GainersLosersIndex(type: type);
           },
         );
-
+      case GapUpDownStocks.path:
+        // final arguments = settings.arguments as Map<String, dynamic>;
+        // StocksType type = arguments["type"] as StocksType;
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return GapUpDownStocks();
+          },
+        );
       case InsiderDetailsType.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         final companySlug = arguments['companySlug'] as String?;
@@ -292,6 +299,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TrendingIndustriesProvider()),
       ChangeNotifierProvider(create: (_) => NewsCategoryProvider()),
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
+      ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];
