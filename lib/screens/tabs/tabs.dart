@@ -62,7 +62,10 @@ class _TabsState extends State<Tabs> {
     return BottomNavigationBarItem(
       icon: Padding(
         padding: EdgeInsets.only(bottom: 3.sp),
-        child: Icon(icon),
+        child: Icon(
+          icon,
+          size: 25,
+        ),
       ),
       label: lable,
     );
@@ -108,14 +111,10 @@ class _TabsState extends State<Tabs> {
           showSelectedLabels: true,
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
-          unselectedLabelStyle: stylePTSansBold(
-            color: ThemeColors.white,
-            fontSize: 9,
-          ),
-          selectedLabelStyle: stylePTSansBold(
-            color: ThemeColors.accent,
-            fontSize: 9,
-          ),
+          unselectedLabelStyle:
+              stylePTSansBold(color: ThemeColors.white, fontSize: 12),
+          selectedLabelStyle:
+              stylePTSansBold(color: ThemeColors.accent, fontSize: 12),
           onTap: (index) {
             context.read<SearchProvider>().clearSearch();
             if (_selectedIndex != index) {

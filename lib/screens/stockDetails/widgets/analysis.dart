@@ -216,9 +216,9 @@ class PeerStockItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(0.sp),
             child: Container(
-              padding: EdgeInsets.all(5.sp),
-              width: 43.sp,
-              height: 43.sp,
+              padding: const EdgeInsets.all(5),
+              width: 43,
+              height: 43,
               child: ThemeImageView(url: data?.image ?? ""),
             ),
           ),
@@ -314,7 +314,7 @@ class AnalysisItem extends StatelessWidget {
             ],
           ),
           Container(
-            height: 10.sp,
+            height: 10,
             width: double.infinity,
             margin: EdgeInsets.only(top: 5.sp),
             decoration: BoxDecoration(
@@ -326,7 +326,7 @@ class AnalysisItem extends StatelessWidget {
               widthFactor: (value ?? 1.0) / 100,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2.sp),
+                  borderRadius: BorderRadius.circular(2),
                   color: Colors.green,
                 ),
               ),
@@ -423,8 +423,8 @@ class SentimentSeekbarItem extends StatelessWidget {
                 children: [
                   Image.asset(
                     Images.graphBear,
-                    height: 40.sp,
-                    width: 40.sp,
+                    height: 40,
+                    width: 40,
                   ),
                   Text("Bearish", style: stylePTSansRegular(fontSize: 12)),
                 ],
@@ -446,8 +446,8 @@ class SentimentSeekbarItem extends StatelessWidget {
                 children: [
                   Image.asset(
                     Images.graphBull,
-                    height: 40.sp,
-                    width: 40.sp,
+                    height: 40,
+                    width: 40,
                   ),
                   Text("Bullish", style: stylePTSansRegular(fontSize: 12)),
                 ],
@@ -476,7 +476,7 @@ class RangeIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: indicatorHeight.sp,
+      height: indicatorHeight,
       child: Stack(
         children: [
           Container(
@@ -484,7 +484,7 @@ class RangeIndicator extends StatelessWidget {
             width: width,
             margin: EdgeInsets.only(top: 5.sp),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2.r),
+              borderRadius: BorderRadius.circular(2),
               gradient: LinearGradient(
                 colors: [
                   Colors.red.withOpacity(0.7),

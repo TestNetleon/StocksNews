@@ -122,7 +122,7 @@ class _TextInputFieldSearchState extends State<TextInputFieldSearch> {
                         },
                         child: Icon(
                           Icons.search,
-                          size: isPhone ? 22 : 16.sp,
+                          size: isPhone ? 22 : 16,
                           color: ThemeColors.accent,
                         ),
                       ),

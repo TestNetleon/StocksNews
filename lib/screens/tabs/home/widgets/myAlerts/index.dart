@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -66,9 +65,9 @@ class HomeMyAlerts extends StatelessWidget {
                             style: stylePTSansBold(fontSize: 12),
                           ),
                           const SpacerHorizontal(width: 5),
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward_ios_rounded,
-                            size: 15.sp,
+                            size: 15,
                           ),
                         ],
                       ),
@@ -79,7 +78,7 @@ class HomeMyAlerts extends StatelessWidget {
             ),
             const SpacerVertical(height: 10),
             SizedBox(
-              height: constraints.maxWidth * 0.62,
+              height: 150,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -114,13 +113,13 @@ class HomeMyAlerts extends StatelessWidget {
                         GestureDetector(
                           onTap: () {},
                           child: Container(
-                            padding: EdgeInsets.all(10.sp),
+                            padding: EdgeInsets.all(10),
                             height: constraints.maxWidth * 0.60,
-                            width: 220.sp,
+                            width: 220,
                             decoration: BoxDecoration(
                               // color: const Color.fromARGB(255, 48, 48, 48),
                               // color: ThemeColors.greyBorder,
-                              borderRadius: BorderRadius.circular(10.sp),
+                              borderRadius: BorderRadius.circular(10),
                               gradient: const LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
@@ -145,7 +144,7 @@ class HomeMyAlerts extends StatelessWidget {
                                         context, StocksIndex.path);
                                   },
                                   child: Container(
-                                      padding: EdgeInsets.all(15.sp),
+                                      padding: EdgeInsets.all(15),
                                       decoration: const BoxDecoration(
                                         color: Color.fromARGB(255, 76, 76, 76),
                                         shape: BoxShape.circle,

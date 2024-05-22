@@ -34,9 +34,9 @@ class BottomSheetContainerPlain extends StatelessWidget {
               visible: showClose,
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
-                child: Align(
+                child: const Align(
                   alignment: Alignment.centerRight,
-                  child: Icon(Icons.close, size: 30.sp),
+                  child: Icon(Icons.close, size: 30),
                 ),
               ),
             ),

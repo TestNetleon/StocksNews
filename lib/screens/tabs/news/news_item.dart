@@ -224,8 +224,8 @@ class NewsItem extends StatelessWidget {
 
           CachedNetworkImagesWidget(
             news?.image ?? "",
-            width: ScreenUtil().screenWidth * .22,
-            height: ScreenUtil().screenWidth * .22,
+            width: 100,
+            height: 100,
           ),
         ],
       ),
@@ -315,7 +315,7 @@ class NewsItemSeparated extends StatelessWidget {
               // ThemeImageView(url: news?.image ?? ""),
               CachedNetworkImagesWidget(
                 news?.image,
-                height: 200.sp,
+                height: 200,
                 width: double.infinity,
               ),
               // Container(

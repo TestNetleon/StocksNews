@@ -89,10 +89,10 @@ class BlogItem extends StatelessWidget {
           ),
           const SpacerHorizontal(width: 10),
           ClipRRect(
-            borderRadius: BorderRadius.circular(Dimen.radius.r.sp),
+            borderRadius: BorderRadius.circular(Dimen.radius.r),
             child: SizedBox(
-              width: ScreenUtil().screenWidth * .22,
-              height: ScreenUtil().screenWidth * .22,
+              width: 100,
+              height: 100,
               child: ThemeImageView(url: blogItem?.image ?? ""),
               // Image.network(news!.image, fit: BoxFit.cover),
             ),

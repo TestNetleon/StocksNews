@@ -132,7 +132,7 @@ class InsidersDetailsItem extends StatelessWidget {
                               ? Icons.arrow_upward_rounded
                               : Icons.arrow_downward_rounded,
                           color: ThemeColors.background,
-                          size: 16.sp,
+                          size: 16,
                         ),
                       ),
                     ),

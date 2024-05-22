@@ -272,8 +272,8 @@ class _LoginBottomState extends State<LoginBottom> {
                           left: 0,
                           child: Image.asset(
                             Images.google,
-                            width: 16.sp,
-                            height: 16.sp,
+                            width: 16,
+                            height: 16,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -421,8 +421,8 @@ class _LoginBottomState extends State<LoginBottom> {
                               left: 0,
                               child: Image.asset(
                                 Images.apple,
-                                width: 16.sp,
-                                height: 16.sp,
+                                width: 18,
+                                height: 18,
                                 fit: BoxFit.contain,
                                 color: ThemeColors.background,
                               ),

@@ -33,7 +33,7 @@ class AlertWatchlistButton extends StatelessWidget {
           children: [
             Icon(
               iconData,
-              size: 15.sp,
+              size: 15,
             ),
             const SpacerHorizontal(width: 5),
             Text(
@@ -45,10 +45,10 @@ class AlertWatchlistButton extends StatelessWidget {
                   iconData == Icons.add_alert_outlined && name == "Alert Added",
               child: Padding(
                 padding: EdgeInsets.only(left: 2.sp),
-                child: Icon(
+                child: const Icon(
                   Icons.check,
                   color: ThemeColors.accent,
-                  size: 15.sp,
+                  size: 15,
                 ),
               ),
             ),
@@ -57,10 +57,10 @@ class AlertWatchlistButton extends StatelessWidget {
                   iconData == Icons.star_border && name == "Watchlist Added",
               child: Padding(
                 padding: EdgeInsets.only(left: 2.sp),
-                child: Icon(
+                child: const Icon(
                   Icons.check,
                   color: ThemeColors.accent,
-                  size: 15.sp,
+                  size: 15,
                 ),
               ),
             ),

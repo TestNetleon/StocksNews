@@ -9,7 +9,7 @@ class BottomSheetTick extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 45.sp,
-      height: 5.sp,
+      height: 5,
       decoration: BoxDecoration(
         color: ThemeColors.divider,
         borderRadius: BorderRadius.circular(5),

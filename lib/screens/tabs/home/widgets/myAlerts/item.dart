@@ -174,7 +174,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
   Widget build(BuildContext context) {
     return Container(
       // height: 400,
-      width: 220.sp,
+      width: 220,
 
       decoration: BoxDecoration(
         // color: const Color.fromARGB(255, 48, 48, 48),
@@ -194,7 +194,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(10.sp),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -202,8 +202,8 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                   children: [
                     CachedNetworkImagesWidget(
                       widget.data.image,
-                      height: 40.sp,
-                      width: 40.sp,
+                      height: 40,
+                      width: 40,
                     ),
                     const SpacerHorizontal(width: 8),
                     Flexible(
@@ -271,8 +271,8 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                     bottomRight: Radius.circular(10.sp),
                   ),
                   child: Container(
-                    padding: EdgeInsets.only(top: 10.sp, bottom: 15.sp),
-                    height: 88.sp,
+                    padding: const EdgeInsets.only(top: 10, bottom: 15),
+                    height: 88,
                     child: LineChart(
                       avgData(),
                     ),

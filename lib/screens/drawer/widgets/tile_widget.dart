@@ -49,7 +49,7 @@ class DrawerTileWidget extends StatelessWidget {
                         padding: EdgeInsets.only(right: 2.sp),
                         child: Icon(
                           drawerItems[index].iconData,
-                          size: 20.sp,
+                          size: 20,
                         ),
                       ),
                       Positioned(

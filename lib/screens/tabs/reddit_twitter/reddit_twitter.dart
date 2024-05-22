@@ -153,7 +153,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                                 provider.socialSentimentRes?.data.length ?? 0,
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: EdgeInsets.only(top: 12.sp),
+                            padding: const EdgeInsets.only(top: 12),
                             itemBuilder: (context, index) {
                               SocialSentimentItemRes? data =
                                   provider.socialSentimentRes?.data[index];
@@ -173,9 +173,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
                               );
                             },
                           ),
-                Divider(
+                const Divider(
                   color: ThemeColors.greyBorder,
-                  height: 40.sp,
+                  height: 40,
                 ),
                 // Text(
                 //   "Most Recent Mentions",

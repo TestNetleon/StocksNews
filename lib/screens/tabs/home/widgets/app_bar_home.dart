@@ -108,7 +108,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                     context, Tabs.path, (route) => false);
               },
         child: Container(
-          width: MediaQuery.of(context).size.width * .45,
+          width: MediaQuery.of(context).size.width * .40,
           constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
           child: Image.asset(
             Images.logo,
@@ -173,8 +173,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                     child: Positioned(
                       right: 13.sp,
                       top: 14.sp,
-                      child: CircleAvatar(
-                        radius: 4.sp,
+                      child: const CircleAvatar(
+                        radius: 4,
                         backgroundColor: ThemeColors.sos,
                       ),
                     ),

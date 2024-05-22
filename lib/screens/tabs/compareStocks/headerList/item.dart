@@ -38,9 +38,9 @@ class HeaderItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(5.sp),
-                    width: 43.sp,
-                    height: 43.sp,
+                    padding: const EdgeInsets.all(5),
+                    width: 43,
+                    height: 43,
                     child: ThemeImageView(url: company?.image ?? ""),
                   ),
                   const SpacerVertical(height: 5),

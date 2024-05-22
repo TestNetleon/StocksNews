@@ -32,9 +32,9 @@ class SocialSentimentMentions extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(0.sp),
                 child: Container(
-                  padding: EdgeInsets.all(5.sp),
-                  width: 43.sp,
-                  height: 43.sp,
+                  padding: const EdgeInsets.all(5),
+                  width: 43,
+                  height: 43,
                   child: ThemeImageView(url: data.image ?? ""),
                 ),
               ),
@@ -81,7 +81,7 @@ class SocialSentimentMentions extends StatelessWidget {
                           (data.change ?? 0) > 0
                               ? Icons.arrow_upward
                               : Icons.arrow_downward,
-                          size: 14.sp,
+                          size: 14,
                           color: (data.change ?? 0) > 0
                               ? ThemeColors.accent
                               : Colors.red,

@@ -55,8 +55,8 @@ class StocksInFocusItem extends StatelessWidget {
               children: [
                 CachedNetworkImagesWidget(
                   focusRes?.image,
-                  height: 40.sp,
-                  width: 40.sp,
+                  height: 40,
+                  width: 40,
                 ),
                 const SpacerHorizontal(width: 8),
                 Expanded(

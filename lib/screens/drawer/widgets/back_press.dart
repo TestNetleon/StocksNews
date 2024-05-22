@@ -30,9 +30,9 @@ class DrawerBackpress extends StatelessWidget {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 13.sp, vertical: 10.sp),
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_rounded,
-            size: 12.sp,
+            size: 14,
           ),
         ),
       ),

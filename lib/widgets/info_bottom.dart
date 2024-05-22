@@ -30,9 +30,9 @@ class InfoBottomSheet extends StatelessWidget {
 
     return InkWell(
       onTap: () => _showBottomSheet(text: text),
-      child: Icon(
+      child: const Icon(
         Icons.info_rounded,
-        size: 25.sp,
+        size: 25,
       ),
     );
   }

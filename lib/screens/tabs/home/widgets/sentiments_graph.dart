@@ -66,13 +66,13 @@ class SentimentsGraph extends StatelessWidget {
           LayoutBuilder(
             builder: (context, constraints) => Container(
               padding: const EdgeInsets.all(0),
-              height: constraints.maxWidth / 1.4, // WORKAROUND
+              height: constraints.maxWidth / 1.6,
               child: Stack(
                 children: [
                   Positioned(
                     left: 0,
                     right: 0,
-                    top: 12.sp,
+                    top: 12,
                     child: Text(
                       "Neutral",
                       style: stylePTSansRegular(fontSize: 18),
@@ -151,7 +151,7 @@ class SentimentsGraph extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 14.sp,
+                    bottom: 14,
                     left: 0,
                     right: 0,
                     child: Row(
