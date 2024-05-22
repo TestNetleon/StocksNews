@@ -8,8 +8,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+// import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class Search extends StatefulWidget {

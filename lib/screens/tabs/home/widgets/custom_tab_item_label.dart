@@ -136,7 +136,10 @@ class CutomTabHome extends StatelessWidget {
           decoration: BoxDecoration(
             border: selected
                 ? Border(
-                    bottom: BorderSide(color: ThemeColors.accent, width: 1.sp),
+                    bottom: BorderSide(
+                      color: ThemeColors.accent,
+                      width: 1.sp,
+                    ),
                   )
                 : null,
           ),

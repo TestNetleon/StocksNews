@@ -6,21 +6,21 @@ List<DrawerRes> marketData = [
     iconData: Icons.calendar_month_outlined,
     text: "Calendar",
   ),
-  DrawerRes(
-    iconData: Icons.data_exploration_outlined,
-    text: "Commodities",
-  ),
-  DrawerRes(
-    iconData: Icons.currency_bitcoin,
-    text: "Crypto",
-  ),
-  DrawerRes(
-    iconData: Icons.currency_yen_outlined,
-    text: "Currencies",
-  ),
+  // DrawerRes(
+  //   iconData: Icons.data_exploration_outlined,
+  //   text: "Commodities",
+  // ),
+  // DrawerRes(
+  //   iconData: Icons.currency_bitcoin,
+  //   text: "Crypto",
+  // ),
+  // DrawerRes(
+  //   iconData: Icons.currency_yen_outlined,
+  //   text: "Currencies",
+  // ),
   DrawerRes(
     iconData: Icons.precision_manufacturing_outlined,
-    text: "Gainers & Decliners",
+    text: "Gainers & Losers",
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
@@ -28,7 +28,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
-    text: "Highs & Lows",
+    text: "52 Weeks",
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
@@ -46,22 +46,22 @@ List<DrawerRes> marketData = [
     iconData: Icons.mode_standby_sharp,
     text: "Most Active",
   ),
-  DrawerRes(
-    iconData: Icons.bar_chart_sharp,
-    text: "Options",
-  ),
+  // DrawerRes(
+  //   iconData: Icons.bar_chart_sharp,
+  //   text: "Options",
+  // ),
   DrawerRes(
     iconData: Icons.stacked_line_chart_outlined,
     text: "Penny Stocks",
   ),
-  DrawerRes(
-    iconData: Icons.settings_input_composite_rounded,
-    text: "Sector Performance",
-  ),
-  DrawerRes(
-    iconData: Icons.interests_outlined,
-    text: "Short Interest",
-  ),
+  // DrawerRes(
+  //   iconData: Icons.settings_input_composite_rounded,
+  //   text: "Sector Performance",
+  // ),
+  // DrawerRes(
+  //   iconData: Icons.interests_outlined,
+  //   text: "Short Interest",
+  // ),
   DrawerRes(
     iconData: Icons.content_paste_go_rounded,
     text: "Congressional Data",

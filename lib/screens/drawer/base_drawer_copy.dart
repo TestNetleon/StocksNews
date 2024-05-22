@@ -1,260 +1,260 @@
-// // import 'package:flutter/gestures.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:package_info_plus/package_info_plus.dart';
-// import 'package:stocks_news_new/screens/drawer/widgets/drawer_more_service.dart';
-// import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
-// import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
-// import 'package:stocks_news_new/utils/colors.dart';
-// import 'package:stocks_news_new/utils/constants.dart';
-// import 'package:stocks_news_new/utils/theme.dart';
+// import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:stocks_news_new/utils/utils.dart';
-// // import 'package:stocks_news_new/utils/utils.dart';
-// import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-// // import '../../utils/constants.dart';
-// import '../../widgets/custom_gridview.dart';
-// import '../../widgets/theme_button_small.dart';
-// import 'widgets/drawer_lists.dart';
-// // import '../t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+// import '../../utils/constants.dart';
+import '../../widgets/custom_gridview.dart';
+import '../../widgets/theme_button_small.dart';
+import 'widgets/drawer_lists.dart';
+// import '../t&cAndPolicy/tc_policy.dart';
 
-// class BaseDrawer extends StatefulWidget {
-//   final bool resetIndex;
-//   const BaseDrawer({super.key, this.resetIndex = false});
+class BaseDrawer extends StatefulWidget {
+  final bool resetIndex;
+  const BaseDrawer({super.key, this.resetIndex = false});
 
-//   @override
-//   State<BaseDrawer> createState() => _BaseDrawerState();
-// }
+  @override
+  State<BaseDrawer> createState() => _BaseDrawerState();
+}
 
-// class _BaseDrawerState extends State<BaseDrawer> {
-//   String? version;
-//   bool showMore = false;
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _getData();
-//     });
-//   }
+class _BaseDrawerState extends State<BaseDrawer> {
+  String? version;
+  bool showMore = false;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getData();
+    });
+  }
 
-//   void _getData() async {
-//     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-//     version = packageInfo.version;
-//     setState(() {});
-//   }
+  void _getData() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
+    setState(() {});
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Drawer(
-//         backgroundColor: ThemeColors.background,
-//         child: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//               const DrawerTopNew(),
-//               Padding(
-//                 padding:
-//                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5.sp),
-//                 child: SingleChildScrollView(
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       // const SpacerVertical(height: 30),
-//                       Text(
-//                         "Welcome to stocks.news",
-//                         style: stylePTSansBold(fontSize: 20),
-//                       ),
-//                       Padding(
-//                         padding: EdgeInsets.only(
-//                           top: 5.sp,
-//                         ),
-//                         child: Text(
-//                           "Dynamic description to print",
-//                           style: stylePTSansRegular(
-//                               fontSize: 13, color: ThemeColors.greyText),
-//                         ),
-//                       ),
-//                       const SpacerVertical(height: 20),
-//                       Row(
-//                         children: [
-//                           Expanded(
-//                             child: ThemeButtonSmall(
-//                               text: "Log in",
-//                               onPressed: () {},
-//                             ),
-//                           ),
-//                           const SpacerHorizontal(width: 10),
-//                           Expanded(
-//                             child: ThemeButtonSmall(
-//                               text: "Sign up",
-//                               onPressed: () {},
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                       Divider(color: ThemeColors.greyBorder, height: 20.sp),
-//                       Text(
-//                         "Market Data",
-//                         style: stylePTSansBold(),
-//                       ),
-//                       CustomGridViewPerChild(
-//                         paddingHorizontal: 5,
-//                         paddingVertical: 25,
-//                         childrenPerRow: 3,
-//                         length: marketData.length,
-//                         getChild: (index) {
-//                           return GestureDetector(
-//                             onTap: () {},
-//                             child: DrawerNewWidget(
-//                               icon: marketData[index].iconData,
-//                               text: marketData[index].text,
-//                             ),
-//                           );
-//                         },
-//                       ),
+  @override
+  Widget build(BuildContext context) {
+    HomeProvider provider = context.watch<HomeProvider>();
+    return SafeArea(
+      child: Drawer(
+        backgroundColor: ThemeColors.background,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const DrawerTopNew(),
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5.sp),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // const SpacerVertical(height: 30),
+                      Text(
+                        "Welcome to stocks.news",
+                        style: stylePTSansBold(fontSize: 20),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 5.sp,
+                        ),
+                        child: Text(
+                          "${provider.homeSliderRes?.text.drawerHeader}",
+                          style: stylePTSansRegular(
+                              fontSize: 13, color: ThemeColors.greyText),
+                        ),
+                      ),
+                      const SpacerVertical(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ThemeButtonSmall(
+                              text: "Log in",
+                              onPressed: () {},
+                            ),
+                          ),
+                          const SpacerHorizontal(width: 10),
+                          Expanded(
+                            child: ThemeButtonSmall(
+                              text: "Sign up",
+                              onPressed: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(color: ThemeColors.greyBorder, height: 20.sp),
+                      Text(
+                        "Market Data",
+                        style: stylePTSansBold(),
+                      ),
+                      CustomGridViewPerChild(
+                        paddingHorizontal: 5,
+                        paddingVertical: 25,
+                        childrenPerRow: 3,
+                        length: marketData.length,
+                        getChild: (index) {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: DrawerNewWidget(
+                              icon: marketData[index].iconData,
+                              text: marketData[index].text,
+                            ),
+                          );
+                        },
+                      ),
 
-//                       Align(
-//                         alignment: Alignment.center,
-//                         child: InkWell(
-//                           borderRadius: BorderRadius.circular(20.sp),
-//                           onTap: () {
-//                             easeOutBuilder(context,
-//                                 child: const DrawerMoreService());
-//                           },
-//                           child: Ink(
-//                             padding: EdgeInsets.symmetric(
-//                                 horizontal: 10.sp, vertical: 5.sp),
-//                             decoration: BoxDecoration(
-//                                 color: ThemeColors.greyBorder.withOpacity(0.3),
-//                                 borderRadius: BorderRadius.circular(20.sp),
-//                                 border:
-//                                     Border.all(color: ThemeColors.greyBorder)),
-//                             child: Text(
-//                               "More services",
-//                               style: stylePTSansRegular(
-//                                   fontSize: 12, color: ThemeColors.white),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                       const SpacerVertical(height: 20),
-//                       GestureDetector(
-//                         onTap: () {},
-//                         child: Row(
-//                           children: [
-//                             Image.asset(
-//                               Images.info,
-//                               height: 16.sp,
-//                               width: 16.sp,
-//                               color: ThemeColors.white,
-//                             ),
-//                             const SpacerHorizontal(width: 8),
-//                             Text(
-//                               "About stocks.news",
-//                               style: stylePTSansRegular(fontSize: 13),
-//                             ),
-//                           ],
-//                         ),
-//                       )
+                      // Align(
+                      //   alignment: Alignment.center,
+                      //   child: InkWell(
+                      //     borderRadius: BorderRadius.circular(20.sp),
+                      //     onTap: () {
+                      //       easeOutBuilder(context,
+                      //           child: const DrawerMoreService());
+                      //     },
+                      //     child: Ink(
+                      //       padding: EdgeInsets.symmetric(
+                      //           horizontal: 10.sp, vertical: 5.sp),
+                      //       decoration: BoxDecoration(
+                      //           color: ThemeColors.greyBorder.withOpacity(0.3),
+                      //           borderRadius: BorderRadius.circular(20.sp),
+                      //           border:
+                      //               Border.all(color: ThemeColors.greyBorder)),
+                      //       child: Text(
+                      //         "More services",
+                      //         style: stylePTSansRegular(
+                      //             fontSize: 12, color: ThemeColors.white),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      const SpacerVertical(height: 20),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              Images.info,
+                              height: 16.sp,
+                              width: 16.sp,
+                              color: ThemeColors.white,
+                            ),
+                            const SpacerHorizontal(width: 8),
+                            Text(
+                              "About stocks.news",
+                              style: stylePTSansRegular(fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      )
 
-//                       // Divider(
-//                       //   color: ThemeColors.greyBorder,
-//                       //   height: 20.sp,
-//                       // ),
-//                       // Align(
-//                       //   alignment: Alignment.center,
-//                       //   child: RichText(
-//                       //     textAlign: TextAlign.center,
-//                       //     text: TextSpan(
-//                       //       children: [
-//                       //         TextSpan(
-//                       //             text: 'Disclaimer,',
-//                       //             recognizer: TapGestureRecognizer()
-//                       //               ..onTap = () {
-//                       //                 Scaffold.of(context).closeDrawer();
-//                       //                 Navigator.push(
-//                       //                   context,
-//                       //                   createRoute(
-//                       //                     const TCandPolicy(
-//                       //                       policyType: PolicyType.disclaimer,
-//                       //                     ),
-//                       //                   ),
-//                       //                 );
-//                       //               },
-//                       //             style: stylePTSansRegular(fontSize: 13)),
-//                       //         TextSpan(
-//                       //             text: ' Privacy Policy ',
-//                       //             recognizer: TapGestureRecognizer()
-//                       //               ..onTap = () {
-//                       //                 Scaffold.of(context).closeDrawer();
-//                       //                 Navigator.push(
-//                       //                   context,
-//                       //                   createRoute(
-//                       //                     const TCandPolicy(
-//                       //                       policyType: PolicyType.privacy,
-//                       //                     ),
-//                       //                   ),
-//                       //                 );
-//                       //               },
-//                       //             style: stylePTSansRegular(fontSize: 13)),
-//                       //         TextSpan(
-//                       //             text: 'and',
-//                       //             style: stylePTSansRegular(
-//                       //                 fontSize: 13, color: ThemeColors.greyText)),
-//                       //         TextSpan(
-//                       //             text: ' Terms of Service',
-//                       //             recognizer: TapGestureRecognizer()
-//                       //               ..onTap = () {
-//                       //                 Scaffold.of(context).closeDrawer();
-//                       //                 Navigator.push(
-//                       //                   context,
-//                       //                   createRoute(
-//                       //                     const TCandPolicy(
-//                       //                       policyType: PolicyType.tC,
-//                       //                     ),
-//                       //                   ),
-//                       //                 );
-//                       //               },
-//                       //             style: stylePTSansRegular(fontSize: 13)),
-//                       //       ],
-//                       //       recognizer: TapGestureRecognizer()
-//                       //         ..onTap = () {
-//                       //           Scaffold.of(context).closeDrawer();
-//                       //           Navigator.push(
-//                       //             context,
-//                       //             createRoute(
-//                       //               const TCandPolicy(
-//                       //                 policyType: PolicyType.privacy,
-//                       //               ),
-//                       //             ),
-//                       //           );
-//                       //         },
-//                       //       text: "Read our ",
-//                       //       style: stylePTSansRegular(
-//                       //           fontSize: 13, color: ThemeColors.greyText),
-//                       //     ),
-//                       //   ),
-//                       // ),
-//                       // const SpacerVertical(height: 10),
-//                       // Align(
-//                       //   alignment: Alignment.center,
-//                       //   child: Text(
-//                       //     "App Version: $version",
-//                       //     style: stylePTSansRegular(
-//                       //       fontSize: 13,
-//                       //       color: ThemeColors.greyText,
-//                       //     ),
-//                       //   ),
-//                       // ),
-//                     ],
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+                      // Divider(
+                      //   color: ThemeColors.greyBorder,
+                      //   height: 20.sp,
+                      // ),
+                      // Align(
+                      //   alignment: Alignment.center,
+                      //   child: RichText(
+                      //     textAlign: TextAlign.center,
+                      //     text: TextSpan(
+                      //       children: [
+                      //         TextSpan(
+                      //             text: 'Disclaimer,',
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 Scaffold.of(context).closeDrawer();
+                      //                 Navigator.push(
+                      //                   context,
+                      //                   createRoute(
+                      //                     const TCandPolicy(
+                      //                       policyType: PolicyType.disclaimer,
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //               },
+                      //             style: stylePTSansRegular(fontSize: 13)),
+                      //         TextSpan(
+                      //             text: ' Privacy Policy ',
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 Scaffold.of(context).closeDrawer();
+                      //                 Navigator.push(
+                      //                   context,
+                      //                   createRoute(
+                      //                     const TCandPolicy(
+                      //                       policyType: PolicyType.privacy,
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //               },
+                      //             style: stylePTSansRegular(fontSize: 13)),
+                      //         TextSpan(
+                      //             text: 'and',
+                      //             style: stylePTSansRegular(
+                      //                 fontSize: 13, color: ThemeColors.greyText)),
+                      //         TextSpan(
+                      //             text: ' Terms of Service',
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 Scaffold.of(context).closeDrawer();
+                      //                 Navigator.push(
+                      //                   context,
+                      //                   createRoute(
+                      //                     const TCandPolicy(
+                      //                       policyType: PolicyType.tC,
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //               },
+                      //             style: stylePTSansRegular(fontSize: 13)),
+                      //       ],
+                      //       recognizer: TapGestureRecognizer()
+                      //         ..onTap = () {
+                      //           Scaffold.of(context).closeDrawer();
+                      //           Navigator.push(
+                      //             context,
+                      //             createRoute(
+                      //               const TCandPolicy(
+                      //                 policyType: PolicyType.privacy,
+                      //               ),
+                      //             ),
+                      //           );
+                      //         },
+                      //       text: "Read our ",
+                      //       style: stylePTSansRegular(
+                      //           fontSize: 13, color: ThemeColors.greyText),
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SpacerVertical(height: 10),
+                      // Align(
+                      //   alignment: Alignment.center,
+                      //   child: Text(
+                      //     "App Version: $version",
+                      //     style: stylePTSansRegular(
+                      //       fontSize: 13,
+                      //       color: ThemeColors.greyText,
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
