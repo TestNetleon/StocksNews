@@ -56,6 +56,7 @@ class Images {
   static const String alertTickGIF = "assets/images/alert_tick.gif";
   static const String alertPopGIF = "assets/images/alerts_GIF.gif";
   static const String otpSuccessGIT = "assets/images/otp_success.gif";
+  static const String updateGIF = "assets/images/update.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

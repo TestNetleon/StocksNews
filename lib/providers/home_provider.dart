@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:isolate';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -20,6 +23,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/widgets/app_update_content.dart';
 
 class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
@@ -269,15 +273,14 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
       );
-
       if (response.status) {
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
-        // UserProvider provider =
-        //     navigatorKey.currentContext!.read<UserProvider>();
-        notificationSeen = response.extra?.notificationCount == 0;
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
-
+        if (response.extra != null && response.extra is Extra) {
+          notificationSeen = (response.extra as Extra).notificationCount == 0;
+          _checkForNewVersion(response.extra as Extra);
+        }
         notifyListeners();
       } else {
         _homeSliderRes = null;
@@ -407,4 +410,68 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   //     );
   //   }
   // }
+
+  void _checkForNewVersion(Extra extra) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    // String versionName = packageInfo.version;
+    String buildCode = packageInfo.buildNumber;
+
+    if (Platform.isAndroid &&
+        (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
+      _showUpdateDialog(extra);
+    } else if (Platform.isIOS &&
+        (extra.iOSBuildCode ?? 0) > int.parse(buildCode)) {
+      _showUpdateDialog(extra);
+    }
+  }
+
+  void _showUpdateDialog(Extra extra) {
+    showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                opacity: a1.value,
+                child: Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    Dialog(
+                      insetPadding: EdgeInsets.symmetric(
+                        horizontal:
+                            ScreenUtil().screenWidth * (isPhone ? .1 : .2),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      child: AppUpdateContent(extra: extra),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 200),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: navigatorKey.currentContext!,
+      pageBuilder: (context, animation1, animation2) {
+        return const SizedBox();
+      },
+    );
+  }
 }
