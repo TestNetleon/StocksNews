@@ -95,7 +95,6 @@ class BlogDetailContainer extends StatelessWidget {
                           // ),
 
                           SpacerVertical(height: Dimen.itemSpacing.sp),
-
                           // const BlogDetailAuthor(),
                           // const SpacerVertical(height: 5),
                           // const BlogDetailCategory(),
@@ -103,8 +102,10 @@ class BlogDetailContainer extends StatelessWidget {
                           // const BlogDetailTags(),
                           HtmlWidget(
                             provider.blogsDetail?.description ?? "",
-                            textStyle:
-                                styleGeorgiaRegular(fontSize: 14, height: 1.5),
+                            textStyle: styleGeorgiaRegular(
+                              fontSize: 14,
+                              height: 1.5,
+                            ),
                           ),
                           const SpacerVertical(height: 10),
                         ],

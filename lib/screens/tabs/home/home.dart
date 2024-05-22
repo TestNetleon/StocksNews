@@ -20,24 +20,12 @@ class Home extends StatelessWidget {
     );
 
     return BaseContainer(
-      // drawer: const BaseDrawer(),
-      // // appBar: AppBarHome(showQR: userProvider.user != null, isHome: true),
-      // appBar: const AppBarHome(
-      //   isHome: true,
-      //   canSearch: true,
-      // ),
-      body: provider.isLoadingSlider
-          ? const Loading()
-          :
-          // provider.data != null
-          //     ?
-          const HomeContainer()
-      // :
-      // ErrorDisplayWidget(
-      //     error: provider.error,
-      //     onRefresh: provider.getHomeData,
-      //   )
-      ,
+      // body: provider.isLoadingSlider ? const Loading() : const HomeContainer(),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        child:
+            provider.isLoadingSlider ? const Loading() : const HomeContainer(),
+      ),
     );
   }
 }

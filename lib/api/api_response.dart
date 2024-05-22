@@ -61,6 +61,12 @@ class Extra {
   final TextRes? text;
   final int? userAlert;
   final InAppNotification? inAppMsg;
+  final String? androidBuildVersion;
+  final int? androidBuildCode;
+  final String? iOSBuildVersion;
+  final int? iOSBuildCode;
+  final String? appUpdateTitle;
+  final String? appUpdateMsg;
 
   Extra({
     this.search,
@@ -74,6 +80,12 @@ class Extra {
     this.txnSize,
     this.userAlert,
     this.inAppMsg,
+    this.androidBuildVersion,
+    this.androidBuildCode,
+    this.iOSBuildVersion,
+    this.iOSBuildCode,
+    this.appUpdateTitle,
+    this.appUpdateMsg,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -108,6 +120,12 @@ class Extra {
         inAppMsg: json["in_app_notification"] == null
             ? null
             : InAppNotification.fromJson(json["in_app_notification"]),
+        androidBuildVersion: json["android_build_version"],
+        androidBuildCode: json["android_build_code"],
+        iOSBuildVersion: json["ios_build_version"],
+        iOSBuildCode: json["ios_build_code"],
+        appUpdateTitle: json["app_update_title"],
+        appUpdateMsg: json["app_update_msg"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -133,6 +151,12 @@ class Extra {
         "notification_count": notificationCount,
         "text": text?.toJson(),
         "in_app_notification": inAppMsg?.toJson(),
+        "android_build_version": androidBuildVersion,
+        "android_build_code": androidBuildCode,
+        "ios_build_version": iOSBuildVersion,
+        "ios_build_code": iOSBuildCode,
+        "app_update_title": appUpdateTitle,
+        "app_update_msg": appUpdateMsg,
       };
 }
 

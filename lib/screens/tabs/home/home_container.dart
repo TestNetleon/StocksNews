@@ -52,7 +52,6 @@ class HomeContainer extends StatelessWidget {
                       provider.homeSliderRes?.sliderPosts?.isNotEmpty ?? false,
                   child: const HomeTopNewsSlider(),
                 ),
-
                 Padding(
                   padding: EdgeInsets.fromLTRB(
                     Dimen.padding.sp,
