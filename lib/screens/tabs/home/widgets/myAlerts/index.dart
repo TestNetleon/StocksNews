@@ -113,7 +113,7 @@ class HomeMyAlerts extends StatelessWidget {
                         GestureDetector(
                           onTap: () {},
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             height: constraints.maxWidth * 0.60,
                             width: 220,
                             decoration: BoxDecoration(
@@ -144,7 +144,7 @@ class HomeMyAlerts extends StatelessWidget {
                                         context, StocksIndex.path);
                                   },
                                   child: Container(
-                                      padding: EdgeInsets.all(15),
+                                      padding: const EdgeInsets.all(15),
                                       decoration: const BoxDecoration(
                                         color: Color.fromARGB(255, 76, 76, 76),
                                         shape: BoxShape.circle,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -47,7 +46,7 @@ class LowPriceStocksItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    "${data.pe}",
+                    "${data.pe ?? "N/A"}",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -67,7 +66,7 @@ class LowPriceStocksItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    data.mktCap,
+                    data.mktCap ?? "N/A",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -87,7 +86,7 @@ class LowPriceStocksItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    "${data.avgVolume}",
+                    data.avgVolume ?? "N/A",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -107,7 +106,7 @@ class LowPriceStocksItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    "${data.consensusRating}",
+                    data.consensusRating ?? "N/A",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -139,7 +138,7 @@ class LowPriceStocksItem extends StatelessWidget {
             ),
             ReadMoreText(
               textAlign: TextAlign.start,
-              data.description,
+              data.description ?? "",
               trimLines: 5,
               colorClickableText: ThemeColors.accent,
               trimMode: TrimMode.Line,
@@ -184,14 +183,14 @@ class LowPriceStocksItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data.symbol,
+                  data.symbol ?? "",
                   style: stylePTSansBold(fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  data.name,
+                  data.name ?? "",
                   style: stylePTSansRegular(
                     color: ThemeColors.greyText,
                     fontSize: 12,
@@ -208,17 +207,17 @@ class LowPriceStocksItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  data.price,
+                  data.price ?? "",
                   style: stylePTSansBold(fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "${data.change} (${data.changesPercentage.toCurrency()}%)",
+                  "${data.change} (${data.changesPercentage?.toCurrency()}%)",
                   style: stylePTSansRegular(
                     fontSize: 12,
-                    color: (data.changesPercentage) > 0
+                    color: (data.changesPercentage ?? 0) > 0
                         ? ThemeColors.accent
                         : Colors.red,
                   ),

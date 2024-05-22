@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
@@ -13,9 +12,9 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../../utils/colors.dart';
 import 'item.dart';
 
 //
@@ -98,7 +97,10 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 14);
+                      return Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 12.sp,
+                      );
                     },
                     itemCount: data?.length ?? 0,
                   ),
