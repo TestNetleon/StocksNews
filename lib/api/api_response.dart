@@ -67,6 +67,8 @@ class Extra {
   final int? iOSBuildCode;
   final String? appUpdateTitle;
   final String? appUpdateMsg;
+  final String? title;
+  final String? subTitle;
 
   Extra({
     this.search,
@@ -77,8 +79,10 @@ class Extra {
     this.sector,
     this.notificationCount,
     this.text,
+    this.title,
     this.txnSize,
     this.userAlert,
+    this.subTitle,
     this.inAppMsg,
     this.androidBuildVersion,
     this.androidBuildCode,
@@ -92,6 +96,8 @@ class Extra {
         search: json["search"],
         userAlert: json["user_alerts"],
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
+        title: json["title"],
+        subTitle: json["sub_title"],
         exchangeShortName: json["exchange_short_name"] == null
             ? []
             : List<KeyValueElement>.from(json["exchange_short_name"]!
@@ -131,6 +137,8 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "search": search,
         "user_alerts": userAlert,
+        "title": title,
+        "sub_title": subTitle,
         "exchange_short_name": exchangeShortName == null
             ? []
             : List<dynamic>.from(exchangeShortName!.map((x) => x.toJson())),

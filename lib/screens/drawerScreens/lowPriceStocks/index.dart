@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -29,6 +31,7 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<LowPriceStocksProvider>().selectedIndex = 0;
       context.read<LowPriceStocksProvider>().getTabsData(showProgress: true);
     });
   }
@@ -82,45 +85,70 @@ class LowPriceStocksData extends StatelessWidget {
 
     return Expanded(
       child: CustomTabContainerNEW(
+        onChange: (index) {
+          provider.tabChange(index);
+        },
         scrollable: true,
         tabsPadding: EdgeInsets.only(bottom: 10.sp),
         tabs:
             List.generate(tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
         widgets: List.generate(
           tabs?.length ?? 0,
-          (index) => SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Best Stocks Under \$2 Right Now",
-                  style: stylePTSansBold(fontSize: 13),
-                ),
-                const SpacerVertical(height: 5),
-                Text(
-                  "It can be difficult to find a deal in the stock  wa handful of undervalued stocks in corners of the market that most investors ignore. This page lists",
-                  style: stylePTSansRegular(
-                      color: ThemeColors.greyText, fontSize: 12),
-                ),
-                const SpacerVertical(height: 5),
-                ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(vertical: 10.sp),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return const LowPriceStocksItem();
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 16,
-                    );
-                  },
-                  itemCount: 20,
-                ),
-              ],
-            ),
+          (index) => _getWidgets(provider),
+        ),
+      ),
+    );
+  }
+
+  Widget _getWidgets(LowPriceStocksProvider provider) {
+    return BaseUiContainer(
+      error: provider.error,
+      hasData: !provider.isLoading && provider.data != null,
+      isLoading: provider.isLoading,
+      showPreparingText: true,
+      onRefresh: () {
+        provider.getLowPriceData(showProgress: false);
+      },
+      child: RefreshIndicator(
+        onRefresh: () async {
+          provider.getLowPriceData(showProgress: false);
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                provider.title ?? "",
+                style: stylePTSansBold(fontSize: 13),
+              ),
+              const SpacerVertical(height: 5),
+              Text(
+                provider.subTitle ?? "",
+                style: stylePTSansRegular(
+                    color: ThemeColors.greyText, fontSize: 12),
+              ),
+              const SpacerVertical(height: 5),
+              ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(vertical: 10.sp),
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  LowPriceStocksRes? data = provider.data?[index];
+                  if (data == null) {
+                    return const SizedBox();
+                  }
+                  return LowPriceStocksItem(data: data);
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 16,
+                  );
+                },
+                itemCount: 20,
+              ),
+            ],
           ),
         ),
       ),

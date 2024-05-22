@@ -8,15 +8,12 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
-import 'package:stocks_news_new/modals/news_res.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import '../modals/news_tab_category_res.dart';
+import '../modals/low_price_stocks_res.dart';
 
 class LowPriceStocksProvider extends ChangeNotifier {
-  NewsRes? _data;
   String? _error;
   Status _status = Status.ideal;
   Status _tabStatus = Status.ideal;
@@ -26,10 +23,16 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
   List<LowPriceStocksTabRes>? get tabs => _tabs;
 
-  List<NewsData>? get data => _data?.data;
+  List<LowPriceStocksRes>? _data;
+  List<LowPriceStocksRes>? get data => _data;
+
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
   bool get tabLoading => _tabStatus == Status.loading;
+
+  String? title;
+  String? subTitle;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -40,18 +43,12 @@ class LowPriceStocksProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearSearch() {
-    _status = Status.ideal;
-    _data = null;
-    notifyListeners();
-  }
-
   void tabChange(index) {
     log("Before--> selected index $selectedIndex, index $index ");
     if (selectedIndex != index) {
       selectedIndex = index;
       notifyListeners();
-      getLowPriceData(showProgress: true);
+      getLowPriceData(showProgress: false);
     }
   }
 
@@ -70,9 +67,9 @@ class LowPriceStocksProvider extends ChangeNotifier {
       );
       if (response.status) {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
-        // if (_tabs != null) {
-        //   getLowPriceData(id: _tabs?[selectedIndex].id);
-        // }
+        if (_tabs != null) {
+          getLowPriceData();
+        }
       } else {
         _error = response.message;
         _tabs = null;
@@ -88,19 +85,8 @@ class LowPriceStocksProvider extends ChangeNotifier {
     }
   }
 
-  void onRefresh() {
-    getLowPriceData(
-      showProgress: true,
-    );
-  }
-
-  void onLoadMore() {
-    getLowPriceData(loadMore: true);
-  }
-
   Future getLowPriceData({
     showProgress = false,
-    loadMore = false,
   }) async {
     setStatus(Status.loading);
 
@@ -112,14 +98,16 @@ class LowPriceStocksProvider extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.latestNews,
+        url: Apis.lowPricesStocks,
         request: request,
         showProgress: showProgress,
       );
 
       if (response.status) {
         _error = null;
-        _data = newsResFromJson(jsonEncode(response.data));
+        _data = lowPriceStocksResFromJson(jsonEncode(response.data));
+        title = response.extra?.title;
+        subTitle = response.extra?.subTitle;
       } else {
         _data = null;
         _error = response.message;

@@ -40,6 +40,14 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
+    text: "Insider Trades",
+  ),
+  DrawerRes(
+    iconData: Icons.pending_actions_rounded,
+    text: "Market Sentiment",
+  ),
+  DrawerRes(
+    iconData: Icons.pending_actions_rounded,
     text: "High & Low PE",
   ),
   DrawerRes(
