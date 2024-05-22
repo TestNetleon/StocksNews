@@ -35,6 +35,7 @@ import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -58,7 +59,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../providers/featured_ticker.dart';
+import '../providers/low_prices_stocks.dart';
 import '../providers/trending_industries.dart';
+import '../screens/drawerScreens/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 
 class Routes {
@@ -76,6 +79,8 @@ class Routes {
     Notifications.path: (_) => const Notifications(),
     Alerts.path: (_) => const Alerts(),
     WatchList.path: (_) => const WatchList(),
+    LowPriceStocksIndex.path: (_) => const LowPriceStocksIndex(),
+
     StartIndex.path: (_) => const StartIndex(),
     MyAccount.path: (_) => const MyAccount(),
     ContactUs.path: (_) => const ContactUs(),
@@ -214,6 +219,17 @@ class Routes {
             );
           },
         );
+
+      case GainersLosersIndex.path:
+        final arguments = settings.arguments as Map<String, dynamic>;
+        StocksType type = arguments["type"] as StocksType;
+
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return GainersLosersIndex(type: type);
+          },
+        );
+
       case InsiderDetailsType.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         final companySlug = arguments['companySlug'] as String?;
@@ -274,6 +290,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ChangeNotifierProvider(create: (_) => FeaturedTickerProvider()),
       ChangeNotifierProvider(create: (_) => TrendingIndustriesProvider()),
+      ChangeNotifierProvider(create: (_) => NewsCategoryProvider()),
+      ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

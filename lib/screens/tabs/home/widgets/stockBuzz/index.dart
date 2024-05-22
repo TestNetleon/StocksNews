@@ -133,8 +133,8 @@ class StockBuzzItem extends StatelessWidget {
                 ),
                 child: CachedNetworkImagesWidget(
                   image,
-                  height: 43,
-                  width: 43,
+                  height: 40,
+                  width: 40,
                 ),
               ),
             ),

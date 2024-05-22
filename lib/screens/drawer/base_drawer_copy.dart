@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -80,15 +82,23 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         children: [
                           Expanded(
                             child: ThemeButtonSmall(
+                              showArrow: false,
                               text: "Log in",
-                              onPressed: () {},
+                              onPressed: () {
+                                Scaffold.of(context).closeDrawer();
+                                loginSheet(dontPop: "true");
+                              },
                             ),
                           ),
                           const SpacerHorizontal(width: 10),
                           Expanded(
                             child: ThemeButtonSmall(
+                              showArrow: false,
                               text: "Sign up",
-                              onPressed: () {},
+                              onPressed: () {
+                                Scaffold.of(context).closeDrawer();
+                                signupSheet(dontPop: "true");
+                              },
                             ),
                           ),
                         ],
@@ -104,8 +114,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         childrenPerRow: 3,
                         length: marketData.length,
                         getChild: (index) {
-                          return GestureDetector(
-                            onTap: () {},
+                          return InkWell(
+                            onTap: marketData[index].onTap,
                             child: DrawerNewWidget(
                               icon: marketData[index].iconData,
                               text: marketData[index].text,

@@ -19,6 +19,7 @@ class Apis {
   static const stockFocus = "/stock-in-focus";
   static const menuWhatWeDo = "/menu-what-we-do";
   static const whatWeDo = "/what-we-do";
+  static const lowPricesTab = "/low-priced-stocks";
 
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";

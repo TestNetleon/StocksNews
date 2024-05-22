@@ -5,12 +5,14 @@ class DrawerRes {
   IconData iconData;
   String text;
   int? badgeCount;
+  Function()? onTap;
   DrawerRes({
     required this.iconData,
     this.isSelected = false,
     required this.text,
     this.showBadge = false,
     this.badgeCount,
+    this.onTap,
   });
 }
 
