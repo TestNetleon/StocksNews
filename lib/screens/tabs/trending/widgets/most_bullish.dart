@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -51,7 +52,7 @@ class MostBullish extends StatelessWidget {
         Visibility(
           visible: data?.text?.mostBullish != '',
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.sp),
+            padding: EdgeInsets.only(bottom: isPhone ? 20.sp : 5.sp),
             child: Text(
               data?.text?.mostBullish ?? "",
               style:

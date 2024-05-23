@@ -43,7 +43,7 @@ class CompareStocksContainer extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(
         Dimen.padding.sp,
-        Dimen.padding.sp,
+        isPhone ? Dimen.padding.sp : Dimen.paddingTablet.sp,
         Dimen.padding.sp,
         0,
       ),

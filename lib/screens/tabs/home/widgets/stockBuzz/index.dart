@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -57,9 +56,9 @@ class StockInBuzz extends StatelessWidget {
                         style: stylePTSansBold(fontSize: 12),
                       ),
                       const SpacerHorizontal(width: 5),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios_rounded,
-                        size: 15.sp,
+                        size: 15,
                       ),
                     ],
                   ),

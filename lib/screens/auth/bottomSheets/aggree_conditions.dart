@@ -15,7 +15,7 @@ class AgreeConditions extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: 'By signing up you agree to our ',
-        style: stylePTSansRegular(fontSize: 13, height: 1.4),
+        style: stylePTSansRegular(fontSize: isPhone ? 13 : 15, height: 1.4),
         children: [
           TextSpan(
             recognizer: TapGestureRecognizer()

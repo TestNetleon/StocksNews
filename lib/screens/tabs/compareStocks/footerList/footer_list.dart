@@ -179,7 +179,9 @@ class _FooterListState extends State<FooterList> {
                       ),
                     ),
                     SizedBox(
-                      height: constraints.maxWidth * 1.8,
+                      height: isPhone
+                          ? constraints.maxWidth * 1.8
+                          : constraints.maxWidth * 1.3,
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),

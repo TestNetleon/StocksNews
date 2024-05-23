@@ -82,6 +82,8 @@ class AppIcons {
 class Dimen {
   static const double authScreenPadding = 24;
   static const double padding = 16;
+  static const double paddingTablet = 8;
+
   static const int narrationLength = 500;
   static const double itemSpacing = 12;
   static const double radius = 10;

@@ -225,7 +225,7 @@ class StockDetailsTabContainer extends StatelessWidget {
         SingleChildScrollView(
           // padding: EdgeInsets.all(Dimen.padding.sp),
           padding: EdgeInsets.only(
-            top: Dimen.padding.sp,
+            top: isPhone ? Dimen.padding.sp : Dimen.paddingTablet.sp,
             // left: Dimen.padding.sp,
             // right: Dimen.padding.sp,
             bottom: 90.sp,

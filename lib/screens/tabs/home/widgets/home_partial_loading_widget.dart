@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 
 class HomePartialLoading extends StatelessWidget {
@@ -40,7 +41,7 @@ class HomePartialLoading extends StatelessWidget {
         if (!loading && error == null)
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            margin: EdgeInsets.only(top: 20.sp),
+            margin: EdgeInsets.only(top: isPhone ? 20.sp : 5.sp),
             child: child,
           ),
       ],
