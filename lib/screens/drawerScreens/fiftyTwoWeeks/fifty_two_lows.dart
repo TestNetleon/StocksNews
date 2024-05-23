@@ -54,6 +54,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
               return const SizedBox();
             }
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (index == 0)
                   DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),

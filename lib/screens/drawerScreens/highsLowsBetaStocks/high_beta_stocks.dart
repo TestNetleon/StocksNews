@@ -57,6 +57,7 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
               return const SizedBox();
             }
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (index == 0)
                   DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),
