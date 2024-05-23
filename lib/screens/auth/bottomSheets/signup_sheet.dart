@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -468,10 +469,15 @@ class _SignUpBottomState extends State<SignUpBottom> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
-                      loginSheet(
-                        dontPop: widget.dntPop,
-                        state: widget.state,
-                      );
+                      isPhone
+                          ? loginSheet(
+                              dontPop: widget.dntPop,
+                              state: widget.state,
+                            )
+                          : loginSheetTablet(
+                              dontPop: widget.dntPop,
+                              state: widget.state,
+                            );
                       // log("${widget.dntPop}");
                       // if (widget.dntPop != null) {
                       //   // Navigator.pushReplacement(

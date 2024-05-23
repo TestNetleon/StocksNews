@@ -23,17 +23,17 @@ class FiftyTwoWeeksItem extends StatelessWidget {
     super.key,
   });
 
-//   void _onTap(context) {
-//     Navigator.pushNamed(
-//       context,
-//       StockDetails.path,
-//       arguments: {"slug": data.symbol},
-//     );
-//   }
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data.symbol},
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
+  @override
+  Widget build(BuildContext context) {
+    MoreStocksProvider provider = context.watch<MoreStocksProvider>();
 
     return InkWell(
       onTap: () {
