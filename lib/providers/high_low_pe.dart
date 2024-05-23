@@ -47,6 +47,7 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future getData(
       {showProgress = false, loadMore = false, required String type}) async {
+    log("-------------$type----------");
     _openIndex = -1;
     if (loadMore) {
       _pageUp++;
