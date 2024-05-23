@@ -14,9 +14,11 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
+import '../modals/highlow_pe_res.dart';
+
 class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
-  HighLowPERes? _data;
-  HighLowPERes? get data => _data;
+  List<HIghLowPeRes>? _data;
+  List<HIghLowPeRes>? get data => _data;
 
   Status _status = Status.ideal;
   Status get status => _status;
@@ -28,7 +30,8 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   List<MoreStocksRes>? get dataList => _dataList;
 
   bool get isLoading => _status == Status.loading;
-  bool get canLoadMore => _pageUp < (_data?.lastPage ?? 1);
+
+  bool canLoadMore = true;
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
@@ -72,9 +75,16 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         if (_pageUp == 1) {
-          _data = highLowPEResFromJson(jsonEncode(response.data));
+          canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
+          _data = hIghLowPeResFromJson(jsonEncode(response.data));
         } else {
-          _data?.data?.addAll(HighLowPERes.fromJson(response.data).data ?? []);
+          log("--1--");
+          List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
+              (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
+
+          _data?.addAll(parsedData);
+
+          log("--2--");
         }
       } else {
         if (_pageUp == 1) {
