@@ -1,5 +1,3 @@
-import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
-
 class Apis {
   // static const baseUrl = "http://3.136.132.71/api/v1"; // live server old
   // static const baseUrl = "http://3.21.111.44/api/v1"; // live server
@@ -94,6 +92,8 @@ class Apis {
 
   static const gapUpStocks = "/get-up-stocks";
   static const gapDownStocks = "/get-down-stocks";
+  static const highPEGrowth = "/high-pe-growth-stocks";
+  static const lowPEGrowth = "/low-pe-growth-stocks";
 }
 
 //
