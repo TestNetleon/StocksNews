@@ -35,10 +35,10 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   // ************* GAP DOWN **************** //
   List<GapUpRes>? _dataDown;
   String? _errorDown;
-  int _pageDown = 1;
+  // int _pageDown = 1;
 
   List<GapUpRes>? get dataDown => _dataDown;
-  bool get canLoadMoreDown => _pageDown < (0 ?? 1);
+  // bool get canLoadMoreDown => _pageDown < (0 ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
 
   void setStatus(status) {

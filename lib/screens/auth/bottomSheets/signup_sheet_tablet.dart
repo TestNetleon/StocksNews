@@ -246,7 +246,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // SpacerVertical(height: 20.sp),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * .45,
                   // constraints:
                   //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
