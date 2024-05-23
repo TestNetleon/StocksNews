@@ -57,28 +57,5 @@ class BaseUiContainer extends StatelessWidget {
                   ),
                 ),
     );
-    // return isLoading
-    //     ? showPreparingText
-    //         ? const Loading()
-    //         : const SizedBox()
-    //     : hasData
-    //         ? child
-    //         : OptionalParent(
-    //             addParent: errorDispCommon,
-    //             parentBuilder: (child) {
-    //               return ErrorDisplayWidget(
-    //                 error: error ?? Const.errNoRecord,
-    //                 onRefresh: onRefresh,
-    //                 onNavigate: onNavigate,
-    //                 navBtnText: navBtnText,
-    //               );
-    //             },
-    //             child: ErrorDisplayNewWidget(
-    //               error: error ?? Const.errNoRecord,
-    //               onRefresh: onRefresh,
-    //               onNavigate: onNavigate,
-    //               navBtnText: navBtnText,
-    //             ),
-    //           );
   }
 }

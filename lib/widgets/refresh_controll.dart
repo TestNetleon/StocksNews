@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -32,9 +33,10 @@ class _RefreshControlState extends State<RefreshControl> {
     return SmartRefresher(
       enablePullUp: true,
       footer: CustomFooter(
-        height: widget.canLoadMore ? 55 : 0,
+        height: widget.canLoadMore ? 50 : 0,
         builder: (BuildContext context, LoadStatus? mode) {
-          Widget body;
+          Widget body = const SizedBox();
+          log("******************** $mode ");
           if (mode == LoadStatus.idle) {
             body = const CircularProgressIndicator(
               strokeWidth: 4,
@@ -57,9 +59,7 @@ class _RefreshControlState extends State<RefreshControl> {
           }
           return Visibility(
             visible: widget.canLoadMore == true ? true : false,
-            child: SizedBox(
-              child: Center(child: body),
-            ),
+            child: SizedBox(child: Center(child: body)),
           );
         },
       ),
