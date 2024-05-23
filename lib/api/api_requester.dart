@@ -115,7 +115,7 @@ Future<ApiResponse> apiRequest({
       // TO show in app messages only, comment this if want to hide
       if (res.extra is Extra) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
-        _checkForInAppMessage(inAppMsg);
+        checkForInAppMessage(inAppMsg);
       }
 
       return res;
@@ -164,8 +164,9 @@ void _handleSessionOut() {
   navigatorKey.currentContext!.read<UserProvider>().clearUser();
 }
 
-void _checkForInAppMessage(InAppNotification? inAppMsg) {
+void checkForInAppMessage(InAppNotification? inAppMsg) {
   if (inAppMsg == null) return;
+
   if (inAppMsg.popupType == InAppMsgType.card.name) {
     showInAppCard(
       title: inAppMsg.title,

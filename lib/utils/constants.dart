@@ -27,7 +27,10 @@ enum AddType { alert, watchlist }
 
 enum SocialTrendingType { now, recently, cap }
 
+// ------ These are global constants to access in complete app --------
 bool isPhone = true;
+bool isAppInForeground = false;
+//------------------------------------------------
 
 class Images {
   static const String logo = "assets/images/logo.png";

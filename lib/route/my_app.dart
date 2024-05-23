@@ -54,6 +54,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    isAppInForeground = state == AppLifecycleState.resumed;
+    // log("**** is in foreground ==>  $isAppInForeground");
     setState(() {
       _appLifecycleState = state;
     });

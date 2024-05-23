@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -227,16 +228,29 @@ class FirebaseApi {
 
     FirebaseMessaging.onMessage.listen((message) async {
       Utils().showLog("on Message called ==>${message.data}");
-      // showInAppCard(
-      //   title: "Dummy Title",
-      //   description: "Dummy message",
-      //   image: "https://app.stocks.news/public/front/images/main-logo.png",
-      //   onClick: () => {},
-      // );
-      // return;
 
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
-      // provider.notificationSeen = false;
+
+      bool inAppMsg = message.data["in_app_msg"] ?? false;
+
+      if (inAppMsg) {
+        if (isAppInForeground) {
+          provider.updateInAppMsgStatus();
+          checkForInAppMessage(
+            InAppNotification(
+              id: message.data["id"],
+              title: message.data["title"],
+              description: message.data["description"],
+              image: message.data["image"],
+              popupType: message.data["popupType"],
+              redirectOn: message.data["redirectOn"],
+              slug: message.data["slug"],
+            ),
+          );
+        }
+        return;
+      }
+
       provider.setNotification(false);
 
       final data = message.data;
