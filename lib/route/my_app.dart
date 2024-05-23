@@ -12,10 +12,10 @@ import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 final _appLinks = AppLinks();
 //
@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           MaterialPageRoute(
               builder: (context) => StockDetails(symbol: slugForTicker)));
     } else if (type == "dashboard") {
-      Navigator.pushNamed(context, Tabs.path);
+      Utils().showLog("--goto dashboard---");
     } else {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -133,14 +133,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   String containsSpecificPath(Uri uri) {
+    log("-----contain path ${uri}");
     if (uri.path.contains('/blog/')) {
       return "blog";
     } else if (uri.path.contains('/stock-detail')) {
       return "stock_detail";
     } else if (uri.path.contains('/news/')) {
       return 'news';
-    } else if (uri.path == "https://app.stocks.news/" ||
-        uri.path == "https://app.stocks.news") {
+    } else if (uri.toString() == "https://app.stocks.news/" ||
+        uri.toString() == "https://app.stocks.news") {
       return 'dashboard';
     } else {
       return '';
