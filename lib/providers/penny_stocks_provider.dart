@@ -16,22 +16,22 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
-  GapUpRes? _data;
+  List<GapUpRes>? _data;
   String? _error;
   int _page = 1;
 
-  List<GapUpData>? get data => _data?.data;
-  bool get canLoadMore => _page < (_data?.lastPage ?? 1);
+  List<GapUpRes>? get data => _data;
+  bool get canLoadMore => _page < (0 ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
 
   // ************* GAP DOWN **************** //
-  GapUpRes? _dataDown;
+  List<GapUpRes>? _dataDown;
   String? _errorDown;
   int _pageDown = 1;
 
-  List<GapUpData>? get dataDown => _dataDown?.data;
-  bool get canLoadMoreDown => _pageDown < (_dataDown?.lastPage ?? 1);
+  List<GapUpRes>? get dataDown => _dataDown;
+  bool get canLoadMoreDown => _pageDown < (0 ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
 
@@ -79,7 +79,7 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
         if (_page == 1) {
           _data = gapUpResFromJson(jsonEncode(response.data));
         } else {
-          _data?.data.addAll(gapUpResFromJson(jsonEncode(response.data)).data);
+          _data?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
@@ -122,8 +122,7 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
         if (_pageDown == 1) {
           _dataDown = gapUpResFromJson(jsonEncode(response.data));
         } else {
-          _dataDown?.data
-              .addAll(gapUpResFromJson(jsonEncode(response.data)).data);
+          _dataDown?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_pageDown == 1) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -13,6 +14,8 @@ class ScreenTitle extends StatelessWidget {
   final Widget? optionalWidget;
   final bool canPopBack;
   final String? subTitle;
+  final bool divider;
+
   const ScreenTitle({
     this.title,
     this.style,
@@ -20,6 +23,7 @@ class ScreenTitle extends StatelessWidget {
     this.optionalText,
     this.subTitle,
     this.canPopBack = false,
+    this.divider = true,
     this.optionalWidget,
   });
 //
@@ -99,12 +103,15 @@ class ScreenTitle extends StatelessWidget {
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-          child: Divider(
-            color: ThemeColors.accent,
-            height: 2,
-            thickness: 2,
+        Visibility(
+          visible: divider,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+            child: Divider(
+              color: ThemeColors.accent,
+              height: 2,
+              thickness: 2,
+            ),
           ),
         ),
       ],

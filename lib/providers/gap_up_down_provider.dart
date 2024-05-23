@@ -16,22 +16,26 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
-  GapUpRes? _data;
+  List<GapUpRes>? _data;
   String? _error;
   int _page = 1;
+  Extra? _extraUp;
 
-  List<GapUpData>? get data => _data?.data;
-  bool get canLoadMore => _page < (_data?.lastPage ?? 1);
+  List<GapUpRes>? get data => _data;
+  Extra? get extraUp => _extraUp;
+  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
 
   // ************* GAP DOWN **************** //
-  GapUpRes? _dataDown;
+  List<GapUpRes>? _dataDown;
   String? _errorDown;
   int _pageDown = 1;
+  // int? _totalPageDown;
+  Extra? _extraDown;
 
-  List<GapUpData>? get dataDown => _dataDown?.data;
-  bool get canLoadMoreDown => _pageDown < (_dataDown?.lastPage ?? 1);
+  List<GapUpRes>? get dataDown => _dataDown;
+  bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
 
@@ -78,8 +82,9 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _data = gapUpResFromJson(jsonEncode(response.data));
+          _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _data?.data.addAll(gapUpResFromJson(jsonEncode(response.data)).data);
+          _data?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
@@ -121,9 +126,9 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         _errorDown = null;
         if (_pageDown == 1) {
           _dataDown = gapUpResFromJson(jsonEncode(response.data));
+          _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _dataDown?.data
-              .addAll(gapUpResFromJson(jsonEncode(response.data)).data);
+          _dataDown?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_pageDown == 1) {

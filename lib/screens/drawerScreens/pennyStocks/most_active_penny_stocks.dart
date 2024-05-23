@@ -29,7 +29,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   @override
   Widget build(BuildContext context) {
     PennyStocksProvider provider = context.watch<PennyStocksProvider>();
-    List<GapUpData>? data = provider.data;
+    List<GapUpRes>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,

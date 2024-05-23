@@ -1,229 +1,55 @@
 import 'dart:convert';
 
-GapUpRes gapUpResFromJson(String str) => GapUpRes.fromJson(json.decode(str));
+List<GapUpRes> gapUpResFromJson(String str) =>
+    List<GapUpRes>.from(json.decode(str).map((x) => GapUpRes.fromJson(x)));
 
-String gapUpResToJson(GapUpRes data) => json.encode(data.toJson());
+String gapUpResToJson(List<GapUpRes> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class GapUpRes {
-  final List<GapUpData> data;
-  final int lastPage;
+  final String symbol;
+  final String name;
+  final String gapPer;
+  final double open;
+  final double previousClose;
+  final String price;
+  final String priceChangeSinceOpen;
+  final String volume;
+  final String image;
 
   GapUpRes({
-    required this.data,
-    required this.lastPage,
+    required this.symbol,
+    required this.name,
+    required this.gapPer,
+    required this.open,
+    required this.previousClose,
+    required this.price,
+    required this.priceChangeSinceOpen,
+    required this.volume,
+    required this.image,
   });
 
   factory GapUpRes.fromJson(Map<String, dynamic> json) => GapUpRes(
-        data: List<GapUpData>.from(
-            json["data"].map((x) => GapUpData.fromJson(x))),
-        lastPage: json["last_page"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "last_page": lastPage,
-      };
-}
-
-class GapUpData {
-  final String id;
-  final String symbol;
-  final String name;
-  final String image;
-  final String price;
-  final String change;
-  final String changesPercentage;
-  final int volume;
-  final String previousClose;
-  final String open;
-  final String changeSinceOpen;
-
-  // final Exchange exchange;
-  // final ExchangeShortName exchangeShortName;
-  // final Type type;
-  // final String description;
-  // final String sector;
-  // final int mktCap;
-  // final bool twitStatus;
-  // final bool redditStatus;
-  // final int status;
-  // final String industry;
-  // final bool sentimentStatus;
-  // final bool stockNewsStatus;
-  // final String industrySlug;
-  // final String sectorSlug;
-  // final String slug;
-  // final bool finnhubStatus;
-  // final String ceo;
-  // final String website;
-  // final Country country;
-  // final String isin;
-  // final int dailyUpdate;
-  // final int avgVolume;
-  // final double eps;
-  // final double pe;
-  // final DateTime updatedAt;
-  // final DateTime createdAt;
-  // final AnalystStock analystStock;
-  // final double dayHigh;
-  // final double dayLow;
-  // final dynamic priceTarget;
-  // final double yearHigh;
-  // final double yearLow;
-  // final double gapPer;
-  // final int gapType;
-  // final int webView;
-  // final dynamic beta;
-
-  GapUpData({
-    required this.id,
-    required this.symbol,
-    required this.name,
-    required this.image,
-    required this.price,
-    required this.change,
-    required this.changesPercentage,
-    required this.volume,
-    required this.previousClose,
-    required this.open,
-    required this.changeSinceOpen,
-    // required this.exchange,
-    // required this.exchangeShortName,
-    // required this.type,
-    // required this.description,
-    // required this.sector,
-    // required this.mktCap,
-    // required this.twitStatus,
-    // required this.redditStatus,
-    // required this.status,
-    // required this.industry,
-    // required this.sentimentStatus,
-    // required this.stockNewsStatus,
-    // required this.industrySlug,
-    // required this.sectorSlug,
-    // required this.slug,
-    // required this.finnhubStatus,
-    // required this.ceo,
-    // required this.website,
-    // required this.country,
-    // required this.isin,
-    // required this.dailyUpdate,
-    // required this.avgVolume,
-    // required this.eps,
-    // required this.pe,
-    // required this.updatedAt,
-    // required this.createdAt,
-    // required this.analystStock,
-    // required this.dayHigh,
-    // required this.dayLow,
-    // required this.priceTarget,
-    // required this.yearHigh,
-    // required this.yearLow,
-    // required this.gapPer,
-    // required this.gapType,
-    // required this.webView,
-    // required this.beta,
-  });
-
-  factory GapUpData.fromJson(Map<String, dynamic> json) => GapUpData(
-        id: json["_id"],
         symbol: json["symbol"],
         name: json["name"],
-        image: json["image"],
-        change: json["change"],
-        changesPercentage: json["changesPercentage"],
-        volume: json["volume"],
+        gapPer: json["gap_per"],
+        open: json["open"]?.toDouble(),
+        previousClose: json["previousClose"]?.toDouble(),
         price: json["price"],
-        previousClose: json["previousClose"],
-        open: json["open"],
-        changeSinceOpen: json["priceChangeSinceOpen"],
-        // exchange: exchangeValues.map[json["exchange"]]!,
-        // exchangeShortName:
-        //     exchangeShortNameValues.map[json["exchange_short_name"]]!,
-        // type: typeValues.map[json["type"]]!,
-        // description: json["description"],
-        // sector: json["sector"],
-        // mktCap: json["mktCap"],
-        // twitStatus: json["twit_status"],
-        // redditStatus: json["reddit_status"],
-        // status: json["status"],
-        // industry: json["industry"],
-        // sentimentStatus: json["sentiment_status"],
-        // stockNewsStatus: json["stock_news_status"],
-        // industrySlug: json["industry_slug"],
-        // sectorSlug: json["sector_slug"],
-        // slug: json["slug"],
-        // finnhubStatus: json["finnhub_status"],
-        // ceo: json["ceo"],
-        // website: json["website"],
-        // country: countryValues.map[json["country"]]!,
-        // isin: json["isin"],
-        // dailyUpdate: json["daily_update"],
-        // avgVolume: json["avgVolume"],
-        // eps: json["eps"]?.toDouble(),
-        // pe: json["pe"]?.toDouble(),
-        // updatedAt: DateTime.parse(json["updated_at"]),
-        // createdAt: DateTime.parse(json["created_at"]),
-        // analystStock: AnalystStock.fromJson(json["analyst_stock"]),
-        // dayHigh: json["dayHigh"]?.toDouble(),
-        // dayLow: json["dayLow"]?.toDouble(),
-        // priceTarget: json["price_target"],
-        // yearHigh: json["yearHigh"]?.toDouble(),
-        // yearLow: json["yearLow"]?.toDouble(),
-        // gapPer: json["gap_per"]?.toDouble(),
-        // gapType: json["gap_type"],
-        // webView: json["web_view"],
-        // beta: json["beta"],
+        priceChangeSinceOpen: json["priceChangeSinceOpen"],
+        volume: json["volume"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "symbol": symbol,
         "name": name,
-        "image": image,
-        "change": change,
-        "changesPercentage": changesPercentage,
-        "volume": volume,
-        "previousClose": previousClose,
+        "gap_per": gapPer,
         "open": open,
-        "priceChangeSinceOpen": changeSinceOpen,
-        // "exchange": exchangeValues.reverse[exchange],
-        // "exchange_short_name":
-        //     exchangeShortNameValues.reverse[exchangeShortName],
-        // "type": typeValues.reverse[type],
-        // "description": description,
-        // "sector": sector,
-        // "price": price,
-        // "mktCap": mktCap,
-        // "twit_status": twitStatus,
-        // "reddit_status": redditStatus,
-        // "status": status,
-        // "industry": industry,
-        // "sentiment_status": sentimentStatus,
-        // "stock_news_status": stockNewsStatus,
-        // "industry_slug": industrySlug,
-        // "sector_slug": sectorSlug,
-        // "slug": slug,
-        // "finnhub_status": finnhubStatus,
-        // "ceo": ceo,
-        // "website": website,
-        // "country": countryValues.reverse[country],
-        // "isin": isin,
-        // "daily_update": dailyUpdate,
-        // "avgVolume": avgVolume,
-        // "eps": eps,
-        // "pe": pe,
-        // "updated_at": updatedAt.toIso8601String(),
-        // "created_at": createdAt.toIso8601String(),
-        // "analyst_stock": analystStock.toJson(),
-        // "dayHigh": dayHigh,
-        // "dayLow": dayLow,
-        // "price_target": priceTarget,
-        // "yearHigh": yearHigh,
-        // "yearLow": yearLow,
-        // "gap_per": gapPer,
-        // "gap_type": gapType,
-        // "web_view": webView,
-        // "beta": beta,
+        "previousClose": previousClose,
+        "price": price,
+        "priceChangeSinceOpen": priceChangeSinceOpen,
+        "volume": volume,
+        "image": image,
       };
 }

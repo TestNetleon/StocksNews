@@ -78,13 +78,9 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
           canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
           _data = hIghLowPeResFromJson(jsonEncode(response.data));
         } else {
-          log("--1--");
           List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
               (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
-
           _data?.addAll(parsedData);
-
-          log("--2--");
         }
       } else {
         if (_pageUp == 1) {

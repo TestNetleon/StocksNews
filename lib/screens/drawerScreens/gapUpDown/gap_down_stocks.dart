@@ -29,7 +29,7 @@ class _GapDownStocksState extends State<GapDownStocks> {
   @override
   Widget build(BuildContext context) {
     GapUpDownProvider provider = context.watch<GapUpDownProvider>();
-    List<GapUpData>? data = provider.dataDown;
+    List<GapUpRes>? data = provider.dataDown;
     return BaseUiContainer(
       error: provider.error,
       hasData: data != null && data.isNotEmpty,
