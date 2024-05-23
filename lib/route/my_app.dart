@@ -103,11 +103,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   )));
     } else if (type == "news") {
       Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => NewsDetails(
-                    slug: slug,
-                  )));
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => NewsDetails(
+            slug: slug,
+          ),
+        ),
+      );
     } else if (type == "stock_detail") {
       Navigator.push(
           navigatorKey.currentContext!,
