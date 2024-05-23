@@ -39,9 +39,9 @@ class _GapDownStocksState extends State<GapDownStocks> {
       showPreparingText: true,
       onRefresh: () => provider.getGapDownStocks(),
       child: RefreshControl(
-        onRefresh: () => provider.getGapDownStocks(),
+        onRefresh: () async => provider.getGapDownStocks(),
         canLoadMore: provider.canLoadMoreDown,
-        onLoadMore: () => provider.getGapDownStocks(loadMore: true),
+        onLoadMore: () async => provider.getGapDownStocks(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,

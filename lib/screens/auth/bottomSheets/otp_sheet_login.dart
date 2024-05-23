@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -101,7 +102,9 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
       UserProvider provider = context.read<UserProvider>();
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
-
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
       Map request = {
         "username": provider.user?.username ?? "",
         "type": "email",
@@ -109,6 +112,8 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         "fcm_token": fcmToken ?? "",
         "platform": Platform.operatingSystem,
         "address": address ?? "",
+        "build_version": versionName,
+        "build_code": buildNumber,
       };
 
       provider.verifyLoginOtp(request,

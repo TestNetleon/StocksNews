@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -144,7 +145,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       print("Signed In *******");
       print(account.toString());
-
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         Map request = {
@@ -155,6 +158,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "fcm_token": fcmToken ?? "",
           "platform": Platform.operatingSystem,
           "address": address ?? "",
+          "build_version": versionName,
+          "build_code": buildNumber,
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, dontPop: 'true', state: widget.state);
@@ -176,7 +181,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
-
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
       UserProvider provider = context.read<UserProvider>();
       Map request = {
         "displayName": displayName ?? "",
@@ -185,6 +192,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "fcm_token": fcmToken ?? "",
         "platform": Platform.operatingSystem,
         "address": address ?? "",
+        "build_version": versionName,
+        "build_code": buildNumber,
       };
       provider.appleLogin(request, dontPop: 'true', state: widget.state);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}

@@ -250,13 +250,13 @@ class LowPriceStocksRes {
 class PriceTarget {
   // final num targetHigh;
   // final num targetLow;
-  final num targetConsensus;
+  final num? targetConsensus;
   // final num targetMedian;
 
   PriceTarget({
     // required this.targetHigh,
     // required this.targetLow,
-    required this.targetConsensus,
+    this.targetConsensus,
     // required this.targetMedian,
   });
 

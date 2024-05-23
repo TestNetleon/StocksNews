@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -92,43 +93,46 @@ class _BaseDrawerState extends State<BaseDrawer> {
                       ),
                       const SpacerVertical(height: 20),
 
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, MyAccount.path);
-                        },
-                        child: Row(
-                          children: [
-                            ProfileImage(
-                              url: userProvider.user?.image,
-                              cameraSize: 12,
-                            ),
-                            const SpacerHorizontal(width: 10),
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  userProvider.user?.name?.isNotEmpty == true
-                                      ? "${userProvider.user?.name}"
-                                      : "Update your account",
-                                  style: stylePTSansBold(),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(
-                                  userProvider.user?.email?.isNotEmpty == true
-                                      ? "${userProvider.user?.email}"
-                                      : "Update your account",
-                                  style: stylePTSansRegular(
-                                      color: ThemeColors.greyText,
-                                      fontSize: 12),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            )),
-                          ],
+                      Visibility(
+                        visible: userProvider.user != null,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, MyAccount.path);
+                          },
+                          child: Row(
+                            children: [
+                              ProfileImage(
+                                url: userProvider.user?.image,
+                                cameraSize: 12,
+                              ),
+                              const SpacerHorizontal(width: 10),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    userProvider.user?.name?.isNotEmpty == true
+                                        ? "${userProvider.user?.name}"
+                                        : "Update your account",
+                                    style: stylePTSansBold(),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    userProvider.user?.email?.isNotEmpty == true
+                                        ? "${userProvider.user?.email}"
+                                        : "Update your account",
+                                    style: stylePTSansRegular(
+                                        color: ThemeColors.greyText,
+                                        fontSize: 12),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              )),
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
@@ -262,7 +266,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.sp, vertical: 5.sp),
                             decoration: BoxDecoration(
-                                color: ThemeColors.greyBorder.withOpacity(0.3),
+                                color: ThemeColors.greyBorder.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20.sp),
                                 border:
                                     Border.all(color: ThemeColors.greyBorder)),
@@ -275,29 +279,36 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         ),
                       ),
                       const SpacerVertical(height: 20),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {},
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              Images.info,
-                              height: 16.sp,
-                              width: 16.sp,
-                              color: ThemeColors.white,
-                            ),
-                            const SpacerHorizontal(width: 8),
-                            Text(
-                              "About stocks.news",
-                              style: stylePTSansRegular(fontSize: 13),
-                            ),
-                          ],
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              color: ThemeColors.greyBorder.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(4.sp)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                Images.info,
+                                height: 16.sp,
+                                width: 16.sp,
+                                color: ThemeColors.white,
+                              ),
+                              const SpacerHorizontal(width: 8),
+                              Text(
+                                "About stocks.news",
+                                style: stylePTSansRegular(fontSize: 13),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-
-                      Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 20.sp,
-                      ),
+                      SpacerVertical(height: 20),
+                      // Divider(
+                      //   color: ThemeColors.greyBorder,
+                      //   height: 20.sp,
+                      // ),
                       Align(
                         alignment: Alignment.center,
                         child: RichText(

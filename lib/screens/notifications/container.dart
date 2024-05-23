@@ -79,9 +79,11 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
                       showPreparingText: true,
                       onRefresh: () => provider.getData(showProgress: false),
                       child: RefreshControl(
-                        onRefresh: () => provider.getData(showProgress: false),
+                        onRefresh: () async =>
+                            provider.getData(showProgress: false),
                         canLoadMore: provider.canLoadMore,
-                        onLoadMore: () => provider.getData(loadMore: true),
+                        onLoadMore: () async =>
+                            provider.getData(loadMore: true),
                         child: ListView.separated(
                           padding: EdgeInsets.only(bottom: Dimen.padding.sp),
                           itemBuilder: (context, index) {

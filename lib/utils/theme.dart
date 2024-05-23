@@ -26,7 +26,7 @@ final lightTheme = ThemeData(
       fontFamily: Fonts.roboto,
     ),
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: ThemeColors.background,
+      statusBarColor: Colors.black,
       statusBarIconBrightness:
           Platform.isAndroid ? Brightness.light : Brightness.dark,
       statusBarBrightness:

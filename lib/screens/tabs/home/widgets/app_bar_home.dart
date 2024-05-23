@@ -89,8 +89,8 @@ class _AppBarHomeState extends State<AppBarHome> {
               icon: Image.asset(
                 Images.dotsMenu,
                 color: ThemeColors.white,
-                height: 18.sp,
-                width: 18.sp,
+                height: 18,
+                width: 18,
               ),
             ),
       centerTitle: true,

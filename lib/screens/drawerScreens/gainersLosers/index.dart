@@ -64,10 +64,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
               onRefresh: () => provider.getGainersLosers(
                   showProgress: true, type: widget.type.name),
               child: RefreshControl(
-                onRefresh: () => provider.getGainersLosers(
+                onRefresh: () async => provider.getGainersLosers(
                     showProgress: true, type: widget.type.name),
                 canLoadMore: provider.canLoadMore,
-                onLoadMore: () => provider.getGainersLosers(
+                onLoadMore: () async => provider.getGainersLosers(
                     loadMore: true, type: widget.type.name),
                 child: ListView.separated(
                   padding: EdgeInsets.only(
@@ -99,10 +99,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
               onRefresh: () =>
                   provider.getLosers(showProgress: true, type: "losers"),
               child: RefreshControl(
-                onRefresh: () =>
+                onRefresh: () async =>
                     provider.getLosers(showProgress: true, type: "losers"),
                 canLoadMore: provider.canLoadMoreLosers,
-                onLoadMore: () =>
+                onLoadMore: () async =>
                     provider.getLosers(loadMore: true, type: "losers"),
                 child: ListView.separated(
                   padding: EdgeInsets.only(

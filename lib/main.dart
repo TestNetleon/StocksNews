@@ -5,7 +5,6 @@ import 'package:stocks_news_new/fcm/service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stocks_news_new/firebase_options.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
@@ -18,7 +17,7 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: ThemeColors.background, // Set your primary dark color
+      statusBarColor: Colors.black, // Set your primary dark color
       statusBarIconBrightness: Brightness.light,
       statusBarBrightness: Brightness.dark,
     ),

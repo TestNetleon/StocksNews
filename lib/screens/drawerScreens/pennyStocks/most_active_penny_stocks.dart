@@ -40,9 +40,9 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
       showPreparingText: true,
       onRefresh: () => provider.getData(),
       child: RefreshControl(
-        onRefresh: () => provider.getData(),
+        onRefresh: () async => provider.getData(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () => provider.getData(loadMore: true),
+        onLoadMore: () async => provider.getData(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,

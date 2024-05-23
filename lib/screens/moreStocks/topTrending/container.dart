@@ -80,7 +80,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                 widgets: List.generate(
                   tabs.length,
                   (index) => RefreshControl(
-                    onRefresh: () => index == 2
+                    onRefresh: () async => index == 2
                         ? provider.getCapData()
                         : provider.getNowRecentlyData(
                             type: index == 0
@@ -90,7 +90,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                     : "cap",
                           ),
                     canLoadMore: index == 2 ? false : provider.canLoadMore,
-                    onLoadMore: () => provider.getNowRecentlyData(
+                    onLoadMore: () async => provider.getNowRecentlyData(
                       loadMore: true,
                       type: index == 0
                           ? "now"
