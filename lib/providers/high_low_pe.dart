@@ -6,13 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/modals/more_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 import '../modals/highlow_pe_res.dart';
 
@@ -37,6 +35,9 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   String? get error => _error ?? Const.errSomethingWrong;
 
   int get openIndex => _openIndex;
+
+  String? title;
+  String? subTitle;
 
   void setStatus(status) {
     _status = status;
@@ -75,6 +76,8 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         if (_pageUp == 1) {
+          title = response.extra?.title;
+          subTitle = response.extra?.subTitle;
           canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
           _data = hIghLowPeResFromJson(jsonEncode(response.data));
         } else {

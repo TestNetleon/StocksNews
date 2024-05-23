@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
-import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
@@ -11,7 +9,6 @@ import '../../../providers/high_low_pe.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../../moreStocks/topGainerLoser/item.dart';
 
 class LowPEStocks extends StatefulWidget {
   const LowPEStocks({super.key});
@@ -64,6 +61,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
             //   index: index,
             // );
             return HighLowPEItem(
+              index: index,
               data: low,
             );
           },

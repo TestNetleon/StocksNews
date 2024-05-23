@@ -11,7 +11,6 @@ import '../../../providers/more_stocks_provider.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../../../widgets/spacer_vertical.dart';
 import '../../moreStocks/topGainerLoser/item.dart';
 
 class GainersLosersIndex extends StatefulWidget {
