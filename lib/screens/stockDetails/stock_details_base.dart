@@ -190,12 +190,13 @@ class StockDetailsBase extends StatelessWidget {
           left: 0,
           right: 0,
           child: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               // border: Border.all(color: ThemeColors.greyBorder),
-              border: Border(
+              border: const Border(
                 top: BorderSide(color: ThemeColors.greyBorder),
               ),
-              color: ThemeColors.tabBack,
+              color: ThemeColors.background.withOpacity(0.8),
+
               // borderRadius: BorderRadius.only(
               // topLeft: Radius.circular(5.sp),
               // topRight: Radius.circular(5.sp),

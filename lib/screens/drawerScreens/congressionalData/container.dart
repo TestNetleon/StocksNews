@@ -47,8 +47,8 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
             ),
             Expanded(
               child: RefreshControl(
-                onLoadMore: () => provider.getData(loadMore: true),
-                onRefresh: () => provider.getData(),
+                onLoadMore: () async => provider.getData(loadMore: true),
+                onRefresh: () async => provider.getData(),
                 canLoadMore: provider.canLoadMore,
                 child: ListView.separated(
                     padding: EdgeInsets.only(bottom: 10.sp),

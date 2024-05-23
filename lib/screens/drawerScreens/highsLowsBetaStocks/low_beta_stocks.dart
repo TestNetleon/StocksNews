@@ -43,9 +43,9 @@ class _LowBetaStocksState extends State<LowBetaStocks> {
       showPreparingText: true,
       onRefresh: () => provider.getHighLowNegativeBetaStocks(type: 2),
       child: RefreshControl(
-        onRefresh: () => provider.getHighLowNegativeBetaStocks(type: 2),
+        onRefresh: () async => provider.getHighLowNegativeBetaStocks(type: 2),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () =>
+        onLoadMore: () async =>
             provider.getHighLowNegativeBetaStocks(loadMore: true, type: 2),
         child: ListView.separated(
           padding: EdgeInsets.only(

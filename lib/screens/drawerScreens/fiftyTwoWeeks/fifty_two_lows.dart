@@ -41,9 +41,9 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
       showPreparingText: true,
       onRefresh: () => provider.getFiftyTwoWeekLows(),
       child: RefreshControl(
-        onRefresh: () => provider.getFiftyTwoWeekLows(),
+        onRefresh: () async => provider.getFiftyTwoWeekLows(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () => provider.getFiftyTwoWeekLows(loadMore: true),
+        onLoadMore: () async => provider.getFiftyTwoWeekLows(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,

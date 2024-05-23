@@ -123,7 +123,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
           ),
           const SpacerVertical(height: 25),
           ThemeButton(
-            text: "Next",
+            text: "Submit",
             onPressed: _onTap,
           ),
         ],
