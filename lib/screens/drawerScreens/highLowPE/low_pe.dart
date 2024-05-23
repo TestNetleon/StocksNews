@@ -8,6 +8,7 @@ import '../../../modals/highlow_pe_res.dart';
 import '../../../providers/high_low_pe.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
+import '../../../widgets/drawer_screen_title.dart';
 import '../../../widgets/refresh_controll.dart';
 
 class LowPEStocks extends StatefulWidget {
@@ -45,34 +46,45 @@ class _LowPEStocksState extends State<LowPEStocks> {
         canLoadMore: provider.canLoadMore,
         onLoadMore: () =>
             provider.getData(showProgress: false, type: "low", loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            HIghLowPeRes? low = provider.data?[index];
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              DrawerScreenTitle(
+                subTitle: provider.subTitle,
+              ),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  HIghLowPeRes? low = provider.data?[index];
 
-            // if (up == null || up.isEmpty) {
-            //   return const SizedBox();
-            // }
-            // return GainerLoserItem(
-            //   data: up[index],
-            //   index: index,
-            // );
-            return HighLowPEItem(
-              index: index,
-              data: low,
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          // itemCount: up?.length ?? 0,
-          itemCount: provider.data?.length ?? 0,
+                  // if (up == null || up.isEmpty) {
+                  //   return const SizedBox();
+                  // }
+                  // return GainerLoserItem(
+                  //   data: up[index],
+                  //   index: index,
+                  // );
+                  return HighLowPEItem(
+                    index: index,
+                    data: low,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                // itemCount: up?.length ?? 0,
+                itemCount: provider.data?.length ?? 0,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -48,11 +49,9 @@ class _HighPeStocksState extends State<HighPeStocks> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Text(
-              //   "data",
-              //   style: stylePTSansRegular(),
-              // ),
-
+              DrawerScreenTitle(
+                subTitle: provider.subTitle,
+              ),
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
