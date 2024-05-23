@@ -11,11 +11,11 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-import '../modals/highlow_pe_res.dart';
+import '../modals/congressional_res.dart';
 
-class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
-  List<HIghLowPeRes>? _data;
-  List<HIghLowPeRes>? get data => _data;
+class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
+  List<CongressionalRes>? _data;
+  List<CongressionalRes>? get data => _data;
 
   Status _status = Status.ideal;
   Status get status => _status;
@@ -23,16 +23,15 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   int _pageUp = 1;
   int _openIndex = -1;
 
-  // List<MoreStocksRes>? _dataList;
-  // List<MoreStocksRes>? get dataList => _dataList;
-
   bool get isLoading => _status == Status.loading;
+
   bool canLoadMore = true;
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
   int get openIndex => _openIndex;
+
   String? title;
   String? subTitle;
 
@@ -46,9 +45,10 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future getData(
-      {showProgress = false, loadMore = false, required String type}) async {
-    log("-------------$type----------");
+  Future getData({
+    showProgress = false,
+    loadMore = false,
+  }) async {
     _openIndex = -1;
     if (loadMore) {
       _pageUp++;
@@ -66,28 +66,22 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-        url: type == "high"
-            ? Apis.highPE
-            : type == "low"
-                ? Apis.lowPE
-                : type == "highGrowth"
-                    ? Apis.highPEGrowth
-                    : Apis.lowPEGrowth,
+        url: Apis.congress,
         request: request,
         showProgress: false,
       );
       if (response.status) {
         _error = null;
         canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
+
         if (_pageUp == 1) {
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
-          _data = hIghLowPeResFromJson(jsonEncode(response.data));
+          _data = congressionalResFromJson(jsonEncode(response.data));
         } else {
-          // List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
-          //     (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
-          // _data?.addAll(parsedData);
-          _data?.addAll(hIghLowPeResFromJson(jsonEncode(response.data)));
+          List<CongressionalRes> parsedData = List<CongressionalRes>.from(
+              (response.data as List).map((x) => CongressionalRes.fromJson(x)));
+          _data?.addAll(parsedData);
         }
       } else {
         if (_pageUp == 1) {

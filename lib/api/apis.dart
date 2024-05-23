@@ -1,5 +1,3 @@
-import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
-
 class Apis {
   // static const baseUrl = "http://3.136.132.71/api/v1"; // live server old
   // static const baseUrl = "http://3.21.111.44/api/v1"; // live server
@@ -35,6 +33,7 @@ class Apis {
   static const homeAlert = "/home-alerts";
   static const newsAlertGraphData = "/stock-historical-chart";
   static const featuredTicker = "/featured-tickers";
+  static const mostActivePenny = "/most-active-penny-stocks";
 
   static const search = "/search";
   static const searchWithNews = "/search_with_news";
@@ -48,6 +47,7 @@ class Apis {
   static const addWatchlist = "/add-watchlist";
   static const deleteWatchlist = "/delete-watchlist";
   static const moreStocks = "/trending_gainer_loser";
+  static const congress = "/congress-stock-trades";
 
   static const updateProfile = "/update-profile";
   static const updateProfileEmail = "/update-profile-otp";
@@ -94,6 +94,8 @@ class Apis {
 
   static const gapUpStocks = "/get-up-stocks";
   static const gapDownStocks = "/get-down-stocks";
+  static const highPEGrowth = "/high-pe-growth-stocks";
+  static const lowPEGrowth = "/low-pe-growth-stocks";
   static const weekHighs = "/week-highs";
   static const weekLows = "/week-lows";
   static const lowBetaStocks = "/low-beta-stocks";

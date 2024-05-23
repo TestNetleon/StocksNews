@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
-import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -11,36 +10,35 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class FiftyTwoWeeksItem extends StatelessWidget {
-  final FiftyTwoWeeksRes data;
+import '../../../modals/penny_stocks.dart';
+
+class PennyStocksItem extends StatelessWidget {
+  final PennyStocksRes data;
   final int index;
-  final bool losers;
 //
-  const FiftyTwoWeeksItem({
+  const PennyStocksItem({
     required this.data,
     required this.index,
-    this.losers = false,
     super.key,
   });
 
-//   void _onTap(context) {
-//     Navigator.pushNamed(
-//       context,
-//       StockDetails.path,
-//       arguments: {"slug": data.symbol},
-//     );
-//   }
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data.symbol},
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
+  @override
+  Widget build(BuildContext context) {
+    PennyStocksProvider provider = context.watch<PennyStocksProvider>();
 
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           StockDetails.path,
-          // arguments: data.symbol,
           arguments: {"slug": data.symbol},
         );
       },
@@ -69,14 +67,14 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.symbol,
+                        data.symbol ?? "N?A",
                         style: stylePTSansBold(fontSize: 14),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(
-                        data.name,
+                        data.name ?? "N?A",
                         style: stylePTSansRegular(
                           color: ThemeColors.greyText,
                           fontSize: 12,
@@ -93,37 +91,29 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${data.price}",
+                    "${data.price ?? "N?A"}",
                     style: stylePTSansBold(fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.changesPercentage.toString()}%",
+                    "${data.change} (${data.changesPercentage})%",
                     style: stylePTSansRegular(
-                        fontSize: 12,
-                        color:
-                            //(data.changesPercentage ?? 0) > 0
-                            //     ?
-                            ThemeColors.accent
-                        //     : Colors.red,
-                        ),
+                      fontSize: 12,
+                      color: (data.changesPercentage ?? 0) < 0
+                          ? Colors.red
+                          : ThemeColors.accent,
+                    ),
                   ),
                 ],
               ),
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  if (losers) {
-                    provider.setOpenIndexLosers(
-                      provider.openIndexLosers == index ? -1 : index,
-                    );
-                  } else {
-                    provider.setOpenIndex(
-                      provider.openIndex == index ? -1 : index,
-                    );
-                  }
+                  provider.setOpenIndex(
+                    provider.openIndex == index ? -1 : index,
+                  );
                 },
                 child: Container(
                   decoration: const BoxDecoration(
@@ -132,13 +122,9 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    losers
-                        ? provider.openIndexLosers == index
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded
-                        : provider.openIndex == index
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded,
+                    provider.openIndex == index
+                        ? Icons.arrow_upward_rounded
+                        : Icons.arrow_downward_rounded,
                     size: 16,
                   ),
                 ),
@@ -148,44 +134,26 @@ class FiftyTwoWeeksItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: losers
-                  ? provider.openIndexLosers == index
-                      ? null
-                      : 0
-                  : provider.openIndex == index
-                      ? null
-                      : 0,
+              height: provider.openIndex == index ? null : 0,
               margin: EdgeInsets.only(
-                top: losers
-                    ? provider.openIndexLosers == index
-                        ? 10.sp
-                        : 0
-                    : provider.openIndex == index
-                        ? 10.sp
-                        : 0,
-                bottom: losers
-                    ? provider.openIndexLosers == index
-                        ? 10.sp
-                        : 0
-                    : provider.openIndex == index
-                        ? 10.sp
-                        : 0,
+                top: provider.openIndex == index ? 10.sp : 0,
+                bottom: provider.openIndex == index ? 10.sp : 0,
               ),
               child: Column(
                 children: [
                   InnerRowItem(
-                    lable: "52-Week High",
-                    value: "${data.yearHigh}",
+                    lable: "Exchange",
+                    value: "${data.exchange}",
                   ),
                   InnerRowItem(
-                    lable: "52-Week Low",
-                    value: "${data.yearLow}",
+                    lable: "Volume",
+                    value: "${data.volume}",
                   ),
                   InnerRowItem(
-                      lable: "Previous Close", value: "${data.previousClose}"),
+                      lable: "Average Volume", value: "${data.avgVolume}"),
                   InnerRowItem(
-                    lable: "Intraday Range",
-                    value: "${data.dayLow}-${data.dayHigh}",
+                    lable: "Dollar Volume",
+                    value: data.dollarVolume,
                   ),
                 ],
               ),

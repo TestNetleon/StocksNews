@@ -5,6 +5,7 @@ import 'package:stocks_news_new/modals/gap_up_res.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -31,15 +32,15 @@ class _GapDownStocksState extends State<GapDownStocks> {
     GapUpDownProvider provider = context.watch<GapUpDownProvider>();
     List<GapUpRes>? data = provider.dataDown;
     return BaseUiContainer(
-      error: provider.error,
+      error: provider.errorDown,
       hasData: data != null && data.isNotEmpty,
-      isLoading: provider.isLoading,
+      isLoading: provider.isLoadingDown,
       errorDispCommon: true,
       showPreparingText: true,
       onRefresh: () => provider.getGapDownStocks(),
       child: RefreshControl(
         onRefresh: () => provider.getGapDownStocks(),
-        canLoadMore: provider.canLoadMore,
+        canLoadMore: provider.canLoadMoreDown,
         onLoadMore: () => provider.getGapDownStocks(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
@@ -47,16 +48,17 @@ class _GapDownStocksState extends State<GapDownStocks> {
             top: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
-            if (data == null || data.isEmpty) {
-              return const SizedBox();
-            }
-            return UpDownStocksItem(data: data[index], index: index);
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (index == 0)
+                  DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),
+                UpDownStocksItem(data: data![index], index: index),
+              ],
+            );
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
+            return Divider(color: ThemeColors.greyBorder, height: 20.sp);
           },
           itemCount: data?.length ?? 0,
         ),

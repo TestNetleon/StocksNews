@@ -7,15 +7,15 @@ String gapUpResToJson(List<GapUpRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class GapUpRes {
-  final String symbol;
-  final String name;
-  final String gapPer;
-  final double open;
-  final double previousClose;
-  final String price;
-  final String priceChangeSinceOpen;
-  final String volume;
-  final String image;
+  final dynamic symbol;
+  final dynamic name;
+  final dynamic gapPer;
+  final dynamic open;
+  final dynamic previousClose;
+  final dynamic price;
+  final dynamic priceChangeSinceOpen;
+  final dynamic volume;
+  final dynamic image;
 
   GapUpRes({
     required this.symbol,
@@ -33,8 +33,8 @@ class GapUpRes {
         symbol: json["symbol"],
         name: json["name"],
         gapPer: json["gap_per"],
-        open: json["open"]?.toDouble(),
-        previousClose: json["previousClose"]?.toDouble(),
+        open: json["open"],
+        previousClose: json["previousClose"],
         price: json["price"],
         priceChangeSinceOpen: json["priceChangeSinceOpen"],
         volume: json["volume"],

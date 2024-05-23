@@ -14,20 +14,24 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
 class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
-  Status _status = Status.ideal;
-  // ************* GAP DOWN **************** //
-  List<GapUpRes>? _data;
-  String? _error;
-  int _page = 1;
+  int _openIndex = -1;
+  int? get openIndex => _openIndex;
+
+  // ************* GAP Up **************** //
+  Status _statusUp = Status.ideal;
+  List<GapUpRes>? _dataUp;
+  String? _errorUp;
+  int _pageUp = 1;
   Extra? _extraUp;
 
-  List<GapUpRes>? get data => _data;
+  List<GapUpRes>? get dataUp => _dataUp;
   Extra? get extraUp => _extraUp;
-  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
-  String? get error => _error ?? Const.errSomethingWrong;
-  bool get isLoading => _status == Status.loading;
+  bool get canLoadMoreUp => _pageUp < (_extraUp?.totalPages ?? 1);
+  String? get errorUp => _errorUp ?? Const.errSomethingWrong;
+  bool get isLoadingUp => _statusUp == Status.loading;
 
   // ************* GAP DOWN **************** //
+  Status _statusDown = Status.ideal;
   List<GapUpRes>? _dataDown;
   String? _errorDown;
   int _pageDown = 1;
@@ -37,39 +41,46 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   List<GapUpRes>? get dataDown => _dataDown;
   bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
-  bool get isLoadingDown => _status == Status.loading;
+  bool get isLoadingDown => _statusDown == Status.loading;
 
   void setStatus(status) {
-    _status = status;
+    _statusUp = status;
+    _statusDown = status;
     notifyListeners();
   }
 
-  // void setStatusLosers(status) {
-  //   _status = status;
-  //   notifyListeners();
-  // }
-  // void setOpenIndex(index) {
-  //   // _openIndex = index;
-  //   notifyListeners();
-  // }
-  // void setOpenIndexLosers(index) {
-  //   // _openIndexLosers = index;
-  //   notifyListeners();
-  // }
+  void setStatusUp(status) {
+    _statusUp = status;
+    notifyListeners();
+  }
+
+  void setStatusDown(status) {
+    _statusDown = status;
+    notifyListeners();
+  }
+
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
 
   Future getGapUpStocks({loadMore = false}) async {
     if (loadMore) {
-      _page++;
-      setStatus(Status.loadingMore);
+      _pageUp++;
+      setStatusUp(Status.loadingMore);
     } else {
-      _page = 1;
-      setStatus(Status.loading);
+      _pageUp = 1;
+      setStatusUp(Status.loading);
     }
+    _openIndex = -1;
+    // _extraDown = null;
+    // _extraUp = null;
+
     try {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "page": "$_page"
+        "page": "$_pageUp"
       };
 
       ApiResponse response = await apiRequest(
@@ -79,36 +90,39 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       );
 
       if (response.status) {
-        _error = null;
-        if (_page == 1) {
-          _data = gapUpResFromJson(jsonEncode(response.data));
+        _errorUp = null;
+        if (_pageUp == 1) {
+          _dataUp = gapUpResFromJson(jsonEncode(response.data));
           _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _data?.addAll(gapUpResFromJson(jsonEncode(response.data)));
+          _dataUp?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
       } else {
-        if (_page == 1) {
-          _data = null;
-          _error = response.message;
+        if (_pageUp == 1) {
+          _dataUp = null;
+          _errorUp = response.message;
           // showErrorMessage(message: response.message);
         }
       }
-      setStatus(Status.loaded);
+      setStatusUp(Status.loaded);
     } catch (e) {
-      _data = null;
+      _dataUp = null;
       log(e.toString());
-      setStatus(Status.loaded);
+      setStatusUp(Status.loaded);
     }
   }
 
   Future getGapDownStocks({loadMore = false}) async {
     if (loadMore) {
       _pageDown++;
-      setStatus(Status.loadingMore);
+      setStatusDown(Status.loadingMore);
     } else {
       _pageDown = 1;
-      setStatus(Status.loading);
+      setStatusDown(Status.loading);
     }
+    _openIndex = -1;
+    // _extraUp = null;
+    // _extraDown = null;
     try {
       Map request = {
         "token":
@@ -126,7 +140,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         _errorDown = null;
         if (_pageDown == 1) {
           _dataDown = gapUpResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
+          _extraDown = response.extra is Extra ? response.extra : null;
         } else {
           _dataDown?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
@@ -137,11 +151,11 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
           // showErrorMessage(message: response.message);
         }
       }
-      setStatus(Status.loaded);
+      setStatusDown(Status.loaded);
     } catch (e) {
       _dataDown = null;
       log(e.toString());
-      setStatus(Status.loaded);
+      setStatusDown(Status.loaded);
     }
   }
 

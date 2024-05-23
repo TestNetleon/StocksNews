@@ -11,21 +11,21 @@ import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/drawer_screen_title.dart';
 import '../../../widgets/refresh_controll.dart';
 
-class LowPEStocks extends StatefulWidget {
-  const LowPEStocks({super.key});
+class LowPEGrowthStocks extends StatefulWidget {
+  const LowPEGrowthStocks({super.key});
 
   @override
-  State<LowPEStocks> createState() => _LowPEStocksState();
+  State<LowPEGrowthStocks> createState() => _LowPEGrowthStocksState();
 }
 
-class _LowPEStocksState extends State<LowPEStocks> {
+class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<HighLowPeProvider>()
-          .getData(showProgress: true, type: "low");
+          .getData(showProgress: true, type: "lowGrowth");
     });
   }
 

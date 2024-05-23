@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/gap_up_res.dart';
+import 'package:stocks_news_new/modals/penny_stocks.dart';
 import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -22,14 +23,14 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<PennyStocksProvider>().getGapUpStocks();
+      context.read<PennyStocksProvider>().getData();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     PennyStocksProvider provider = context.watch<PennyStocksProvider>();
-    List<GapUpRes>? data = provider.data;
+    List<PennyStocksRes>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -37,11 +38,11 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getGapUpStocks(),
+      onRefresh: () => provider.getData(),
       child: RefreshControl(
-        onRefresh: () => provider.getGapUpStocks(),
+        onRefresh: () => provider.getData(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () => provider.getGapUpStocks(loadMore: true),
+        onLoadMore: () => provider.getData(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,
@@ -51,9 +52,16 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
             if (data == null || data.isEmpty) {
               return const SizedBox();
             }
-            return UpDownStocksItem(
-              data: data[index],
-              index: index,
+
+            return Column(
+              children: [
+                if (index == 0)
+                  DrawerScreenTitle(subTitle: provider.extra?.subTitle),
+                PennyStocksItem(
+                  data: data[index],
+                  index: index,
+                ),
+              ],
             );
           },
           separatorBuilder: (BuildContext context, int index) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gap_up_res.dart';
-import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -14,12 +14,10 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class UpDownStocksItem extends StatelessWidget {
   final GapUpRes data;
   final int index;
-  final bool losers;
 //
   const UpDownStocksItem({
     required this.data,
     required this.index,
-    this.losers = false,
     super.key,
   });
 
@@ -33,14 +31,13 @@ class UpDownStocksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MoreStocksProvider provider = context.watch<MoreStocksProvider>();
+    GapUpDownProvider provider = context.watch<GapUpDownProvider>();
 
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           StockDetails.path,
-          // arguments: data.symbol,
           arguments: {"slug": data.symbol},
         );
       },
@@ -102,28 +99,20 @@ class UpDownStocksItem extends StatelessWidget {
                   Text(
                     "${data.priceChangeSinceOpen}%",
                     style: stylePTSansRegular(
-                        fontSize: 12,
-                        color:
-                            //(data.changesPercentage ?? 0) > 0
-                            //     ?
-                            ThemeColors.accent
-                        //     : Colors.red,
-                        ),
+                      fontSize: 12,
+                      color: "${data.priceChangeSinceOpen}".contains("-")
+                          ? Colors.red
+                          : ThemeColors.accent,
+                    ),
                   ),
                 ],
               ),
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  if (losers) {
-                    provider.setOpenIndexLosers(
-                      provider.openIndexLosers == index ? -1 : index,
-                    );
-                  } else {
-                    provider.setOpenIndex(
-                      provider.openIndex == index ? -1 : index,
-                    );
-                  }
+                  provider.setOpenIndex(
+                    provider.openIndex == index ? -1 : index,
+                  );
                 },
                 child: Container(
                   decoration: const BoxDecoration(
@@ -132,13 +121,9 @@ class UpDownStocksItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    losers
-                        ? provider.openIndexLosers == index
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded
-                        : provider.openIndex == index
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded,
+                    provider.openIndex == index
+                        ? Icons.arrow_upward_rounded
+                        : Icons.arrow_downward_rounded,
                     size: 16,
                   ),
                 ),
@@ -148,28 +133,10 @@ class UpDownStocksItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: losers
-                  ? provider.openIndexLosers == index
-                      ? null
-                      : 0
-                  : provider.openIndex == index
-                      ? null
-                      : 0,
+              height: provider.openIndex == index ? null : 0,
               margin: EdgeInsets.only(
-                top: losers
-                    ? provider.openIndexLosers == index
-                        ? 10.sp
-                        : 0
-                    : provider.openIndex == index
-                        ? 10.sp
-                        : 0,
-                bottom: losers
-                    ? provider.openIndexLosers == index
-                        ? 10.sp
-                        : 0
-                    : provider.openIndex == index
-                        ? 10.sp
-                        : 0,
+                top: provider.openIndex == index ? 10.sp : 0,
+                bottom: provider.openIndex == index ? 10.sp : 0,
               ),
               child: Column(
                 children: [
@@ -183,7 +150,7 @@ class UpDownStocksItem extends StatelessWidget {
                   ),
                   InnerRowItem(
                       lable: "Price Change Since Open",
-                      value: data.priceChangeSinceOpen),
+                      value: "${data.priceChangeSinceOpen}"),
                   InnerRowItem(
                     lable: "Daily Volume",
                     value: data.volume,

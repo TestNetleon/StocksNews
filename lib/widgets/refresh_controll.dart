@@ -30,19 +30,21 @@ class _RefreshControlState extends State<RefreshControl> {
 
   @override
   Widget build(BuildContext context) {
+    // log("******************** Can Load More =>  ${widget.canLoadMore} ");
+
     return SmartRefresher(
       enablePullUp: true,
       footer: CustomFooter(
-        height: widget.canLoadMore ? 50 : 0,
+        height: widget.canLoadMore ? 100 : 0,
         builder: (BuildContext context, LoadStatus? mode) {
           Widget body = const SizedBox();
-          log("******************** $mode ");
+          // log("******************** $mode ");
           if (mode == LoadStatus.idle) {
             // body = const CircularProgressIndicator(
             //   strokeWidth: 4,
             //   color: ThemeColors.accent,
             // );
-            body = const SizedBox();
+            // body = const SizedBox();
           } else if (mode == LoadStatus.loading) {
             body = const CircularProgressIndicator(
               strokeWidth: 4,

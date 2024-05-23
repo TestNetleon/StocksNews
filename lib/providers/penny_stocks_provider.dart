@@ -13,17 +13,24 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
+import '../modals/penny_stocks.dart';
+
 class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
+  int _openIndex = -1;
+  int? get openIndex => _openIndex;
+
   Status _status = Status.ideal;
-  // ************* GAP DOWN **************** //
-  List<GapUpRes>? _data;
+  // ************* Most Active **************** //
+  List<PennyStocksRes>? _data;
   String? _error;
   int _page = 1;
 
-  List<GapUpRes>? get data => _data;
-  bool get canLoadMore => _page < (0 ?? 1);
+  List<PennyStocksRes>? get data => _data;
+  bool get canLoadMore => _page < (extra?.totalPages ?? 0);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
+  Extra? _extraData;
+  Extra? get extra => _extraData;
 
   // ************* GAP DOWN **************** //
   List<GapUpRes>? _dataDown;
@@ -33,13 +40,16 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   List<GapUpRes>? get dataDown => _dataDown;
   bool get canLoadMoreDown => _pageDown < (0 ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
-  bool get isLoadingDown => _status == Status.loading;
 
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
 
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
   // void setStatusLosers(status) {
   //   _status = status;
   //   notifyListeners();
@@ -53,11 +63,12 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   //   notifyListeners();
   // }
 
-  Future getGapUpStocks({showProgress = false, loadMore = false}) async {
+  Future getData({showProgress = false, loadMore = false}) async {
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
     } else {
+      _openIndex = -1;
       _page = 1;
       setStatus(Status.loading);
     }
@@ -69,17 +80,18 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.gapUpStocks,
+        url: Apis.mostActivePenny,
         request: request,
         showProgress: false,
       );
 
       if (response.status) {
+        _extraData = response.extra;
         _error = null;
         if (_page == 1) {
-          _data = gapUpResFromJson(jsonEncode(response.data));
+          _data = pennyStocksResFromJson(jsonEncode(response.data));
         } else {
-          _data?.addAll(gapUpResFromJson(jsonEncode(response.data)));
+          _data?.addAll(pennyStocksResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
@@ -91,49 +103,6 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
-      setStatus(Status.loaded);
-    }
-  }
-
-  Future getGapDownStocks({showProgress = false, loadMore = false}) async {
-    if (loadMore) {
-      _pageDown++;
-      setStatus(Status.loadingMore);
-    } else {
-      _pageDown = 1;
-      setStatus(Status.loading);
-    }
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "page": "$_pageDown"
-      };
-
-      ApiResponse response = await apiRequest(
-        url: Apis.gapDownStocks,
-        request: request,
-        showProgress: false,
-      );
-
-      if (response.status) {
-        _errorDown = null;
-        if (_pageDown == 1) {
-          _dataDown = gapUpResFromJson(jsonEncode(response.data));
-        } else {
-          _dataDown?.addAll(gapUpResFromJson(jsonEncode(response.data)));
-        }
-      } else {
-        if (_pageDown == 1) {
-          _dataDown = null;
-          _errorDown = response.message;
-          // showErrorMessage(message: response.message);
-        }
-      }
-      setStatus(Status.loaded);
-    } catch (e) {
-      _dataDown = null;
       log(e.toString());
       setStatus(Status.loaded);
     }

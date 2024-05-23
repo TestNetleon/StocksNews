@@ -71,6 +71,7 @@ import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
 import '../providers/trending_industries.dart';
+import '../screens/drawerScreens/congressionalData/index.dart';
 import '../screens/drawerScreens/lowPriceStocks/index.dart';
 import '../screens/whatWeDo/index.dart';
 
@@ -90,6 +91,7 @@ class Routes {
     Alerts.path: (_) => const Alerts(),
     WatchList.path: (_) => const WatchList(),
     LowPriceStocksIndex.path: (_) => const LowPriceStocksIndex(),
+    CongressionalIndex.path: (_) => const CongressionalIndex(),
 
     StartIndex.path: (_) => const StartIndex(),
     MyAccount.path: (_) => const MyAccount(),
@@ -324,6 +326,10 @@ class Routes {
       ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
       ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
+      // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
+      ChangeNotifierProvider(
+          create: (_) =>
+              PennyStocksProvider()), // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

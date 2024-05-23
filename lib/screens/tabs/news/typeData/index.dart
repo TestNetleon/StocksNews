@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 
 import '../../../../modals/home_insider_res.dart';
 import '../../../../modals/news_res.dart';
@@ -17,13 +18,21 @@ class NewsTypeData extends StatelessWidget {
   Widget build(BuildContext context) {
     NewsCategoryProvider provider = context.watch<NewsCategoryProvider>();
 
-    return RefreshControl(
+    return
+        // BaseUiContainer(
+        //   error: provider.error,
+        //   hasData: provider.data != null && provider.data!.isNotEmpty,
+        //   isLoading: provider.isLoading,
+        //   errorDispCommon: true,
+        //   showPreparingText: true,
+        //   onRefresh: () => provider.onRefresh(),
+        //   child:
+        RefreshControl(
       onRefresh: () async => provider.onRefresh(),
       canLoadMore: provider.canLoadMore,
       onLoadMore: () async => provider.onLoadMore(),
       child: ListView.separated(
         itemCount: provider.data?.length ?? 0,
-        // shrinkWrap: true,
         padding: EdgeInsets.only(bottom: 12.sp, top: 12.sp),
         itemBuilder: (context, index) {
           NewsData? newsItemData = provider.data?[index];
@@ -54,7 +63,6 @@ class NewsTypeData extends StatelessWidget {
                 //     image: newsItemData.image,
                 //     site: newsItemData.site ?? '',
                 //     authors: newsItemData.authors,
-
                 //     postDate: DateFormat("MMMM dd, yyyy")
                 //         .format(newsItemData.publishedDate),
                 //     url: newsItemData.url,
@@ -64,7 +72,6 @@ class NewsTypeData extends StatelessWidget {
               ],
             );
           }
-
           return NewsItem(
             showCategory: newsItemData?.authors?.isEmpty == true,
             news: News(
@@ -83,12 +90,10 @@ class NewsTypeData extends StatelessWidget {
         },
         separatorBuilder: (BuildContext context, int index) {
           // return const SpacerVertical(height: 16);
-          return Divider(
-            color: ThemeColors.greyBorder,
-            height: 20.sp,
-          );
+          return Divider(color: ThemeColors.greyBorder, height: 20.sp);
         },
       ),
+      // ),
     );
   }
 }

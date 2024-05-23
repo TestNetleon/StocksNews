@@ -296,6 +296,8 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       selectedIndex = index;
       notifyListeners();
       String? id = _tabs?[index].id;
+      _page = 1;
+      _data = null;
       getNews(tabChangeLoading: false, id: id, showProgress: true);
     }
   }
@@ -337,12 +339,12 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     getNews(
       tabChangeLoading: false,
       id: _tabs?[selectedIndex].id,
-      showProgress: true,
+      showProgress: false,
     );
   }
 
-  void onLoadMore() {
-    getNews(loadMore: true, id: _tabs?[selectedIndex].id);
+  Future onLoadMore() async {
+    await getNews(loadMore: true, id: _tabs?[selectedIndex].id);
   }
 
   Future getNews({
