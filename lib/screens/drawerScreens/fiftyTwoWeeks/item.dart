@@ -12,7 +12,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class FiftyTwoWeeksItem extends StatelessWidget {
-  final HighLowPeDataRes data;
+  // final HighLowPeDataRes data;
+  final dynamic data;
   final int index;
   final bool losers;
 //

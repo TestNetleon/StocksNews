@@ -183,7 +183,7 @@ class UpDownStocksItem extends StatelessWidget {
                   ),
                   InnerRowItem(
                       lable: "Price Change Since Open",
-                      value: data.priceChangeSinceOpen),
+                      value: "${data.priceChangeSinceOpen}"),
                   InnerRowItem(
                     lable: "Daily Volume",
                     value: data.volume,
