@@ -13,13 +13,13 @@ String hIghLowPeResToJson(List<HIghLowPeRes> data) =>
 class HIghLowPeRes {
   final String? symbol;
   final String? name;
-  final String? price;
+  final dynamic price;
   final Change? change;
-  final double? pe;
-  final String? marketCap;
-  final String? volume;
-  final String? avgVolume;
-  final String? image;
+  final dynamic pe;
+  final dynamic marketCap;
+  final dynamic volume;
+  final dynamic avgVolume;
+  final dynamic image;
 
   HIghLowPeRes({
     this.symbol,
@@ -38,7 +38,7 @@ class HIghLowPeRes {
         name: json["name"],
         price: json["price"],
         change: json["change"] == null ? null : Change.fromJson(json["change"]),
-        pe: json["pe"]?.toDouble(),
+        pe: json["pe"],
         marketCap: json["marketCap"],
         volume: json["volume"],
         avgVolume: json["avgVolume"],
@@ -59,9 +59,9 @@ class HIghLowPeRes {
 }
 
 class Change {
-  final String? value;
-  final String? percentage;
-  final String? direction;
+  final dynamic value;
+  final dynamic percentage;
+  final dynamic direction;
 
   Change({
     this.value,
