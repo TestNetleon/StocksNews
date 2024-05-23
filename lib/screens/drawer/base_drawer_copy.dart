@@ -17,6 +17,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import '../../utils/constants.dart';
 import '../../widgets/custom_gridview.dart';
 import '../../widgets/theme_button_small.dart';
+import '../alerts/alerts.dart';
+import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
 // import '../t&cAndPolicy/tc_policy.dart';
 
@@ -104,6 +106,72 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         ],
                       ),
                       Divider(color: ThemeColors.greyBorder, height: 20.sp),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Scaffold.of(context).closeDrawer();
+                              Navigator.pushNamed(context, Alerts.path);
+                            },
+                            child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.add_alert_outlined,
+                                  size: 22,
+                                ),
+                                const SpacerVertical(height: 5),
+                                Text(
+                                  "${provider.totalAlerts}",
+                                  style: stylePTSansBold(),
+                                ),
+                                const SpacerVertical(height: 5),
+                                Text(
+                                  provider.totalAlerts == 1
+                                      ? "Stock Alert"
+                                      : "Stock Alerts",
+                                  style: stylePTSansRegular(
+                                      fontSize: 13,
+                                      color: const Color.fromARGB(
+                                          255, 184, 187, 193)),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SpacerHorizontal(width: 40),
+                          InkWell(
+                            onTap: () {
+                              Scaffold.of(context).closeDrawer();
+                              Navigator.pushNamed(context, WatchList.path);
+                            },
+                            child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.star_border,
+                                  size: 22,
+                                ),
+                                const SpacerVertical(height: 5),
+                                Text(
+                                  "${provider.totalWatchList}",
+                                  style: stylePTSansBold(),
+                                ),
+                                const SpacerVertical(height: 5),
+                                Text(
+                                  "Stock Watchlist",
+                                  style: stylePTSansRegular(
+                                    fontSize: 13,
+                                    color: const Color.fromARGB(
+                                        255, 184, 187, 193),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SpacerVertical(height: 15),
+
                       Text(
                         "Market Data",
                         style: stylePTSansBold(),

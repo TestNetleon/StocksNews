@@ -45,28 +45,39 @@ class _HighPeStocksState extends State<HighPeStocks> {
         canLoadMore: provider.canLoadMore,
         onLoadMore: () =>
             provider.getData(showProgress: false, type: "high", loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            HIghLowPeRes? high = provider.data?[index];
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Text(
+              //   "data",
+              //   style: stylePTSansRegular(),
+              // ),
 
-            if (high == null) {
-              return const SizedBox();
-            }
-            return HighLowPEItem(
-              data: high,
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          itemCount: provider.data?.length ?? 0,
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  HIghLowPeRes? high = provider.data?[index];
+
+                  return HighLowPEItem(
+                    index: index,
+                    data: high,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                itemCount: provider.data?.length ?? 0,
+              ),
+            ],
+          ),
         ),
       ),
     );

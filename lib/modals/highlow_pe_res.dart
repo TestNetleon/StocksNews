@@ -60,7 +60,7 @@ class HIghLowPeRes {
 
 class Change {
   final String? value;
-  final num? percentage;
+  final String? percentage;
   final String? direction;
 
   Change({
