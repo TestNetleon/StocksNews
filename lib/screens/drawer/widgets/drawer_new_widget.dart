@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -14,7 +13,7 @@ class DrawerNewWidget extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 20.sp,
+          size: 20,
         ),
         const SpacerVertical(height: 10),
         Text(

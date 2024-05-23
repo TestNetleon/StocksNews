@@ -110,7 +110,7 @@ class _AppBarHomeState extends State<AppBarHome> {
           width: MediaQuery.of(context).size.width * .40,
           constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
           child: Container(
-            margin: EdgeInsets.all(8.sp),
+            margin: isPhone ? EdgeInsets.all(8.sp) : null,
             child: Image.asset(
               Images.logo,
               fit: BoxFit.contain,

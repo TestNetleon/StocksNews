@@ -291,8 +291,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             children: [
                               Image.asset(
                                 Images.info,
-                                height: 16.sp,
-                                width: 16.sp,
+                                height: 20,
+                                width: 20,
                                 color: ThemeColors.white,
                               ),
                               const SpacerHorizontal(width: 8),
