@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
-import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/item.dart';
+import 'package:stocks_news_new/modals/high_low_beta_stocks_res_dart';
+import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 
@@ -11,27 +11,29 @@ import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
 
-class FiftyTwoWeeksLowsStocks extends StatefulWidget {
-  const FiftyTwoWeeksLowsStocks({super.key});
+class NegativeBetaStocks extends StatefulWidget {
+  const NegativeBetaStocks({super.key});
 
   @override
-  State<FiftyTwoWeeksLowsStocks> createState() =>
-      _FiftyTwoWeeksLowsStocksState();
+  State<NegativeBetaStocks> createState() => _NegativeBetaStocksState();
 }
 
-class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
+class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FiftyTwoWeeksProvider>().getFiftyTwoWeekLows();
+      context
+          .read<HighLowBetaStocksProvider>()
+          .getHighLowNegativeBetaStocks(type: 3);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    FiftyTwoWeeksProvider provider = context.watch<FiftyTwoWeeksProvider>();
-    List<FiftyTwoWeeksRes>? data = provider.dataLows;
+    HighLowBetaStocksProvider provider =
+        context.watch<HighLowBetaStocksProvider>();
+    List<HighLowBetaStocksRes>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -39,11 +41,12 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getFiftyTwoWeekLows(),
+      onRefresh: () => provider.getHighLowNegativeBetaStocks(type: 3),
       child: RefreshControl(
-        onRefresh: () => provider.getFiftyTwoWeekLows(),
+        onRefresh: () => provider.getHighLowNegativeBetaStocks(type: 3),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () => provider.getFiftyTwoWeekLows(loadMore: true),
+        onLoadMore: () =>
+            provider.getHighLowNegativeBetaStocks(loadMore: true, type: 3),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,
@@ -57,7 +60,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
               children: [
                 if (index == 0)
                   DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),
-                FiftyTwoWeeksItem(
+                HighLowBetaStocksItem(
                   data: data[index],
                   index: index,
                 ),

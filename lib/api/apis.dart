@@ -94,6 +94,11 @@ class Apis {
 
   static const gapUpStocks = "/get-up-stocks";
   static const gapDownStocks = "/get-down-stocks";
+  static const weekHighs = "/week-highs";
+  static const weekLows = "/week-lows";
+  static const lowBetaStocks = "/low-beta-stocks";
+  static const highBetaStocks = "/high-beta-stocks";
+  static const negativeBetaStocks = "/negative-beta-stocks";
 }
 
 //

@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 
 mixin AuthProviderBase {
@@ -23,7 +25,7 @@ mixin AuthProviderBase {
     //         builder: (context) => const Login(
     //               dontPop: "true",
     //             )));
-    loginSheet(dontPop: "true");
+    isPhone ? loginSheet(dontPop: "true") : loginSheetTablet(dontPop: "true");
 
     Preference.logout();
     navigatorKey.currentContext!.read<UserProvider>().clearUser();

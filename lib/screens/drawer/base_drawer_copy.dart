@@ -5,7 +5,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -88,7 +90,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               text: "Log in",
                               onPressed: () {
                                 Scaffold.of(context).closeDrawer();
-                                loginSheet(dontPop: "true");
+                                isPhone
+                                    ? loginSheet(dontPop: "true")
+                                    : loginSheetTablet(dontPop: "true");
                               },
                             ),
                           ),
@@ -99,7 +103,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               text: "Sign up",
                               onPressed: () {
                                 Scaffold.of(context).closeDrawer();
-                                signupSheet(dontPop: "true");
+                                isPhone
+                                    ? signupSheet(dontPop: "true")
+                                    : signupSheetTablet(dontPop: "true");
                               },
                             ),
                           ),

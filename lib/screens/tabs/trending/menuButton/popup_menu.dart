@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -49,7 +50,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                   //   createRoute(const Login()),
                   // );
 
-                  await loginSheet();
+                  isPhone ? await loginSheet() : await loginSheetTablet();
 
                   if (context.read<UserProvider>().user == null) {
                     return;
@@ -96,7 +97,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                   //   context,
                   //   createRoute(const Login()),
                   // );
-                  await loginSheet();
+                  isPhone ? await loginSheet() : await loginSheetTablet();
 
                   if (context.read<UserProvider>().user == null) {
                     return;

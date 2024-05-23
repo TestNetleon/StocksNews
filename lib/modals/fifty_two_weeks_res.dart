@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-List<FiftyTwoWeeksRes> fifttTwoWeeksResFromJson(String str) =>
+List<FiftyTwoWeeksRes> fiftyTwoWeeksResFromJson(String str) =>
     List<FiftyTwoWeeksRes>.from(
         json.decode(str).map((x) => FiftyTwoWeeksRes.fromJson(x)));
 
@@ -12,16 +12,16 @@ String fiftyTwoWeeksResToJson(List<FiftyTwoWeeksRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class FiftyTwoWeeksRes {
-  final String symbol;
-  final String name;
-  final String? price;
-  final double? changesPercentage;
-  final String? yearHigh;
-  final String? yearLow;
-  final String? previousClose;
-  final String? dayLow;
-  final String? dayHigh;
-  final String? image;
+  final dynamic symbol;
+  final dynamic name;
+  final dynamic price;
+  final dynamic changesPercentage;
+  final dynamic yearHigh;
+  final dynamic yearLow;
+  final dynamic previousClose;
+  final dynamic dayLow;
+  final dynamic dayHigh;
+  final dynamic image;
 
   FiftyTwoWeeksRes({
     required this.symbol,
@@ -41,7 +41,7 @@ class FiftyTwoWeeksRes {
         symbol: json["symbol"],
         name: json["name"],
         price: json["price"],
-        changesPercentage: json["changesPercentage"]?.toDouble(),
+        changesPercentage: json["changesPercentage"],
         yearHigh: json["yearHigh"],
         yearLow: json["yearLow"],
         previousClose: json["previousClose"],

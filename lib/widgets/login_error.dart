@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
@@ -56,7 +58,7 @@ class LoginError extends StatelessWidget {
                     //     state: state,
                     //   )),
                     // );
-                    await loginSheet(state: state);
+                    isPhone ? await loginSheet() : await loginSheetTablet();
                   },
                   text: "Log in",
                   showArrow: false,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
+import 'package:stocks_news_new/modals/high_low_beta_stocks_res_dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
@@ -11,12 +11,12 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class FiftyTwoWeeksItem extends StatelessWidget {
-  final FiftyTwoWeeksRes data;
+class HighLowBetaStocksItem extends StatelessWidget {
+  final HighLowBetaStocksRes data;
   final int index;
   final bool losers;
 //
-  const FiftyTwoWeeksItem({
+  const HighLowBetaStocksItem({
     required this.data,
     required this.index,
     this.losers = false,
@@ -57,7 +57,7 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     width: 43,
                     height: 43,
-                    child: ThemeImageView(url: data.image ?? ""),
+                    child: ThemeImageView(url: data.image),
                   ),
                 ),
               ),
@@ -100,7 +100,7 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.changesPercentage.toString()}%",
+                    "${data.beta.toString()}%",
                     style: stylePTSansRegular(
                         fontSize: 12,
                         color:
@@ -174,18 +174,17 @@ class FiftyTwoWeeksItem extends StatelessWidget {
               child: Column(
                 children: [
                   InnerRowItem(
-                    lable: "52-Week High",
-                    value: "${data.yearHigh}",
+                    lable: "PE Ratio",
+                    value: "${data.pe}",
                   ),
                   InnerRowItem(
-                    lable: "52-Week Low",
-                    value: "${data.yearLow}",
+                    lable: "Market Cap",
+                    value: data.marketCap,
                   ),
+                  InnerRowItem(lable: "Volume", value: "${data.volume}"),
                   InnerRowItem(
-                      lable: "Previous Close", value: "${data.previousClose}"),
-                  InnerRowItem(
-                    lable: "Intraday Range",
-                    value: "${data.dayLow}-${data.dayHigh}",
+                    lable: "Average Volume",
+                    value: "${data.avgVolume}",
                   ),
                 ],
               ),

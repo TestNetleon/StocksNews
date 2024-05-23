@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -200,7 +202,9 @@ class _StartIndexState extends State<StartIndex> {
                       //     ),
                       //   ),
                       // );
-                      loginSheet(dontPop: "true");
+                      isPhone
+                          ? loginSheet(dontPop: "true")
+                          : loginSheetTablet(dontPop: "true");
                     },
                     text: "Log In",
                   ),
@@ -219,7 +223,9 @@ class _StartIndexState extends State<StartIndex> {
                       //     ),
                       //   ),
                       // );
-                      signupSheet(dontPop: "true");
+                      isPhone
+                          ? signupSheet(dontPop: "true")
+                          : signupSheetTablet(dontPop: "true");
                     },
                     text: "Create New Account",
                   ),

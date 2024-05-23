@@ -10,6 +10,7 @@ import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
+import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
@@ -42,6 +43,7 @@ import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
@@ -98,7 +100,8 @@ class Routes {
     IndexBlog.path: (_) => const IndexBlog(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
     HighLowPEIndex.path: (_) => const HighLowPEIndex(),
-    // FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),
+    FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),
+    HighLowsBetaStocksIndex.path: (_) => const HighLowsBetaStocksIndex(),
 
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
   };
@@ -318,9 +321,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
       ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
       ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
-      ChangeNotifierProvider(
-          create: (_) =>
-              PennyStocksProvider()), // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
+      ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
+      ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
+      ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

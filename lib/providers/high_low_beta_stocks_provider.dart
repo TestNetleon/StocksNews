@@ -6,31 +6,30 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
+import 'package:stocks_news_new/modals/high_low_beta_stocks_res_dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
+class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
-  List<FiftyTwoWeeksRes>? _data;
+  List<HighLowBetaStocksRes>? _data;
   String? _error;
   int _page = 1;
   Extra? _extraUp;
 
-  List<FiftyTwoWeeksRes>? get data => _data;
+  List<HighLowBetaStocksRes>? get data => _data;
   Extra? get extraUp => _extraUp;
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
 
   // ************* GAP DOWN **************** //
-  List<FiftyTwoWeeksRes>? _dataLows;
   String? _errorDown;
   int _pageDown = 1;
   // int? _totalPageDown;
   Extra? _extraDown;
 
-  List<FiftyTwoWeeksRes>? get dataLows => _dataLows;
   bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
@@ -40,20 +39,8 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  // void setStatusLosers(status) {
-  //   _status = status;
-  //   notifyListeners();
-  // }
-  // void setOpenIndex(index) {
-  //   // _openIndex = index;
-  //   notifyListeners();
-  // }
-  // void setOpenIndexLosers(index) {
-  //   // _openIndexLosers = index;
-  //   notifyListeners();
-  // }
-
-  Future getFiftyTwoWeekHigh({loadMore = false}) async {
+  Future getHighLowNegativeBetaStocks({loadMore = false, type = 1}) async {
+    log("text Set $type");
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -65,7 +52,11 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
       Map request = {"page": "$_page"};
 
       ApiResponse response = await apiRequest(
-        url: Apis.weekHighs,
+        url: type == 1
+            ? Apis.highBetaStocks
+            : type == 2
+                ? Apis.lowBetaStocks
+                : Apis.negativeBetaStocks,
         request: request,
         showProgress: false,
       );
@@ -73,10 +64,11 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         if (_page == 1) {
-          _data = fiftyTwoWeeksResFromJson(jsonEncode(response.data));
+          _data = highLowBetaStocksResFromJson(jsonEncode(response.data));
           _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _data?.addAll(fiftyTwoWeeksResFromJson(jsonEncode(response.data)));
+          _data
+              ?.addAll(highLowBetaStocksResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
@@ -88,47 +80,6 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
-      setStatus(Status.loaded);
-    }
-  }
-
-  Future getFiftyTwoWeekLows({loadMore = false}) async {
-    if (loadMore) {
-      _pageDown++;
-      setStatus(Status.loadingMore);
-    } else {
-      _pageDown = 1;
-      setStatus(Status.loading);
-    }
-    try {
-      Map request = {"page": "$_pageDown"};
-
-      ApiResponse response = await apiRequest(
-        url: Apis.weekLows,
-        request: request,
-        showProgress: false,
-      );
-
-      if (response.status) {
-        _errorDown = null;
-        if (_pageDown == 1) {
-          _dataLows = fiftyTwoWeeksResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
-        } else {
-          _dataLows
-              ?.addAll(fiftyTwoWeeksResFromJson(jsonEncode(response.data)));
-        }
-      } else {
-        if (_pageDown == 1) {
-          _dataLows = null;
-          _errorDown = response.message;
-          // showErrorMessage(message: response.message);
-        }
-      }
-      setStatus(Status.loaded);
-    } catch (e) {
-      _dataLows = null;
       log(e.toString());
       setStatus(Status.loaded);
     }

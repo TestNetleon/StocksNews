@@ -12,8 +12,10 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
@@ -64,7 +66,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                     //   createRoute(const Login()),
                     // );
                     _vibrate();
-                    await loginSheet();
+                    isPhone ? await loginSheet() : await loginSheetTablet();
 
                     if (context.read<UserProvider>().user == null) {
                       return;
@@ -109,7 +111,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                     //   createRoute(const Login()),
                     // );
 
-                    await loginSheet();
+                    isPhone ? await loginSheet() : await loginSheetTablet();
                     if (context.read<UserProvider>().user == null) {
                       return;
                     }
