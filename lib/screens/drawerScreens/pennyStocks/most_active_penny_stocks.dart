@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gap_up_res.dart';
-import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
+import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
@@ -10,37 +10,38 @@ import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
 
-class GapDownStocks extends StatefulWidget {
-  const GapDownStocks({super.key});
+class MostActivePennyStocks extends StatefulWidget {
+  const MostActivePennyStocks({super.key});
 
   @override
-  State<GapDownStocks> createState() => _GapDownStocksState();
+  State<MostActivePennyStocks> createState() => _MostActivePennyStocksState();
 }
 
-class _GapDownStocksState extends State<GapDownStocks> {
+class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<GapUpDownProvider>().getGapDownStocks();
+      context.read<PennyStocksProvider>().getGapUpStocks();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    GapUpDownProvider provider = context.watch<GapUpDownProvider>();
-    List<GapUpRes>? data = provider.dataDown;
+    PennyStocksProvider provider = context.watch<PennyStocksProvider>();
+    List<GapUpRes>? data = provider.data;
+
     return BaseUiContainer(
       error: provider.error,
       hasData: data != null && data.isNotEmpty,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getGapDownStocks(),
+      onRefresh: () => provider.getGapUpStocks(),
       child: RefreshControl(
-        onRefresh: () => provider.getGapDownStocks(),
+        onRefresh: () => provider.getGapUpStocks(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () => provider.getGapDownStocks(loadMore: true),
+        onLoadMore: () => provider.getGapUpStocks(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,
@@ -50,7 +51,10 @@ class _GapDownStocksState extends State<GapDownStocks> {
             if (data == null || data.isEmpty) {
               return const SizedBox();
             }
-            return UpDownStocksItem(data: data[index], index: index);
+            return UpDownStocksItem(
+              data: data[index],
+              index: index,
+            );
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider(

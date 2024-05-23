@@ -13,17 +13,15 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
-class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
+class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
   List<GapUpRes>? _data;
   String? _error;
   int _page = 1;
-  Extra? _extraUp;
 
   List<GapUpRes>? get data => _data;
-  Extra? get extraUp => _extraUp;
-  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
+  bool get canLoadMore => _page < (0 ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
 
@@ -31,11 +29,9 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   List<GapUpRes>? _dataDown;
   String? _errorDown;
   int _pageDown = 1;
-  // int? _totalPageDown;
-  Extra? _extraDown;
 
   List<GapUpRes>? get dataDown => _dataDown;
-  bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
+  bool get canLoadMoreDown => _pageDown < (0 ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
 
@@ -57,7 +53,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   //   notifyListeners();
   // }
 
-  Future getGapUpStocks({loadMore = false}) async {
+  Future getGapUpStocks({showProgress = false, loadMore = false}) async {
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -82,7 +78,6 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _data = gapUpResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
         } else {
           _data?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }
@@ -101,7 +96,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getGapDownStocks({loadMore = false}) async {
+  Future getGapDownStocks({showProgress = false, loadMore = false}) async {
     if (loadMore) {
       _pageDown++;
       setStatus(Status.loadingMore);
@@ -126,7 +121,6 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         _errorDown = null;
         if (_pageDown == 1) {
           _dataDown = gapUpResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
         } else {
           _dataDown?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }

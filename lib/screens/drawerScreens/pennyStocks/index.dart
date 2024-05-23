@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/gap_down_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/gap_up_stocks.dart';
+import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/most_active_penny_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import '../../../utils/constants.dart';
 
-class GapUpDownStocks extends StatelessWidget {
-  static const path = "GapUpDownStocks";
+class PennyStocks extends StatelessWidget {
+  static const path = "PennyStocks";
 
-  final StocksType? type;
-  const GapUpDownStocks({super.key, this.type = StocksType.gapUp});
+  // final StocksType? type;
+  const PennyStocks({
+    super.key,
+    // this.type = StocksType.gapUp
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +32,11 @@ class GapUpDownStocks extends StatelessWidget {
         child: CustomTabContainerNEW(
           scrollable: false,
           tabsPadding: EdgeInsets.zero,
-          tabs: ["Gap Up Stocks", "Gap Down Stocks"],
+          tabs: ["Most Active", "Most Popular", "Top Today"],
           widgets: [
-            GapUpStocks(),
-            GapDownStocks(),
+            MostActivePennyStocks(),
+            MostActivePennyStocks(),
+            MostActivePennyStocks(),
           ],
         ),
       ),

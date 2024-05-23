@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
+import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../../moreStocks/topGainerLoser/item.dart';
+import 'item.dart';
 
 class HighPeStocks extends StatefulWidget {
   const HighPeStocks({super.key});
@@ -31,7 +31,6 @@ class _HighPeStocksState extends State<HighPeStocks> {
   @override
   Widget build(BuildContext context) {
     HighLowPeProvider provider = context.watch<HighLowPeProvider>();
-    List<HighLowPeDataRes>? high = provider.data?.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -46,44 +45,39 @@ class _HighPeStocksState extends State<HighPeStocks> {
         canLoadMore: provider.canLoadMore,
         onLoadMore: () =>
             provider.getData(showProgress: false, type: "high", loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            HighLowPeDataRes? high = provider.data?.data?[index];
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Text(
+              //   "data",
+              //   style: stylePTSansRegular(),
+              // ),
 
-            // if (up == null || up.isEmpty) {
-            //   return const SizedBox();
-            // }
-            // return GainerLoserItem(
-            //   data: up[index],
-            //   index: index,
-            // );
-            return GainerLoserItem(
-              data: GainersLosersDataRes(
-                symbol: high?.symbol ?? "",
-                name: high?.name ?? "",
-                avgVolume: "${high?.avgVolume ?? "N/A"}",
-                changesPercentage: high?.changesPercentage,
-                previousClose: "${high?.previousClose ?? "N/A"}",
-                price: high?.price ?? "N/A",
-                range: "${high?.range ?? "N/A"}",
-                volume: "${high?.volume ?? "N/A"}",
-                image: high?.image,
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  HIghLowPeRes? high = provider.data?[index];
+
+                  return HighLowPEItem(
+                    index: index,
+                    data: high,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                itemCount: provider.data?.length ?? 0,
               ),
-              index: index,
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          // itemCount: up?.length ?? 0,
-          itemCount: high?.length ?? 0,
+            ],
+          ),
         ),
       ),
     );

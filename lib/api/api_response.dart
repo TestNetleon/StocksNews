@@ -69,6 +69,7 @@ class Extra {
   final String? appUpdateMsg;
   final String? title;
   final String? subTitle;
+  final int? totalPages;
 
   Extra({
     this.search,
@@ -81,6 +82,7 @@ class Extra {
     this.text,
     this.title,
     this.txnSize,
+    this.totalPages,
     this.userAlert,
     this.subTitle,
     this.inAppMsg,
@@ -98,6 +100,7 @@ class Extra {
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         title: json["title"],
         subTitle: json["sub_title"],
+        totalPages: json["total_pages"],
         exchangeShortName: json["exchange_short_name"] == null
             ? []
             : List<KeyValueElement>.from(json["exchange_short_name"]!
@@ -139,6 +142,7 @@ class Extra {
         "user_alerts": userAlert,
         "title": title,
         "sub_title": subTitle,
+        "total_pages": totalPages,
         "exchange_short_name": exchangeShortName == null
             ? []
             : List<dynamic>.from(exchangeShortName!.map((x) => x.toJson())),

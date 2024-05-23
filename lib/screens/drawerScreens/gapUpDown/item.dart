@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class UpDownStocksItem extends StatelessWidget {
-  final GapUpData data;
+  final GapUpRes data;
   final int index;
   final bool losers;
 //
@@ -93,14 +93,14 @@ class UpDownStocksItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${data.price}",
+                    data.price,
                     style: stylePTSansBold(fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.changesPercentage}%",
+                    "${data.priceChangeSinceOpen}%",
                     style: stylePTSansRegular(
                         fontSize: 12,
                         color:
@@ -183,10 +183,10 @@ class UpDownStocksItem extends StatelessWidget {
                   ),
                   InnerRowItem(
                       lable: "Price Change Since Open",
-                      value: "${data.changeSinceOpen}"),
+                      value: data.priceChangeSinceOpen),
                   InnerRowItem(
                     lable: "Daily Volume",
-                    value: "${data.volume}",
+                    value: data.volume,
                   ),
                 ],
               ),

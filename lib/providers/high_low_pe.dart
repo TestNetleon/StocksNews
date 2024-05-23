@@ -6,17 +6,17 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/modals/more_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
+import '../modals/highlow_pe_res.dart';
 
 class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
-  HighLowPERes? _data;
-  HighLowPERes? get data => _data;
+  List<HIghLowPeRes>? _data;
+  List<HIghLowPeRes>? get data => _data;
 
   Status _status = Status.ideal;
   Status get status => _status;
@@ -28,12 +28,16 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   List<MoreStocksRes>? get dataList => _dataList;
 
   bool get isLoading => _status == Status.loading;
-  bool get canLoadMore => _pageUp < (_data?.lastPage ?? 1);
+
+  bool canLoadMore = true;
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
   int get openIndex => _openIndex;
+
+  String? title;
+  String? subTitle;
 
   void setStatus(status) {
     _status = status;
@@ -47,6 +51,7 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future getData(
       {showProgress = false, loadMore = false, required String type}) async {
+    log("-------------$type----------");
     _openIndex = -1;
     if (loadMore) {
       _pageUp++;
@@ -71,9 +76,14 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         if (_pageUp == 1) {
-          _data = highLowPEResFromJson(jsonEncode(response.data));
+          title = response.extra?.title;
+          subTitle = response.extra?.subTitle;
+          canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
+          _data = hIghLowPeResFromJson(jsonEncode(response.data));
         } else {
-          _data?.data?.addAll(HighLowPERes.fromJson(response.data).data ?? []);
+          List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
+              (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
+          _data?.addAll(parsedData);
         }
       } else {
         if (_pageUp == 1) {
