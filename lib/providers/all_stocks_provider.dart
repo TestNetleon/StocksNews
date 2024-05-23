@@ -124,7 +124,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     clear = true,
     inAppMsgId,
   }) async {
-    log("Can load more $canLoadMore");
+    // log("Can load more $canLoadMore");
     if (search != null) {
       valueSearch = search;
       _page = 1;

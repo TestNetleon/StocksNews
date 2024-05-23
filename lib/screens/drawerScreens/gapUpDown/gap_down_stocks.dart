@@ -40,7 +40,7 @@ class _GapDownStocksState extends State<GapDownStocks> {
       onRefresh: () => provider.getGapDownStocks(),
       child: RefreshControl(
         onRefresh: () => provider.getGapDownStocks(),
-        canLoadMore: provider.canLoadMore,
+        canLoadMore: provider.canLoadMoreDown,
         onLoadMore: () => provider.getGapDownStocks(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
