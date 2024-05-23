@@ -22,7 +22,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<GapUpDownProvider>().getGapUpStocks(showProgress: true);
+      context.read<GapUpDownProvider>().getGapUpStocks();
     });
   }
 
@@ -37,9 +37,9 @@ class _GapUpStocksState extends State<GapUpStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getGapUpStocks(showProgress: true),
+      onRefresh: () => provider.getGapUpStocks(),
       child: RefreshControl(
-        onRefresh: () => provider.getGapUpStocks(showProgress: true),
+        onRefresh: () => provider.getGapUpStocks(),
         canLoadMore: provider.canLoadMore,
         onLoadMore: () => provider.getGapUpStocks(loadMore: true),
         child: ListView.separated(
@@ -62,8 +62,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
               height: 20.sp,
             );
           },
-          // itemCount: up?.length ?? 0,
-          itemCount: 5,
+          itemCount: data?.length ?? 0,
         ),
       ),
     );
