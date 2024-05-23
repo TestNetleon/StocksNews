@@ -11,21 +11,21 @@ import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
 import 'item.dart';
 
-class HighPeStocks extends StatefulWidget {
-  const HighPeStocks({super.key});
+class HighPeGrowthStocks extends StatefulWidget {
+  const HighPeGrowthStocks({super.key});
 
   @override
-  State<HighPeStocks> createState() => _HighPeStocksState();
+  State<HighPeGrowthStocks> createState() => _HighPeGrowthStocksState();
 }
 
-class _HighPeStocksState extends State<HighPeStocks> {
+class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<HighLowPeProvider>()
-          .getData(showProgress: true, type: "high");
+          .getData(showProgress: true, type: "highGrowth");
     });
   }
 

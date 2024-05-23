@@ -24,18 +24,16 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   int _pageUp = 1;
   int _openIndex = -1;
 
-  List<MoreStocksRes>? _dataList;
-  List<MoreStocksRes>? get dataList => _dataList;
+  // List<MoreStocksRes>? _dataList;
+  // List<MoreStocksRes>? get dataList => _dataList;
 
   bool get isLoading => _status == Status.loading;
-
   bool canLoadMore = true;
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
   int get openIndex => _openIndex;
-
   String? title;
   String? subTitle;
 
@@ -69,7 +67,13 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-        url: type == "high" ? Apis.highPE : Apis.lowPE,
+        url: type == "high"
+            ? Apis.highPE
+            : type == "low"
+                ? Apis.lowPE
+                : type == "highGrowth"
+                    ? Apis.highPEGrowth
+                    : Apis.lowPEGrowth,
         request: request,
         showProgress: false,
       );
@@ -81,9 +85,10 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
           subTitle = response.extra?.subTitle;
           _data = hIghLowPeResFromJson(jsonEncode(response.data));
         } else {
-          List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
-              (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
-          _data?.addAll(parsedData);
+          // List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
+          //     (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
+          // _data?.addAll(parsedData);
+          _data?.addAll(hIghLowPeResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_pageUp == 1) {

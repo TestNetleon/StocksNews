@@ -14,7 +14,10 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
 class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
-  // ************* GAP DOWN **************** //
+  int _openIndex = -1;
+  int? get openIndex => _openIndex;
+
+  // ************* GAP Up **************** //
   Status _statusUp = Status.ideal;
   List<GapUpRes>? _dataUp;
   String? _errorUp;
@@ -56,18 +59,10 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  // void setStatusLosers(status) {
-  //   _status = status;
-  //   notifyListeners();
-  // }
-  // void setOpenIndex(index) {
-  //   // _openIndex = index;
-  //   notifyListeners();
-  // }
-  // void setOpenIndexLosers(index) {
-  //   // _openIndexLosers = index;
-  //   notifyListeners();
-  // }
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
 
   Future getGapUpStocks({loadMore = false}) async {
     if (loadMore) {
@@ -77,6 +72,10 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       _pageUp = 1;
       setStatusUp(Status.loading);
     }
+    _openIndex = -1;
+    _extraDown = null;
+    _extraUp = null;
+
     try {
       Map request = {
         "token":
@@ -121,6 +120,9 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       _pageDown = 1;
       setStatusDown(Status.loading);
     }
+    _openIndex = -1;
+    _extraUp = null;
+    _extraDown = null;
     try {
       Map request = {
         "token":

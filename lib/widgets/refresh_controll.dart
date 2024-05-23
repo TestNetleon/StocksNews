@@ -36,7 +36,7 @@ class _RefreshControlState extends State<RefreshControl> {
         height: widget.canLoadMore ? 50 : 0,
         builder: (BuildContext context, LoadStatus? mode) {
           Widget body = const SizedBox();
-          log("******************** $mode ");
+          // log("******************** $mode ");
           if (mode == LoadStatus.idle) {
             // body = const CircularProgressIndicator(
             //   strokeWidth: 4,
