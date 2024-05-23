@@ -91,7 +91,7 @@ class PennyStocksItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${data.price ?? "N?A"}",
+                    data.price ?? "N?A",
                     style: stylePTSansBold(fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

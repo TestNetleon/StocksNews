@@ -133,7 +133,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   String containsSpecificPath(Uri uri) {
-    log("-----contain path ${uri}");
+    log("-----contain path $uri");
     if (uri.path.contains('/blog/')) {
       return "blog";
     } else if (uri.path.contains('/stock-detail')) {

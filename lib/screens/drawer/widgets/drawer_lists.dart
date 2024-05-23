@@ -11,8 +11,6 @@ import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart'
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-import '../../drawerScreens/fiftyTwoWeeks/index.dart';
-
 List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.calendar_month_outlined,

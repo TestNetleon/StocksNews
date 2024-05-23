@@ -1,8 +1,6 @@
 // import 'package:flutter/gestures.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -304,7 +302,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           ),
                         ),
                       ),
-                      SpacerVertical(height: 20),
+                      const SpacerVertical(height: 20),
                       // Divider(
                       //   color: ThemeColors.greyBorder,
                       //   height: 20.sp,
