@@ -20,12 +20,15 @@ import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/in_app_messages.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
+  Utils().showLog("****************** GOT THE SILENT PUSH *****************");
+
   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
   // provider.user?.notificationSeen = false;
   HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
@@ -223,11 +226,18 @@ class FirebaseApi {
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
     FirebaseMessaging.onMessage.listen((message) async {
+      Utils().showLog("on Message called ==>${message.data}");
+      // showInAppCard(
+      //   title: "Dummy Title",
+      //   description: "Dummy message",
+      //   image: "https://app.stocks.news/public/front/images/main-logo.png",
+      //   onClick: () => {},
+      // );
+      // return;
+
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
       // provider.notificationSeen = false;
       provider.setNotification(false);
-
-      Utils().showLog("on Message called ==>${message.data}");
 
       final data = message.data;
       String? image = data["image"];
