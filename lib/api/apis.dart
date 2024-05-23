@@ -33,6 +33,7 @@ class Apis {
   static const homeAlert = "/home-alerts";
   static const newsAlertGraphData = "/stock-historical-chart";
   static const featuredTicker = "/featured-tickers";
+  static const mostActivePenny = "/most-active-penny-stocks";
 
   static const search = "/search";
   static const searchWithNews = "/search_with_news";

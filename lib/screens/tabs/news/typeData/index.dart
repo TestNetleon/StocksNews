@@ -27,78 +27,84 @@ class NewsTypeData extends StatelessWidget {
         //   showPreparingText: true,
         //   onRefresh: () => provider.onRefresh(),
         //   child:
-        RefreshControl(
-      onRefresh: () async => provider.onRefresh(),
-      canLoadMore: provider.canLoadMore,
-      onLoadMore: () async => provider.onLoadMore(),
-      child: ListView.separated(
-        itemCount: provider.data?.length ?? 0,
-        padding: EdgeInsets.only(bottom: 12.sp, top: 12.sp),
-        itemBuilder: (context, index) {
-          NewsData? newsItemData = provider.data?[index];
-          if (index == 0) {
-            return Column(
-              children: [
-                NewsItemSeparated(
-                  showCategory: newsItemData?.authors?.isEmpty == true,
-                  news: News(
-                    slug: newsItemData?.slug,
-                    // publishedDate: newsItemData.publishedDate,
-                    title: newsItemData?.title ?? "",
-                    image: newsItemData?.image ?? "",
-                    site: newsItemData?.site ?? '',
-                    authors: newsItemData?.authors,
-                    postDate: DateFormat("MMMM dd, yyyy")
-                        .format(newsItemData?.publishedDate ?? DateTime.now()),
-                    url: newsItemData?.url,
-                    //  "November 29, 2023",
+        BaseUiContainer(
+      error: provider.error,
+      hasData: !provider.isLoading && provider.data != null,
+      isLoading: provider.isLoading,
+      showPreparingText: true,
+      child: RefreshControl(
+        onRefresh: () async => provider.onRefresh(),
+        canLoadMore: provider.canLoadMore,
+        onLoadMore: () async => provider.onLoadMore(),
+        child: ListView.separated(
+          itemCount: provider.data?.length ?? 0,
+          padding: EdgeInsets.only(bottom: 12.sp, top: 12.sp),
+          itemBuilder: (context, index) {
+            NewsData? newsItemData = provider.data?[index];
+            if (index == 0) {
+              return Column(
+                children: [
+                  NewsItemSeparated(
+                    showCategory: newsItemData?.authors?.isEmpty == true,
+                    news: News(
+                      slug: newsItemData?.slug,
+                      // publishedDate: newsItemData.publishedDate,
+                      title: newsItemData?.title ?? "",
+                      image: newsItemData?.image ?? "",
+                      site: newsItemData?.site ?? '',
+                      authors: newsItemData?.authors,
+                      postDate: DateFormat("MMMM dd, yyyy").format(
+                          newsItemData?.publishedDate ?? DateTime.now()),
+                      url: newsItemData?.url,
+                      //  "November 29, 2023",
+                    ),
                   ),
-                ),
-                // NewsItem(
-                //   showCategory: newsItemData.authors?.isEmpty == true,
-                //   news: News(
-                //     slug: newsItemData.slug,
-                //     // publishedDate: newsItemData.publishedDate,
-                //     title: newsItemData.title,
-                //     image: newsItemData.image,
-                //     site: newsItemData.site ?? '',
-                //     authors: newsItemData.authors,
+                  // NewsItem(
+                  //   showCategory: newsItemData.authors?.isEmpty == true,
+                  //   news: News(
+                  //     slug: newsItemData.slug,
+                  //     // publishedDate: newsItemData.publishedDate,
+                  //     title: newsItemData.title,
+                  //     image: newsItemData.image,
+                  //     site: newsItemData.site ?? '',
+                  //     authors: newsItemData.authors,
 
-                //     postDate: DateFormat("MMMM dd, yyyy")
-                //         .format(newsItemData.publishedDate),
-                //     url: newsItemData.url,
-                //     //  "November 29, 2023",
-                //   ),
-                // ),
-              ],
+                  //     postDate: DateFormat("MMMM dd, yyyy")
+                  //         .format(newsItemData.publishedDate),
+                  //     url: newsItemData.url,
+                  //     //  "November 29, 2023",
+                  //   ),
+                  // ),
+                ],
+              );
+            }
+
+            return NewsItem(
+              showCategory: newsItemData?.authors?.isEmpty == true,
+              news: News(
+                slug: newsItemData?.slug,
+                // publishedDate: newsItemData.publishedDate,
+                title: newsItemData?.title ?? "",
+                image: newsItemData?.image ?? "",
+                site: newsItemData?.site ?? '',
+                authors: newsItemData?.authors,
+                postDate: DateFormat("MMMM dd, yyyy")
+                    .format(newsItemData?.publishedDate ?? DateTime.now()),
+                url: newsItemData?.url,
+                //  "November 29, 2023",
+              ),
             );
-          }
-
-          return NewsItem(
-            showCategory: newsItemData?.authors?.isEmpty == true,
-            news: News(
-              slug: newsItemData?.slug,
-              // publishedDate: newsItemData.publishedDate,
-              title: newsItemData?.title ?? "",
-              image: newsItemData?.image ?? "",
-              site: newsItemData?.site ?? '',
-              authors: newsItemData?.authors,
-              postDate: DateFormat("MMMM dd, yyyy")
-                  .format(newsItemData?.publishedDate ?? DateTime.now()),
-              url: newsItemData?.url,
-              //  "November 29, 2023",
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          // return const SpacerVertical(height: 16);
-          return Divider(
-            color: ThemeColors.greyBorder,
-            height: 20.sp,
-          );
-        },
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            // return const SpacerVertical(height: 16);
+            return Divider(
+              color: ThemeColors.greyBorder,
+              height: 20.sp,
+            );
+          },
+        ),
+        // ),
       ),
-      // ),
     );
   }
 }

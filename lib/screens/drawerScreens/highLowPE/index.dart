@@ -31,7 +31,12 @@ class HighLowPEIndex extends StatelessWidget {
         child: CustomTabContainerNEW(
           scrollable: true,
           tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: const ["High PE", "Low PE", "High PE Growth", "Low PE Growth"],
+          tabs: const [
+            "High PE Ratio",
+            "Low PE Ratio",
+            "High PE Growth",
+            "Low PE Growth"
+          ],
           widgets: const [
             HighPeStocks(),
             LowPEStocks(),

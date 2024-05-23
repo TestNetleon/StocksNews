@@ -296,7 +296,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       selectedIndex = index;
       notifyListeners();
       String? id = _tabs?[index].id;
-      getNews(tabChangeLoading: false, id: id, showProgress: true);
+      getNews(tabChangeLoading: false, id: id, showProgress: false);
     }
   }
 
@@ -337,7 +337,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     getNews(
       tabChangeLoading: false,
       id: _tabs?[selectedIndex].id,
-      showProgress: true,
+      showProgress: false,
     );
   }
 

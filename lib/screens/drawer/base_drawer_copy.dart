@@ -1,9 +1,12 @@
 // import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
@@ -15,11 +18,16 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import '../../utils/constants.dart';
+import '../../utils/utils.dart';
 import '../../widgets/custom_gridview.dart';
 import '../../widgets/theme_button_small.dart';
 import '../alerts/alerts.dart';
+import '../myAccount/my_account.dart';
+import '../t&cAndPolicy/tc_policy.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
+import 'widgets/drawer_more_service.dart';
+import 'widgets/profile_image.dart';
 // import '../t&cAndPolicy/tc_policy.dart';
 
 class BaseDrawer extends StatefulWidget {
@@ -50,6 +58,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
     return SafeArea(
       child: Drawer(
         backgroundColor: ThemeColors.background,
@@ -80,30 +89,73 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         ),
                       ),
                       const SpacerVertical(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ThemeButtonSmall(
-                              showArrow: false,
-                              text: "Log in",
-                              onPressed: () {
-                                Scaffold.of(context).closeDrawer();
-                                loginSheet(dontPop: "true");
-                              },
+
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, MyAccount.path);
+                        },
+                        child: Row(
+                          children: [
+                            ProfileImage(
+                              url: userProvider.user?.image,
+                              cameraSize: 12,
                             ),
-                          ),
-                          const SpacerHorizontal(width: 10),
-                          Expanded(
-                            child: ThemeButtonSmall(
-                              showArrow: false,
-                              text: "Sign up",
-                              onPressed: () {
-                                Scaffold.of(context).closeDrawer();
-                                signupSheet(dontPop: "true");
-                              },
+                            const SpacerHorizontal(width: 10),
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  userProvider.user?.name?.isNotEmpty == true
+                                      ? "${userProvider.user?.name}"
+                                      : "Update your account",
+                                  style: stylePTSansBold(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  userProvider.user?.email?.isNotEmpty == true
+                                      ? "${userProvider.user?.email}"
+                                      : "Update your account",
+                                  style: stylePTSansRegular(
+                                      color: ThemeColors.greyText,
+                                      fontSize: 12),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            )),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: userProvider.user == null,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ThemeButtonSmall(
+                                showArrow: false,
+                                text: "Log in",
+                                onPressed: () {
+                                  Scaffold.of(context).closeDrawer();
+                                  loginSheet(dontPop: "true");
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                            const SpacerHorizontal(width: 10),
+                            Expanded(
+                              child: ThemeButtonSmall(
+                                showArrow: false,
+                                text: "Sign up",
+                                onPressed: () {
+                                  Scaffold.of(context).closeDrawer();
+                                  signupSheet(dontPop: "true");
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Divider(color: ThemeColors.greyBorder, height: 20.sp),
 
@@ -192,30 +244,30 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         },
                       ),
 
-                      // Align(
-                      //   alignment: Alignment.center,
-                      //   child: InkWell(
-                      //     borderRadius: BorderRadius.circular(20.sp),
-                      //     onTap: () {
-                      //       easeOutBuilder(context,
-                      //           child: const DrawerMoreService());
-                      //     },
-                      //     child: Ink(
-                      //       padding: EdgeInsets.symmetric(
-                      //           horizontal: 10.sp, vertical: 5.sp),
-                      //       decoration: BoxDecoration(
-                      //           color: ThemeColors.greyBorder.withOpacity(0.3),
-                      //           borderRadius: BorderRadius.circular(20.sp),
-                      //           border:
-                      //               Border.all(color: ThemeColors.greyBorder)),
-                      //       child: Text(
-                      //         "More services",
-                      //         style: stylePTSansRegular(
-                      //             fontSize: 12, color: ThemeColors.white),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(20.sp),
+                          onTap: () {
+                            easeOutBuilder(context,
+                                child: const DrawerMoreService());
+                          },
+                          child: Ink(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.sp, vertical: 5.sp),
+                            decoration: BoxDecoration(
+                                color: ThemeColors.greyBorder.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(20.sp),
+                                border:
+                                    Border.all(color: ThemeColors.greyBorder)),
+                            child: Text(
+                              "More services",
+                              style: stylePTSansRegular(
+                                  fontSize: 12, color: ThemeColors.white),
+                            ),
+                          ),
+                        ),
+                      ),
                       const SpacerVertical(height: 20),
                       GestureDetector(
                         onTap: () {},
@@ -234,97 +286,98 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ],
                         ),
-                      )
+                      ),
 
-                      // Divider(
-                      //   color: ThemeColors.greyBorder,
-                      //   height: 20.sp,
-                      // ),
-                      // Align(
-                      //   alignment: Alignment.center,
-                      //   child: RichText(
-                      //     textAlign: TextAlign.center,
-                      //     text: TextSpan(
-                      //       children: [
-                      //         TextSpan(
-                      //             text: 'Disclaimer,',
-                      //             recognizer: TapGestureRecognizer()
-                      //               ..onTap = () {
-                      //                 Scaffold.of(context).closeDrawer();
-                      //                 Navigator.push(
-                      //                   context,
-                      //                   createRoute(
-                      //                     const TCandPolicy(
-                      //                       policyType: PolicyType.disclaimer,
-                      //                     ),
-                      //                   ),
-                      //                 );
-                      //               },
-                      //             style: stylePTSansRegular(fontSize: 13)),
-                      //         TextSpan(
-                      //             text: ' Privacy Policy ',
-                      //             recognizer: TapGestureRecognizer()
-                      //               ..onTap = () {
-                      //                 Scaffold.of(context).closeDrawer();
-                      //                 Navigator.push(
-                      //                   context,
-                      //                   createRoute(
-                      //                     const TCandPolicy(
-                      //                       policyType: PolicyType.privacy,
-                      //                     ),
-                      //                   ),
-                      //                 );
-                      //               },
-                      //             style: stylePTSansRegular(fontSize: 13)),
-                      //         TextSpan(
-                      //             text: 'and',
-                      //             style: stylePTSansRegular(
-                      //                 fontSize: 13, color: ThemeColors.greyText)),
-                      //         TextSpan(
-                      //             text: ' Terms of Service',
-                      //             recognizer: TapGestureRecognizer()
-                      //               ..onTap = () {
-                      //                 Scaffold.of(context).closeDrawer();
-                      //                 Navigator.push(
-                      //                   context,
-                      //                   createRoute(
-                      //                     const TCandPolicy(
-                      //                       policyType: PolicyType.tC,
-                      //                     ),
-                      //                   ),
-                      //                 );
-                      //               },
-                      //             style: stylePTSansRegular(fontSize: 13)),
-                      //       ],
-                      //       recognizer: TapGestureRecognizer()
-                      //         ..onTap = () {
-                      //           Scaffold.of(context).closeDrawer();
-                      //           Navigator.push(
-                      //             context,
-                      //             createRoute(
-                      //               const TCandPolicy(
-                      //                 policyType: PolicyType.privacy,
-                      //               ),
-                      //             ),
-                      //           );
-                      //         },
-                      //       text: "Read our ",
-                      //       style: stylePTSansRegular(
-                      //           fontSize: 13, color: ThemeColors.greyText),
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SpacerVertical(height: 10),
-                      // Align(
-                      //   alignment: Alignment.center,
-                      //   child: Text(
-                      //     "App Version: $version",
-                      //     style: stylePTSansRegular(
-                      //       fontSize: 13,
-                      //       color: ThemeColors.greyText,
-                      //     ),
-                      //   ),
-                      // ),
+                      Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 20.sp,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                  text: 'Disclaimer,',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Scaffold.of(context).closeDrawer();
+                                      Navigator.push(
+                                        context,
+                                        createRoute(
+                                          const TCandPolicy(
+                                            policyType: PolicyType.disclaimer,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  style: stylePTSansRegular(fontSize: 13)),
+                              TextSpan(
+                                  text: ' Privacy Policy ',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Scaffold.of(context).closeDrawer();
+                                      Navigator.push(
+                                        context,
+                                        createRoute(
+                                          const TCandPolicy(
+                                            policyType: PolicyType.privacy,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  style: stylePTSansRegular(fontSize: 13)),
+                              TextSpan(
+                                  text: 'and',
+                                  style: stylePTSansRegular(
+                                      fontSize: 13,
+                                      color: ThemeColors.greyText)),
+                              TextSpan(
+                                  text: ' Terms of Service',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Scaffold.of(context).closeDrawer();
+                                      Navigator.push(
+                                        context,
+                                        createRoute(
+                                          const TCandPolicy(
+                                            policyType: PolicyType.tC,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  style: stylePTSansRegular(fontSize: 13)),
+                            ],
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Scaffold.of(context).closeDrawer();
+                                Navigator.push(
+                                  context,
+                                  createRoute(
+                                    const TCandPolicy(
+                                      policyType: PolicyType.privacy,
+                                    ),
+                                  ),
+                                );
+                              },
+                            text: "Read our ",
+                            style: stylePTSansRegular(
+                                fontSize: 13, color: ThemeColors.greyText),
+                          ),
+                        ),
+                      ),
+                      const SpacerVertical(height: 10),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "App Version: $version",
+                          style: stylePTSansRegular(
+                            fontSize: 13,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

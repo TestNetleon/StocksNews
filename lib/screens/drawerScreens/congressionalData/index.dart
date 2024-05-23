@@ -6,28 +6,18 @@ import 'package:stocks_news_new/screens/drawerScreens/congressionalData/containe
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-class CongressionalIndex extends StatefulWidget {
+class CongressionalIndex extends StatelessWidget {
   static const path = "CongressionalIndex";
   const CongressionalIndex({super.key});
 
   @override
-  State<CongressionalIndex> createState() => _CongressionalIndexState();
-}
-
-class _CongressionalIndexState extends State<CongressionalIndex> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<CongressionalProvider>().getData(showProgress: false);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const BaseContainer(
-      appBar: AppBarHome(isPopback: true, canSearch: true),
-      body: CongressionalContainer(),
+    return ChangeNotifierProvider.value(
+      value: CongressionalProvider(),
+      child: const BaseContainer(
+        appBar: AppBarHome(isPopback: true, canSearch: true),
+        body: CongressionalContainer(),
+      ),
     );
   }
 }
