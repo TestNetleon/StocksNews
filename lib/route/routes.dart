@@ -16,6 +16,7 @@ import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
+import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
@@ -39,6 +40,7 @@ import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -241,6 +243,14 @@ class Routes {
             return const GapUpDownStocks();
           },
         );
+      case PennyStocks.path:
+        // final arguments = settings.arguments as Map<String, dynamic>;
+        // StocksType type = arguments["type"] as StocksType;
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return const PennyStocks();
+          },
+        );
       case InsiderDetailsType.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         final companySlug = arguments['companySlug'] as String?;
@@ -305,7 +315,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
       ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
       ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
-
+      ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];
   }

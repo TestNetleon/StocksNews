@@ -13,7 +13,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
-class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
+class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
   GapUpRes? _data;
@@ -53,7 +53,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   //   notifyListeners();
   // }
 
-  Future getGapUpStocks({loadMore = false}) async {
+  Future getGapUpStocks({showProgress = false, loadMore = false}) async {
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -96,7 +96,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getGapDownStocks({loadMore = false}) async {
+  Future getGapDownStocks({showProgress = false, loadMore = false}) async {
     if (loadMore) {
       _pageDown++;
       setStatus(Status.loadingMore);

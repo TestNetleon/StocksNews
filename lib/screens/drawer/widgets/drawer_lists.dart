@@ -5,6 +5,7 @@ import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 List<DrawerRes> marketData = [
@@ -89,6 +90,10 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.stacked_line_chart_outlined,
     text: "Penny Stocks",
+    onTap: () => Navigator.pushNamed(
+      navigatorKey.currentContext!,
+      PennyStocks.path,
+    ),
   ),
   // DrawerRes(
   //   iconData: Icons.settings_input_composite_rounded,

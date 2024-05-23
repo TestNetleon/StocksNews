@@ -34,8 +34,8 @@ class GapUpData {
   final String change;
   final String changesPercentage;
   final int volume;
-  final double previousClose;
-  final double open;
+  final String previousClose;
+  final String open;
   final String changeSinceOpen;
 
   // final Exchange exchange;
@@ -226,93 +226,4 @@ class GapUpData {
         // "web_view": webView,
         // "beta": beta,
       };
-}
-
-class AnalystStock {
-  final DateTime date;
-  final int analystRatingsbuy;
-  final int analystRatingsHold;
-  final int analystRatingsSell;
-  final int analystRatingsStrongSell;
-  final int analystRatingsStrongBuy;
-
-  AnalystStock({
-    required this.date,
-    required this.analystRatingsbuy,
-    required this.analystRatingsHold,
-    required this.analystRatingsSell,
-    required this.analystRatingsStrongSell,
-    required this.analystRatingsStrongBuy,
-  });
-
-  factory AnalystStock.fromJson(Map<String, dynamic> json) => AnalystStock(
-        date: DateTime.parse(json["date"]),
-        analystRatingsbuy: json["analystRatingsbuy"],
-        analystRatingsHold: json["analystRatingsHold"],
-        analystRatingsSell: json["analystRatingsSell"],
-        analystRatingsStrongSell: json["analystRatingsStrongSell"],
-        analystRatingsStrongBuy: json["analystRatingsStrongBuy"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "date":
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-        "analystRatingsbuy": analystRatingsbuy,
-        "analystRatingsHold": analystRatingsHold,
-        "analystRatingsSell": analystRatingsSell,
-        "analystRatingsStrongSell": analystRatingsStrongSell,
-        "analystRatingsStrongBuy": analystRatingsStrongBuy,
-      };
-}
-
-enum Country { CA, US }
-
-final countryValues = EnumValues({"CA": Country.CA, "US": Country.US});
-
-enum Exchange { OTHER_OTC }
-
-final exchangeValues = EnumValues({"Other OTC": Exchange.OTHER_OTC});
-
-enum ExchangeShortName { OTC }
-
-final exchangeShortNameValues = EnumValues({"OTC": ExchangeShortName.OTC});
-
-enum Type { STOCK }
-
-final typeValues = EnumValues({"stock": Type.STOCK});
-
-class Link {
-  final String url;
-  final String label;
-  final bool active;
-
-  Link({
-    required this.url,
-    required this.label,
-    required this.active,
-  });
-
-  factory Link.fromJson(Map<String, dynamic> json) => Link(
-        url: json["url"],
-        label: json["label"],
-        active: json["active"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "url": url,
-        "label": label,
-        "active": active,
-      };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
