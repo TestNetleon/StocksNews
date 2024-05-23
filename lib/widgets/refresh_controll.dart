@@ -38,10 +38,11 @@ class _RefreshControlState extends State<RefreshControl> {
           Widget body = const SizedBox();
           log("******************** $mode ");
           if (mode == LoadStatus.idle) {
-            body = const CircularProgressIndicator(
-              strokeWidth: 4,
-              color: ThemeColors.accent,
-            );
+            // body = const CircularProgressIndicator(
+            //   strokeWidth: 4,
+            //   color: ThemeColors.accent,
+            // );
+            body = const SizedBox();
           } else if (mode == LoadStatus.loading) {
             body = const CircularProgressIndicator(
               strokeWidth: 4,

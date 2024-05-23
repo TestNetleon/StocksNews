@@ -119,7 +119,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const SpacerVertical(height: 14);
+                    return Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 12.sp,
+                    );
                   },
                   itemCount: losers?.length ?? 0,
                 ),

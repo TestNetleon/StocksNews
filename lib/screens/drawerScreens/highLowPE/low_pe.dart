@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
+import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/highLowPE/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
+import '../../../modals/highlow_pe_res.dart';
 import '../../../providers/high_low_pe.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -31,7 +34,6 @@ class _LowPEStocksState extends State<LowPEStocks> {
   @override
   Widget build(BuildContext context) {
     HighLowPeProvider provider = context.watch<HighLowPeProvider>();
-    List<HighLowPeDataRes>? low = provider.data?.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -52,7 +54,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
             top: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
-            HighLowPeDataRes? low = provider.data?.data?[index];
+            HIghLowPeRes? low = provider.data?[index];
 
             // if (up == null || up.isEmpty) {
             //   return const SizedBox();
@@ -61,19 +63,8 @@ class _LowPEStocksState extends State<LowPEStocks> {
             //   data: up[index],
             //   index: index,
             // );
-            return GainerLoserItem(
-              data: GainersLosersDataRes(
-                symbol: low?.symbol ?? "",
-                name: low?.name ?? "",
-                avgVolume: "${low?.avgVolume ?? "N/A"}",
-                changesPercentage: low?.changesPercentage,
-                previousClose: "${low?.previousClose ?? "N/A"}",
-                price: low?.price ?? "N/A",
-                range: "${low?.range ?? "N/A"}",
-                volume: "${low?.volume ?? "N/A"}",
-                image: low?.image,
-              ),
-              index: index,
+            return HighLowPEItem(
+              data: low,
             );
           },
           separatorBuilder: (BuildContext context, int index) {
@@ -83,7 +74,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
             );
           },
           // itemCount: up?.length ?? 0,
-          itemCount: low?.length ?? 0,
+          itemCount: provider.data?.length ?? 0,
         ),
       ),
     );
