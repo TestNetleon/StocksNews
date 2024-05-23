@@ -15,7 +15,7 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -64,7 +64,7 @@ class _TabsState extends State<Tabs> {
         padding: EdgeInsets.only(bottom: 3.sp),
         child: Icon(
           icon,
-          size: 25,
+          size: 23,
         ),
       ),
       label: lable,
@@ -112,9 +112,9 @@ class _TabsState extends State<Tabs> {
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           unselectedLabelStyle:
-              stylePTSansBold(color: ThemeColors.white, fontSize: 12),
+              stylePTSansBold(color: ThemeColors.white, fontSize: 11),
           selectedLabelStyle:
-              stylePTSansBold(color: ThemeColors.accent, fontSize: 12),
+              stylePTSansBold(color: ThemeColors.accent, fontSize: 11),
           onTap: (index) {
             context.read<SearchProvider>().clearSearch();
             if (_selectedIndex != index) {
@@ -143,8 +143,8 @@ class _TabsState extends State<Tabs> {
     final trendingProvider = context.read<TrendingProvider>();
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
-    final newsProvider = context.read<FeaturedNewsProvider>();
-    final latestNewsProvider = context.read<NewsProvider>();
+    // final newsProvider = context.read<FeaturedNewsProvider>();
+    // final latestNewsProvider = context.read<NewsProvider>();
 
     if (Platform.isAndroid) {
       bool isVibe = await Vibration.hasVibrator() ?? false;
@@ -196,11 +196,13 @@ class _TabsState extends State<Tabs> {
         redditTwitterProvider.getRedditTwitterData(reset: true);
         break;
       case 4:
-        newsProvider.getNews(
-          showProgress: false,
-          inAppMsgId: widget.inAppMsgId,
-        );
-        latestNewsProvider.getNews();
+        // newsProvider.getNews(
+        //   showProgress: false,
+        //   inAppMsgId: widget.inAppMsgId,
+        // );
+        // latestNewsProvider.getNews();
+        context.read<NewsCategoryProvider>().selectedIndex = 0;
+        context.read<NewsCategoryProvider>().getTabsData(showProgress: true);
 
         break;
       case 5:

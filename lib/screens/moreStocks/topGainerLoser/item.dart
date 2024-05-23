@@ -15,10 +15,12 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class GainerLoserItem extends StatelessWidget {
   final GainersLosersDataRes data;
   final int index;
+  final bool losers;
 //
   const GainerLoserItem({
     required this.data,
     required this.index,
+    this.losers = false,
     super.key,
   });
 
@@ -54,7 +56,7 @@ class GainerLoserItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0.sp),
                   child: Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     width: 43,
                     height: 43,
                     child: ThemeImageView(url: data.image ?? ""),
@@ -113,9 +115,15 @@ class GainerLoserItem extends StatelessWidget {
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  provider.setOpenIndex(
-                    provider.openIndex == index ? -1 : index,
-                  );
+                  if (losers) {
+                    provider.setOpenIndexLosers(
+                      provider.openIndexLosers == index ? -1 : index,
+                    );
+                  } else {
+                    provider.setOpenIndex(
+                      provider.openIndex == index ? -1 : index,
+                    );
+                  }
                 },
                 child: Container(
                   decoration: const BoxDecoration(
@@ -124,9 +132,13 @@ class GainerLoserItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    provider.openIndex == index
-                        ? Icons.arrow_upward_rounded
-                        : Icons.arrow_downward_rounded,
+                    losers
+                        ? provider.openIndexLosers == index
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded
+                        : provider.openIndex == index
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded,
                     size: 16,
                   ),
                 ),
@@ -136,10 +148,28 @@ class GainerLoserItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: provider.openIndex == index ? null : 0,
+              height: losers
+                  ? provider.openIndexLosers == index
+                      ? null
+                      : 0
+                  : provider.openIndex == index
+                      ? null
+                      : 0,
               margin: EdgeInsets.only(
-                top: provider.openIndex == index ? 10.sp : 0,
-                bottom: provider.openIndex == index ? 10.sp : 0,
+                top: losers
+                    ? provider.openIndexLosers == index
+                        ? 10.sp
+                        : 0
+                    : provider.openIndex == index
+                        ? 10.sp
+                        : 0,
+                bottom: losers
+                    ? provider.openIndexLosers == index
+                        ? 10.sp
+                        : 0
+                    : provider.openIndex == index
+                        ? 10.sp
+                        : 0,
               ),
               child: Column(
                 children: [

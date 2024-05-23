@@ -226,6 +226,7 @@ class NewsItem extends StatelessWidget {
             news?.image ?? "",
             width: 100,
             height: 100,
+            fit: BoxFit.contain,
           ),
         ],
       ),

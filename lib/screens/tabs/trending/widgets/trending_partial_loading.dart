@@ -45,6 +45,7 @@ class TrendingPartialLoading extends StatelessWidget {
         ),
       );
     }
+
     if (error != null) {
       return ErrorDisplayWidget(
         smallHeight: true,

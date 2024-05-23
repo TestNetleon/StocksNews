@@ -1,15 +1,16 @@
 // // import 'package:flutter/gestures.dart';
 // import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:package_info_plus/package_info_plus.dart';
-// import 'package:stocks_news_new/screens/drawer/widgets/drawer_more_service.dart';
+// import 'package:provider/provider.dart';
+// import 'package:stocks_news_new/providers/home_provider.dart';
+// import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+// import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 // import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 // import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
 // import 'package:stocks_news_new/utils/colors.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
-// import 'package:stocks_news_new/utils/utils.dart';
 // // import 'package:stocks_news_new/utils/utils.dart';
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 // import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -46,6 +47,7 @@
 
 //   @override
 //   Widget build(BuildContext context) {
+//     HomeProvider provider = context.watch<HomeProvider>();
 //     return SafeArea(
 //       child: Drawer(
 //         backgroundColor: ThemeColors.background,
@@ -70,7 +72,7 @@
 //                           top: 5.sp,
 //                         ),
 //                         child: Text(
-//                           "Dynamic description to print",
+//                           "${provider.homeSliderRes?.text.drawerHeader}",
 //                           style: stylePTSansRegular(
 //                               fontSize: 13, color: ThemeColors.greyText),
 //                         ),
@@ -80,15 +82,23 @@
 //                         children: [
 //                           Expanded(
 //                             child: ThemeButtonSmall(
+//                               showArrow: false,
 //                               text: "Log in",
-//                               onPressed: () {},
+//                               onPressed: () {
+//                                 Scaffold.of(context).closeDrawer();
+//                                 loginSheet(dontPop: "true");
+//                               },
 //                             ),
 //                           ),
 //                           const SpacerHorizontal(width: 10),
 //                           Expanded(
 //                             child: ThemeButtonSmall(
+//                               showArrow: false,
 //                               text: "Sign up",
-//                               onPressed: () {},
+//                               onPressed: () {
+//                                 Scaffold.of(context).closeDrawer();
+//                                 signupSheet(dontPop: "true");
+//                               },
 //                             ),
 //                           ),
 //                         ],
@@ -104,8 +114,8 @@
 //                         childrenPerRow: 3,
 //                         length: marketData.length,
 //                         getChild: (index) {
-//                           return GestureDetector(
-//                             onTap: () {},
+//                           return InkWell(
+//                             onTap: marketData[index].onTap,
 //                             child: DrawerNewWidget(
 //                               icon: marketData[index].iconData,
 //                               text: marketData[index].text,
@@ -114,30 +124,30 @@
 //                         },
 //                       ),
 
-//                       Align(
-//                         alignment: Alignment.center,
-//                         child: InkWell(
-//                           borderRadius: BorderRadius.circular(20.sp),
-//                           onTap: () {
-//                             easeOutBuilder(context,
-//                                 child: const DrawerMoreService());
-//                           },
-//                           child: Ink(
-//                             padding: EdgeInsets.symmetric(
-//                                 horizontal: 10.sp, vertical: 5.sp),
-//                             decoration: BoxDecoration(
-//                                 color: ThemeColors.greyBorder.withOpacity(0.3),
-//                                 borderRadius: BorderRadius.circular(20.sp),
-//                                 border:
-//                                     Border.all(color: ThemeColors.greyBorder)),
-//                             child: Text(
-//                               "More services",
-//                               style: stylePTSansRegular(
-//                                   fontSize: 12, color: ThemeColors.white),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
+//                       // Align(
+//                       //   alignment: Alignment.center,
+//                       //   child: InkWell(
+//                       //     borderRadius: BorderRadius.circular(20.sp),
+//                       //     onTap: () {
+//                       //       easeOutBuilder(context,
+//                       //           child: const DrawerMoreService());
+//                       //     },
+//                       //     child: Ink(
+//                       //       padding: EdgeInsets.symmetric(
+//                       //           horizontal: 10.sp, vertical: 5.sp),
+//                       //       decoration: BoxDecoration(
+//                       //           color: ThemeColors.greyBorder.withOpacity(0.3),
+//                       //           borderRadius: BorderRadius.circular(20.sp),
+//                       //           border:
+//                       //               Border.all(color: ThemeColors.greyBorder)),
+//                       //       child: Text(
+//                       //         "More services",
+//                       //         style: stylePTSansRegular(
+//                       //             fontSize: 12, color: ThemeColors.white),
+//                       //       ),
+//                       //     ),
+//                       //   ),
+//                       // ),
 //                       const SpacerVertical(height: 20),
 //                       GestureDetector(
 //                         onTap: () {},

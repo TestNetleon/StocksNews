@@ -19,6 +19,10 @@ class Apis {
   static const stockFocus = "/stock-in-focus";
   static const menuWhatWeDo = "/menu-what-we-do";
   static const whatWeDo = "/what-we-do";
+  static const lowPricesTab = "/low-priced-stocks";
+  static const lowPricesStocks = "/low-priced-stocks-under";
+  static const highPE = "/high-pe-ratio-stocks";
+  static const lowPE = "/low-pe-ratio-stocks";
 
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";
@@ -83,6 +87,8 @@ class Apis {
   static const getOtherData = "/stock-other-details";
   static const newsTab = "/category-list";
   static const marketTickers = "/market-tickers";
+
+  static const gapUpStocks = "/get-up-stocks";
 }
 
 //

@@ -31,28 +31,31 @@ class BaseUiContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? showPreparingText
-            ? const Loading()
-            : const SizedBox()
-        : hasData
-            ? child
-            : OptionalParent(
-                addParent: errorDispCommon,
-                parentBuilder: (child) {
-                  return ErrorDisplayWidget(
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
+      child: isLoading
+          ? showPreparingText
+              ? const Loading()
+              : const SizedBox()
+          : hasData
+              ? child
+              : OptionalParent(
+                  addParent: errorDispCommon,
+                  parentBuilder: (child) {
+                    return ErrorDisplayWidget(
+                      error: error ?? Const.errNoRecord,
+                      onRefresh: onRefresh,
+                      onNavigate: onNavigate,
+                      navBtnText: navBtnText,
+                    );
+                  },
+                  child: ErrorDisplayNewWidget(
                     error: error ?? Const.errNoRecord,
                     onRefresh: onRefresh,
                     onNavigate: onNavigate,
                     navBtnText: navBtnText,
-                  );
-                },
-                child: ErrorDisplayNewWidget(
-                  error: error ?? Const.errNoRecord,
-                  onRefresh: onRefresh,
-                  onNavigate: onNavigate,
-                  navBtnText: navBtnText,
+                  ),
                 ),
-              );
+    );
   }
 }

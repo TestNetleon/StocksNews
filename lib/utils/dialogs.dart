@@ -229,6 +229,7 @@ void showPlatformBottomSheet({
   EdgeInsets? padding,
 }) {
   showModalBottomSheet(
+    useSafeArea: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(10.sp),

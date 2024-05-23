@@ -1,28 +1,29 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
-class RefreshControll extends StatefulWidget {
-  const RefreshControll({
+class RefreshControl extends StatefulWidget {
+  const RefreshControl({
     required this.onRefresh,
     required this.onLoadMore,
     required this.child,
-    this.canLoadmore = true,
+    this.canLoadMore = true,
     super.key,
   });
 //
   final Future Function() onRefresh;
   final Future Function() onLoadMore;
   final Widget child;
-  final bool canLoadmore;
+  final bool canLoadMore;
 
   @override
-  State<RefreshControll> createState() => _RefreshControllState();
+  State<RefreshControl> createState() => _RefreshControlState();
 }
 
-class _RefreshControllState extends State<RefreshControll> {
+class _RefreshControlState extends State<RefreshControl> {
   final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
@@ -32,9 +33,10 @@ class _RefreshControllState extends State<RefreshControll> {
     return SmartRefresher(
       enablePullUp: true,
       footer: CustomFooter(
-        height: widget.canLoadmore ? 55 : 0,
+        height: widget.canLoadMore ? 50 : 0,
         builder: (BuildContext context, LoadStatus? mode) {
-          Widget body;
+          Widget body = const SizedBox();
+          log("******************** $mode ");
           if (mode == LoadStatus.idle) {
             body = const CircularProgressIndicator(
               strokeWidth: 4,
@@ -56,10 +58,8 @@ class _RefreshControllState extends State<RefreshControll> {
             body = const SizedBox();
           }
           return Visibility(
-            visible: widget.canLoadmore == true ? true : false,
-            child: SizedBox(
-              child: Center(child: body),
-            ),
+            visible: widget.canLoadMore == true ? true : false,
+            child: SizedBox(child: Center(child: body)),
           );
         },
       ),
@@ -69,7 +69,7 @@ class _RefreshControllState extends State<RefreshControll> {
         _refreshController.refreshCompleted();
       },
       onLoading: () async {
-        if (widget.canLoadmore) {
+        if (widget.canLoadMore) {
           await widget.onLoadMore();
         }
         _refreshController.loadComplete();

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -13,9 +12,9 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../../utils/colors.dart';
 import 'item.dart';
 
 //
@@ -64,13 +63,14 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
         child: Column(
           children: [
             ScreenTitle(
-                title: widget.type == StocksType.gainers
-                    ? "Today’s Top Gainers"
-                    : widget.type == StocksType.losers
-                        ? "Today’s Top Losers"
-                        : data?.length == 1
-                            ? "Popular Stock"
-                            : "Popular Stocks"),
+              title: widget.type == StocksType.gainers
+                  ? "Today’s Top Gainers"
+                  : widget.type == StocksType.losers
+                      ? "Today’s Top Losers"
+                      : data?.length == 1
+                          ? "Popular Stock"
+                          : "Popular Stocks",
+            ),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,
@@ -79,10 +79,10 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 errorDispCommon: true,
                 onRefresh: () => provider.getGainersLosers(
                     showProgress: true, type: widget.type.name),
-                child: RefreshControll(
+                child: RefreshControl(
                   onRefresh: () => provider.getGainersLosers(
                       showProgress: true, type: widget.type.name),
-                  canLoadmore: provider.canLoadMore,
+                  canLoadMore: provider.canLoadMore,
                   onLoadMore: () => provider.getGainersLosers(
                       loadMore: true, type: widget.type.name),
                   child: ListView.separated(
@@ -97,7 +97,10 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 14);
+                      return Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 12.sp,
+                      );
                     },
                     itemCount: data?.length ?? 0,
                   ),

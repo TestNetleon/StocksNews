@@ -6,7 +6,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/notifications/item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -78,9 +78,9 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
                       errorDispCommon: true,
                       showPreparingText: true,
                       onRefresh: () => provider.getData(showProgress: false),
-                      child: RefreshControll(
+                      child: RefreshControl(
                         onRefresh: () => provider.getData(showProgress: false),
-                        canLoadmore: provider.canLoadMore,
+                        canLoadMore: provider.canLoadMore,
                         onLoadMore: () => provider.getData(loadMore: true),
                         child: ListView.separated(
                           padding: EdgeInsets.only(bottom: Dimen.padding.sp),

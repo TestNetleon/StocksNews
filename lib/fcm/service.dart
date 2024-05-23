@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -320,13 +321,20 @@ Future<String?> _getUserLocation() async {
 }
 
 Future saveFCMapi({String? value, String? address}) async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String versionName = packageInfo.version;
+  String buildNumber = packageInfo.buildNumber;
+
   try {
     Map request = {
       "token": "",
       "fcm_token": value ?? "",
       "platform": Platform.operatingSystem,
       "address": address ?? "",
+      "build_version": versionName,
+      "build_code": buildNumber,
     };
+
     ApiResponse response = await apiRequest(
       url: Apis.saveFCM,
       request: request,

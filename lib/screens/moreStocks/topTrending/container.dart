@@ -4,7 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/large_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/medium_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/mega_cap.dart';
@@ -79,7 +79,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                 tabsPadding: EdgeInsets.symmetric(horizontal: 0.sp),
                 widgets: List.generate(
                   tabs.length,
-                  (index) => RefreshControll(
+                  (index) => RefreshControl(
                     onRefresh: () => index == 2
                         ? provider.getCapData()
                         : provider.getNowRecentlyData(
@@ -89,7 +89,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                     ? "recently"
                                     : "cap",
                           ),
-                    canLoadmore: index == 2 ? false : provider.canLoadMore,
+                    canLoadMore: index == 2 ? false : provider.canLoadMore,
                     onLoadMore: () => provider.getNowRecentlyData(
                       loadMore: true,
                       type: index == 0

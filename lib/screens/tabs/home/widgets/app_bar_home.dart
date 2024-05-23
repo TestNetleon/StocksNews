@@ -10,7 +10,8 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
+
+import '../../../../widgets/cache_network_image.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -90,8 +91,8 @@ class _AppBarHomeState extends State<AppBarHome> {
               // icon: Image.asset(
               //   Images.dotsMenu,
               //   color: ThemeColors.white,
-              //   height: 20.sp,
-              //   width: 20.sp,
+              //   height: 18.sp,
+              //   width: 18.sp,
               // ),
             ),
       centerTitle: true,

@@ -123,7 +123,7 @@ class _LoginBottomState extends State<LoginBottom> {
 
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
-      showErrorMessage(message: "$error");
+      popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
       log("$error");
     }
   }
@@ -147,7 +147,8 @@ class _LoginBottomState extends State<LoginBottom> {
           state: widget.state, dontPop: widget.dontPop);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
-      showErrorMessage(message: "$error");
+      popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
+      // showErrorMessage(message: "$error");
       log("$error");
     }
   }

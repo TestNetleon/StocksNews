@@ -127,9 +127,7 @@ void showInAppModal({required title, description, image, onClick}) {
                             if (image != null)
                               Container(
                                 margin: const EdgeInsets.all(8.0),
-                                child: const CachedNetworkImagesWidget(
-                                  "https://img.freepik.com/free-vector/gradient-stock-market-concept_23-2149166910.jpg?t=st=1716027320~exp=1716030920~hmac=fb2ed98c07151bfa1e80148a0a59fc074a616b58d6d9ceca573c8bf414731371&w=720",
-                                ),
+                                child: CachedNetworkImagesWidget(image),
                               ),
                             if (description != null)
                               Container(
@@ -240,7 +238,7 @@ void showInAppTopBanner({required title, description, image, onClick}) {
                   padding: EdgeInsets.all(12.sp),
                   child: Row(
                     children: [
-                      if (image != null)
+                      if (image != null && image != "")
                         Container(
                           margin: EdgeInsets.only(right: 10.sp),
                           width: ScreenUtil().screenWidth * .20,
@@ -255,7 +253,7 @@ void showInAppTopBanner({required title, description, image, onClick}) {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Dialog Title',
+                              title,
                               style: stylePTSansBold(color: Colors.black),
                             ),
                             if (description != null)
@@ -267,22 +265,6 @@ void showInAppTopBanner({required title, description, image, onClick}) {
                                       stylePTSansRegular(color: Colors.black),
                                 ),
                               ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                            //     TextButton(
-                            //       onPressed: () {
-                            //         Navigator.pop(context);
-                            //       },
-                            //       child: Text(
-                            //         'Okay',
-                            //         style: stylePTSansRegular(
-                            //           color: ThemeColors.buttonBlue,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
                       ),
