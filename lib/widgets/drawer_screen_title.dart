@@ -24,7 +24,7 @@ class DrawerScreenTitle extends StatelessWidget {
     return Visibility(
       visible: subTitle != null && subTitle != "",
       child: Container(
-        margin: EdgeInsets.only(top: 10.sp),
+        margin: EdgeInsets.only(bottom: 10.sp),
         child: Text(
           subTitle ?? "",
           style: style ??
