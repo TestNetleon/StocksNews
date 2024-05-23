@@ -26,7 +26,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
 
   List<GapUpRes>? get dataUp => _dataUp;
   Extra? get extraUp => _extraUp;
-  bool get canLoadMore => _pageUp < (_extraUp?.totalPages ?? 1);
+  bool get canLoadMoreUp => _pageUp < (_extraUp?.totalPages ?? 1);
   String? get errorUp => _errorUp ?? Const.errSomethingWrong;
   bool get isLoadingUp => _statusUp == Status.loading;
 
@@ -73,8 +73,8 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       setStatusUp(Status.loading);
     }
     _openIndex = -1;
-    _extraDown = null;
-    _extraUp = null;
+    // _extraDown = null;
+    // _extraUp = null;
 
     try {
       Map request = {
@@ -121,8 +121,8 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       setStatusDown(Status.loading);
     }
     _openIndex = -1;
-    _extraUp = null;
-    _extraDown = null;
+    // _extraUp = null;
+    // _extraDown = null;
     try {
       Map request = {
         "token":
@@ -140,7 +140,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         _errorDown = null;
         if (_pageDown == 1) {
           _dataDown = gapUpResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
+          _extraDown = response.extra is Extra ? response.extra : null;
         } else {
           _dataDown?.addAll(gapUpResFromJson(jsonEncode(response.data)));
         }

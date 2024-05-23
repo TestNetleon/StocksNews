@@ -38,7 +38,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getAlerts({showProgress = false, loadMore = false}) async {
-    log("Can load more $canLoadMore");
+    // log("Can load more $canLoadMore");
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);

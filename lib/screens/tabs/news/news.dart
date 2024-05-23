@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +95,9 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           widgets: List.generate(
             provider.tabs?.length ?? 0,
             (index) {
-              if (!provider.isLoading && provider.data?.isEmpty == true) {
+              log("Index = $index ******  data => ${provider.data?.isEmpty}");
+              if (!provider.isLoading &&
+                  (provider.data == null || provider.data?.isEmpty == true)) {
                 return ErrorDisplayWidget(
                   error: provider.error,
                   onRefresh: provider.onRefresh,

@@ -63,7 +63,6 @@ class NewsTypeData extends StatelessWidget {
                 //     image: newsItemData.image,
                 //     site: newsItemData.site ?? '',
                 //     authors: newsItemData.authors,
-
                 //     postDate: DateFormat("MMMM dd, yyyy")
                 //         .format(newsItemData.publishedDate),
                 //     url: newsItemData.url,
@@ -73,7 +72,6 @@ class NewsTypeData extends StatelessWidget {
               ],
             );
           }
-
           return NewsItem(
             showCategory: newsItemData?.authors?.isEmpty == true,
             news: News(
@@ -92,10 +90,7 @@ class NewsTypeData extends StatelessWidget {
         },
         separatorBuilder: (BuildContext context, int index) {
           // return const SpacerVertical(height: 16);
-          return Divider(
-            color: ThemeColors.greyBorder,
-            height: 20.sp,
-          );
+          return Divider(color: ThemeColors.greyBorder, height: 20.sp);
         },
       ),
       // ),
