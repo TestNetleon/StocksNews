@@ -89,6 +89,7 @@ class Apis {
   static const marketTickers = "/market-tickers";
 
   static const gapUpStocks = "/get-up-stocks";
+  static const gapDownStocks = "/get-down-stocks";
 }
 
 //
