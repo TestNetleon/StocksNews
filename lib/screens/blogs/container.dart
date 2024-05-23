@@ -36,9 +36,9 @@ class BlogContainer extends StatelessWidget {
           errorDispCommon: true,
           onRefresh: () => provider.getData(showProgress: true),
           child: RefreshControl(
-            onRefresh: () => provider.getData(showProgress: true),
+            onRefresh: () async => provider.getData(showProgress: true),
             canLoadMore: provider.canLoadMore,
-            onLoadMore: () => provider.getData(loadMore: true),
+            onLoadMore: () async => provider.getData(loadMore: true),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -98,10 +98,10 @@ class AuthorContainer extends StatelessWidget {
           onRefresh: () =>
               provider.getData(showProgress: true, type: type, id: id),
           child: RefreshControl(
-            onRefresh: () =>
+            onRefresh: () async =>
                 provider.getData(showProgress: true, type: type, id: id),
             canLoadMore: provider.canLoadMore,
-            onLoadMore: () =>
+            onLoadMore: () async =>
                 provider.getData(loadMore: true, type: type, id: id),
             child: SingleChildScrollView(
               child: Column(
@@ -162,10 +162,10 @@ class CategoryContainer extends StatelessWidget {
           onRefresh: () =>
               provider.getData(showProgress: true, type: type, id: id),
           child: RefreshControl(
-            onRefresh: () =>
+            onRefresh: () async =>
                 provider.getData(showProgress: true, type: type, id: id),
             canLoadMore: provider.canLoadMore,
-            onLoadMore: () =>
+            onLoadMore: () async =>
                 provider.getData(loadMore: true, type: type, id: id),
             child: SingleChildScrollView(
               child: Column(
@@ -226,10 +226,10 @@ class TagsContainer extends StatelessWidget {
           onRefresh: () =>
               provider.getData(showProgress: true, type: type, id: id),
           child: RefreshControl(
-            onRefresh: () =>
+            onRefresh: () async =>
                 provider.getData(showProgress: true, type: type, id: id),
             canLoadMore: provider.canLoadMore,
-            onLoadMore: () =>
+            onLoadMore: () async =>
                 provider.getData(loadMore: true, type: type, id: id),
             child: SingleChildScrollView(
               child: Column(

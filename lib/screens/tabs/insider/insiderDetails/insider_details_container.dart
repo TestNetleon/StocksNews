@@ -51,7 +51,7 @@ class InsiderCompanyContainer extends StatelessWidget {
             );
           },
           canLoadMore: provider.canLoadMoreCompany,
-          onLoadMore: () => provider.getData(
+          onLoadMore: () async => provider.getData(
             loadMore: true,
             companySlug: companySlug ?? "",
             clear: false,
@@ -251,7 +251,7 @@ class InsiderReportingContainer extends StatelessWidget {
                 reportingSlug: reportingSlug ?? "");
           },
           canLoadMore: provider.canLoadMoreReporter,
-          onLoadMore: () => provider.getData(
+          onLoadMore: () async => provider.getData(
               loadMore: true,
               companySlug: companySlug ?? "",
               clear: false,

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'dart:developer';
 import 'dart:io';
@@ -105,7 +106,9 @@ class _LoginBottomState extends State<LoginBottom> {
 
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       log(account.toString());
-
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         Map request = {
@@ -116,6 +119,8 @@ class _LoginBottomState extends State<LoginBottom> {
           "fcm_token": fcmToken ?? "",
           "platform": Platform.operatingSystem,
           "address": address ?? "",
+          "build_version": versionName,
+          "build_code": buildNumber,
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request,
@@ -135,7 +140,9 @@ class _LoginBottomState extends State<LoginBottom> {
       String? address = await Preference.getLocation();
 
       UserProvider provider = context.read<UserProvider>();
-
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
       Map request = {
         "displayName": displayName ?? "",
         "email": email ?? "",
@@ -143,6 +150,8 @@ class _LoginBottomState extends State<LoginBottom> {
         "fcm_token": fcmToken ?? "",
         "platform": Platform.operatingSystem,
         "address": address ?? "",
+        "build_version": versionName,
+        "build_code": buildNumber,
       };
       provider.appleLogin(request,
           state: widget.state, dontPop: widget.dontPop);

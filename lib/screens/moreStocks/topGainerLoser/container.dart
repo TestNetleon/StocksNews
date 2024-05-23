@@ -80,10 +80,10 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 onRefresh: () => provider.getGainersLosers(
                     showProgress: true, type: widget.type.name),
                 child: RefreshControl(
-                  onRefresh: () => provider.getGainersLosers(
+                  onRefresh: () async => provider.getGainersLosers(
                       showProgress: true, type: widget.type.name),
                   canLoadMore: provider.canLoadMore,
-                  onLoadMore: () => provider.getGainersLosers(
+                  onLoadMore: () async => provider.getGainersLosers(
                       loadMore: true, type: widget.type.name),
                   child: ListView.separated(
                     padding: EdgeInsets.only(bottom: Dimen.padding.sp),
