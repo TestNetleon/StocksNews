@@ -1,3 +1,5 @@
+import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
+
 class Apis {
   // static const baseUrl = "http://3.136.132.71/api/v1"; // live server old
   // static const baseUrl = "http://3.21.111.44/api/v1"; // live server
@@ -23,6 +25,8 @@ class Apis {
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const highPE = "/high-pe-ratio-stocks";
   static const lowPE = "/low-pe-ratio-stocks";
+  static const fiftyTwoWeekHigh = "/week-highs";
+  static const fiftyTwoWeekLows = "/week-lows";
 
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";

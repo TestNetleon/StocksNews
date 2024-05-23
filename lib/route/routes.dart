@@ -8,6 +8,7 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
@@ -36,6 +37,7 @@ import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
@@ -94,6 +96,7 @@ class Routes {
     IndexBlog.path: (_) => const IndexBlog(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
     HighLowPEIndex.path: (_) => const HighLowPEIndex(),
+    // FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),
 
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
   };
@@ -305,6 +308,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
       ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
       ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
+      // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

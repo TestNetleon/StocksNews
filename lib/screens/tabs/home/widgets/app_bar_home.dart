@@ -111,9 +111,12 @@ class _AppBarHomeState extends State<AppBarHome> {
         child: Container(
           width: MediaQuery.of(context).size.width * .40,
           constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-          child: Image.asset(
-            Images.logo,
-            fit: BoxFit.contain,
+          child: Container(
+            margin: EdgeInsets.all(8.sp),
+            child: Image.asset(
+              Images.logo,
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),
