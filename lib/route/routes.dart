@@ -63,6 +63,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
+import '../providers/congressional_provider.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
@@ -318,6 +319,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
       ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
       ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
+      ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(
           create: (_) =>
               PennyStocksProvider()), // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),

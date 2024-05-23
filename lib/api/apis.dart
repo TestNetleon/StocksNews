@@ -48,6 +48,7 @@ class Apis {
   static const addWatchlist = "/add-watchlist";
   static const deleteWatchlist = "/delete-watchlist";
   static const moreStocks = "/trending_gainer_loser";
+  static const congress = "/congress-stock-trades";
 
   static const updateProfile = "/update-profile";
   static const updateProfileEmail = "/update-profile-otp";

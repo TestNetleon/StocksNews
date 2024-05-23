@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/highlow_pe_res.dart';
+import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -10,143 +10,145 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
-import '../../../widgets/theme_image_view.dart';
 
 class CongressionalItem extends StatelessWidget {
-  final HIghLowPeRes? data;
+  final CongressionalRes? data;
   final int index;
   const CongressionalItem({super.key, this.data, required this.index});
 
   @override
   Widget build(BuildContext context) {
     HighLowPeProvider provider = context.watch<HighLowPeProvider>();
-    return InkWell(
-      onTap: () {
-        provider.setOpenIndex(
-          provider.openIndex == index ? -1 : index,
-        );
-      },
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: 43,
-                    height: 43,
-                    child: ThemeImageView(url: data?.image ?? ""),
-                  ),
-                ),
-              ),
-              const SpacerHorizontal(width: 12),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {},
+    return Column(
+      children: [
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "${data?.name}",
+                          style: stylePTSansBold(fontSize: 14),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SpacerVertical(height: 3),
                       Text(
-                        data?.symbol ?? "N?A",
-                        style: stylePTSansBold(fontSize: 14),
+                        "${data?.symbol}",
+                        style: stylePTSansBold(
+                          fontSize: 13,
+                          color: ThemeColors.accent,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SpacerVertical(height: 5),
-                      Text(
-                        data?.name ?? "N?A",
-                        style: stylePTSansRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 12,
+                      const SpacerVertical(height: 3),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "${data?.company}",
+                          style: stylePTSansBold(
+                              fontSize: 14, color: ThemeColors.greyText),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
+                      const SpacerVertical(height: 3),
                     ],
                   ),
                 ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    data?.price ?? "N?A",
-                    style: stylePTSansBold(fontSize: 14),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    "${data?.change?.value} (${data?.change?.percentage})%",
-                    style: stylePTSansRegular(
-                      fontSize: 12,
-                      color: data?.change?.direction == "up"
-                          ? ThemeColors.accent
-                          : Colors.red,
+                const SpacerHorizontal(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      data?.type ?? "",
+                      style: stylePTSansBold(
+                          fontSize: 14,
+                          color: data?.type == "Purchase"
+                              ? ThemeColors.accent
+                              : ThemeColors.sos),
                     ),
-                  ),
-                ],
-              ),
-              const SpacerHorizontal(width: 10),
-              InkWell(
-                onTap: () {
-                  provider.setOpenIndex(
-                    provider.openIndex == index ? -1 : index,
-                  );
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.accent,
-                  ),
-                  margin: EdgeInsets.only(left: 8.sp),
-                  padding: const EdgeInsets.all(3),
-                  child: Icon(
-                    provider.openIndex == index
-                        ? Icons.arrow_upward_rounded
-                        : Icons.arrow_downward_rounded,
-                    size: 16,
-                  ),
+                    const SpacerVertical(height: 5),
+                    GestureDetector(
+                      onTap: () {
+                        provider.setOpenIndex(
+                          provider.openIndex == index ? -1 : index,
+                        );
+                      },
+                      child: Container(
+                        // ignore: prefer_const_constructors
+                        decoration: BoxDecoration(
+                          // color: data?.transactionType == "Buy"
+                          //     ? ThemeColors.accent
+                          //     : data?.transactionType == "Sell"
+                          //         ? ThemeColors.sos
+                          //         : ThemeColors.white,
+
+                          color: ThemeColors.white,
+                        ),
+                        margin: EdgeInsets.only(left: 8.sp),
+                        padding: const EdgeInsets.all(3),
+                        child: Icon(
+                          provider.openIndex == index
+                              ? Icons.arrow_upward_rounded
+                              : Icons.arrow_downward_rounded,
+                          color: ThemeColors.background,
+                          size: 16.sp,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
-          AnimatedSize(
-            duration: const Duration(milliseconds: 150),
-            child: Container(
-              height: provider.openIndex == index ? null : 0,
-              margin: EdgeInsets.only(
-                top: provider.openIndex == index ? 10.sp : 0,
-                bottom: provider.openIndex == index ? 10.sp : 0,
-              ),
-              child: Column(
-                children: [
-                  InnerRowItem(
-                    lable: "PE Ratio",
-                    value: "${data?.pe ?? "N?A"}",
-                  ),
-                  InnerRowItem(
-                    lable: "Market Cap",
-                    value: data?.marketCap ?? "N?A",
-                  ),
-                  InnerRowItem(
-                    lable: "Volume",
-                    value: data?.volume ?? "N?A",
-                  ),
-                  InnerRowItem(
-                    lable: "Average Volume",
-                    value: data?.avgVolume ?? "N?A",
-                  ),
-                ],
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "${data?.dateTraded} Shares @ ${data?.currentPrice}",
+                style: stylePTSansRegular(
+                  color: ThemeColors.greyText,
+                  fontSize: 12,
+                ),
+                maxLines: 2,
+                textAlign: TextAlign.end,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
-          )
-        ],
-      ),
+          ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            height: provider.openIndex == index ? null : 0,
+            margin: EdgeInsets.only(
+              top: provider.openIndex == index ? 10.sp : 0,
+              bottom: provider.openIndex == index ? 10.sp : 0,
+            ),
+            child: Column(
+              children: [
+                InnerRowItem(
+                  lable: "Date Filed",
+                  value: "${data!.dateFiled}",
+                ),
+                InnerRowItem(
+                  lable: "Date Traded",
+                  value: "${data?.dateTraded}",
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 }
