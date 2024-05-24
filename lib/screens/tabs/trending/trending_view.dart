@@ -216,7 +216,8 @@ class _TrendingViewState extends State<TrendingView> {
                       index: 1,
                       content: TrendingPartialLoading(
                         loading: provider.isLoadingBearish,
-                        error: !provider.isLoadingBearish &&
+                        error: provider.statusBearish != Status.ideal &&
+                                !provider.isLoadingBearish &&
                                 (provider.mostBearish == null ||
                                     provider.mostBearish?.mostBearish
                                             ?.isEmpty ==
@@ -242,7 +243,8 @@ class _TrendingViewState extends State<TrendingView> {
                       index: 2,
                       content: TrendingPartialLoading(
                         loading: provider.isLoadingStories,
-                        error: !provider.isLoadingStories &&
+                        error: provider.statusStories != Status.ideal &&
+                                !provider.isLoadingStories &&
                                 (provider.trendingStories?.sectors == null ||
                                     provider.trendingStories?.sectors
                                             ?.isEmpty ==
@@ -268,7 +270,8 @@ class _TrendingViewState extends State<TrendingView> {
                       index: 2,
                       content: TrendingPartialLoading(
                         loading: provider.isLoadingStories,
-                        error: !provider.isLoadingStories &&
+                        error: provider.statusStories != Status.ideal &&
+                                !provider.isLoadingStories &&
                                 (provider.trendingStories?.generalNews ==
                                         null ||
                                     provider.trendingStories?.generalNews
@@ -288,7 +291,9 @@ class _TrendingViewState extends State<TrendingView> {
 
                 if (index == 4) {
                   return const TrendingTabWidget(
-                      index: 4, content: TrendingIndustries());
+                    index: 4,
+                    content: TrendingIndustries(),
+                  );
                 }
 
                 return Container();
