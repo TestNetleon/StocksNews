@@ -126,7 +126,7 @@ class LowPriceStocksItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    "${data.priceTarget?.targetConsensus ?? "N/A"}",
+                    "${data.priceTarget ?? "N/A"}",
                     style: stylePTSansRegular(),
                   ),
                 ),

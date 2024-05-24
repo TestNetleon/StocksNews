@@ -114,7 +114,7 @@ class CongressionalItem extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                "${data?.dateTraded} Shares @ ${data?.currentPrice}",
+                "${data?.amount} Shares @ ${data?.currentPrice}",
                 style: stylePTSansRegular(
                   color: ThemeColors.greyText,
                   fontSize: 12,

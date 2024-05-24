@@ -6,12 +6,11 @@ import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/low_price_stocks_tab.dart';
@@ -50,12 +49,7 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
           Dimen.padding,
           0,
         ),
-        child: Column(
-          children: [
-            const ScreenTitle(title: 'Low Price Stocks'),
-            _getWidget(provider),
-          ],
-        ),
+        child: _getWidget(provider),
       ),
     );
   }
@@ -82,19 +76,16 @@ class LowPriceStocksData extends StatelessWidget {
     LowPriceStocksProvider provider = context.watch<LowPriceStocksProvider>();
     List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
-    return Expanded(
-      child: CustomTabContainerNEW(
-        onChange: (index) {
-          provider.tabChange(index);
-        },
-        scrollable: true,
-        tabsPadding: EdgeInsets.only(bottom: 10.sp),
-        tabs:
-            List.generate(tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
-        widgets: List.generate(
-          tabs?.length ?? 0,
-          (index) => _getWidgets(provider),
-        ),
+    return CustomTabContainerNEW(
+      onChange: (index) {
+        provider.tabChange(index);
+      },
+      scrollable: true,
+      tabsPadding: EdgeInsets.only(bottom: 10.sp),
+      tabs: List.generate(tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
+      widgets: List.generate(
+        tabs?.length ?? 0,
+        (index) => _getWidgets(provider),
       ),
     );
   }
@@ -117,15 +108,20 @@ class LowPriceStocksData extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                provider.title ?? "",
-                style: stylePTSansBold(fontSize: 13),
-              ),
-              const SpacerVertical(height: 5),
-              Text(
-                provider.subTitle ?? "",
-                style: stylePTSansRegular(
-                    color: ThemeColors.greyText, fontSize: 12),
+              // Text(
+              //   provider.title ?? "",
+              //   style: stylePTSansBold(fontSize: 13),
+              // ),
+              // const SpacerVertical(height: 5),
+              // Text(
+              //   provider.subTitle ?? "",
+              //   style: stylePTSansRegular(
+              //       color: ThemeColors.greyText, fontSize: 12),
+              // ),
+
+              DrawerScreenTitle(
+                title: provider.title,
+                subTitle: provider.subTitle,
               ),
               const SpacerVertical(height: 5),
               ListView.separated(
