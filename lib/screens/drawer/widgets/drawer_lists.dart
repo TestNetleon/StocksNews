@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -85,6 +86,12 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.graphic_eq_outlined,
     text: "Indices",
+    onTap: () {
+      Navigator.pushNamed(
+        navigatorKey.currentContext!,
+        IndicesIndex.path,
+      );
+    },
   ),
   DrawerRes(
     iconData: Icons.price_change_outlined,
