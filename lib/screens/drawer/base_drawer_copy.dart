@@ -173,8 +173,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ],
                             ),
                           ),
-                          Divider(color: ThemeColors.greyBorder, height: 20.sp),
-
+                          Divider(color: ThemeColors.greyBorder, height: 40.sp),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -288,6 +287,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           const SpacerVertical(height: 20),
                           InkWell(
                             onTap: () {},
+                            borderRadius: BorderRadius.circular(4.sp),
                             child: Ink(
                               decoration: BoxDecoration(
                                   color:
@@ -404,6 +404,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ),
                             ),
                           ),
+                          const SpacerVertical(height: 20),
                         ],
                       ),
                     ),

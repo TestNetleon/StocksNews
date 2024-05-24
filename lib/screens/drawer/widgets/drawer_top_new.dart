@@ -28,13 +28,13 @@ class DrawerTopNew extends StatelessWidget {
           text ?? "",
           style: stylePTSansBold(fontSize: 20),
         ),
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: const Icon(
-        //     Icons.settings,
-        //     color: ThemeColors.white,
-        //   ),
-        // ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.settings,
+            color: ThemeColors.white,
+          ),
+        ),
         // Row(
         //   children: [
         // IconButton(
