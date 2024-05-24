@@ -209,7 +209,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
         scrollOffset = ScreenUtil().screenHeight * 1.293;
         break;
       case 5:
-        scrollOffset = ScreenUtil().screenHeight * 1.6;
+        scrollOffset = ScreenUtil().screenHeight * 1.47;
         break;
       default:
         scrollOffset = 0;
@@ -230,7 +230,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
       return 2;
     } else if (offset < ScreenUtil().screenHeight * 1.293) {
       return 3;
-    } else if (offset < ScreenUtil().screenHeight * 1.6) {
+    } else if (offset < ScreenUtil().screenHeight * 1.47) {
       return 4;
     } else {
       return 5;
@@ -301,8 +301,8 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
                       childrenPerRow: 3,
                       length: marketData.length,
                       getChild: (index) {
-                        return GestureDetector(
-                          onTap: () {},
+                        return InkWell(
+                          onTap: marketData[index].onTap,
                           child: DrawerNewWidget(
                             icon: marketData[index].iconData,
                             text: marketData[index].text,
@@ -320,7 +320,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
                       childrenPerRow: 3,
                       length: researchTools.length,
                       getChild: (index) {
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {},
                           child: DrawerNewWidget(
                             icon: researchTools[index].iconData,
@@ -339,7 +339,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
                       childrenPerRow: 3,
                       length: financialCalendar.length,
                       getChild: (index) {
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {},
                           child: DrawerNewWidget(
                             icon: financialCalendar[index].iconData,
@@ -358,7 +358,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
                       childrenPerRow: 3,
                       length: stockList.length,
                       getChild: (index) {
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {},
                           child: DrawerNewWidget(
                             icon: stockList[index].iconData,
@@ -377,7 +377,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
                       childrenPerRow: 3,
                       length: headlines.length,
                       getChild: (index) {
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {},
                           child: DrawerNewWidget(
                             icon: headlines[index].iconData,
@@ -396,7 +396,7 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
                       childrenPerRow: 3,
                       length: learn.length,
                       getChild: (index) {
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {},
                           child: DrawerNewWidget(
                             icon: learn[index].iconData,

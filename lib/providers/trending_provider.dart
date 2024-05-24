@@ -99,8 +99,11 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       "mention_spike": selectedTwo ? "yes" : "no",
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.createAlert, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.createAlert,
+        request: request,
+        showProgress: true,
+      );
       if (response.status) {
         if (up) {
           //
@@ -145,8 +148,11 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       "symbol": symbol
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.addWatchlist, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.addWatchlist,
+        request: request,
+        showProgress: true,
+      );
       if (response.status) {
         if (up) {
           //
@@ -297,6 +303,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

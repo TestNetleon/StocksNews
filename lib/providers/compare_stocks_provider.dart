@@ -103,6 +103,7 @@ class CompareStocksProvider extends ChangeNotifier {
       ApiResponse res = await apiRequest(
         url: Apis.deleteCompare,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         _company.removeAt(index);
@@ -137,6 +138,7 @@ class CompareStocksProvider extends ChangeNotifier {
       ApiResponse res = await apiRequest(
         url: Apis.addCompare,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         if (!_company.any((company) => company.symbol == symbol)) {

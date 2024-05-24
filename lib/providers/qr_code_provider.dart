@@ -31,8 +31,11 @@ class QRcodePRovider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "qr_token": qrCode,
       };
-      ApiResponse response =
-          await apiRequest(url: Apis.qrCodeScan, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.qrCodeScan,
+        request: request,
+        showProgress: true,
+      );
       if (response.status) {
       } else {}
       Navigator.pop(navigatorKey.currentContext!);

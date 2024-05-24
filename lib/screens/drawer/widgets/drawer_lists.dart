@@ -51,14 +51,23 @@ List<DrawerRes> marketData = [
     iconData: Icons.pending_actions_rounded,
     text: "Insider Trades",
     onTap: () {
-      Scaffold.of(navigatorKey.currentContext!).closeDrawer();
-      Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path,
-          arguments: 2);
+      Navigator.pushNamed(
+        navigatorKey.currentContext!,
+        Tabs.path,
+        arguments: 2,
+      );
     },
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
     text: "Market Sentiment",
+    onTap: () {
+      Navigator.pushNamed(
+        navigatorKey.currentContext!,
+        Tabs.path,
+        arguments: 3,
+      );
+    },
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,

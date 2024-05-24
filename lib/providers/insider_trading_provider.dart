@@ -134,11 +134,12 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future getData(
-      {showProgress = false,
-      loadMore = false,
-      search,
-      bool clear = true}) async {
+  Future getData({
+    showProgress = false,
+    loadMore = false,
+    search,
+    bool clear = true,
+  }) async {
     if (search != null) {
       valueSearch = search;
       _page = 1;
@@ -165,9 +166,10 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
         "txn_date": dateSend,
       };
       ApiResponse response = await apiRequest(
-          url: Apis.insiderTrading,
-          request: request,
-          showProgress: showProgress);
+        url: Apis.insiderTrading,
+        request: request,
+        showProgress: showProgress,
+      );
 
       if (response.status) {
         _error = null;
@@ -209,6 +211,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

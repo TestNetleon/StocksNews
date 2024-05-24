@@ -106,7 +106,10 @@ class TrendingIndustriesProvider extends ChangeNotifier {
         "token": provider.user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
-          url: Apis.trendingIndustries, request: request, showProgress: false);
+        url: Apis.trendingIndustries,
+        request: request,
+        showProgress: false,
+      );
       if (response.status) {
         _data = trendingIndustriesResFromJson(jsonEncode(response.data));
       } else {

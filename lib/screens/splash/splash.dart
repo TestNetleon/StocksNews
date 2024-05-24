@@ -87,9 +87,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   Future getWelcomeData() async {
     try {
-      Map request = {
-        "token": "",
-      };
+      Map request = {"token": ""};
+
       ApiResponse response = await apiRequest(
         url: Apis.welcome,
         request: request,

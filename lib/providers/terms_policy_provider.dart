@@ -43,8 +43,11 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
                       : "disclaimer",
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.infoPage, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.infoPage,
+        request: request,
+        showProgress: true,
+      );
 
       if (response.status) {
         _data = termsPolicyResFromJson(jsonEncode(response.data));
