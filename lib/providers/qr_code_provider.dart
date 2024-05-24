@@ -8,7 +8,6 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 class QRcodePRovider extends ChangeNotifier {
   String? _error;
@@ -39,9 +38,9 @@ class QRcodePRovider extends ChangeNotifier {
       if (response.status) {
       } else {}
       Navigator.pop(navigatorKey.currentContext!);
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
+      // showErrorMessage(
+      //     message: response.message,
+      //     type: response.status ? SnackbarType.info : SnackbarType.error);
       setStatus(Status.ideal);
     } catch (e) {
       log(e.toString());

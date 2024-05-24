@@ -9,6 +9,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/utils.dart';
 
 var options = BaseOptions(
@@ -60,14 +61,14 @@ Future requestUploadImage({
         data: request, options: Options(headers: headers));
     closeGlobalProgressDialog();
 
-    showErrorMessage(
-        message: response.data["message"], type: SnackbarType.info);
+    // showErrorMessage(
+    //     message: response.data["message"], type: SnackbarType.info);
     return ApiResponse(status: true, data: response.data["data"]["image"]);
   } on DioException catch (e) {
     Utils().showLog("dio e $e");
     closeGlobalProgressDialog();
     // throw ExceptionMessage(e.message ?? Const.errSomethingWrong);
-    showErrorMessage(message: Const.errSomethingWrong);
+    // showErrorMessage(message: Const.errSomethingWrong);
 
     return ApiResponse(status: false, message: Const.errSomethingWrong);
   } catch (e) {

@@ -16,7 +16,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.da
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -322,10 +322,10 @@ class _LoginBottomState extends State<LoginBottom> {
                         } catch (e) {
                           if (e.toString().contains(
                               "SignInWithAppleNotSupportedException")) {
-                            showErrorMessage(
-                              message:
-                                  "Sign in with Apple not supported in this device",
-                            );
+                            // showErrorMessage(
+                            //   message:
+                            //       "Sign in with Apple not supported in this device",
+                            // );
                           }
                         }
                       },

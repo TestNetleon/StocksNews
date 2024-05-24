@@ -4,9 +4,9 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 import '../providers/home_provider.dart';
+import '../utils/dialogs.dart';
 
 class InfoBottomSheet extends StatelessWidget {
   const InfoBottomSheet({super.key});

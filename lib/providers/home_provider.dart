@@ -21,7 +21,6 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/app_update_content.dart';
 
@@ -378,7 +377,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         _homeInsiderRes = HomeInsiderRes.fromJson(response.data);
       } else {
         _homeInsiderRes = null;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       _statusInsider = Status.loaded;
       notifyListeners();

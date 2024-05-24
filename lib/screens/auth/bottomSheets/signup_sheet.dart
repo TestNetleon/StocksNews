@@ -16,7 +16,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dar
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
@@ -389,10 +389,10 @@ class _SignUpBottomState extends State<SignUpBottom> {
                               print("Error Apple Sign IN - $e");
                               if (e.toString().contains(
                                   "SignInWithAppleNotSupportedException")) {
-                                showErrorMessage(
-                                  message:
-                                      "Sign in with Apple not supported in this device",
-                                );
+                                // showErrorMessage(
+                                //   message:
+                                //       "Sign in with Apple not supported in this device",
+                                // );
                               }
                             }
                             // Now send the credential (especially `credential.authorizationCode`) to your server to create a session

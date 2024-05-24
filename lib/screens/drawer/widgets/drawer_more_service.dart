@@ -9,83 +9,6 @@ import 'drawer_lists.dart';
 import 'drawer_new_widget.dart';
 import 'drawer_top_new.dart';
 
-// class DrawerMoreService extends StatelessWidget {
-//   const DrawerMoreService({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: ThemeColors.background,
-//       body: SafeArea(
-//         child: ListView(
-//           padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 15.sp),
-//           children: [
-//             const DrawerTopNew(),
-//             const SpacerVertical(height: 50),
-//             Text(
-//               "Market Data",
-//               style: stylePTSansBold(),
-//             ),
-//             CustomGridViewPerChild(
-//               paddingHorizontal: 5,
-//               paddingVertical: 25,
-//               childrenPerRow: 3,
-//               length: marketData.length,
-//               getChild: (index) {
-//                 return GestureDetector(
-//                   onTap: () {},
-//                   child: DrawerNewWidget(
-//                     icon: marketData[index].iconData,
-//                     text: marketData[index].text,
-//                   ),
-//                 );
-//               },
-//             ),
-//             Text(
-//               "Market Data1",
-//               style: stylePTSansBold(),
-//             ),
-//             CustomGridViewPerChild(
-//               paddingHorizontal: 5,
-//               paddingVertical: 25,
-//               childrenPerRow: 3,
-//               length: marketData.length,
-//               getChild: (index) {
-//                 return GestureDetector(
-//                   onTap: () {},
-//                   child: DrawerNewWidget(
-//                     icon: marketData[index].iconData,
-//                     text: marketData[index].text,
-//                   ),
-//                 );
-//               },
-//             ),
-//             Text(
-//               "Market Data2",
-//               style: stylePTSansBold(),
-//             ),
-//             CustomGridViewPerChild(
-//               paddingHorizontal: 5,
-//               paddingVertical: 25,
-//               childrenPerRow: 3,
-//               length: marketData.length,
-//               getChild: (index) {
-//                 return GestureDetector(
-//                   onTap: () {},
-//                   child: DrawerNewWidget(
-//                     icon: marketData[index].iconData,
-//                     text: marketData[index].text,
-//                   ),
-//                 );
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class DrawerMoreService extends StatefulWidget {
   const DrawerMoreService({super.key});
 
@@ -97,11 +20,11 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   TabController? _tabController;
-  // double firstTab = ScreenUtil().screenHeight * 0.499;
-  // double secondTab = ScreenUtil().screenHeight * 0.820;
-  // double thirdTab = ScreenUtil().screenHeight * 1.162;
-  // double fourthTab = ScreenUtil().screenHeight * 1.4;
-  // double fifthTab = ScreenUtil().screenHeight * 1.545;
+  // double firstTab = ScreenUtil().screenHeight * 0.485;
+  // double secondTab = ScreenUtil().screenHeight * 0.817;
+  // double thirdTab = ScreenUtil().screenHeight * 1.055;
+  // double fourthTab = ScreenUtil().screenHeight * 1.293;
+  // double fifthTab = ScreenUtil().screenHeight * 1.47;
   // @override
   // void initState() {
   //   super.initState();

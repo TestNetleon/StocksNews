@@ -10,10 +10,12 @@ import 'package:stocks_news_new/screens/tabs/trending/menuButton/popup_menu.dart
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
+
+import '../../../utils/dialogs.dart';
 
 //
 class TopTrendingItem extends StatelessWidget {

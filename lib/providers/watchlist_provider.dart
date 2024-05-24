@@ -13,7 +13,6 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
   WatchlistRes? _data;
@@ -127,9 +126,9 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
-        showErrorMessage(message: response.message, type: SnackbarType.info);
+        // showErrorMessage(message: response.message, type: SnackbarType.info);
       } else {
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
@@ -159,9 +158,9 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         navigatorKey.currentContext!
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       } else {
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
@@ -180,18 +179,18 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       if (res.status) {
         setStatus(Status.loaded);
         handleSessionOut();
-        showErrorMessage(message: res.message, type: SnackbarType.info);
+        // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
-        showErrorMessage(
-          message: res.message,
-        );
+        // showErrorMessage(
+        //   message: res.message,
+        // );
       }
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 }

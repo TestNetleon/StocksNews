@@ -17,6 +17,7 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/in_app_messages.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:http/http.dart' as http;

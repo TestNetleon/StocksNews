@@ -36,7 +36,9 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
     return BaseUiContainer(
       error: provider.error,
       // hasData: up != null && up.isNotEmpty,
-      hasData: true,
+      hasData: !provider.isLoading &&
+          provider.data != null &&
+          provider.data?.isNotEmpty == true,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,

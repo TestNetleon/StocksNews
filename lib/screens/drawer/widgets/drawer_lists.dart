@@ -10,8 +10,16 @@ import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.
 import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/myAccount/my_account.dart';
+import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+
+import '../../blogs/index.dart';
+import '../../contactUs/contact_us.dart';
+import '../../faq/index.dart';
+import '../../t&cAndPolicy/tc_policy.dart';
+import '../../whatWeDo/index.dart';
 
 List<DrawerRes> marketData = [
   DrawerRes(
@@ -152,6 +160,27 @@ List<DrawerRes> marketData = [
     iconData: Icons.money,
     text: "Earnings",
   ),
+  DrawerRes(
+    iconData: Icons.newspaper_rounded,
+    text: "Blogs",
+    onTap: () {
+      Navigator.pushNamed(
+        navigatorKey.currentContext!,
+        IndexBlog.path,
+      );
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.stacked_line_chart_outlined,
+    text: "Stocks",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.screen_search_desktop_outlined,
+    text: "Stock Screener",
+  ),
 ];
 
 List<DrawerRes> researchTools = [
@@ -270,5 +299,53 @@ List<DrawerRes> learn = [
   DrawerRes(
     iconData: Icons.currency_bitcoin,
     text: "Help",
+  ),
+];
+
+// 0: StocksIndex.path,
+
+// 1:,
+// 2: IndexBlog.path,
+// 3: TCandPolicy.path,
+// 4: WhatWeDoIndex.path,
+// 5: ContactUs.path,
+// 6: FAQ.path,
+
+List<DrawerRes> aboutTiles = [
+  DrawerRes(
+    iconData: Icons.person_2_outlined,
+    text: "My Profile",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, MyAccount.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.list_alt_rounded,
+    text: "About Stocks.news",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, TCandPolicy.path,
+          arguments: PolicyType.aboutUs);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.featured_play_list_outlined,
+    text: "What we do",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, WhatWeDoIndex.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.mail_outline_sharp,
+    text: "Contact Us",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, ContactUs.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.help_outline_rounded,
+    text: "FAQ",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, FAQ.path);
+    },
   ),
 ];

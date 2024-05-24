@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/bottom_sheet_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
@@ -35,78 +34,78 @@ void closeGlobalProgressDialog() {
   navigatorKey.currentState?.pop();
 }
 
-void showErrorMessage(
-    {required message,
-    type = SnackbarType.error,
-    bool snackbar = true,
-    int duration = 2}) {
-  // if (Platform.isAndroid) {
-  if (snackbar) {
-    final snackBar = SnackBar(
-      duration: Duration(seconds: duration),
-      // behavior: SnackBarBehavior.floating,
-      backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
-      content: Text(
-        message ?? '',
-        style:
-            stylePTSansRegular().copyWith(color: Colors.white, fontSize: 14.sp),
-      ),
-    );
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(snackBar);
-  } else {
-    showDialog(
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return AlertDialog(
-          insetPadding: EdgeInsets.all(10.sp),
-          backgroundColor: const Color.fromARGB(255, 39, 39, 39),
-          content: Text(
-            message,
-            style: stylePTSansRegular(fontSize: 14),
-          ),
-          actions: <Widget>[
-            GestureDetector(
-              child: Padding(
-                padding: EdgeInsets.all(10.sp),
-                child: Text(
-                  "Okay",
-                  style: stylePTSansRegular(fontSize: 14),
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-  // } else {
-  //   showDialog(
-  //       context: navigatorKey.currentContext!,
-  //       builder: (context) {
-  //         return CupertinoAlertDialog(
-  //           content: Text(
-  //             message,
-  //             style: stylePTSansRegular(fontSize: 12),
-  //           ),
-  //           actions: <Widget>[
-  //             CupertinoDialogAction(
-  //               child: Text(
-  //                 "Dismiss",
-  //                 style: stylePTSansRegular(fontSize: 14),
-  //               ),
-  //               onPressed: () {
-  //                 FocusManager.instance.primaryFocus?.unfocus();
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-}
+// void showErrorMessage(
+//     {required message,
+//     type = SnackbarType.error,
+//     bool snackbar = true,
+//     int duration = 2}) {
+//   // if (Platform.isAndroid) {
+//   if (snackbar) {
+//     final snackBar = SnackBar(
+//       duration: Duration(seconds: duration),
+//       // behavior: SnackBarBehavior.floating,
+//       backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
+//       content: Text(
+//         message ?? '',
+//         style:
+//             stylePTSansRegular().copyWith(color: Colors.white, fontSize: 14.sp),
+//       ),
+//     );
+//     ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(snackBar);
+//   } else {
+//     showDialog(
+//       context: navigatorKey.currentContext!,
+//       builder: (context) {
+//         return AlertDialog(
+//           insetPadding: EdgeInsets.all(10.sp),
+//           backgroundColor: const Color.fromARGB(255, 39, 39, 39),
+//           content: Text(
+//             message,
+//             style: stylePTSansRegular(fontSize: 14),
+//           ),
+//           actions: <Widget>[
+//             GestureDetector(
+//               child: Padding(
+//                 padding: EdgeInsets.all(10.sp),
+//                 child: Text(
+//                   "Okay",
+//                   style: stylePTSansRegular(fontSize: 14),
+//                 ),
+//               ),
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// } else {
+//   showDialog(
+//       context: navigatorKey.currentContext!,
+//       builder: (context) {
+//         return CupertinoAlertDialog(
+//           content: Text(
+//             message,
+//             style: stylePTSansRegular(fontSize: 12),
+//           ),
+//           actions: <Widget>[
+//             CupertinoDialogAction(
+//               child: Text(
+//                 "Dismiss",
+//                 style: stylePTSansRegular(fontSize: 14),
+//               ),
+//               onPressed: () {
+//                 FocusManager.instance.primaryFocus?.unfocus();
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ],
+//         );
+//       });
+// }
+// }
 
 Future<dynamic> showConfirmAlertCallbackDialog({
   context,

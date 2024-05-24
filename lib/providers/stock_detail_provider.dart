@@ -20,7 +20,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -147,7 +147,7 @@ class StockDetailProvider with ChangeNotifier {
         }
       } else {
         _data = null;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
@@ -464,7 +464,7 @@ class StockDetailProvider with ChangeNotifier {
         graphError = '';
       } else {
         graphError = response.message;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       _statusGraph = Status.loaded;
 
@@ -504,7 +504,7 @@ class StockDetailProvider with ChangeNotifier {
         _otherData = stocksOtherDetailsFromJson(jsonEncode(response.data));
       } else {
         _otherData = null;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
@@ -639,7 +639,7 @@ class StockDetailProvider with ChangeNotifier {
         });
       } else {
         _data = null;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       mentionLoading = false;
       notifyListeners();
@@ -686,16 +686,16 @@ class StockDetailProvider with ChangeNotifier {
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
 
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
+      // showErrorMessage(
+      //     message: response.message,
+      //     type: response.status ? SnackbarType.info : SnackbarType.error);
       setStatus(Status.loaded);
       return ApiResponse(status: response.status, data: response.data);
     } catch (e) {
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
 
-      showErrorMessage(message: Const.errSomethingWrong);
+      // showErrorMessage(message: Const.errSomethingWrong);
     }
   }
 
@@ -721,9 +721,9 @@ class StockDetailProvider with ChangeNotifier {
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
       }
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
+      // showErrorMessage(
+      //     message: response.message,
+      //     type: response.status ? SnackbarType.info : SnackbarType.error);
 
       setStatus(Status.loaded);
       return ApiResponse(status: response.status, data: response.data);
@@ -731,7 +731,7 @@ class StockDetailProvider with ChangeNotifier {
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
 
-      showErrorMessage(message: Const.errSomethingWrong);
+      // showErrorMessage(message: Const.errSomethingWrong);
     }
   }
 }

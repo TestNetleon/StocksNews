@@ -11,12 +11,14 @@ import 'package:stocks_news_new/screens/tabs/insider/filter/filter_insider_compa
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_container.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
+
+import '../../../../utils/dialogs.dart';
 
 //
 class InsiderDetailsType extends StatelessWidget {

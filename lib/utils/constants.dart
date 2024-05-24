@@ -35,7 +35,7 @@ bool isAppInForeground = false;
 class Images {
   static const String logo = "assets/images/logo.png";
   static const String logoP = "assets/images/logo_holder.png";
-
+  static const String stockIcon = "assets/images/stock_icon.png";
   static const String signupSuccess = "assets/images/signup_success.png";
   static const String google = "assets/images/google.png";
   static const String apple = "assets/images/apple.png";

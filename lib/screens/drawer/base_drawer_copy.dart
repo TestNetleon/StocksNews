@@ -1,8 +1,5 @@
 // import 'package:flutter/gestures.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +9,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/drawer/about/about_stocks_news.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -26,7 +24,6 @@ import '../../widgets/custom_gridview.dart';
 import '../../widgets/theme_button_small.dart';
 import '../alerts/alerts.dart';
 import '../myAccount/my_account.dart';
-import '../t&cAndPolicy/tc_policy.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
 import 'widgets/drawer_more_service.dart';
@@ -80,21 +77,31 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // const SpacerVertical(height: 30),
-                          Text(
-                            "Welcome to stocks.news",
-                            style: stylePTSansBold(fontSize: 20),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 5.sp,
+
+                          Visibility(
+                            visible: userProvider.user == null,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Welcome to stocks.news",
+                                  style: stylePTSansBold(fontSize: 20),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 5.sp,
+                                  ),
+                                  child: Text(
+                                    "${provider.homeSliderRes?.text.drawerHeader}",
+                                    style: stylePTSansRegular(
+                                        fontSize: 13,
+                                        color: ThemeColors.greyText),
+                                  ),
+                                ),
+                                const SpacerVertical(height: 20),
+                              ],
                             ),
-                            child: Text(
-                              "${provider.homeSliderRes?.text.drawerHeader}",
-                              style: stylePTSansRegular(
-                                  fontSize: 13, color: ThemeColors.greyText),
-                            ),
                           ),
-                          const SpacerVertical(height: 20),
 
                           Visibility(
                             visible: userProvider.user != null,
@@ -202,7 +209,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                           fontSize: 13,
                                           color: const Color.fromARGB(
                                               255, 184, 187, 193)),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -286,7 +293,12 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           ),
                           const SpacerVertical(height: 20),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              easeOutBuilder(context,
+                                  child: AboutStocksNews(
+                                    version: version ?? "",
+                                  ));
+                            },
                             borderRadius: BorderRadius.circular(4.sp),
                             child: Ink(
                               decoration: BoxDecoration(
@@ -317,94 +329,94 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           //   color: ThemeColors.greyBorder,
                           //   height: 20.sp,
                           // ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: 'Disclaimer,',
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Scaffold.of(context).closeDrawer();
-                                          Navigator.push(
-                                            context,
-                                            createRoute(
-                                              const TCandPolicy(
-                                                policyType:
-                                                    PolicyType.disclaimer,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      style: stylePTSansRegular(fontSize: 13)),
-                                  TextSpan(
-                                      text: ' Privacy Policy ',
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Scaffold.of(context).closeDrawer();
-                                          Navigator.push(
-                                            context,
-                                            createRoute(
-                                              const TCandPolicy(
-                                                policyType: PolicyType.privacy,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      style: stylePTSansRegular(fontSize: 13)),
-                                  TextSpan(
-                                      text: 'and',
-                                      style: stylePTSansRegular(
-                                          fontSize: 13,
-                                          color: ThemeColors.greyText)),
-                                  TextSpan(
-                                      text: ' Terms of Service',
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Scaffold.of(context).closeDrawer();
-                                          Navigator.push(
-                                            context,
-                                            createRoute(
-                                              const TCandPolicy(
-                                                policyType: PolicyType.tC,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      style: stylePTSansRegular(fontSize: 13)),
-                                ],
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Scaffold.of(context).closeDrawer();
-                                    Navigator.push(
-                                      context,
-                                      createRoute(
-                                        const TCandPolicy(
-                                          policyType: PolicyType.privacy,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                text: "Read our ",
-                                style: stylePTSansRegular(
-                                    fontSize: 13, color: ThemeColors.greyText),
-                              ),
-                            ),
-                          ),
-                          const SpacerVertical(height: 10),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "App Version: $version",
-                              style: stylePTSansRegular(
-                                fontSize: 13,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
-                          ),
-                          const SpacerVertical(height: 20),
+                          // Align(
+                          //   alignment: Alignment.center,
+                          //   child: RichText(
+                          //     textAlign: TextAlign.center,
+                          //     text: TextSpan(
+                          //       children: [
+                          //         TextSpan(
+                          //             text: 'Disclaimer,',
+                          //             recognizer: TapGestureRecognizer()
+                          //               ..onTap = () {
+                          //                 Scaffold.of(context).closeDrawer();
+                          //                 Navigator.push(
+                          //                   context,
+                          //                   createRoute(
+                          //                     const TCandPolicy(
+                          //                       policyType:
+                          //                           PolicyType.disclaimer,
+                          //                     ),
+                          //                   ),
+                          //                 );
+                          //               },
+                          //             style: stylePTSansRegular(fontSize: 13)),
+                          //         TextSpan(
+                          //             text: ' Privacy Policy ',
+                          //             recognizer: TapGestureRecognizer()
+                          //               ..onTap = () {
+                          //                 Scaffold.of(context).closeDrawer();
+                          //                 Navigator.push(
+                          //                   context,
+                          //                   createRoute(
+                          //                     const TCandPolicy(
+                          //                       policyType: PolicyType.privacy,
+                          //                     ),
+                          //                   ),
+                          //                 );
+                          //               },
+                          //             style: stylePTSansRegular(fontSize: 13)),
+                          //         TextSpan(
+                          //             text: 'and',
+                          //             style: stylePTSansRegular(
+                          //                 fontSize: 13,
+                          //                 color: ThemeColors.greyText)),
+                          //         TextSpan(
+                          //             text: ' Terms of Service',
+                          //             recognizer: TapGestureRecognizer()
+                          //               ..onTap = () {
+                          //                 Scaffold.of(context).closeDrawer();
+                          //                 Navigator.push(
+                          //                   context,
+                          //                   createRoute(
+                          //                     const TCandPolicy(
+                          //                       policyType: PolicyType.tC,
+                          //                     ),
+                          //                   ),
+                          //                 );
+                          //               },
+                          //             style: stylePTSansRegular(fontSize: 13)),
+                          //       ],
+                          //       recognizer: TapGestureRecognizer()
+                          //         ..onTap = () {
+                          //           Scaffold.of(context).closeDrawer();
+                          //           Navigator.push(
+                          //             context,
+                          //             createRoute(
+                          //               const TCandPolicy(
+                          //                 policyType: PolicyType.privacy,
+                          //               ),
+                          //             ),
+                          //           );
+                          //         },
+                          //       text: "Read our ",
+                          //       style: stylePTSansRegular(
+                          //           fontSize: 13, color: ThemeColors.greyText),
+                          //     ),
+                          //   ),
+                          // ),
+                          // const SpacerVertical(height: 10),
+                          // Align(
+                          //   alignment: Alignment.center,
+                          //   child: Text(
+                          //     "App Version: $version",
+                          //     style: stylePTSansRegular(
+                          //       fontSize: 13,
+                          //       color: ThemeColors.greyText,
+                          //     ),
+                          //   ),
+                          // ),
+                          // const SpacerVertical(height: 20),
                         ],
                       ),
                     ),
@@ -419,12 +431,12 @@ class _BaseDrawerState extends State<BaseDrawer> {
             },
             child: Container(
               width: 11,
-              height: 50,
+              height: 70,
               decoration: const BoxDecoration(
                 color: ThemeColors.accent,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  bottomLeft: Radius.circular(50),
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
                 ),
               ),
               child: const Icon(

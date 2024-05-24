@@ -12,7 +12,6 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   GainersLosersRes? _gainersLosers;
@@ -235,18 +234,18 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
       if (res.status) {
         setStatus(Status.loaded);
         handleSessionOut();
-        showErrorMessage(message: res.message, type: SnackbarType.info);
+        // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
-        showErrorMessage(
-          message: res.message,
-        );
+        // showErrorMessage(
+        //   message: res.message,
+        // );
       }
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 }
