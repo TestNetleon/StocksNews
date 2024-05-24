@@ -32,12 +32,12 @@ class HomePartialLoading extends StatelessWidget {
               color: ThemeColors.accent,
             ),
           ),
-        if (error != null)
-          ErrorDisplayWidget(
-            smallHeight: true,
-            error: error,
-            onRefresh: onRefresh,
-          ),
+        // if (error != null)
+        //   ErrorDisplayWidget(
+        //     smallHeight: true,
+        //     error: error,
+        //     onRefresh: onRefresh,
+        //   ),
         if (!loading && error == null)
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),

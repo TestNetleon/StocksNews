@@ -143,6 +143,7 @@ class _TabsState extends State<Tabs> {
     final trendingProvider = context.read<TrendingProvider>();
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
+    final newsCatProvider = context.read<NewsCategoryProvider>();
     // final newsProvider = context.read<FeaturedNewsProvider>();
     // final latestNewsProvider = context.read<NewsProvider>();
 
@@ -185,15 +186,19 @@ class _TabsState extends State<Tabs> {
         _home(context, widget.inAppMsgId);
         break;
       case 1:
-        context.read<TrendingIndustriesProvider>().getData();
-
-        trendingProvider.refreshData();
+        if (trendingProvider.mostBullish == null) {
+          trendingProvider.getMostBullish();
+        }
         break;
       case 2:
-        insiderProvider.getData(showProgress: false);
+        if (insiderProvider.data == null) {
+          insiderProvider.getData(showProgress: false);
+        }
         break;
       case 3:
-        redditTwitterProvider.getRedditTwitterData(reset: true);
+        if (redditTwitterProvider.socialSentimentRes == null) {
+          redditTwitterProvider.getRedditTwitterData(reset: true);
+        }
         break;
       case 4:
         // newsProvider.getNews(
@@ -201,9 +206,12 @@ class _TabsState extends State<Tabs> {
         //   inAppMsgId: widget.inAppMsgId,
         // );
         // latestNewsProvider.getNews();
-        context.read<NewsCategoryProvider>().selectedIndex = 0;
-        context.read<NewsCategoryProvider>().getTabsData(showProgress: true);
-
+        newsCatProvider.selectedIndex = 0;
+        if (newsCatProvider.tabs == null) {
+          newsCatProvider.getTabsData(showProgress: true);
+        } else {
+          newsCatProvider.getNews(showProgress: true, id: "featured-news");
+        }
         break;
       case 5:
         _compareStocks(context);
@@ -222,7 +230,11 @@ class _TabsState extends State<Tabs> {
 
 void _home(BuildContext context, String? inAppMsgId) async {
   final HomeProvider homeProvider = context.read<HomeProvider>();
-  homeProvider.refreshData(inAppMsgId);
+  if (homeProvider.homeSliderRes == null &&
+      homeProvider.homeAlertData == null &&
+      homeProvider.homeTrendingRes == null) {
+    homeProvider.refreshData(inAppMsgId);
+  }
   // homeProvider.getHomeData();
   // homeProvider.getHomeNewData();
 }
@@ -231,7 +243,7 @@ void _compareStocks(BuildContext context) {
   UserProvider provider = context.read<UserProvider>();
   final compareProvider = context.read<CompareStocksProvider>();
 
-  if (provider.user != null) {
+  if (provider.user != null && compareProvider.company.isEmpty) {
     compareProvider.getCompareStock();
   }
 }

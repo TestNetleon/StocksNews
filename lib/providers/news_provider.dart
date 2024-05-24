@@ -293,7 +293,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   void tabChange(index) {
-    log("Before--> selected index $selectedIndex, index $index ");
+    // log("Before--> selected index $selectedIndex, index $index ");
     if (selectedIndex != index) {
       selectedIndex = index;
       notifyListeners();
@@ -389,7 +389,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: id == "featured-news" ? Apis.featuredNews : Apis.latestNews,
         request: request,
-        showProgress: showProgress,
+        showProgress: false,
       );
 
       if (response.status) {

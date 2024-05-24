@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/home_container.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class Home extends StatelessWidget {

@@ -123,11 +123,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future refreshData(String? inAppMsgId) async {
-    await getHomeSlider();
+    getHomeSlider();
     // getIpoData();
     // getStockInFocus();
-    await getHomeTrendingData();
-    await getHomeAlerts();
+    getHomeTrendingData();
+    getHomeAlerts();
     // getHomeSentimentData();
     // getHomeInsiderData(inAppMsgId);
   }
@@ -157,7 +157,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getHomeSlider() async {
-    showGlobalProgressDialog();
+    // showGlobalProgressDialog();
 
     _statusSlider = Status.loading;
     notifyListeners();
@@ -257,7 +257,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     }
-    closeGlobalProgressDialog();
+    // closeGlobalProgressDialog();
   }
 
   Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
