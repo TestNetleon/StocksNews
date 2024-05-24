@@ -422,6 +422,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // String versionName = packageInfo.version;
     String buildCode = packageInfo.buildNumber;
 
+    log("*************** AVC ******************* ${extra.iOSBuildCode} == $buildCode");
+
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
       _showUpdateDialog(extra);

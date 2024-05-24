@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -188,9 +189,12 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // const SpacerVertical(height: 50),
-                Text(
-                  "OTP VERIFICATION",
-                  style: stylePTSansBold(fontSize: 22),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "OTP VERIFICATION",
+                    style: stylePTSansBold(fontSize: 22),
+                  ),
                 ),
                 const SpacerVertical(height: 8),
                 // Text(

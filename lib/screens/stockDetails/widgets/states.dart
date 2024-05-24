@@ -181,8 +181,8 @@ class _StatesState extends State<States> {
     KeyStats? keyStats = context.watch<StockDetailProvider>().data?.keyStats;
 
     return CustomGridView(
-      paddingVerticle: 5,
-      paddingHorizontal: 5,
+      paddingVerticle: 8.sp,
+      paddingHorizontal: 5.sp,
       length: 25,
       getChild: (index) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,

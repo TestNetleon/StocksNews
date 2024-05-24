@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -78,7 +79,7 @@ class HomeMyAlerts extends StatelessWidget {
             ),
             const SpacerVertical(height: 10),
             SizedBox(
-              height: 150,
+              height: 150.sp,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
