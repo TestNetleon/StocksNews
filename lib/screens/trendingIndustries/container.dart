@@ -42,76 +42,78 @@ class _TrendingIndustriesContainerState
     TrendingIndustriesProvider provider =
         context.watch<TrendingIndustriesProvider>();
     return BaseContainer(
-      // appBar: const AppBarHome(
-      //     isPopback: true, showTrailing: true, canSearch: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                visible: provider.textRes?.subTitle != '',
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20.sp),
-                  child: Text(
-                    provider.textRes?.subTitle ?? "",
-                    style: stylePTSansRegular(
-                        fontSize: 13, color: ThemeColors.greyText),
-                  ),
-                ),
-              ),
-              provider.isLoading
-                  ? const Loading()
-                  : provider.data != null && provider.data?.isNotEmpty == true
-                      ? RefreshIndicator(
-                          onRefresh: provider.getData,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.only(bottom: 16.sp),
-                            itemBuilder: (context, index) {
-                              TrendingIndustriesRes? data =
-                                  provider.data?[index];
-
-                              if (data == null) {
-                                return const SizedBox();
-                              }
-                              if (index == 0) {
-                                return Column(
-                                  children: [
-                                    const TrendingIndustriesGraph(),
-                                    TrendingIndustryItem(data: data),
-                                  ],
-                                );
-                              }
-
-                              return TrendingIndustryItem(data: data);
-                            },
-                            separatorBuilder: (context, index) {
-                              // return const SpacerVertical(height: 10);
-                              return Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 12.sp,
-                              );
-                            },
-                            itemCount: provider.data?.length ?? 0,
-                          ),
-                        )
-                      : (provider.data == null ||
-                                  provider.data?.isEmpty == true) &&
-                              !provider.isLoading
-                          ? Center(
-                              child: ErrorDisplayNewWidget(
-                                error: provider.error,
-                                onRefresh: provider.getData,
-                              ),
-                            )
-                          : const SizedBox(),
-            ],
-          ),
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          0,
         ),
+        child: provider.isLoading
+            ? const Loading()
+            : (provider.data == null || provider.data?.isEmpty == true) &&
+                    !provider.isLoading
+                ? Center(
+                    child: ErrorDisplayNewWidget(
+                      error: provider.error,
+                      onRefresh: provider.getData,
+                    ),
+                  )
+                : RefreshIndicator(
+                    onRefresh: provider.getData,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Visibility(
+                            visible: provider.textRes?.subTitle != '',
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 20.sp),
+                              child: Text(
+                                provider.textRes?.subTitle ?? "",
+                                style: stylePTSansRegular(
+                                    fontSize: 13, color: ThemeColors.greyText),
+                              ),
+                            ),
+                          ),
+                          provider.data != null &&
+                                  provider.data?.isNotEmpty == true
+                              ? ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.only(bottom: 16.sp),
+                                  itemBuilder: (context, index) {
+                                    TrendingIndustriesRes? data =
+                                        provider.data?[index];
+
+                                    if (data == null) {
+                                      return const SizedBox();
+                                    }
+                                    if (index == 0) {
+                                      return Column(
+                                        children: [
+                                          const TrendingIndustriesGraph(),
+                                          TrendingIndustryItem(data: data),
+                                        ],
+                                      );
+                                    }
+
+                                    return TrendingIndustryItem(data: data);
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    // return const SpacerVertical(height: 10);
+                                    return Divider(
+                                      color: ThemeColors.greyBorder,
+                                      height: 12.sp,
+                                    );
+                                  },
+                                  itemCount: provider.data?.length ?? 0,
+                                )
+                              : const SizedBox(),
+                        ],
+                      ),
+                    ),
+                  ),
       ),
     );
   }

@@ -29,34 +29,16 @@ class MostBullish extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Row(
-        //   children: [
-        //     // ColoredText(
-        //     //   text: "Most Bullish",
-        //     //   coloredLetters: const ["B"],
-        //     //   style: stylePTSansBold(),
-        //     // ),
-
-        //     const Icon(
-        //       Icons.trending_up_rounded,
-        //       color: ThemeColors.accent,
-        //     ),
-        //     const SpacerHorizontal(width: 5),
-        //     Text(
-        //       "Most Bullish",
-        //       style: styleGeorgiaBold(fontSize: 17),
-        //     ),
-        //   ],
-        // ),
-        // const SpacerVertical(height: 5),
         Visibility(
           visible: data?.text?.mostBullish != '',
           child: Padding(
             padding: EdgeInsets.only(bottom: isPhone ? 20.sp : 5.sp),
             child: Text(
               data?.text?.mostBullish ?? "",
-              style:
-                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+              style: stylePTSansRegular(
+                fontSize: 13,
+                color: ThemeColors.greyText,
+              ),
             ),
           ),
         ),
@@ -143,14 +125,6 @@ class MostBullish extends StatelessWidget {
             );
           },
         ),
-        // const SpacerVertical(height: Dimen.itemSpacing),
-        // Align(
-        //   alignment: Alignment.centerLeft,
-        //   child: ThemeButtonSmall(
-        //     onPressed: () {},
-        //     text: "View All",
-        //   ),
-        // )
       ],
     );
   }
