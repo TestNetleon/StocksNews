@@ -4,12 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/container.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/sentiments_graph.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:upgrader/upgrader.dart';
-//
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/inFocus/stocks_focus.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -61,50 +58,35 @@ class HomeContainer extends StatelessWidget {
                   0,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingIpo,
-                    //   error: !provider.isLoadingIpo && provider.ipoRes == null
-                    //       ? HomeError.ipo
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const IpoIndex(),
-                    // ),
-
-                    Visibility(
-                      visible: provider.focusRes != null,
-                      child: HomePartialLoading(
-                        loading: provider.isLoadingStockFocus,
-                        error: null,
-                        onRefresh: provider.refreshWithCheck,
-                        child: const StocksInFocus(),
-                      ),
-                    ),
-
+                    // if (provider.homeTrendingRes?.popular != null)
                     HomePartialLoading(
                       loading: provider.isLoadingTrending,
-                      error: !provider.isLoadingTrending &&
+                      error: provider.statusTrending != Status.ideal &&
+                              !provider.isLoadingTrending &&
                               provider.homeTrendingRes == null
                           ? HomeError.stockBuzz
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: const StockInBuzz(),
                     ),
-                    // const SpacerVertical(height: 10),
-                    // const HomeBanner(),
-
+                    // if (provider.homeAlertData != null)
                     HomePartialLoading(
                       loading: provider.isLoadingHomeAlert,
-                      error: !provider.isLoadingHomeAlert &&
+                      error: provider.statusHomeAlert != Status.ideal &&
+                              !provider.isLoadingHomeAlert &&
                               provider.homeAlertData == null
                           ? HomeError.homeAlert
                           : null,
                       onRefresh: provider.refreshWithCheck,
                       child: const HomeMyAlerts(),
                     ),
+                    // if (provider.homeTrendingRes != null)
                     HomePartialLoading(
                       loading: provider.isLoadingTrending,
-                      error: !provider.isLoadingTrending &&
+                      error: provider.statusTrending != Status.ideal &&
+                              !provider.isLoadingTrending &&
                               provider.homeTrendingRes == null
                           ? provider.homeTrendingRes?.gainers.isEmpty == true
                               ? HomeError.gainers
@@ -116,6 +98,25 @@ class HomeContainer extends StatelessWidget {
                       child: const HomeInnerTabs(),
                     ),
 
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingIpo,
+                    //   error: !provider.isLoadingIpo && provider.ipoRes == null
+                    //       ? HomeError.ipo
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child: const IpoIndex(),
+                    // ),
+                    // Visibility(
+                    //   visible: provider.focusRes != null,
+                    //   child: HomePartialLoading(
+                    //     loading: provider.isLoadingStockFocus,
+                    //     error: null,
+                    //     onRefresh: provider.refreshWithCheck,
+                    //     child: const StocksInFocus(),
+                    //   ),
+                    // ),
+                    // const SpacerVertical(height: 10),
+                    // const HomeBanner(),
                     // HomePartialLoading(
                     //   loading: provider.isLoadingSentiment,
                     //   error: !provider.isLoadingSentiment &&
