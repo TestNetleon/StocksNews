@@ -20,6 +20,7 @@ void showInAppCard({required title, description, image, onClick}) {
               child: InAppMsgDialogBase(
                 child: GestureDetector(
                   onTap: onClick,
+                  behavior: HitTestBehavior.translucent,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
