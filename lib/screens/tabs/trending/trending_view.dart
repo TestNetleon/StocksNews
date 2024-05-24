@@ -187,7 +187,9 @@ class _TrendingViewState extends State<TrendingView> {
                     child: TrendingPartialLoading(
                       loading: provider.isLoadingBullish,
                       error: !provider.isLoadingBullish &&
-                              provider.mostBullish?.mostBullish?.isEmpty == true
+                              (provider.mostBullish?.mostBullish == null ||
+                                  provider.mostBullish?.mostBullish?.isEmpty ==
+                                      true)
                           ? TrendingError.bullish
                           : null,
                       onRefresh: provider.refreshWithCheck,
@@ -229,7 +231,9 @@ class _TrendingViewState extends State<TrendingView> {
                     child: TrendingPartialLoading(
                       loading: provider.isLoadingStories,
                       error: !provider.isLoadingStories &&
-                              provider.trendingStories?.sectors?.isEmpty == true
+                              (provider.trendingStories?.sectors == null ||
+                                  provider.trendingStories?.sectors?.isEmpty ==
+                                      true)
                           ? TrendingError.sectors
                           : null,
                       onRefresh: provider.refreshWithCheck,
@@ -249,8 +253,10 @@ class _TrendingViewState extends State<TrendingView> {
                     child: TrendingPartialLoading(
                       loading: provider.isLoadingStories,
                       error: !provider.isLoadingStories &&
-                              provider.trendingStories?.generalNews?.isEmpty ==
-                                  true
+                              (provider.trendingStories?.generalNews == null ||
+                                  provider.trendingStories?.generalNews
+                                          ?.isEmpty ==
+                                      true)
                           ? TrendingError.stories
                           : null,
                       onRefresh: provider.refreshWithCheck,
