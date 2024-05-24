@@ -123,11 +123,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Future refreshData(String? inAppMsgId) async {
     getHomeSlider();
     // getIpoData();
-    getStockInFocus();
-    getHomeSentimentData();
+    // getStockInFocus();
     getHomeTrendingData();
     getHomeAlerts();
-    getHomeInsiderData(inAppMsgId);
+    // getHomeSentimentData();
+    // getHomeInsiderData(inAppMsgId);
   }
 
   Future refreshWithCheck() async {
@@ -138,21 +138,21 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // if (_ipoRes == null) {
     //   getIpoData();
     // }
-    if (_homeSentimentRes == null) {
-      getHomeSentimentData();
-    }
-    if (_focusRes == null) {
-      getStockInFocus();
-    }
+    // if (_homeSentimentRes == null) {
+    //   getHomeSentimentData();
+    // }
+    // if (_focusRes == null) {
+    //   getStockInFocus();
+    // }
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
     }
     if (_homeAlertData == null) {
       getHomeAlerts();
     }
-    if (_homeInsiderRes == null) {
-      getHomeInsiderData(null);
-    }
+    // if (_homeInsiderRes == null) {
+    //   getHomeInsiderData(null);
+    // }
   }
 
   Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {

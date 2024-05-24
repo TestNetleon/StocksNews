@@ -115,38 +115,39 @@ class HomeContainer extends StatelessWidget {
                       onRefresh: provider.refreshWithCheck,
                       child: const HomeInnerTabs(),
                     ),
-                    HomePartialLoading(
-                      loading: provider.isLoadingSentiment,
-                      error: !provider.isLoadingSentiment &&
-                              provider.homeSentimentRes == null
-                          ? HomeError.sentiment
-                          : null,
-                      onRefresh: provider.refreshWithCheck,
-                      child: const SentimentsGraph(),
-                    ),
-                    HomePartialLoading(
-                      loading: provider.isLoadingInsider,
-                      error: !provider.isLoadingInsider &&
-                              provider.homeInsiderRes == null
-                          ? provider.homeInsiderRes?.news.isEmpty == true
-                              ? HomeError.news
-                              : provider.homeInsiderRes?.recentMentions
-                                          ?.isEmpty ==
-                                      true
-                                  ? HomeError.mentions
-                                  : HomeError.insiderTrading
-                          : null,
-                      onRefresh: provider.refreshWithCheck,
-                      child: const Column(
-                        children: [
-                          MostRecentMentions(),
-                          // InsiderSocialTabs(),
-                          // SpacerVertical(),
-                          // HomeNewsItem(),
-                          // SpacerVertical(),
-                        ],
-                      ),
-                    ),
+
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingSentiment,
+                    //   error: !provider.isLoadingSentiment &&
+                    //           provider.homeSentimentRes == null
+                    //       ? HomeError.sentiment
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child: const SentimentsGraph(),
+                    // ),
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingInsider,
+                    //   error: !provider.isLoadingInsider &&
+                    //           provider.homeInsiderRes == null
+                    //       ? provider.homeInsiderRes?.news.isEmpty == true
+                    //           ? HomeError.news
+                    //           : provider.homeInsiderRes?.recentMentions
+                    //                       ?.isEmpty ==
+                    //                   true
+                    //               ? HomeError.mentions
+                    //               : HomeError.insiderTrading
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child: const Column(
+                    //     children: [
+                    //       MostRecentMentions(),
+                    //       // InsiderSocialTabs(),
+                    //       // SpacerVertical(),
+                    //       // HomeNewsItem(),
+                    //       // SpacerVertical(),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
