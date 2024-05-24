@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
+import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
@@ -14,12 +15,12 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 class FiftyTwoWeeksItem extends StatelessWidget {
   final FiftyTwoWeeksRes data;
   final int index;
-  final bool losers;
+  final bool fiftyTwoWeeks;
 //
   const FiftyTwoWeeksItem({
     required this.data,
     required this.index,
-    this.losers = false,
+    this.fiftyTwoWeeks = false,
     super.key,
   });
 
@@ -33,7 +34,7 @@ class FiftyTwoWeeksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MoreStocksProvider provider = context.watch<MoreStocksProvider>();
+    FiftyTwoWeeksProvider provider = context.watch<FiftyTwoWeeksProvider>();
 
     return InkWell(
       onTap: () {
@@ -115,9 +116,9 @@ class FiftyTwoWeeksItem extends StatelessWidget {
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  if (losers) {
-                    provider.setOpenIndexLosers(
-                      provider.openIndexLosers == index ? -1 : index,
+                  if (fiftyTwoWeeks) {
+                    provider.setOpenIndexFiftyTwoWeeks(
+                      provider.openIndexFiftyTwoWeeks == index ? -1 : index,
                     );
                   } else {
                     provider.setOpenIndex(
@@ -132,8 +133,8 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    losers
-                        ? provider.openIndexLosers == index
+                    fiftyTwoWeeks
+                        ? provider.openIndexFiftyTwoWeeks == index
                             ? Icons.arrow_upward_rounded
                             : Icons.arrow_downward_rounded
                         : provider.openIndex == index
@@ -148,23 +149,23 @@ class FiftyTwoWeeksItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: losers
-                  ? provider.openIndexLosers == index
+              height: fiftyTwoWeeks
+                  ? provider.openIndexFiftyTwoWeeks == index
                       ? null
                       : 0
                   : provider.openIndex == index
                       ? null
                       : 0,
               margin: EdgeInsets.only(
-                top: losers
-                    ? provider.openIndexLosers == index
+                top: fiftyTwoWeeks
+                    ? provider.openIndexFiftyTwoWeeks == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
                         ? 10.sp
                         : 0,
-                bottom: losers
-                    ? provider.openIndexLosers == index
+                bottom: fiftyTwoWeeks
+                    ? provider.openIndexFiftyTwoWeeks == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index

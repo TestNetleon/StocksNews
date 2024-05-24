@@ -34,9 +34,32 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
+  Status _statusFiftyTwoWeeks = Status.ideal;
+  Status get statusFiftyTwoWeeks => _statusFiftyTwoWeeks;
+  bool get isLoadingFiftyTwoWeeks => _statusFiftyTwoWeeks == Status.loading;
+  int get openIndexFiftyTwoWeeks => _openIndexFiftyTwoWeeks;
+  int _openIndexFiftyTwoWeeks = -1;
+  int _openIndex = -1;
+
+  int get openIndex => _openIndex;
 
   void setStatus(status) {
     _status = status;
+    notifyListeners();
+  }
+
+  void setStatusFiftyTwoWeeks(status) {
+    _statusFiftyTwoWeeks = status;
+    notifyListeners();
+  }
+
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
+
+  void setOpenIndexFiftyTwoWeeks(index) {
+    _openIndexFiftyTwoWeeks = index;
     notifyListeners();
   }
 

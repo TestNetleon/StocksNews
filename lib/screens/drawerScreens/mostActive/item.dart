@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/high_low_beta_stocks_res_dart';
-import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
+import 'package:stocks_news_new/modals/most_active_stocks_res.dart';
+import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -11,15 +11,15 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class HighLowBetaStocksItem extends StatelessWidget {
-  final HighLowBetaStocksRes data;
+class MostActiveItem extends StatelessWidget {
+  final MostActiveStocksRes data;
   final int index;
-  final bool highLowBetaStocks;
+  final bool mostActive;
 //
-  const HighLowBetaStocksItem({
+  const MostActiveItem({
     required this.data,
     required this.index,
-    this.highLowBetaStocks = false,
+    this.mostActive = false,
     super.key,
   });
 
@@ -33,8 +33,7 @@ class HighLowBetaStocksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HighLowBetaStocksProvider provider =
-        context.watch<HighLowBetaStocksProvider>();
+    MostActiveProvider provider = context.watch<MostActiveProvider>();
 
     return InkWell(
       onTap: () {
@@ -58,7 +57,7 @@ class HighLowBetaStocksItem extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     width: 43,
                     height: 43,
-                    child: ThemeImageView(url: data.image),
+                    child: ThemeImageView(url: data.image ?? ""),
                   ),
                 ),
               ),
@@ -101,7 +100,7 @@ class HighLowBetaStocksItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.beta.toString()}%",
+                    "${data.priceChange.toString()}(${data.percentageChange.toString()})%",
                     style: stylePTSansRegular(
                         fontSize: 12,
                         color:
@@ -116,9 +115,9 @@ class HighLowBetaStocksItem extends StatelessWidget {
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  if (highLowBetaStocks) {
-                    provider.setOpenIndexHighLowBetaStocks(
-                      provider.openIndexHighLowBetaStocks == index ? -1 : index,
+                  if (mostActive) {
+                    provider.setOpenIndexMostActive(
+                      provider.openIndexMostActive == index ? -1 : index,
                     );
                   } else {
                     provider.setOpenIndex(
@@ -133,8 +132,8 @@ class HighLowBetaStocksItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    highLowBetaStocks
-                        ? provider.openIndexHighLowBetaStocks == index
+                    mostActive
+                        ? provider.openIndexMostActive == index
                             ? Icons.arrow_upward_rounded
                             : Icons.arrow_downward_rounded
                         : provider.openIndex == index
@@ -149,23 +148,23 @@ class HighLowBetaStocksItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: highLowBetaStocks
-                  ? provider.openIndexHighLowBetaStocks == index
+              height: mostActive
+                  ? provider.openIndexMostActive == index
                       ? null
                       : 0
                   : provider.openIndex == index
                       ? null
                       : 0,
               margin: EdgeInsets.only(
-                top: highLowBetaStocks
-                    ? provider.openIndexHighLowBetaStocks == index
+                top: mostActive
+                    ? provider.openIndexMostActive == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
                         ? 10.sp
                         : 0,
-                bottom: highLowBetaStocks
-                    ? provider.openIndexHighLowBetaStocks == index
+                bottom: mostActive
+                    ? provider.openIndexMostActive == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
@@ -174,18 +173,45 @@ class HighLowBetaStocksItem extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  InnerRowItem(
-                    lable: "PE Ratio",
-                    value: "${data.pe}",
+                  Visibility(
+                    visible: data.volatility != null,
+                    child: InnerRowItem(
+                      lable: "Volatility",
+                      value: "${data.volatility}",
+                    ),
                   ),
-                  InnerRowItem(
-                    lable: "Market Cap",
-                    value: data.marketCap,
+                  Visibility(
+                    visible: data.dayLow != null,
+                    child: InnerRowItem(
+                      lable: "Intraday Range",
+                      value: "${data.dayLow}-${data.dayHigh}",
+                    ),
                   ),
-                  InnerRowItem(lable: "Volume", value: "${data.volume}"),
-                  InnerRowItem(
-                    lable: "Average Volume",
-                    value: "${data.avgVolume}",
+                  Visibility(
+                    visible: data.volumeGrowth != null,
+                    child: InnerRowItem(
+                      lable: "Volume Growth",
+                      value: "${data.volumeGrowth}",
+                    ),
+                  ),
+                  Visibility(
+                    visible: data.volume != null,
+                    child: InnerRowItem(
+                      lable: "Volume",
+                      value: "${data.volume}",
+                    ),
+                  ),
+                  Visibility(
+                    visible: data.avgVolume != null,
+                    child: InnerRowItem(
+                      lable: "Average Volume",
+                      value: "${data.avgVolume}",
+                    ),
+                  ),
+                  Visibility(
+                    visible: data.dollarVolume != null,
+                    child: InnerRowItem(
+                        lable: "Dollar Volume", value: "${data.dollarVolume}"),
                   ),
                 ],
               ),

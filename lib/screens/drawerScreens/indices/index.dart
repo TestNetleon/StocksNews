@@ -133,7 +133,7 @@ class IndicesData extends StatelessWidget {
                   if (data == null) {
                     return const SizedBox();
                   }
-                  return LowPriceStocksItem(data: data);
+                  return IndicesItem(data: data, index: index);
                 },
                 separatorBuilder: (context, index) {
                   return const Divider(

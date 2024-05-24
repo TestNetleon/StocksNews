@@ -22,6 +22,15 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
+  Status _statusHighLowBetaStocks = Status.ideal;
+  Status get statusHighLowBetaStocks => _statusHighLowBetaStocks;
+  bool get isLoadingHighLowBetaStocks =>
+      _statusHighLowBetaStocks == Status.loading;
+  int get openIndexHighLowBetaStocks => _openIndexHighLowBetaStocks;
+  int _openIndexHighLowBetaStocks = -1;
+  int _openIndex = -1;
+
+  int get openIndex => _openIndex;
 
   // ************* GAP DOWN **************** //
   String? _errorDown;
@@ -35,6 +44,21 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
 
   void setStatus(status) {
     _status = status;
+    notifyListeners();
+  }
+
+  void setStatusHighLowBetaStocks(status) {
+    _statusHighLowBetaStocks = status;
+    notifyListeners();
+  }
+
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
+
+  void setOpenIndexHighLowBetaStocks(index) {
+    _openIndexHighLowBetaStocks = index;
     notifyListeners();
   }
 

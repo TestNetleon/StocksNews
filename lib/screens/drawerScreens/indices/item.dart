@@ -1,230 +1,195 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
-import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
-import 'package:readmore/readmore.dart';
-import '../../../utils/colors.dart';
-import '../../../utils/theme.dart';
-import '../../../widgets/cache_network_image.dart';
-import '../../../widgets/spacer_horizontal.dart';
-import '../../../widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
+import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class LowPriceStocksItem extends StatelessWidget {
+class IndicesItem extends StatelessWidget {
   final LowPriceStocksRes data;
-  const LowPriceStocksItem({super.key, required this.data});
+  final int index;
+  final bool indices;
+//
+  const IndicesItem({
+    required this.data,
+    required this.index,
+    this.indices = false,
+    super.key,
+  });
 
-  void _openBottomSheet() {
-    showPlatformBottomSheet(
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-      context: navigatorKey.currentContext!,
-      showClose: false,
-      enableDrag: true,
-      content: Container(
-        padding: EdgeInsets.all(18.sp),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 23, 23, 23),
-              // ThemeColors.greyBorder,
-              Color.fromARGB(255, 48, 48, 48),
-            ],
-          ),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "P/E Ratio: ",
-                  style: stylePTSansRegular(),
-                ),
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    "${data.pe ?? "N/A"}",
-                    style: stylePTSansRegular(),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Market Cap: ",
-                  style: stylePTSansRegular(),
-                ),
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    data.mktCap ?? "N/A",
-                    style: stylePTSansRegular(),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Avg. Trading Volume: ",
-                  style: stylePTSansRegular(),
-                ),
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    data.avgVolume ?? "N/A",
-                    style: stylePTSansRegular(),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Consensus Rating: ",
-                  style: stylePTSansRegular(),
-                ),
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    data.consensusRating ?? "N/A",
-                    style: stylePTSansRegular(),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Consensus Price Target: ",
-                  style: stylePTSansRegular(),
-                ),
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    "${data.priceTarget ?? "N/A"}",
-                    style: stylePTSansRegular(),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            ReadMoreText(
-              textAlign: TextAlign.start,
-              data.description ?? "",
-              trimLines: 5,
-              colorClickableText: ThemeColors.accent,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: 'Read more',
-              trimExpandedText: 'Read less',
-              moreStyle: stylePTSansRegular(color: ThemeColors.accent),
-              style: stylePTSansRegular(height: 1.4),
-            ),
-          ],
-        ),
-      ),
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data.symbol},
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    IndicesProvider provider = context.watch<IndicesProvider>();
+
     return InkWell(
       onTap: () {
-        _openBottomSheet();
+        Navigator.pushNamed(
+          context,
+          StockDetails.path,
+          // arguments: data.symbol,
+          arguments: {"slug": data.symbol},
+        );
       },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(0),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => _onTap(context),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(0.sp),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 43,
+                    height: 43,
+                    child: ThemeImageView(url: data.image ?? ""),
+                  ),
+                ),
+              ),
+              const SpacerHorizontal(width: 12),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => _onTap(context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "data.symbol",
+                        style: stylePTSansBold(fontSize: 14),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SpacerVertical(height: 5),
+                      Text(
+                        " data.name",
+                        style: stylePTSansRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SpacerHorizontal(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "${data.price}",
+                    style: stylePTSansBold(fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SpacerVertical(height: 5),
+                  Text(
+                    "${data.changesPercentage.toString()}%",
+                    style: stylePTSansRegular(
+                        fontSize: 12,
+                        color:
+                            //(data.changesPercentage ?? 0) > 0
+                            //     ?
+                            ThemeColors.accent
+                        //     : Colors.red,
+                        ),
+                  ),
+                ],
+              ),
+              const SpacerHorizontal(width: 10),
+              InkWell(
+                onTap: () {
+                  if (indices) {
+                    provider.setOpenIndexIndices(
+                      provider.openIndexIndices == index ? -1 : index,
+                    );
+                  } else {
+                    provider.setOpenIndex(
+                      provider.openIndex == index ? -1 : index,
+                    );
+                  }
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: ThemeColors.accent,
+                  ),
+                  margin: EdgeInsets.only(left: 8.sp),
+                  padding: const EdgeInsets.all(3),
+                  child: Icon(
+                    indices
+                        ? provider.openIndexIndices == index
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded
+                        : provider.openIndex == index
+                            ? Icons.arrow_upward_rounded
+                            : Icons.arrow_downward_rounded,
+                    size: 16,
+                  ),
+                ),
+              )
+            ],
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 150),
             child: Container(
-              padding: const EdgeInsets.all(5),
-              width: 43,
-              height: 43,
-              // child: ThemeImageView(
-              //   url: "${data?.image}",
-              // ),
-              child: CachedNetworkImagesWidget(
-                data.image,
-                placeHolder: Images.placeholder,
+              height: indices
+                  ? provider.openIndexIndices == index
+                      ? null
+                      : 0
+                  : provider.openIndex == index
+                      ? null
+                      : 0,
+              margin: EdgeInsets.only(
+                top: indices
+                    ? provider.openIndexIndices == index
+                        ? 10.sp
+                        : 0
+                    : provider.openIndex == index
+                        ? 10.sp
+                        : 0,
+                bottom: indices
+                    ? provider.openIndexIndices == index
+                        ? 10.sp
+                        : 0
+                    : provider.openIndex == index
+                        ? 10.sp
+                        : 0,
+              ),
+              child: const Column(
+                children: [
+                  InnerRowItem(
+                    lable: "52-Week High",
+                    value: "",
+                  ),
+                  InnerRowItem(
+                    lable: "52-Week Low",
+                    value: "",
+                  ),
+                  InnerRowItem(lable: "Previous Close", value: ""),
+                  InnerRowItem(
+                    lable: "Intraday Range",
+                    value: "",
+                  ),
+                ],
               ),
             ),
-          ),
-          const SpacerHorizontal(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data.symbol ?? "",
-                  style: stylePTSansBold(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SpacerVertical(height: 5),
-                Text(
-                  data.name ?? "",
-                  style: stylePTSansRegular(
-                    color: ThemeColors.greyText,
-                    fontSize: 12,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          const SpacerHorizontal(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  data.price ?? "",
-                  style: stylePTSansBold(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SpacerVertical(height: 5),
-                Text(
-                  "${data.change} (${data.changesPercentage?.toCurrency()}%)",
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: (data.changesPercentage ?? 0) > 0
-                        ? ThemeColors.accent
-                        : Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          )
         ],
       ),
     );

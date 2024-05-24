@@ -32,6 +32,10 @@ class IndicesProvider extends ChangeNotifier {
 
   String? title;
   String? subTitle;
+  int _openIndexIndices = -1;
+  int get openIndexIndices => _openIndexIndices;
+  int _openIndex = -1;
+  int get openIndex => _openIndex;
 
   void setStatus(status) {
     _status = status;
@@ -40,6 +44,16 @@ class IndicesProvider extends ChangeNotifier {
 
   void setTabStatus(status) {
     _tabStatus = status;
+    notifyListeners();
+  }
+
+  void setOpenIndexIndices(index) {
+    _openIndexIndices = index;
+    notifyListeners();
+  }
+
+  void setOpenIndex(index) {
+    _openIndex = index;
     notifyListeners();
   }
 

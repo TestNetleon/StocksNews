@@ -101,6 +101,9 @@ class Apis {
   static const lowBetaStocks = "/low-beta-stocks";
   static const highBetaStocks = "/high-beta-stocks";
   static const negativeBetaStocks = "/negative-beta-stocks";
+  static const mostActiveStocks = "/most-active-stocks";
+  static const mostVoliatileStocks = "/most-voliatile-stocks";
+  static const mostVolumeStocks = "/unusual-volume-stocks";
 }
 
 //

@@ -16,6 +16,7 @@ import 'package:stocks_news_new/providers/insider_trading_company_provider.dart'
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
@@ -46,6 +47,7 @@ import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
@@ -107,6 +109,7 @@ class Routes {
     FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),
     HighLowsBetaStocksIndex.path: (_) => const HighLowsBetaStocksIndex(),
     IndicesIndex.path: (_) => const IndicesIndex(),
+    MostActiveIndex.path: (_) => const MostActiveIndex(),
 
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
   };
@@ -330,6 +333,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
       ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
       ChangeNotifierProvider(create: (_) => IndicesProvider()),
+      ChangeNotifierProvider(create: (_) => MostActiveProvider()),
 
       // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(

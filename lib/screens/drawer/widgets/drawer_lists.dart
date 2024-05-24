@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -115,6 +116,12 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.mode_standby_sharp,
     text: "Most Active",
+    onTap: () {
+      Navigator.pushNamed(
+        navigatorKey.currentContext!,
+        MostActiveIndex.path,
+      );
+    },
   ),
   // DrawerRes(
   //   iconData: Icons.bar_chart_sharp,
