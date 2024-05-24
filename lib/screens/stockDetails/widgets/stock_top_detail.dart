@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../providers/stock_detail_provider.dart';
 import 'stockTopWidgets/desclaimer.dart';
 import 'stockTopWidgets/detail.dart';
 import 'stockTopWidgets/range.dart';

@@ -96,6 +96,8 @@
 //       _data = null;
 //       log(e.toString());
 
+// ignore_for_file: prefer_final_fields
+
 //       setStatus(Status.loaded);
 //     }
 //   }

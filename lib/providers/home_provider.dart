@@ -21,7 +21,6 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/app_update_content.dart';
 
@@ -29,7 +28,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
   String? _error;
 //
-
   Status _statusSlider = Status.ideal;
   Status get statusSlider => _statusSlider;
 

@@ -8,8 +8,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import '../drawer/base_drawer.dart';
-
 class StockDetails extends StatefulWidget {
   final String symbol;
   final String? inAppMsgId;

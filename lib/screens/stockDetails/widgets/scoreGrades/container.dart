@@ -4,11 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class StocksScoreGrades extends StatelessWidget {
   const StocksScoreGrades({super.key});
