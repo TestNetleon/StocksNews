@@ -12,20 +12,20 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.watch<HomeProvider>();
+    // HomeProvider provider = context.watch<HomeProvider>();
 
     FirebaseAnalytics.instance.logEvent(
       name: 'ScreensVisit',
       parameters: {'screen_name': "Home Screen"},
     );
 
-    return BaseContainer(
-      // body: provider.isLoadingSlider ? const Loading() : const HomeContainer(),
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
-        child:
-            provider.isLoadingSlider ? const Loading() : const HomeContainer(),
-      ),
+    return const BaseContainer(
+      body: HomeContainer(),
+      // AnimatedSwitcher(
+      //   duration: const Duration(milliseconds: 500),
+      //   child:
+      // provider.isLoadingSlider ? const Loading() : const HomeContainer(),
+      // ),
     );
   }
 }
