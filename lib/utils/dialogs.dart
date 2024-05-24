@@ -259,7 +259,7 @@ class CommonSnackbar {
   static bool _isShowing = false;
 
   static void show({
-    String message = "No message present.",
+    String? message,
     int duration = 2,
     SnackbarType type = SnackbarType.error,
   }) {
@@ -270,17 +270,17 @@ class CommonSnackbar {
         duration: Duration(seconds: duration),
         // behavior: SnackBarBehavior.floating,
         backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
-        action: SnackBarAction(
-          label: 'Close',
-          textColor: ThemeColors.white,
-          onPressed: () {
-            ScaffoldMessenger.of(navigatorKey.currentContext!)
-                .hideCurrentSnackBar();
-            _isShowing = false;
-          },
-        ),
+        // action: SnackBarAction(
+        //   label: 'Close',
+        //   textColor: ThemeColors.white,
+        //   onPressed: () {
+        //     ScaffoldMessenger.of(navigatorKey.currentContext!)
+        //         .hideCurrentSnackBar();
+        //     _isShowing = false;
+        //   },
+        // ),
         content: Text(
-          message,
+          message ?? "No message present.",
           style: stylePTSansRegular(color: ThemeColors.white),
         ),
       );

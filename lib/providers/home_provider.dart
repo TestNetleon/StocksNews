@@ -217,6 +217,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       } else {
         _homeAlertData = null;
       }
+
       userAlert = response.extra?.userAlert;
       _statusHomeAlert = Status.loaded;
       notifyListeners();
@@ -345,6 +346,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         _homeTrendingRes = null;
         _error = "Data not found";
       }
+
       topLoading = false;
       _statusTrending = Status.loaded;
       notifyListeners();
