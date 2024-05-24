@@ -54,6 +54,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
             }
 
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (index == 0)
                   DrawerScreenTitle(subTitle: provider.extra?.subTitle),

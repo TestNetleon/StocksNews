@@ -49,6 +49,7 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
             provider.getData(showProgress: false, type: "low", loadMore: true),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DrawerScreenTitle(
                 subTitle: provider.subTitle,

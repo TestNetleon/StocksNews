@@ -1,6 +1,8 @@
 // import 'package:flutter/gestures.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -61,345 +63,376 @@ class _BaseDrawerState extends State<BaseDrawer> {
     HomeProvider provider = context.watch<HomeProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
     return SafeArea(
-      child: Drawer(
-        backgroundColor: ThemeColors.background,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const DrawerTopNew(),
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5.sp),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const SpacerVertical(height: 30),
-                      Text(
-                        "Welcome to stocks.news",
-                        style: stylePTSansBold(fontSize: 20),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 5.sp,
-                        ),
-                        child: Text(
-                          "${provider.homeSliderRes?.text.drawerHeader}",
-                          style: stylePTSansRegular(
-                              fontSize: 13, color: ThemeColors.greyText),
-                        ),
-                      ),
-                      const SpacerVertical(height: 20),
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: [
+          Drawer(
+            backgroundColor: ThemeColors.background,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const DrawerTopNew(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // const SpacerVertical(height: 30),
+                          Text(
+                            "Welcome to stocks.news",
+                            style: stylePTSansBold(fontSize: 20),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 5.sp,
+                            ),
+                            child: Text(
+                              "${provider.homeSliderRes?.text.drawerHeader}",
+                              style: stylePTSansRegular(
+                                  fontSize: 13, color: ThemeColors.greyText),
+                            ),
+                          ),
+                          const SpacerVertical(height: 20),
 
-                      Visibility(
-                        visible: userProvider.user != null,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, MyAccount.path);
-                          },
-                          child: Row(
-                            children: [
-                              ProfileImage(
-                                url: userProvider.user?.image,
-                                cameraSize: 12,
-                              ),
-                              const SpacerHorizontal(width: 10),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                          Visibility(
+                            visible: userProvider.user != null,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, MyAccount.path);
+                              },
+                              child: Row(
                                 children: [
-                                  Text(
-                                    userProvider.user?.name?.isNotEmpty == true
-                                        ? "${userProvider.user?.name}"
-                                        : "Update your account",
-                                    style: stylePTSansBold(),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                                  ProfileImage(
+                                    url: userProvider.user?.image,
+                                    cameraSize: 12,
                                   ),
-                                  Text(
-                                    userProvider.user?.email?.isNotEmpty == true
-                                        ? "${userProvider.user?.email}"
-                                        : "Update your account",
-                                    style: stylePTSansRegular(
-                                        color: ThemeColors.greyText,
-                                        fontSize: 12),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                  const SpacerHorizontal(width: 10),
+                                  Expanded(
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        userProvider.user?.name?.isNotEmpty ==
+                                                true
+                                            ? "${userProvider.user?.name}"
+                                            : "Update your account",
+                                        style: stylePTSansBold(),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        userProvider.user?.email?.isNotEmpty ==
+                                                true
+                                            ? "${userProvider.user?.email}"
+                                            : "Update your account",
+                                        style: stylePTSansRegular(
+                                            color: ThemeColors.greyText,
+                                            fontSize: 12),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  )),
                                 ],
-                              )),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: userProvider.user == null,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ThemeButtonSmall(
+                                    showArrow: false,
+                                    text: "Log in",
+                                    onPressed: () {
+                                      Scaffold.of(context).closeDrawer();
+                                      isPhone
+                                          ? loginSheet(dontPop: "true")
+                                          : loginSheetTablet(dontPop: "true");
+                                    },
+                                  ),
+                                ),
+                                const SpacerHorizontal(width: 10),
+                                Expanded(
+                                  child: ThemeButtonSmall(
+                                    showArrow: false,
+                                    text: "Sign up",
+                                    onPressed: () {
+                                      Scaffold.of(context).closeDrawer();
+                                      isPhone
+                                          ? signupSheet(dontPop: "true")
+                                          : signupSheetTablet(dontPop: "true");
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(color: ThemeColors.greyBorder, height: 20.sp),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Scaffold.of(context).closeDrawer();
+                                  Navigator.pushNamed(context, Alerts.path);
+                                },
+                                child: Column(
+                                  children: [
+                                    const Icon(
+                                      Icons.add_alert_outlined,
+                                      size: 22,
+                                    ),
+                                    const SpacerVertical(height: 5),
+                                    Text(
+                                      "${provider.totalAlerts}",
+                                      style: stylePTSansBold(),
+                                    ),
+                                    const SpacerVertical(height: 5),
+                                    Text(
+                                      provider.totalAlerts == 1
+                                          ? "Stock Alert"
+                                          : "Stock Alerts",
+                                      style: stylePTSansRegular(
+                                          fontSize: 13,
+                                          color: const Color.fromARGB(
+                                              255, 184, 187, 193)),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SpacerHorizontal(width: 40),
+                              InkWell(
+                                onTap: () {
+                                  Scaffold.of(context).closeDrawer();
+                                  Navigator.pushNamed(context, WatchList.path);
+                                },
+                                child: Column(
+                                  children: [
+                                    const Icon(
+                                      Icons.star_border,
+                                      size: 22,
+                                    ),
+                                    const SpacerVertical(height: 5),
+                                    Text(
+                                      "${provider.totalWatchList}",
+                                      style: stylePTSansBold(),
+                                    ),
+                                    const SpacerVertical(height: 5),
+                                    Text(
+                                      "Stock Watchlist",
+                                      style: stylePTSansRegular(
+                                        fontSize: 13,
+                                        color: const Color.fromARGB(
+                                            255, 184, 187, 193),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: userProvider.user == null,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ThemeButtonSmall(
-                                showArrow: false,
-                                text: "Log in",
-                                onPressed: () {
-                                  Scaffold.of(context).closeDrawer();
-                                  isPhone
-                                      ? loginSheet(dontPop: "true")
-                                      : loginSheetTablet(dontPop: "true");
-                                },
-                              ),
-                            ),
-                            const SpacerHorizontal(width: 10),
-                            Expanded(
-                              child: ThemeButtonSmall(
-                                showArrow: false,
-                                text: "Sign up",
-                                onPressed: () {
-                                  Scaffold.of(context).closeDrawer();
-                                  isPhone
-                                      ? signupSheet(dontPop: "true")
-                                      : signupSheetTablet(dontPop: "true");
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(color: ThemeColors.greyBorder, height: 20.sp),
+                          const SpacerVertical(height: 15),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Scaffold.of(context).closeDrawer();
-                              Navigator.pushNamed(context, Alerts.path);
+                          Text(
+                            "Market Data",
+                            style: stylePTSansBold(),
+                          ),
+                          CustomGridViewPerChild(
+                            paddingHorizontal: 5,
+                            paddingVertical: 25,
+                            childrenPerRow: 3,
+                            length: marketData.length,
+                            getChild: (index) {
+                              return InkWell(
+                                onTap: marketData[index].onTap,
+                                child: DrawerNewWidget(
+                                  icon: marketData[index].iconData,
+                                  text: marketData[index].text,
+                                ),
+                              );
                             },
-                            child: Column(
-                              children: [
-                                const Icon(
-                                  Icons.add_alert_outlined,
-                                  size: 22,
-                                ),
-                                const SpacerVertical(height: 5),
-                                Text(
-                                  "${provider.totalAlerts}",
-                                  style: stylePTSansBold(),
-                                ),
-                                const SpacerVertical(height: 5),
-                                Text(
-                                  provider.totalAlerts == 1
-                                      ? "Stock Alert"
-                                      : "Stock Alerts",
+                          ),
+
+                          Align(
+                            alignment: Alignment.center,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(20.sp),
+                              onTap: () {
+                                easeOutBuilder(context,
+                                    child: const DrawerMoreService());
+                              },
+                              child: Ink(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.sp, vertical: 5.sp),
+                                decoration: BoxDecoration(
+                                    color:
+                                        ThemeColors.greyBorder.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(20.sp),
+                                    border: Border.all(
+                                        color: ThemeColors.greyBorder)),
+                                child: Text(
+                                  "More services",
                                   style: stylePTSansRegular(
-                                      fontSize: 13,
-                                      color: const Color.fromARGB(
-                                          255, 184, 187, 193)),
-                                )
-                              ],
+                                      fontSize: 12, color: ThemeColors.white),
+                                ),
+                              ),
                             ),
                           ),
-                          const SpacerHorizontal(width: 40),
+                          const SpacerVertical(height: 20),
                           InkWell(
-                            onTap: () {
-                              Scaffold.of(context).closeDrawer();
-                              Navigator.pushNamed(context, WatchList.path);
-                            },
-                            child: Column(
-                              children: [
-                                const Icon(
-                                  Icons.star_border,
-                                  size: 22,
-                                ),
-                                const SpacerVertical(height: 5),
-                                Text(
-                                  "${provider.totalWatchList}",
-                                  style: stylePTSansBold(),
-                                ),
-                                const SpacerVertical(height: 5),
-                                Text(
-                                  "Stock Watchlist",
-                                  style: stylePTSansRegular(
-                                    fontSize: 13,
-                                    color: const Color.fromARGB(
-                                        255, 184, 187, 193),
+                            onTap: () {},
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                  color:
+                                      ThemeColors.greyBorder.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(4.sp)),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    Images.info,
+                                    height: 20,
+                                    width: 20,
+                                    color: ThemeColors.white,
                                   ),
-                                )
-                              ],
+                                  const SpacerHorizontal(width: 8),
+                                  Text(
+                                    "About stocks.news",
+                                    style: stylePTSansRegular(fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 20),
+                          // Divider(
+                          //   color: ThemeColors.greyBorder,
+                          //   height: 20.sp,
+                          // ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: 'Disclaimer,',
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Scaffold.of(context).closeDrawer();
+                                          Navigator.push(
+                                            context,
+                                            createRoute(
+                                              const TCandPolicy(
+                                                policyType:
+                                                    PolicyType.disclaimer,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      style: stylePTSansRegular(fontSize: 13)),
+                                  TextSpan(
+                                      text: ' Privacy Policy ',
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Scaffold.of(context).closeDrawer();
+                                          Navigator.push(
+                                            context,
+                                            createRoute(
+                                              const TCandPolicy(
+                                                policyType: PolicyType.privacy,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      style: stylePTSansRegular(fontSize: 13)),
+                                  TextSpan(
+                                      text: 'and',
+                                      style: stylePTSansRegular(
+                                          fontSize: 13,
+                                          color: ThemeColors.greyText)),
+                                  TextSpan(
+                                      text: ' Terms of Service',
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Scaffold.of(context).closeDrawer();
+                                          Navigator.push(
+                                            context,
+                                            createRoute(
+                                              const TCandPolicy(
+                                                policyType: PolicyType.tC,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      style: stylePTSansRegular(fontSize: 13)),
+                                ],
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Scaffold.of(context).closeDrawer();
+                                    Navigator.push(
+                                      context,
+                                      createRoute(
+                                        const TCandPolicy(
+                                          policyType: PolicyType.privacy,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                text: "Read our ",
+                                style: stylePTSansRegular(
+                                    fontSize: 13, color: ThemeColors.greyText),
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 10),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "App Version: $version",
+                              style: stylePTSansRegular(
+                                fontSize: 13,
+                                color: ThemeColors.greyText,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      const SpacerVertical(height: 15),
-
-                      Text(
-                        "Market Data",
-                        style: stylePTSansBold(),
-                      ),
-                      CustomGridViewPerChild(
-                        paddingHorizontal: 5,
-                        paddingVertical: 25,
-                        childrenPerRow: 3,
-                        length: marketData.length,
-                        getChild: (index) {
-                          return InkWell(
-                            onTap: marketData[index].onTap,
-                            child: DrawerNewWidget(
-                              icon: marketData[index].iconData,
-                              text: marketData[index].text,
-                            ),
-                          );
-                        },
-                      ),
-
-                      Align(
-                        alignment: Alignment.center,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20.sp),
-                          onTap: () {
-                            easeOutBuilder(context,
-                                child: const DrawerMoreService());
-                          },
-                          child: Ink(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.sp, vertical: 5.sp),
-                            decoration: BoxDecoration(
-                                color: ThemeColors.greyBorder.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(20.sp),
-                                border:
-                                    Border.all(color: ThemeColors.greyBorder)),
-                            child: Text(
-                              "More services",
-                              style: stylePTSansRegular(
-                                  fontSize: 12, color: ThemeColors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SpacerVertical(height: 20),
-                      InkWell(
-                        onTap: () {},
-                        child: Ink(
-                          decoration: BoxDecoration(
-                              color: ThemeColors.greyBorder.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(4.sp)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                Images.info,
-                                height: 20,
-                                width: 20,
-                                color: ThemeColors.white,
-                              ),
-                              const SpacerHorizontal(width: 8),
-                              Text(
-                                "About stocks.news",
-                                style: stylePTSansRegular(fontSize: 13),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SpacerVertical(height: 20),
-                      // Divider(
-                      //   color: ThemeColors.greyBorder,
-                      //   height: 20.sp,
-                      // ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: 'Disclaimer,',
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Scaffold.of(context).closeDrawer();
-                                      Navigator.push(
-                                        context,
-                                        createRoute(
-                                          const TCandPolicy(
-                                            policyType: PolicyType.disclaimer,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  style: stylePTSansRegular(fontSize: 13)),
-                              TextSpan(
-                                  text: ' Privacy Policy ',
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Scaffold.of(context).closeDrawer();
-                                      Navigator.push(
-                                        context,
-                                        createRoute(
-                                          const TCandPolicy(
-                                            policyType: PolicyType.privacy,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  style: stylePTSansRegular(fontSize: 13)),
-                              TextSpan(
-                                  text: 'and',
-                                  style: stylePTSansRegular(
-                                      fontSize: 13,
-                                      color: ThemeColors.greyText)),
-                              TextSpan(
-                                  text: ' Terms of Service',
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Scaffold.of(context).closeDrawer();
-                                      Navigator.push(
-                                        context,
-                                        createRoute(
-                                          const TCandPolicy(
-                                            policyType: PolicyType.tC,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  style: stylePTSansRegular(fontSize: 13)),
-                            ],
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Scaffold.of(context).closeDrawer();
-                                Navigator.push(
-                                  context,
-                                  createRoute(
-                                    const TCandPolicy(
-                                      policyType: PolicyType.privacy,
-                                    ),
-                                  ),
-                                );
-                              },
-                            text: "Read our ",
-                            style: stylePTSansRegular(
-                                fontSize: 13, color: ThemeColors.greyText),
-                          ),
-                        ),
-                      ),
-                      const SpacerVertical(height: 10),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "App Version: $version",
-                          style: stylePTSansRegular(
-                            fontSize: 13,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
+          InkWell(
+            onTap: () {
+              Scaffold.of(context).closeDrawer();
+            },
+            child: Container(
+              width: 11,
+              height: 50,
+              decoration: const BoxDecoration(
+                color: ThemeColors.accent,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                ),
+              ),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 11,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
