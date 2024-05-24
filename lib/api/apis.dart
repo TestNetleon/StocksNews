@@ -104,6 +104,7 @@ class Apis {
   static const mostActiveStocks = "/most-active-stocks";
   static const mostVoliatileStocks = "/most-voliatile-stocks";
   static const mostVolumeStocks = "/unusual-volume-stocks";
+  static const updateInAppCount = "/update-inapp-count";
 }
 
 //

@@ -481,7 +481,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     );
   }
 
-  Future updateInAppMsgStatus() async {
+  Future updateInAppMsgStatus(id) async {
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     String? fcmToken = await Preference.getFcmToken();
@@ -489,9 +489,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       Map request = {
         "token": provider.user?.token ?? "",
         "fcmToken": fcmToken,
+        "id": id,
       };
       await apiRequest(
-        url: "Apis.inAppCountUpdate",
+        url: Apis.updateInAppCount,
         request: request,
         showProgress: false,
       );
