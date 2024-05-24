@@ -730,7 +730,7 @@ class StockDetailProvider with ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.addWatchlist,
         request: request,
-        showProgress: true,
+        showProgress: false,
       );
       if (response.status) {
         data?.isWatchlistAdded = 1;
