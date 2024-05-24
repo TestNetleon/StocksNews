@@ -185,7 +185,7 @@ class _TabsState extends State<Tabs> {
         _home(context, widget.inAppMsgId);
         break;
       case 1:
-        context.read<TrendingIndustriesProvider>().getData();
+        // context.read<TrendingIndustriesProvider>().getData();
 
         trendingProvider.refreshData();
         break;

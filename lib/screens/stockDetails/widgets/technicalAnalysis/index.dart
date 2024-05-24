@@ -8,8 +8,25 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import 'test/container.dart';
 
-class StocksTechnicalAnalysis extends StatelessWidget {
-  const StocksTechnicalAnalysis({super.key});
+class StocksTechnicalAnalysis extends StatefulWidget {
+  final String symbol;
+  const StocksTechnicalAnalysis({super.key, required this.symbol});
+
+  @override
+  State<StocksTechnicalAnalysis> createState() =>
+      _StocksTechnicalAnalysisState();
+}
+
+class _StocksTechnicalAnalysisState extends State<StocksTechnicalAnalysis> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<StockDetailProvider>()
+          .technicalAnalysisData(symbol: widget.symbol);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

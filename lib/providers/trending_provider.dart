@@ -181,8 +181,8 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future refreshData() async {
-    getMostBullish();
-    getTrendingStories();
+    getMostBullish(showProgress: true);
+    // getTrendingStories();
   }
 
   Future refreshWithCheck() async {
@@ -198,7 +198,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getMostBullish() async {
+  Future getMostBullish({showProgress = false}) async {
     // _data = null;
     _statusBullish = Status.loading;
     notifyListeners();
@@ -210,7 +210,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.trendingBullish,
         request: request,
-        showProgress: false,
+        showProgress: showProgress,
       );
       if (response.status) {
         _mostBullish = TrendingRes.fromJson(response.data);
@@ -220,7 +220,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
         // } else {
         //   getMostBearish();
         // }
-        getMostBearish();
+        // getMostBearish();
       } else {
         _mostBullish = null;
       }

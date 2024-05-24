@@ -27,10 +27,14 @@ import 'package:stocks_news_new/utils/utils.dart';
 //
 class StockDetailProvider with ChangeNotifier {
   String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
+
+  String? _errorOther;
+  String? get errorOther => _errorOther ?? Const.errSomethingWrong;
+
   Status _status = Status.ideal;
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
-  String? get error => _error ?? Const.errSomethingWrong;
   AnalysisRes? _analysisRes;
   AnalysisRes? get analysisRes => _analysisRes;
 
@@ -40,6 +44,8 @@ class StockDetailProvider with ChangeNotifier {
   StocksOtherDetailsRes? _otherData;
   StocksOtherDetailsRes? get otherData => _otherData;
   String? graphError = '';
+
+  bool otherLoading = false;
   bool analysisLoading = false;
   bool mentionLoading = false;
   bool tALoading = false;
@@ -53,7 +59,7 @@ class StockDetailProvider with ChangeNotifier {
   Status get statusGraph => _statusGraph;
   bool get isLoadingGraph => _statusGraph == Status.loading;
 
-  bool get otherLoading => _status == Status.loading;
+  // bool get otherLoading => _status == Status.loading;
 
   List<StockDetailGraph>? _graphChart;
   List<StockDetailGraph>? get graphChart => _graphChart;
@@ -108,9 +114,17 @@ class StockDetailProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future getStockDetails({required String symbol, loadOther = true}) async {
+  Future getStockDetails(
+      {required String symbol, loadOther = true, refresh = false}) async {
     _selectedIndex = 0;
-    _data = null;
+
+    if (refresh) {
+      _data = null;
+      _analysisRes = null;
+      _dataMentions = null;
+      _technicalAnalysisRes = null;
+      _otherData = null;
+    }
     if (loadOther) setStatus(Status.loading);
     try {
       Map request = {
@@ -483,8 +497,8 @@ class StockDetailProvider with ChangeNotifier {
     loadOther = true,
     inAppMsgId,
   }) async {
-    _otherData = null;
-    setStatus(Status.loading);
+    otherLoading = true;
+    notifyListeners();
     try {
       Map request = {
         "token":
@@ -504,11 +518,16 @@ class StockDetailProvider with ChangeNotifier {
         _otherData = stocksOtherDetailsFromJson(jsonEncode(response.data));
       } else {
         _otherData = null;
+        _errorOther = response.message;
         // showErrorMessage(message: response.message);
       }
-      setStatus(Status.loaded);
+      otherLoading = false;
+      notifyListeners();
     } catch (e) {
-      _otherData = null;
+      otherLoading = false;
+      _errorOther = Const.errSomethingWrong;
+
+      notifyListeners();
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

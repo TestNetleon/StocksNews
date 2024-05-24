@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../providers/stock_detail_provider.dart';
 import 'stockTopWidgets/desclaimer.dart';
 import 'stockTopWidgets/detail.dart';
 import 'stockTopWidgets/range.dart';
 
-class StockTopDetail extends StatelessWidget {
-  const StockTopDetail({super.key});
+class StockTopDetail extends StatefulWidget {
+  final String symbol;
+  const StockTopDetail({super.key, required this.symbol});
+
+  @override
+  State<StockTopDetail> createState() => _StockTopDetailState();
+}
+
+class _StockTopDetailState extends State<StockTopDetail> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     context
+  //         .read<StockDetailProvider>()
+  //         .getStockDetails(symbol: widget.symbol);
+  //   });
+  // }
+
 //
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class NewTopGraphIndex extends StatefulWidget {
-  const NewTopGraphIndex({super.key});
+  final String symbol;
+  const NewTopGraphIndex({super.key, required this.symbol});
 
   @override
   State<NewTopGraphIndex> createState() => _NewTopGraphIndexState();
@@ -17,9 +18,20 @@ class NewTopGraphIndex extends StatefulWidget {
 
 class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
   // List<String>? interval = ['1M', '5M', '15M', '30M', '1H', '4H'];
+
   List<String>? range = ['1H', '1D', '1W', '1M', '1Y'];
 
   int _selectedIndex = 0;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     context
+  //         .read<StockDetailProvider>()
+  //         .getStockGraphData(symbol: widget.symbol);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
