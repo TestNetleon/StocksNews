@@ -106,6 +106,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.login,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -170,6 +171,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.googleLogin,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -233,6 +235,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.appleLogin,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -284,6 +287,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.signup,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -327,6 +331,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.resendOtp,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       showErrorMessage(
@@ -344,6 +349,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.signupResendOtp,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       showErrorMessage(
@@ -361,6 +367,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.verifySignupOtp,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -408,6 +415,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.verifyLoginOtp,
         request: request,
+        showProgress: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -463,6 +471,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -494,6 +503,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.deleteUser,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -535,6 +545,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: verifyOTP ? Apis.updateProfileEmail : Apis.updateProfile,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -568,6 +579,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.updateProfileOTP,
         request: request,
+        showProgress: true,
       );
       if (response.status) {
         setStatus(Status.loaded);

@@ -70,6 +70,7 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

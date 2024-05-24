@@ -37,8 +37,11 @@ class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
       "message": message.text,
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.contactUs, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.contactUs,
+        request: request,
+        showProgress: true,
+      );
       showErrorMessage(
         message: response.message,
         type: response.status ? SnackbarType.info : SnackbarType.error,

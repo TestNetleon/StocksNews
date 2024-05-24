@@ -42,9 +42,9 @@ Future<ApiResponse> apiRequest({
   callback,
   header,
   baseUrl = Apis.baseUrl,
-  showProgress = true,
+  showProgress = false,
   optionalParent = false,
-  Duration timeoutDuration = const Duration(seconds: 30),
+  Duration timeoutDuration = const Duration(seconds: 40),
 }) async {
   Map<String, String> headers = getHeaders();
   if (header != null) {

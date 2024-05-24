@@ -85,9 +85,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
     }
   }
 
-  Future getLowPriceData({
-    showProgress = false,
-  }) async {
+  Future getLowPriceData({showProgress = false}) async {
     setStatus(Status.loading);
 
     try {

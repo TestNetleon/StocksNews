@@ -669,8 +669,11 @@ class StockDetailProvider with ChangeNotifier {
       "mention_spike": selectedTwo ? "yes" : "no",
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.createAlert, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.createAlert,
+        request: request,
+        showProgress: true,
+      );
       if (response.status) {
         data?.isAlertAdded = 1;
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
@@ -708,6 +711,7 @@ class StockDetailProvider with ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.addWatchlist,
         request: request,
+        showProgress: true,
       );
       if (response.status) {
         data?.isWatchlistAdded = 1;

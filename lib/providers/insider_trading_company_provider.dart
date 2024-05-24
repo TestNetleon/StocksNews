@@ -373,9 +373,10 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
               "txn_date": dateSendIP,
             };
       ApiResponse response = await apiRequest(
-          url: Apis.insiderTrading,
-          request: request,
-          showProgress: showProgress);
+        url: Apis.insiderTrading,
+        request: request,
+        showProgress: showProgress,
+      );
       if (response.status) {
         _error = null;
         if (reportingSlug == "") {
@@ -441,6 +442,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
