@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -20,10 +19,11 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart'
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
+import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
 //
@@ -334,10 +334,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         showProgress: true,
       );
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: response.message,
-        type: response.status ? SnackbarType.info : SnackbarType.error,
-      );
+      // showErrorMessage(
+      //   message: response.message,
+      //   type: response.status ? SnackbarType.info : SnackbarType.error,
+      // );
     } catch (e) {
       setStatus(Status.loaded);
     }
@@ -352,10 +352,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         showProgress: true,
       );
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: response.message,
-        type: response.status ? SnackbarType.info : SnackbarType.error,
-      );
+      // showErrorMessage(
+      //   message: response.message,
+      //   type: response.status ? SnackbarType.info : SnackbarType.error,
+      // );
     } catch (e) {
       setStatus(Status.loaded);
     }
@@ -483,18 +483,18 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         provider.setTotalsAlerts(0);
         provider.setTotalsWatchList(0);
 
-        showErrorMessage(message: res.message, type: SnackbarType.info);
+        // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
-        showErrorMessage(
-          message: res.message,
-        );
+        // showErrorMessage(
+        //   message: res.message,
+        // );
       }
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 
@@ -508,18 +508,18 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (res.status) {
         setStatus(Status.loaded);
         handleSessionOut();
-        showErrorMessage(message: res.message, type: SnackbarType.info);
+        // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
-        showErrorMessage(
-          message: res.message,
-        );
+        // showErrorMessage(
+        //   message: res.message,
+        // );
       }
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 
@@ -549,24 +549,24 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (res.status) {
         setStatus(Status.loaded);
-        showErrorMessage(message: res.message, type: SnackbarType.info);
+        // showErrorMessage(message: res.message, type: SnackbarType.info);
         if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
         return ApiResponse(status: true, data: res.data);
       } else {
         setStatus(Status.loaded);
-        showErrorMessage(
-          message: res.message,
-        );
+        // showErrorMessage(
+        //   message: res.message,
+        // );
         if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
         return ApiResponse(status: false);
       }
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
       if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
       return ApiResponse(status: false);
@@ -583,13 +583,13 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         setStatus(Status.loaded);
-        showErrorMessage(message: response.message, snackbar: false);
+        // showErrorMessage(message: response.message, snackbar: false);
 
         return ApiResponse(status: true, data: response.data);
       } else {
         setStatus(Status.loaded);
         Navigator.pop(navigatorKey.currentContext!);
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
         return ApiResponse(status: false);
       }
     } catch (e) {

@@ -35,7 +35,7 @@ bool isAppInForeground = false;
 class Images {
   static const String logo = "assets/images/logo.png";
   static const String logoP = "assets/images/logo_holder.png";
-
+  static const String stockIcon = "assets/images/stock_icon.png";
   static const String signupSuccess = "assets/images/signup_success.png";
   static const String google = "assets/images/google.png";
   static const String apple = "assets/images/apple.png";
@@ -60,6 +60,7 @@ class Images {
   static const String alertPopGIF = "assets/images/alerts_GIF.gif";
   static const String otpSuccessGIT = "assets/images/otp_success.gif";
   static const String updateGIF = "assets/images/update.gif";
+  static const String serverErrorGIF = "assets/images/server_error.json";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

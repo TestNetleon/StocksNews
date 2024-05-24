@@ -7,7 +7,7 @@ import 'package:share_plus/share_plus.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
@@ -159,7 +159,7 @@ void closeKeyboard() {
 Future<void> openUrl(String? url,
     {LaunchMode mode = LaunchMode.platformDefault, String? extraUrl}) async {
   if (url == null || url.isEmpty) {
-    showErrorMessage(message: "Exception: Could not launch.");
+    // showErrorMessage(message: "Exception: Could not launch.");
   } else {
     log(url);
     try {
@@ -176,7 +176,7 @@ Future<void> openUrl(String? url,
 
 commonShare({String? url, String? title}) {
   if (url == null || url == '') {
-    showErrorMessage(message: "No url found.");
+    // showErrorMessage(message: "No url found.");
   } else {
     Share.share("$title $url", subject: title);
   }

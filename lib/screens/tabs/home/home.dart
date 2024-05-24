@@ -12,70 +12,20 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.watch<HomeProvider>();
+    // HomeProvider provider = context.watch<HomeProvider>();
 
     FirebaseAnalytics.instance.logEvent(
       name: 'ScreensVisit',
       parameters: {'screen_name': "Home Screen"},
     );
 
-    return BaseContainer(
-      // body: provider.isLoadingSlider ? const Loading() : const HomeContainer(),
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
-        child:
-            provider.isLoadingSlider ? const Loading() : const HomeContainer(),
-      ),
+    return const BaseContainer(
+      body: HomeContainer(),
+      // AnimatedSwitcher(
+      //   duration: const Duration(milliseconds: 500),
+      //   child:
+      // provider.isLoadingSlider ? const Loading() : const HomeContainer(),
+      // ),
     );
   }
 }
-
-// class Home extends StatelessWidget {
-//   static const String path = "Home";
-//   const Home({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ClipRRect(
-//       borderRadius: const BorderRadius.only(
-//         topLeft: Radius.circular(20.0),
-//         topRight: Radius.circular(20.0),
-//       ),
-//       child: CupertinoScaffold(
-//         topRadius: CupertinoScrollbar.defaultRadiusWhileDragging,
-//         body: CupertinoPageScaffold(
-//           navigationBar: CupertinoNavigationBar(
-//             backgroundColor: ThemeColors.greyText,
-//             leading: IconButton(
-//                 onPressed: () {
-//                   loginIOS();
-//                 },
-//                 icon: const Icon(Icons.menu)),
-//           ),
-//           child: Container(),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// void loginIOS() {
-//   showCupertinoModalBottomSheet(
-//     context: navigatorKey.currentContext!,
-//     builder: (context) {
-//       return Container(
-//         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 70),
-//         color: ThemeColors.greyBorder,
-//         child: Column(
-//           children: [
-//             ElevatedButton(
-//                 onPressed: () {
-//                   loginIOS();
-//                 },
-//                 child: const Text("AAAA")),
-//           ],
-//         ),
-//       );
-//     },
-//   );
-// }

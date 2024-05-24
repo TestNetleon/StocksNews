@@ -9,7 +9,6 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
@@ -42,10 +41,10 @@ class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: true,
       );
-      showErrorMessage(
-        message: response.message,
-        type: response.status ? SnackbarType.info : SnackbarType.error,
-      );
+      // showErrorMessage(
+      //   message: response.message,
+      //   type: response.status ? SnackbarType.info : SnackbarType.error,
+      // );
       if (response.status) {
         name.clear();
         email.clear();

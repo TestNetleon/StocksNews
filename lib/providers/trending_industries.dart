@@ -12,7 +12,6 @@ import 'package:stocks_news_new/modals/trending_industries_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 class TrendingIndustriesProvider extends ChangeNotifier {
   String? _error;
@@ -115,7 +114,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
       } else {
         _data = null;
         _error = response.message;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {

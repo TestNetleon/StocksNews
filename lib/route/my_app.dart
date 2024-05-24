@@ -178,89 +178,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // });
   }
 
-  // void _handleIncomingLinks() {
-  //   // It will handle app links while the app is already started - be it in
-  //   // the foreground or in the background.
-  //   try {
-  //     if (!kIsWeb) {
-  //       log('entered incoming links');
-  //       _sub = uriLinkStream.listen((Uri? uri) {
-  //         // if (!mounted) return;
-
-  //         if (uri == null) {
-  //           log("found no incoming links");
-  //         } else {
-  //           log('found URI in incoming links : $uri');
-
-  //           // Navigator.push(
-  //           //   navigatorKey.currentContext!,
-  //           //   MaterialPageRoute(
-  //           //     builder: (context) => WebviewLink(url: uri.toString()),
-  //           //   ),
-  //           // );
-
-  //           _navigate(uri);
-  //         }
-  //       }, onError: (Object err) {
-  //         log('got err: $err');
-  //       });
-  //     }
-  //   } catch (e) {
-  //     log("ERROR $e");
-  //   }
-  // }
-
-  /// Handle the initial Uri - the one the app was started with
-  ///
-  /// **ATTENTION**: `getInitialLink`/`getInitialUri` should be handled
-  /// ONLY ONCE in your app's lifetime, since it is not meant to change
-  /// throughout your app's life.
-  ///
-  /// We handle all exceptions, since it is called from initState.
-  // Future<void> _handleInitialUri() async {
-  //   try {
-  //     Uri? uri = await getInitialUri();
-  //     log('initial uri function with no URI');
-  //     if (uri == null) {
-  //       log('about to call incoming links');
-  //       _handleIncomingLinks();
-  //     } else {
-  //       log('ELSE PART of initialURI: $uri');
-
-  //       _navigate(uri, gotoHome: true);
-  //     }
-  //   } on PlatformException {
-  //     log('falied to get initial uri');
-  //   } on FormatException catch (err) {
-  //     log('malformed initial uri $err');
-  //   }
-  // }
-
-  // void _navigate(uri, {bool gotoHome = false}) {
-  //   if (!gotoHome) {
-  //     log("ALREADY OPENED");
-
-  //     Timer(Duration(seconds: Platform.isIOS ? 1 : 5), () {
-  //       Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(
-  //             builder: (context) => WebviewLink(url: uri),
-  //           ));
-  //     });
-  //   } else {
-  //     log("ABOUT TO OPEN");
-  //     // Navigator.pushNamedAndRemoveUntil(
-  //     //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-  //     Timer(const Duration(seconds: 5), () {
-  //       Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(
-  //             builder: (context) => WebviewLink(url: uri),
-  //           ));
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -280,6 +197,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       },
       child: const Splash(),
       // child: const DemoWeb(),
+      // child: const InternetErrorWidget(),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -11,7 +10,6 @@ import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 import 'user_provider.dart';
 
@@ -75,7 +73,7 @@ class CompareStocksProvider extends ChangeNotifier {
         _company = [];
         wholeListEmpty = true;
 
-        showErrorMessage(message: res.message);
+        // showErrorMessage(message: res.message);
       }
       if (res.extra is List) {
         _textRes = res.extra?.text;
@@ -85,9 +83,9 @@ class CompareStocksProvider extends ChangeNotifier {
       _company = [];
       wholeListEmpty = true;
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 
@@ -112,14 +110,14 @@ class CompareStocksProvider extends ChangeNotifier {
           notifyListeners();
         }
       } else {
-        showErrorMessage(message: res.message);
+        // showErrorMessage(message: res.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 
@@ -151,17 +149,17 @@ class CompareStocksProvider extends ChangeNotifier {
 //           ));
           notifyListeners();
         } else {
-          showErrorMessage(message: "Symbol $symbol is already added.");
+          // showErrorMessage(message: "Symbol $symbol is already added.");
         }
       } else {
-        showErrorMessage(message: res.message);
+        // showErrorMessage(message: res.message);
       }
       setStatus(Status.loaded);
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 }

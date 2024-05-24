@@ -74,10 +74,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     closeKeyboard();
     UserProvider provider = context.read<UserProvider>();
     if (isEmpty(nameController.text)) {
-      showErrorMessage(message: "Please enter valid name");
+      // showErrorMessage(message: "Please enter valid name");
       return;
     } else if (!isEmail(emailController.text)) {
-      showErrorMessage(message: "Please enter valid email address");
+      // showErrorMessage(message: "Please enter valid email address");
       return;
     } else {
       try {

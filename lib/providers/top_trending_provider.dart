@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -14,7 +13,6 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 
 import 'home_provider.dart';
 
@@ -120,16 +118,16 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
 
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
+      // showErrorMessage(
+      //     message: response.message,
+      //     type: response.status ? SnackbarType.info : SnackbarType.error);
       setAdd(Status.loaded);
 
       return ApiResponse(status: response.status);
     } catch (e) {
       log(e.toString());
       setAdd(Status.loaded);
-      showErrorMessage(message: Const.errSomethingWrong);
+      // showErrorMessage(message: Const.errSomethingWrong);
     }
   }
 
@@ -169,9 +167,9 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
 
         notifyListeners();
       }
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
+      // showErrorMessage(
+      //     message: response.message,
+      //     type: response.status ? SnackbarType.info : SnackbarType.error);
       setAdd(Status.loaded);
 
       return ApiResponse(status: response.status);
@@ -179,7 +177,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
       log(e.toString());
       setAdd(Status.loaded);
 
-      showErrorMessage(message: Const.errSomethingWrong);
+      // showErrorMessage(message: Const.errSomethingWrong);
     }
   }
 
@@ -335,18 +333,18 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
       if (res.status) {
         setStatus(Status.loaded);
         handleSessionOut();
-        showErrorMessage(message: res.message, type: SnackbarType.info);
+        // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
-        showErrorMessage(
-          message: res.message,
-        );
+        // showErrorMessage(
+        //   message: res.message,
+        // );
       }
     } catch (e) {
       setStatus(Status.loaded);
-      showErrorMessage(
-        message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      );
+      // showErrorMessage(
+      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
+      // );
     }
   }
 }

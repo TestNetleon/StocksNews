@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
 import '../providers/user_provider.dart';
+import '../utils/dialogs.dart';
 
 void showIosEmailError({String? state, String? dontPop}) {
   showPlatformBottomSheet(

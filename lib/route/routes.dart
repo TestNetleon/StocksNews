@@ -49,6 +49,8 @@ import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.
 import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/errorScreens/internet_error.dart';
+import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -96,7 +98,6 @@ class Routes {
     WatchList.path: (_) => const WatchList(),
     LowPriceStocksIndex.path: (_) => const LowPriceStocksIndex(),
     CongressionalIndex.path: (_) => const CongressionalIndex(),
-
     StartIndex.path: (_) => const StartIndex(),
     MyAccount.path: (_) => const MyAccount(),
     ContactUs.path: (_) => const ContactUs(),
@@ -110,8 +111,9 @@ class Routes {
     HighLowsBetaStocksIndex.path: (_) => const HighLowsBetaStocksIndex(),
     IndicesIndex.path: (_) => const IndicesIndex(),
     MostActiveIndex.path: (_) => const MostActiveIndex(),
-
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
+    ServerErrorWidget.path: (_) => const ServerErrorWidget(),
+    InternetErrorWidget.path: (_) => const InternetErrorWidget(),
   };
 
   static Route bottomToTopScreenRoute(widget) {

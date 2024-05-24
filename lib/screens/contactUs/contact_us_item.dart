@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/optiona_parent.dart';
@@ -34,9 +34,9 @@ class _ContactUsItemState extends State<ContactUsItem> {
   void _onTap() async {
     closeKeyboard();
     if (!isName(name.text)) {
-      showErrorMessage(message: "Please enter valid name");
+      // showErrorMessage(message: "Please enter valid name");
     } else if (!isEmail(email.text) && email.text.isNotEmpty) {
-      showErrorMessage(message: "Please enter valid email address");
+      // showErrorMessage(message: "Please enter valid email address");
     }
 
     //  else if (!isNumeric(phone.text) &&
@@ -45,7 +45,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
     // }
 
     else if (comments.text.isEmpty) {
-      showErrorMessage(message: "Please enter your comment");
+      // showErrorMessage(message: "Please enter your comment");
     } else {
       context.read<ContactUsProvider>().contactUS(
             name: name,

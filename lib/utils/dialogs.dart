@@ -35,78 +35,78 @@ void closeGlobalProgressDialog() {
   navigatorKey.currentState?.pop();
 }
 
-void showErrorMessage(
-    {required message,
-    type = SnackbarType.error,
-    bool snackbar = true,
-    int duration = 2}) {
-  // if (Platform.isAndroid) {
-  if (snackbar) {
-    final snackBar = SnackBar(
-      duration: Duration(seconds: duration),
-      // behavior: SnackBarBehavior.floating,
-      backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
-      content: Text(
-        message ?? '',
-        style:
-            stylePTSansRegular().copyWith(color: Colors.white, fontSize: 14.sp),
-      ),
-    );
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(snackBar);
-  } else {
-    showDialog(
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return AlertDialog(
-          insetPadding: EdgeInsets.all(10.sp),
-          backgroundColor: const Color.fromARGB(255, 39, 39, 39),
-          content: Text(
-            message,
-            style: stylePTSansRegular(fontSize: 14),
-          ),
-          actions: <Widget>[
-            GestureDetector(
-              child: Padding(
-                padding: EdgeInsets.all(10.sp),
-                child: Text(
-                  "Okay",
-                  style: stylePTSansRegular(fontSize: 14),
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-  // } else {
-  //   showDialog(
-  //       context: navigatorKey.currentContext!,
-  //       builder: (context) {
-  //         return CupertinoAlertDialog(
-  //           content: Text(
-  //             message,
-  //             style: stylePTSansRegular(fontSize: 12),
-  //           ),
-  //           actions: <Widget>[
-  //             CupertinoDialogAction(
-  //               child: Text(
-  //                 "Dismiss",
-  //                 style: stylePTSansRegular(fontSize: 14),
-  //               ),
-  //               onPressed: () {
-  //                 FocusManager.instance.primaryFocus?.unfocus();
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-}
+// void showErrorMessage(
+//     {required message,
+//     type = SnackbarType.error,
+//     bool snackbar = true,
+//     int duration = 2}) {
+//   // if (Platform.isAndroid) {
+//   if (snackbar) {
+//     final snackBar = SnackBar(
+//       duration: Duration(seconds: duration),
+//       // behavior: SnackBarBehavior.floating,
+//       backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
+//       content: Text(
+//         message ?? '',
+//         style:
+//             stylePTSansRegular().copyWith(color: Colors.white, fontSize: 14.sp),
+//       ),
+//     );
+//     ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(snackBar);
+//   } else {
+//     showDialog(
+//       context: navigatorKey.currentContext!,
+//       builder: (context) {
+//         return AlertDialog(
+//           insetPadding: EdgeInsets.all(10.sp),
+//           backgroundColor: const Color.fromARGB(255, 39, 39, 39),
+//           content: Text(
+//             message,
+//             style: stylePTSansRegular(fontSize: 14),
+//           ),
+//           actions: <Widget>[
+//             GestureDetector(
+//               child: Padding(
+//                 padding: EdgeInsets.all(10.sp),
+//                 child: Text(
+//                   "Okay",
+//                   style: stylePTSansRegular(fontSize: 14),
+//                 ),
+//               ),
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// } else {
+//   showDialog(
+//       context: navigatorKey.currentContext!,
+//       builder: (context) {
+//         return CupertinoAlertDialog(
+//           content: Text(
+//             message,
+//             style: stylePTSansRegular(fontSize: 12),
+//           ),
+//           actions: <Widget>[
+//             CupertinoDialogAction(
+//               child: Text(
+//                 "Dismiss",
+//                 style: stylePTSansRegular(fontSize: 14),
+//               ),
+//               onPressed: () {
+//                 FocusManager.instance.primaryFocus?.unfocus();
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ],
+//         );
+//       });
+// }
+// }
 
 Future<dynamic> showConfirmAlertCallbackDialog({
   context,
@@ -253,4 +253,41 @@ void showPlatformBottomSheet({
       );
     },
   );
+}
+
+class CommonSnackbar {
+  static bool _isShowing = false;
+
+  static void show({
+    String? message,
+    int duration = 2,
+    SnackbarType type = SnackbarType.error,
+  }) {
+    if (!_isShowing) {
+      _isShowing = true;
+
+      final snackBar = SnackBar(
+        duration: Duration(seconds: duration),
+        // behavior: SnackBarBehavior.floating,
+        backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
+        // action: SnackBarAction(
+        //   label: 'Close',
+        //   textColor: ThemeColors.white,
+        //   onPressed: () {
+        //     ScaffoldMessenger.of(navigatorKey.currentContext!)
+        //         .hideCurrentSnackBar();
+        //     _isShowing = false;
+        //   },
+        // ),
+        content: Text(
+          message ?? "No message present.",
+          style: stylePTSansRegular(color: ThemeColors.white),
+        ),
+      );
+      ScaffoldMessenger.of(navigatorKey.currentContext!)
+          .showSnackBar(snackBar)
+          .closed
+          .then((value) => _isShowing = false);
+    }
+  }
 }

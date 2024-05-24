@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:readmore/readmore.dart';
 import '../../../utils/colors.dart';
+import '../../../utils/dialogs.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/cache_network_image.dart';
 import '../../../widgets/spacer_horizontal.dart';

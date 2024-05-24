@@ -16,10 +16,11 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dar
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
 
+import '../../../../utils/dialogs.dart';
 import 'alert_popup.dart';
 import 'button.dart';
 

@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
@@ -36,6 +37,7 @@ class BlogDetailContainer extends StatelessWidget {
               hasData:
                   provider.blogsDetail != null && !provider.isLoadingDetail,
               isLoading: provider.isLoadingDetail,
+              showPreparingText: true,
               onRefresh: () => provider.getBlogDetailData(slug: slug),
               child: RefreshIndicator(
                 onRefresh: () => provider.getBlogDetailData(slug: slug),
@@ -101,6 +103,10 @@ class BlogDetailContainer extends StatelessWidget {
                           // const SpacerVertical(height: 5),
                           // const BlogDetailTags(),
                           HtmlWidget(
+                            onLoadingBuilder:
+                                (context, element, loadingProgress) {
+                              return const ProgressDialog();
+                            },
                             provider.blogsDetail?.description ?? "",
                             textStyle: styleGeorgiaRegular(
                               fontSize: 14,

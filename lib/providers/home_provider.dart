@@ -29,6 +29,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
   String? _error;
 //
+
   Status _statusSlider = Status.ideal;
   Status get statusSlider => _statusSlider;
 
@@ -122,28 +123,18 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future refreshData(String? inAppMsgId) async {
-    getHomeSlider();
+    await getHomeSlider();
     // getIpoData();
-    getStockInFocus();
-    getHomeSentimentData();
-    getHomeTrendingData();
-    getHomeAlerts();
-    getHomeInsiderData(inAppMsgId);
+    // getStockInFocus();
+    await getHomeTrendingData();
+    await getHomeAlerts();
+    // getHomeSentimentData();
+    // getHomeInsiderData(inAppMsgId);
   }
 
   Future refreshWithCheck() async {
     if (_homeSliderRes == null) {
       getHomeSlider();
-    }
-
-    // if (_ipoRes == null) {
-    //   getIpoData();
-    // }
-    if (_homeSentimentRes == null) {
-      getHomeSentimentData();
-    }
-    if (_focusRes == null) {
-      getStockInFocus();
     }
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
@@ -151,9 +142,122 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     if (_homeAlertData == null) {
       getHomeAlerts();
     }
-    if (_homeInsiderRes == null) {
-      getHomeInsiderData(null);
+    // if (_ipoRes == null) {
+    //   getIpoData();
+    // }
+    // if (_homeSentimentRes == null) {
+    //   getHomeSentimentData();
+    // }
+    // if (_focusRes == null) {
+    //   getStockInFocus();
+    // }
+    // if (_homeInsiderRes == null) {
+    //   getHomeInsiderData(null);
+    // }
+  }
+
+  Future getHomeSlider() async {
+    showGlobalProgressDialog();
+
+    _statusSlider = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    String? fcmToken = await Preference.getFcmToken();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+        "fcm_token": fcmToken ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeSlider,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _homeSliderRes = HomeSliderRes.fromJson(response.data);
+        totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
+        totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
+        if (response.extra != null && response.extra is Extra) {
+          notificationSeen = (response.extra as Extra).notificationCount == 0;
+          _checkForNewVersion(response.extra as Extra);
+        }
+        notifyListeners();
+      } else {
+        _homeSliderRes = null;
+      }
+      _statusSlider = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _homeSliderRes = null;
+      log(e.toString());
+      _statusSlider = Status.loaded;
+      notifyListeners();
     }
+  }
+
+  Future getHomeTrendingData() async {
+    topLoading = true;
+
+    _statusTrending = Status.loading;
+    notifyListeners();
+
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeTrending,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
+      } else {
+        _homeTrendingRes = null;
+        _error = "Data not found";
+      }
+      topLoading = false;
+      _statusTrending = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _homeTrendingRes = null;
+      _error = Const.errSomethingWrong;
+      topLoading = false;
+      _statusTrending = Status.loaded;
+      notifyListeners();
+    }
+  }
+
+  Future getHomeAlerts({bool userAvail = true}) async {
+    _statusHomeAlert = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": userAvail ? provider.user?.token ?? "" : "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeAlert,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _homeAlertData = homeAlertsResFromJson(jsonEncode(response.data));
+      } else {
+        _homeAlertData = null;
+      }
+      userAlert = response.extra?.userAlert;
+      _statusHomeAlert = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _homeAlertData = null;
+      log(e.toString());
+      _statusHomeAlert = Status.loaded;
+      notifyListeners();
+    }
+    closeGlobalProgressDialog();
   }
 
   Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
@@ -199,36 +303,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getHomeAlerts({bool userAvail = true}) async {
-    _statusHomeAlert = Status.loading;
-    notifyListeners();
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    try {
-      Map request = {
-        "token": userAvail ? provider.user?.token ?? "" : "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.homeAlert,
-        request: request,
-        showProgress: false,
-      );
-
-      if (response.status) {
-        _homeAlertData = homeAlertsResFromJson(jsonEncode(response.data));
-      } else {
-        _homeAlertData = null;
-      }
-      userAlert = response.extra?.userAlert;
-      _statusHomeAlert = Status.loaded;
-      notifyListeners();
-    } catch (e) {
-      _homeAlertData = null;
-      log(e.toString());
-      _statusHomeAlert = Status.loaded;
-      notifyListeners();
-    }
-  }
-
   Future getIpoData() async {
     _statusIpo = Status.loading;
     notifyListeners();
@@ -254,43 +328,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _ipoRes = null;
       log(e.toString());
       _statusIpo = Status.loaded;
-      notifyListeners();
-    }
-  }
-
-  Future getHomeSlider() async {
-    _statusSlider = Status.loading;
-    notifyListeners();
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    String? fcmToken = await Preference.getFcmToken();
-    try {
-      Map request = {
-        "token": provider.user?.token ?? "",
-        "fcm_token": fcmToken ?? "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.homeSlider,
-        request: request,
-        showProgress: false,
-      );
-      if (response.status) {
-        _homeSliderRes = HomeSliderRes.fromJson(response.data);
-        totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
-        totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
-        if (response.extra != null && response.extra is Extra) {
-          notificationSeen = (response.extra as Extra).notificationCount == 0;
-          _checkForNewVersion(response.extra as Extra);
-        }
-        notifyListeners();
-      } else {
-        _homeSliderRes = null;
-      }
-      _statusSlider = Status.loaded;
-      notifyListeners();
-    } catch (e) {
-      _homeSliderRes = null;
-      log(e.toString());
-      _statusSlider = Status.loaded;
       notifyListeners();
     }
   }
@@ -324,40 +361,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getHomeTrendingData() async {
-    topLoading = true;
-
-    _statusTrending = Status.loading;
-    notifyListeners();
-
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    try {
-      Map request = {
-        "token": provider.user?.token ?? "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.homeTrending,
-        request: request,
-        showProgress: false,
-      );
-      if (response.status) {
-        _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
-      } else {
-        _homeTrendingRes = null;
-        _error = "Data not found";
-      }
-      topLoading = false;
-      _statusTrending = Status.loaded;
-      notifyListeners();
-    } catch (e) {
-      _homeTrendingRes = null;
-      _error = Const.errSomethingWrong;
-      topLoading = false;
-      _statusTrending = Status.loaded;
-      notifyListeners();
-    }
-  }
-
   Future getHomeInsiderData(inAppMsgId) async {
     _statusInsider = Status.loading;
     notifyListeners();
@@ -378,7 +381,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         _homeInsiderRes = HomeInsiderRes.fromJson(response.data);
       } else {
         _homeInsiderRes = null;
-        showErrorMessage(message: response.message);
+        // showErrorMessage(message: response.message);
       }
       _statusInsider = Status.loaded;
       notifyListeners();
