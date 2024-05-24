@@ -336,7 +336,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         "token": provider.user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
-          url: Apis.homeTrending, request: request, showProgress: false);
+        url: Apis.homeTrending,
+        request: request,
+        showProgress: false,
+      );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
       } else {

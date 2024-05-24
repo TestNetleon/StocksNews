@@ -44,9 +44,10 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
         "page": "$_page",
       };
       ApiResponse response = await apiRequest(
-          url: Apis.notifications,
-          request: request,
-          showProgress: showProgress);
+        url: Apis.notifications,
+        request: request,
+        showProgress: showProgress,
+      );
 
       if (response.status) {
         _error = null;
@@ -82,6 +83,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

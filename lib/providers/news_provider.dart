@@ -93,6 +93,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -189,6 +190,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -231,9 +233,10 @@ class HeaderNewsProvider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
-          url: Apis.marketTickers,
-          request: request,
-          showProgress: showProgress);
+        url: Apis.marketTickers,
+        request: request,
+        showProgress: showProgress,
+      );
       if (response.status) {
         //
         _data = stockHeaderNewsResFromJson(jsonEncode(response.data));
@@ -523,6 +526,7 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

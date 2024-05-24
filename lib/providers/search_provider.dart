@@ -58,7 +58,10 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       //   "token": navigatorKey.currentContext!.read<UserProvider>().user?.token??""
       // };
       ApiResponse response = await apiRequest(
-          url: Apis.search, request: request, showProgress: showProgress);
+        url: Apis.search,
+        request: request,
+        showProgress: showProgress,
+      );
       if (response.status) {
         _data = searchResFromJson(jsonEncode(response.data));
       } else {
@@ -79,9 +82,10 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       //   "token": navigatorKey.currentContext!.read<UserProvider>().user?.token??""
       // };
       ApiResponse response = await apiRequest(
-          url: Apis.searchWithNews,
-          request: request,
-          showProgress: showProgress);
+        url: Apis.searchWithNews,
+        request: request,
+        showProgress: showProgress,
+      );
       if (response.status) {
         _dataNew = searchNewResFromJson(jsonEncode(response.data));
       } else {
@@ -100,6 +104,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

@@ -103,7 +103,10 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-          url: Apis.deleteWatchlist, request: request, showProgress: true);
+        url: Apis.deleteWatchlist,
+        request: request,
+        showProgress: true,
+      );
 
       if (response.status) {
         _data?.data.removeWhere((element) => element.id == id);
@@ -148,6 +151,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.addWatchlist,
         request: request,
+        showProgress: true,
       );
       if (response.status) {
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
@@ -171,6 +175,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
         request: request,
+        showProgress: true,
       );
       if (res.status) {
         setStatus(Status.loaded);

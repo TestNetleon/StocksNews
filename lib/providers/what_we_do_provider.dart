@@ -72,8 +72,11 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
     };
     try {
-      ApiResponse response =
-          await apiRequest(url: Apis.menuWhatWeDo, request: request);
+      ApiResponse response = await apiRequest(
+        url: Apis.menuWhatWeDo,
+        request: request,
+        showProgress: true,
+      );
 
       if (response.status) {
         _data = whatWeDoTabResFromJson(jsonEncode(response.data)).list;
@@ -105,7 +108,10 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
     };
     try {
       ApiResponse response = await apiRequest(
-          url: Apis.whatWeDo, request: request, showProgress: showProgress);
+        url: Apis.whatWeDo,
+        request: request,
+        showProgress: showProgress,
+      );
 
       if (response.status) {
         _res = whatWeDoResFromJson(jsonEncode(response.data));
