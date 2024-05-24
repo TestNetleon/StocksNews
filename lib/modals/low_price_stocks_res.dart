@@ -46,7 +46,7 @@ class LowPriceStocksRes {
   // final num? eps;
   final num? pe;
   // final num? previousClose;
-  final PriceTarget? priceTarget;
+  final num? priceTarget;
   // final num? volume;
   // final num? yearHigh;
   // final num? yearLow;
@@ -144,9 +144,8 @@ class LowPriceStocksRes {
         // eps: json["eps"],
         // pe: json["pe"],
         // previousClose: json["previousClose"],
-        priceTarget: json["price_target"] == null
-            ? null
-            : PriceTarget.fromJson(json["price_target"]),
+        priceTarget: json["price_target"],
+
         // volume: json["volume"],
         // yearHigh: json["yearHigh"],
         // yearLow: json["yearLow"],
@@ -195,7 +194,7 @@ class LowPriceStocksRes {
         // "eps": eps,
         "pe": pe,
         // "previousClose": previousClose,
-        "price_target": priceTarget?.toJson(),
+        "price_target": priceTarget,
         // "volume": volume,
         // "yearHigh": yearHigh,
         // "yearLow": yearLow,
@@ -247,30 +246,4 @@ class LowPriceStocksRes {
 //       };
 // }
 
-class PriceTarget {
-  // final num targetHigh;
-  // final num targetLow;
-  final num? targetConsensus;
-  // final num targetMedian;
 
-  PriceTarget({
-    // required this.targetHigh,
-    // required this.targetLow,
-    this.targetConsensus,
-    // required this.targetMedian,
-  });
-
-  factory PriceTarget.fromJson(Map<String, dynamic> json) => PriceTarget(
-        // targetHigh: json["targetHigh"],
-        // targetLow: json["targetLow"],
-        targetConsensus: json["targetConsensus"],
-        // targetMedian: json["targetMedian"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        // "targetHigh": targetHigh,
-        // "targetLow": targetLow,
-        "targetConsensus": targetConsensus,
-        // "targetMedian": targetMedian,
-      };
-}

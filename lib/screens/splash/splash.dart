@@ -16,7 +16,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-
 import '../tabs/tabs.dart';
 
 class Splash extends StatefulWidget {

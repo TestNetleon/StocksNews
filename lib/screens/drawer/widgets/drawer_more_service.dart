@@ -97,6 +97,77 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   TabController? _tabController;
+  // double firstTab = ScreenUtil().screenHeight * 0.499;
+  // double secondTab = ScreenUtil().screenHeight * 0.820;
+  // double thirdTab = ScreenUtil().screenHeight * 1.162;
+  // double fourthTab = ScreenUtil().screenHeight * 1.4;
+  // double fifthTab = ScreenUtil().screenHeight * 1.545;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _tabController = TabController(length: 6, vsync: this);
+  //   _scrollController.addListener(_scrollListener);
+  // }
+
+  // @override
+  // void dispose() {
+  //   _scrollController.removeListener(_scrollListener);
+  //   _tabController?.dispose();
+  //   super.dispose();
+  // }
+
+  // void _scrollListener() {
+  //   double offset = _scrollController.offset;
+  //   int index = _getTabIndex(offset + 20);
+  //   _tabController?.animateTo(
+  //     index,
+  //     curve: Curves.easeIn,
+  //     duration: const Duration(milliseconds: 1),
+  //   );
+  // }
+
+  // void _scrollToIndex(int index) {
+  //   double scrollOffset = 0.0;
+  //   switch (index) {
+  //     case 1:
+  //       scrollOffset = firstTab;
+  //       break;
+  //     case 2:
+  //       scrollOffset = secondTab;
+  //       break;
+  //     case 3:
+  //       scrollOffset = thirdTab;
+  //       break;
+  //     case 4:
+  //       scrollOffset = fourthTab;
+  //       break;
+  //     case 5:
+  //       scrollOffset = fifthTab;
+  //       break;
+  //     default:
+  //       scrollOffset = 0;
+  //   }
+  //   _scrollController.animateTo(
+  //     scrollOffset,
+  //     duration: const Duration(milliseconds: 1),
+  //     curve: Curves.easeOut,
+  //   );
+  // }
+
+  // int _getTabIndex(double offset) {
+  //   if (offset < firstTab) {
+  //     return 0;
+  //   } else if (offset < secondTab) {
+  //     return 1;
+  //   } else if (offset < thirdTab) {
+  //     return 2;
+  //   } else if (offset < fourthTab) {
+  //     return 3;
+  //   } else if (offset < fifthTab) {
+  //     return 4;
+  //   } else {
+  //     return 5;
+  //   }
 
   @override
   void initState() {
@@ -126,19 +197,19 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
     double scrollOffset = 0.0;
     switch (index) {
       case 1:
-        scrollOffset = ScreenUtil().screenHeight * 0.591;
+        scrollOffset = ScreenUtil().screenHeight * 0.485;
         break;
       case 2:
-        scrollOffset = ScreenUtil().screenHeight * 0.923;
+        scrollOffset = ScreenUtil().screenHeight * 0.817;
         break;
       case 3:
-        scrollOffset = ScreenUtil().screenHeight * 1.162;
+        scrollOffset = ScreenUtil().screenHeight * 1.055;
         break;
       case 4:
-        scrollOffset = ScreenUtil().screenHeight * 1.4;
+        scrollOffset = ScreenUtil().screenHeight * 1.293;
         break;
       case 5:
-        scrollOffset = ScreenUtil().screenHeight * 1.545;
+        scrollOffset = ScreenUtil().screenHeight * 1.6;
         break;
       default:
         scrollOffset = 0;
@@ -151,15 +222,15 @@ class _DrawerMoreServiceState extends State<DrawerMoreService>
   }
 
   int _getTabIndex(double offset) {
-    if (offset < ScreenUtil().screenHeight * 0.591) {
+    if (offset < ScreenUtil().screenHeight * 0.485) {
       return 0;
-    } else if (offset < ScreenUtil().screenHeight * 0.923) {
+    } else if (offset < ScreenUtil().screenHeight * 0.817) {
       return 1;
-    } else if (offset < ScreenUtil().screenHeight * 1.162) {
+    } else if (offset < ScreenUtil().screenHeight * 1.055) {
       return 2;
-    } else if (offset < ScreenUtil().screenHeight * 1.4) {
+    } else if (offset < ScreenUtil().screenHeight * 1.293) {
       return 3;
-    } else if (offset < ScreenUtil().screenHeight * 1.545) {
+    } else if (offset < ScreenUtil().screenHeight * 1.6) {
       return 4;
     } else {
       return 5;
