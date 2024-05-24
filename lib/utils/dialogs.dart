@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/bottom_sheet_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
@@ -252,4 +253,41 @@ void showPlatformBottomSheet({
       );
     },
   );
+}
+
+class CommonSnackbar {
+  static bool _isShowing = false;
+
+  static void show({
+    String message = "No message present.",
+    int duration = 2,
+    SnackbarType type = SnackbarType.error,
+  }) {
+    if (!_isShowing) {
+      _isShowing = true;
+
+      final snackBar = SnackBar(
+        duration: Duration(seconds: duration),
+        // behavior: SnackBarBehavior.floating,
+        backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
+        action: SnackBarAction(
+          label: 'Close',
+          textColor: ThemeColors.white,
+          onPressed: () {
+            ScaffoldMessenger.of(navigatorKey.currentContext!)
+                .hideCurrentSnackBar();
+            _isShowing = false;
+          },
+        ),
+        content: Text(
+          message,
+          style: stylePTSansRegular(color: ThemeColors.white),
+        ),
+      );
+      ScaffoldMessenger.of(navigatorKey.currentContext!)
+          .showSnackBar(snackBar)
+          .closed
+          .then((value) => _isShowing = false);
+    }
+  }
 }
