@@ -87,8 +87,29 @@ class HomeMyAlerts extends StatelessWidget {
                 itemBuilder: (context, index) {
                   HomeAlertsRes? data = homeAlert?[index];
                   if (data == null) {
-                    return const SizedBox();
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      height: constraints.maxWidth * 0.60,
+                      width: 220,
+                      decoration: BoxDecoration(
+                        // color: const Color.fromARGB(255, 48, 48, 48),
+                        // color: ThemeColors.greyBorder,
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromARGB(255, 23, 23, 23),
+                            // ThemeColors.greyBorder,
+                            Color.fromARGB(255, 48, 48, 48),
+                          ],
+                        ),
+                      ),
+                    );
                   }
+                  // if (data == null) {
+                  //   return const SizedBox();
+                  // }
 
                   if (homeAlert?.length == 1 && userRes != null) {
                     return Row(
@@ -101,13 +122,10 @@ class HomeMyAlerts extends StatelessWidget {
                               Navigator.pushNamed(
                                 context,
                                 StockDetails.path,
-                                // arguments: data.symbol,
                                 arguments: {"slug": data.symbol},
                               );
                             },
-                            child: HomeMyAlertItem(
-                              data: data,
-                            ),
+                            child: HomeMyAlertItem(data: data),
                           ),
                         ),
                         const SpacerHorizontal(width: 10),
@@ -168,20 +186,17 @@ class HomeMyAlerts extends StatelessWidget {
                         Navigator.pushNamed(
                           context,
                           StockDetails.path,
-                          // arguments: data.symbol,
                           arguments: {"slug": data.symbol},
                         );
                       },
-                      child: HomeMyAlertItem(
-                        data: data,
-                      ),
+                      child: HomeMyAlertItem(data: data),
                     ),
                   );
                 },
                 separatorBuilder: (context, index) {
                   return const SpacerHorizontal(width: 12);
                 },
-                itemCount: homeAlert?.length ?? 0,
+                itemCount: homeAlert?.length ?? 5,
               ),
             ),
           ],
