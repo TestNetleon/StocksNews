@@ -58,12 +58,16 @@ class StockDetailsBase extends StatelessWidget {
           ],
           widgets: [
             BaseUiContainer(
-              hasData: !provider.isLoading &&
-                  !provider.isLoadingGraph &&
+              hasData: !provider.isLoading ||
+                  !provider.isLoadingGraph ||
                   provider.data != null &&
-                  (provider.graphChart != null &&
-                      provider.graphChart?.isNotEmpty == true),
-              isLoading: provider.isLoading || provider.isLoadingGraph,
+                      (provider.graphChart != null &&
+                          provider.graphChart?.isNotEmpty == true),
+              isLoading: provider.isLoading ||
+                  provider.isLoadingGraph &&
+                      provider.data == null &&
+                      (provider.graphChart == null &&
+                          provider.graphChart?.isEmpty == true),
               error: provider.data != null
                   ? provider.error
                   : (provider.graphChart != null &&
@@ -213,7 +217,11 @@ class StockDetailsBase extends StatelessWidget {
           ],
         ),
         Visibility(
-          visible: !provider.isLoading && !provider.isLoadingGraph,
+          visible: !provider.isLoading ||
+              !provider.isLoadingGraph &&
+                  provider.data == null &&
+                  (provider.graphChart == null &&
+                      provider.graphChart?.isEmpty == true),
           child: Positioned(
             bottom: 0,
             left: 0,

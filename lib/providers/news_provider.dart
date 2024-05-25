@@ -266,16 +266,19 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   int _page = 1;
   int selectedIndex = 0;
 
-  List<NesCategoryTabRes>? _tabs;
-  List<NesCategoryTabRes>? get tabs => _tabs;
+  List<NewsTabsRes>? _tabs;
+  List<NewsTabsRes>? get tabs => _tabs;
 
   List<NewsData>? get data => _data?.data;
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   // int? get page => _page;
   bool get isLoading => _status == Status.loading;
-
   bool get tabLoading => _tabStatus == Status.loading;
+
+  Map<String, TabsNewsHolder?> _newsData = {};
+  Map<String, TabsNewsHolder?> get newsData => _newsData;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -292,16 +295,12 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  void tabChange(index) {
-    // log("Before--> selected index $selectedIndex, index $index ");
-    if (selectedIndex != index) {
-      selectedIndex = index;
-      notifyListeners();
-      String? id = _tabs?[index].id;
-      _page = 1;
-      _data = null;
-      getNews(tabChangeLoading: false, id: id, showProgress: false);
-    }
+  void tabChange(index, String? id) {
+    selectedIndex = index;
+    if (id == null) return;
+    if (_newsData[id]?.data != null || _newsData[id]?.error != null) return;
+    notifyListeners();
+    getNewsData(id: id, index: index);
   }
 
   Future getTabsData({showProgress = false}) async {
@@ -320,12 +319,11 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _tabs = nesCategoryTabResFromJson(jsonEncode(response.data));
         if (_tabs != null) {
-          getNews(id: _tabs?[selectedIndex].id);
+          getNewsData(id: _tabs?[selectedIndex].id);
         }
       } else {
         _error = response.message;
         _tabs = null;
-        // showErrorMessage(message: response.message);
       }
       setTabStatus(Status.loaded);
     } catch (e) {
@@ -337,16 +335,103 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  void onRefresh() {
-    getNews(
-      tabChangeLoading: false,
-      id: _tabs?[selectedIndex].id,
-      showProgress: false,
-    );
+  void onRefresh() async {
+    await getNewsData(id: _tabs?[selectedIndex].id, refreshing: true);
   }
 
   Future onLoadMore() async {
-    await getNews(loadMore: true, id: _tabs?[selectedIndex].id);
+    await getNewsData(loadMore: true, id: _tabs?[selectedIndex].id);
+  }
+
+  Future getNewsData(
+      {loadMore = false, refreshing = false, index, String? id}) async {
+    if (_newsData[id]?.data == null || refreshing) {
+      _newsData[id!] = TabsNewsHolder(
+        currentPage: 1,
+        data: null,
+        error: null,
+        loading: true,
+      );
+    } else {
+      _newsData[id!] = TabsNewsHolder(
+        currentPage: (_newsData[id]?.currentPage ?? 1) + 1,
+        data: _newsData[id]?.data,
+        error: _newsData[id]?.error,
+        loading: false,
+      );
+    }
+    notifyListeners();
+
+    try {
+      Map request = id == "latest-news" || id == "featured-news"
+          ? {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "page": "${(_newsData[id]?.currentPage ?? 1)}",
+            }
+          : {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "page": "${(_newsData[id]?.currentPage ?? 1)}",
+              "category_id": tabs?[selectedIndex].id,
+            };
+
+      ApiResponse response = await apiRequest(
+        url: id == "featured-news" ? Apis.featuredNews : Apis.latestNews,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        if (_newsData[id]?.data == null || _newsData[id]?.currentPage == 1) {
+          _newsData[id] = TabsNewsHolder(
+            currentPage: _newsData[id]?.currentPage ?? 1,
+            data: newsResFromJson(jsonEncode(response.data)),
+            error: null,
+            loading: false,
+          );
+        } else {
+          final newData = _newsData[id]?.data;
+          newData!.data.addAll(newsResFromJson(jsonEncode(response.data)).data);
+
+          _newsData[id] = TabsNewsHolder(
+            currentPage: _newsData[id]?.currentPage ?? 1,
+            data: newData,
+            error: null,
+            loading: false,
+          );
+        }
+      } else {
+        if (_newsData[id]?.data == null || _newsData[id]?.currentPage == 1) {
+          _newsData[id] = TabsNewsHolder(
+            currentPage: 1,
+            data: null,
+            error: response.message,
+            loading: false,
+          );
+        }
+      }
+
+      // if (tabChangeLoading) {
+      //   setTabStatus(Status.loaded);
+      // } else {
+      setStatus(Status.loaded);
+      // }
+    } catch (e) {
+      // _data = null;
+      log(e.toString());
+      // if (tabChangeLoading) {
+      //   setTabStatus(Status.loaded);
+      // } else {
+      setStatus(Status.loaded);
+      // }
+    }
   }
 
   Future getNews({

@@ -35,7 +35,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     getWelcomeData();
-
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });

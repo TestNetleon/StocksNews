@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
@@ -20,15 +21,12 @@ class WhatWeDoIndex extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: WhatWeDoProvider(),
-      child: const BaseContainer(
-          appBar: AppBarHome(
-            isPopback: true,
-            canSearch: true,
-          ),
-          body: WhatWeDoContainer()),
-    );
+    return const BaseContainer(
+        appBar: AppBarHome(
+          isPopback: true,
+          canSearch: true,
+        ),
+        body: WhatWeDoContainer());
   }
 }
 
@@ -44,8 +42,15 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<WhatWeDoProvider>().getWhatWeDO(reset: true);
+      _callApi();
     });
+  }
+
+  _callApi() {
+    WhatWeDoProvider provider = context.read<WhatWeDoProvider>();
+    if (provider.data == null || provider.data?.isEmpty == true) {
+      provider.getWhatWeDO(reset: true);
+    }
   }
 
   @override
@@ -74,18 +79,26 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                             (index) => '${provider.data?[index].title}'),
                         widgets: List.generate(
                           provider.data?.length ?? 0,
-                          (index) => SingleChildScrollView(
-                              child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.sp),
-                            child: HtmlWidget(
-                              onLoadingBuilder:
-                                  (context, element, loadingProgress) {
-                                return const ProgressDialog();
-                              },
-                              provider.res?.page.description ?? "",
-                              textStyle: stylePTSansRegular(height: 1.5),
-                            ),
-                          )),
+                          (index) => BaseUiContainer(
+                            isLoading: provider.isLoadingData &&
+                                provider.statusData != Status.ideal,
+                            hasData:
+                                !provider.isLoadingData && provider.res != null,
+                            error: provider.error,
+                            showPreparingText: true,
+                            child: SingleChildScrollView(
+                                child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10.sp),
+                              child: HtmlWidget(
+                                onLoadingBuilder:
+                                    (context, element, loadingProgress) {
+                                  return const ProgressDialog();
+                                },
+                                provider.res?.page.description ?? "",
+                                textStyle: stylePTSansRegular(height: 1.5),
+                              ),
+                            )),
+                          ),
                         ),
                       ),
                     ),

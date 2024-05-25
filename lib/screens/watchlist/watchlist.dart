@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -13,6 +14,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+
+import '../auth/bottomSheets/login_sheet_tablet.dart';
 
 class WatchList extends StatefulWidget {
   static const path = "WatchList";
@@ -32,13 +35,17 @@ class _WatchListState extends State<WatchList> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       UserProvider provider = context.read<UserProvider>();
       if (provider.user != null) {
-        context.read<WatchlistProvider>().getData(showProgress: false);
+        _getData();
       }
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stock WatchList"},
       );
     });
+  }
+
+  Future _getData() async {
+    context.read<WatchlistProvider>().getData(showProgress: false);
   }
 
   @override
@@ -68,7 +75,17 @@ class _WatchListState extends State<WatchList> {
             //   onChanged: (text) {},
             // ),
             userProvider.user == null
-                ? const Expanded(child: LoginError(state: "watchList"))
+                ? Expanded(
+                    child: LoginError(
+                    state: "watchList",
+                    onClick: () async {
+                      isPhone
+                          ? await loginSheet(dontPop: "true")
+                          : await loginSheetTablet(dontPop: "true");
+
+                      await _getData();
+                    },
+                  ))
                 : Expanded(
                     child: BaseUiContainer(
                       isLoading: provider.isLoading && provider.data == null,

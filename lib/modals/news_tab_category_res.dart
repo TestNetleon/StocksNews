@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-List<NesCategoryTabRes> nesCategoryTabResFromJson(String str) =>
-    List<NesCategoryTabRes>.from(
-        json.decode(str).map((x) => NesCategoryTabRes.fromJson(x)));
+import 'package:stocks_news_new/modals/news_res.dart';
 
-String nesCategoryTabResToJson(List<NesCategoryTabRes> data) =>
+List<NewsTabsRes> nesCategoryTabResFromJson(String str) =>
+    List<NewsTabsRes>.from(
+        json.decode(str).map((x) => NewsTabsRes.fromJson(x)));
+
+String nesCategoryTabResToJson(List<NewsTabsRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-//
-class NesCategoryTabRes {
+class NewsTabsRes {
   final String id;
   final String name;
 
-  NesCategoryTabRes({
+  NewsTabsRes({
     required this.id,
     required this.name,
   });
 
-  factory NesCategoryTabRes.fromJson(Map<String, dynamic> json) =>
-      NesCategoryTabRes(
+  factory NewsTabsRes.fromJson(Map<String, dynamic> json) => NewsTabsRes(
         id: json["_id"],
         name: json["name"],
       );
@@ -27,4 +27,18 @@ class NesCategoryTabRes {
         "id": id,
         "name": name,
       };
+}
+
+class TabsNewsHolder {
+  NewsRes? data;
+  int currentPage;
+  String? error;
+  bool loading;
+
+  TabsNewsHolder({
+    this.data,
+    this.currentPage = 1,
+    this.loading = false,
+    this.error,
+  });
 }

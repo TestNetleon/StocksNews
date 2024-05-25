@@ -36,10 +36,10 @@ class _StockDetailsState extends State<StockDetails> {
     });
   }
 
-  void _getData() async {
+  void _getData() {
     StockDetailProvider provider = context.read<StockDetailProvider>();
-    await provider.getStockDetails(symbol: widget.symbol, refresh: true);
-    await provider.getStockGraphData(symbol: widget.symbol);
+    provider.getStockDetails(symbol: widget.symbol, refresh: true);
+    provider.getStockGraphData(symbol: widget.symbol);
   }
 
   @override

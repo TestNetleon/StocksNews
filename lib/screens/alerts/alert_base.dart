@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -15,6 +16,7 @@ import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import '../../widgets/screen_title.dart';
+import '../auth/bottomSheets/login_sheet_tablet.dart';
 import 'alert_container.dart';
 
 class AlertBase extends StatefulWidget {
@@ -37,7 +39,7 @@ class _AlertBaseState extends State<AlertBase> {
     });
   }
 
-  void _getData() {
+  Future _getData() async {
     UserProvider provider = context.read<UserProvider>();
     if (provider.user != null) {
       context.read<AlertProvider>().getAlerts(showProgress: false);
@@ -66,10 +68,15 @@ class _AlertBaseState extends State<AlertBase> {
                     ? "Stock Alert"
                     : "Stock Alerts"),
             userProvider.user == null
-                ? const Expanded(
+                ? Expanded(
                     child: LoginError(
                       error: "User Not logged in",
-                      state: "alert",
+                      onClick: () async {
+                        isPhone
+                            ? await loginSheet(dontPop: "true")
+                            : await loginSheetTablet(dontPop: "true");
+                        await _getData();
+                      },
                     ),
                   )
                 : Expanded(

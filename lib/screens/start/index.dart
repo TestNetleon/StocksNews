@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
@@ -40,18 +41,20 @@ class _StartIndexState extends State<StartIndex> {
       // lottieFile:
       //     "https://lottie.host/e0a7a0db-24c4-4d04-9f89-fa8d995ebed5/U5BCDolXsb.json",
       lottieFile: Images.trendingGIF,
+      // lottieFile: "assets/images/animation_bull_bear.json",
     ),
     StartClass(
-      title: "Track Insider",
-      colorText: 'Trades',
-      description:
-          "These insiders have been the most active in trading stocks.",
-      color: ThemeColors.background,
-      lottieFile: Images.bearBullGIF,
+        title: "Track Insider",
+        colorText: 'Trades',
+        description:
+            "These insiders have been the most active in trading stocks.",
+        color: ThemeColors.background,
+        lottieFile: Images.bearBullGIF,
+        isLottie: true
 
-      // lottieFile:
-      //     "https://lottie.host/e6984867-8de5-4c6b-9802-d31e3838d0c2/gya8lFmcM4.json",
-    ),
+        // lottieFile:
+        //     "https://lottie.host/e6984867-8de5-4c6b-9802-d31e3838d0c2/gya8lFmcM4.json",
+        ),
     StartClass(
       title: "Most Discussed",
       colorText: 'Stocks!',
@@ -95,14 +98,16 @@ class _StartIndexState extends State<StartIndex> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          // Visibility(
-                          //     visible: array[index].lottieFile != null,
-                          //     child: Lottie.network(
-                          //         height: 300.sp,
-                          //         array[index].lottieFile ?? "")),
+                          Visibility(
+                              visible: array[index].lottieFile != null &&
+                                  array[index].isLottie,
+                              child: Lottie.asset(
+                                  height: 300.sp,
+                                  array[index].lottieFile ?? "")),
 
                           Visibility(
-                            visible: array[index].lottieFile != null,
+                            visible: array[index].lottieFile != null &&
+                                !array[index].isLottie,
                             child: Image.asset(
                               array[index].lottieFile ?? "",
                               height: 250.sp,
@@ -268,12 +273,15 @@ class StartClass {
   String colorText;
   String description;
   String? lottieFile;
+  bool isLottie;
+
   Color color;
   StartClass({
     required this.title,
     required this.description,
     required this.color,
     required this.colorText,
+    this.isLottie = false,
     this.lottieFile,
   });
 }

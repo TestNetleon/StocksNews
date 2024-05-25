@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/optiona_parent.dart';
 import 'package:validators/validators.dart';
 
@@ -34,8 +35,17 @@ class _ContactUsItemState extends State<ContactUsItem> {
   void _onTap() async {
     closeKeyboard();
     if (!isName(name.text)) {
+      popUpAlert(
+          message: "Please enter valid name",
+          title: "",
+          icon: Images.alertPopGIF);
+
       // showErrorMessage(message: "Please enter valid name");
     } else if (!isEmail(email.text) && email.text.isNotEmpty) {
+      popUpAlert(
+          message: "Please enter valid email address",
+          title: "",
+          icon: Images.alertPopGIF);
       // showErrorMessage(message: "Please enter valid email address");
     }
 
@@ -45,6 +55,10 @@ class _ContactUsItemState extends State<ContactUsItem> {
     // }
 
     else if (comments.text.isEmpty) {
+      popUpAlert(
+          message: "Please enter your comment",
+          title: "",
+          icon: Images.alertPopGIF);
       // showErrorMessage(message: "Please enter your comment");
     } else {
       context.read<ContactUsProvider>().contactUS(

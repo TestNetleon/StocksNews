@@ -1,7 +1,6 @@
 class Apis {
-  // static const baseUrl = "http://3.136.132.71/api/v1"; // live server old
-  // static const baseUrl = "http://3.21.111.44/api/v1"; // live server
-  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  static const baseUrl = "https://dev.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";

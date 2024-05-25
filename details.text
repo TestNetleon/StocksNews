@@ -142,3 +142,90 @@ Bitly App ID: Ao1seSO8XNS
 6. remove something went wrong on aap API
 7. contact us alert
 8. text in watchlist (remove text )
+
+
+
+++==========≠≠≠≠≠=====≠≠==============================
+
+
+
+dart
+Copy code
+// Define a model for tab data
+class TabData {
+  final String title;
+  final String slug;
+  
+  TabData({required this.title, required this.slug});
+}
+
+// Define a model for listing data
+class ListingData {
+  final List<dynamic> items; // Change dynamic to your actual data type
+  final int currentPage;
+  final bool hasMore;
+
+  ListingData({required this.items, required this.currentPage, required this.hasMore});
+}
+
+// Define a provider for tab data
+class TabProvider extends ChangeNotifier {
+  List<TabData> _tabs = [];
+
+  List<TabData> get tabs => _tabs;
+
+  void setTabs(List<TabData> tabs) {
+    _tabs = tabs;
+    notifyListeners();
+  }
+}
+
+// Define a provider for listing data
+class ListingProvider extends ChangeNotifier {
+  Map<String, ListingData> _listingData = {};
+
+  Map<String, ListingData> get listingData => _listingData;
+
+  void setListingData(String slug, ListingData data) {
+    _listingData[slug] = data;
+    notifyListeners();
+  }
+}
+Now, when you fetch the tabs data from the API, you can update the TabProvider with the fetched data:
+
+dart
+Copy code
+void fetchTabsData() {
+  // Fetch tabs data from API
+  // Example:
+  final tabs = // Fetch your tabs data
+  tabProvider.setTabs(tabs);
+}
+Similarly, when you fetch listing data for a specific tab, you can update the ListingProvider with the fetched data:
+
+dart
+Copy code
+void fetchListingData(String slug) {
+  // Fetch listing data for the given slug from API
+  // Example:
+  final listingData = // Fetch your listing data for the given slug
+  listingProvider.setListingData(slug, listingData);
+}
+In your UI, you can then listen to changes in these providers and update the UI accordingly:
+
+dart
+Copy code
+Consumer<TabProvider>(
+  builder: (context, tabProvider, _) {
+    final tabs = tabProvider.tabs;
+    // Build UI using tabs data
+  },
+)
+
+Consumer<ListingProvider>(
+  builder: (context, listingProvider, _) {
+    final listingData = listingProvider.listingData[/* current tab's slug */];
+    // Build UI using listing data
+  },
+)
+This way, each tab has its own provider to manage its specific data, and as you fetch more data, you update the state in the corresponding provider. This ensures that each tab's data is managed separately and can be updated independently.
