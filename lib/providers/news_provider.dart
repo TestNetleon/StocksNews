@@ -297,10 +297,10 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
 
   void tabChange(index, String? id) {
     selectedIndex = index;
+    notifyListeners();
     if (id == null) return;
     if (_newsData[id]?.data != null || _newsData[id]?.error != null) return;
-    notifyListeners();
-    getNewsData(id: id, index: index);
+    getNewsData(id: id);
   }
 
   Future getTabsData({showProgress = false}) async {
@@ -344,7 +344,9 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getNewsData(
-      {loadMore = false, refreshing = false, index, String? id}) async {
+      {loadMore = false,
+      refreshing = false,
+      String? id = "featured-news"}) async {
     if (_newsData[id]?.data == null || refreshing) {
       _newsData[id!] = TabsNewsHolder(
         currentPage: 1,

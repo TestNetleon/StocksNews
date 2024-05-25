@@ -14,7 +14,7 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -198,6 +198,8 @@ class _TabsState extends State<Tabs> {
       case 4:
         if (newsCatProvider.tabs == null) {
           newsCatProvider.getTabsData(showProgress: true);
+        } else {
+          newsCatProvider.tabChange(0, newsCatProvider.tabs![0].id);
         }
         break;
       case 5:

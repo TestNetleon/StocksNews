@@ -26,7 +26,6 @@ class StockInBuzz extends StatelessWidget {
             //   title: "Stock In Buzz",
             //   // subTitle: "Dynamic description for Stocks in Buss.",
             // ),
-
             // const SpacerVertical(height: 5),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -70,19 +69,41 @@ class StockInBuzz extends StatelessWidget {
             SizedBox(
               height: 100,
               child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return StockBuzzItem(
-                      symbol: popular?[index].symbol ?? "",
-                      up: (popular?[index].changesPercentage ?? -1) > 0,
-                      image: popular?[index].image ?? "",
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SpacerHorizontal(width: 15);
-                  },
-                  itemCount: 10),
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  // if (popular == null) {
+                  //   return ClipRRect(
+                  //     borderRadius: BorderRadius.circular(50),
+                  //     child: Container(
+                  //       padding: const EdgeInsets.all(20),
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //         gradient: const LinearGradient(
+                  //           begin: Alignment.topCenter,
+                  //           end: Alignment.bottomCenter,
+                  //           colors: [
+                  //             Color.fromARGB(255, 23, 23, 23),
+                  //             Color.fromARGB(255, 48, 48, 48),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       child: const SizedBox(height: 40, width: 40),
+                  //     ),
+                  //   );
+                  // }
+
+                  return StockBuzzItem(
+                    symbol: popular?[index].symbol ?? "",
+                    up: (popular?[index].changesPercentage ?? -1) > 0,
+                    image: popular?[index].image ?? "",
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SpacerHorizontal(width: 15);
+                },
+                itemCount: popular?.length ?? 5,
+              ),
             ),
           ],
         );

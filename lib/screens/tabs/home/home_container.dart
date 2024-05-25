@@ -21,33 +21,18 @@ class HomeContainer extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         provider.refreshData(null);
-        // provider.getHomeData();
-        // provider.getHomeNewData();
       },
       child: DefaultTextStyle(
         style: styleGeorgiaBold(),
-        child:
-            // UpgradeAlert(
-            //   upgrader: Upgrader(
-            //     // dialogStyle: UpgradeDialogStyle.cupertino,
-            //     showIgnore: false,
-            //     showLater: Platform.isIOS,
-            //     durationUntilAlertAgain: Duration.zero,
-            //   ),
-            //   child:
-            SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              // TextInputFieldSearchCommon(
-              //   hintText: "Search symbol, company name or news",
-              //   searching: context.watch<SearchProvider>().isLoading,
-              //   onChanged: (text) {},
+              // Visibility(
+              //   visible:
+              //       provider.homeSliderRes?.sliderPosts?.isNotEmpty ?? false,
+              //   child:
+              const HomeTopNewsSlider(),
               // ),
-              Visibility(
-                visible:
-                    provider.homeSliderRes?.sliderPosts?.isNotEmpty ?? false,
-                child: const HomeTopNewsSlider(),
-              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(
                   Dimen.padding.sp,
@@ -59,29 +44,30 @@ class HomeContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // if (provider.homeTrendingRes?.popular != null)
-                    HomePartialLoading(
-                      loading: provider.isLoadingTrending,
-                      error: provider.statusTrending != Status.ideal &&
-                              !provider.isLoadingTrending &&
-                              provider.homeTrendingRes == null
-                          ? HomeError.stockBuzz
-                          : null,
-                      onRefresh: provider.refreshWithCheck,
-                      child: const StockInBuzz(),
-                    ),
-                    // if (provider.homeAlertData != null)
-                    HomePartialLoading(
-                      loading: provider.isLoadingHomeAlert,
-                      error: provider.statusHomeAlert != Status.ideal &&
-                              !provider.isLoadingHomeAlert &&
-                              provider.homeAlertData == null
-                          ? HomeError.homeAlert
-                          : null,
-                      onRefresh: provider.refreshWithCheck,
-                      child: const HomeMyAlerts(),
-                    ),
-                    // if (provider.homeTrendingRes != null)
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingTrending,
+                    //   error: provider.statusTrending != Status.ideal &&
+                    //           !provider.isLoadingTrending &&
+                    //           provider.homeTrendingRes == null
+                    //       ? HomeError.stockBuzz
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child:
+                    const StockInBuzz(),
+                    // ),
+
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingHomeAlert,
+                    //   error: provider.statusHomeAlert != Status.ideal &&
+                    //           !provider.isLoadingHomeAlert &&
+                    //           provider.homeAlertData == null
+                    //       ? HomeError.homeAlert
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child:
+                    const HomeMyAlerts(),
+                    // ),
+
                     HomePartialLoading(
                       loading: provider.isLoadingTrending,
                       error: provider.statusTrending != Status.ideal &&
@@ -154,7 +140,6 @@ class HomeContainer extends StatelessWidget {
             ],
           ),
         ),
-        // ),
       ),
     );
   }

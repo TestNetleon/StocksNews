@@ -36,7 +36,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
   @override
   Widget build(BuildContext context) {
     List<SliderPost>? sliderPosts =
-        context.read<HomeProvider>().homeSliderRes?.sliderPosts;
+        context.watch<HomeProvider>().homeSliderRes?.sliderPosts;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -136,80 +136,81 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                 ),
               ],
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: imageHeight,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                pauseAutoPlayOnTouch: true,
-                viewportFraction: 1,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                onPageChanged: (index, reason) {
-                  _activeIndex = index;
-                  setState(() {});
-                },
-              ),
-              items: sliderPosts?.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return GestureDetector(
-                      onTap: () => _newsDetail(slug: i.slug),
-                      // onTap: () => openUrl(i.url),
-                      child: Container(
-                        width: constraints.maxWidth,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.sp, vertical: 10.sp),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              i.title ?? "",
-                              style: styleGeorgiaBold(fontSize: 25),
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SpacerVertical(height: 10),
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 3.sp),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Visibility(
-                                    visible: i.authors != null &&
-                                        i.authors?.isNotEmpty == true,
-                                    child: Text(
-                                      "By ",
-                                      style: styleGeorgiaRegular(
-                                          color: ThemeColors.greyText,
-                                          fontSize: 13),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: NewsDetailAuthorA(
-                                      type: BlogsType.author,
-                                      title: "Author: ",
-                                      data: i.authors,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              i.publishedDate ?? "",
-                              style: styleGeorgiaRegular(
-                                  color: ThemeColors.greyText, fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+            if (sliderPosts != null)
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: imageHeight,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  pauseAutoPlayOnTouch: true,
+                  viewportFraction: 1,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  onPageChanged: (index, reason) {
+                    _activeIndex = index;
+                    setState(() {});
                   },
-                );
-              }).toList(),
-            ),
+                ),
+                items: sliderPosts?.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return GestureDetector(
+                        onTap: () => _newsDetail(slug: i.slug),
+                        // onTap: () => openUrl(i.url),
+                        child: Container(
+                          width: constraints.maxWidth,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 15.sp, vertical: 10.sp),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                i.title ?? "",
+                                style: styleGeorgiaBold(fontSize: 25),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SpacerVertical(height: 10),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 3.sp),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Visibility(
+                                      visible: i.authors != null &&
+                                          i.authors?.isNotEmpty == true,
+                                      child: Text(
+                                        "By ",
+                                        style: styleGeorgiaRegular(
+                                            color: ThemeColors.greyText,
+                                            fontSize: 13),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: NewsDetailAuthorA(
+                                        type: BlogsType.author,
+                                        title: "Author: ",
+                                        data: i.authors,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                i.publishedDate ?? "",
+                                style: styleGeorgiaRegular(
+                                    color: ThemeColors.greyText, fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
             Positioned(
               bottom: 5.sp,
               child: AnimatedSmoothIndicator(
