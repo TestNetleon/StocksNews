@@ -152,7 +152,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                     setState(() {});
                   },
                 ),
-                items: sliderPosts?.map((i) {
+                items: sliderPosts.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
                       return GestureDetector(

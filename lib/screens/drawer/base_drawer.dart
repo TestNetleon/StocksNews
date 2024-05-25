@@ -12,6 +12,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
@@ -255,7 +256,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                         () {
                                       Scaffold.of(context).closeDrawer();
                                     });
-                                    loginSheet(dontPop: 'true');
+                                    isPhone
+                                        ? loginSheet(dontPop: 'true')
+                                        : loginSheetTablet(dontPop: 'true');
                                     // Navigator.push(
                                     //     context,
                                     //     createRoute(const Login(

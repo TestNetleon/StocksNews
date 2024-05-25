@@ -62,7 +62,7 @@ class CompareStocksContainer extends StatelessWidget {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ScreenTitle(title: "Compare Stocks"),
+                    const ScreenTitle(title: "Compare Stocks"),
                     Expanded(
                       child: LoginError(
                         state: "compare",

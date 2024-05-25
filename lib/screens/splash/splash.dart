@@ -34,10 +34,19 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    getWelcomeData();
+    _callAPI();
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
+  }
+
+  void _callAPI() async {
+    bool firstTime = // kDebugMode ? true :
+        await Preference.getFirstTime();
+    log("--First Time $firstTime");
+    if (firstTime) {
+      getWelcomeData();
+    }
   }
 
   void _getDeviceType() async {

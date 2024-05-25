@@ -28,6 +28,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 import 'package:vibration/vibration.dart';
 
+import '../drawer/base_drawer.dart';
 import '../drawer/base_drawer_copy.dart';
 
 class Tabs extends StatefulWidget {

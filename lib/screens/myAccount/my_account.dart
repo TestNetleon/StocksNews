@@ -37,7 +37,7 @@ class MyAccount extends StatelessWidget {
             child: provider.user == null
                 ? Column(
                     children: [
-                      ScreenTitle(title: "My Profile"),
+                      const ScreenTitle(title: "My Profile"),
                       Expanded(child: LoginError(
                         onClick: () async {
                           isPhone

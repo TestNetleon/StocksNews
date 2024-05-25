@@ -243,7 +243,7 @@ class StockDetailsBase extends StatelessWidget {
               child: const AddToAlertWatchlist(),
             ),
           ),
-        )
+        ),
       ],
     );
   }

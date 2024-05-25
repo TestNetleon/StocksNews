@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../../../utils/colors.dart';
+import '../../drawer/base_drawer.dart';
 import 'item.dart';
 
 //
