@@ -8,7 +8,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:upgrader/upgrader.dart';
 import 'widgets/home_inner_tabs.dart';
-import 'widgets/inFocus/stocks_focus.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
 

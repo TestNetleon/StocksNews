@@ -8,6 +8,8 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/contact_us_provider.dart';
+import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
@@ -25,6 +27,7 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 //
@@ -34,6 +37,7 @@ import 'package:provider/provider.dart';
 
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
+import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/createAccount/create_account.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
@@ -336,6 +340,11 @@ class Routes {
       ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
       ChangeNotifierProvider(create: (_) => IndicesProvider()),
       ChangeNotifierProvider(create: (_) => MostActiveProvider()),
+      ChangeNotifierProvider(create: (_) => WhatWeDoProvider()),
+
+      ChangeNotifierProvider(create: (_) => TermsAndPolicyProvider()),
+      ChangeNotifierProvider(create: (_) => ContactUsProvider()),
+      ChangeNotifierProvider(create: (_) => FaqProvide()),
 
       // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(

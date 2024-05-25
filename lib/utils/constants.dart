@@ -51,9 +51,12 @@ class Images {
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
+
   static const String discussedGIF = "assets/images/most_discussed.gif";
   static const String newsGIT = "assets/images/news.gif";
-  static const String bearBullGIF = "assets/images/bull_bear.gif";
+  // static const String bearBullGIF = "assets/images/bull_bear.gif";
+  static const String bearBullGIF = "assets/images/animation_bull_bear.json";
+
   static const String alertBellGIF = "assets/images/alert_bell.gif";
   static const String progressGIF = "assets/images/progress.gif";
   static const String alertTickGIF = "assets/images/alert_tick.gif";

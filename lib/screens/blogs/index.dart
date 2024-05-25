@@ -6,6 +6,7 @@ import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/screens/blogs/container.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class Blog extends StatefulWidget {
   final BlogsType type;
@@ -83,10 +84,18 @@ class _IndexBlogState extends State<IndexBlog> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _callAPi();
+    });
+  }
+
+  _callAPi() {
+    BlogProvider provider = context.read<BlogProvider>();
+    Utils().showLog(" Blog Data ->${provider.blogData == null}");
+    if (provider.blogData == null || provider.blogData?.isEmpty == true) {
       context
           .read<BlogProvider>()
           .getData(showProgress: true, type: BlogsType.blog);
-    });
+    }
   }
 
   @override

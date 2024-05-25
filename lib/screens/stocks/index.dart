@@ -18,15 +18,19 @@ class _StocksIndexState extends State<StocksIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<AllStocksProvider>().getData(
-            showProgress: true,
-            inAppMsgId: widget.inAppMsgId,
-          );
+      _callAPi();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stocks"},
       );
     });
+  }
+
+  _callAPi() {
+    AllStocksProvider provider = context.read<AllStocksProvider>();
+    if (provider.data == null || provider.data?.isEmpty == true) {
+      provider.getData(showProgress: true, inAppMsgId: widget.inAppMsgId);
+    }
   }
 
 //

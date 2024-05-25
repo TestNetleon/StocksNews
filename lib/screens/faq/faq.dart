@@ -22,8 +22,15 @@ class _FAQBaseState extends State<FAQBase> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FaqProvide>().getFAQs();
+      _callApi();
     });
+  }
+
+  _callApi() {
+    FaqProvide provider = context.read<FaqProvide>();
+    if (provider.data == null || provider.data?.isEmpty == true) {
+      context.read<FaqProvide>().getFAQs();
+    }
   }
 
   @override

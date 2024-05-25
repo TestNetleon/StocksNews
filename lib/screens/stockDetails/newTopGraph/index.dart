@@ -78,6 +78,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                         setState(() {});
                         provider.getStockGraphData(
                           clearData: false,
+                          showProgress: false,
                           symbol: provider.data?.keyStats?.symbol ?? "",
                           range: range?[_selectedIndex] ?? "1H",
                         );

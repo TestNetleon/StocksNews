@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/contact_us_provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -16,13 +15,7 @@ class ContactUs extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: TermsAndPolicyProvider(),
-      child: ChangeNotifierProvider.value(
-        value: ContactUsProvider(),
-        child: const ContactUsBase(),
-      ),
-    );
+    return const ContactUsBase();
   }
 }
 

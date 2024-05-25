@@ -46,7 +46,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
     if (selectedIndex != index) {
       selectedIndex = index;
       notifyListeners();
-      getWhatWeDOData(slug: _data?[index].slug, showProgress: true);
+      getWhatWeDOData(slug: _data?[index].slug, showProgress: false);
     }
   }
 

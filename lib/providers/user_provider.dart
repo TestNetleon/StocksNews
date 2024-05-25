@@ -189,11 +189,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           if (state == "compare") {
             await compareProvider.getCompareStock();
           } else if (state == "alert") {
-            await alertProvider.getAlerts(showProgress: true);
+            await alertProvider.getAlerts(showProgress: false);
           } else if (state == "watchList") {
-            await watchlistProvider.getData(showProgress: true);
+            await watchlistProvider.getData(showProgress: false);
           } else if (state == "notification") {
-            await notificationProvider.getData(showProgress: true);
+            await notificationProvider.getData(showProgress: false);
           }
         } else {
           // kDebugMode ? Preference.setFirstTime(true) : null;
@@ -250,11 +250,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           if (state == "compare") {
             await compareProvider.getCompareStock();
           } else if (state == "alert") {
-            await alertProvider.getAlerts(showProgress: true);
+            await alertProvider.getAlerts(showProgress: false);
           } else if (state == "watchList") {
-            await watchlistProvider.getData(showProgress: true);
+            await watchlistProvider.getData(showProgress: false);
           } else if (state == "notification") {
-            await notificationProvider.getData(showProgress: true);
+            await notificationProvider.getData(showProgress: false);
           }
         } else {
           // kDebugMode ? Preference.setFirstTime(true) : null;
@@ -428,11 +428,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           if (state == "compare") {
             await compareProvider.getCompareStock();
           } else if (state == "alert") {
-            await alertProvider.getAlerts(showProgress: true);
+            await alertProvider.getAlerts(showProgress: false);
           } else if (state == "watchList") {
-            await watchlistProvider.getData(showProgress: true);
+            await watchlistProvider.getData(showProgress: false);
           } else if (state == "notification") {
-            await notificationProvider.getData(showProgress: true);
+            await notificationProvider.getData(showProgress: false);
           }
 
           // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
