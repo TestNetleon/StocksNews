@@ -93,7 +93,7 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
 
                             error: whatWeDoHolder?.error,
                             hasData: whatWeDoHolder?.data != null,
-                            isLoading: whatWeDoHolder?.loading ?? false,
+                            isLoading: whatWeDoHolder?.loading ?? true,
 
                             errorDispCommon: true,
                             showPreparingText: true,

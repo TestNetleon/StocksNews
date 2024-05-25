@@ -36,9 +36,10 @@ class _ContactUsItemState extends State<ContactUsItem> {
     closeKeyboard();
     if (!isName(name.text)) {
       popUpAlert(
-          message: "Please enter valid name",
-          title: "Alert",
-          icon: Images.alertPopGIF);
+        message: "Please enter valid name",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
 
       // showErrorMessage(message: "Please enter valid name");
     } else if (!isEmail(email.text) || email.text.isEmpty) {
