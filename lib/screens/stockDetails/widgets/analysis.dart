@@ -9,7 +9,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -17,43 +17,71 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../widgets/theme_image_view.dart';
 
 //
-class Analysis extends StatelessWidget {
-  const Analysis({super.key});
+class Analysis extends StatefulWidget {
+  final String symbol;
+  const Analysis({super.key, required this.symbol});
+
+  @override
+  State<Analysis> createState() => _AnalysisState();
+}
+
+class _AnalysisState extends State<Analysis> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getData();
+    });
+  }
+
+  _getData() {
+    StockDetailProvider provider = context.read<StockDetailProvider>();
+    if (provider.analysisRes == null) {
+      provider.analysisData(symbol: widget.symbol);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
 
-    return Column(
-      children: [
-        ScreenTitle(
-          // title: "Stock Analysis",
-          subTitle: provider.analysisRes?.text,
-        ),
-        provider.analysisLoading && provider.analysisRes == null
-            ? const Loading(text: 'Fetching stock analysis data...')
-            //  Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       const CircularProgressIndicator(
-            //         color: ThemeColors.accent,
-            //       ),
-            //       const SpacerHorizontal(width: 5),
-            //       Flexible(
-            //         child: Text(
-            //           "Fetching stock analysis data...",
-            //           style: stylePTSansRegular(color: ThemeColors.accent),
-            //         ),
-            //       ),
-            //     ],
-            //   )
-            : provider.data != null
-                ? const AlalysisBase()
-                : Text(
-                    "No analysis data found",
-                    style: stylePTSansBold(),
-                  ),
-      ],
+    return BaseUiContainer(
+      isLoading: provider.analysisLoading && provider.analysisRes == null,
+      hasData: !provider.analysisLoading && provider.analysisRes != null,
+      showPreparingText: true,
+      child: Column(
+        children: [
+          ScreenTitle(
+            // title: "Stock Analysis",
+            subTitle: provider.analysisRes?.text,
+          ),
+          const AlalysisBase(),
+
+          // provider.analysisLoading && provider.analysisRes == null
+          //     ? const Loading(text: 'Fetching stock analysis data...')
+          //     //  Row(
+          //     //     mainAxisAlignment: MainAxisAlignment.center,
+          //     //     children: [
+          //     //       const CircularProgressIndicator(
+          //     //         color: ThemeColors.accent,
+          //     //       ),
+          //     //       const SpacerHorizontal(width: 5),
+          //     //       Flexible(
+          //     //         child: Text(
+          //     //           "Fetching stock analysis data...",
+          //     //           style: stylePTSansRegular(color: ThemeColors.accent),
+          //     //         ),
+          //     //       ),
+          //     //     ],
+          //     //   )
+          //     : provider.data != null
+          //         ? const AlalysisBase()
+          //         : Text(
+          //             "No analysis data found",
+          //             style: stylePTSansBold(),
+          //           ),
+        ],
+      ),
     );
   }
 }

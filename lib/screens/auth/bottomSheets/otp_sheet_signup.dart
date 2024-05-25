@@ -188,9 +188,12 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // const SpacerVertical(height: 50),
-                Text(
-                  "OTP VERIFICATION",
-                  style: stylePTSansBold(fontSize: 22),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "OTP VERIFICATION",
+                    style: stylePTSansBold(fontSize: 22),
+                  ),
                 ),
                 const SpacerVertical(height: 8),
                 // Text(

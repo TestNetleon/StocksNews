@@ -124,7 +124,7 @@ class HomeError {
   static const trending = "Trending is $unavailable";
   static const gainers = "Top Gainers are $unavailable";
   static const ipo = "IPO data is $unavailable";
-  static const stockBuzz = "Stock in Buzz data is $unavailable";
+  static const stockBuzz = "Stock in Popular data is $unavailable";
   static const homeAlert = "Alert data is $unavailable";
 
   static const loosers = "Top Losers are $unavailable";

@@ -89,9 +89,12 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SpacerVertical(height: 50),
-            Text(
-              "OTP VERIFICATION",
-              style: stylePTSansBold(fontSize: 22),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "OTP VERIFICATION",
+                style: stylePTSansBold(fontSize: 22),
+              ),
             ),
             const SpacerVertical(height: 8),
             Text(

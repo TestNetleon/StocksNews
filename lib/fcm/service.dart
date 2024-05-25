@@ -226,30 +226,41 @@ class FirebaseApi {
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
     FirebaseMessaging.onMessage.listen((message) async {
-      Utils().showLog("on Message called ==>${message.data}");
+      Utils().showLog("on Message called ==> data ${message.data}");
+      Utils().showLog(
+          "on Message called ==> Notification ${message.notification}");
 
+      try {
+        Utils()
+            .showLog("on Message called ==> !!! ${message.data["in_app_msg"]}");
+      } catch (e) {
+        print(e.toString());
+      }
+
+      // bool inAppMsg = message.data["in_app_msg"] ?? false;
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
 
-      bool inAppMsg = message.data["in_app_msg"] ?? false;
-
-      if (inAppMsg) {
+      Utils().showLog("on Message called ==> 000");
+      if (message.data["in_app_msg"] == true ||
+          message.data["in_app_msg"] == 'true') {
+        Utils().showLog("on Message called ==> 1");
         if (isAppInForeground) {
-          provider.updateInAppMsgStatus();
+          Utils().showLog("on Message called ==> 2");
+          provider.updateInAppMsgStatus(message.data["_id"]);
           checkForInAppMessage(
             InAppNotification(
-              id: message.data["id"],
+              id: message.data["_id"],
               title: message.data["title"],
               description: message.data["description"],
               image: message.data["image"],
-              popupType: message.data["popupType"],
-              redirectOn: message.data["redirectOn"],
+              popupType: message.data["popup_type"],
+              redirectOn: message.data["redirect_on"],
               slug: message.data["slug"],
             ),
           );
         }
         return;
       }
-
       provider.setNotification(false);
 
       final data = message.data;

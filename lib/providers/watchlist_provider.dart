@@ -150,7 +150,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.addWatchlist,
         request: request,
-        showProgress: true,
+        showProgress: false,
       );
       if (response.status) {
         await _player.play(AssetSource(AudioFiles.alertWeathlist));

@@ -21,6 +21,7 @@ class InAppMsgDialogBase extends StatelessWidget {
       child: Stack(
         children: [
           Container(
+            width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mentions.dar
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_stories.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mention_with.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import '../../utils/colors.dart';
@@ -25,7 +25,9 @@ import 'widgets/technicalAnalysis/index.dart';
 
 //
 class StockDetailsBase extends StatelessWidget {
-  const StockDetailsBase({super.key});
+  final String symbol;
+  final String? inAppMsgId;
+  const StockDetailsBase({super.key, required this.symbol, this.inAppMsgId});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,6 @@ class StockDetailsBase extends StatelessWidget {
             "Company Earnings",
             "Key Stats",
             "Stock Score/Grades",
-            // "Company Brief",
             "Stock Analysis",
             "Analysis Forecast",
             "Technical Analysis",
@@ -56,33 +57,54 @@ class StockDetailsBase extends StatelessWidget {
             "Popular Stocks",
           ],
           widgets: [
-            StockDetailsTabContainer(
-              content: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Dimen.padding.sp,
-                      right: Dimen.padding.sp,
-                    ),
-                    child: const StockTopDetail(),
+            BaseUiContainer(
+              hasData: !provider.isLoading &&
+                  !provider.isLoadingGraph &&
+                  provider.data != null &&
+                  (provider.graphChart != null &&
+                      provider.graphChart?.isNotEmpty == true),
+              isLoading: provider.isLoading || provider.isLoadingGraph,
+              error: provider.data != null
+                  ? provider.error
+                  : (provider.graphChart != null &&
+                          provider.graphChart?.isNotEmpty == true)
+                      ? provider.graphError
+                      : null,
+              showPreparingText: true,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  provider.getStockDetails(symbol: symbol);
+                  provider.getStockGraphData(symbol: symbol);
+                },
+                child: StockDetailsTabContainer(
+                  content: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: Dimen.padding.sp,
+                          right: Dimen.padding.sp,
+                        ),
+                        child: StockTopDetail(symbol: symbol),
+                      ),
+                      // StockDetailTopGraph(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 8.sp,
+                          right: 8.sp,
+                        ),
+                        child: NewTopGraphIndex(symbol: symbol),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: Dimen.padding.sp,
+                          right: Dimen.padding.sp,
+                        ),
+                        child: const CompanyBrief(),
+                      ),
+                      // SpacerVertical(height: 90),
+                    ],
                   ),
-                  // StockDetailTopGraph(),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 8.sp,
-                      right: 8.sp,
-                    ),
-                    child: const NewTopGraphIndex(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Dimen.padding.sp,
-                      right: Dimen.padding.sp,
-                    ),
-                    child: const CompanyBrief(),
-                  ),
-                  // SpacerVertical(height: 90),
-                ],
+                ),
               ),
             ),
             Padding(
@@ -90,8 +112,11 @@ class StockDetailsBase extends StatelessWidget {
                 left: Dimen.padding.sp,
                 right: Dimen.padding.sp,
               ),
-              child: const StockDetailsTabContainer(
-                content: CompanyEarningStockDetail(),
+              child: StockDetailsTabContainer(
+                content: CompanyEarningStockDetail(
+                  symbol: symbol,
+                  inAppMsgId: inAppMsgId,
+                ),
               ),
             ),
             Padding(
@@ -117,8 +142,8 @@ class StockDetailsBase extends StatelessWidget {
                 left: Dimen.padding.sp,
                 right: Dimen.padding.sp,
               ),
-              child: const StockDetailsTabContainer(
-                content: Analysis(),
+              child: StockDetailsTabContainer(
+                content: Analysis(symbol: symbol),
               ),
             ),
             Padding(
@@ -140,8 +165,10 @@ class StockDetailsBase extends StatelessWidget {
                 left: Dimen.padding.sp,
                 right: Dimen.padding.sp,
               ),
-              child: const StockDetailsTabContainer(
-                content: StocksTechnicalAnalysis(),
+              child: StockDetailsTabContainer(
+                content: StocksTechnicalAnalysis(
+                  symbol: symbol,
+                ),
               ),
             ),
             Padding(
@@ -185,25 +212,28 @@ class StockDetailsBase extends StatelessWidget {
             ),
           ],
         ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              // border: Border.all(color: ThemeColors.greyBorder),
-              border: const Border(
-                top: BorderSide(color: ThemeColors.greyBorder),
-              ),
-              color: ThemeColors.background.withOpacity(0.8),
+        Visibility(
+          visible: !provider.isLoading && !provider.isLoadingGraph,
+          child: Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                // border: Border.all(color: ThemeColors.greyBorder),
+                border: const Border(
+                  top: BorderSide(color: ThemeColors.greyBorder),
+                ),
+                color: ThemeColors.background.withOpacity(0.8),
 
-              // borderRadius: BorderRadius.only(
-              // topLeft: Radius.circular(5.sp),
-              // topRight: Radius.circular(5.sp),
-              // ),
+                // borderRadius: BorderRadius.only(
+                // topLeft: Radius.circular(5.sp),
+                // topRight: Radius.circular(5.sp),
+                // ),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10.sp),
+              child: const AddToAlertWatchlist(),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 10.sp),
-            child: const AddToAlertWatchlist(),
           ),
         )
       ],

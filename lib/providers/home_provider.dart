@@ -21,7 +21,6 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/widgets/app_update_content.dart';
 
@@ -29,7 +28,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
   String? _error;
 //
-
   Status _statusSlider = Status.ideal;
   Status get statusSlider => _statusSlider;
 
@@ -123,11 +121,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future refreshData(String? inAppMsgId) async {
-    await getHomeSlider();
+    getHomeSlider();
     // getIpoData();
     // getStockInFocus();
-    await getHomeTrendingData();
-    await getHomeAlerts();
+    getHomeTrendingData();
+    getHomeAlerts();
     // getHomeSentimentData();
     // getHomeInsiderData(inAppMsgId);
   }
@@ -157,7 +155,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getHomeSlider() async {
-    showGlobalProgressDialog();
+    // showGlobalProgressDialog();
 
     _statusSlider = Status.loading;
     notifyListeners();
@@ -257,7 +255,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     }
-    closeGlobalProgressDialog();
+    // closeGlobalProgressDialog();
   }
 
   Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
@@ -422,6 +420,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // String versionName = packageInfo.version;
     String buildCode = packageInfo.buildNumber;
 
+    log("*************** AVC ******************* ${extra.iOSBuildCode} == $buildCode");
+
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
       _showUpdateDialog(extra);
@@ -481,7 +481,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     );
   }
 
-  Future updateInAppMsgStatus() async {
+  Future updateInAppMsgStatus(id) async {
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     String? fcmToken = await Preference.getFcmToken();
@@ -489,9 +489,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       Map request = {
         "token": provider.user?.token ?? "",
         "fcmToken": fcmToken,
+        "id": id,
       };
       await apiRequest(
-        url: "Apis.inAppCountUpdate",
+        url: Apis.updateInAppCount,
         request: request,
         showProgress: false,
       );

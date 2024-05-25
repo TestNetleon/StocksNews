@@ -9,7 +9,7 @@ class BaseUiContainer extends StatelessWidget {
   const BaseUiContainer({
     required this.child,
     required this.hasData,
-    required this.error,
+    this.error,
     required this.isLoading,
     this.errorDispCommon = false,
     this.showPreparingText = false,

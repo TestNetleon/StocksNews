@@ -12,6 +12,7 @@ import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
@@ -119,6 +120,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           MaterialPageRoute(
               builder: (context) => StockDetails(symbol: slugForTicker)));
     } else if (type == "dashboard") {
+      if (_appLifecycleState == null) {
+        //
+      } else {
+        Navigator.pushNamed(context, Tabs.path);
+      }
       Utils().showLog("--goto dashboard---");
     } else {
       Navigator.push(
