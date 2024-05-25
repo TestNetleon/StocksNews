@@ -208,7 +208,7 @@ class TabsWhatWeDoHolder {
 
   TabsWhatWeDoHolder({
     this.data,
-    this.loading = false,
+    this.loading = true,
     this.error,
   });
 }
