@@ -26,11 +26,12 @@ class InAppMsgDialogBase extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
             ),
-            margin: EdgeInsets.all(8.sp),
+            margin: EdgeInsets.symmetric(horizontal: 8.sp, vertical: 36.sp),
             child: child,
           ),
           Positioned(
             right: 0,
+            left: 0,
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Container(

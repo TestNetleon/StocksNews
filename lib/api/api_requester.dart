@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
+import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -47,6 +48,7 @@ Future<ApiResponse> apiRequest({
   optionalParent = false,
   Duration timeoutDuration = const Duration(seconds: 40),
 }) async {
+  isServerError = false;
   Map<String, String> headers = getHeaders();
   if (header != null) {
     headers.addAll(header);
@@ -123,12 +125,13 @@ Future<ApiResponse> apiRequest({
     } else if (response.statusCode == 429 || response.statusCode == 500) {
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
-      // Timer(const Duration(milliseconds: 200), () {
-      //   Navigator.popUntil(
-      //       navigatorKey.currentContext!, (route) => route.isFirst);
-      //   Navigator.pushNamed(
-      //       navigatorKey.currentContext!, ServerErrorWidget.path);
-      // });
+      Timer(const Duration(milliseconds: 200), () {
+        isServerError = true;
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushNamed(
+            navigatorKey.currentContext!, ServerErrorWidget.path);
+      });
       return ApiResponse(
         status: false,
         message: Const.errSomethingWrong,
