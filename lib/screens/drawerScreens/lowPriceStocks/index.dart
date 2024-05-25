@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/low_price_stocks_tab.dart';
@@ -97,12 +100,12 @@ class LowPriceStocksData extends StatelessWidget {
       isLoading: provider.isLoading,
       showPreparingText: true,
       onRefresh: () {
-        provider.getLowPriceData(showProgress: false);
+        provider.getLowPriceData();
       },
-      child: RefreshIndicator(
-        onRefresh: () async {
-          provider.getLowPriceData(showProgress: false);
-        },
+      child: RefreshControl(
+        onRefresh: () async => provider.getLowPriceData(),
+        canLoadMore: provider.canLoadMore,
+        onLoadMore: () async => provider.getLowPriceData(loadMore: true),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(

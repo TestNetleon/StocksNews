@@ -177,7 +177,7 @@ class MostActiveItem extends StatelessWidget {
                     visible: data.volatility != null,
                     child: InnerRowItem(
                       lable: "Volatility",
-                      value: "${data.volatility}",
+                      value: "${data.volatility}%",
                     ),
                   ),
                   Visibility(
@@ -190,6 +190,7 @@ class MostActiveItem extends StatelessWidget {
                   Visibility(
                     visible: data.volumeGrowth != null,
                     child: InnerRowItem(
+                      valueColor: ThemeColors.accent,
                       lable: "Volume Growth",
                       value: "(${data.volumeGrowth})%",
                     ),

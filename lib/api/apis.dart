@@ -21,6 +21,8 @@ class Apis {
   static const whatWeDo = "/what-we-do";
   static const lowPricesTab = "/low-priced-stocks";
   static const lowPricesStocks = "/low-priced-stocks-under";
+  static const saleOnStocks = "/stocks-on-sale";
+
   static const highPE = "/high-pe-ratio-stocks";
   static const lowPE = "/low-pe-ratio-stocks";
   static const fiftyTwoWeekHigh = "/week-highs";

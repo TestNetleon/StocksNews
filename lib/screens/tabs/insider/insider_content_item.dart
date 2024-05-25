@@ -258,6 +258,7 @@ class InsiderContentItem extends StatelessWidget {
 }
 
 class InnerRowItem extends StatelessWidget {
+  final dynamic valueColor;
   final String lable;
   final String? value;
   final String? subLabel;
@@ -270,6 +271,7 @@ class InnerRowItem extends StatelessWidget {
     this.onDetailsClick,
     this.subLabel,
     this.subValue,
+    this.valueColor,
     super.key,
   });
 
@@ -288,7 +290,9 @@ class InnerRowItem extends StatelessWidget {
                   Flexible(
                     child: onDetailsClick == null
                         ? Text(value ?? '',
-                            style: stylePTSansBold(fontSize: 14))
+                            style: stylePTSansBold(
+                                fontSize: 14,
+                                color: valueColor ?? Colors.white))
                         : InkWell(
                             onTap: onDetailsClick,
                             child: Text(
