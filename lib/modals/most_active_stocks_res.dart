@@ -62,7 +62,7 @@ class MostActiveStocksRes {
         dayLow: json["dayLow"],
         dayHigh: json["dayHigh"],
         volatility: json["volatility"],
-        volumeGrowth: json["dayHigh"],
+        volumeGrowth: json["volumeGrowth"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,6 +80,6 @@ class MostActiveStocksRes {
         "dayLow": dayLow,
         "dayHigh": dayHigh,
         "volatility": volatility,
-        "Volume_growth": volumeGrowth,
+        "volumeGrowth": volumeGrowth,
       };
 }

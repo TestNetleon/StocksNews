@@ -97,7 +97,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
 
   Future getData() async {
     setStatus(Status.loading);
-    trendingIndustriesGraphData();
+    // trendingIndustriesGraphData(); //FewMinutes
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     try {

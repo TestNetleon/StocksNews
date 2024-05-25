@@ -181,17 +181,17 @@ class MostActiveItem extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: data.dayLow != null,
+                    visible: data.intradayRange != null,
                     child: InnerRowItem(
                       lable: "Intraday Range",
-                      value: "${data.dayLow}-${data.dayHigh}",
+                      value: "${data.intradayRange}",
                     ),
                   ),
                   Visibility(
                     visible: data.volumeGrowth != null,
                     child: InnerRowItem(
                       lable: "Volume Growth",
-                      value: "${data.volumeGrowth}",
+                      value: "(${data.volumeGrowth})%",
                     ),
                   ),
                   Visibility(

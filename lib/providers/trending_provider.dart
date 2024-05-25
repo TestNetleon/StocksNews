@@ -182,7 +182,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
 
   Future refreshData() async {
     getMostBullish();
-    getTrendingStories();
+    // getTrendingStories();FewMinutes
   }
 
   Future refreshWithCheck() async {
@@ -207,6 +207,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
+
       ApiResponse response = await apiRequest(
         url: Apis.trendingBullish,
         request: request,
@@ -220,7 +221,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
         // } else {
         //   getMostBearish();
         // }
-        getMostBearish();
+        // getMostBearish();FewMinutes
       } else {
         _mostBullish = null;
       }
