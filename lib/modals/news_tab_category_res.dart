@@ -38,7 +38,7 @@ class TabsNewsHolder {
   TabsNewsHolder({
     this.data,
     this.currentPage = 1,
-    this.loading = false,
+    this.loading = true,
     this.error,
   });
 }
