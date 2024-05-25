@@ -77,15 +77,13 @@ class _WatchListState extends State<WatchList> {
             userProvider.user == null
                 ? Expanded(
                     child: LoginError(
-                    state: "watchList",
-                    onClick: () async {
-                      isPhone
-                          ? await loginSheet(dontPop: "true")
-                          : await loginSheetTablet(dontPop: "true");
-
-                      await _getData();
-                    },
-                  ))
+                      state: "watchList",
+                      onClick: () async {
+                        isPhone ? await loginSheet() : await loginSheetTablet();
+                        await _getData();
+                      },
+                    ),
+                  )
                 : Expanded(
                     child: BaseUiContainer(
                       isLoading: provider.isLoading && provider.data == null,

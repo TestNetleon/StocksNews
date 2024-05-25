@@ -343,8 +343,12 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     await getNewsData(loadMore: true, id: _tabs?[selectedIndex].id);
   }
 
-  Future getNewsData(
-      {loadMore = false, refreshing = false, index, String? id}) async {
+  Future getNewsData({
+    loadMore = false,
+    refreshing = false,
+    index,
+    String? id,
+  }) async {
     if (_newsData[id]?.data == null || refreshing) {
       _newsData[id!] = TabsNewsHolder(
         currentPage: 1,

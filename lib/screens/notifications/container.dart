@@ -5,6 +5,7 @@ import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/notifications/item.dart';
@@ -17,6 +18,8 @@ import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+
+import '../auth/bottomSheets/login_sheet.dart';
 
 class NotificationsContainer extends StatefulWidget {
   static const String path = "Notifications";
@@ -34,13 +37,17 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       UserRes? res = context.read<UserProvider>().user;
       if (res != null) {
-        context.read<NotificationProvider>().getData(showProgress: false);
+        _callAPi();
       }
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Notifications"},
       );
     });
+  }
+
+  Future _callAPi() async {
+    context.read<NotificationProvider>().getData(showProgress: false);
   }
 
   @override
@@ -63,11 +70,17 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
             const ScreenTitle(title: "Notifications"),
             Expanded(
               child: res == null
-                  ? const Column(
+                  ? Column(
                       children: [
                         Expanded(
                             child: LoginError(
                           state: "notification",
+                          onClick: () async {
+                            isPhone
+                                ? await loginSheet()
+                                : await loginSheetTablet();
+                            _callAPi();
+                          },
                         ))
                       ],
                     )

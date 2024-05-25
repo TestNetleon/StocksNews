@@ -15,6 +15,9 @@ import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../auth/bottomSheets/login_sheet.dart';
+import '../../auth/bottomSheets/login_sheet_tablet.dart';
+
 class CompareStocksContainer extends StatelessWidget {
   const CompareStocksContainer({super.key});
 
@@ -56,12 +59,21 @@ class CompareStocksContainer extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: () => provider.getCompareStock(),
           child: userProvider.user == null
-              ? const Column(
+              ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ScreenTitle(title: "Compare Stocks"),
                     Expanded(
-                      child: LoginError(state: "compare"),
+                      child: LoginError(
+                        state: "compare",
+                        onClick: () async {
+                          isPhone
+                              ? await loginSheet()
+                              : await loginSheetTablet();
+
+                          await provider.getCompareStock(showProgress: false);
+                        },
+                      ),
                     ),
                   ],
                 )

@@ -37,14 +37,14 @@ class _ContactUsItemState extends State<ContactUsItem> {
     if (!isName(name.text)) {
       popUpAlert(
           message: "Please enter valid name",
-          title: "",
+          title: "Alert",
           icon: Images.alertPopGIF);
 
       // showErrorMessage(message: "Please enter valid name");
-    } else if (!isEmail(email.text) && email.text.isNotEmpty) {
+    } else if (!isEmail(email.text) || email.text.isNotEmpty) {
       popUpAlert(
           message: "Please enter valid email address",
-          title: "",
+          title: "Alert",
           icon: Images.alertPopGIF);
       // showErrorMessage(message: "Please enter valid email address");
     }
@@ -57,7 +57,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
     else if (comments.text.isEmpty) {
       popUpAlert(
           message: "Please enter your comment",
-          title: "",
+          title: "Alert",
           icon: Images.alertPopGIF);
       // showErrorMessage(message: "Please enter your comment");
     } else {

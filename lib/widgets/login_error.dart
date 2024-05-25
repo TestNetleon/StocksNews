@@ -94,9 +94,9 @@ class LoginError extends StatelessWidget {
     this.state,
     this.smallHeight = false,
     super.key,
-    this.onClick,
+    required this.onClick,
   });
-  final Function()? onClick;
+  final Function() onClick;
   final String? error;
   final String? state;
   final Function()? onRefresh;
@@ -140,7 +140,7 @@ class LoginError extends StatelessWidget {
                   //       ? await loginSheet(state: state)
                   //       : await loginSheetTablet(state: state);
                   // },
-                  onPressed: onClick!,
+                  onPressed: onClick,
                   text: "Log in",
                   showArrow: false,
                   // fullWidth: false,
