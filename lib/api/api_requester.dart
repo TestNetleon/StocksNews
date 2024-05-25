@@ -125,13 +125,13 @@ Future<ApiResponse> apiRequest({
     } else if (response.statusCode == 429 || response.statusCode == 500) {
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
-      Timer(const Duration(milliseconds: 200), () {
-        isServerError = true;
-        Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushNamed(
-            navigatorKey.currentContext!, ServerErrorWidget.path);
-      });
+      // Timer(const Duration(milliseconds: 200), () {
+      //   isServerError = true;
+      //   Navigator.popUntil(
+      //       navigatorKey.currentContext!, (route) => route.isFirst);
+      //   Navigator.pushNamed(
+      //       navigatorKey.currentContext!, ServerErrorWidget.path);
+      // });
       return ApiResponse(
         status: false,
         message: Const.errSomethingWrong,

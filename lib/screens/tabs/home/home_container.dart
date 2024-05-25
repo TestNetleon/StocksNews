@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_w
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/error_display_common.dart';
 // import 'package:upgrader/upgrader.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -18,6 +19,17 @@ class HomeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
 
+    if (!provider.isLoadingSlider &&
+        !provider.isLoadingHomeAlert &&
+        !provider.isLoadingTrending &&
+        provider.homeSliderRes == null &&
+        provider.homeAlertData == null &&
+        provider.homeTrendingRes == null) {
+      return ErrorDisplayWidget(
+        error: Const.errSomethingWrong,
+        onRefresh: () => provider.refreshData(null),
+      );
+    }
     return RefreshIndicator(
       onRefresh: () async {
         provider.refreshData(null);
