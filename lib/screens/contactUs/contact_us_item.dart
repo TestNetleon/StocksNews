@@ -41,7 +41,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
           icon: Images.alertPopGIF);
 
       // showErrorMessage(message: "Please enter valid name");
-    } else if (!isEmail(email.text) || email.text.isNotEmpty) {
+    } else if (!isEmail(email.text) || email.text.isEmpty) {
       popUpAlert(
           message: "Please enter valid email address",
           title: "Alert",
