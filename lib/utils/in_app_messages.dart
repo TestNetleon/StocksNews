@@ -19,8 +19,8 @@ void showInAppCard({required title, description, image, onClick}) {
               opacity: a1.value,
               child: InAppMsgDialogBase(
                 child: GestureDetector(
-                  onTap: onClick,
                   behavior: HitTestBehavior.translucent,
+                  onTap: onClick,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
@@ -112,6 +112,7 @@ void showInAppModal({required title, description, image, onClick}) {
               opacity: a1.value,
               child: InAppMsgDialogBase(
                 child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: onClick,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -195,6 +196,7 @@ void showInAppImageOnly({required image, onClick}) {
               opacity: a1.value,
               child: InAppMsgDialogBase(
                 child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
                   onTap: onClick,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.sp),
@@ -234,6 +236,7 @@ void showInAppTopBanner({required title, description, image, onClick}) {
               elevation: 10.0,
               backgroundColor: Colors.white,
               child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: onClick,
                 child: Container(
                   padding: EdgeInsets.all(12.sp),

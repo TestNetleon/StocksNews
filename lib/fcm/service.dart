@@ -224,28 +224,27 @@ class FirebaseApi {
       );
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-
     FirebaseMessaging.onMessage.listen((message) async {
-      Utils().showLog("on Message called ==> data ${message.data}");
-      Utils().showLog(
-          "on Message called ==> Notification ${message.notification}");
-
       try {
-        Utils()
-            .showLog("on Message called ==> !!! ${message.data["in_app_msg"]}");
+        Utils().showLog("on Message  ==> Notification ${message.notification}");
+        Utils().showLog("on Message  ==> Data ********************}");
+        Utils().showLog("in_app_msg  => ${message.data["in_app_msg"]}");
+        Utils().showLog("_id         => ${message.data["_id"]}");
+        Utils().showLog("title       => ${message.data["title"]}");
+        Utils().showLog("description => ${message.data["description"]}");
+        Utils().showLog("image       => ${message.data["image"]}");
+        Utils().showLog("popup_type  => ${message.data["popup_type"]}");
+        Utils().showLog("redirect_on => ${message.data["redirect_on"]}");
+        Utils().showLog("slug        => ${message.data["slug"]}");
+        Utils().showLog("on Message  ==> Data END********************}");
       } catch (e) {
         print(e.toString());
       }
-
       // bool inAppMsg = message.data["in_app_msg"] ?? false;
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
-
-      Utils().showLog("on Message called ==> 000");
       if (message.data["in_app_msg"] == true ||
           message.data["in_app_msg"] == 'true') {
-        Utils().showLog("on Message called ==> 1");
         if (isAppInForeground) {
-          Utils().showLog("on Message called ==> 2");
           provider.updateInAppMsgStatus(message.data["_id"]);
           checkForInAppMessage(
             InAppNotification(
@@ -317,6 +316,13 @@ class FirebaseApi {
 
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
+
+    if (Platform.isIOS) {
+      await _firebaseMessaging.getAPNSToken().then((value) async {
+        Utils().showLog("APNS TOKEN  ******   $value");
+      });
+    }
+
     await _firebaseMessaging.getToken().then((value) async {
       Utils().showLog("FCM TOKEN  ******   $value");
       String? address = await _getUserLocation();

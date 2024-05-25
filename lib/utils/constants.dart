@@ -30,6 +30,7 @@ enum SocialTrendingType { now, recently, cap }
 // ------ These are global constants to access in complete app --------
 bool isPhone = true;
 bool isAppInForeground = false;
+bool isServerError = false;
 //------------------------------------------------
 
 class Images {
