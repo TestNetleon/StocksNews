@@ -15,7 +15,6 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -29,8 +28,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 import 'package:vibration/vibration.dart';
 
-//TODO
-//
 class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int index;
@@ -199,16 +196,8 @@ class _TabsState extends State<Tabs> {
         }
         break;
       case 4:
-        // newsProvider.getNews(
-        //   showProgress: false,
-        //   inAppMsgId: widget.inAppMsgId,
-        // );
-        // latestNewsProvider.getNews();
-        newsCatProvider.selectedIndex = 0;
         if (newsCatProvider.tabs == null) {
           newsCatProvider.getTabsData(showProgress: true);
-        } else {
-          newsCatProvider.getNews(showProgress: true, id: "featured-news");
         }
         break;
       case 5:
@@ -217,14 +206,6 @@ class _TabsState extends State<Tabs> {
     }
   }
 }
-
-// void _watchList(BuildContext context) {
-//   UserProvider provider = context.read<UserProvider>();
-//   if (provider.user != null) {
-//     final watchListProvider = context.read<WatchlistProvider>();
-//     watchListProvider.getData(showProgress: true);
-//   }
-// }
 
 void _home(BuildContext context, String? inAppMsgId) async {
   final HomeProvider homeProvider = context.read<HomeProvider>();
