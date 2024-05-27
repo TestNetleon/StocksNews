@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/high_low_beta_stocks_res_dart';
+import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 

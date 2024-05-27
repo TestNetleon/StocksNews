@@ -62,7 +62,7 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
   //   notifyListeners();
   // }
 
-  Future getData({showProgress = false, loadMore = false}) async {
+  Future getData({showProgress = false, loadMore = false, type = 0}) async {
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -79,7 +79,13 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.mostActivePenny,
+        url: type == 1
+            ? Apis.mostActivePenny
+            : type == 2
+                ? Apis.mostActivePenny
+                : type == 3
+                    ? Apis.topPennyStocksToday
+                    : Apis.mostActivePenny,
         request: request,
         showProgress: false,
       );

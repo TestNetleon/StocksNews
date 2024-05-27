@@ -1,6 +1,6 @@
 class Apis {
-  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
-  static const baseUrl = "https://dev.stocks.news/api/v1"; // live server
+  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = "https://dev.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
@@ -19,7 +19,11 @@ class Apis {
   static const menuWhatWeDo = "/menu-what-we-do";
   static const whatWeDo = "/what-we-do";
   static const lowPricesTab = "/low-priced-stocks";
+  static const exchanageTab = "/exchanage";
+
   static const lowPricesStocks = "/low-priced-stocks-under";
+  static const indices = "/indices";
+
   static const saleOnStocks = "/stocks-on-sale";
 
   static const highPE = "/high-pe-ratio-stocks";
@@ -35,6 +39,7 @@ class Apis {
   static const newsAlertGraphData = "/stock-historical-chart";
   static const featuredTicker = "/featured-tickers";
   static const mostActivePenny = "/most-active-penny-stocks";
+  static const topPennyStocksToday = "/top-penny-stocks-today";
 
   static const search = "/search";
   static const searchWithNews = "/search_with_news";

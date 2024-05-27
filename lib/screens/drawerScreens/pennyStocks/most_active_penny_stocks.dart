@@ -23,7 +23,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<PennyStocksProvider>().getData();
+      context.read<PennyStocksProvider>().getData(type: 1);
     });
   }
 
@@ -38,11 +38,11 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getData(),
+      onRefresh: () => provider.getData(type: 1),
       child: RefreshControl(
-        onRefresh: () async => provider.getData(),
+        onRefresh: () async => provider.getData(type: 1),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.getData(loadMore: true),
+        onLoadMore: () async => provider.getData(loadMore: true, type: 1),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,

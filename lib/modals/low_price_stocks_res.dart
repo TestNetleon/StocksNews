@@ -12,23 +12,30 @@ String lowPriceStocksResToJson(List<LowPriceStocksRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class LowPriceStocksRes {
-  final String? symbol;
-  final String? name;
+  final dynamic symbol;
+  final dynamic name;
 
-  final String? description;
-  final String? image;
-  final String? price;
-  final String? mktCap;
+  final dynamic description;
+  final dynamic image;
+  final dynamic price;
+  final dynamic mktCap;
 
-  final String? change;
-  final num? changesPercentage;
+  final dynamic change;
+  final dynamic changesPercentage;
 
-  final String? avgVolume;
+  final dynamic avgVolume;
 
-  final num? pe;
-  final num? priceTarget;
+  final dynamic pe;
+  final dynamic priceTarget;
 
-  final String? consensusRating;
+  final dynamic consensusRating;
+
+  final dynamic volume;
+
+  final dynamic priceChange;
+  final dynamic percentageChange;
+  final dynamic the52WeekHigh;
+  final dynamic discount52Weeks;
 
   LowPriceStocksRes({
     this.symbol,
@@ -43,6 +50,11 @@ class LowPriceStocksRes {
     this.pe,
     this.priceTarget,
     this.consensusRating,
+    this.volume,
+    this.priceChange,
+    this.percentageChange,
+    this.the52WeekHigh,
+    this.discount52Weeks,
   });
 
   factory LowPriceStocksRes.fromJson(Map<String, dynamic> json) =>
@@ -58,7 +70,12 @@ class LowPriceStocksRes {
         avgVolume: json["avgVolume"],
         pe: json["pe"],
         priceTarget: json["price_target"],
-        consensusRating: json["consensus_rating"],
+        consensusRating: json["Consensus_Rating"],
+        volume: json["volume"],
+        priceChange: json["price_change"],
+        percentageChange: json["percentage_change"],
+        the52WeekHigh: json["52WeekHigh"],
+        discount52Weeks: json["discount52Weeks"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +90,11 @@ class LowPriceStocksRes {
         "avgVolume": avgVolume,
         "pe": pe,
         "price_target": priceTarget,
-        "consensus_rating": consensusRating,
+        "Consensus_Rating": consensusRating,
+        "volume": volume,
+        "price_change": priceChange,
+        "percentage_change": percentageChange,
+        "52WeekHigh": the52WeekHigh,
+        "discount52Weeks": discount52Weeks,
       };
 }

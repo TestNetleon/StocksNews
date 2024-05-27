@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -59,7 +59,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (index == 0) DrawerScreenTitle(subTitle: provider.subTitle),
+                if (index == 0) HtmlTitle(subTitle: provider.subTitle),
                 HighLowPEItem(index: index, data: high),
               ],
             );

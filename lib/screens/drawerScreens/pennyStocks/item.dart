@@ -67,14 +67,14 @@ class PennyStocksItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.symbol ?? "N?A",
+                        "${data.symbol ?? "N?A"}",
                         style: stylePTSansBold(fontSize: 14),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(
-                        data.name ?? "N?A",
+                        "${data.name ?? "N?A"}",
                         style: stylePTSansRegular(
                           color: ThemeColors.greyText,
                           fontSize: 12,
@@ -91,7 +91,7 @@ class PennyStocksItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    data.price ?? "N?A",
+                    "${data.price ?? "N?A"}",
                     style: stylePTSansBold(fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -141,9 +141,26 @@ class PennyStocksItem extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  InnerRowItem(
-                    lable: "Exchange",
-                    value: "${data.exchange}",
+                  Visibility(
+                    visible: data.pe != null,
+                    child: InnerRowItem(
+                      lable: "PE Ratio",
+                      value: "${data.pe}",
+                    ),
+                  ),
+                  Visibility(
+                    visible: data.mktCap != null,
+                    child: InnerRowItem(
+                      lable: "Market Cap",
+                      value: "${data.mktCap}",
+                    ),
+                  ),
+                  Visibility(
+                    visible: data.exchange != null,
+                    child: InnerRowItem(
+                      lable: "Exchange",
+                      value: "${data.exchange}",
+                    ),
                   ),
                   InnerRowItem(
                     lable: "Volume",
@@ -151,9 +168,12 @@ class PennyStocksItem extends StatelessWidget {
                   ),
                   InnerRowItem(
                       lable: "Average Volume", value: "${data.avgVolume}"),
-                  InnerRowItem(
-                    lable: "Dollar Volume",
-                    value: data.dollarVolume,
+                  Visibility(
+                    visible: data.dollarVolume != null,
+                    child: InnerRowItem(
+                      lable: "Dollar Volume",
+                      value: data.dollarVolume,
+                    ),
                   ),
                 ],
               ),

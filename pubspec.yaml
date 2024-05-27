@@ -91,6 +91,7 @@ dependencies:
   app_links: ^6.0.2
   audioplayers: ^5.2.1
   readmore: ^3.0.0
+  flutter_html: ^3.0.0-beta.2
 
 dev_dependencies:
   flutter_test:

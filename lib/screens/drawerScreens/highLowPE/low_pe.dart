@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../modals/highlow_pe_res.dart';
 import '../../../providers/high_low_pe.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
-import '../../../widgets/drawer_screen_title.dart';
 import '../../../widgets/refresh_controll.dart';
 
 class LowPEStocks extends StatefulWidget {
@@ -53,7 +53,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DrawerScreenTitle(
+              HtmlTitle(
                 subTitle: provider.subTitle,
               ),
               ListView.separated(

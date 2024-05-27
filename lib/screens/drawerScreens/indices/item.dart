@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
+import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
@@ -12,7 +12,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class IndicesItem extends StatelessWidget {
-  final LowPriceStocksRes data;
+  final IndicesRes data;
   final int index;
   final bool indices;
 //
@@ -69,14 +69,14 @@ class IndicesItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "data.symbol",
+                        data.symbol,
                         style: stylePTSansBold(fontSize: 14),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(
-                        " data.name",
+                        data.name,
                         style: stylePTSansRegular(
                           color: ThemeColors.greyText,
                           fontSize: 12,
@@ -99,16 +99,32 @@ class IndicesItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
-                  Text(
-                    "${data.changesPercentage.toString()}%",
-                    style: stylePTSansRegular(
-                        fontSize: 12,
-                        color:
-                            //(data.changesPercentage ?? 0) > 0
-                            //     ?
-                            ThemeColors.accent
-                        //     : Colors.red,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if ((data.percentageChange ?? 0) > 0)
+                        const Icon(
+                          Icons.arrow_upward_outlined,
+                          color: ThemeColors.accent,
+                          size: 12,
                         ),
+                      if ((data.percentageChange ?? 0) < 0)
+                        const Icon(
+                          Icons.arrow_downward,
+                          color: Colors.red,
+                          size: 12,
+                        ),
+                      Text(
+                        "${data.priceChange} (${data.percentageChange}%)",
+                        style: stylePTSansRegular(
+                          fontSize: 12,
+                          color: (data.percentageChange ?? 0) > 0
+                              ? ThemeColors.accent
+                              : Colors.red,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -171,20 +187,23 @@ class IndicesItem extends StatelessWidget {
                         ? 10.sp
                         : 0,
               ),
-              child: const Column(
+              child: Column(
                 children: [
                   InnerRowItem(
-                    lable: "52-Week High",
-                    value: "",
+                    lable: "P/E Ratio",
+                    value: "${data.peRatio}",
                   ),
                   InnerRowItem(
-                    lable: "52-Week Low",
-                    value: "",
+                    lable: "Market Cap",
+                    value: "${data.mktCap}",
                   ),
-                  InnerRowItem(lable: "Previous Close", value: ""),
                   InnerRowItem(
-                    lable: "Intraday Range",
-                    value: "",
+                    lable: "Consensus Analyst Rating",
+                    value: "${data.consensusAnalystRating}",
+                  ),
+                  InnerRowItem(
+                    lable: "Analyst Rating Consensus Price Target",
+                    value: "${data.analystRatingConsensusPriceTarget}",
                   ),
                 ],
               ),

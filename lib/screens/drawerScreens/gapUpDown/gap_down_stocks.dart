@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/gap_up_res.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -51,8 +51,7 @@ class _GapDownStocksState extends State<GapDownStocks> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (index == 0)
-                  DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),
+                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
                 UpDownStocksItem(data: data![index], index: index),
               ],
             );

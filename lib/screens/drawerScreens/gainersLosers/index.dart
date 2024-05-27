@@ -5,6 +5,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../modals/gainers_losers_res.dart';
 import '../../../providers/more_stocks_provider.dart';
@@ -76,9 +77,18 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                     if (gainers == null || gainers.isEmpty) {
                       return const SizedBox();
                     }
-                    return GainerLoserItem(
-                      data: gainers[index],
-                      index: index,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (index == 0)
+                          HtmlTitle(
+                              subTitle:
+                                  provider.extraUpGainers?.subTitle ?? ""),
+                        GainerLoserItem(
+                          data: gainers[index],
+                          index: index,
+                        ),
+                      ],
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -111,10 +121,18 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                     if (losers == null || losers.isEmpty) {
                       return const SizedBox();
                     }
-                    return GainerLoserItem(
-                      losers: true,
-                      data: losers[index],
-                      index: index,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (index == 0)
+                          HtmlTitle(
+                              subTitle: provider.extraUpLosers?.subTitle ?? ""),
+                        GainerLoserItem(
+                          losers: true,
+                          data: losers[index],
+                          index: index,
+                        ),
+                      ],
                     );
                   },
                   separatorBuilder: (context, index) {

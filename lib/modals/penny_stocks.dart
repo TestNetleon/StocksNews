@@ -12,16 +12,18 @@ String pennyStocksResToJson(List<PennyStocksRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class PennyStocksRes {
-  final String? symbol;
-  final String? name;
-  final String? exchange;
-  final String? price;
-  final String? change;
-  final num? changesPercentage;
-  final String? volume;
-  final String? image;
-  final String? avgVolume;
-  final String? dollarVolume;
+  final dynamic symbol;
+  final dynamic name;
+  final dynamic exchange;
+  final dynamic price;
+  final dynamic change;
+  final dynamic changesPercentage;
+  final dynamic volume;
+  final dynamic image;
+  final dynamic avgVolume;
+  final dynamic dollarVolume;
+  final dynamic pe;
+  final dynamic mktCap;
 
   PennyStocksRes({
     this.symbol,
@@ -34,6 +36,8 @@ class PennyStocksRes {
     this.image,
     this.avgVolume,
     this.dollarVolume,
+    this.pe,
+    this.mktCap,
   });
 
   factory PennyStocksRes.fromJson(Map<String, dynamic> json) => PennyStocksRes(
@@ -47,6 +51,8 @@ class PennyStocksRes {
         volume: json["volume"],
         avgVolume: json["avgVolume"],
         dollarVolume: json["dollarVolume"],
+        pe: json["pe"],
+        mktCap: json["mktCap"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,5 +66,7 @@ class PennyStocksRes {
         "volume": volume,
         "avgVolume": avgVolume,
         "dollarVolume": dollarVolume,
+        "pe": pe,
+        "mktCap": mktCap,
       };
 }

@@ -53,6 +53,10 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   String? get errorLosers => _errorLosers ?? Const.errSomethingWrong;
 
   int get openIndexLosers => _openIndexLosers;
+  Extra? _extraUpGainers;
+  Extra? get extraUpGainers => _extraUpGainers;
+  Extra? _extraUpLosers;
+  Extra? get extraUpLosers => _extraUpLosers;
 
   void setStatus(status) {
     _status = status;
@@ -135,6 +139,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
       _pageLosers++;
       setStatusLosers(Status.loadingMore);
     } else {
+      _extraUpLosers = null;
       _pageLosers = 1;
       setStatusLosers(Status.loading);
     }
@@ -157,6 +162,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
         _errorLosers = null;
         if (_pageLosers == 1) {
           _losers = gainersLosersResFromJson(jsonEncode(response.data));
+          _extraUpLosers = response.extra is Extra ? response.extra : null;
         } else {
           _losers?.data
               ?.addAll(GainersLosersRes.fromJson(response.data).data ?? []);
@@ -183,6 +189,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
       _page++;
       setStatus(Status.loadingMore);
     } else {
+      _extraUpGainers = null;
       _page = 1;
       setStatus(Status.loading);
     }
@@ -205,6 +212,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _gainersLosers = gainersLosersResFromJson(jsonEncode(response.data));
+          _extraUpGainers = response.extra is Extra ? response.extra : null;
         } else {
           _gainersLosers?.data
               ?.addAll(GainersLosersRes.fromJson(response.data).data ?? []);

@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/item_sale_on_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -106,48 +108,37 @@ class LowPriceStocksData extends StatelessWidget {
         onRefresh: () async => provider.getLowPriceData(),
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => provider.getLowPriceData(loadMore: true),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Text(
-              //   provider.title ?? "",
-              //   style: stylePTSansBold(fontSize: 13),
-              // ),
-              // const SpacerVertical(height: 5),
-              // Text(
-              //   provider.subTitle ?? "",
-              //   style: stylePTSansRegular(
-              //       color: ThemeColors.greyText, fontSize: 12),
-              // ),
-
-              DrawerScreenTitle(
-                title: provider.title,
-                subTitle: provider.subTitle,
-              ),
-              const SpacerVertical(height: 5),
-              ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(vertical: 10.sp),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  LowPriceStocksRes? data = provider.data?[index];
-                  if (data == null) {
-                    return const SizedBox();
-                  }
-                  return LowPriceStocksItem(data: data);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 16,
-                  );
-                },
-                itemCount: 20,
-              ),
-            ],
-          ),
+        child: ListView.separated(
+          padding: EdgeInsets.symmetric(vertical: 10.sp),
+          itemBuilder: (context, index) {
+            LowPriceStocksRes? data = provider.data?[index];
+            if (data == null) {
+              return const SizedBox();
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                index == 0
+                    ? DrawerScreenTitle(
+                        title: provider.title,
+                        subTitle: provider.subTitle,
+                      )
+                    : SizedBox(),
+                provider.typeIndex == 1
+                    ? SaleOnStocksItem(
+                        data: data,
+                      )
+                    : LowPriceStocksItem(data: data),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider(
+              color: ThemeColors.greyBorder,
+              height: 16,
+            );
+          },
+          itemCount: provider.data?.length ?? 0,
         ),
       ),
     );

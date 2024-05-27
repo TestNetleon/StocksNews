@@ -33,12 +33,18 @@ class ThemeColors {
       900: Color(0xFF000000), // Black
     },
   );
+  static const LinearGradient greyWhiteGradient = LinearGradient(
+    colors: [Colors.grey, Colors.white],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   static const primary = Color(0xFF000000);
   static const primaryLight = Color(0xFF2C2C2C);
   static const background = Color(0xFF121212);
   // static const primaryLight = Color.fromARGB(255, 34, 34, 34);
   static const accent = Color(0xFF35BA46);
+  static const gredientColor = Color.fromARGB(78, 0, 0, 0);
 
   static const transparent = Color.fromARGB(78, 0, 0, 0);
   static const transparentDark = Color.fromARGB(220, 0, 0, 0);

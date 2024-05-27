@@ -18,6 +18,8 @@ class LowPriceStocksProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   Status _tabStatus = Status.ideal;
   int selectedIndex = 0;
+  int _typeIndex = 0;
+  int get typeIndex => _typeIndex;
 
   List<LowPriceStocksTabRes>? _tabs;
 
@@ -58,15 +60,18 @@ class LowPriceStocksProvider extends ChangeNotifier {
   void tabChange(index) {
     print("olooopp === ${tabs?[index].name}");
     if (tabs?[index].name == "Stocks On Sale") {
-      selectedIndex = 8;
-      notifyListeners();
+      if (selectedIndex != index) {
+        selectedIndex = index;
+        notifyListeners();
+        getLowPriceData(type: 1);
+      }
       return;
     } else {
       log("Before--> selected index $selectedIndex, index $index ");
       if (selectedIndex != index) {
         selectedIndex = index;
         notifyListeners();
-        getLowPriceData();
+        getLowPriceData(type: 0);
       }
     }
   }
@@ -87,7 +92,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
       if (response.status) {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
         if (_tabs != null) {
-          getLowPriceData();
+          getLowPriceData(type: 0);
         }
       } else {
         _error = response.message;
@@ -101,52 +106,6 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
       log(e.toString());
       setTabStatus(Status.loaded);
-    }
-  }
-
-  Future getSaleOnStocks({loadMore = false}) async {
-    if (loadMore) {
-      _page++;
-      setStatus(Status.loadingMore);
-    } else {
-      _page = 1;
-      setStatus(Status.loading);
-    }
-    try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "page": "$_page"
-      };
-
-      ApiResponse response = await apiRequest(
-        url: Apis.saleOnStocks,
-        request: request,
-        showProgress: false,
-      );
-
-      if (response.status) {
-        _error = null;
-        if (_page == 1) {
-          _data = lowPriceStocksResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
-          title = response.extra?.title;
-          subTitle = response.extra?.subTitle;
-        } else {
-          _data?.addAll(lowPriceStocksResFromJson(jsonEncode(response.data)));
-        }
-      } else {
-        if (_page == 1) {
-          _data = null;
-          _error = response.message;
-          // showErrorMessage(message: response.message);
-        }
-      }
-      setStatus(Status.loaded);
-    } catch (e) {
-      _data = null;
-      log(e.toString());
-      setStatus(Status.loaded);
     }
   }
 
@@ -185,7 +144,10 @@ class LowPriceStocksProvider extends ChangeNotifier {
   //   }
   // }
 
-  Future getLowPriceData({loadMore = false}) async {
+  Future getLowPriceData({loadMore = false, type}) async {
+    _typeIndex = type ?? typeIndex;
+    notifyListeners();
+    log("type =================$type");
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -197,12 +159,12 @@ class LowPriceStocksProvider extends ChangeNotifier {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "slug": _tabs?[selectedIndex].key,
+        if (typeIndex == 0) "slug": _tabs?[selectedIndex].key,
         "page": "$_page"
       };
 
       ApiResponse response = await apiRequest(
-        url: Apis.lowPricesStocks,
+        url: typeIndex == 1 ? Apis.saleOnStocks : Apis.lowPricesStocks,
         request: request,
         showProgress: false,
       );
@@ -216,6 +178,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
           subTitle = response.extra?.subTitle;
         } else {
           _data?.addAll(lowPriceStocksResFromJson(jsonEncode(response.data)));
+          notifyListeners();
         }
       } else {
         if (_page == 1) {

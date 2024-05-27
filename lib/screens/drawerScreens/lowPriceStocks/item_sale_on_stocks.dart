@@ -4,7 +4,6 @@ import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-import 'package:readmore/readmore.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dialogs.dart';
 import '../../../utils/theme.dart';
@@ -12,9 +11,9 @@ import '../../../widgets/cache_network_image.dart';
 import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/spacer_vertical.dart';
 
-class LowPriceStocksItem extends StatelessWidget {
+class SaleOnStocksItem extends StatelessWidget {
   final LowPriceStocksRes data;
-  const LowPriceStocksItem({super.key, required this.data});
+  const SaleOnStocksItem({super.key, required this.data});
 
   void _openBottomSheet() {
     showPlatformBottomSheet(
@@ -36,18 +35,19 @@ class LowPriceStocksItem extends StatelessWidget {
           ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "P/E Ratio: ",
+                  "52-Week High: ",
                   style: stylePTSansRegular(),
                 ),
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    "${data.pe ?? "N/A"}",
+                    "${data.the52WeekHigh ?? "N/A"}",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -61,33 +61,13 @@ class LowPriceStocksItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Market Cap: ",
+                  "Discount from 52-Week High: ",
                   style: stylePTSansRegular(),
                 ),
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    data.mktCap ?? "N/A",
-                    style: stylePTSansRegular(),
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Avg. Trading Volume: ",
-                  style: stylePTSansRegular(),
-                ),
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.end,
-                    data.avgVolume ?? "N/A",
+                    "${data.discount52Weeks}%",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -107,7 +87,7 @@ class LowPriceStocksItem extends StatelessWidget {
                 Flexible(
                   child: Text(
                     textAlign: TextAlign.end,
-                    data.consensusRating ?? "N/A",
+                    "${data.consensusRating ?? "N/A"}",
                     style: stylePTSansRegular(),
                   ),
                 ),
@@ -121,7 +101,7 @@ class LowPriceStocksItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Consensus Price Target: ",
+                  "	Price Target: ",
                   style: stylePTSansRegular(),
                 ),
                 Flexible(
@@ -132,21 +112,6 @@ class LowPriceStocksItem extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            const Divider(
-              color: ThemeColors.greyBorder,
-              height: 15,
-            ),
-            ReadMoreText(
-              textAlign: TextAlign.start,
-              data.description ?? "",
-              trimLines: 5,
-              colorClickableText: ThemeColors.accent,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: 'Read more',
-              trimExpandedText: 'Read less',
-              moreStyle: stylePTSansRegular(color: ThemeColors.accent),
-              style: stylePTSansRegular(height: 1.4),
             ),
           ],
         ),
@@ -214,14 +179,32 @@ class LowPriceStocksItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SpacerVertical(height: 5),
-                Text(
-                  "${data.change} (${data.changesPercentage}%)",
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: (data.change ?? 0) > 0
-                        ? ThemeColors.accent
-                        : Colors.red,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if ((data.percentageChange ?? 0) > 0)
+                      const Icon(
+                        Icons.arrow_upward_outlined,
+                        color: ThemeColors.accent,
+                        size: 12,
+                      ),
+                    if ((data.percentageChange ?? 0) < 0)
+                      const Icon(
+                        Icons.arrow_downward,
+                        color: Colors.red,
+                        size: 12,
+                      ),
+                    Text(
+                      "${data.priceChange} (${data.percentageChange}%)",
+                      style: stylePTSansRegular(
+                        fontSize: 12,
+                        color: (data.percentageChange ?? 0) > 0
+                            ? ThemeColors.accent
+                            : Colors.red,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
