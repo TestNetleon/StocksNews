@@ -562,7 +562,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // );
         if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
-        return ApiResponse(status: false);
+        return ApiResponse(status: false, message: res.message);
       }
     } catch (e) {
       setStatus(Status.loaded);
@@ -571,7 +571,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       // );
       if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
-      return ApiResponse(status: false);
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
 
