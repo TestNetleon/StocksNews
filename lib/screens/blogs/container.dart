@@ -6,6 +6,7 @@ import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/screens/blogs/widgets/item.dart';
 import 'package:stocks_news_new/screens/blogs/widgets/header.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -58,7 +59,11 @@ class BlogContainer extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVertical(height: 16);
+                      // return const SpacerVertical(height: 16);
+                      return const Divider(
+                        height: 16,
+                        color: ThemeColors.greyBorder,
+                      );
                     },
                   ),
                 ],

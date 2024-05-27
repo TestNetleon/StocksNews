@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -317,20 +318,22 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                 Text(
                                   user?.name?.isNotEmpty == true
                                       ? "${user?.name}"
-                                      : "Update your account",
+                                      : "Hello",
                                   style: stylePTSansBold(),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                Text(
-                                  user?.email?.isNotEmpty == true
-                                      ? "${user?.email}"
-                                      : "Update your account",
-                                  style: stylePTSansRegular(
-                                      color: ThemeColors.greyText,
-                                      fontSize: 12),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                Visibility(
+                                  visible:
+                                      user?.email != null && user?.email != '',
+                                  child: Text(
+                                    "${user?.email}",
+                                    style: stylePTSansRegular(
+                                        color: ThemeColors.greyText,
+                                        fontSize: 12),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ],
                             )),

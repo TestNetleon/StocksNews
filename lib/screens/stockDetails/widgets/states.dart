@@ -167,6 +167,8 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import 'stockTopWidgets/common_heading.dart';
+
 //
 class States extends StatefulWidget {
   const States({super.key});
@@ -180,85 +182,100 @@ class _StatesState extends State<States> {
   Widget build(BuildContext context) {
     KeyStats? keyStats = context.watch<StockDetailProvider>().data?.keyStats;
 
-    return CustomGridView(
-      paddingVerticle: 8.sp,
-      paddingHorizontal: 5.sp,
-      length: 25,
-      getChild: (index) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (index == 0)
-            StateItemNEW(label: "Symbol", value: keyStats?.symbol),
-          if (index == 1) StateItemNEW(label: "Name", value: keyStats?.name),
+    return Column(
+      children: [
+        const CommonHeadingStockDetail(),
+        CustomGridView(
+          paddingVerticle: 8.sp,
+          paddingHorizontal: 5.sp,
+          length: 25,
+          getChild: (index) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (index == 0)
+                StateItemNEW(label: "Symbol", value: keyStats?.symbol),
+              if (index == 1)
+                StateItemNEW(label: "Name", value: keyStats?.name),
 
-          if (index == 2) StateItemNEW(label: "Price", value: keyStats?.price),
-          if (index == 3)
-            StateItemNEW(label: "Change", value: "\$${keyStats?.change ?? ""}"),
-          if (index == 4)
-            StateItemNEW(
-              label: "Change Per.",
-              value: "${keyStats?.changesPercentage?.toCurrency()}%",
-            ),
-          if (index == 5)
-            StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
-          if (index == 6)
-            StateItemNEW(label: "Day High", value: keyStats?.dayHigh),
-          if (index == 7)
-            StateItemNEW(label: "Year Low", value: keyStats?.yearLow),
-          if (index == 8)
-            StateItemNEW(label: "Year High", value: keyStats?.yearHigh),
-          if (index == 9)
-            StateItemNEW(label: "Volume", value: keyStats?.volume),
-          if (index == 10)
-            StateItemNEW(label: "Avg. Volume (3m)", value: keyStats?.avgVolume),
+              if (index == 2)
+                StateItemNEW(label: "Price", value: keyStats?.price),
+              if (index == 3)
+                StateItemNEW(
+                    label: "Change", value: "\$${keyStats?.change ?? ""}"),
+              if (index == 4)
+                StateItemNEW(
+                  label: "Change Per.",
+                  value: "${keyStats?.changesPercentage?.toCurrency()}%",
+                ),
+              if (index == 5)
+                StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
+              if (index == 6)
+                StateItemNEW(label: "Day High", value: keyStats?.dayHigh),
+              if (index == 7)
+                StateItemNEW(label: "Year Low", value: keyStats?.yearLow),
+              if (index == 8)
+                StateItemNEW(label: "Year High", value: keyStats?.yearHigh),
+              if (index == 9)
+                StateItemNEW(label: "Volume", value: keyStats?.volume),
+              if (index == 10)
+                StateItemNEW(
+                    label: "Avg. Volume (3m)", value: keyStats?.avgVolume),
 
-          if (index == 11)
-            StateItemNEW(
-                label: "Previous Close", value: keyStats?.previousClose),
+              if (index == 11)
+                StateItemNEW(
+                    label: "Previous Close", value: keyStats?.previousClose),
 
-          if (index == 12) StateItemNEW(label: "Open", value: keyStats?.open),
-          if (index == 13)
-            StateItemNEW(label: "EPS", value: "${keyStats?.eps ?? ""}"),
-          if (index == 14)
-            StateItemNEW(label: "P/E ratio", value: "${keyStats?.pe ?? ""}"),
+              if (index == 12)
+                StateItemNEW(label: "Open", value: keyStats?.open),
+              if (index == 13)
+                StateItemNEW(label: "EPS", value: "${keyStats?.eps ?? ""}"),
+              if (index == 14)
+                StateItemNEW(
+                    label: "P/E ratio", value: "${keyStats?.pe ?? ""}"),
 
-          if (index == 15)
-            StateItemNEW(label: "Avg 50 EMA (D)", value: keyStats?.priceAvg50),
-          if (index == 16)
-            StateItemNEW(
-                label: "Avg 200 EMA (D)", value: keyStats?.priceAvg200),
-          // if (index == 10)
-          //   StateItemNEW(label: "Exchange", value: keyStats?.exchange),
-          if (index == 17)
-            StateItemNEW(label: "Revenue", value: keyStats?.revenue),
-          if (index == 18)
-            StateItemNEW(
-                label: "Book value/Share", value: keyStats?.bookValuePerShare),
-          if (index == 19)
-            StateItemNEW(
-                label: "Dividend (yield)", value: keyStats?.dividendYield),
-          if (index == 20)
-            StateItemNEW(
-                label: "EV/Ebitda", value: keyStats?.enterpriseValueOverEbitda),
-          if (index == 21)
-            StateItemNEW(
-                label: "Bid/Ask", value: "${keyStats?.bid}/${keyStats?.ask}"),
-          // if (index == 22) StateItemNEW(label: "Fair Value", value: "-"),
-          // if (index == 23)
-          //   StateItemNEW(label: "Analyst target price", value: "-"),
+              if (index == 15)
+                StateItemNEW(
+                    label: "Avg 50 EMA (D)", value: keyStats?.priceAvg50),
+              if (index == 16)
+                StateItemNEW(
+                    label: "Avg 200 EMA (D)", value: keyStats?.priceAvg200),
+              // if (index == 10)
+              //   StateItemNEW(label: "Exchange", value: keyStats?.exchange),
+              if (index == 17)
+                StateItemNEW(label: "Revenue", value: keyStats?.revenue),
+              if (index == 18)
+                StateItemNEW(
+                    label: "Book value/Share",
+                    value: keyStats?.bookValuePerShare),
+              if (index == 19)
+                StateItemNEW(
+                    label: "Dividend (yield)", value: keyStats?.dividendYield),
+              if (index == 20)
+                StateItemNEW(
+                    label: "EV/Ebitda",
+                    value: keyStats?.enterpriseValueOverEbitda),
+              if (index == 21)
+                StateItemNEW(
+                    label: "Bid/Ask",
+                    value: "${keyStats?.bid}/${keyStats?.ask}"),
+              // if (index == 22) StateItemNEW(label: "Fair Value", value: "-"),
+              // if (index == 23)
+              //   StateItemNEW(label: "Analyst target price", value: "-"),
 
-          if (index == 22)
-            StateItemNEW(label: "Market Cap.", value: keyStats?.marketCap),
-          if (index == 23)
-            StateItemNEW(
-                label: "Shares Outstanding",
-                value: keyStats?.sharesOutstanding),
-          if (index == 24)
-            StateItemNEW(
-                label: "Earnings Announcement",
-                value: keyStats?.earningsAnnouncement),
-        ],
-      ),
+              if (index == 22)
+                StateItemNEW(label: "Market Cap.", value: keyStats?.marketCap),
+              if (index == 23)
+                StateItemNEW(
+                    label: "Shares Outstanding",
+                    value: keyStats?.sharesOutstanding),
+              if (index == 24)
+                StateItemNEW(
+                    label: "Earnings Announcement",
+                    value: keyStats?.earningsAnnouncement),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

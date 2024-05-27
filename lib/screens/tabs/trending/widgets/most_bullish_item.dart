@@ -221,7 +221,7 @@ class MostBullishItem extends StatelessWidget {
                       const SpacerHorizontal(width: 4),
                       Expanded(
                         child: Text(
-                          "${data.mentionChange.toCurrency()}%",
+                          "(${data.mentionChange.toCurrency()}%)",
                           style: stylePTSansRegular(
                             color: data.mentionChange == 0
                                 ? Colors.white

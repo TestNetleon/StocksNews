@@ -31,6 +31,7 @@ class InsiderCompanyContainer extends StatelessWidget {
         hasData: provider.companyData != null,
         error: provider.error,
         errorDispCommon: true,
+        showPreparingText: true,
         onRefresh: () {
           provider.getData(
             showProgress: true,
@@ -231,6 +232,7 @@ class InsiderReportingContainer extends StatelessWidget {
         hasData: provider.reporterData != null,
         error: provider.error,
         errorDispCommon: true,
+        showPreparingText: true,
         onRefresh: () {
           provider.insiderGraphDataInsider(
               companySlug: companySlug ?? "",

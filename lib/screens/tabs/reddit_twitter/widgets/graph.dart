@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -46,8 +47,12 @@ class SocialSentimentsGraph extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Align(
-              alignment: Alignment.centerRight, child: InfoBottomSheet()),
+          Visibility(
+            visible: provider.socialSentimentRes?.text?.sentimentText != null &&
+                provider.socialSentimentRes?.text?.sentimentText != '',
+            child: const Align(
+                alignment: Alignment.centerRight, child: InfoBottomSheet()),
+          ),
           Text(
             "Average Market Sentiment",
             style: styleGeorgiaBold(fontSize: 18),

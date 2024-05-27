@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
+import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -11,13 +12,15 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import 'stockTopWidgets/common_heading.dart';
+
 class StocksMentions extends StatelessWidget {
   const StocksMentions({super.key});
 //
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-
+    KeyStats? keyStats = provider.data?.keyStats;
     List<Mentions>? mentions = provider.dataMentions?.mentions;
 
     if (provider.mentionLoading) {
@@ -45,8 +48,10 @@ class StocksMentions extends StatelessWidget {
 
     return Column(
       children: [
+        const CommonHeadingStockDetail(),
         ScreenTitle(
           // title: "News Mentions",
+          // title: "${keyStats?.name} (${keyStats?.symbol})",
           subTitle: provider.dataMentions?.mentionText,
         ),
         SizedBox(

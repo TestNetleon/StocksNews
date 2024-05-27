@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'stockTopWidgets/common_heading.dart';
 
 //
 class AnalysisForecast extends StatefulWidget {
@@ -45,11 +46,12 @@ class _AnalysisForecastState extends State<AnalysisForecast> {
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-    KeyStats? keyStats = provider.data?.keyStats;
+    // KeyStats? keyStats = provider.data?.keyStats;
     return Column(
       children: [
+        const CommonHeadingStockDetail(),
         ScreenTitle(
-          title: "${keyStats?.name} (${keyStats?.symbol})",
+          // title: "${keyStats?.name} (${keyStats?.symbol})",
           subTitle: provider.dataMentions?.forecastText,
         ),
         Container(

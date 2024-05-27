@@ -31,9 +31,9 @@ class AlertContainer extends StatelessWidget {
         },
         separatorBuilder: (BuildContext context, int index) {
           // return const SpacerVertical(height: 12);
-          return Divider(
+          return const Divider(
             color: ThemeColors.greyBorder,
-            height: 12.sp,
+            height: 16,
           );
         },
       ),

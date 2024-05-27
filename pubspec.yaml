@@ -91,6 +91,8 @@ dependencies:
   app_links: ^6.0.2
   audioplayers: ^5.2.1
   readmore: ^3.0.0
+  socket_io_client: ^2.0.3+1
+  web_socket_channel: ^2.4.3
 
 dev_dependencies:
   flutter_test:

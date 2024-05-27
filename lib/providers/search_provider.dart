@@ -64,6 +64,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
         _data = searchResFromJson(jsonEncode(response.data));
       } else {
         _data = null;
+        notifyListeners();
         // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);

@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../stockTopWidgets/common_heading.dart';
 import 'i_frame_item.dart';
 
 //
@@ -119,13 +120,14 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            const CommonHeadingStockDetail(),
             Visibility(
               visible: widget.redditRssId != null,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SpacerVertical(height: 15),
+                  // const SpacerVertical(height: 15),
                   const ScreenTitle(
                     title: "Recent Reddit Posts",
                     // style: stylePTSansRegular(fontSize: 20),

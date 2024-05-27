@@ -91,7 +91,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
     }
 
     context.read<InsiderTradingDetailsProvider>().getData(
-          showProgress: true,
+          showProgress: false,
           companySlug: widget.companySlug ?? "",
           reportingSlug: widget.reportingSlug ?? "",
         );

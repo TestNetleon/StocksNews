@@ -45,7 +45,7 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
     RtShowTheLast(name: "1 DAY", value: "1"),
     RtShowTheLast(name: "3 DAYS", value: "3"),
     RtShowTheLast(name: "5 DAYS", value: "5"),
-    RtShowTheLast(name: "7 DAYS", value: "7"),
+    // RtShowTheLast(name: "7 DAYS", value: "7"),
     RtShowTheLast(name: "14 DAYS", value: "14"),
   ];
 

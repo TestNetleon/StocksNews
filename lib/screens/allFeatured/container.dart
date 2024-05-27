@@ -39,9 +39,9 @@ class AllFeaturedContainer extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return Divider(
+          return const Divider(
+            height: 16,
             color: ThemeColors.greyBorder,
-            height: 15.sp,
           );
         },
         itemCount: provider.data?.length ?? 0,

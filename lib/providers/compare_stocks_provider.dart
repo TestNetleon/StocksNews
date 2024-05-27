@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
+import '../widgets/custom/alert_popup.dart';
 import 'user_provider.dart';
 
 //
@@ -153,6 +154,10 @@ class CompareStocksProvider extends ChangeNotifier {
         }
       } else {
         // showErrorMessage(message: res.message);
+        popUpAlert(
+            message: res.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
       setStatus(Status.loaded);
     } catch (e) {
