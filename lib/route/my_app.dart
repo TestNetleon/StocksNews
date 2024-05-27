@@ -123,7 +123,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       if (_appLifecycleState == null) {
         //
       } else {
-        Navigator.pushNamed(context, Tabs.path);
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
       }
       Utils().showLog("--goto dashboard---");
     } else {

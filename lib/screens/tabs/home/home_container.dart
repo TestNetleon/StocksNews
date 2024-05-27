@@ -22,8 +22,11 @@ class HomeContainer extends StatelessWidget {
     HomeProvider provider = context.watch<HomeProvider>();
 
     if (!provider.isLoadingSlider &&
+        provider.statusSlider != Status.ideal &&
         !provider.isLoadingHomeAlert &&
+        provider.statusHomeAlert != Status.ideal &&
         !provider.isLoadingTrending &&
+        provider.statusTrending != Status.ideal &&
         provider.homeSliderRes == null &&
         provider.homeAlertData == null &&
         provider.homeTrendingRes == null) {
