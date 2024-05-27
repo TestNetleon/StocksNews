@@ -116,7 +116,7 @@ class Routes {
     IndicesIndex.path: (_) => const IndicesIndex(),
     MostActiveIndex.path: (_) => const MostActiveIndex(),
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
-    ServerErrorWidget.path: (_) => const ServerErrorWidget(),
+    // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
     InternetErrorWidget.path: (_) => const InternetErrorWidget(),
   };
 

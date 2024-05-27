@@ -6,9 +6,28 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
-class ServerErrorWidget extends StatelessWidget {
+class ServerError extends StatefulWidget {
   static const path = "ServerErrorWidget";
-  const ServerErrorWidget({super.key});
+
+  const ServerError({
+    required this.errorCode,
+    required this.onClick,
+    super.key,
+  });
+
+  final int errorCode;
+  final void Function()? onClick;
+
+  @override
+  State<ServerError> createState() => _ServerErrorState();
+}
+
+class _ServerErrorState extends State<ServerError> {
+  @override
+  void dispose() {
+    isShowingError = false;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +64,11 @@ class ServerErrorWidget extends StatelessWidget {
             ),
             const SpacerVertical(),
             ThemeButtonSmall(
-              onPressed: () {},
+              onPressed: () {
+                isShowingError = false;
+                Navigator.pop(context);
+                if (widget.onClick != null) widget.onClick!();
+              },
               showArrow: false,
               text: "Refresh",
               fontBold: true,

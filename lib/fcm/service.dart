@@ -379,6 +379,7 @@ Future saveFCMapi({String? value, String? address}) async {
       url: Apis.saveFCM,
       request: request,
       showProgress: false,
+      showErrorOnFull: false,
     );
 
     if (response.status) {

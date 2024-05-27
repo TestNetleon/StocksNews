@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,6 @@ import 'package:stocks_news_new/api/third_party_api_requester.dart'
     as third_party_api;
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/graph_data_res.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_sentiment_res.dart';
@@ -25,8 +23,8 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
-import 'package:stocks_news_new/widgets/app_update_content.dart';
 
 class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
@@ -507,62 +505,62 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
-      _showUpdateDialog(extra);
+      showAppUpdateDialog(extra);
     } else if (Platform.isIOS &&
         (extra.iOSBuildCode ?? 0) > int.parse(buildCode)) {
-      _showUpdateDialog(extra);
+      showAppUpdateDialog(extra);
     }
   }
 
-  void _showUpdateDialog(Extra extra) {
-    showGeneralDialog(
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionBuilder: (context, a1, a2, widget) {
-        return SafeArea(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Transform.scale(
-              scale: a1.value,
-              child: Opacity(
-                opacity: a1.value,
-                child: Stack(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    Dialog(
-                      insetPadding: EdgeInsets.symmetric(
-                        horizontal:
-                            ScreenUtil().screenWidth * (isPhone ? .1 : .2),
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      child: AppUpdateContent(extra: extra),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-      transitionDuration: const Duration(milliseconds: 200),
-      barrierDismissible: true,
-      barrierLabel: '',
-      context: navigatorKey.currentContext!,
-      pageBuilder: (context, animation1, animation2) {
-        return const SizedBox();
-      },
-    );
-  }
+  // void _showUpdateDialog(Extra extra) {
+  //   showGeneralDialog(
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     transitionBuilder: (context, a1, a2, widget) {
+  //       return SafeArea(
+  //         child: Align(
+  //           alignment: Alignment.bottomCenter,
+  //           child: Transform.scale(
+  //             scale: a1.value,
+  //             child: Opacity(
+  //               opacity: a1.value,
+  //               child: Stack(
+  //                 children: [
+  //                   GestureDetector(
+  //                     onTap: () {},
+  //                     child: Container(
+  //                       width: double.infinity,
+  //                       height: double.infinity,
+  //                       color: Colors.transparent,
+  //                     ),
+  //                   ),
+  //                   Dialog(
+  //                     insetPadding: EdgeInsets.symmetric(
+  //                       horizontal:
+  //                           ScreenUtil().screenWidth * (isPhone ? .1 : .2),
+  //                     ),
+  //                     shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.circular(16.0),
+  //                     ),
+  //                     elevation: 0,
+  //                     backgroundColor: Colors.transparent,
+  //                     child: AppUpdateContent(extra: extra),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //     transitionDuration: const Duration(milliseconds: 200),
+  //     barrierDismissible: true,
+  //     barrierLabel: '',
+  //     context: navigatorKey.currentContext!,
+  //     pageBuilder: (context, animation1, animation2) {
+  //       return const SizedBox();
+  //     },
+  //   );
+  // }
 
   Future updateInAppMsgStatus(id) async {
     notifyListeners();

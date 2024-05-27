@@ -36,6 +36,11 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    getAlerts();
+  }
+
   Future getAlerts({showProgress = false, loadMore = false}) async {
     // log("Can load more $canLoadMore");
     if (loadMore) {
@@ -55,6 +60,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.alerts,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -98,7 +104,10 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-          url: Apis.deleteAlertlist, request: request, showProgress: true);
+        url: Apis.deleteAlertlist,
+        request: request,
+        showProgress: true,
+      );
 
       if (response.status) {
         _data?.data?.removeWhere((element) => element.id == id);

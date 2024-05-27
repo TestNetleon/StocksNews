@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/app_update_content.dart';
 import 'package:stocks_news_new/widgets/bottom_sheet_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 
@@ -290,4 +293,105 @@ class CommonSnackbar {
           .then((value) => _isShowing = false);
     }
   }
+}
+
+void showAppUpdateDialog(Extra extra) {
+  showGeneralDialog(
+    barrierColor: Colors.black.withOpacity(0.5),
+    transitionBuilder: (context, a1, a2, widget) {
+      return SafeArea(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  Dialog(
+                    insetPadding: EdgeInsets.symmetric(
+                      horizontal:
+                          ScreenUtil().screenWidth * (isPhone ? .1 : .2),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    child: AppUpdateContent(extra: extra),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 200),
+    barrierDismissible: true,
+    barrierLabel: '',
+    context: navigatorKey.currentContext!,
+    pageBuilder: (context, animation1, animation2) {
+      return const SizedBox();
+    },
+  );
+}
+
+void showErrorFullScreenDialog({errorCode, onClick}) {
+  showGeneralDialog(
+    barrierColor: Colors.black.withOpacity(0.5),
+    transitionBuilder: (context, a1, a2, widget) {
+      return SafeArea(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  Dialog(
+                    insetPadding: EdgeInsets.zero,
+                    // insetPadding: EdgeInsets.symmetric(
+                    //   horizontal:
+                    //       ScreenUtil().screenWidth * (isPhone ? .1 : .2),
+                    // ),
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(16.0),
+                    // ),
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    child: ServerError(errorCode: errorCode, onClick: onClick),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 200),
+    barrierDismissible: false,
+    barrierLabel: '',
+    context: navigatorKey.currentContext!,
+    pageBuilder: (context, animation1, animation2) {
+      return const SizedBox();
+    },
+  );
 }
