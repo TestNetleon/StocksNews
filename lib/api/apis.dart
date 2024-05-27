@@ -29,7 +29,8 @@ class Apis {
   static const homeSentiment = "/home-sentiment";
   static const homeTrending = "/home-trending";
   static const homeInsider = "/home-insider";
-  static const homeAlert = "/home-alerts";
+  // static const homeAlert = "/home-alerts"; TODO
+  static const homeAlert = "/home-alerts-data";
   static const newsAlertGraphData = "/stock-historical-chart";
   static const featuredTicker = "/featured-tickers";
   static const mostActivePenny = "/most-active-penny-stocks";

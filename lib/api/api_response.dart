@@ -14,9 +14,6 @@ class ApiResponse {
     this.message,
     this.data,
     this.session = true,
-    this.totalAmount,
-    this.totalCount,
-    this.pagecount,
     this.extra,
   });
 
@@ -26,23 +23,15 @@ class ApiResponse {
 
   final String? message;
   final dynamic data;
-  final dynamic totalAmount;
-  final dynamic totalCount;
-  final dynamic pagecount;
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(
         status: json["status"],
         message: json["message"],
         data: json["data"] is List
             ? List<dynamic>.from(json["data"])
-            // ? List<dynamic>.from(json["data"].map((x) => dynamic.fromJson(x)))
             : json["data"],
-        totalAmount: json['total_amount'],
-        totalCount: json['total_count'],
-        pagecount: json["page_count"],
         extra: json["extra"] is List
             ? List<dynamic>.from(json["extra"])
-            // ? List<dynamic>.from(json["data"].map((x) => dynamic.fromJson(x)))
             : json["extra"] == null
                 ? null
                 : Extra.fromJson(json["extra"]),

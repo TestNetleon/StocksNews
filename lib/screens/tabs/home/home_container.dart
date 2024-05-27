@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
+// ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index_copy.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
@@ -46,13 +48,7 @@ class HomeContainer extends StatelessWidget {
               const HomeTopNewsSlider(),
               // ),
               Padding(
-                padding: EdgeInsets.fromLTRB(
-                  Dimen.padding.sp,
-                  0,
-                  // Dimen.padding.sp,
-                  Dimen.padding.sp,
-                  0,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
