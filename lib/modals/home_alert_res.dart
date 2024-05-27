@@ -19,7 +19,7 @@ class HomeAlertsRes {
   final String change;
   final num changesPercentage;
   final num previousClose;
-  final List<Chart>? chart;
+  List<Chart>? chart;
 
   HomeAlertsRes({
     required this.symbol,
@@ -61,10 +61,10 @@ class HomeAlertsRes {
 
 class Chart {
   final DateTime date;
+  final double close;
   // final double open;
   // final double low;
   // final double high;
-  final double close;
   // final int volume;
 
   Chart({
