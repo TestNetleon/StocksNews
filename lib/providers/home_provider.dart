@@ -5,11 +5,15 @@ import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/api/third_party_api_requester.dart'
+    as third_party_api;
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/graph_data_res.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_sentiment_res.dart';
@@ -101,7 +105,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   void setTotalsWatchList(int value) {
     totalWatchList = value;
-    log("TOTAL WATCHLIST => $totalWatchList");
     notifyListeners();
   }
 
@@ -122,10 +125,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future refreshData(String? inAppMsgId) async {
     getHomeSlider();
-    // getIpoData();
-    // getStockInFocus();
     getHomeTrendingData();
     getHomeAlerts();
+
+    // getIpoData();
+    // getStockInFocus();
     // getHomeSentimentData();
     // getHomeInsiderData(inAppMsgId);
   }
@@ -229,6 +233,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future getHomeAlerts({bool userAvail = true}) async {
     _statusHomeAlert = Status.loading;
+    _homeAlertData = null;
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     try {
@@ -391,6 +396,86 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
+  Future<List<Chart>?> getHomeAlertsGraphData({required String symbol}) async {
+    String interval = "15min";
+
+    // Current time in GMT-4
+    DateTime currentTime =
+        DateTime.now().toUtc().subtract(const Duration(hours: 4));
+
+    // Fixed time 10:30 AM in GMT-4
+    DateTime fixedTime = DateTime.utc(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      10,
+      30,
+    ).toUtc();
+
+    if (currentTime.isBefore(fixedTime)) {
+      interval = '5min';
+    }
+    // Adjust for GMT-4
+    DateTime today =
+        DateTime.now().toUtc().subtract(const Duration(hours: 4)).toLocal();
+    String formattedToday = DateFormat('yyyy-MM-dd').format(today);
+
+    try {
+      ApiResponse response = await third_party_api.apiRequest(
+        url:
+            "$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+        showProgress: false,
+      );
+
+      if (response.status == true) {
+        List<Chart> data = response.data == null
+            ? []
+            : List<Chart>.from(response.data!.map((x) => Chart.fromJson(x)));
+        int? index =
+            _homeAlertData?.indexWhere((element) => element.symbol == symbol);
+        if (index != null && index >= 0) {
+          _homeAlertData![index].chart = data;
+          notifyListeners();
+        }
+        return data;
+      } else {
+        int weekDay = today.weekday;
+        DateTime adjustedToday;
+
+        if (weekDay == DateTime.monday) {
+          adjustedToday = today.subtract(const Duration(days: 3));
+        } else if (weekDay == DateTime.sunday) {
+          adjustedToday = today.subtract(const Duration(days: 2));
+        } else {
+          adjustedToday = today.subtract(const Duration(days: 1));
+        }
+        String formattedNewDate =
+            DateFormat('yyyy-MM-dd').format(adjustedToday);
+        ApiResponse res = await third_party_api.apiRequest(
+          url:
+              "15min/$symbol?from=$formattedNewDate&to=$formattedNewDate&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+          showProgress: false,
+        );
+
+        if (res.status == true) {
+          List<Chart> data = res.data == null
+              ? []
+              : List<Chart>.from(res.data!.map((x) => Chart.fromJson(x)));
+          int? index =
+              _homeAlertData?.indexWhere((element) => element.symbol == symbol);
+          if (index != null && index >= 0) {
+            _homeAlertData![index].chart = data;
+            notifyListeners();
+          }
+          return data;
+        }
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   // Future logoutUser(request) async {
   //   try {
   //     ApiResponse res = await apiRequest(
@@ -419,8 +504,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     // String versionName = packageInfo.version;
     String buildCode = packageInfo.buildNumber;
-
-    log("*************** AVC ******************* ${extra.iOSBuildCode} == $buildCode");
 
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {

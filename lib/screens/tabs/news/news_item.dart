@@ -156,6 +156,11 @@ class NewsItem extends StatelessWidget {
                           style: stylePTSansRegular(
                               color: ThemeColors.greyText, fontSize: 13),
                         ),
+                        // Text(
+                        //   " | ${news?.postDateString} ",
+                        //   style: stylePTSansRegular(
+                        //       color: ThemeColors.greyText, fontSize: 13),
+                        // ),
                       ],
                     ),
                   ),

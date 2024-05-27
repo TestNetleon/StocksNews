@@ -10,22 +10,26 @@ class SearchRes {
   final String id;
   final String symbol;
   final String name;
+  final String? image;
 //
   SearchRes({
     required this.id,
     required this.symbol,
     required this.name,
+    this.image,
   });
 
   factory SearchRes.fromJson(Map<String, dynamic> json) => SearchRes(
         id: json["_id"],
         symbol: json["symbol"],
         name: json["name"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "symbol": symbol,
         "name": name,
+        "image": image,
       };
 }

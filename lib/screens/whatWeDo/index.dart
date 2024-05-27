@@ -51,11 +51,13 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
     if (provider.data == null || provider.data?.isEmpty == true) {
       provider.getWhatWeDO(reset: true);
     }
+    // provider.getWhatWeDO(reset: true);
   }
 
   @override
   Widget build(BuildContext context) {
     WhatWeDoProvider provider = context.watch<WhatWeDoProvider>();
+
     return provider.isLoading && provider.data == null
         ? const SizedBox()
         : !provider.isLoading && provider.data == null
@@ -73,33 +75,47 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                     const ScreenTitle(title: "What We Do"),
                     Expanded(
                       child: CustomTabContainerNEW(
+                        tabsPadding: REdgeInsets.only(bottom: 10.sp),
                         onChange: (index) => provider.onTapChange(index),
                         scrollable: true,
                         tabs: List.generate(provider.data?.length ?? 0,
                             (index) => '${provider.data?[index].title}'),
-                        widgets: List.generate(
-                          provider.data?.length ?? 0,
-                          (index) => BaseUiContainer(
-                            isLoading: provider.isLoadingData &&
-                                provider.statusData != Status.ideal,
-                            hasData:
-                                !provider.isLoadingData && provider.res != null,
-                            error: provider.error,
+                        widgets:
+                            List.generate(provider.data?.length ?? 0, (index) {
+                          TabsWhatWeDoHolder? whatWeDoHolder =
+                              provider.weDoData[provider.data?[index].slug];
+
+                          return BaseUiContainer(
+                            // isLoading: provider.isLoadingData
+                            // hasData:
+                            //     !provider.isLoadingData && provider.res != null,
+                            // error: provider.error,
+
+                            error: whatWeDoHolder?.error,
+                            hasData: whatWeDoHolder?.data != null,
+                            isLoading: whatWeDoHolder?.loading ?? true,
+
+                            errorDispCommon: true,
                             showPreparingText: true,
+                            // onRefresh: () => provider.getWhatWeDOData(
+                            //     slug: provider.data?[index].slug),
+                            onRefresh: () => provider.getWhatWeDODataNew(
+                                slug: provider.data?[index].slug),
                             child: SingleChildScrollView(
-                                child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.sp),
-                              child: HtmlWidget(
-                                onLoadingBuilder:
-                                    (context, element, loadingProgress) {
-                                  return const ProgressDialog();
-                                },
-                                provider.res?.page.description ?? "",
-                                textStyle: stylePTSansRegular(height: 1.5),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.sp),
+                                child: HtmlWidget(
+                                  onLoadingBuilder:
+                                      (context, element, loadingProgress) {
+                                    return const ProgressDialog();
+                                  },
+                                  whatWeDoHolder?.data?.page.description ?? "",
+                                  textStyle: stylePTSansRegular(height: 1.5),
+                                ),
                               ),
-                            )),
-                          ),
-                        ),
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ],

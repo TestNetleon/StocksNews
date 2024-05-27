@@ -25,17 +25,16 @@ class Apis {
   static const indices = "/indices";
 
   static const saleOnStocks = "/stocks-on-sale";
-
   static const highPE = "/high-pe-ratio-stocks";
   static const lowPE = "/low-pe-ratio-stocks";
   static const fiftyTwoWeekHigh = "/week-highs";
   static const fiftyTwoWeekLows = "/week-lows";
-
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";
   static const homeTrending = "/home-trending";
   static const homeInsider = "/home-insider";
-  static const homeAlert = "/home-alerts";
+  // static const homeAlert = "/home-alerts"; TODO
+  static const homeAlert = "/home-alerts-data";
   static const newsAlertGraphData = "/stock-historical-chart";
   static const featuredTicker = "/featured-tickers";
   static const mostActivePenny = "/most-active-penny-stocks";
@@ -43,9 +42,7 @@ class Apis {
 
   static const search = "/search";
   static const searchWithNews = "/search_with_news";
-
   static const getMostSearch = "/most-search-symbol";
-
   static const latestNews = "/latest-news";
   static const trending = "/trending";
   static const insiderTrading = "/insider-trading";

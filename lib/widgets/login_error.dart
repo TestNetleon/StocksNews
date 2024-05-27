@@ -77,13 +77,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
-import '../screens/auth/bottomSheets/login_sheet.dart';
 
 //
 class LoginError extends StatelessWidget {
@@ -94,9 +90,9 @@ class LoginError extends StatelessWidget {
     this.state,
     this.smallHeight = false,
     super.key,
-    this.onClick,
+    required this.onClick,
   });
-  final Function()? onClick;
+  final Function() onClick;
   final String? error;
   final String? state;
   final Function()? onRefresh;
@@ -140,7 +136,7 @@ class LoginError extends StatelessWidget {
                   //       ? await loginSheet(state: state)
                   //       : await loginSheetTablet(state: state);
                   // },
-                  onPressed: onClick!,
+                  onPressed: onClick,
                   text: "Log in",
                   showArrow: false,
                   // fullWidth: false,

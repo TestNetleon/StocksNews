@@ -71,8 +71,8 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
     });
   }
 
-  void _callAPI({showProgress = false, loadMore = false}) {
-    context.read<NewsTypeProvider>().getNewsTypeData(
+  Future _callAPI({showProgress = false, loadMore = false}) async {
+    await context.read<NewsTypeProvider>().getNewsTypeData(
           showProgress: showProgress,
           type: widget.type,
           id: widget.data?.id,

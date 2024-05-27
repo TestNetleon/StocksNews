@@ -58,7 +58,6 @@ class LowPriceStocksProvider extends ChangeNotifier {
   }
 
   void tabChange(index) {
-    print("olooopp === ${tabs?[index].name}");
     if (tabs?[index].name == "Stocks On Sale") {
       if (selectedIndex != index) {
         selectedIndex = index;

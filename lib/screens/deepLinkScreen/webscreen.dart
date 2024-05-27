@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
@@ -33,7 +34,7 @@ class _AnalysisForecastState extends State<WebviewLink> {
   }
 
   void _setData({Uri? url, String? stringURL}) {
-    log('navigated url: $url');
+    Utils().showLog('navigated url: $url');
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))

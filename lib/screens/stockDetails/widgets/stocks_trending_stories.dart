@@ -6,20 +6,25 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
+import 'stockTopWidgets/common_heading.dart';
+
 class StocksTrendingStories extends StatelessWidget {
   const StocksTrendingStories({super.key});
 //
   @override
   Widget build(BuildContext context) {
-    List<News>? newsPost =
-        context.watch<StockDetailProvider>().dataMentions?.newsPost;
+    StockDetailProvider provider = context.watch<StockDetailProvider>();
+    List<News>? newsPost = provider.dataMentions?.newsPost;
+    // KeyStats? keyStats = provider.data?.keyStats;
     if (newsPost == null || newsPost.isEmpty) return const SizedBox();
     return Column(
       children: [
-        // const ScreenTitle(
-        //   title: "Trending Stories",
+        // ScreenTitle(
+        //   title: "${keyStats?.name} (${keyStats?.symbol})",
         //   // style: stylePTSansRegular(fontSize: 20),
         // ),
+        const CommonHeadingStockDetail(),
+
         ListView.separated(
           itemCount: newsPost.length,
           physics: const NeverScrollableScrollPhysics(),

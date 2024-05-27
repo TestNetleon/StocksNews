@@ -26,7 +26,7 @@ class NewsTypeData extends StatelessWidget {
       error: newsHolder?.error,
       hasData: newsHolder?.data != null &&
           (newsHolder?.data?.data.isNotEmpty ?? false),
-      isLoading: newsHolder?.loading ?? false,
+      isLoading: newsHolder?.loading ?? true,
       errorDispCommon: true,
       showPreparingText: true,
       onRefresh: () => provider.onRefresh(),

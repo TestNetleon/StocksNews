@@ -72,9 +72,7 @@ class _AlertBaseState extends State<AlertBase> {
                     child: LoginError(
                       error: "User Not logged in",
                       onClick: () async {
-                        isPhone
-                            ? await loginSheet(dontPop: "true")
-                            : await loginSheetTablet(dontPop: "true");
+                        isPhone ? await loginSheet() : await loginSheetTablet();
                         await _getData();
                       },
                     ),

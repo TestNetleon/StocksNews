@@ -12,6 +12,7 @@ import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
+import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -34,10 +35,19 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    getWelcomeData();
+    _callAPI();
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
+  }
+
+  void _callAPI() async {
+    bool firstTime = // kDebugMode ? true :
+        await Preference.getFirstTime();
+    log("--First Time $firstTime");
+    if (firstTime) {
+      getWelcomeData();
+    }
   }
 
   void _getDeviceType() async {

@@ -16,6 +16,9 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
+
+import 'spacer_horizontal.dart';
 
 //
 class TextInputFieldSearchCommon extends StatefulWidget {
@@ -233,18 +236,33 @@ class _TextInputFieldSearchCommonState
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 6.sp),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  Text(
-                                    data?.symbol ?? '',
-                                    style: stylePTSansRegular(fontSize: 14),
-                                  ),
-                                  Text(
-                                    data?.name ?? '',
-                                    style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText),
+                                  Container(
+                                      width: 43.sp,
+                                      height: 43.sp,
+                                      padding: EdgeInsets.all(5.sp),
+                                      child: CachedNetworkImagesWidget(
+                                          data?.image)),
+                                  const SpacerHorizontal(width: 6),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data?.symbol ?? '',
+                                          style:
+                                              stylePTSansRegular(fontSize: 14),
+                                        ),
+                                        Text(
+                                          data?.name ?? '',
+                                          style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

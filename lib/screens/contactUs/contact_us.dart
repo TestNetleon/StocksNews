@@ -48,7 +48,7 @@ class _ContactUsBaseState extends State<ContactUsBase> {
             ScreenTitle(title: "Contact Us"),
             Expanded(
               child: ContactUsContainer(),
-            )
+            ),
           ],
         ),
       ),

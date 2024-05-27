@@ -37,6 +37,9 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   WhatWeDoRes? _res;
   WhatWeDoRes? get res => _res;
 
+  Map<String, TabsWhatWeDoHolder?> _weDoData = {};
+  Map<String, TabsWhatWeDoHolder?> get weDoData => _weDoData;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -46,7 +49,10 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
     if (selectedIndex != index) {
       selectedIndex = index;
       notifyListeners();
-      getWhatWeDOData(slug: _data?[index].slug, showProgress: false);
+      if (_weDoData[data?[selectedIndex].slug]?.data != null ||
+          _weDoData[data?[selectedIndex].slug]?.error != null) return;
+      // getWhatWeDOData(slug: _data?[index].slug, showProgress: false);
+      getWhatWeDODataNew(slug: _data?[index].slug, showProgress: false);
     }
   }
 
@@ -80,7 +86,8 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
 
       if (response.status) {
         _data = whatWeDoTabResFromJson(jsonEncode(response.data)).list;
-        getWhatWeDOData(slug: _data?[0].slug);
+        // getWhatWeDOData(slug: _data?[0].slug);
+        getWhatWeDODataNew(slug: _data?[0].slug);
       } else {
         _data = null;
         _error = response.message;
@@ -97,8 +104,18 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future getWhatWeDOData({showProgress = true, String? slug}) async {
-    _statusData = Status.loading;
+  Future getWhatWeDODataNew({
+    refreshing = false,
+    showProgress = false,
+    String? slug,
+  }) async {
+    _weDoData[slug ?? ""] = TabsWhatWeDoHolder(
+      data: null,
+      error: null,
+      loading: true,
+    );
+
+    // _statusData = Status.loading;
     notifyListeners();
 
     Map request = {
@@ -114,22 +131,84 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
       );
 
       if (response.status) {
-        _res = whatWeDoResFromJson(jsonEncode(response.data));
+        // _res = whatWeDoResFromJson(jsonEncode(response.data));
+        _weDoData[slug ?? ""] = TabsWhatWeDoHolder(
+          data: whatWeDoResFromJson(jsonEncode(response.data)),
+          error: null,
+          loading: false,
+        );
       } else {
-        _res = null;
-        _error = response.message;
+        // _res = null;
+        _weDoData[slug ?? ""] = TabsWhatWeDoHolder(
+          data: null,
+          error: response.message,
+          loading: false,
+        );
+        // _error = response.message;
       }
 
       _statusData = Status.loaded;
       notifyListeners();
       return ApiResponse(status: response.status);
     } catch (e) {
-      _res = null;
-      _error = Const.errSomethingWrong;
-
+      // _res = null;
+      // _error = Const.errSomethingWrong;
+      _weDoData[slug ?? ""] = TabsWhatWeDoHolder(
+        data: null,
+        error: Const.errSomethingWrong,
+        loading: false,
+      );
       log(e.toString());
       _statusData = Status.loaded;
       notifyListeners();
     }
   }
+
+  // Future getWhatWeDOData({showProgress = true, String? slug}) async {
+  //   _statusData = Status.loading;
+  //   notifyListeners();
+
+  //   Map request = {
+  //     "token":
+  //         navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //     "slug": slug,
+  //   };
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.whatWeDo,
+  //       request: request,
+  //       showProgress: showProgress,
+  //     );
+
+  //     if (response.status) {
+  //       _res = whatWeDoResFromJson(jsonEncode(response.data));
+  //     } else {
+  //       _res = null;
+  //       _error = response.message;
+  //     }
+
+  //     _statusData = Status.loaded;
+  //     notifyListeners();
+  //     return ApiResponse(status: response.status);
+  //   } catch (e) {
+  //     _res = null;
+  //     _error = Const.errSomethingWrong;
+
+  //     log(e.toString());
+  //     _statusData = Status.loaded;
+  //     notifyListeners();
+  //   }
+  // }
+}
+
+class TabsWhatWeDoHolder {
+  WhatWeDoRes? data;
+  String? error;
+  bool loading;
+
+  TabsWhatWeDoHolder({
+    this.data,
+    this.loading = true,
+    this.error,
+  });
 }

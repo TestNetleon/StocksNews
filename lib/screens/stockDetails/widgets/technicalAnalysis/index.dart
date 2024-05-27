@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../stockTopWidgets/common_heading.dart';
 import 'test/container.dart';
 
 class StocksTechnicalAnalysis extends StatefulWidget {
@@ -34,6 +35,7 @@ class _StocksTechnicalAnalysisState extends State<StocksTechnicalAnalysis> {
 //
     return Column(
       children: [
+        const CommonHeadingStockDetail(),
         ScreenTitle(
           // title: "${provider.data?.keyStats?.symbol} ",
           title:

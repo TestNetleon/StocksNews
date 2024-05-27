@@ -8,7 +8,6 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/analysis_forecast.d
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mentions.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_stories.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mention_with.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
@@ -54,7 +53,7 @@ class StockDetailsBase extends StatelessWidget {
             "News Mentions",
             "Recent Reddit Posts and X Tweets",
             "Trending Stories",
-            "Popular Stocks",
+            // "Popular Stocks",
           ],
           widgets: [
             BaseUiContainer(
@@ -137,8 +136,11 @@ class StockDetailsBase extends StatelessWidget {
                 left: Dimen.padding.sp,
                 right: Dimen.padding.sp,
               ),
-              child: const StockDetailsTabContainer(
-                content: StocksScoreGrades(),
+              child: StockDetailsTabContainer(
+                content: StocksScoreGrades(
+                  symbol: symbol,
+                  inAppMsgId: inAppMsgId,
+                ),
               ),
             ),
             Padding(
@@ -205,15 +207,15 @@ class StockDetailsBase extends StatelessWidget {
                 content: StocksTrendingStories(),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
-              ),
-              child: const StockDetailsTabContainer(
-                content: StockMentionWith(),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(
+            //     left: Dimen.padding.sp,
+            //     right: Dimen.padding.sp,
+            //   ),
+            //   child: const StockDetailsTabContainer(
+            //     content: StockMentionWith(),
+            //   ),
+            // ),
           ],
         ),
         Visibility(
@@ -243,7 +245,7 @@ class StockDetailsBase extends StatelessWidget {
               child: const AddToAlertWatchlist(),
             ),
           ),
-        )
+        ),
       ],
     );
   }

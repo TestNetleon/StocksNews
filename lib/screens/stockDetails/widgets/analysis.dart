@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../widgets/theme_image_view.dart';
+import 'stockTopWidgets/common_heading.dart';
 
 //
 class Analysis extends StatefulWidget {
@@ -51,6 +52,7 @@ class _AnalysisState extends State<Analysis> {
       showPreparingText: true,
       child: Column(
         children: [
+          const CommonHeadingStockDetail(),
           ScreenTitle(
             // title: "Stock Analysis",
             subTitle: provider.analysisRes?.text,

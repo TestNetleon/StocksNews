@@ -65,6 +65,7 @@ class TextRes {
   final String? subTitle;
   final String? note;
   final String? other;
+  final String? sentimentText;
 
   TextRes({
     this.trending,
@@ -78,6 +79,7 @@ class TextRes {
     this.generalNews,
     this.now,
     this.recently,
+    this.sentimentText,
     this.subTitle,
     this.cap,
     this.mentionText,
@@ -99,6 +101,7 @@ class TextRes {
         generalNews: json["general_news"],
         now: json["now"],
         note: json["note"],
+        sentimentText: json["sentiment_text"],
         other: json["other"],
         recently: json["recently"],
         cap: json["cap"],
@@ -109,6 +112,7 @@ class TextRes {
         "gainers": gainers,
         "losers": losers,
         "mentions_text": mentionText,
+        "sentiment_text": sentimentText,
         "recent_mentions": recentMentions,
         "hot_stocks": hotStocks,
         "most_bullish": mostBullish,

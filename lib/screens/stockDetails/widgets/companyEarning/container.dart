@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/screens/stockDetails/widgets/stockTopWidgets/common_heading.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -92,6 +93,7 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                 //   // title: earning?.title ?? "",
                 //   subTitle: earning?.text,
                 // ),
+                const CommonHeadingStockDetail(),
                 Visibility(
                   visible: earning?.text != '',
                   child: Padding(

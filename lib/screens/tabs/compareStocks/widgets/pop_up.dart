@@ -13,6 +13,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../widgets/cache_network_image.dart';
+import '../../../../widgets/spacer_horizontal.dart';
+
 //
 class CompareStocksPopup extends StatefulWidget {
   const CompareStocksPopup({super.key});
@@ -82,7 +85,7 @@ class _CompareStocksPopupState extends State<CompareStocksPopup> {
             borderRadius: BorderRadius.circular(10.sp),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10.sp),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10.sp),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -189,18 +192,33 @@ class _CompareStocksPopupState extends State<CompareStocksPopup> {
                                 symbol: data?.symbol ?? "", index: index),
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 6.sp),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  Text(
-                                    data?.symbol ?? '',
-                                    style: stylePTSansRegular(fontSize: 14),
-                                  ),
-                                  Text(
-                                    data?.name ?? '',
-                                    style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText),
+                                  Container(
+                                      width: 43.sp,
+                                      height: 43.sp,
+                                      padding: EdgeInsets.all(5.sp),
+                                      child: CachedNetworkImagesWidget(
+                                          data?.image)),
+                                  const SpacerHorizontal(width: 6),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          data?.symbol ?? '',
+                                          style:
+                                              stylePTSansRegular(fontSize: 14),
+                                        ),
+                                        Text(
+                                          data?.name ?? '',
+                                          style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

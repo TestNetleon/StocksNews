@@ -42,6 +42,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
       };
+
       ApiResponse response = await apiRequest(
         url: Apis.notifications,
         request: request,

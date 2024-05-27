@@ -7,8 +7,36 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
-class StocksScoreGrades extends StatelessWidget {
-  const StocksScoreGrades({super.key});
+import '../stockTopWidgets/common_heading.dart';
+
+class StocksScoreGrades extends StatefulWidget {
+  final String symbol;
+  final String? inAppMsgId;
+  const StocksScoreGrades({super.key, required this.symbol, this.inAppMsgId});
+
+  @override
+  State<StocksScoreGrades> createState() => _StocksScoreGradesState();
+}
+
+class _StocksScoreGradesState extends State<StocksScoreGrades> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getData();
+    });
+  }
+
+  _getData() {
+    StockDetailProvider provider = context.read<StockDetailProvider>();
+    if (provider.otherData == null) {
+      provider.getStockOtherDetails(
+        symbol: widget.symbol,
+        inAppMsgId: widget.inAppMsgId,
+      );
+    }
+  }
+
 //
   @override
   Widget build(BuildContext context) {
@@ -50,6 +78,7 @@ class StocksScoreGrades extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 20.sp),
         child: Column(
           children: [
+            const CommonHeadingStockDetail(),
             ScreenTitle(
               // title: score?.title ?? "",
               subTitle: score?.text,

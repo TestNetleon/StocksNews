@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
-import '../providers/home_provider.dart';
 import '../utils/dialogs.dart';
 
 class InfoBottomSheet extends StatelessWidget {
@@ -26,7 +26,11 @@ class InfoBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? text = context.read<HomeProvider>().homeSentimentRes?.text;
+    String? text = context
+        .read<RedditTwitterProvider>()
+        .socialSentimentRes
+        ?.text
+        ?.sentimentText;
 
     return InkWell(
       onTap: () => _showBottomSheet(text: text),
