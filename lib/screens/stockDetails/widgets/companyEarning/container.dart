@@ -133,8 +133,9 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: AutoSizeText(
-                                      maxLines: 1,
+                                      maxLines: 2,
                                       "EPS (Earnings Per Share)",
+                                      textAlign: TextAlign.center,
                                       style: stylePTSansRegular(
                                         fontSize: 12,
                                         color: ThemeColors.greyText,
@@ -145,8 +146,9 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                                 child: Align(
                                   alignment: Alignment.centerRight,
                                   child: AutoSizeText(
-                                    maxLines: 1,
-                                    "REVENUE",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    "REVENUE (%change)",
                                     style: stylePTSansRegular(
                                       fontSize: 12,
                                       color: ThemeColors.greyText,
