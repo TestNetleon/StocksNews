@@ -11,6 +11,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/screen_title_simmer.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -54,26 +55,32 @@ class Insider extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ScreenTitle(
-              title: "Insider Trading",
-              subTitle: provider.textRes?.subTitle,
-              optionalWidget: GestureDetector(
-                onTap: _filterClick,
-                child: const Icon(
-                  Icons.filter_alt,
-                  color: ThemeColors.accent,
-                ),
+            provider.isLoading
+                ? const ScreenTitleSimmer(
+                    optionalWidget: true,
+                    twoLineSubTitle: true,
+                  )
+                : ScreenTitle(
+                    title: "Insider Trading",
+                    subTitle: provider.textRes?.subTitle,
+                    optionalWidget: GestureDetector(
+                      onTap: _filterClick,
+                      child: const Icon(
+                        Icons.filter_alt,
+                        color: ThemeColors.accent,
+                      ),
+                    ),
+                  ),
+            if (provider.isLoading == false)
+              TextInputFieldSearch(
+                hintText: "Find by insider or company name",
+                onSubmitted: (text) {
+                  closeKeyboard();
+                  provider.getData(search: text, clear: false);
+                },
+                searching: provider.isSearching,
+                editable: true,
               ),
-            ),
-            TextInputFieldSearch(
-              hintText: "Find by insider or company name",
-              onSubmitted: (text) {
-                closeKeyboard();
-                provider.getData(search: text, clear: false);
-              },
-              searching: provider.isSearching,
-              editable: true,
-            ),
             const Expanded(child: InsiderContent())
           ],
         ),

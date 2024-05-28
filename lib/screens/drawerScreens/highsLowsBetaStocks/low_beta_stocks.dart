@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
 import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -59,8 +59,7 @@ class _LowBetaStocksState extends State<LowBetaStocks> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (index == 0)
-                  DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),
+                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
                 HighLowBetaStocksItem(
                   data: data[index],
                   index: index,

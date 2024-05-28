@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/penny_stocks.dart';
 import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -56,8 +56,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (index == 0)
-                  DrawerScreenTitle(subTitle: provider.extra?.subTitle),
+                if (index == 0) HtmlTitle(subTitle: provider.extra?.subTitle),
                 PennyStocksItem(
                   data: data[index],
                   index: index,

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
+import 'package:stocks_news_new/screens/tabs/insider/widget/insiderScreenSimmer/insider_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -35,6 +36,7 @@ class _InsiderContentState extends State<InsiderContent> {
     InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();
 
     return BaseUiContainer(
+      placeholder: const InsiderScreenSimmer(),
       isLoading: provider.isLoading,
       hasData: provider.data != null &&
           (provider.data?.data.isNotEmpty ?? false) &&

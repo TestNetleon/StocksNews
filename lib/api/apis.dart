@@ -108,6 +108,8 @@ class Apis {
   static const mostVoliatileStocks = "/most-voliatile-stocks";
   static const mostVolumeStocks = "/unusual-volume-stocks";
   static const updateInAppCount = "/update-inapp-count";
+  static const dividends = "/dividends";
+  static const earnings = "/earnings";
 }
 
 //

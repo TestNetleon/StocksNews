@@ -1,0 +1,71 @@
+// To parse this JSON data, do
+//
+//     final earningsRes = earningsResFromJson(jsonString);
+
+import 'dart:convert';
+
+List<EarningsRes> earningsResFromJson(String str) => List<EarningsRes>.from(
+    json.decode(str).map((x) => EarningsRes.fromJson(x)));
+
+String earningsResToJson(List<EarningsRes> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class EarningsRes {
+  final dynamic symbol;
+  final dynamic name;
+  final dynamic exchangeShortName;
+  final dynamic price;
+  final dynamic eps;
+  final dynamic epsEstimated;
+  final dynamic revenue;
+  final dynamic revenueEstimated;
+  final dynamic date;
+  final dynamic fiscalDateEnding;
+  final dynamic updatedFromDate;
+  final dynamic image;
+
+  EarningsRes({
+    this.symbol,
+    this.name,
+    this.exchangeShortName,
+    this.price,
+    this.eps,
+    this.epsEstimated,
+    this.revenue,
+    this.revenueEstimated,
+    this.date,
+    this.fiscalDateEnding,
+    this.updatedFromDate,
+    this.image,
+  });
+
+  factory EarningsRes.fromJson(Map<String, dynamic> json) => EarningsRes(
+        symbol: json["symbol"],
+        name: json["name"],
+        exchangeShortName: json["exchange_short_name"],
+        price: json["price"],
+        eps: json["eps"],
+        epsEstimated: json["epsEstimated"],
+        revenue: json["revenue"],
+        revenueEstimated: json["revenueEstimated"],
+        date: json["date"],
+        fiscalDateEnding: json["fiscalDateEnding"],
+        updatedFromDate: json["updatedFromDate"],
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "symbol": symbol,
+        "name": name,
+        "exchange_short_name": exchangeShortName,
+        "price": price,
+        "eps": eps,
+        "epsEstimated": epsEstimated,
+        "revenue": revenue,
+        "revenueEstimated": revenueEstimated,
+        "date": date,
+        "fiscalDateEnding": fiscalDateEnding,
+        "updatedFromDate": updatedFromDate,
+        "image": image,
+      };
+}

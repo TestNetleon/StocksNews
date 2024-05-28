@@ -4,8 +4,10 @@ import 'package:stocks_news_new/widgets/gradient_con_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class TrendingScreenSimmerItem extends StatelessWidget {
-  const TrendingScreenSimmerItem({super.key});
+class TrendingIndustriesScreenSimmerItem extends StatelessWidget {
+  const TrendingIndustriesScreenSimmerItem(
+      {this.trendingSectorScreen = false, super.key});
+  final bool trendingSectorScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +28,15 @@ class TrendingScreenSimmerItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             GradientContainerWidget(
-              height: 20,
+              height: 30,
               borderRadius: 2.sp,
               width: 50.sp,
-            ),
-            const SpacerVertical(height: 5),
-            GradientContainerWidget(
-              height: 20,
-              borderRadius: 2.sp,
-              width: 30.sp,
             ),
           ],
         ),
         const Expanded(child: SpacerHorizontal(width: 40)),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -48,20 +44,20 @@ class TrendingScreenSimmerItem extends StatelessWidget {
                 GradientContainerWidget(
                   height: 20,
                   borderRadius: 2.sp,
-                  width: 50.sp,
-                ),
-                const SpacerVertical(height: 5),
-                GradientContainerWidget(
-                  height: 20,
-                  borderRadius: 2.sp,
                   width: 30.sp,
                 ),
+                Visibility(
+                    visible: !trendingSectorScreen,
+                    child: const SpacerVertical(height: 5)),
+                Visibility(
+                  visible: !trendingSectorScreen,
+                  child: GradientContainerWidget(
+                    height: 20,
+                    borderRadius: 2.sp,
+                    width: 50.sp,
+                  ),
+                ),
               ],
-            ),
-            const GradientContainerWidget(
-              height: 10,
-              shape: BoxShape.rectangle,
-              width: 10,
             ),
           ],
         ),

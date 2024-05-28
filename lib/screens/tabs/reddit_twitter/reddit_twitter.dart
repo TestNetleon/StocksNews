@@ -6,15 +6,15 @@ import 'package:stocks_news_new/modals/reddit_twitter_res.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/days.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/recent_mention_item.dart';
+import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/simmer_effect_reddit_twitter.dart/reddit_twi_sc_simmer.dart';
+import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/simmer_effect_reddit_twitter.dart/reddit_twitter_item_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_item.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -65,7 +65,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
             // const ScreenTitle(title: "Social Sentiment"),
             Expanded(
               child: provider.isLoading && provider.socialSentimentRes == null
-                  ? const Loading()
+                  ? const RedditTwitterScreenSimmer()
                   : provider.socialSentimentRes == null && !provider.isLoading
                       ? Center(
                           child: ErrorDisplayNewWidget(
@@ -129,25 +129,26 @@ class _RedditTwitterState extends State<RedditTwitter> {
                         ),
                       )
                     : provider.daysLoading
-                        ? SizedBox(
-                            height: 270.sp,
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const CircularProgressIndicator(
-                                    color: ThemeColors.accent,
-                                  ),
-                                  const SpacerHorizontal(width: 5),
-                                  Flexible(
-                                      child: Text(
-                                    "Preparing your data.. Please wait",
-                                    style: stylePTSansRegular(),
-                                  )),
-                                ],
-                              ),
-                            ),
-                          )
+                        ? const RedditTwitterItemScreenSimmer()
+                        // SizedBox(
+                        //     height: 270.sp,
+                        //     child: Center(
+                        //       child: Row(
+                        //         mainAxisAlignment: MainAxisAlignment.center,
+                        //         children: [
+                        //           const CircularProgressIndicator(
+                        //             color: ThemeColors.accent,
+                        //           ),
+                        //           const SpacerHorizontal(width: 5),
+                        //           Flexible(
+                        //               child: Text(
+                        //             "Preparing your data.. Please wait",
+                        //             style: stylePTSansRegular(),
+                        //           )),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   )
                         : ListView.separated(
                             itemCount:
                                 provider.socialSentimentRes?.data.length ?? 0,

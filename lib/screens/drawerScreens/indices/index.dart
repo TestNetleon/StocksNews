@@ -9,10 +9,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/low_price_stocks_tab.dart';
 import 'item.dart';
@@ -107,48 +106,31 @@ class IndicesData extends StatelessWidget {
         onRefresh: () async {
           provider.getIndicesData(showProgress: false);
         },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Text(
-              //   provider.title ?? "",
-              //   style: stylePTSansBold(fontSize: 13),
-              // ),
-              // const SpacerVertical(height: 5),
-              // Text(
-              //   provider.subTitle ?? "",
-              //   style: stylePTSansRegular(
-              //       color: ThemeColors.greyText, fontSize: 12),
-              // ),
-
-              DrawerScreenTitle(
-                title: provider.title,
-                subTitle: provider.subTitle,
-              ),
-              const SpacerVertical(height: 5),
-              ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(vertical: 10.sp),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  IndicesRes? data = provider.data?[index];
-                  if (data == null) {
-                    return const SizedBox();
-                  }
-                  return IndicesItem(data: data, index: index);
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 16,
-                  );
-                },
-                itemCount: 20,
-              ),
-            ],
-          ),
+        child: ListView.separated(
+          padding: EdgeInsets.symmetric(vertical: 10.sp),
+          itemBuilder: (context, index) {
+            IndicesRes? data = provider.data?[index];
+            if (data == null) {
+              return const SizedBox();
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (index == 0)
+                  HtmlTitle(
+                    subTitle: provider.subTitle,
+                  ),
+                IndicesItem(data: data, index: index),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider(
+              color: ThemeColors.greyBorder,
+              height: 16,
+            );
+          },
+          itemCount: 20,
         ),
       ),
     );

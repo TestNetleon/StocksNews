@@ -9,6 +9,8 @@ import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
+import 'package:stocks_news_new/providers/dividends_provider.dart';
+import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
@@ -45,6 +47,8 @@ import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
+import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings.dart';
 import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
@@ -118,6 +122,8 @@ class Routes {
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
     ServerErrorWidget.path: (_) => const ServerErrorWidget(),
     InternetErrorWidget.path: (_) => const InternetErrorWidget(),
+    DividendsScreen.path: (_) => const DividendsScreen(),
+    EarningsScreen.path: (_) => const EarningsScreen(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -345,6 +351,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TermsAndPolicyProvider()),
       ChangeNotifierProvider(create: (_) => ContactUsProvider()),
       ChangeNotifierProvider(create: (_) => FaqProvide()),
+      ChangeNotifierProvider(create: (_) => DividendsProvider()),
+      ChangeNotifierProvider(create: (_) => EarningsProvider()),
 
       // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(

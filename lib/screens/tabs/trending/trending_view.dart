@@ -5,10 +5,11 @@ import 'package:stocks_news_new/providers/trending_industries.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bearish.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish.dart';
+import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_trending/trending_sc_simmer.dart';
+import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_trending/trending_sector_sc_simmer.dart';
+import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_trending/trending_stories_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 import '../../trendingIndustries/index.dart';
@@ -156,25 +157,26 @@ class _TrendingViewState extends State<TrendingView> {
     TrendingProvider provider = context.watch<TrendingProvider>();
 
     return provider.isLoadingBullish && provider.mostBullish == null
-        ? Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(
-                  Images.progressGIF,
-                  width: 100,
-                  height: 100,
-                ),
-                Text(
-                  "We are preparing data for you. Please wait...",
-                  textAlign: TextAlign.center,
-                  style: styleGeorgiaRegular(
-                    color: ThemeColors.accent,
-                  ),
-                ),
-              ],
-            ),
-          )
+        ? const TrendingScreenSimmer()
+        // Center(
+        //     child: Column(
+        //       mainAxisSize: MainAxisSize.min,
+        //       children: [
+        //         Image.asset(
+        //           Images.progressGIF,
+        //           width: 100,
+        //           height: 100,
+        //         ),
+        //         Text(
+        //           "We are preparing data for you. Please wait...",
+        //           textAlign: TextAlign.center,
+        //           style: styleGeorgiaRegular(
+        //             color: ThemeColors.accent,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   )
         : CustomTabContainerNEW(
             scrollable: true,
             tabs: List.generate(
@@ -185,12 +187,13 @@ class _TrendingViewState extends State<TrendingView> {
                 if (index == 0) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      provider.getMostBullish(showProgress: true);
+                      provider.getMostBullish();
                     },
                     child: TrendingTabWidget(
                       index: 0,
                       content: TrendingPartialLoading(
-                        loading: false,
+                        placeholder: const TrendingScreenSimmer(),
+                        loading: provider.isLoadingBullish,
                         error: !provider.isLoadingBullish &&
                                 (provider.mostBullish?.mostBullish == null ||
                                     provider.mostBullish?.mostBullish
@@ -216,6 +219,7 @@ class _TrendingViewState extends State<TrendingView> {
                     child: TrendingTabWidget(
                       index: 1,
                       content: TrendingPartialLoading(
+                        placeholder: const TrendingScreenSimmer(),
                         loading: provider.isLoadingBearish,
                         error: provider.statusBearish != Status.ideal &&
                                 !provider.isLoadingBearish &&
@@ -243,6 +247,7 @@ class _TrendingViewState extends State<TrendingView> {
                     child: TrendingTabWidget(
                       index: 2,
                       content: TrendingPartialLoading(
+                        placeholder: const TrendingSectorScreenSimmer(),
                         loading: provider.isLoadingStories,
                         error: provider.statusStories != Status.ideal &&
                                 !provider.isLoadingStories &&
@@ -270,6 +275,7 @@ class _TrendingViewState extends State<TrendingView> {
                     child: TrendingTabWidget(
                       index: 2,
                       content: TrendingPartialLoading(
+                        placeholder: const TrendingStoriesScreenSimmer(),
                         loading: provider.isLoadingStories,
                         error: provider.statusStories != Status.ideal &&
                                 !provider.isLoadingStories &&

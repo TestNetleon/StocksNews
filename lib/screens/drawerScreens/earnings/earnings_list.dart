@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
-import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/item.dart';
+import 'package:stocks_news_new/modals/Earnings_res.dart';
+import 'package:stocks_news_new/providers/Earnings_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/Earnings/Earnings_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
@@ -11,29 +11,26 @@ import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
 
-class NegativeBetaStocks extends StatefulWidget {
-  const NegativeBetaStocks({super.key});
+class EarningsList extends StatefulWidget {
+  const EarningsList({super.key});
 
   @override
-  State<NegativeBetaStocks> createState() => _NegativeBetaStocksState();
+  State<EarningsList> createState() => _EarningsListState();
 }
 
-class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
+class _EarningsListState extends State<EarningsList> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context
-          .read<HighLowBetaStocksProvider>()
-          .getHighLowNegativeBetaStocks(type: 3);
+      context.read<EarningsProvider>().getEarningsStocks();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    HighLowBetaStocksProvider provider =
-        context.watch<HighLowBetaStocksProvider>();
-    List<HighLowBetaStocksRes>? data = provider.data;
+    EarningsProvider provider = context.watch<EarningsProvider>();
+    List<EarningsRes>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -41,29 +38,26 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getHighLowNegativeBetaStocks(type: 3),
+      onRefresh: () => provider.getEarningsStocks(),
       child: RefreshControl(
-        onRefresh: () async => provider.getHighLowNegativeBetaStocks(type: 3),
+        onRefresh: () async => provider.getEarningsStocks(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () async =>
-            provider.getHighLowNegativeBetaStocks(loadMore: true, type: 3),
+        onLoadMore: () async => provider.getEarningsStocks(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
             if (data == null || data.isEmpty) {
               return const SizedBox();
             }
+            dynamic dataItem = data[index];
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                HighLowBetaStocksItem(
-                  data: data[index],
-                  index: index,
-                ),
+                EarningsItem(data: dataItem, index: index)
               ],
             );
           },
@@ -73,7 +67,6 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
               height: 20.sp,
             );
           },
-          // itemCount: up?.length ?? 0,
           itemCount: data?.length ?? 0,
         ),
       ),

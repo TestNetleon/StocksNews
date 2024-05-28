@@ -16,6 +16,7 @@ class BaseUiContainer extends StatelessWidget {
     this.onRefresh,
     this.onNavigate,
     this.navBtnText,
+    this.placeholder,
     super.key,
   });
 //
@@ -26,6 +27,7 @@ class BaseUiContainer extends StatelessWidget {
   final bool showPreparingText;
   final bool errorDispCommon;
   final String? navBtnText;
+  final Widget? placeholder;
   final dynamic Function()? onRefresh;
   final dynamic Function()? onNavigate;
 
@@ -35,7 +37,7 @@ class BaseUiContainer extends StatelessWidget {
       duration: const Duration(milliseconds: 400),
       child: isLoading
           ? showPreparingText
-              ? const Loading()
+              ? placeholder ?? const Loading()
               : const SizedBox()
           : hasData
               ? child

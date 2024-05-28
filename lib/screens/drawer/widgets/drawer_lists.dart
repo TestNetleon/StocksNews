@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/drawerScreens/congressionalData/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
+import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings.dart';
 import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
@@ -162,10 +164,16 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.safety_divider_rounded,
     text: "Dividends",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, DividendsScreen.path);
+    },
   ),
   DrawerRes(
     iconData: Icons.money,
     text: "Earnings",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, EarningsScreen.path);
+    },
   ),
   DrawerRes(
     iconData: Icons.newspaper_rounded,

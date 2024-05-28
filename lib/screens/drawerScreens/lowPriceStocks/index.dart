@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/item_sale_on_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -11,10 +10,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/low_price_stocks_tab.dart';
 import 'item.dart';
@@ -117,8 +115,7 @@ class LowPriceStocksData extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 index == 0
-                    ? DrawerScreenTitle(
-                        title: provider.title,
+                    ? HtmlTitle(
                         subTitle: provider.subTitle,
                       )
                     : SizedBox(),

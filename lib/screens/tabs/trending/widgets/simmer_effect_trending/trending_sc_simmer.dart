@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_sc_simmer_item.dart';
+import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_trending/trending_sc_simmer_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/gradient_con_widget.dart';

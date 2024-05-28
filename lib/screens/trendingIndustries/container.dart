@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_industries_res.dart';
 import 'package:stocks_news_new/providers/trending_industries.dart';
+import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_trending/trending_industries_sc_simmer.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/graph/graph.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -50,7 +51,9 @@ class _TrendingIndustriesContainerState
           0,
         ),
         child: provider.isLoading
-            ? const Loading()
+            ? const TrendingIndustriesSimmer()
+
+            // ? const Loading()
             : (provider.data == null || provider.data?.isEmpty == true) &&
                     !provider.isLoading
                 ? Center(

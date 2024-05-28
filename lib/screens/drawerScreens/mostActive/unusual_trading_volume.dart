@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/most_active_stocks_res.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/drawer_screen_title.dart';
+import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -56,8 +56,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (index == 0)
-                  DrawerScreenTitle(subTitle: provider.extraUp?.subTitle),
+                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
                 MostActiveItem(
                   data: data[index],
                   index: index,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/news_tab_category_res.dart';
+import 'package:stocks_news_new/screens/tabs/news/widget/news_sc_simmer.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 
 import '../../../../modals/home_insider_res.dart';
@@ -29,6 +30,7 @@ class NewsTypeData extends StatelessWidget {
       isLoading: newsHolder?.loading ?? true,
       errorDispCommon: true,
       showPreparingText: true,
+      placeholder: const NewsScreenSimmer(),
       onRefresh: () => provider.onRefresh(),
       child: RefreshControl(
         onRefresh: () async => provider.onRefresh(),

@@ -13,6 +13,7 @@ class TrendingPartialLoading extends StatelessWidget {
     this.loading = false,
     this.marginTop = true,
     this.onRefresh,
+    this.placeholder,
     super.key,
   });
 
@@ -20,30 +21,33 @@ class TrendingPartialLoading extends StatelessWidget {
   final bool loading;
   final bool marginTop;
   final String? error;
+  final Widget? placeholder;
+
   final Function()? onRefresh;
 
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              Images.progressGIF,
-              width: 100,
-              height: 100,
+      return placeholder ??
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  Images.progressGIF,
+                  width: 100,
+                  height: 100,
+                ),
+                Text(
+                  "We are preparing data for you. Please wait...",
+                  textAlign: TextAlign.center,
+                  style: styleGeorgiaRegular(
+                    color: ThemeColors.accent,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              "We are preparing data for you. Please wait...",
-              textAlign: TextAlign.center,
-              style: styleGeorgiaRegular(
-                color: ThemeColors.accent,
-              ),
-            ),
-          ],
-        ),
-      );
+          );
     }
 
     if (error != null) {

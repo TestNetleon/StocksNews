@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/gradient_con_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class NewsScreenSimmer extends StatelessWidget {
-  const NewsScreenSimmer({super.key});
+class TrendingStoriesScreenSimmer extends StatelessWidget {
+  const TrendingStoriesScreenSimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,30 +15,11 @@ class NewsScreenSimmer extends StatelessWidget {
       itemCount: 8,
       padding: EdgeInsets.only(
         bottom: 12.sp,
-        top: 12.sp,
+        top: 20.sp,
+        left: Dimen.padding.sp,
+        right: Dimen.padding.sp,
       ),
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const GradientContainerWidget(height: 200),
-              const SpacerVertical(),
-              GradientContainerWidget(height: 20, borderRadius: 2.sp),
-              const SpacerVertical(height: 5),
-              GradientContainerWidget(height: 20, borderRadius: 2.sp),
-              const SpacerVertical(height: 5),
-              GradientContainerWidget(
-                height: 10,
-                borderRadius: 2.sp,
-                width: ScreenUtil().screenWidth * .5,
-              ),
-              const SpacerVertical(height: 10),
-              const SpacerVertical(height: 10),
-            ],
-          );
-        }
-
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
