@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -71,6 +72,11 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
       if (response.status) {
         log("updating user via email.......");
         provider.updateUser(email: widget.email);
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
     } catch (e) {
       //

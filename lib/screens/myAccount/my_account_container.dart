@@ -16,7 +16,9 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 //
@@ -75,9 +77,18 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     UserProvider provider = context.read<UserProvider>();
     if (isEmpty(nameController.text)) {
       // showErrorMessage(message: "Please enter valid name");
+      popUpAlert(
+          message: "Please enter valid name.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+
       return;
     } else if (!isEmail(emailController.text)) {
       // showErrorMessage(message: "Please enter valid email address");
+      popUpAlert(
+          message: "Please enter valid email address.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       return;
     } else {
       try {
