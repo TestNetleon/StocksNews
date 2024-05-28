@@ -5,6 +5,7 @@ import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -14,18 +15,29 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import '../../../utils/dialogs.dart';
-
 //
 class Insider extends StatelessWidget {
   const Insider({super.key});
 
+  // void _filterClick() {
+  //   showPlatformBottomSheet(
+  //     backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+  //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+  //     context: navigatorKey.currentContext!,
+  //     content: const FilterInsiders(),
+  //   );
+  // }
+
   void _filterClick() {
-    showPlatformBottomSheet(
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-      padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-      context: navigatorKey.currentContext!,
-      content: const FilterInsiders(),
+    // showPlatformBottomSheet(
+    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+    //   padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+    //   context: navigatorKey.currentContext!,
+    //   content: const FilterInsiders(),
+    // );
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Insider Trades",
+      child: const FilterInsiders(),
     );
   }
 

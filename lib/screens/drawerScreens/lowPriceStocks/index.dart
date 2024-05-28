@@ -119,7 +119,7 @@ class LowPriceStocksData extends StatelessWidget {
                         title: provider.title,
                         subTitle: provider.subTitle,
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 provider.typeIndex == 1
                     ? SaleOnStocksItem(
                         data: data,

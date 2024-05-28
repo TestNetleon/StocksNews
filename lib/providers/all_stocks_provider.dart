@@ -36,6 +36,10 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   String valuePrice = "";
   String valueExchange = "";
   String valueSearch = "";
+
+  TextEditingController exchangeController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+
   final TextEditingController controller = TextEditingController();
 
   TextRes? _textRes;
@@ -80,6 +84,8 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     valueExchange = "";
     valueSearch = "";
     controller.clear();
+    exchangeController.clear();
+    priceController.clear();
     notifyListeners();
   }
 
@@ -105,6 +111,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     keyExchange = selectedItem?.key ?? "";
     valueExchange = selectedItem?.value ?? "";
     Utils().showLog("Key Exchange=> $keyExchange");
+    exchangeController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -112,6 +119,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     keyPrice = selectedItem?.key ?? "";
     valuePrice = selectedItem?.value ?? "";
     Utils().showLog("Key Price=> $keyPrice");
+    priceController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 

@@ -14,6 +14,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
@@ -21,7 +22,6 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 //
-import '../../utils/dialogs.dart';
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
@@ -184,13 +184,19 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   void _selectOption() {
-    showPlatformBottomSheet(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-        context: context,
-        content: MyAccountImageType(
-          onCamera: () => _pickImage(source: ImageSource.camera),
-          onGallery: () => _pickImage(),
-        ));
+    // showPlatformBottomSheet(
+    //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+    //     context: context,
+    //     content: MyAccountImageType(
+    //       onCamera: () => _pickImage(source: ImageSource.camera),
+    //       onGallery: () => _pickImage(),
+    //     ));
+
+    BaseBottomSheets().gradientBottomSheet(
+        child: MyAccountImageType(
+      onCamera: () => _pickImage(source: ImageSource.camera),
+      onGallery: () => _pickImage(),
+    ));
   }
 
   void _sendOTP({String? otp}) {

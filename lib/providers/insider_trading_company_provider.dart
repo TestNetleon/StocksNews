@@ -75,6 +75,12 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   String valueTxnTypeIP = "";
   String valueTxnSizeIP = "";
 
+  TextEditingController tnxTypeControllerCP = TextEditingController();
+  TextEditingController tnxSizeControllerCP = TextEditingController();
+
+  TextEditingController tnxTypeControllerIP = TextEditingController();
+  TextEditingController tnxSizeControllerIP = TextEditingController();
+
   List<String>? chartDates;
   List<int>? chartPurchase;
   List<int>? chartSale;
@@ -182,24 +188,28 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   void onChangeTransactionTypeCP({KeyValueElement? selectedItem}) {
     keyTxnTypeCP = selectedItem?.key ?? "";
     valueTxnTypeCP = selectedItem?.value ?? "";
+    tnxTypeControllerCP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangeTransactionSizeCP({KeyValueElement? selectedItem}) {
     keyTxnSizeCP = selectedItem?.key ?? "";
     valueTxnSizeCP = selectedItem?.value ?? "";
+    tnxSizeControllerCP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangeTransactionTypeIP({KeyValueElement? selectedItem}) {
     keyTxnTypeIP = selectedItem?.key ?? "";
     valueTxnTypeIP = selectedItem?.value ?? "";
+    tnxTypeControllerIP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangeTransactionSizeIP({KeyValueElement? selectedItem}) {
     keyTxnSizeIP = selectedItem?.key ?? "";
     valueTxnSizeIP = selectedItem?.value ?? "";
+    tnxSizeControllerIP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -216,6 +226,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     dateCP.clear();
     dateSendCP = "";
     searchTransaction = "";
+    tnxSizeControllerCP.clear();
+    tnxTypeControllerCP.clear();
     notifyListeners();
   }
 
@@ -227,6 +239,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     dateIP.clear();
     dateSendIP = "";
     searchTransaction = "";
+    tnxSizeControllerIP.clear();
+    tnxTypeControllerIP.clear();
     notifyListeners();
   }
 
