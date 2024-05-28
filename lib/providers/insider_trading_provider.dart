@@ -180,7 +180,6 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
         _transactionType = response.extra.transactionType;
         _cap = response.extra.cap;
         _sector = response.extra.sector;
-        log("Sector image ${_sector?[1].image}");
         _txnSize = response.extra.txnSize;
         notifyListeners();
       } else {

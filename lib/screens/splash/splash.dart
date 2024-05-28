@@ -52,13 +52,18 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   Future<bool> _checkForConnection() async {
-    final result = await (Connectivity().checkConnectivity());
-    if (result[0] == ConnectivityResult.none && result.length == 1) {
-      isShowingError = true;
-      showErrorFullScreenDialog(
-          errorCode: 0, onClick: null, log: "From Splash");
-      return false;
+    try {
+      final result = await (Connectivity().checkConnectivity());
+      if (result[0] == ConnectivityResult.none && result.length == 1) {
+        isShowingError = true;
+        showErrorFullScreenDialog(
+            errorCode: 0, onClick: null, log: "From Splash");
+        return false;
+      }
+    } catch (e) {
+      return true;
     }
+
     return true;
   }
 
