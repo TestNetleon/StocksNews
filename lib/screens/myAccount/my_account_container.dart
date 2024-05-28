@@ -23,7 +23,6 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 //
-import '../../utils/dialogs.dart';
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
