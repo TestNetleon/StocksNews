@@ -20,7 +20,7 @@ class MyAccountImageType extends StatelessWidget {
           onTap: onCamera,
           child: Container(
             width: double.infinity,
-            color: ThemeColors.primaryLight,
+            // color: ThemeColors.primaryLight,
             padding: EdgeInsets.all(10.sp),
             child: Row(
               children: [
@@ -36,15 +36,15 @@ class MyAccountImageType extends StatelessWidget {
             ),
           ),
         ),
-        const Divider(
-          color: ThemeColors.divider,
+        Divider(
+          color: ThemeColors.greyBorder.withOpacity(0.4),
           thickness: 0.5,
         ),
         GestureDetector(
           onTap: onGallery,
           child: Container(
             width: double.infinity,
-            color: ThemeColors.primaryLight,
+            // color: ThemeColors.primaryLight,
             padding: EdgeInsets.all(10.sp),
             child: Row(
               children: [

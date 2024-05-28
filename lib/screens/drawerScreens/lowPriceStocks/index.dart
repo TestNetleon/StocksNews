@@ -118,7 +118,7 @@ class LowPriceStocksData extends StatelessWidget {
                     ? HtmlTitle(
                         subTitle: provider.subTitle,
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 provider.typeIndex == 1
                     ? SaleOnStocksItem(
                         data: data,

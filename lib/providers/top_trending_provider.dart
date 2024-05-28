@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import 'home_provider.dart';
 
@@ -125,7 +125,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
 
       return ApiResponse(status: response.status);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setAdd(Status.loaded);
       // showErrorMessage(message: Const.errSomethingWrong);
     }
@@ -174,7 +174,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
 
       return ApiResponse(status: response.status);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setAdd(Status.loaded);
 
       // showErrorMessage(message: Const.errSomethingWrong);
@@ -273,7 +273,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _res = null;
       _error = Const.errSomethingWrong;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -314,7 +314,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
       _capData = null;
       _error = Const.errSomethingWrong;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       if (!fromAddTo) {
         setStatus(Status.loaded);
       } else {

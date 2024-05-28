@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +11,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
   WatchlistRes? _data;
@@ -39,6 +38,10 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getData();
+  }
+
   Future getData({
     showProgress = false,
     loadMore = false,
@@ -63,6 +66,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.watchlist,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -86,7 +90,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -105,6 +109,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.deleteWatchlist,
         request: request,
         showProgress: true,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -132,7 +137,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -151,6 +156,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.addWatchlist,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
@@ -164,7 +170,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

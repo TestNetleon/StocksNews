@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import '../modals/low_price_stocks_res.dart';
 
 class LowPriceStocksProvider extends ChangeNotifier {
@@ -66,13 +66,16 @@ class LowPriceStocksProvider extends ChangeNotifier {
       }
       return;
     } else {
-      log("Before--> selected index $selectedIndex, index $index ");
       if (selectedIndex != index) {
         selectedIndex = index;
         notifyListeners();
         getLowPriceData(type: 0);
       }
     }
+  }
+
+  Future onRefresh() async {
+    getTabsData();
   }
 
   Future getTabsData({showProgress = false}) async {
@@ -87,6 +90,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         url: Apis.lowPricesTab,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
@@ -103,7 +107,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
       _error = Const.errSomethingWrong;
       _tabs = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setTabStatus(Status.loaded);
     }
   }
@@ -137,7 +141,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
   //     setStatus(Status.loaded);
   //   } catch (e) {
   //     _data = null;
-  //     log(e.toString());
+  //     Utils().showLog(e.toString());
 
   //     setStatus(Status.loaded);
   //   }
@@ -146,7 +150,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
   Future getLowPriceData({loadMore = false, type}) async {
     _typeIndex = type ?? typeIndex;
     notifyListeners();
-    log("type =================$type");
+
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -166,6 +170,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         url: typeIndex == 1 ? Apis.saleOnStocks : Apis.lowPricesStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -189,7 +194,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -62,12 +63,12 @@ class FirebaseApi {
   }
 
   void _navigateToRequiredScreen(payload, {whenAppKilled = false}) async {
-    // log("--------- => notification => $payload");
+    // Utils().showLog("--------- => notification => $payload");
 
     // bool isLoggedIn = await Preference.isLoggedIn();
 
     // if (isLoggedIn) {
-    //   log("is logged in");
+    //   Utils().showLog("is logged in");
 
     //   try {
     //     String type = payload["type"];
@@ -86,10 +87,10 @@ class FirebaseApi {
     //           arguments: {"slug": type},);
     //     }
     //   } catch (e) {
-    //     log("Exception ===>> $e");
+    //     Utils().showLog("Exception ===>> $e");
     //   }
     // } else {
-    //   log("is not logged in");
+    //   Utils().showLog("is not logged in");
     //   try {
     //     Navigator.popUntil(
     //       navigatorKey.currentContext!,
@@ -227,18 +228,8 @@ class FirebaseApi {
     FirebaseMessaging.onMessage.listen((message) async {
       try {
         Utils().showLog("on Message  ==> Notification ${message.notification}");
-        Utils().showLog("on Message  ==> Data ********************}");
-        Utils().showLog("in_app_msg  => ${message.data["in_app_msg"]}");
-        Utils().showLog("_id         => ${message.data["_id"]}");
-        Utils().showLog("title       => ${message.data["title"]}");
-        Utils().showLog("description => ${message.data["description"]}");
-        Utils().showLog("image       => ${message.data["image"]}");
-        Utils().showLog("popup_type  => ${message.data["popup_type"]}");
-        Utils().showLog("redirect_on => ${message.data["redirect_on"]}");
-        Utils().showLog("slug        => ${message.data["slug"]}");
-        Utils().showLog("on Message  ==> Data END********************}");
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) print(e.toString());
       }
       // bool inAppMsg = message.data["in_app_msg"] ?? false;
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
@@ -279,7 +270,7 @@ class FirebaseApi {
         );
       }
 
-      // log("THIS IS BIGIMAGE NOTIFICATION ${information != null}");
+      // Utils().showLog("THIS IS BIGIMAGE NOTIFICATION ${information != null}");
 
       if (Platform.isAndroid) {
         _localNotifications.show(
@@ -326,7 +317,9 @@ class FirebaseApi {
     await _firebaseMessaging.getToken().then((value) async {
       Utils().showLog("FCM TOKEN  ******   $value");
       String? address = await _getUserLocation();
-      saveFCMapi(value: value, address: address);
+      if (!isShowingError) {
+        saveFCMapi(value: value, address: address);
+      }
     });
 
     initPushNotification();
@@ -379,6 +372,7 @@ Future saveFCMapi({String? value, String? address}) async {
       url: Apis.saveFCM,
       request: request,
       showProgress: false,
+      showErrorOnFull: false,
     );
 
     if (response.status) {

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   int _openIndex = -1;
@@ -63,6 +63,14 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefreshGapUp() async {
+    getGapUpStocks();
+  }
+
+  Future onRefreshGapDown() async {
+    getGapDownStocks();
+  }
+
   Future getGapUpStocks({loadMore = false}) async {
     if (loadMore) {
       _pageUp++;
@@ -86,6 +94,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.gapUpStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefreshGapUp,
       );
 
       if (response.status) {
@@ -106,7 +115,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       setStatusUp(Status.loaded);
     } catch (e) {
       _dataUp = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatusUp(Status.loaded);
     }
   }
@@ -133,6 +142,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.gapDownStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefreshGapDown,
       );
 
       if (response.status) {
@@ -153,7 +163,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       setStatusDown(Status.loaded);
     } catch (e) {
       _dataDown = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatusDown(Status.loaded);
     }
   }

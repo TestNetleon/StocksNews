@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/what_wedo_res.dart';
 
@@ -66,6 +66,10 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   //   WeDoClass(name: "Daily Trade Ideas"),
   // ];
 
+  Future onRefresh() async {
+    getWhatWeDO();
+  }
+
   Future getWhatWeDO({final bool reset = false}) async {
     if (reset) {
       selectedIndex = 0;
@@ -82,6 +86,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.menuWhatWeDo,
         request: request,
         showProgress: true,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -99,7 +104,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
       _data = null;
       _error = Const.errSomethingWrong;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -158,7 +163,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
         error: Const.errSomethingWrong,
         loading: false,
       );
-      log(e.toString());
+      Utils().showLog(e.toString());
       _statusData = Status.loaded;
       notifyListeners();
     }
@@ -194,7 +199,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   //     _res = null;
   //     _error = Const.errSomethingWrong;
 
-  //     log(e.toString());
+  //      Utils().showLog(e.toString());
   //     _statusData = Status.loaded;
   //     notifyListeners();
   //   }

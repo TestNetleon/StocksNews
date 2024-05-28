@@ -33,28 +33,28 @@ class _QRcodeContainerState extends State<QRcodeContainer> {
   // }
 
   // void _type() {
-  //   log("00");
+  //    Utils().showLog("00");
   //   if (Platform.isAndroid) {
-  //     log("11");
+  //      Utils().showLog("11");
 
   //     controller?.pauseCamera();
   //   } else if (Platform.isIOS) {
-  //     log("22");
+  //      Utils().showLog("22");
 
   //     controller?.resumeCamera();
   //   }
   // }
 
   // void _onQRViewCreated(QRViewController controller) {
-  //   log("0");
+  //    Utils().showLog("0");
   //   this.controller = controller;
   //   controller.scannedDataStream.listen((scanData) {
-  //     log("1");
+  //      Utils().showLog("1");
 
   //     setState(() {
   //       result = scanData;
 
-  //       log("RESULT ${result?.code}");
+  //        Utils().showLog("RESULT ${result?.code}");
   //     });
 
   //     if (result?.code != null) {

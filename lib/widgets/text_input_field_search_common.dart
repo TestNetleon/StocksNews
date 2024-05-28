@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -76,7 +75,7 @@ class _TextInputFieldSearchCommonState
   void _searchApiCall(String text) {
     firstTime = false;
     setState(() {});
-    log("---calling search api call");
+    Utils().showLog("---calling search api call");
     if (text.isEmpty) {
       // Map request = {
       //   "term": text,

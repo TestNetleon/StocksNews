@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -10,6 +9,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
@@ -64,8 +64,11 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    // getHighLowNegativeBetaStocks();
+  }
+
   Future getHighLowNegativeBetaStocks({loadMore = false, type = 1}) async {
-    log("text Set $type");
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -84,6 +87,7 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
                 : Apis.negativeBetaStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -105,7 +109,7 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

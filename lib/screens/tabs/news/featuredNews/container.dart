@@ -70,26 +70,10 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
                       authors: newsItemData.authors,
                       postDate: DateFormat("MMMM dd, yyyy")
                           .format(newsItemData.publishedDate),
+                      postDateString: newsItemData.postDateString,
                       url: newsItemData.url,
-                      //  "November 29, 2023",
                     ),
                   ),
-                  // NewsItem(
-                  //   showCategory: newsItemData.authors?.isEmpty == true,
-                  //   news: News(
-                  //     slug: newsItemData.slug,
-                  //     // publishedDate: newsItemData.publishedDate,
-                  //     title: newsItemData.title,
-                  //     image: newsItemData.image,
-                  //     site: newsItemData.site ?? '',
-                  //     authors: newsItemData.authors,
-
-                  //     postDate: DateFormat("MMMM dd, yyyy")
-                  //         .format(newsItemData.publishedDate),
-                  //     url: newsItemData.url,
-                  //     //  "November 29, 2023",
-                  //   ),
-                  // ),
                 ],
               );
             }
@@ -106,6 +90,7 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
 
                 postDate: DateFormat("MMMM dd, yyyy")
                     .format(newsItemData.publishedDate),
+                postDateString: newsItemData.postDateString,
                 url: newsItemData.url,
                 //  "November 29, 2023",
               ),

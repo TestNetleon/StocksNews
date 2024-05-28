@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +7,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -422,7 +421,7 @@ class SentimentSeekbarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("Stock detail sentiment value : $value");
+    Utils().showLog("Stock detail sentiment value : $value");
     return Container(
       decoration: BoxDecoration(
         color: ThemeColors.primaryLight,

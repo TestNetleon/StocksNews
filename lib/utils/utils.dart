@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-//
+
 // import 'package:whatsapp_share/whatsapp_share.dart';
 
 bool isEven(index) {
@@ -47,22 +47,22 @@ String formatDateTimeAgo(DateTime dateTime) {
   final difference = dateTime.difference(now);
 
   if (difference.inSeconds < 60) {
-    // log("SEC = ${difference.inSeconds}");
+    // Utils().showLog("SEC = ${difference.inSeconds}");
     return 'just now';
   } else if (difference.inMinutes < 60) {
-    // log("MINIUTES = ${difference.inMinutes}");
+    // Utils().showLog("MINIUTES = ${difference.inMinutes}");
     final minutes = difference.inMinutes;
     return '$minutes ${minutes == 1 ? 'minute' : 'minutes'} ago';
   } else if (difference.inHours < 24) {
-    // log("HOURS = ${difference.inHours}");
+    // Utils().showLog("HOURS = ${difference.inHours}");
     final hours = difference.inHours;
     return '$hours ${hours == 1 ? 'hour' : 'hours'} ago';
   } else if (difference.inDays < 7) {
-    // log("DAYS = ${difference.inDays}");
+    // Utils().showLog("DAYS = ${difference.inDays}");
     final days = difference.inDays;
     return '$days ${days == 1 ? 'day' : 'days'} ago';
   } else {
-    log("DATE = ${difference.inDays}");
+    Utils().showLog("DATE = ${difference.inDays}");
     return DateFormat.yMMMd().format(dateTime);
   }
 }
@@ -161,7 +161,7 @@ Future<void> openUrl(String? url,
   if (url == null || url.isEmpty) {
     // showErrorMessage(message: "Exception: Could not launch.");
   } else {
-    log(url);
+    Utils().showLog(url);
     try {
       if (!await launchUrl(Uri.parse(url), mode: mode)) {
         throw Exception('Could not launch $url');

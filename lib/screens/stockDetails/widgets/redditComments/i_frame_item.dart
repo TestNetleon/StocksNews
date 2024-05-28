@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +6,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -42,8 +41,8 @@ class _StockDetailiFrameItemState extends State<StockDetailiFrameItem> {
 
     redditRssId = companyInfo?.redditRssId;
     twitterRssId = companyInfo?.twitterRssId;
-    log("Reddit RSS id $redditRssId ");
-    log("Twitter RSS id $twitterRssId ");
+    Utils().showLog("Reddit RSS id $redditRssId ");
+    Utils().showLog("Twitter RSS id $twitterRssId ");
 
     setState(() {});
 
@@ -62,22 +61,22 @@ class _StockDetailiFrameItemState extends State<StockDetailiFrameItem> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            log("$progress");
+            Utils().showLog("$progress");
           },
           onPageStarted: (String url) {
             loading = true;
             setState(() {});
-            log("page started");
+            Utils().showLog("page started");
           },
           onPageFinished: (String url) {
             loading = false;
             setState(() {});
-            log("page finished");
+            Utils().showLog("page finished");
           },
           onWebResourceError: (WebResourceError error) {
             loading = false;
             setState(() {});
-            log("Error $error");
+            Utils().showLog("Error $error");
           },
         ),
       )
@@ -94,7 +93,7 @@ class _StockDetailiFrameItemState extends State<StockDetailiFrameItem> {
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {
-            log("Error $error");
+            Utils().showLog("Error $error");
           },
         ),
       )

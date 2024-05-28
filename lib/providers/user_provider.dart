@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +22,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import '../utils/dialogs.dart';
@@ -122,7 +122,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         //   )),
         // );
         if (editEmail) {
-          log("****************");
           Navigator.pop(navigatorKey.currentContext!);
           // showErrorMessage(message: response.message, snackbar: false);
         } else {
@@ -147,7 +146,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             icon: Images.alertPopGIF);
       }
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       popUpAlert(
           message: "Something went wrong",
           title: "Alert",
@@ -211,7 +210,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       popUpAlert(
           message: "Something went wrong",
           title: "Alert",
@@ -271,7 +270,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       popUpAlert(
           message: "Something went wrong",
           title: "Alert",
@@ -318,7 +317,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             icon: Images.alertPopGIF);
       }
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       popUpAlert(
           message: "Something went wrong",
           title: "Alert",
@@ -391,7 +390,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             icon: Images.alertPopGIF);
       }
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       popUpAlert(
           message: "Something went wrong",
           title: "Alert",
@@ -457,7 +456,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             icon: Images.alertPopGIF);
       }
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       popUpAlert(
           message: "Something went wrong",
           title: "Alert",
@@ -562,7 +561,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // );
         if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
-        return ApiResponse(status: false);
+        return ApiResponse(status: false, message: res.message);
       }
     } catch (e) {
       setStatus(Status.loaded);
@@ -571,7 +570,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       // );
       if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
-      return ApiResponse(status: false);
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
 
@@ -619,7 +618,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   //       showErrorMessage(message: response.message);
   //     }
   //   } catch (e) {
-  //     log(e.toString());
+  //      Utils().showLog(e.toString());
   //     setStatus(Status.loaded);
   //   }
   // }

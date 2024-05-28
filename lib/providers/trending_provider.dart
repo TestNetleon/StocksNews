@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +10,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class TrendingProvider extends ChangeNotifier with AuthProviderBase {
   TrendingRes? _mostBullish;
@@ -87,7 +86,6 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     bool selectedTwo = false,
   }) async {
     setStatus(Status.loading);
-    log("UP $up");
     Map request = {
       "token":
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
@@ -129,7 +127,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
       return ApiResponse(status: response.status);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
 
       // showErrorMessage(message: Const.errSomethingWrong);
@@ -174,7 +172,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
       return ApiResponse(status: response.status);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
       // showErrorMessage(message: Const.errSomethingWrong);
     }
@@ -217,7 +215,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
         _mostBullish = TrendingRes.fromJson(response.data);
         // if (_mostBullish?.trendingSymbolList == null ||
         //     _mostBullish?.trendingSymbolList?.isEmpty == true) {
-        //   log("---------bullish trending symbol list not found----------");
+        //   Utils().showLog("---------bullish trending symbol list not found----------");
         // } else {
         //   getMostBearish();
         // }
@@ -230,7 +228,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _mostBullish = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       _statusBullish = Status.loaded;
       notifyListeners();
     }
@@ -261,7 +259,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _mostBearish = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       _statusBearish = Status.loaded;
       notifyListeners();
     }
@@ -291,7 +289,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _trendingStories = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       _statusStories = Status.loaded;
       notifyListeners();
     }

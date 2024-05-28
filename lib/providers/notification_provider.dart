@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -9,6 +8,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class NotificationProvider extends ChangeNotifier with AuthProviderBase {
   NotificationsRes? _data;
@@ -26,6 +26,10 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
   void setStatus(status) {
     _status = status;
     notifyListeners();
+  }
+
+  Future onRefresh() async {
+    getData();
   }
 
   Future getData({showProgress = false, loadMore = false}) async {
@@ -47,6 +51,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.notifications,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -73,7 +78,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

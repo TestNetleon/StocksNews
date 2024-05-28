@@ -54,6 +54,7 @@ class NewsTypeData extends StatelessWidget {
                   postDate: DateFormat("MMMM dd, yyyy").format(
                     newsItemData?.publishedDate ?? DateTime.now(),
                   ),
+                  postDateString: newsItemData?.postDateString,
                   url: newsItemData?.url,
                 ),
               );
@@ -66,6 +67,7 @@ class NewsTypeData extends StatelessWidget {
                 image: newsItemData?.image ?? "",
                 site: newsItemData?.site ?? '',
                 authors: newsItemData?.authors,
+                postDateString: newsItemData?.postDateString,
                 postDate: DateFormat("MMMM dd, yyyy")
                     .format(newsItemData?.publishedDate ?? DateTime.now()),
                 url: newsItemData?.url,

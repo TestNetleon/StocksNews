@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom_tab.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -246,7 +245,7 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
       if (widget.onChange != null) {
         widget.onChange!(_selectedIndex);
       }
-      log("$_selectedIndex");
+      Utils().showLog("$_selectedIndex");
     });
   }
 

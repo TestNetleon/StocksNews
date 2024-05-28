@@ -40,7 +40,11 @@ class SearchContainer extends StatelessWidget {
             return StocksItem(top: top, gainer: true);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVertical(height: 12);
+            // return const SpacerVertical(height: 12);
+            return const Divider(
+              height: 16,
+              color: ThemeColors.greyBorder,
+            );
           },
         ),
         const SpacerVertical(),
@@ -54,7 +58,9 @@ class SearchContainer extends StatelessWidget {
 
             if (index == 0) {
               return NewsItemSeparated(
-                  showCategory: news?.authors?.isEmpty == true, news: news);
+                showCategory: news?.authors?.isEmpty == true,
+                news: news,
+              );
             }
 
             return NewsItem(

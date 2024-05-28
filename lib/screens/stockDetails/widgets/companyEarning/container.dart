@@ -129,28 +129,56 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: AutoSizeText(
-                                      maxLines: 1,
-                                      "EPS (Earnings Per Share)",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      )),
+                                  child: Column(
+                                    children: [
+                                      AutoSizeText(
+                                          maxLines: 1,
+                                          "EPS",
+                                          textAlign: TextAlign.center,
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          )),
+                                      AutoSizeText(
+                                        maxLines: 1,
+                                        "(% Change)",
+                                        textAlign: TextAlign.center,
+                                        style: stylePTSansRegular(
+                                          fontSize: 12,
+                                          color: ThemeColors.greyText,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: AutoSizeText(
-                                    maxLines: 1,
-                                    "REVENUE",
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
+                                  child: Column(
+                                    children: [
+                                      AutoSizeText(
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        "REVENUE",
+                                        style: stylePTSansRegular(
+                                          fontSize: 12,
+                                          color: ThemeColors.greyText,
+                                        ),
+                                      ),
+                                      AutoSizeText(
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        "(% Change)",
+                                        style: stylePTSansRegular(
+                                          fontSize: 12,
+                                          color: ThemeColors.greyText,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),

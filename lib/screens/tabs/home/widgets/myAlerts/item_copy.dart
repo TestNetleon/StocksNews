@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/graph_data_res.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -14,32 +13,12 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class HomeMyAlertItem extends StatefulWidget {
+class HomeMyAlertItem extends StatelessWidget {
   final HomeAlertsRes data;
   const HomeMyAlertItem({super.key, required this.data});
 
-  @override
-  State<HomeMyAlertItem> createState() => _HomeMyAlertItemState();
-}
-
-class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.data.chart == null || widget.data.chart!.isEmpty) {
-        _getChartData();
-      }
-    });
-  }
-
-  void _getChartData() async {
-    HomeProvider homeProvider = context.read<HomeProvider>();
-    await homeProvider.getHomeAlertsGraphData(symbol: widget.data.symbol);
-  }
-
   LineChartData avgData() {
-    List<Chart> reversedData = widget.data.chart?.reversed.toList() ?? [];
+    List<Chart> reversedData = data.chart?.reversed.toList() ?? [];
 
     List<FlSpot> spots = [];
 
@@ -76,10 +55,9 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
         LineChartBarData(
           show: true,
           spots: spots,
-          color:
-              widget.data.previousClose > (widget.data.chart?.first.close ?? 0)
-                  ? ThemeColors.sos
-                  : ThemeColors.accent,
+          color: data.previousClose > (data.chart?.first.close ?? 0)
+              ? ThemeColors.sos
+              : ThemeColors.accent,
           isCurved: true,
           barWidth: 2,
           isStrokeCapRound: false,
@@ -92,8 +70,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                widget.data.previousClose >
-                        (widget.data.chart?.first.close ?? 0)
+                data.previousClose > (data.chart?.first.close ?? 0)
                     ? ThemeColors.sos.withOpacity(0.1)
                     : ThemeColors.accent.withOpacity(0.1),
                 const Color.fromARGB(255, 48, 48, 48),
@@ -131,7 +108,7 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                 Row(
                   children: [
                     CachedNetworkImagesWidget(
-                      widget.data.image,
+                      data.image,
                       height: 40,
                       width: 40,
                     ),
@@ -141,14 +118,14 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.data.symbol,
+                            data.symbol,
                             style: styleGeorgiaBold(fontSize: 14),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SpacerVertical(height: 5),
                           Text(
-                            widget.data.name,
+                            data.name,
                             style: styleGeorgiaRegular(
                               color: ThemeColors.greyText,
                               fontSize: 12,
@@ -163,28 +140,28 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  widget.data.price,
+                  data.price,
                   style: stylePTSansBold(fontSize: 20),
                 ),
                 Row(
                   children: [
                     Text(
-                      widget.data.change,
+                      data.change,
                       style: stylePTSansBold(
                           fontSize: 13,
-                          color: widget.data.changesPercentage > 0
+                          color: data.changesPercentage > 0
                               ? ThemeColors.accent
-                              : widget.data.changesPercentage == 0
+                              : data.changesPercentage == 0
                                   ? ThemeColors.white
                                   : ThemeColors.sos),
                     ),
                     Text(
-                      "  (${widget.data.changesPercentage.toCurrency()})%",
+                      "  (${data.changesPercentage.toCurrency()})%",
                       style: stylePTSansBold(
                           fontSize: 13,
-                          color: widget.data.changesPercentage > 0
+                          color: data.changesPercentage > 0
                               ? ThemeColors.accent
-                              : widget.data.changesPercentage == 0
+                              : data.changesPercentage == 0
                                   ? ThemeColors.white
                                   : ThemeColors.sos),
                     ),
@@ -195,33 +172,32 @@ class _HomeMyAlertItemState extends State<HomeMyAlertItem> {
           ),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            child:
-                widget.data.chart == null || widget.data.chart?.isEmpty == true
-                    ? ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(14),
-                        ),
-                        child: Container(
-                          width: 220,
-                          color: const Color.fromARGB(255, 35, 35, 35),
-                          constraints: const BoxConstraints(
-                            maxHeight: 88,
-                            minHeight: 30,
-                          ),
-                        ),
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10.sp),
-                          bottomRight: Radius.circular(10.sp),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 10, bottom: 15),
-                          height: 88,
-                          child: LineChart(avgData()),
-                        ),
+            child: data.chart == null || data.chart?.isEmpty == true
+                ? ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(14),
+                    ),
+                    child: Container(
+                      width: 220,
+                      color: const Color.fromARGB(255, 35, 35, 35),
+                      constraints: const BoxConstraints(
+                        maxHeight: 88,
+                        minHeight: 30,
                       ),
+                    ),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.sp),
+                      bottomRight: Radius.circular(10.sp),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 10, bottom: 15),
+                      height: 88,
+                      child: LineChart(avgData()),
+                    ),
+                  ),
           ),
         ],
       ),

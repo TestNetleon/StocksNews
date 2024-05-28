@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:intl/intl.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 enum RequestType { get, post }
 
@@ -16,7 +15,6 @@ enum StockStates { sector, industry }
 
 enum InsiderTradingName { company, reporter }
 
-//
 enum NotificationType { dashboard, newsDetail, lpPage, blogDetail }
 
 enum BlogsType { blog, author, category, tag }
@@ -30,7 +28,7 @@ enum SocialTrendingType { now, recently, cap }
 // ------ These are global constants to access in complete app --------
 bool isPhone = true;
 bool isAppInForeground = false;
-bool isServerError = false;
+bool isShowingError = false;
 //------------------------------------------------
 
 class Images {
@@ -52,12 +50,9 @@ class Images {
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
-
   static const String discussedGIF = "assets/images/most_discussed.gif";
   static const String newsGIT = "assets/images/news.gif";
-  // static const String bearBullGIF = "assets/images/bull_bear.gif";
   static const String bearBullGIF = "assets/images/animation_bull_bear.json";
-
   static const String alertBellGIF = "assets/images/alert_bell.gif";
   static const String progressGIF = "assets/images/progress.gif";
   static const String alertTickGIF = "assets/images/alert_tick.gif";
@@ -65,6 +60,8 @@ class Images {
   static const String otpSuccessGIT = "assets/images/otp_success.gif";
   static const String updateGIF = "assets/images/update.gif";
   static const String serverErrorGIF = "assets/images/server_error.json";
+  // static const String networkErrorGIF = "assets/images/connection_error.json";
+  static const String connectionGIF = "assets/images/connection.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
@@ -172,7 +169,7 @@ extension StringExtension on String {
           "${dateArray[0]}-${num.parse(dateArray[1]).toMonth()}-${num.parse(dateArray[2]).toMonth()}");
       return DateFormat('d MMM yyyy').format(dateTime);
     } catch (e) {
-      log("Error  = $e");
+      Utils().showLog("Error  = $e");
       return this;
     }
   }

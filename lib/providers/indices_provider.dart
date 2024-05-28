@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class IndicesProvider extends ChangeNotifier {
   String? _error;
@@ -58,12 +58,15 @@ class IndicesProvider extends ChangeNotifier {
   }
 
   void tabChange(index) {
-    log("Before--> selected index $selectedIndex, index $index ");
     if (selectedIndex != index) {
       selectedIndex = index;
       notifyListeners();
       getIndicesData(showProgress: false);
     }
+  }
+
+  Future onRefresh() async {
+    getTabsData();
   }
 
   Future getTabsData({showProgress = false}) async {
@@ -75,10 +78,12 @@ class IndicesProvider extends ChangeNotifier {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
+
       ApiResponse response = await apiRequest(
         url: Apis.exchanageTab,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -96,14 +101,16 @@ class IndicesProvider extends ChangeNotifier {
       _error = Const.errSomethingWrong;
       _tabs = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setTabStatus(Status.loaded);
     }
   }
 
-  Future getIndicesData({
-    showProgress = false,
-  }) async {
+  Future onRefreshIndicesData() async {
+    getTabsData();
+  }
+
+  Future getIndicesData({showProgress = false}) async {
     setStatus(Status.loading);
 
     try {
@@ -117,6 +124,7 @@ class IndicesProvider extends ChangeNotifier {
         url: Apis.indices,
         request: request,
         showProgress: false,
+        onRefresh: onRefreshIndicesData,
       );
 
       if (response.status) {
@@ -132,7 +140,7 @@ class IndicesProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
 
       setStatus(Status.loaded);
     }

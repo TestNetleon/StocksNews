@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 //
 class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
@@ -36,6 +36,10 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   String valuePrice = "";
   String valueExchange = "";
   String valueSearch = "";
+
+  TextEditingController exchangeController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+
   final TextEditingController controller = TextEditingController();
 
   TextRes? _textRes;
@@ -80,6 +84,8 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     valueExchange = "";
     valueSearch = "";
     controller.clear();
+    exchangeController.clear();
+    priceController.clear();
     notifyListeners();
   }
 
@@ -91,7 +97,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   void setStatus(status) {
-    log("$_status");
+    Utils().showLog("$_status");
     _status = status;
     notifyListeners();
   }
@@ -104,15 +110,23 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   void onChangeExchange({KeyValueElement? selectedItem}) {
     keyExchange = selectedItem?.key ?? "";
     valueExchange = selectedItem?.value ?? "";
-    log("Key Exchange=> $keyExchange");
+    Utils().showLog("Key Exchange=> $keyExchange");
+    exchangeController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangePrice({KeyValueElement? selectedItem}) {
     keyPrice = selectedItem?.key ?? "";
     valuePrice = selectedItem?.value ?? "";
-    log("Key Price=> $keyPrice");
+    Utils().showLog("Key Price=> $keyPrice");
+    priceController.text = selectedItem?.value ?? "";
     notifyListeners();
+  }
+
+  Future onRefresh() async {
+    _page = 1;
+    _clearVariables();
+    getData();
   }
 
   Future getData({
@@ -122,7 +136,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     clear = true,
     inAppMsgId,
   }) async {
-    // log("Can load more $canLoadMore");
+    // Utils().showLog("Can load more $canLoadMore");
     if (search != null) {
       valueSearch = search;
       _page = 1;
@@ -156,6 +170,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.stocks,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -184,7 +199,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

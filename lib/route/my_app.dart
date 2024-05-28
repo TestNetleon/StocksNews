@@ -1,8 +1,9 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
-import 'dart:developer';
+
 import 'package:app_links/app_links.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:stocks_news_new/dummy.dart';
@@ -14,6 +15,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -46,7 +48,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getAppLinks();
-      Timer(const Duration(milliseconds: 7200), () {
+      Timer(const Duration(milliseconds: 7500), () {
         _checkForConnection();
       });
       setState(() {});
@@ -56,7 +58,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
-    // log("**** is in foreground ==>  $isAppInForeground");
+    //  Utils().showLog("**** is in foreground ==>  $isAppInForeground");
     setState(() {
       _appLifecycleState = state;
     });
@@ -94,9 +96,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   _navigation({String? type, required Uri uri, String? slug}) {
-    log("---Type $type, -----Uri $uri,-----Slug $slug");
+    Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
     String slugForTicker = extractSymbolValue(uri);
-    log("slug for ticker $slugForTicker");
+    Utils().showLog("slug for ticker $slugForTicker");
     if (type == "blog") {
       Navigator.push(
           navigatorKey.currentContext!,
@@ -123,7 +125,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       if (_appLifecycleState == null) {
         //
       } else {
-        Navigator.pushNamed(context, Tabs.path);
+        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
       }
       Utils().showLog("--goto dashboard---");
     } else {
@@ -139,7 +143,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   String containsSpecificPath(Uri uri) {
-    log("-----contain path $uri");
+    Utils().showLog("-----contain path $uri");
     if (uri.path.contains('/blog/')) {
       return "blog";
     } else if (uri.path.contains('/stock-detail')) {
@@ -155,33 +159,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _checkForConnection() async {
-    // final connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    //   connection = false;
-    //   Navigator.push(navigatorKey.currentContext!,
-    //       MaterialPageRoute(builder: (_) => const InternetConnectionWidget()));
-    //   showErrorMessage(message: "No internet connection ");
-    // }
-
-    // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-    //   if (result == ConnectivityResult.mobile ||
-    //       result == ConnectivityResult.wifi) {
-    //     log("connection");
-    //     if (!connection) {
-    //       Navigator.pop(navigatorKey.currentContext!);
-    //     }
-    //     connection = true;
-    //   } else {
-    //     log("withoutConnection");
-    //     connection = false;
-    //     Navigator.push(
-    //         navigatorKey.currentContext!,
-    //         MaterialPageRoute(
-    //             builder: (_) => const InternetConnectionWidget()));
-    //     showErrorMessage(message: "No internet connection ");
-    //   }
-    // });
+    Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult>? result) async {
+      if ((result?.length ?? 0) == 1) {
+        if (result![0] == ConnectivityResult.none &&
+            result.length == 1 &&
+            !isShowingError) {
+          Timer(const Duration(milliseconds: 2000), () async {
+            final result = await (Connectivity().checkConnectivity());
+            if (result[0] == ConnectivityResult.none && result.length == 1) {
+              isShowingError = true;
+              showErrorFullScreenDialog(
+                errorCode: 0,
+                onClick: null,
+                log: "From My App",
+              );
+            }
+          });
+        }
+      }
+    });
   }
 
   @override

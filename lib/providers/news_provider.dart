@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/news_tab_category_res.dart';
 
@@ -39,6 +39,11 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    getNews();
+  }
+
   Future getNews({
     showProgress = false,
     loadMore = false,
@@ -63,6 +68,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.latestNews,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -82,7 +88,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -135,6 +141,11 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    getNews();
+  }
+
   Future getNews({showProgress = false, loadMore = false, inAppMsgId}) async {
     // navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
 
@@ -160,6 +171,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.featuredNews,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -179,7 +191,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -224,6 +236,10 @@ class HeaderNewsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getHeaderNews();
+  }
+
   Future getHeaderNews({showProgress = false}) async {
     setStatus(Status.loading);
     try {
@@ -235,6 +251,7 @@ class HeaderNewsProvider extends ChangeNotifier {
         url: Apis.marketTickers,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         //
@@ -250,7 +267,7 @@ class HeaderNewsProvider extends ChangeNotifier {
     } catch (e) {
       _data = null;
       _error = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.ideal);
     }
   }
@@ -330,7 +347,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       _error = Const.errSomethingWrong;
       _tabs = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setTabStatus(Status.loaded);
     }
   }
@@ -388,6 +405,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
         url: id == "featured-news" ? Apis.featuredNews : Apis.latestNews,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -427,7 +445,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       // }
     } catch (e) {
       // _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       // if (tabChangeLoading) {
       //   setTabStatus(Status.loaded);
       // } else {
@@ -452,7 +470,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       _page = 1;
       setStatus(Status.loading);
     }
-    log("Refreshing Index $selectedIndex");
+
     try {
       Map request = id == "latest-news" || id == "featured-news"
           ? {
@@ -500,7 +518,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
       }
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       if (tabChangeLoading) {
         setTabStatus(Status.loaded);
       } else {
@@ -590,8 +608,6 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
         } else {
           _data?.data.addAll(newsResFromJson(jsonEncode(response.data)).data);
         }
-
-        log("in provider  ${_data?.data.length}");
       } else {
         if (_page == 1) {
           _data = null;
@@ -602,7 +618,7 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -15,12 +14,14 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 //
-import '../../utils/dialogs.dart';
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
@@ -75,9 +76,18 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     UserProvider provider = context.read<UserProvider>();
     if (isEmpty(nameController.text)) {
       // showErrorMessage(message: "Please enter valid name");
+      popUpAlert(
+          message: "Please enter valid name.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+
       return;
     } else if (!isEmail(emailController.text)) {
       // showErrorMessage(message: "Please enter valid email address");
+      popUpAlert(
+          message: "Please enter valid email address.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
       return;
     } else {
       try {
@@ -89,10 +99,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
         if (res.status) {
           if (emailController.text != provider.user?.email) {
-            log("IF");
+            Utils().showLog("IF");
             _sendOTP(otp: res.data["otp"].toString());
           } else {
-            log("ELSE");
+            Utils().showLog("ELSE");
             provider.updateUser(
                 name: nameController.text,
                 email: emailController.text.toLowerCase());
@@ -129,14 +139,14 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           ],
         );
         if (croppedFile != null) {
-          log("cropped image=> ${croppedFile.path}");
+          Utils().showLog("cropped image=> ${croppedFile.path}");
           _image = File(croppedFile.path);
           setState(() {});
           _uploadImage(image: _image);
         }
       }
     } catch (e) {
-      log("Error => $e");
+      Utils().showLog("Error => $e");
     }
   }
 
@@ -167,20 +177,26 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             //
           }
         } catch (e) {
-          log("Error $e");
+          Utils().showLog("Error $e");
         }
       }
     }
   }
 
   void _selectOption() {
-    showPlatformBottomSheet(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-        context: context,
-        content: MyAccountImageType(
-          onCamera: () => _pickImage(source: ImageSource.camera),
-          onGallery: () => _pickImage(),
-        ));
+    // showPlatformBottomSheet(
+    //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+    //     context: context,
+    //     content: MyAccountImageType(
+    //       onCamera: () => _pickImage(source: ImageSource.camera),
+    //       onGallery: () => _pickImage(),
+    //     ));
+
+    BaseBottomSheets().gradientBottomSheet(
+        child: MyAccountImageType(
+      onCamera: () => _pickImage(source: ImageSource.camera),
+      onGallery: () => _pickImage(),
+    ));
   }
 
   void _sendOTP({String? otp}) {

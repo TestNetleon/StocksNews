@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/search_new.dart';
 
@@ -69,7 +69,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -93,7 +93,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -147,7 +147,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.ideal);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.ideal);
     }
   }

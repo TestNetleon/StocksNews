@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +13,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class InsiderTradingDetailsProvider extends ChangeNotifier
     with AuthProviderBase {
@@ -75,6 +75,12 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   String valueTxnTypeIP = "";
   String valueTxnSizeIP = "";
 
+  TextEditingController tnxTypeControllerCP = TextEditingController();
+  TextEditingController tnxSizeControllerCP = TextEditingController();
+
+  TextEditingController tnxTypeControllerIP = TextEditingController();
+  TextEditingController tnxSizeControllerIP = TextEditingController();
+
   List<String>? chartDates;
   List<int>? chartPurchase;
   List<int>? chartSale;
@@ -87,7 +93,6 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     showProgress = false,
     String companySlug = "",
   }) async {
-    log("INSIDER GRAPH DATA");
     // setStatus(Status.loading);
     _isGraphLoading = Status.loading;
     try {
@@ -123,7 +128,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
       chartDates = null;
       chartPurchase = null;
       chartSale = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
     }
@@ -134,7 +139,6 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     String companySlug = "",
     String reportingSlug = "",
   }) async {
-    log("INSIDER GRAPH DATA INSIDER");
     // setStatus(Status.loading);
     _isGraphLoadingInsider = Status.loading;
     notifyListeners();
@@ -174,7 +178,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
       chartDatesInsider = null;
       chartPurchaseInsider = null;
       chartSaleInsider = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       // setStatus(Status.loaded);
       _isGraphLoadingInsider = Status.loaded;
       notifyListeners();
@@ -184,28 +188,28 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   void onChangeTransactionTypeCP({KeyValueElement? selectedItem}) {
     keyTxnTypeCP = selectedItem?.key ?? "";
     valueTxnTypeCP = selectedItem?.value ?? "";
-    log("Key TransactionType=> $keyTxnTypeCP");
+    tnxTypeControllerCP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangeTransactionSizeCP({KeyValueElement? selectedItem}) {
     keyTxnSizeCP = selectedItem?.key ?? "";
     valueTxnSizeCP = selectedItem?.value ?? "";
-    log("Key TransactionSize=> $keyTxnSizeCP");
+    tnxSizeControllerCP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangeTransactionTypeIP({KeyValueElement? selectedItem}) {
     keyTxnTypeIP = selectedItem?.key ?? "";
     valueTxnTypeIP = selectedItem?.value ?? "";
-    log("Key TransactionType=> $keyTxnTypeIP");
+    tnxTypeControllerIP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
   void onChangeTransactionSizeIP({KeyValueElement? selectedItem}) {
     keyTxnSizeIP = selectedItem?.key ?? "";
     valueTxnSizeIP = selectedItem?.value ?? "";
-    log("Key TransactionSize=> $keyTxnSizeIP");
+    tnxSizeControllerIP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -222,6 +226,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     dateCP.clear();
     dateSendCP = "";
     searchTransaction = "";
+    tnxSizeControllerCP.clear();
+    tnxTypeControllerCP.clear();
     notifyListeners();
   }
 
@@ -233,6 +239,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     dateIP.clear();
     dateSendIP = "";
     searchTransaction = "";
+    tnxSizeControllerIP.clear();
+    tnxTypeControllerIP.clear();
     notifyListeners();
   }
 
@@ -281,10 +289,10 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
 
     if (picked != null) {
       if (isCP) {
-        dateCP.text = DateFormat("dd-MM-yyyy").format(picked);
+        dateCP.text = DateFormat("MMM dd, yyyy").format(picked);
         dateSendCP = DateFormat("yyyy-MM-dd").format(picked);
       } else {
-        dateIP.text = DateFormat("dd-MM-yyyy").format(picked);
+        dateIP.text = DateFormat("MMM dd, yyyy").format(picked);
         dateSendIP = DateFormat("yyyy-MM-dd").format(picked);
       }
     }
@@ -301,8 +309,6 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     bool clear = true,
   }) async {
     if (reportingSlug == "") {
-      log("THIS IS COMPANY PAGE");
-
       if (clear) _clearVariablesCP();
 
       if (search != "") {
@@ -322,8 +328,6 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
         setStatus(Status.loading);
       }
     } else {
-      log("THIS IS INSIDER PAGE");
-
       if (clear) _clearVariablesIP();
       if (search != "") {
         _indexCompany = -1;
@@ -430,7 +434,6 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
           _reporterData = null;
         }
       }
-      log("error in insider trading company-> $e");
       setStatus(Status.loaded);
     }
   }

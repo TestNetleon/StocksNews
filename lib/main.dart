@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/fcm/service.dart';
@@ -12,7 +12,7 @@ void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
   } catch (e) {
-    log(e.toString());
+    if (kDebugMode) print(e.toString());
   }
 
   SystemChrome.setSystemUIOverlayStyle(

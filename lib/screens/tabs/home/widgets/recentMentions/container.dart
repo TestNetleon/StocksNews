@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/recentMentions/item.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -155,7 +154,7 @@ class _MostRecentMentionsState extends State<MostRecentMentions> {
                       constraints: constraints,
                       data: i,
                       onJumpBack: () {
-                        log("Going to previous page");
+                        Utils().showLog("Going to previous page");
                         _carouselController.previousPage();
                       },
                       onJumpNext: () {

@@ -57,7 +57,7 @@ class WatchlistData {
         name: json["name"],
         image: json["image"],
         price: json["price"],
-        changes: json["changes"].toDouble(),
+        changes: json["changes"],
         // updatedAt: DateTime.parse(json["updated_at"]),
         // createdAt: DateTime.parse(json["created_at"]),
       );
@@ -71,29 +71,5 @@ class WatchlistData {
         "changes": changes,
         // "updated_at": updatedAt.toIso8601String(),
         // "created_at": createdAt.toIso8601String(),
-      };
-}
-
-class Link {
-  final String url;
-  final String label;
-  final bool active;
-
-  Link({
-    required this.url,
-    required this.label,
-    required this.active,
-  });
-
-  factory Link.fromJson(Map<String, dynamic> json) => Link(
-        url: json["url"],
-        label: json["label"],
-        active: json["active"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "url": url,
-        "label": label,
-        "active": active,
       };
 }

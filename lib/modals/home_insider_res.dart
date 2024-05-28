@@ -247,7 +247,7 @@ class News {
   final String site;
   final String? url;
   final String postDate;
-  // final String? postDateString;
+  final String? postDateString;
   final String? slug;
   final List<DetailListType>? authors;
 
@@ -260,7 +260,7 @@ class News {
     this.url,
     this.slug,
     required this.postDate,
-    // this.postDateString,
+    this.postDateString,
     this.authors,
   });
 
@@ -272,7 +272,7 @@ class News {
         site: json["site"],
         url: json["url"],
         postDate: json["post_date"],
-        // postDateString: json["published_date_string"],
+        postDateString: json["published_date_string"],
 
         slug: json["slug"],
         authors: json["authors"] == null
@@ -289,7 +289,7 @@ class News {
         "site": site,
         "url": url,
         "post_date": postDate,
-        // "published_date_string": postDateString,
+        "published_date_string": postDateString,
         "slug": slug,
         "authors": authors == null
             ? []

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +7,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter_insider_company.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_container.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -17,8 +16,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
-
-import '../../../../utils/dialogs.dart';
 
 //
 class InsiderDetailsType extends StatelessWidget {
@@ -78,12 +75,12 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
 
   void _getData() {
     if (widget.reportingSlug == "") {
-      log("---------loading only for company-----------");
+      Utils().showLog("---------loading only for company-----------");
       context.read<InsiderTradingDetailsProvider>().insiderGraphData(
             companySlug: widget.companySlug ?? "",
           );
     } else {
-      log("---------loading only for insider-----------");
+      Utils().showLog("---------loading only for insider-----------");
       context.read<InsiderTradingDetailsProvider>().insiderGraphDataInsider(
             companySlug: widget.companySlug ?? "",
             reportingSlug: widget.reportingSlug ?? "",
@@ -98,9 +95,17 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
   }
 
   void _filterClick({String? companySlug, String? reportingSlug}) {
-    showPlatformBottomSheet(
-      context: context,
-      content: FilterInsiderCompany(
+    // showPlatformBottomSheet(
+    //   context: context,
+    //   content: FilterInsiderCompany(
+    //     companySlug: companySlug,
+    //     reportingSlug: reportingSlug,
+    //   ),
+    // );
+
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Insider Trades",
+      child: FilterInsiderCompany(
         companySlug: companySlug,
         reportingSlug: reportingSlug,
       ),

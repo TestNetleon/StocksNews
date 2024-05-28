@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/search/search_container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -27,11 +28,19 @@ class _SearchState extends State<Search> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<SearchProvider>().getSearchDefaults();
+      _callAPI();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Search"},
       );
     });
+  }
+
+  _callAPI() {
+    HomeProvider provider = context.read<HomeProvider>();
+    if (provider.homeInsiderRes == null) {
+      context.read<HomeProvider>().getHomeInsiderData(null);
+    }
   }
 
   @override

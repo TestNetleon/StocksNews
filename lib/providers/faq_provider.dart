@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class FaqProvide extends ChangeNotifier with AuthProviderBase {
   String? _error;
@@ -43,6 +43,10 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
     // }
   }
 
+  Future onRefresh() async {
+    getFAQs();
+  }
+
   Future getFAQs() async {
     setStatus(Status.loading);
     Map request = {
@@ -54,6 +58,7 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
         url: Apis.faQs,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _data = faQsResFromJson(jsonEncode(response.data));
@@ -65,7 +70,7 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
       _error = Const.errSomethingWrong;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

@@ -1,6 +1,6 @@
 // // ignore_for_file: avoid_print, use_build_context_synchronously
 
-// import 'dart:developer';
+//  
 // import 'dart:io';
 
 // import 'package:flutter/foundation.dart';
@@ -46,7 +46,7 @@
 //   @override
 //   void initState() {
 //     super.initState();
-//     log("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
+//      Utils().showLog("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
 //   }
 
 //   void _onLoginClick() {
@@ -77,7 +77,7 @@
 //       String? address = await Preference.getLocation();
 
 //       GoogleSignInAccount? account = await _googleSignIn.signIn();
-//       log(account.toString());
+//        Utils().showLog(account.toString());
 
 //       if (account != null) {
 //         UserProvider provider = context.read<UserProvider>();
@@ -98,7 +98,7 @@
 //       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
 //     } catch (error) {
 //       showErrorMessage(message: "$error");
-//       log("$error");
+//        Utils().showLog("$error");
 //     }
 //   }
 
@@ -122,7 +122,7 @@
 //       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
 //     } catch (error) {
 //       showErrorMessage(message: "$error");
-//       log("$error");
+//        Utils().showLog("$error");
 //     }
 //   }
 

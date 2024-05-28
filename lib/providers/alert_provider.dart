@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +13,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 //
 class AlertProvider extends ChangeNotifier with AuthProviderBase {
@@ -36,8 +36,13 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    getAlerts();
+  }
+
   Future getAlerts({showProgress = false, loadMore = false}) async {
-    // log("Can load more $canLoadMore");
+    // Utils().showLog("Can load more $canLoadMore");
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -55,6 +60,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.alerts,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -82,7 +88,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -98,7 +104,10 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
       };
 
       ApiResponse response = await apiRequest(
-          url: Apis.deleteAlertlist, request: request, showProgress: true);
+        url: Apis.deleteAlertlist,
+        request: request,
+        showProgress: true,
+      );
 
       if (response.status) {
         _data?.data?.removeWhere((element) => element.id == id);
@@ -127,7 +136,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
 
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

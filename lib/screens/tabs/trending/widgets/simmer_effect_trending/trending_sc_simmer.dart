@@ -63,7 +63,7 @@ class TrendingScreenSimmer extends StatelessWidget {
         return const TrendingScreenSimmerItem();
       },
       separatorBuilder: (BuildContext context, int index) {
-        if (index == 0) return SizedBox();
+        if (index == 0) return const SizedBox();
 
         return const Divider(
           color: ThemeColors.greyBorder,

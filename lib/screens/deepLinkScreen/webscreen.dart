@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -24,7 +22,7 @@ class _AnalysisForecastState extends State<WebviewLink> {
   @override
   void initState() {
     super.initState();
-    log("-------${widget.url}---- ${widget.stringURL}---------");
+    Utils().showLog("-------${widget.url}---- ${widget.stringURL}---------");
     _setData(url: widget.url, stringURL: widget.stringURL);
   }
 
@@ -41,15 +39,15 @@ class _AnalysisForecastState extends State<WebviewLink> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            log("progress $progress");
+            Utils().showLog("progress $progress");
           },
           onPageStarted: (String url) {
             setLoading(true);
-            log("page finished $url");
+            Utils().showLog("page finished $url");
           },
           onPageFinished: (String url) {
             setLoading(false);
-            log("page finished $url");
+            Utils().showLog("page finished $url");
           },
           onWebResourceError: (WebResourceError error) {
             setLoading(false);

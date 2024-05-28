@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/modals/trending_industries_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class TrendingIndustriesProvider extends ChangeNotifier {
   String? _error;
@@ -40,10 +40,13 @@ class TrendingIndustriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getData();
+  }
+
   Future trendingIndustriesGraphData({
     showProgress = false,
   }) async {
-    log("SECTOR GRAPH DATA");
     // setStatus(Status.loading);
     _isGraphLoading = Status.loading;
 
@@ -89,7 +92,6 @@ class TrendingIndustriesProvider extends ChangeNotifier {
       positiveMentions = null;
       negativeMentions = null;
       neutralMentions = null;
-      log(e.toString());
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
     }
@@ -108,6 +110,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
         url: Apis.trendingIndustries,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _data = trendingIndustriesResFromJson(jsonEncode(response.data));
@@ -121,7 +124,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
       _data = null;
       _error = Const.errSomethingWrong;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

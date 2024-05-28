@@ -77,6 +77,7 @@ class NewsData {
   // final String? api;
   // final String symbol;
   final DateTime publishedDate;
+  final String? postDateString;
   final String title;
   final String slug;
   final String image;
@@ -100,6 +101,7 @@ class NewsData {
     required this.publishedDate,
     required this.title,
     required this.slug,
+    this.postDateString,
     required this.image,
     required this.site,
     required this.postDate,
@@ -122,6 +124,7 @@ class NewsData {
         publishedDate: DateTime.parse(json["published_date"]),
         title: json["title"],
         slug: json["slug"],
+        postDateString: json["published_date_string"],
         image: json["image"],
         site: json["site"],
         postDate: json["post_date"],
@@ -146,6 +149,7 @@ class NewsData {
         "published_date": publishedDate.toIso8601String(),
         "title": title,
         "slug": slug,
+        "published_date_string": publishedDate,
         "image": image,
         "site": site,
         "post_date": postDate,

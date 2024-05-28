@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 //
 class BlogProvider extends ChangeNotifier with AuthProviderBase {
@@ -61,8 +61,6 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     String id = "",
     inAppMsgId,
   }) async {
-    log("TYPE IS ===> ${type.name}");
-
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -130,23 +128,15 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         }
 
         if (type == BlogsType.author) {
-          log("data is for author");
-
           authorRes = _data;
           authorsData = _data?.data.data;
         } else if (type == BlogsType.category) {
-          log("data is for category");
-
           categoryRes = _data;
           categoryData = _data?.data.data;
         } else if (type == BlogsType.tag) {
-          log("data is for tag");
-
           tagsRes = _data;
           tagsData = _data?.data.data;
         } else {
-          log("data is for blog");
-
           blogRes = _data;
           blogData = _data?.data.data;
         }
@@ -157,7 +147,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -225,7 +215,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _blogsDetail = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       // setStatus(Status.loaded);
       _statusDetail = Status.loaded;
       notifyListeners();

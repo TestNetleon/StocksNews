@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -20,7 +19,7 @@ class StocksMentions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
-    KeyStats? keyStats = provider.data?.keyStats;
+    // KeyStats? keyStats = provider.data?.keyStats;
     List<Mentions>? mentions = provider.dataMentions?.mentions;
 
     if (provider.mentionLoading) {

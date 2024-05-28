@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +8,8 @@ import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -48,7 +48,7 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
     try {
       ApiResponse response = await provider.resendUpdateEmailOtp(request);
       if (response.status) {
-        log("updating OTP via resend OTP.......");
+        Utils().showLog("updating OTP via resend OTP.......");
 
         // otpController.text = response.data["otp"].toString();
       }
@@ -69,8 +69,13 @@ class _MyAccountOTPState extends State<MyAccountOTP> {
       if (!mounted) return;
 
       if (response.status) {
-        log("updating user via email.......");
+        Utils().showLog("updating user via email.......");
         provider.updateUser(email: widget.email);
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
       }
     } catch (e) {
       //
