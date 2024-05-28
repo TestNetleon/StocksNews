@@ -40,6 +40,10 @@ class TrendingIndustriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getData();
+  }
+
   Future trendingIndustriesGraphData({
     showProgress = false,
   }) async {
@@ -108,6 +112,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
         url: Apis.trendingIndustries,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _data = trendingIndustriesResFromJson(jsonEncode(response.data));

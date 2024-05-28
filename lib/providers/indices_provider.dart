@@ -66,6 +66,10 @@ class IndicesProvider extends ChangeNotifier {
     }
   }
 
+  Future onRefresh() async {
+    getTabsData();
+  }
+
   Future getTabsData({showProgress = false}) async {
     _tabs == null;
 
@@ -75,10 +79,12 @@ class IndicesProvider extends ChangeNotifier {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
+
       ApiResponse response = await apiRequest(
         url: Apis.exchanageTab,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -101,9 +107,11 @@ class IndicesProvider extends ChangeNotifier {
     }
   }
 
-  Future getIndicesData({
-    showProgress = false,
-  }) async {
+  Future onRefreshIndicesData() async {
+    getTabsData();
+  }
+
+  Future getIndicesData({showProgress = false}) async {
     setStatus(Status.loading);
 
     try {
@@ -117,6 +125,7 @@ class IndicesProvider extends ChangeNotifier {
         url: Apis.indices,
         request: request,
         showProgress: false,
+        onRefresh: onRefreshIndicesData,
       );
 
       if (response.status) {

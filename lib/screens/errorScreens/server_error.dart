@@ -16,7 +16,7 @@ class ServerError extends StatefulWidget {
   });
 
   final int errorCode;
-  final void Function()? onClick;
+  final dynamic onClick;
 
   @override
   State<ServerError> createState() => _ServerErrorState();
@@ -27,6 +27,15 @@ class _ServerErrorState extends State<ServerError> {
   void dispose() {
     isShowingError = false;
     super.dispose();
+  }
+
+  String _getErrorTitle() {
+    switch (widget.errorCode) {
+      case 200:
+        return "";
+      default:
+        return "";
+    }
   }
 
   @override
@@ -67,7 +76,7 @@ class _ServerErrorState extends State<ServerError> {
               onPressed: () {
                 isShowingError = false;
                 Navigator.pop(context);
-                if (widget.onClick != null) widget.onClick!();
+                if (widget.onClick != null) widget.onClick();
               },
               showArrow: false,
               text: "Refresh",

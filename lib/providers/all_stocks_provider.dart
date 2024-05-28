@@ -115,6 +115,12 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    _clearVariables();
+    getData();
+  }
+
   Future getData({
     showProgress = false,
     loadMore = false,
@@ -156,6 +162,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.stocks,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

@@ -66,6 +66,10 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   //   WeDoClass(name: "Daily Trade Ideas"),
   // ];
 
+  Future onRefresh() async {
+    getWhatWeDO();
+  }
+
   Future getWhatWeDO({final bool reset = false}) async {
     if (reset) {
       selectedIndex = 0;
@@ -82,6 +86,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.menuWhatWeDo,
         request: request,
         showProgress: true,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

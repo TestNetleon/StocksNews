@@ -39,6 +39,11 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    getNews();
+  }
+
   Future getNews({
     showProgress = false,
     loadMore = false,
@@ -63,6 +68,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.latestNews,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -135,6 +141,11 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    _page = 1;
+    getNews();
+  }
+
   Future getNews({showProgress = false, loadMore = false, inAppMsgId}) async {
     // navigatorKey.currentContext!.read<HeaderNewsProvider>().getHeaderNews();
 
@@ -160,6 +171,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.featuredNews,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -224,6 +236,10 @@ class HeaderNewsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getHeaderNews();
+  }
+
   Future getHeaderNews({showProgress = false}) async {
     setStatus(Status.loading);
     try {
@@ -235,6 +251,7 @@ class HeaderNewsProvider extends ChangeNotifier {
         url: Apis.marketTickers,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         //
@@ -388,6 +405,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
         url: id == "featured-news" ? Apis.featuredNews : Apis.latestNews,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

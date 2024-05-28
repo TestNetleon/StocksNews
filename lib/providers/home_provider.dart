@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -96,8 +96,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   void setTotalsAlerts(int value) {
     totalAlerts = value;
-    log("TOTAL ALERTS => $totalAlerts");
-
     notifyListeners();
   }
 
@@ -122,6 +120,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future refreshData(String? inAppMsgId) async {
+    _getLastMarketOpen();
     getHomeSlider();
     getHomeTrendingData();
     getHomeAlerts();
@@ -172,6 +171,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.homeSlider,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
       if (response.status) {
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
@@ -189,7 +189,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _homeSliderRes = null;
-      log(e.toString());
       _statusSlider = Status.loaded;
       notifyListeners();
     }
@@ -210,6 +209,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.homeTrending,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
@@ -242,6 +242,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.homeAlert,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
 
       if (response.status) {
@@ -254,7 +255,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _homeAlertData = null;
-      log(e.toString());
       _statusHomeAlert = Status.loaded;
       notifyListeners();
     }
@@ -267,6 +267,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: apiUrl,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
       sendPort.send(response);
     } catch (e) {
@@ -286,6 +287,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.stockFocus,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
 
       if (response.status) {
@@ -297,8 +299,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _focusRes = null;
-
-      log(e.toString());
       _statusFocus = Status.loaded;
       notifyListeners();
     }
@@ -316,6 +316,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.ipoCalendar,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
 
       if (response.status) {
@@ -327,7 +328,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _ipoRes = null;
-      log(e.toString());
       _statusIpo = Status.loaded;
       notifyListeners();
     }
@@ -345,6 +345,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.homeSentiment,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
       if (response.status) {
         _homeSentimentRes = HomeSentimentRes.fromJson(response.data);
@@ -356,7 +357,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _homeSentimentRes = null;
-      log(e.toString());
       _statusSentiment = Status.loaded;
       notifyListeners();
     }
@@ -377,6 +377,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.homeInsider,
         request: request,
         showProgress: false,
+        onRefresh: () => refreshData(null),
       );
       if (response.status) {
         _homeInsiderRes = HomeInsiderRes.fromJson(response.data);
@@ -388,13 +389,128 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _homeInsiderRes = null;
-      log(e.toString());
       _statusInsider = Status.loaded;
       notifyListeners();
     }
   }
 
+  DateTime? _lastMarketOpen;
+
+  Future _getLastMarketOpen() async {
+    ApiResponse response = await third_party_api.apiRequest(
+      url: "quote/AAPL?apikey=5e5573e6668fcd5327987ab3b912ef3e",
+      showProgress: false,
+    );
+
+    if (response.status == true) {
+      var timeStamp = response.data[0]['timestamp'];
+      _lastMarketOpen = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+      _lastMarketOpen =
+          _lastMarketOpen!.toUtc().subtract(const Duration(hours: 4));
+    }
+  }
+
+  bool _isLastOpenToday(DateTime date1, DateTime date2) {
+    // Convert both dates to midnight by creating new DateTime objects
+    DateTime midnightDate1 = DateTime(date1.year, date1.month, date1.day);
+    DateTime midnightDate2 = DateTime(date2.year, date2.month, date2.day);
+
+    // Compare the two dates
+    return midnightDate1.isAtSameMomentAs(midnightDate2);
+  }
+
   Future<List<Chart>?> getHomeAlertsGraphData({required String symbol}) async {
+    if (_lastMarketOpen == null) {
+      await _getLastMarketOpen();
+    }
+
+    // // Current time in GMT-4
+    DateTime today = DateTime.now().toUtc().subtract(const Duration(hours: 4));
+
+    bool isLastOpenToday = false;
+    if (_lastMarketOpen == null) {
+      isLastOpenToday = _isLastOpenToday(_lastMarketOpen!, today);
+    }
+
+    String interval = "15min";
+
+    // Fixed time 10:30 AM in GMT-4
+    DateTime fixedTime = DateTime.utc(
+      DateTime.now().toUtc().year,
+      DateTime.now().toUtc().month,
+      DateTime.now().toUtc().day,
+      10,
+      30,
+    ).toUtc();
+
+    if (today.isBefore(fixedTime) && isLastOpenToday) {
+      // if (currentTime.isBefore(fixedTime)) {
+      interval = '5min';
+    }
+
+    // Adjust for GMT-4
+    // DateTime today = DateTime.now().toUtc().subtract(const Duration(hours: 4));
+
+    String formattedToday =
+        DateFormat('yyyy-MM-dd').format(_lastMarketOpen ?? today);
+
+    try {
+      ApiResponse response = await third_party_api.apiRequest(
+        url:
+            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+        showProgress: false,
+      );
+
+      if (response.status == true) {
+        List<Chart> data = response.data == null
+            ? []
+            : List<Chart>.from(response.data!.map((x) => Chart.fromJson(x)));
+        int? index =
+            _homeAlertData?.indexWhere((element) => element.symbol == symbol);
+        if (index != null && index >= 0) {
+          _homeAlertData![index].chart = data;
+          notifyListeners();
+        }
+        return data;
+      } else {
+        // int weekDay = today.weekday;
+        // DateTime adjustedToday;
+
+        // if (weekDay == DateTime.monday) {
+        //   adjustedToday = today.subtract(const Duration(days: 3));
+        // } else if (weekDay == DateTime.sunday) {
+        //   adjustedToday = today.subtract(const Duration(days: 2));
+        // } else {
+        //   adjustedToday = today.subtract(const Duration(days: 1));
+        // }
+        // String formattedNewDate =
+        //     DateFormat('yyyy-MM-dd').format(adjustedToday);
+        // ApiResponse res = await third_party_api.apiRequest(
+        //   url:
+        //       "historical-chart/15min/$symbol?from=$formattedNewDate&to=$formattedNewDate&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+        //   showProgress: false,
+        // );
+
+        // if (res.status == true) {
+        //   List<Chart> data = res.data == null
+        //       ? []
+        //       : List<Chart>.from(res.data!.map((x) => Chart.fromJson(x)));
+        //   int? index =
+        //       _homeAlertData?.indexWhere((element) => element.symbol == symbol);
+        //   if (index != null && index >= 0) {
+        //     _homeAlertData![index].chart = data;
+        //     notifyListeners();
+        //   }
+        //   return data;
+        // }
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<Chart>?> getHomeAlertsGraphData1({required String symbol}) async {
     String interval = "15min";
 
     // Current time in GMT-4
@@ -578,7 +694,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         showProgress: false,
       );
     } catch (e) {
-      log(e.toString());
+      if (kDebugMode) print(e.toString());
     }
   }
 }

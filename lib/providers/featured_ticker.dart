@@ -30,6 +30,10 @@ class FeaturedTickerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getFeaturedTicker();
+  }
+
   Future getFeaturedTicker({
     showProgress = false,
     loadMore = false,
@@ -52,6 +56,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
         url: Apis.featuredTicker,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

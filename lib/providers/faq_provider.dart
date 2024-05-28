@@ -43,6 +43,10 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
     // }
   }
 
+  Future onRefresh() async {
+    getFAQs();
+  }
+
   Future getFAQs() async {
     setStatus(Status.loading);
     Map request = {
@@ -54,6 +58,7 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
         url: Apis.faQs,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _data = faQsResFromJson(jsonEncode(response.data));

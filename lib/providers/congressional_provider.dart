@@ -45,6 +45,10 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getData();
+  }
+
   Future getData({
     showProgress = false,
     loadMore = false,
@@ -69,6 +73,7 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.congress,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _error = null;

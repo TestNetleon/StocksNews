@@ -75,6 +75,10 @@ class LowPriceStocksProvider extends ChangeNotifier {
     }
   }
 
+  Future onRefresh() async {
+    getTabsData();
+  }
+
   Future getTabsData({showProgress = false}) async {
     _tabs == null;
     setTabStatus(Status.loading);
@@ -87,6 +91,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         url: Apis.lowPricesTab,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));
@@ -166,6 +171,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         url: typeIndex == 1 ? Apis.saleOnStocks : Apis.lowPricesStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

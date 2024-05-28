@@ -63,6 +63,14 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefreshGapUp() async {
+    getGapUpStocks();
+  }
+
+  Future onRefreshGapDown() async {
+    getGapDownStocks();
+  }
+
   Future getGapUpStocks({loadMore = false}) async {
     if (loadMore) {
       _pageUp++;
@@ -86,6 +94,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.gapUpStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefreshGapUp,
       );
 
       if (response.status) {
@@ -133,6 +142,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.gapDownStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefreshGapDown,
       );
 
       if (response.status) {
