@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/api_requester.dart';
 import '../api/api_response.dart';
@@ -76,7 +76,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

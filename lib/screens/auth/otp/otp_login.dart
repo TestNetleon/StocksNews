@@ -1,4 +1,4 @@
-// import 'dart:developer';
+//  
 // import 'dart:io';
 
 // import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@
 //     //   UserRes? user = context.read<UserProvider>().user;
 //     //   _controller.text = "${user?.otp}";
 //     // });
-//     log("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
+//      Utils().showLog("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
 //   }
 
 //   @override

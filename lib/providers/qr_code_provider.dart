@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:developer';
 
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -8,6 +7,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class QRcodePRovider extends ChangeNotifier {
   String? _error;
@@ -43,7 +43,7 @@ class QRcodePRovider extends ChangeNotifier {
       //     type: response.status ? SnackbarType.info : SnackbarType.error);
       setStatus(Status.ideal);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.ideal);
     }
   }

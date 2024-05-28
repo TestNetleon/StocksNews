@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -345,7 +347,7 @@ void showAppUpdateDialog(Extra extra) {
   );
 }
 
-void showErrorFullScreenDialog({errorCode, onClick}) {
+void showErrorFullScreenDialog({errorCode, onClick, log}) {
   showGeneralDialog(
     barrierColor: Colors.black.withOpacity(0.5),
     transitionBuilder: (context, a1, a2, widget) {
@@ -368,16 +370,16 @@ void showErrorFullScreenDialog({errorCode, onClick}) {
                   ),
                   Dialog(
                     insetPadding: EdgeInsets.zero,
-                    // insetPadding: EdgeInsets.symmetric(
-                    //   horizontal:
-                    //       ScreenUtil().screenWidth * (isPhone ? .1 : .2),
-                    // ),
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(16.0),
-                    // ),
                     elevation: 0,
                     backgroundColor: Colors.transparent,
-                    child: ServerError(errorCode: errorCode, onClick: onClick),
+                    child: PopScope(
+                      canPop: false,
+                      child: ServerError(
+                        errorCode: errorCode,
+                        onClick: onClick,
+                        log: log,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -391,7 +393,10 @@ void showErrorFullScreenDialog({errorCode, onClick}) {
     barrierLabel: '',
     context: navigatorKey.currentContext!,
     pageBuilder: (context, animation1, animation2) {
-      return const SizedBox();
+      return const PopScope(
+        canPop: false,
+        child: SizedBox(),
+      );
     },
   );
 }

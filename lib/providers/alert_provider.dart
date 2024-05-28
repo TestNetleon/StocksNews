@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +13,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 //
 class AlertProvider extends ChangeNotifier with AuthProviderBase {
@@ -42,7 +42,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getAlerts({showProgress = false, loadMore = false}) async {
-    // log("Can load more $canLoadMore");
+    // Utils().showLog("Can load more $canLoadMore");
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -88,7 +88,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -136,7 +136,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
 
       setStatus(Status.loaded);
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

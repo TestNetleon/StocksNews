@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   GainersLosersRes? _gainersLosers;
@@ -124,7 +124,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   //   } catch (e) {
   //     _data = null;
 
-  //     log(e.toString());
+  //     Utils().showLog(e.toString());
   //     setStatus(Status.loaded);
   //   }
   // }
@@ -177,7 +177,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _losers = null;
       _errorLosers = Const.errSomethingWrong;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatusLosers(Status.loaded);
     }
   }
@@ -227,7 +227,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _gainersLosers = null;
       _error = Const.errSomethingWrong;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

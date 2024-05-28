@@ -72,7 +72,7 @@ class AlertsItem extends StatelessWidget {
           //   child: InkWell(
           //     splashColor: Colors.black12,
           //     onTap: (){
-          //       log("****");
+          //        Utils().showLog("****");
           //     },
           //     child: Container(
           //       color: Colors.red,

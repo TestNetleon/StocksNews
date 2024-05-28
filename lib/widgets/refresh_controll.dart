@@ -29,7 +29,7 @@ class _RefreshControlState extends State<RefreshControl> {
 
   @override
   Widget build(BuildContext context) {
-    // log("******************** Can Load More =>  ${widget.canLoadMore} ");
+    // Utils().showLog("******************** Can Load More =>  ${widget.canLoadMore} ");
 
     return SmartRefresher(
       enablePullUp: true,
@@ -37,7 +37,7 @@ class _RefreshControlState extends State<RefreshControl> {
         height: widget.canLoadMore ? 100 : 0,
         builder: (BuildContext context, LoadStatus? mode) {
           Widget body = const SizedBox();
-          // log("******************** $mode ");
+          // Utils().showLog("******************** $mode ");
           if (mode == LoadStatus.idle) {
             // body = const CircularProgressIndicator(
             //   strokeWidth: 4,

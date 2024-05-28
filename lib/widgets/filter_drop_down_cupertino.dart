@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class FilterDropDownCupertino extends StatefulWidget {
   final List<Widget> children;
@@ -38,7 +37,7 @@ class _FilterDropDownCupertinoState extends State<FilterDropDownCupertino> {
                 setState(() {
                   selectedIndex = index;
                 });
-                log("$selectedIndex");
+                Utils().showLog("$selectedIndex");
               },
               children: widget.children,
             ),
@@ -47,9 +46,9 @@ class _FilterDropDownCupertinoState extends State<FilterDropDownCupertino> {
             onTap: () {
               try {
                 // if (selectedIndex != null) {
-                log("$selectedIndex");
+                Utils().showLog("$selectedIndex");
                 widget.onSelected(selectedIndex);
-                log("$selectedIndex ** ");
+                Utils().showLog("$selectedIndex ** ");
                 // }
               } catch (e) {
                 if (kDebugMode) {

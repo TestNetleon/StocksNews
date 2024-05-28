@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -77,12 +75,12 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
 
   void _getData() {
     if (widget.reportingSlug == "") {
-      log("---------loading only for company-----------");
+      Utils().showLog("---------loading only for company-----------");
       context.read<InsiderTradingDetailsProvider>().insiderGraphData(
             companySlug: widget.companySlug ?? "",
           );
     } else {
-      log("---------loading only for insider-----------");
+      Utils().showLog("---------loading only for insider-----------");
       context.read<InsiderTradingDetailsProvider>().insiderGraphDataInsider(
             companySlug: widget.companySlug ?? "",
             reportingSlug: widget.reportingSlug ?? "",

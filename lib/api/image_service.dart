@@ -50,7 +50,7 @@ Future requestUploadImage({
     try {
       Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
     } catch (e) {
-      // log("Error in showing request");
+      // Utils().showLog("Error in showing request");
       //
     }
     Map<String, dynamic> headers = getHeaders();

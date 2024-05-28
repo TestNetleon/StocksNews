@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -24,6 +25,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
@@ -252,6 +254,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       userAlert = response.extra?.userAlert;
       _statusHomeAlert = Status.loaded;
       notifyListeners();
+      _updateChartData();
     } catch (e) {
       _homeAlertData = null;
       _statusHomeAlert = Status.loaded;
@@ -393,8 +396,26 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  DateTime? _lastMarketOpen;
+  // -------------  Start Update Chart data on HomePage ------------
+  void _updateChartData() async {
+    if (_homeAlertData == null || (_homeAlertData?.isEmpty ?? true)) return;
+    for (var item in _homeAlertData!) {
+      if (item.chart == null || (item.chart?.isEmpty ?? true)) {
+        await getHomeAlertsGraphData(symbol: item.symbol);
+      }
+    }
 
+    bool callAgain = false;
+    for (var item in _homeAlertData!) {
+      if (item.chart == null || (item.chart?.isEmpty ?? true)) {
+        callAgain = true;
+        break;
+      }
+    }
+    if (callAgain) _updateChartData();
+  }
+
+  DateTime? _lastMarketOpen;
   Future _getLastMarketOpen() async {
     ApiResponse response = await third_party_api.apiRequest(
       url: "quote/AAPL?apikey=5e5573e6668fcd5327987ab3b912ef3e",
@@ -413,12 +434,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // Convert both dates to midnight by creating new DateTime objects
     DateTime midnightDate1 = DateTime(date1.year, date1.month, date1.day);
     DateTime midnightDate2 = DateTime(date2.year, date2.month, date2.day);
-
     // Compare the two dates
     return midnightDate1.isAtSameMomentAs(midnightDate2);
   }
 
-  Future<List<Chart>?> getHomeAlertsGraphData({required String symbol}) async {
+  Future getHomeAlertsGraphData({required String symbol}) async {
     if (_lastMarketOpen == null) {
       await _getLastMarketOpen();
     }
@@ -427,7 +447,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     DateTime today = DateTime.now().toUtc().subtract(const Duration(hours: 4));
 
     bool isLastOpenToday = false;
-    if (_lastMarketOpen == null) {
+
+    if (_lastMarketOpen != null) {
       isLastOpenToday = _isLastOpenToday(_lastMarketOpen!, today);
     }
 
@@ -446,9 +467,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       // if (currentTime.isBefore(fixedTime)) {
       interval = '5min';
     }
-
-    // Adjust for GMT-4
-    // DateTime today = DateTime.now().toUtc().subtract(const Duration(hours: 4));
 
     String formattedToday =
         DateFormat('yyyy-MM-dd').format(_lastMarketOpen ?? today);
@@ -470,148 +488,13 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
           _homeAlertData![index].chart = data;
           notifyListeners();
         }
-        return data;
-      } else {
-        // int weekDay = today.weekday;
-        // DateTime adjustedToday;
-
-        // if (weekDay == DateTime.monday) {
-        //   adjustedToday = today.subtract(const Duration(days: 3));
-        // } else if (weekDay == DateTime.sunday) {
-        //   adjustedToday = today.subtract(const Duration(days: 2));
-        // } else {
-        //   adjustedToday = today.subtract(const Duration(days: 1));
-        // }
-        // String formattedNewDate =
-        //     DateFormat('yyyy-MM-dd').format(adjustedToday);
-        // ApiResponse res = await third_party_api.apiRequest(
-        //   url:
-        //       "historical-chart/15min/$symbol?from=$formattedNewDate&to=$formattedNewDate&apikey=5e5573e6668fcd5327987ab3b912ef3e",
-        //   showProgress: false,
-        // );
-
-        // if (res.status == true) {
-        //   List<Chart> data = res.data == null
-        //       ? []
-        //       : List<Chart>.from(res.data!.map((x) => Chart.fromJson(x)));
-        //   int? index =
-        //       _homeAlertData?.indexWhere((element) => element.symbol == symbol);
-        //   if (index != null && index >= 0) {
-        //     _homeAlertData![index].chart = data;
-        //     notifyListeners();
-        //   }
-        //   return data;
-        // }
-        return null;
       }
     } catch (e) {
-      return null;
+      if (kDebugMode) print(e.toString());
     }
   }
 
-  Future<List<Chart>?> getHomeAlertsGraphData1({required String symbol}) async {
-    String interval = "15min";
-
-    // Current time in GMT-4
-    DateTime currentTime =
-        DateTime.now().toUtc().subtract(const Duration(hours: 4));
-
-    // Fixed time 10:30 AM in GMT-4
-    DateTime fixedTime = DateTime.utc(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      10,
-      30,
-    ).toUtc();
-
-    if (currentTime.isBefore(fixedTime)) {
-      interval = '5min';
-    }
-    // Adjust for GMT-4
-    DateTime today =
-        DateTime.now().toUtc().subtract(const Duration(hours: 4)).toLocal();
-    String formattedToday = DateFormat('yyyy-MM-dd').format(today);
-
-    try {
-      ApiResponse response = await third_party_api.apiRequest(
-        url:
-            "$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
-        showProgress: false,
-      );
-
-      if (response.status == true) {
-        List<Chart> data = response.data == null
-            ? []
-            : List<Chart>.from(response.data!.map((x) => Chart.fromJson(x)));
-        int? index =
-            _homeAlertData?.indexWhere((element) => element.symbol == symbol);
-        if (index != null && index >= 0) {
-          _homeAlertData![index].chart = data;
-          notifyListeners();
-        }
-        return data;
-      } else {
-        int weekDay = today.weekday;
-        DateTime adjustedToday;
-
-        if (weekDay == DateTime.monday) {
-          adjustedToday = today.subtract(const Duration(days: 3));
-        } else if (weekDay == DateTime.sunday) {
-          adjustedToday = today.subtract(const Duration(days: 2));
-        } else {
-          adjustedToday = today.subtract(const Duration(days: 1));
-        }
-        String formattedNewDate =
-            DateFormat('yyyy-MM-dd').format(adjustedToday);
-        ApiResponse res = await third_party_api.apiRequest(
-          url:
-              "15min/$symbol?from=$formattedNewDate&to=$formattedNewDate&apikey=5e5573e6668fcd5327987ab3b912ef3e",
-          showProgress: false,
-        );
-
-        if (res.status == true) {
-          List<Chart> data = res.data == null
-              ? []
-              : List<Chart>.from(res.data!.map((x) => Chart.fromJson(x)));
-          int? index =
-              _homeAlertData?.indexWhere((element) => element.symbol == symbol);
-          if (index != null && index >= 0) {
-            _homeAlertData![index].chart = data;
-            notifyListeners();
-          }
-          return data;
-        }
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // Future logoutUser(request) async {
-  //   try {
-  //     ApiResponse res = await apiRequest(
-  //       url: Apis.logout,
-  //       request: request,
-  //     );
-  //     if (res.status) {
-  //       // setStatus(Status.loaded);
-  //       handleSessionOut();
-  //       showErrorMessage(message: res.message, type: SnackbarType.info);
-  //     } else {
-  //       setStatus(Status.loaded);
-  //       showErrorMessage(
-  //         message: res.message,
-  //       );
-  //     }
-  //   } catch (e) {
-  //     // setStatus(Status.loaded);
-  //     showErrorMessage(
-  //       message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-  //     );
-  //   }
-  // }
+  // -------------  End Update Chart data on HomePage ------------
 
   void _checkForNewVersion(Extra extra) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -626,56 +509,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       showAppUpdateDialog(extra);
     }
   }
-
-  // void _showUpdateDialog(Extra extra) {
-  //   showGeneralDialog(
-  //     barrierColor: Colors.black.withOpacity(0.5),
-  //     transitionBuilder: (context, a1, a2, widget) {
-  //       return SafeArea(
-  //         child: Align(
-  //           alignment: Alignment.bottomCenter,
-  //           child: Transform.scale(
-  //             scale: a1.value,
-  //             child: Opacity(
-  //               opacity: a1.value,
-  //               child: Stack(
-  //                 children: [
-  //                   GestureDetector(
-  //                     onTap: () {},
-  //                     child: Container(
-  //                       width: double.infinity,
-  //                       height: double.infinity,
-  //                       color: Colors.transparent,
-  //                     ),
-  //                   ),
-  //                   Dialog(
-  //                     insetPadding: EdgeInsets.symmetric(
-  //                       horizontal:
-  //                           ScreenUtil().screenWidth * (isPhone ? .1 : .2),
-  //                     ),
-  //                     shape: RoundedRectangleBorder(
-  //                       borderRadius: BorderRadius.circular(16.0),
-  //                     ),
-  //                     elevation: 0,
-  //                     backgroundColor: Colors.transparent,
-  //                     child: AppUpdateContent(extra: extra),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //     transitionDuration: const Duration(milliseconds: 200),
-  //     barrierDismissible: true,
-  //     barrierLabel: '',
-  //     context: navigatorKey.currentContext!,
-  //     pageBuilder: (context, animation1, animation2) {
-  //       return const SizedBox();
-  //     },
-  //   );
-  // }
 
   Future updateInAppMsgStatus(id) async {
     notifyListeners();

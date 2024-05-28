@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +9,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -42,16 +41,16 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
   void _triggerEvents() {
     if (widget.policyType == PolicyType.aboutUs) {
       FirebaseInAppMessaging.instance.triggerEvent("about_click");
-      log("about_click");
+      Utils().showLog("about_click");
     } else if (widget.policyType == PolicyType.tC) {
       FirebaseInAppMessaging.instance.triggerEvent("terms_click");
-      log("terms_click");
+      Utils().showLog("terms_click");
     } else if (widget.policyType == PolicyType.privacy) {
       FirebaseInAppMessaging.instance.triggerEvent("privacy_click");
-      log("privacy_click");
+      Utils().showLog("privacy_click");
     } else {
       FirebaseInAppMessaging.instance.triggerEvent("disclaimer_click");
-      log("disclaimer_click");
+      Utils().showLog("disclaimer_click");
     }
   }
 

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -82,7 +82,8 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
     // });
 
     _startTime();
-    log("---State is ${widget.state}, ---Don't pop up is${widget.dontPop}---");
+    Utils().showLog(
+        "---State is ${widget.state}, ---Don't pop up is${widget.dontPop}---");
   }
 
   @override

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +11,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item_copy.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -39,7 +38,7 @@ class HomeMyAlerts extends StatelessWidget {
     List<HomeAlertsRes>? homeAlert = provider.homeAlertData;
 
     UserRes? userRes = context.watch<UserProvider>().user;
-    log("$userRes");
+    Utils().showLog("$userRes");
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(

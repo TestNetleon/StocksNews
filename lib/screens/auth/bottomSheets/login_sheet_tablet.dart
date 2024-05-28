@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -72,7 +72,8 @@ class _LoginBottomState extends State<LoginBottom> {
   @override
   void initState() {
     super.initState();
-    log("---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
+    Utils().showLog(
+        "---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
   }
 
   void _onLoginClick() {
@@ -105,7 +106,7 @@ class _LoginBottomState extends State<LoginBottom> {
       String? address = await Preference.getLocation();
 
       GoogleSignInAccount? account = await _googleSignIn.signIn();
-      log(account.toString());
+      Utils().showLog(account.toString());
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
@@ -130,7 +131,7 @@ class _LoginBottomState extends State<LoginBottom> {
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
-      log("$error");
+      Utils().showLog("$error");
     }
   }
 
@@ -159,7 +160,7 @@ class _LoginBottomState extends State<LoginBottom> {
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
       // showErrorMessage(message: "$error");
-      log("$error");
+      Utils().showLog("$error");
     }
   }
 

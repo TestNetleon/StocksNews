@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -8,6 +7,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
@@ -111,7 +111,7 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
@@ -152,7 +152,7 @@ class FiftyTwoWeeksProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _dataLows = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

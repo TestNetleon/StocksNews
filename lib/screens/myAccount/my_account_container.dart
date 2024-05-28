@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -100,10 +99,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
         if (res.status) {
           if (emailController.text != provider.user?.email) {
-            log("IF");
+            Utils().showLog("IF");
             _sendOTP(otp: res.data["otp"].toString());
           } else {
-            log("ELSE");
+            Utils().showLog("ELSE");
             provider.updateUser(
                 name: nameController.text,
                 email: emailController.text.toLowerCase());
@@ -140,14 +139,14 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           ],
         );
         if (croppedFile != null) {
-          log("cropped image=> ${croppedFile.path}");
+          Utils().showLog("cropped image=> ${croppedFile.path}");
           _image = File(croppedFile.path);
           setState(() {});
           _uploadImage(image: _image);
         }
       }
     } catch (e) {
-      log("Error => $e");
+      Utils().showLog("Error => $e");
     }
   }
 
@@ -178,7 +177,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             //
           }
         } catch (e) {
-          log("Error $e");
+          Utils().showLog("Error $e");
         }
       }
     }

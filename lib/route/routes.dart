@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -53,7 +52,6 @@ import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.
 import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/errorScreens/internet_error.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -74,6 +72,7 @@ import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../providers/featured_ticker.dart';
@@ -116,7 +115,7 @@ class Routes {
     MostActiveIndex.path: (_) => const MostActiveIndex(),
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
     // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
-    InternetErrorWidget.path: (_) => const InternetErrorWidget(),
+    // InternetErrorWidget.path: (_) => const InternetErrorWidget(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -143,7 +142,8 @@ class Routes {
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
 
-    log("=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
+    Utils().showLog(
+        "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
     switch (routingData) {
       case TCandPolicy.path:
         return MaterialWithModalsPageRoute(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
@@ -137,7 +137,7 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
         // showErrorMessage(message: response.message, duration: 1);
       }
     } catch (e) {
-      log(e.toString());
+      Utils().showLog(e.toString());
       // if (isSearching) searching = false;
       setStatus(Status.loaded);
       _socialSentimentRes = null;

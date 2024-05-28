@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -73,7 +72,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
   void initState() {
     super.initState();
 
-    log("---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
+    Utils().showLog(
+        "---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
   void _onLoginClick() {
@@ -487,7 +487,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                               dontPop: widget.dntPop,
                               state: widget.state,
                             );
-                      // log("${widget.dntPop}");
+                      //  Utils().showLog("${widget.dntPop}");
                       // if (widget.dntPop != null) {
                       //   // Navigator.pushReplacement(
                       //   //     context,

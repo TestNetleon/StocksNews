@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -125,6 +124,7 @@ Future<ApiResponse> apiRequest({
         showErrorFullScreenDialog(
           errorCode: response.statusCode,
           onClick: onRefresh,
+          log: "API REQUEST ERROR",
         );
       }
       return ApiResponse(
@@ -155,6 +155,7 @@ Future<ApiResponse> apiRequest({
       showErrorFullScreenDialog(
         errorCode: -1,
         onClick: onRefresh,
+        log: "API REQUEST ERROR",
       );
     }
     return ApiResponse(
@@ -210,7 +211,6 @@ void checkForInAppMessage(InAppNotification? inAppMsg) {
 }
 
 void navigateToRequiredScreen(InAppNotification? inAppMsg) {
-  log("Clicked");
   if (inAppMsg?.redirectOn == "none" || inAppMsg?.redirectOn == null) {
     Navigator.pop(navigatorKey.currentContext!);
     return;
@@ -228,7 +228,7 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       ),
     );
   } else if (inAppMsg?.redirectOn == 'stock') {
-    log("Navigating to Stocks");
+    Utils().showLog("Navigating to Stocks");
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
       navigatorKey.currentContext!,
@@ -261,9 +261,9 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog') {
-    log("message");
+    Utils().showLog("message");
     Navigator.pop(navigatorKey.currentContext!);
-    log("message");
+    Utils().showLog("message");
     Navigator.pushNamed(
       navigatorKey.currentContext!,
       Blog.path,
