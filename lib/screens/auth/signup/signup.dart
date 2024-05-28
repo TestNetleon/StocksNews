@@ -1,6 +1,6 @@
 // // ignore_for_file: avoid_print, use_build_context_synchronously
 
-// import 'dart:developer';
+//  
 // import 'dart:io';
 
 // import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@
 //   void initState() {
 //     super.initState();
 
-//     log("---State is ${widget.state}, ---Dont pop up is${widget.dntPop}---");
+//      Utils().showLog("---State is ${widget.state}, ---Dont pop up is${widget.dntPop}---");
 //   }
 
 //   // void _onLoginClick() {
@@ -345,7 +345,7 @@
 //                   ),
 //                   TextButton(
 //                     onPressed: () {
-//                       log("${widget.dntPop}");
+//                        Utils().showLog("${widget.dntPop}");
 //                       if (widget.dntPop != null) {
 //                         Navigator.pushReplacement(
 //                             context,

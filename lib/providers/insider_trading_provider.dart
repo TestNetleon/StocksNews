@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   InsiderTradingRes? _data;
@@ -68,7 +68,6 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     if (picked != null) {
       date.text = DateFormat("dd-MM-yyyy").format(picked);
       dateSend = DateFormat("yyyy-MM-dd").format(picked);
-      log(date.text);
     }
 
     notifyListeners();
@@ -77,7 +76,6 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   void onChangeTransactionType({KeyValueElement? selectedItem}) {
     keyTxnType = selectedItem?.key ?? "";
     valueTxnType = selectedItem?.value ?? "";
-    log("Key TransactionType=> $keyTxnType");
     type.text = selectedItem?.value ?? "";
     notifyListeners();
   }
@@ -85,7 +83,6 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   void onChangeCap({KeyValueElement? selectedItem}) {
     keyCap = selectedItem?.key ?? "";
     valueCap = selectedItem?.value ?? "";
-    log("Key Cap=> $keyCap");
     capController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
@@ -93,7 +90,6 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   void onChangeSector({KeyValueElement? selectedItem}) {
     keySector = selectedItem?.key ?? "";
     valueSector = selectedItem?.value ?? "";
-    log("Key Sector=> $keySector");
     sectorController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
@@ -101,7 +97,6 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   void onChangeTransactionSize({KeyValueElement? selectedItem}) {
     keyTxnSize = selectedItem?.key ?? "";
     valueTxnSize = selectedItem?.value ?? "";
-    log("Key TransactionSize=> $keyTxnSize");
     txnSizeController.text = selectedItem?.value ?? "";
     notifyListeners();
   }
@@ -199,7 +194,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }

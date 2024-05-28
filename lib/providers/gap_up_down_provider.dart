@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
   int _openIndex = -1;
@@ -115,7 +115,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       setStatusUp(Status.loaded);
     } catch (e) {
       _dataUp = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatusUp(Status.loaded);
     }
   }
@@ -163,7 +163,7 @@ class GapUpDownProvider extends ChangeNotifier with AuthProviderBase {
       setStatusDown(Status.loaded);
     } catch (e) {
       _dataDown = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatusDown(Status.loaded);
     }
   }

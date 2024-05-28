@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SectorGraph extends StatefulWidget {
@@ -36,7 +35,7 @@ class _SectorGraphState extends State<SectorGraph> {
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {
-            log("Error $error");
+            Utils().showLog("Error $error");
           },
         ),
       )

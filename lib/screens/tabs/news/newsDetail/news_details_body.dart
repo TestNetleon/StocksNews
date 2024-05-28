@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -76,7 +74,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   //     }
   //   }
 
-  //   log("$_isVisible");
+  //   Utils().showLog("$_isVisible");
   // }
 
 // Function to create Text widgets from array data
@@ -201,7 +199,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           },
                           onTapUrl: (url) async {
                             bool a = await launchUrl(Uri.parse(url));
-                            log("clicked ur---$url, return value $a");
+                            Utils()
+                                .showLog("clicked ur---$url, return value $a");
 
                             return a;
                           },
@@ -504,7 +503,7 @@ class ListAlignment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("${list1?.isEmpty}, ${list2?.isEmpty}");
+    Utils().showLog("${list1?.isEmpty}, ${list2?.isEmpty}");
     return Wrap(
       children: [
         Visibility(
@@ -554,7 +553,7 @@ class ListAlignment extends StatelessWidget {
           InkWell(
             onTap: () {
               if (blog) {
-                log("1");
+                Utils().showLog("1");
                 Navigator.pushReplacementNamed(
                     navigatorKey.currentContext!, Blog.path,
                     arguments: {

@@ -37,7 +37,7 @@ class _AppBarHomeState extends State<AppBarHome> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // log("App bar init called-------");
+      // Utils().showLog("App bar init called-------");
     });
   }
 
@@ -47,7 +47,7 @@ class _AppBarHomeState extends State<AppBarHome> {
     // String? image = provider.user?.image;
     // bool notificationSeen = provider.user?.notificationSeen == true;
     HomeProvider homeProvider = context.watch<HomeProvider>();
-    // log("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
+    // Utils().showLog("build updated for app bar showing Notification Seen? ${homeProvider.notificationSeen}");
     return AppBar(
       // backgroundColor: ThemeColors.background,
       backgroundColor: Colors.black,

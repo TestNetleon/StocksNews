@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +9,7 @@ import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_deta
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -264,7 +263,7 @@ class InsiderReportingContainer extends StatelessWidget {
                 InsiderTradingData? data = provider.reporterData?.data[index];
 
                 if (index == 0) {
-                  log("$index");
+                  Utils().showLog("$index");
                   return Column(
                     children: [
                       provider.isGraphLoadingInsider

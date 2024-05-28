@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -16,6 +15,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dar
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
@@ -35,7 +35,7 @@ class AddToAlertWatchlist extends StatelessWidget {
         // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
         Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
       } else {
-        log("$isVibe");
+        Utils().showLog("$isVibe");
       }
     } else {
       HapticFeedback.lightImpact();

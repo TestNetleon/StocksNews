@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
@@ -45,7 +43,7 @@ class _BlogState extends State<Blog> {
 
   @override
   Widget build(BuildContext context) {
-    log("message");
+    Utils().showLog("message");
     if (widget.type == BlogsType.author) {
       return AuthorContainer(
         type: widget.type,

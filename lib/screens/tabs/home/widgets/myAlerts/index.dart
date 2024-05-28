@@ -1,4 +1,4 @@
-// import 'dart:developer';
+//  
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +25,7 @@
 //     List<HomeAlertsRes>? homeAlert = provider.homeAlertData;
 
 //     UserRes? userRes = context.watch<UserProvider>().user;
-//     log("$userRes");
+//     Utils().showLog("$userRes");
 //     return LayoutBuilder(
 //       builder: (context, constraints) {
 //         return Column(

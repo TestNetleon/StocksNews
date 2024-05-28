@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
@@ -34,11 +33,11 @@ class NotificationsItem extends StatelessWidget {
       // );
 
       if (type == NotificationType.dashboard.name) {
-        log("--navigate to dashboard---");
+        Utils().showLog("--navigate to dashboard---");
         Navigator.pushNamedAndRemoveUntil(
             navigatorKey.currentContext!, Tabs.path, (route) => false);
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        log("--navigate to news detail---");
+        Utils().showLog("--navigate to news detail---");
 
         Navigator.pushNamed(
           navigatorKey.currentContext!,
@@ -46,7 +45,7 @@ class NotificationsItem extends StatelessWidget {
           arguments: {"slug": slug},
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
-        log("--navigate to landing page---");
+        Utils().showLog("--navigate to landing page---");
 
         Navigator.push(
           navigatorKey.currentContext!,
@@ -57,7 +56,7 @@ class NotificationsItem extends StatelessWidget {
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        log("--navigate to blog detail---");
+        Utils().showLog("--navigate to blog detail---");
 
         Navigator.push(
           navigatorKey.currentContext!,
@@ -68,7 +67,7 @@ class NotificationsItem extends StatelessWidget {
           ),
         );
       } else {
-        log("--navigate to stock detail---");
+        Utils().showLog("--navigate to stock detail---");
 
         Navigator.pushNamed(
           navigatorKey.currentContext!,
@@ -78,7 +77,7 @@ class NotificationsItem extends StatelessWidget {
         );
       }
     } catch (e) {
-      log("Exception ===>> $e");
+      Utils().showLog("Exception ===>> $e");
       Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!, Tabs.path, (route) => false);
     }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
   SectorIndustryRes? _data;
@@ -39,7 +39,6 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
     showProgress = false,
     String name = "",
   }) async {
-    log("SECTOR GRAPH DATA");
     // setStatus(Status.loading);
     _isGraphLoading = Status.loading;
     try {
@@ -65,7 +64,7 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       dates = null;
       values = null;
-      log(e.toString());
+      Utils().showLog(e.toString());
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
     }
@@ -85,7 +84,6 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loading);
     }
     if (stockStates == StockStates.sector && !loadMore) {
-      log("---called in sector industry provider for GRAPH");
       sectorGraphData(name: name);
     }
 
@@ -124,7 +122,6 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
           _data?.data.addAll(
               sectorIndustryResFromJson(jsonEncode(response.data)).data);
         }
-        log("${_data?.data == null}");
       } else {
         if (_page == 1) {
           _data = null;
@@ -135,7 +132,7 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _data = null;
 
-      log(e.toString());
+      Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }
   }
