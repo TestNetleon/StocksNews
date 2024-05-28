@@ -120,6 +120,8 @@ class InsiderCompanyContainer extends StatelessWidget {
                         thickness: 1,
                       ),
                       InsidersDetailsItem(
+                        price: data?.price ?? "",
+                        transacted: "${data?.securitiesTransacted ?? 0}",
                         symbol: data?.symbol ?? '',
                         leading: data?.reportingName,
                         trailing: data?.transactionType,
@@ -164,6 +166,8 @@ class InsiderCompanyContainer extends StatelessWidget {
                   );
                 }
                 return InsidersDetailsItem(
+                  price: data?.price ?? "",
+                  transacted: "${data?.securitiesTransacted ?? 0}",
                   leadingClick: () {
                     Navigator.pushNamed(context, InsiderDetailsType.path,
                         arguments: {
@@ -282,22 +286,22 @@ class InsiderReportingContainer extends StatelessWidget {
                         children: [
                           AutoSizeText(
                             maxLines: 1,
-                            "BOUGHT/SOLD",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
-                          ),
-                          const SpacerHorizontal(width: 10),
-                          AutoSizeText(
-                            maxLines: 1,
                             "TRANSACTIONS",
                             style: stylePTSansRegular(
                               fontSize: 12,
                               color: ThemeColors.greyText,
                             ),
                           ),
-                          const SpacerHorizontal(width: 10),
+                          // const SpacerHorizontal(width: 1),
+                          // AutoSizeText(
+                          //   maxLines: 1,
+                          //   "TRANSACTIONS",
+                          //   style: stylePTSansRegular(
+                          //     fontSize: 12,
+                          //     color: ThemeColors.greyText,
+                          //   ),
+                          // ),
+                          // const SpacerHorizontal(width: 10),
                           AutoSizeText(
                             maxLines: 1,
                             "BUY/SELL",
@@ -348,11 +352,15 @@ class InsiderReportingContainer extends StatelessWidget {
                         thickness: 1,
                       ),
                       InsidersDetailsItem(
+                        price: data?.price ?? "",
+                        transacted: "${data?.securitiesTransacted ?? 0}",
                         isInsider: true,
                         symbol: data?.symbol ?? '',
-                        leading: "${data?.securitiesTransacted}",
+                        // leading: "${data?.securitiesTransacted}",
+                        leading: "${data?.totalTransaction}",
+
                         trailing: "${data?.transactionType}",
-                        middle: "${data?.totalTransaction}",
+                        // middle: "${data?.totalTransaction}",
                         index: index,
                         isOpen: provider.indexReporting == index,
                         // leadingSubtitle: data?.typeOfOwner,
@@ -387,12 +395,16 @@ class InsiderReportingContainer extends StatelessWidget {
                   );
                 }
                 return InsidersDetailsItem(
+                  price: data?.price ?? "",
+                  transacted: "${data?.securitiesTransacted ?? 0}",
                   isInsider: true,
 
                   symbol: data?.symbol ?? '',
-                  leading: "${data?.securitiesTransacted}",
+                  // leading: "${data?.securitiesTransacted}",
+                  leading: "${data?.totalTransaction}",
+
                   trailing: "${data?.transactionType}",
-                  middle: "${data?.totalTransaction}",
+                  // middle: "${data?.totalTransaction}",
                   index: index,
                   isOpen: provider.indexReporting == index,
                   // leadingSubtitle: data?.typeOfOwner,

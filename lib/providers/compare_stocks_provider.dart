@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../widgets/custom/alert_popup.dart';
 import 'user_provider.dart';
@@ -174,5 +175,65 @@ class CompareStocksProvider extends ChangeNotifier {
       //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
       // );
     }
+  }
+
+  //================================================NEW COMPARE =========================================
+
+  List<CompareStockRes>? _companyNEW = [];
+  List<CompareStockRes>? get companyNEW => _companyNEW;
+
+  List<String> tabs = [
+    "Overview",
+    "Stock Analysis",
+    "Earning",
+    "Dividends",
+    "Financial"
+  ];
+
+  clearStockNew() {
+    _companyNEW?.clear();
+    notifyListeners();
+  }
+
+  deleteItemNew(index) {
+    _companyNEW?.removeAt(index);
+    notifyListeners();
+  }
+
+  void addSTockNew() {
+    Utils().showLog("Before${_companyNEW?.length}");
+    _companyNEW?.add(CompareStockRes(
+      symbol: "AAPL",
+      name: "'Apple'",
+      image: "",
+      price: "123",
+      changes: 1,
+      changesPercentage: 1,
+      dayLow: "dayLow",
+      dayHigh: 'dayHigh',
+      yearLow: "yearLow",
+      yearHigh: "yearHigh",
+      mktCap: "mktCap",
+      priceAvg50: "priceAvg50",
+      priceAvg200: "priceAvg200",
+      exchange: "exchange",
+      volume: "volume",
+      avgVolume: "avgVolume",
+      open: 'open',
+      previousClose: "previousClose",
+      eps: 1,
+      pe: 1,
+      earningsAnnouncement: "earningsAnnouncement",
+      sharesOutstanding: 'sharesOutstanding',
+      analystRankingPercent: 1,
+      fundamentalPercent: 1,
+      longTermPercent: 1,
+      overallPercent: 2,
+      setimentPercent: 3,
+      shortTermPercent: 4,
+      valuationPercent: 5,
+    ));
+    Utils().showLog("After${_companyNEW?.length}");
+    notifyListeners();
   }
 }

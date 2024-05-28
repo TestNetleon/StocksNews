@@ -56,15 +56,22 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
 class FilterListing extends StatelessWidget {
   final List<KeyValueElement> items;
   final Function(int) onSelected;
-  const FilterListing(
-      {super.key, required this.items, required this.onSelected});
+  final double paddingLeft;
+  const FilterListing({
+    super.key,
+    required this.items,
+    required this.onSelected,
+    this.paddingLeft = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +88,33 @@ class FilterListing extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: Center(
-                child: Text(
-                  items[index].value ?? "",
-                  style: stylePTSansRegular(fontSize: 16),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+                      Visibility(
+                        visible: items[index].image != null &&
+                            items[index].image != "",
+                        child: Container(
+                            height: 20,
+                            width: 20,
+                            margin: EdgeInsets.only(right: 10.sp),
+                            child:
+                                CachedNetworkImagesWidget(items[index].image)),
+                      ),
+                      Flexible(
+                        child: Text(
+                          items[index].value ?? "",
+                          style: index == 0
+                              ? stylePTSansBold(fontSize: 16)
+                              : stylePTSansRegular(fontSize: 15),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

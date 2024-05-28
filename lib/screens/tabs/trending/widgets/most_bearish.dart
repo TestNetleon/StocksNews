@@ -86,25 +86,51 @@ class MostBearish extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SpacerHorizontal(width: 40),
+                      // const SpacerHorizontal(width: 40),
                       Expanded(
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          "PRICE",
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            AutoSizeText(
+                              maxLines: 1,
+                              "PRICE",
+                              style: stylePTSansRegular(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
+                              ),
+                            ),
+                            AutoSizeText(
+                              maxLines: 1,
+                              "(% Change)",
+                              style: stylePTSansRegular(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      AutoSizeText(
-                        maxLines: 1,
-                        "MENTIONS",
-                        textAlign: TextAlign.end,
-                        style: stylePTSansRegular(
-                          fontSize: 12,
-                          color: ThemeColors.greyText,
-                        ),
+                      const SpacerHorizontal(width: 15),
+
+                      Column(
+                        children: [
+                          AutoSizeText(
+                            maxLines: 1,
+                            "MENTIONS",
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                          AutoSizeText(
+                            maxLines: 1,
+                            "(% Change)",
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ],
                       ),
                       const SpacerHorizontal(width: 10),
                     ],

@@ -295,10 +295,10 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
 
     if (picked != null) {
       if (isCP) {
-        dateCP.text = DateFormat("dd-MM-yyyy").format(picked);
+        dateCP.text = DateFormat("MMM dd, yyyy").format(picked);
         dateSendCP = DateFormat("yyyy-MM-dd").format(picked);
       } else {
-        dateIP.text = DateFormat("dd-MM-yyyy").format(picked);
+        dateIP.text = DateFormat("MMM dd, yyyy").format(picked);
         dateSendIP = DateFormat("yyyy-MM-dd").format(picked);
       }
     }

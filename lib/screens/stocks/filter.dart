@@ -42,8 +42,10 @@ void showExchangePicker(BuildContext context) {
 
   BaseBottomSheets().gradientBottomSheet(
     child: FilterListing(
+      paddingLeft: ScreenUtil().screenWidth * 0.35,
       items: List.generate(provider.exchangeShortName?.length ?? 0, (index) {
         return KeyValueElement(
+            image: provider.exchangeShortName?[index].image,
             key: provider.exchangeShortName?[index].key,
             value: provider.exchangeShortName?[index].value);
       }),

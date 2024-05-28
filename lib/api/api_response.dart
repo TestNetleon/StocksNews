@@ -164,20 +164,24 @@ class Extra {
 class KeyValueElement {
   final String? key;
   final String? value;
+  final String? image;
 
   KeyValueElement({
     this.key,
     this.value,
+    this.image,
   });
 
   factory KeyValueElement.fromJson(Map<String, dynamic> json) =>
       KeyValueElement(
         key: json["key"],
         value: json["value"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "key": key,
         "value": value,
+        "image": image,
       };
 }

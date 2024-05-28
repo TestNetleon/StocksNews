@@ -209,8 +209,10 @@ class FilterInsiders extends StatelessWidget {
     // );
     BaseBottomSheets().gradientBottomSheet(
       child: FilterListing(
+        paddingLeft: ScreenUtil().screenWidth * 0.26,
         items: List.generate(provider.sector?.length ?? 0, (index) {
           return KeyValueElement(
+              image: provider.sector?[index].image,
               key: provider.sector?[index].key,
               value: provider.sector?[index].value);
         }),
@@ -488,7 +490,7 @@ class FilterInsiders extends StatelessWidget {
                   fontSize: 15,
                   color: ThemeColors.background,
                 ),
-                hintText: "dd-mm-yyyy",
+                hintText: "mm dd, yyyy",
                 editable: false,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 10.sp,

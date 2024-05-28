@@ -11,7 +11,7 @@ class InsidersDetailsItem extends StatelessWidget {
   final void Function()? onTap;
   final void Function()? leadingClick;
   final List<Widget> children;
-  final String? leading, middle, trailing, leadingSubtitle;
+  final String? leading, middle, trailing, leadingSubtitle, price, transacted;
   final String symbol;
   final int index;
   final bool? isOpen;
@@ -29,6 +29,8 @@ class InsidersDetailsItem extends StatelessWidget {
     this.trailing,
     required this.children,
     this.isInsider = false,
+    this.price,
+    this.transacted,
   });
 
   @override
@@ -36,6 +38,7 @@ class InsidersDetailsItem extends StatelessWidget {
     //      color: isEven(index) ? null : ThemeColors.background,
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,6 +144,18 @@ class InsidersDetailsItem extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        const SpacerVertical(height: 5),
+        Text(
+          "$transacted Shares @ $price",
+          // "1000 Shares @ 1000",
+
+          style: stylePTSansRegular(
+            color: ThemeColors.greyText,
+            fontSize: 12,
+          ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         AnimatedSize(
           duration: const Duration(milliseconds: 150),

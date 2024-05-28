@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';

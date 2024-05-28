@@ -70,25 +70,51 @@ class MostBullish extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SpacerHorizontal(width: 24),
+                      // const SpacerHorizontal(width: 24),
                       Expanded(
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          "PRICE",
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
+                        flex: 3,
+                        child: Column(
+                          children: [
+                            AutoSizeText(
+                              maxLines: 1,
+                              "PRICE",
+                              style: stylePTSansRegular(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
+                              ),
+                            ),
+                            AutoSizeText(
+                              maxLines: 1,
+                              "(% Change)",
+                              style: stylePTSansRegular(
+                                fontSize: 12,
+                                color: ThemeColors.greyText,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      AutoSizeText(
-                        maxLines: 1,
-                        "MENTIONS",
-                        textAlign: TextAlign.end,
-                        style: stylePTSansRegular(
-                          fontSize: 12,
-                          color: ThemeColors.greyText,
-                        ),
+                      Column(
+                        children: [
+                          AutoSizeText(
+                            maxLines: 1,
+                            "MENTIONS",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                          AutoSizeText(
+                            maxLines: 1,
+                            "(% Change)",
+                            textAlign: TextAlign.end,
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.greyText,
+                            ),
+                          ),
+                        ],
                       ),
                       const SpacerHorizontal(width: 10),
                     ],

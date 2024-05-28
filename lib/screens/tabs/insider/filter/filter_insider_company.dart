@@ -241,7 +241,7 @@ class FilterInsiderCompany extends StatelessWidget {
               TextInputField(
                   style: stylePTSansRegular(
                       fontSize: 15, color: ThemeColors.background),
-                  hintText: "dd-mm-yyyy",
+                  hintText: "mm dd, yyyy",
                   editable: false,
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 10.sp, vertical: 13.sp),

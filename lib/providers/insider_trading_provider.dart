@@ -66,7 +66,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
       lastDate: DateTime.now(),
     );
     if (picked != null) {
-      date.text = DateFormat("dd-MM-yyyy").format(picked);
+      date.text = DateFormat("MMM dd, yyyy").format(picked);
       dateSend = DateFormat("yyyy-MM-dd").format(picked);
       log(date.text);
     }
@@ -185,6 +185,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
         _transactionType = response.extra.transactionType;
         _cap = response.extra.cap;
         _sector = response.extra.sector;
+        log("Sector image ${_sector?[1].image}");
         _txnSize = response.extra.txnSize;
         notifyListeners();
       } else {
