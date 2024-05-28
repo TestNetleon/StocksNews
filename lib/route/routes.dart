@@ -54,7 +54,6 @@ import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/errorScreens/internet_error.dart';
-import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';

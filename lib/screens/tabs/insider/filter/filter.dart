@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -43,11 +44,26 @@ class FilterInsiders extends StatelessWidget {
   // }
   void showTransactionPicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    showPlatformBottomSheet(
-      showClose: false,
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-      context: context,
-      content: FilterListing(
+    // showPlatformBottomSheet(
+    //   showClose: false,
+    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+    //   context: context,
+    //   content: FilterListing(
+    //     items: List.generate(provider.transactionType?.length ?? 0, (index) {
+    //       return KeyValueElement(
+    //           key: provider.transactionType?[index].key,
+    //           value: provider.transactionType?[index].value);
+    //     }),
+    //     onSelected: (index) {
+    //       provider.onChangeTransactionType(
+    //         selectedItem: provider.transactionType?[index],
+    //       );
+    //     },
+    //   ),
+    // );
+
+    BaseBottomSheets().gradientBottomSheet(
+      child: FilterListing(
         items: List.generate(provider.transactionType?.length ?? 0, (index) {
           return KeyValueElement(
               key: provider.transactionType?[index].key,
@@ -90,11 +106,25 @@ class FilterInsiders extends StatelessWidget {
 
   void showMarketCapPicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    showPlatformBottomSheet(
-      showClose: false,
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-      context: context,
-      content: FilterListing(
+    // showPlatformBottomSheet(
+    //   showClose: false,
+    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+    //   context: context,
+    //   content: FilterListing(
+    //     items: List.generate(provider.cap?.length ?? 0, (index) {
+    //       return KeyValueElement(
+    //           key: provider.cap?[index].key, value: provider.cap?[index].value);
+    //     }),
+    //     onSelected: (index) {
+    //       provider.onChangeCap(
+    //         selectedItem: provider.cap?[index],
+    //       );
+    //     },
+    //   ),
+    // );
+
+    BaseBottomSheets().gradientBottomSheet(
+      child: FilterListing(
         items: List.generate(provider.cap?.length ?? 0, (index) {
           return KeyValueElement(
               key: provider.cap?[index].key, value: provider.cap?[index].value);
@@ -162,11 +192,25 @@ class FilterInsiders extends StatelessWidget {
 
   void showSectorPicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    showPlatformBottomSheet(
-      showClose: false,
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-      context: context,
-      content: FilterListing(
+    // showPlatformBottomSheet(
+    //   showClose: false,
+    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+    //   context: context,
+    //   content: FilterListing(
+    //     items: List.generate(provider.sector?.length ?? 0, (index) {
+    //       return KeyValueElement(
+    //           key: provider.sector?[index].key,
+    //           value: provider.sector?[index].value);
+    //     }),
+    //     onSelected: (index) {
+    //       provider.onChangeSector(
+    //         selectedItem: provider.sector?[index],
+    //       );
+    //     },
+    //   ),
+    // );
+    BaseBottomSheets().gradientBottomSheet(
+      child: FilterListing(
         items: List.generate(provider.sector?.length ?? 0, (index) {
           return KeyValueElement(
               key: provider.sector?[index].key,
@@ -208,11 +252,25 @@ class FilterInsiders extends StatelessWidget {
   // }
   void showTransactionSizePicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    showPlatformBottomSheet(
-      showClose: false,
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-      context: context,
-      content: FilterListing(
+    // showPlatformBottomSheet(
+    //   showClose: false,
+    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+    //   context: context,
+    //   content: FilterListing(
+    //     items: List.generate(provider.txnSize?.length ?? 0, (index) {
+    //       return KeyValueElement(
+    //           key: provider.txnSize?[index].key,
+    //           value: provider.txnSize?[index].value);
+    //     }),
+    //     onSelected: (index) {
+    //       provider.onChangeTransactionSize(
+    //         selectedItem: provider.txnSize?[index],
+    //       );
+    //     },
+    //   ),
+    // );
+    BaseBottomSheets().gradientBottomSheet(
+      child: FilterListing(
         items: List.generate(provider.txnSize?.length ?? 0, (index) {
           return KeyValueElement(
               key: provider.txnSize?[index].key,
@@ -235,9 +293,9 @@ class FilterInsiders extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SpacerVertical(height: 3),
-        const ScreenTitle(title: "Filter Insider Trades"),
-        const SpacerVertical(height: 10),
+        // const SpacerVertical(height: 3),
+        // const ScreenTitle(title: "Filter Insider Trades"),
+        // const SpacerVertical(height: 10),
         // FilterDropDownTextField(
         //   heading: "Transaction Type",
         //   value: provider.valueTxnType.isEmpty

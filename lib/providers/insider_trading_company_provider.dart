@@ -75,6 +75,12 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   String valueTxnTypeIP = "";
   String valueTxnSizeIP = "";
 
+  TextEditingController tnxTypeControllerCP = TextEditingController();
+  TextEditingController tnxSizeControllerCP = TextEditingController();
+
+  TextEditingController tnxTypeControllerIP = TextEditingController();
+  TextEditingController tnxSizeControllerIP = TextEditingController();
+
   List<String>? chartDates;
   List<int>? chartPurchase;
   List<int>? chartSale;
@@ -185,6 +191,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     keyTxnTypeCP = selectedItem?.key ?? "";
     valueTxnTypeCP = selectedItem?.value ?? "";
     log("Key TransactionType=> $keyTxnTypeCP");
+    tnxTypeControllerCP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -192,6 +199,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     keyTxnSizeCP = selectedItem?.key ?? "";
     valueTxnSizeCP = selectedItem?.value ?? "";
     log("Key TransactionSize=> $keyTxnSizeCP");
+    tnxSizeControllerCP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -199,6 +207,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     keyTxnTypeIP = selectedItem?.key ?? "";
     valueTxnTypeIP = selectedItem?.value ?? "";
     log("Key TransactionType=> $keyTxnTypeIP");
+    tnxTypeControllerIP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -206,6 +215,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     keyTxnSizeIP = selectedItem?.key ?? "";
     valueTxnSizeIP = selectedItem?.value ?? "";
     log("Key TransactionSize=> $keyTxnSizeIP");
+    tnxSizeControllerIP.text = selectedItem?.value ?? "";
     notifyListeners();
   }
 
@@ -222,6 +232,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     dateCP.clear();
     dateSendCP = "";
     searchTransaction = "";
+    tnxSizeControllerCP.clear();
+    tnxTypeControllerCP.clear();
     notifyListeners();
   }
 
@@ -233,6 +245,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     dateIP.clear();
     dateSendIP = "";
     searchTransaction = "";
+    tnxSizeControllerIP.clear();
+    tnxTypeControllerIP.clear();
     notifyListeners();
   }
 

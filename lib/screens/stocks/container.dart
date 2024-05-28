@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -20,17 +20,20 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
-import '../../utils/dialogs.dart';
-
 //
 class StocksContainer extends StatelessWidget {
   const StocksContainer({super.key});
 
+  // void _filterClick() {
+  //   showPlatformBottomSheet(
+  //       padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+  //       context: navigatorKey.currentContext!,
+  //       content: const FilterStocks());
+  // }
+
   void _filterClick() {
-    showPlatformBottomSheet(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-        context: navigatorKey.currentContext!,
-        content: const FilterStocks());
+    BaseBottomSheets().gradientBottomSheet(
+        title: "Filter Stocks", child: const FilterStocks());
   }
 
   @override
