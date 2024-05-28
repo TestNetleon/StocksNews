@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -52,6 +53,10 @@ class CompareStocksProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
+  Future onRefresh() async {
+    getCompareStock();
+  }
+
   Future getCompareStock({showProgress = true}) async {
     _company = [];
     wholeListEmpty = false;
@@ -67,6 +72,7 @@ class CompareStocksProvider extends ChangeNotifier {
         url: Apis.compare,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (res.status) {
         _company = compareStockResFromJson(jsonEncode(res.data));
@@ -103,6 +109,7 @@ class CompareStocksProvider extends ChangeNotifier {
         url: Apis.deleteCompare,
         request: request,
         showProgress: true,
+        onRefresh: onRefresh,
       );
       if (res.status) {
         _company.removeAt(index);
@@ -138,6 +145,7 @@ class CompareStocksProvider extends ChangeNotifier {
         url: Apis.addCompare,
         request: request,
         showProgress: true,
+        onRefresh: onRefresh,
       );
       if (res.status) {
         if (!_company.any((company) => company.symbol == symbol)) {

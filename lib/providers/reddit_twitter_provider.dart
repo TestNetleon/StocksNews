@@ -75,6 +75,11 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    clearSearch();
+    getRedditTwitterData();
+  }
+
   Future getRedditTwitterData({
     String search = "",
     reset = false,
@@ -107,8 +112,8 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.redditTwitter,
         request: request,
-        // showProgress: !isSearching,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         _socialSentimentRes =

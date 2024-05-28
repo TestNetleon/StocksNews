@@ -28,6 +28,10 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getData();
+  }
+
   Future getData({showProgress = false, loadMore = false}) async {
     if (loadMore) {
       _page++;
@@ -47,6 +51,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.notifications,
         request: request,
         showProgress: showProgress,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

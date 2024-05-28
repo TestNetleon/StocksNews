@@ -39,6 +39,10 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    getData();
+  }
+
   Future getData({
     showProgress = false,
     loadMore = false,
@@ -63,6 +67,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.watchlist,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -105,6 +110,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.deleteWatchlist,
         request: request,
         showProgress: true,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {
@@ -151,6 +157,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.addWatchlist,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
       if (response.status) {
         await _player.play(AssetSource(AudioFiles.alertWeathlist));

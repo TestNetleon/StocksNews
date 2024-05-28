@@ -39,7 +39,7 @@ Future<ApiResponse> apiRequest({
   required String url,
   Map? request,
   header,
-  baseUrl = "https://financialmodelingprep.com/api/v3/historical-chart/",
+  baseUrl = "https://financialmodelingprep.com/api/v3/",
   showProgress = false,
   Duration timeoutDuration = const Duration(seconds: 30),
 }) async {
@@ -72,9 +72,9 @@ Future<ApiResponse> apiRequest({
         status: false,
         message: Const.errSomethingWrong,
       );
-    } else if (response.statusCode == 429 || response.statusCode == 500) {
-      Utils().showLog('Status Code Error ${response.statusCode}');
-      if (showProgress) closeGlobalProgressDialog();
+      // } else if (response.statusCode == 429 || response.statusCode == 500) {
+      //   Utils().showLog('Status Code Error ${response.statusCode}');
+      //   if (showProgress) closeGlobalProgressDialog();
       // Timer(const Duration(milliseconds: 200), () {
       //   isServerError = true;
       //   Navigator.popUntil(
@@ -82,10 +82,10 @@ Future<ApiResponse> apiRequest({
       //   Navigator.pushNamed(
       //       navigatorKey.currentContext!, ServerErrorWidget.path);
       // });
-      return ApiResponse(
-        status: false,
-        message: Const.errSomethingWrong,
-      );
+      //   return ApiResponse(
+      //     status: false,
+      //     message: Const.errSomethingWrong,
+      //   );
     } else {
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();

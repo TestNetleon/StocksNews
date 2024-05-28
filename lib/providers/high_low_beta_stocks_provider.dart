@@ -64,6 +64,10 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  Future onRefresh() async {
+    // getHighLowNegativeBetaStocks();
+  }
+
   Future getHighLowNegativeBetaStocks({loadMore = false, type = 1}) async {
     log("text Set $type");
     if (loadMore) {
@@ -84,6 +88,7 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
                 : Apis.negativeBetaStocks,
         request: request,
         showProgress: false,
+        onRefresh: onRefresh,
       );
 
       if (response.status) {

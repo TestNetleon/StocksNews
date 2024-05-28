@@ -40,6 +40,7 @@ class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.contactUs,
         request: request,
         showProgress: true,
+        onRefresh: () {},
       );
       // showErrorMessage(
       //   message: response.message,
