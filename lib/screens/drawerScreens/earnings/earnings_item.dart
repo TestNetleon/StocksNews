@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/Earnings_res.dart';
 import 'package:stocks_news_new/providers/Earnings_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -33,7 +34,8 @@ class EarningsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EarningsProvider provider = context.watch<EarningsProvider>();
+    EarningsProvider provider =
+        navigatorKey.currentContext!.watch<EarningsProvider>();
 
     return InkWell(
       onTap: () {

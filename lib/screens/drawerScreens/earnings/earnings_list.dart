@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/Earnings_res.dart';
 import 'package:stocks_news_new/providers/Earnings_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/drawerScreens/Earnings/Earnings_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
@@ -23,13 +25,15 @@ class _EarningsListState extends State<EarningsList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<EarningsProvider>().getEarningsStocks();
+      navigatorKey.currentContext!.read<EarningsProvider>().getEarningsStocks();
+      Utils().showLog("hahaja");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    EarningsProvider provider = context.watch<EarningsProvider>();
+    EarningsProvider provider =
+        navigatorKey.currentContext!.watch<EarningsProvider>();
     List<EarningsRes>? data = provider.data;
 
     return BaseUiContainer(
