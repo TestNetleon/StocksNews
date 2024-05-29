@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
-import 'package:stocks_news_new/screens/tabs/compareNew/widgets/add_more.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 import 'widgets/header.dart';
-import 'widgets/overview.dart';
+import 'overview/overview.dart';
 
 class CompareStockNewContainer extends StatelessWidget {
   const CompareStockNewContainer({super.key});
@@ -27,16 +26,7 @@ class CompareStockNewContainer extends StatelessWidget {
                 // width: double.infinity,
                 child: const Align(
                   alignment: Alignment.centerLeft,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CompareNewHeader(),
-                        CompareNewAddMore(),
-                      ],
-                    ),
-                  ),
+                  child: CompareNewHeader(),
                 ),
               ),
               Expanded(

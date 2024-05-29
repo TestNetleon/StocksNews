@@ -14,11 +14,13 @@ class ScreenTitle extends StatelessWidget {
   final bool canPopBack;
   final String? subTitle;
   final bool divider;
+  final EdgeInsets? dividerPadding;
 
   const ScreenTitle({
     this.title,
     this.style,
     super.key,
+    this.dividerPadding,
     this.optionalText,
     this.subTitle,
     this.canPopBack = false,
@@ -104,9 +106,10 @@ class ScreenTitle extends StatelessWidget {
         ),
         Visibility(
           visible: divider,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-            child: Divider(
+          child: Padding(
+            padding: dividerPadding ??
+                const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+            child: const Divider(
               color: ThemeColors.accent,
               height: 2,
               thickness: 2,
