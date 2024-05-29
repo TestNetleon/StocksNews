@@ -101,11 +101,12 @@ Route createRoute(Widget widget) {
   );
 }
 
-easeOutBuilder(BuildContext context, {required Widget child}) {
+easeOutBuilder(BuildContext context,
+    {required Widget child, Duration? duration}) {
   Navigator.push(
     context,
     PageRouteBuilder(
-      transitionDuration: const Duration(milliseconds: 400),
+      transitionDuration: duration ?? const Duration(milliseconds: 400),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

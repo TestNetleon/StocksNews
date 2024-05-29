@@ -14,7 +14,7 @@ class LinearBarCommon extends StatelessWidget {
       animation: true,
       animationDuration: 1000,
       percent: value / 100,
-      lineHeight: !isPhone ? 14 : 16,
+      lineHeight: !isPhone ? 14 : 20,
       barRadius: const Radius.circular(5),
       padding: const EdgeInsets.only(right: 5),
       // padding: EdgeInsets.only(right: 20.sp, top: 1.sp),
@@ -22,7 +22,7 @@ class LinearBarCommon extends StatelessWidget {
       center: Text(
         "$value%",
         style: stylePTSansBold(
-          fontSize: 8,
+          fontSize: 11,
         ),
       ),
       progressColor: value >= 0 && value < 25
