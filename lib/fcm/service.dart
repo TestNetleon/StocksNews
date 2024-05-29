@@ -35,10 +35,8 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
   // provider.notificationSeen = false;
   provider.setNotification(false);
-  Utils().showLog("Notification Title: ${message.notification?.title}");
-  Utils().showLog("Notification body Body: ${message.notification?.body}");
   Utils().showLog("Data Payload: ${message.data}");
-  Utils().showLog("Image ${message.data["image"]}");
+  Utils().showLog("Notification Payload: ${message.notification}");
 }
 
 class FirebaseApi {
@@ -228,6 +226,7 @@ class FirebaseApi {
     FirebaseMessaging.onMessage.listen((message) async {
       try {
         Utils().showLog("on Message  ==> Notification ${message.notification}");
+        Utils().showLog("on Message  ==> Data ${message.data}");
       } catch (e) {
         if (kDebugMode) print(e.toString());
       }
