@@ -16,6 +16,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.da
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -112,6 +113,8 @@ class _LoginBottomState extends State<LoginBottom> {
       String buildNumber = packageInfo.buildNumber;
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
+        bool granted = await Permission.notification.isGranted;
+
         Map request = {
           "displayName": account.displayName ?? "",
           "email": account.email,
@@ -122,6 +125,7 @@ class _LoginBottomState extends State<LoginBottom> {
           "address": address ?? "",
           "build_version": versionName,
           "build_code": buildNumber,
+          "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request,
@@ -139,23 +143,30 @@ class _LoginBottomState extends State<LoginBottom> {
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
+      bool granted = await Permission.notification.isGranted;
 
       UserProvider provider = context.read<UserProvider>();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
+
       Map request = {
         "displayName": displayName ?? "",
         "email": email ?? "",
         "id": id ?? "",
-        "fcm_token": fcmToken ?? "",
         "platform": Platform.operatingSystem,
         "address": address ?? "",
         "build_version": versionName,
         "build_code": buildNumber,
+        "fcm_token": fcmToken ?? "",
+        "fcm_permission": "$granted",
       };
-      provider.appleLogin(request,
-          state: widget.state, dontPop: widget.dontPop);
+
+      provider.appleLogin(
+        request,
+        state: widget.state,
+        dontPop: widget.dontPop,
+      );
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);

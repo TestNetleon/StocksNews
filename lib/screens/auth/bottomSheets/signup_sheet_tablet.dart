@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -79,14 +80,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
   void _onLoginClick() {
     closeKeyboard();
 
-    if (!isEmail(_controller.text)
-        // && !isNumeric(_controller.text)
-        ) {
-      // showErrorMessage(
-      //   message: "Please enter valid email address",
-      //   snackbar: false,
-      // );
-
+    if (!isEmail(_controller.text)) {
       popUpAlert(
         message: "Please enter valid email address.",
         title: "Alert",
@@ -95,61 +89,30 @@ class _SignUpBottomState extends State<SignUpBottom> {
       return;
     }
 
-    // else if (isNumeric(_controller.text) &&
-    //     (isEmpty(_controller.text) || !isLength(_controller.text, 3))) {
-    //   showErrorMessage(message: "Please enter valid phone number");
-    //   return;
-    // }
-
     UserProvider provider = context.read<UserProvider>();
 
     Map request = {"username": _controller.text.toLowerCase()};
 
     provider.signup(request);
   }
-  // void _onLoginClick() {
-  //   closeKeyboard();
-  //   if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
-  //     showErrorMessage(
-  //       message: "Please enter valid email address",
-  //     );
-  //     return;
-  //   } else if (isNumeric(_controller.text) &&
-  //       (isEmpty(_controller.text) || !isLength(_controller.text, 3))) {
-  //     showErrorMessage(message: "Please enter valid phone number");
-  //     return;
-  //   }
-
-  //   UserProvider provider = context.read<UserProvider>();
-
-  //   Map request = {
-  //     "username": _controller.text,
-  //     "type": isEmail(_controller.text) ? "email" : "phone",
-  //   };
-
-  //   provider.login(request);
-  // }
 
   void _handleSignIn() async {
     if (await _googleSignIn.isSignedIn()) {
-      print("Already Signed In *******");
       await _googleSignIn.signOut();
-      print("Signed out *******");
     }
 
     try {
-      print("Signed In ******* ##");
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
 
       GoogleSignInAccount? account = await _googleSignIn.signIn();
-      print("Signed In *******");
-      print(account.toString());
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
+        bool granted = await Permission.notification.isGranted;
+
         Map request = {
           "displayName": account.displayName ?? "",
           "email": account.email,
@@ -160,6 +123,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "address": address ?? "",
           "build_version": versionName,
           "build_code": buildNumber,
+          "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, dontPop: 'true', state: widget.state);
@@ -185,6 +149,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
       UserProvider provider = context.read<UserProvider>();
+      bool granted = await Permission.notification.isGranted;
+
       Map request = {
         "displayName": displayName ?? "",
         "email": email ?? "",
@@ -194,6 +160,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "address": address ?? "",
         "build_version": versionName,
         "build_code": buildNumber,
+        "fcm_permission": "$granted",
       };
       provider.appleLogin(request, dontPop: 'true', state: widget.state);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
@@ -273,32 +240,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         style: stylePTSansBold(fontSize: 24),
                       ),
                       const SpacerVertical(height: 30),
-
-                      // ThemeButton(
-                      //   onPressed: () {
-                      //     // Navigator.pushNamed(context, CreateAccount.path);
-                      //     createAccountSheet();
-                      //   },
-                      //   child: SizedBox(
-                      //     width: double.infinity,
-                      //     child: Stack(
-                      //       alignment: Alignment.center,
-                      //       children: [
-                      //         const Positioned(left: 0, child: Icon(Icons.person)),
-                      //         Text(
-                      //           "Sign Up with Email Address",
-                      //           style: stylePTSansRegular(fontSize: 14),
-                      //           textAlign: TextAlign.center,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // Text(
-                      //   "Email Address",
-                      //   style: stylePTSansRegular(fontSize: 14),
-                      // ),
-                      // const SpacerVertical(height: 5),
                       ThemeInputField(
                         controller: _controller,
                         placeholder: "Enter email address to sign up",
@@ -438,47 +379,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
                           ),
                           const SpacerVertical(),
                           const AgreeConditions(),
-
-                          // Visibility(
-                          //     visible: Platform.isIOS,
-                          //     child: Container(
-                          //       margin: EdgeInsets.only(top: Dimen.itemSpacing.sp),
-                          //       child: SignInWithAppleButton(
-                          //         style: SignInWithAppleButtonStyle.whiteOutlined,
-                          //         iconAlignment: IconAlignment.left,
-                          //         onPressed: () async {
-                          //           try {
-                          //             // flutter: AuthorizationAppleID(000150.6a1410656f504cdcb3d81a2c25231878.1000, Netleon, Technologies, netleonweb@gmail.com, null)
-                          //             // if(Platform.isIOS && Platform.version)
-                          //             final AuthorizationCredentialAppleID
-                          //                 credential = await SignInWithApple
-                          //                     .getAppleIDCredential(
-                          //               scopes: [
-                          //                 AppleIDAuthorizationScopes.email,
-                          //                 AppleIDAuthorizationScopes.fullName,
-                          //               ],
-                          //             );
-                          //             _handleSignInApple(
-                          //               credential.userIdentifier,
-                          //               credential.givenName != null
-                          //                   ? "${credential.givenName} ${credential.familyName}"
-                          //                   : null,
-                          //               credential.email,
-                          //             );
-                          //             print(credential.userIdentifier);
-                          //           } catch (e) {
-                          //             print("Error Apple Sign IN - $e");
-                          //             if (e.toString().contains(
-                          //                 "SignInWithAppleNotSupportedException")) {
-                          //               showErrorMessage(
-                          //                 message:
-                          //                     "Sign in with Apple not supported in this device",
-                          //               );
-                          //             }
-                          //           }
-                          //         },
-                          //       ),
-                          //     )),
                         ],
                       ),
                       const SpacerVertical(height: 15),
@@ -496,19 +396,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
                                     dontPop: widget.dntPop,
                                     state: widget.state,
                                   );
-                            //  Utils().showLog("${widget.dntPop}");
-                            // if (widget.dntPop != null) {
-                            //   // Navigator.pushReplacement(
-                            //   //     context,
-                            //   //     createRoute(Login(
-                            //   //       dontPop: widget.dntPop,
-                            //   //       state: widget.state,
-                            //   //     )));
-                            //   Navigator.pop(context);
-                            //   loginSheet(dontPop: widget.dntPop, state: widget.state);
-                            // } else {
-                            //   Navigator.pop(context);
-                            // }
                           },
                           child: RichText(
                             text: TextSpan(

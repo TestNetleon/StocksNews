@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -96,6 +97,8 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
+      bool granted = await Permission.notification.isGranted;
+
       Map request = {
         "username": provider.user?.username ?? "",
         "otp": _controller.text,
@@ -105,6 +108,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
         "address": address ?? "",
         "build_version": versionName,
         "build_code": buildNumber,
+        "fcm_permission": "$granted",
       };
 
       provider.verifySignupOtp(request);

@@ -40,7 +40,6 @@ import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/createAccount/create_account.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -93,7 +92,7 @@ class Routes {
     Splash.path: (_) => const Splash(),
     // Login.path: (_) => const Login(),
     // SignUp.path: (_) => const SignUp(),
-    CreateAccount.path: (_) => const CreateAccount(),
+    // CreateAccount.path: (_) => const CreateAccount(),
     SignUpSuccess.path: (_) => const SignUpSuccess(),
     // Tabs.path: (_) => const Tabs(),
     // OTPSignup.path: (_) => const OTPSignup(),

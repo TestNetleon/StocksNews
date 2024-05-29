@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 
 import 'dart:io';
@@ -112,6 +113,8 @@ class _LoginBottomState extends State<LoginBottom> {
       String buildNumber = packageInfo.buildNumber;
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
+        bool granted = await Permission.notification.isGranted;
+
         Map request = {
           "displayName": account.displayName ?? "",
           "email": account.email,
@@ -122,6 +125,7 @@ class _LoginBottomState extends State<LoginBottom> {
           "address": address ?? "",
           "build_version": versionName,
           "build_code": buildNumber,
+          "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request,
@@ -144,6 +148,8 @@ class _LoginBottomState extends State<LoginBottom> {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
+      bool granted = await Permission.notification.isGranted;
+
       Map request = {
         "displayName": displayName ?? "",
         "email": email ?? "",
@@ -153,6 +159,7 @@ class _LoginBottomState extends State<LoginBottom> {
         "address": address ?? "",
         "build_version": versionName,
         "build_code": buildNumber,
+        "fcm_permission": "$granted",
       };
       provider.appleLogin(request,
           state: widget.state, dontPop: widget.dontPop);
