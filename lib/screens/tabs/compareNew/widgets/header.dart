@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../modals/compare_stock_res.dart';
@@ -25,7 +25,7 @@ class CompareNewHeader extends StatelessWidget {
             // borderRadius: BorderRadius.circular(8),
             onTap: () {},
             child: Ink(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
               decoration: BoxDecoration(
                   // borderRadius: BorderRadius.circular(8),
                   // color: ThemeColors.greyBorder.withOpacity(0.4),
@@ -37,8 +37,7 @@ class CompareNewHeader extends StatelessWidget {
                             color: ThemeColors.greyBorder.withOpacity(0.4),
                           )
                         : provider.company.length == 3 &&
-                                index == 0 &&
-                                index == 2
+                                (index == 0 || index == 1)
                             ? BorderSide(
                                 color: ThemeColors.greyBorder.withOpacity(0.4),
                               )
@@ -75,17 +74,20 @@ class CompareNewHeader extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () => provider.removeStockItem(index: index),
-                      child: const Align(
-                        alignment: Alignment.topRight,
-                        child: Icon(
-                          Icons.close,
-                          color: ThemeColors.greyBorder,
-                          size: 20,
+                  Visibility(
+                    // visible: provider.company.length != 1,
+                    child: Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () => provider.removeStockItem(index: index),
+                        child: const Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(
+                            Icons.close,
+                            color: ThemeColors.greyBorder,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),

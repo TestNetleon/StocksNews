@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -13,11 +12,12 @@ class LinearBarCommon extends StatelessWidget {
   Widget build(BuildContext context) {
     return LinearPercentIndicator(
       animation: true,
-      animationDuration: 2500,
+      animationDuration: 1000,
       percent: value / 100,
       lineHeight: !isPhone ? 14 : 16,
-      barRadius: Radius.circular(5.sp),
-      padding: EdgeInsets.only(right: 20.sp, top: 1.sp),
+      barRadius: const Radius.circular(5),
+      padding: const EdgeInsets.only(right: 5),
+      // padding: EdgeInsets.only(right: 20.sp, top: 1.sp),
       backgroundColor: ThemeColors.greyBorder,
       center: Text(
         "$value%",

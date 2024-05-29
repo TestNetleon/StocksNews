@@ -5,6 +5,7 @@ import 'package:stocks_news_new/screens/tabs/compareNew/container.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../../providers/search_provider.dart';
@@ -16,6 +17,7 @@ import '../../auth/bottomSheets/login_sheet_tablet.dart';
 import '../compareStocks/widgets/pop_up.dart';
 
 class CompareNew extends StatelessWidget {
+  static const path = "CompareNew";
   const CompareNew({super.key});
 
   _showPopUp(BuildContext context) {
@@ -44,7 +46,9 @@ class CompareNew extends StatelessWidget {
                   const EdgeInsets.fromLTRB(0, Dimen.itemSpacing, 0, 0),
               title: "Compare Stocks",
               optionalWidget: Visibility(
-                visible: userProvider.user != null,
+                visible: userProvider.user != null &&
+                    provider.company.length < 3 &&
+                    !provider.isLoading,
                 child: Row(
                   children: [
                     InkWell(
@@ -54,6 +58,7 @@ class CompareNew extends StatelessWidget {
                       child: const Icon(
                         Icons.add,
                         color: ThemeColors.accent,
+                        size: 22,
                       ),
                     ),
                   ],
@@ -77,13 +82,17 @@ class CompareNew extends StatelessWidget {
           Visibility(
             visible: userProvider.user != null,
             child: Expanded(
-              child: BaseUiContainer(
-                isLoading: provider.isLoading && provider.company.isEmpty,
-                hasData: provider.company.isNotEmpty,
-                error: provider.error,
-                showPreparingText: true,
-                child: const CompareStockNewContainer(),
-              ),
+              child: provider.company.isEmpty && !provider.isLoading
+                  ? const ErrorDisplayNewWidget(
+                      error: "Please add a stock to compare",
+                    )
+                  : BaseUiContainer(
+                      isLoading: provider.isLoading && provider.company.isEmpty,
+                      hasData: provider.company.isNotEmpty,
+                      error: provider.error,
+                      showPreparingText: true,
+                      child: const CompareStockNewContainer(),
+                    ),
             ),
           ),
         ],

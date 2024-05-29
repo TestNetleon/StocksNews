@@ -185,9 +185,9 @@ class CompareStocksProvider extends ChangeNotifier {
   List<String> tabs = [
     "Overview",
     "Stock Analysis",
-    "Earning",
+    "Earnings",
     "Dividends",
-    "Financial"
+    "Financials"
   ];
 
   clearStockNew() {

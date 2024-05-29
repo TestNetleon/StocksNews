@@ -67,6 +67,7 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/redditComments/i_fr
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
@@ -121,6 +122,7 @@ class Routes {
     // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
     // InternetErrorWidget.path: (_) => const InternetErrorWidget(),
     DividendsScreen.path: (_) => const DividendsScreen(),
+    CompareNew.path: (_) => const CompareNew(),
     EarningsScreen.path: (_) => const EarningsScreen(),
   };
 
