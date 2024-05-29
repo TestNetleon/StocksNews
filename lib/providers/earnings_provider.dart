@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/Earnings_res.dart';
+import 'package:stocks_news_new/modals/earnings_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 

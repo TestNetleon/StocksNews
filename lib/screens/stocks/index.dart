@@ -29,7 +29,7 @@ class _StocksIndexState extends State<StocksIndex> {
   _callAPi() {
     AllStocksProvider provider = context.read<AllStocksProvider>();
     if (provider.data == null || provider.data?.isEmpty == true) {
-      provider.getData(showProgress: true, inAppMsgId: widget.inAppMsgId);
+      provider.getData(showProgress: false, inAppMsgId: widget.inAppMsgId);
     }
   }
 

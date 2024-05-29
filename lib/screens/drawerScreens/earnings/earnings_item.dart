@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/Earnings_res.dart';
-import 'package:stocks_news_new/providers/Earnings_provider.dart';
+import 'package:stocks_news_new/modals/earnings_res.dart';
+import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
-import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
+import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -13,7 +13,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class EarningsItem extends StatelessWidget {
-  final EarningsRes? data;
+  final EarningsRes data;
   final int index;
   final bool earnings;
 //
@@ -28,7 +28,7 @@ class EarningsItem extends StatelessWidget {
     Navigator.pushNamed(
       context,
       StockDetails.path,
-      arguments: {"slug": data?.symbol},
+      arguments: {"slug": data.symbol},
     );
   }
 
@@ -43,7 +43,7 @@ class EarningsItem extends StatelessWidget {
           context,
           StockDetails.path,
           // arguments: data.symbol,
-          arguments: {"slug": data?.symbol},
+          arguments: {"slug": data.symbol},
         );
       },
       child: Column(
@@ -59,7 +59,7 @@ class EarningsItem extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     width: 43,
                     height: 43,
-                    child: ThemeImageView(url: data?.image ?? ""),
+                    child: ThemeImageView(url: data.image ?? ""),
                   ),
                 ),
               ),
@@ -71,14 +71,14 @@ class EarningsItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data?.symbol,
+                        data.symbol,
                         style: stylePTSansBold(fontSize: 14),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(
-                        data?.name,
+                        data.name,
                         style: stylePTSansRegular(
                           color: ThemeColors.greyText,
                           fontSize: 12,
@@ -95,7 +95,7 @@ class EarningsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${data?.price}",
+                    "${data.price}",
                     style: stylePTSansBold(fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -163,61 +163,37 @@ class EarningsItem extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Visibility(
-                    visible: data?.date != null,
-                    child: InnerRowItem(
-                      lable: "Date",
-                      value: "${data?.date}",
-                    ),
+                  InnerRowItem(
+                    lable: "Date",
+                    value: "${data.date ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.exchangeShortName != null,
-                    child: InnerRowItem(
-                      lable: "Exchange",
-                      value: "${data?.exchangeShortName}",
-                    ),
+                  InnerRowItem(
+                    lable: "Exchange",
+                    value: "${data.exchangeShortName ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.eps != null,
-                    child: InnerRowItem(
-                      lable: "EPS",
-                      value: "${data?.eps}",
-                    ),
+                  InnerRowItem(
+                    lable: "EPS",
+                    value: "${data.eps ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.epsEstimated != null,
-                    child: InnerRowItem(
-                      lable: "EPS Estimated",
-                      value: "${data?.epsEstimated}",
-                    ),
+                  InnerRowItem(
+                    lable: "EPS Estimated",
+                    value: "${data.epsEstimated ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.revenue != null,
-                    child: InnerRowItem(
-                      lable: "Revenue",
-                      value: "${data?.revenue}",
-                    ),
+                  InnerRowItem(
+                    lable: "Revenue",
+                    value: "${data.revenue ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.revenueEstimated != null,
-                    child: InnerRowItem(
-                      lable: "Revenue Estimated",
-                      value: "${data?.revenueEstimated}",
-                    ),
+                  InnerRowItem(
+                    lable: "Revenue Estimated",
+                    value: "${data.revenueEstimated ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.fiscalDateEnding != null,
-                    child: InnerRowItem(
-                      lable: "Fiscal Date Ending",
-                      value: "${data?.fiscalDateEnding}",
-                    ),
+                  InnerRowItem(
+                    lable: "Fiscal Date Ending",
+                    value: "${data.fiscalDateEnding ?? "N/A"}",
                   ),
-                  Visibility(
-                    visible: data?.updatedFromDate != null,
-                    child: InnerRowItem(
-                      lable: "Updated From Date",
-                      value: "${data?.updatedFromDate}",
-                    ),
+                  InnerRowItem(
+                    lable: "Updated From Date",
+                    value: "${data.updatedFromDate ?? "N/A"}",
                   ),
                 ],
               ),

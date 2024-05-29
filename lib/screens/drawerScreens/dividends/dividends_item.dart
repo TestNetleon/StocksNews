@@ -103,6 +103,9 @@ class DividendsItem extends StatelessWidget {
                     data.change.toString(),
                     style: stylePTSansRegular(
                       fontSize: 12,
+                      color: (data.change ?? 0) > 0
+                          ? ThemeColors.accent
+                          : Colors.red,
                     ),
                   ),
                 ],

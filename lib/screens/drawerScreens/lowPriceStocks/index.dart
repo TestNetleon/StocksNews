@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
+import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
+import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/tab_bar_sc_simmer.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/item_sale_on_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -31,7 +33,7 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<LowPriceStocksProvider>().selectedIndex = 0;
-      context.read<LowPriceStocksProvider>().getTabsData(showProgress: true);
+      context.read<LowPriceStocksProvider>().getTabsData(showProgress: false);
     });
   }
 
@@ -50,7 +52,9 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
           Dimen.padding,
           0,
         ),
-        child: _getWidget(provider),
+        child: provider.tabLoading
+            ? const TabViewScreenSimmer()
+            : _getWidget(provider),
       ),
     );
   }
@@ -93,6 +97,9 @@ class LowPriceStocksData extends StatelessWidget {
 
   Widget _getWidgets(LowPriceStocksProvider provider) {
     return BaseUiContainer(
+      placeholder: const SimmerScreenDrawerCommon(
+        downIconVisible: true,
+      ),
       error: provider.error,
       hasData: !provider.isLoading && provider.data != null,
       isLoading: provider.isLoading,

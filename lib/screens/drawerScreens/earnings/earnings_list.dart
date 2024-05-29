@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/Earnings_res.dart';
-import 'package:stocks_news_new/providers/Earnings_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/drawerScreens/Earnings/Earnings_item.dart';
+import 'package:stocks_news_new/modals/earnings_res.dart';
+import 'package:stocks_news_new/providers/earnings_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
+import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
-
-import '../../../utils/constants.dart';
-import '../../../widgets/base_ui_container.dart';
-import '../../../widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
 class EarningsList extends StatefulWidget {
   const EarningsList({super.key});
@@ -24,21 +22,19 @@ class _EarningsListState extends State<EarningsList> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      navigatorKey.currentContext!.read<EarningsProvider>().getEarningsStocks();
-      Utils().showLog("hahaja");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<EarningsProvider>().getEarningsStocks();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    EarningsProvider provider =
-        navigatorKey.currentContext!.watch<EarningsProvider>();
-    List<EarningsRes>? data = provider.data;
+    EarningsProvider provider = context.watch<EarningsProvider>();
 
     return BaseUiContainer(
+      placeholder: const SimmerScreenDrawerCommon(),
       error: provider.error,
-      hasData: data != null && data.isNotEmpty,
+      hasData: provider.data != null && provider.data!.isNotEmpty,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
@@ -52,10 +48,10 @@ class _EarningsListState extends State<EarningsList> {
             bottom: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
-            if (data == null || data.isEmpty) {
+            if (provider.data == null || provider.data!.isEmpty) {
               return const SizedBox();
             }
-            dynamic dataItem = data[index];
+            EarningsRes dataItem = provider.data![index] as EarningsRes;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +67,7 @@ class _EarningsListState extends State<EarningsList> {
               height: 20.sp,
             );
           },
-          itemCount: data?.length ?? 0,
+          itemCount: provider.data?.length ?? 0,
         ),
       ),
     );

@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 class EarningsScreen extends StatelessWidget {
-  static const path = "EarningsScreen";
+  static const path = "EarningScreens";
   const EarningsScreen({super.key});
 
   @override

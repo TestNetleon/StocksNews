@@ -354,9 +354,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => EarningsProvider()),
 
       // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
-      ChangeNotifierProvider(
-          create: (_) =>
-              PennyStocksProvider()), // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
+      ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
+      // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
     ];

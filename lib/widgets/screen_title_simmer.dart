@@ -12,10 +12,12 @@ class ScreenTitleSimmer extends StatelessWidget {
     this.optionalWidget,
     this.twoLineSubTitle = false,
     this.titleVisible = true,
+    this.leftPaddingSubTitle = 10,
   });
   final bool? optionalWidget;
   final bool? twoLineSubTitle;
   final bool titleVisible;
+  final double leftPaddingSubTitle;
 
 //
   @override
@@ -47,7 +49,7 @@ class ScreenTitleSimmer extends StatelessWidget {
         ),
         SpacerVertical(height: 5.sp),
         Padding(
-          padding: EdgeInsets.only(left: 10.sp),
+          padding: EdgeInsets.only(left: leftPaddingSubTitle.sp),
           child: GradientContainerWidget(
             height: twoLineSubTitle == true ? 30 : 18,
             borderRadius: 2.sp,

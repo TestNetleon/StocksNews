@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
@@ -34,6 +35,8 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
     HighLowPeProvider provider = context.watch<HighLowPeProvider>();
 
     return BaseUiContainer(
+      placeholder: const SimmerScreenDrawerCommon(),
+
       error: provider.error,
       // hasData: up != null && up.isNotEmpty,
       hasData: !provider.isLoading &&

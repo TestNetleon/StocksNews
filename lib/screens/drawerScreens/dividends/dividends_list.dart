@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends_item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
@@ -33,6 +34,7 @@ class _DividendsListState extends State<DividendsList> {
     List<DividendsRes>? data = provider.data;
 
     return BaseUiContainer(
+      placeholder: const SimmerScreenDrawerCommon(),
       error: provider.error,
       hasData: data != null && data.isNotEmpty,
       isLoading: provider.isLoading,

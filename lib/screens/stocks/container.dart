@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
+import 'package:stocks_news_new/screens/stocks/widgets/stocksSimmer/stocks_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -74,83 +75,88 @@ class StocksContainer extends StatelessWidget {
               searching: provider.isSearching,
               editable: true,
             ),
-            Expanded(
-              child: BaseUiContainer(
-                isLoading: provider.isLoading,
-                hasData: provider.data != null &&
-                    (provider.data?.isNotEmpty ?? false) &&
-                    !provider.isLoading,
-                error: provider.error,
-                child: RefreshControl(
-                  onRefresh: () async => provider.getData(showProgress: true),
-                  canLoadMore: provider.canLoadMore,
-                  onLoadMore: () async =>
-                      provider.getData(loadMore: true, clear: false),
-                  child: ListView.separated(
-                    itemCount: provider.data?.length ?? 0,
-                    padding: EdgeInsets.symmetric(vertical: 10.sp),
-                    separatorBuilder: (context, index) {
-                      // return const SpacerVertical(height: 10);
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 12.sp,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      AllStocks? data = provider.data?[index];
-                      if (index == 0) {
-                        return Column(
-                          children: [
-                            Divider(
+            provider.isLoading
+                ? const Expanded(
+                    child: StocksScreenSimmer(),
+                  )
+                : Expanded(
+                    child: BaseUiContainer(
+                      isLoading: provider.isLoading,
+                      hasData: provider.data != null &&
+                          (provider.data?.isNotEmpty ?? false) &&
+                          !provider.isLoading,
+                      error: provider.error,
+                      child: RefreshControl(
+                        onRefresh: () async =>
+                            provider.getData(showProgress: false),
+                        canLoadMore: provider.canLoadMore,
+                        onLoadMore: () async =>
+                            provider.getData(loadMore: true, clear: false),
+                        child: ListView.separated(
+                          itemCount: provider.data?.length ?? 0,
+                          padding: EdgeInsets.symmetric(vertical: 10.sp),
+                          separatorBuilder: (context, index) {
+                            // return const SpacerVertical(height: 10);
+                            return Divider(
                               color: ThemeColors.greyBorder,
-                              height: 15.sp,
-                              thickness: 1,
-                            ),
-                            Row(
-                              children: [
-                                const SpacerHorizontal(width: 5),
-                                Expanded(
-                                  child: AutoSizeText(
-                                    maxLines: 1,
-                                    "COMPANY",
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
+                              height: 12.sp,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            AllStocks? data = provider.data?[index];
+                            if (index == 0) {
+                              return Column(
+                                children: [
+                                  Divider(
+                                    color: ThemeColors.greyBorder,
+                                    height: 15.sp,
+                                    thickness: 1,
                                   ),
-                                ),
-                                const SpacerHorizontal(width: 24),
-                                Expanded(
-                                  child: AutoSizeText(
-                                    maxLines: 1,
-                                    "PRICE",
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
+                                  Row(
+                                    children: [
+                                      const SpacerHorizontal(width: 5),
+                                      Expanded(
+                                        child: AutoSizeText(
+                                          maxLines: 1,
+                                          "COMPANY",
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                      ),
+                                      const SpacerHorizontal(width: 24),
+                                      Expanded(
+                                        child: AutoSizeText(
+                                          maxLines: 1,
+                                          "PRICE",
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                      ),
+                                      const SpacerHorizontal(width: 10),
+                                    ],
                                   ),
-                                ),
-                                const SpacerHorizontal(width: 10),
-                              ],
-                            ),
-                            Divider(
-                              color: ThemeColors.greyBorder,
-                              height: 15.sp,
-                              thickness: 1,
-                            ),
-                            StocksItemAll(data: data, index: index),
-                          ],
-                        );
-                      }
-                      return StocksItemAll(
-                        index: index,
-                        data: data,
-                      );
-                    },
+                                  Divider(
+                                    color: ThemeColors.greyBorder,
+                                    height: 15.sp,
+                                    thickness: 1,
+                                  ),
+                                  StocksItemAll(data: data, index: index),
+                                ],
+                              );
+                            }
+                            return StocksItemAll(
+                              index: index,
+                              data: data,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
