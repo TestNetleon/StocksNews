@@ -18,7 +18,8 @@ import '../../../../widgets/spacer_horizontal.dart';
 
 //
 class CompareStocksPopup extends StatefulWidget {
-  const CompareStocksPopup({super.key});
+  final bool fromAdd;
+  const CompareStocksPopup({super.key, this.fromAdd = false});
 
   @override
   State<CompareStocksPopup> createState() => _CompareStocksPopupState();
@@ -188,8 +189,19 @@ class _CompareStocksPopupState extends State<CompareStocksPopup> {
                         itemBuilder: (BuildContext context, int index) {
                           SearchRes? data = provider.data?[index];
                           return InkWell(
-                            onTap: () => compareProvider.addStockItem(
-                                symbol: data?.symbol ?? "", index: index),
+                            onTap: widget.fromAdd
+                                ? () {
+                                    if (data != null) {
+                                      Navigator.pop(context);
+                                      compareProvider.addInCompare(data: data);
+                                    }
+                                  }
+                                : () => compareProvider.addStockItem(
+                                      fromMain: true,
+                                      symbol: data?.symbol ?? "",
+                                      name: data?.name,
+                                      image: data?.image,
+                                    ),
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 6.sp),
                               child: Row(

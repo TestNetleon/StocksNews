@@ -1,107 +1,3 @@
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:provider/provider.dart';
-// import 'package:stocks_news_new/utils/colors.dart';
-// import 'package:stocks_news_new/utils/theme.dart';
-// import 'package:stocks_news_new/widgets/cache_network_image.dart';
-// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-// import '../../../../modals/compare_stock_res.dart';
-// import '../../../../providers/compare_stocks_provider.dart';
-
-// class CompareNewHeader extends StatelessWidget {
-//   const CompareNewHeader({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     CompareStocksProvider provider = context.watch<CompareStocksProvider>();
-
-//     return Row(
-//       children: List.generate(provider.company.length, (index) {
-//         CompareStockRes company = provider.company[index];
-//         return Expanded(
-//           child: InkWell(
-//             // borderRadius: BorderRadius.circular(8),
-//             onTap: () {},
-//             child: Ink(
-//               padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
-//               decoration: BoxDecoration(
-//                   // borderRadius: BorderRadius.circular(8),
-//                   // color: ThemeColors.greyBorder.withOpacity(0.4),
-//                   border: Border(
-//                 right: provider.company.length == 1
-//                     ? BorderSide.none
-//                     : provider.company.length == 2 && index == 0
-//                         ? BorderSide(
-//                             color: ThemeColors.greyBorder.withOpacity(0.4),
-//                           )
-//                         : provider.company.length == 3 &&
-//                                 (index == 0 || index == 1)
-//                             ? BorderSide(
-//                                 color: ThemeColors.greyBorder.withOpacity(0.4),
-//                               )
-//                             : BorderSide.none,
-//               )),
-//               width: ScreenUtil().screenWidth * 0.3,
-//               child: Stack(
-//                 alignment: Alignment.center,
-//                 children: [
-//                   Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       const SpacerVertical(height: 10),
-//                       SizedBox(
-//                         height: 35,
-//                         width: 35,
-//                         child: CachedNetworkImagesWidget(company.image),
-//                       ),
-//                       const SpacerVertical(height: 5),
-//                       Text(
-//                         company.symbol,
-//                         maxLines: 1,
-//                         textAlign: TextAlign.center,
-//                         style: stylePTSansRegular(),
-//                       ),
-//                       const SpacerVertical(height: 5),
-//                       Text(
-//                         maxLines: 2,
-//                         overflow: TextOverflow.ellipsis,
-//                         textAlign: TextAlign.center,
-//                         company.name,
-//                         style: stylePTSansRegular(
-//                             fontSize: 11, color: ThemeColors.greyText),
-//                       ),
-//                     ],
-//                   ),
-//                   Visibility(
-//                     // visible: provider.company.length != 1,
-//                     child: Positioned(
-//                       top: 0,
-//                       right: 0,
-//                       child: GestureDetector(
-//                         onTap: () => provider.removeStockItem(index: index),
-//                         child: const Align(
-//                           alignment: Alignment.topRight,
-//                           child: Icon(
-//                             Icons.close,
-//                             color: ThemeColors.greyBorder,
-//                             size: 15,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         );
-//       }),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -115,13 +11,12 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class CompareNewHeader extends StatelessWidget {
-  const CompareNewHeader({super.key});
+class CompareNewAddHeader extends StatelessWidget {
+  const CompareNewAddHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     CompareStocksProvider provider = context.watch<CompareStocksProvider>();
-
     return Row(
       children: [
         _buildItem(provider, 0),
@@ -153,7 +48,9 @@ class CompareNewHeader extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) {
-          return const CompareStocksPopup();
+          return const CompareStocksPopup(
+            fromAdd: true,
+          );
         });
   }
 
@@ -223,7 +120,7 @@ class CompareNewHeader extends StatelessWidget {
                   right: 0,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(30),
-                    onTap: () => provider.removeStockItem(index: index),
+                    onTap: () => provider.removeFromCompare(index: index),
                     child: const Align(
                       alignment: Alignment.topRight,
                       child: Padding(
