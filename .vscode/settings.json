@@ -3,7 +3,9 @@
         "bottomsheet",
         "cupertino",
         "Dimen",
+        "Geolocator",
         "loosers",
+        "Placemark",
         "screenutil"
     ]
 }

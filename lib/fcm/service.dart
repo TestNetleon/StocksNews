@@ -225,10 +225,12 @@ class FirebaseApi {
       );
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-    FirebaseMessaging.onMessage.listen((message) async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       try {
-        Utils().showLog("on Message  ==> Notification ${message.notification}");
-        Utils().showLog("on Message  ==> Data ${message.data}");
+        Utils().showLog("on Message  0 ==>  ${message.toMap()}");
+        Utils().showLog("on Message  1 ==>  ${message.toString()}");
+        // Utils().showLog("on Message  ==> Notification ${message.notification}");
+        // Utils().showLog("on Message  ==> Data ${message.data}");
       } catch (e) {
         if (kDebugMode) print(e.toString());
       }
