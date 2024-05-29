@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/third_party_api_requester.dart'
@@ -161,10 +163,14 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     String? fcmToken = await Preference.getFcmToken();
+    bool granted = await Permission.notification.isGranted;
+
     try {
+      fcmToken ??= await FirebaseMessaging.instance.getToken();
       Map request = {
         "token": provider.user?.token ?? "",
         "fcm_token": fcmToken ?? "",
+        "fcm_permission": "$granted",
       };
       ApiResponse response = await apiRequest(
         url: Apis.homeSlider,

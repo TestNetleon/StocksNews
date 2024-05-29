@@ -40,7 +40,6 @@ import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/createAccount/create_account.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -67,6 +66,7 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/redditComments/i_fr
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
@@ -92,7 +92,7 @@ class Routes {
     Splash.path: (_) => const Splash(),
     // Login.path: (_) => const Login(),
     // SignUp.path: (_) => const SignUp(),
-    CreateAccount.path: (_) => const CreateAccount(),
+    // CreateAccount.path: (_) => const CreateAccount(),
     SignUpSuccess.path: (_) => const SignUpSuccess(),
     // Tabs.path: (_) => const Tabs(),
     // OTPSignup.path: (_) => const OTPSignup(),
@@ -121,6 +121,7 @@ class Routes {
     // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
     // InternetErrorWidget.path: (_) => const InternetErrorWidget(),
     DividendsScreen.path: (_) => const DividendsScreen(),
+    CompareNew.path: (_) => const CompareNew(),
     EarningsScreen.path: (_) => const EarningsScreen(),
   };
 

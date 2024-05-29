@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
+import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -54,6 +56,31 @@ class CompareStocksProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
+  List<SearchRes> _compareData = [];
+  List<SearchRes> get compareData => _compareData;
+
+  void addInCompare({required SearchRes data}) {
+    bool symbolExists =
+        _compareData.any((element) => element.symbol == data.symbol);
+    if (symbolExists) {
+      log("exist");
+      // Show a Snackbar if the symbol already exists
+      popUpAlert(
+          message: "Stock already added for comparison.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+    } else {
+      _compareData.add(data);
+
+      notifyListeners();
+    }
+  }
+
+  removeFromCompare({required int index}) {
+    _compareData.removeAt(index);
+    notifyListeners();
+  }
+
   Future onRefresh() async {
     getCompareStock();
   }
@@ -66,7 +93,7 @@ class CompareStocksProvider extends ChangeNotifier {
     Map request = {
       "token":
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      "default_compare_add": "1",
+      "default_compare_add": "0",
     };
     try {
       ApiResponse res = await apiRequest(
@@ -77,6 +104,13 @@ class CompareStocksProvider extends ChangeNotifier {
       );
       if (res.status) {
         _company = compareStockResFromJson(jsonEncode(res.data));
+        for (var i = 0; i < company.length; i++) {
+          compareData.add(SearchRes(
+            symbol: company[i].symbol,
+            name: company[i].name,
+            image: company[i].image,
+          ));
+        }
       } else {
         _company = [];
         wholeListEmpty = true;
@@ -114,8 +148,10 @@ class CompareStocksProvider extends ChangeNotifier {
       );
       if (res.status) {
         _company.removeAt(index);
+        _compareData.removeAt(index);
         if (_company.isEmpty) {
           wholeListEmpty = true;
+          compareData.clear();
           notifyListeners();
         }
       } else {
@@ -130,12 +166,22 @@ class CompareStocksProvider extends ChangeNotifier {
     }
   }
 
-  Future addStockItem({required int index, required String symbol}) async {
+  Future addStockItem({
+    required String symbol,
+    bool fromNewAdd = false,
+    bool fromMain = false,
+    String? name,
+    String? image,
+  }) async {
+    log("From Main => $fromMain");
     setStatus(Status.loading);
     SearchProvider provider =
         navigatorKey.currentContext!.read<SearchProvider>();
     provider.clearSearch();
-    Navigator.pop(navigatorKey.currentContext!);
+    if (!fromNewAdd) {
+      Navigator.pop(navigatorKey.currentContext!);
+    }
+
     Map request = {
       "token":
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
@@ -145,18 +191,21 @@ class CompareStocksProvider extends ChangeNotifier {
       ApiResponse res = await apiRequest(
         url: Apis.addCompare,
         request: request,
-        showProgress: true,
+        showProgress: _company.isNotEmpty,
         onRefresh: onRefresh,
       );
       if (res.status) {
         if (!_company.any((company) => company.symbol == symbol)) {
           _company = compareStockResFromJson(jsonEncode(res.data));
+          if (fromMain) {
+            _compareData.add(SearchRes(
+              symbol: symbol,
+              name: name ?? "",
+              image: image,
+            ));
+          }
           wholeListEmpty = false;
-//           _company.add(CompareStockRes(
-//             symbol: symbol,
-//             image: res.data["image"],
-//             name: res.data["name"],
-//           ));
+
           notifyListeners();
         } else {
           // showErrorMessage(message: "Symbol $symbol is already added.");
@@ -185,9 +234,9 @@ class CompareStocksProvider extends ChangeNotifier {
   List<String> tabs = [
     "Overview",
     "Stock Analysis",
-    "Earning",
+    "Earnings",
     "Dividends",
-    "Financial"
+    "Financials"
   ];
 
   clearStockNew() {
@@ -237,3 +286,14 @@ class CompareStocksProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+// class CompareNewAddRes {
+//   final String symbol;
+//   final String image;
+//   final String name;
+//   CompareNewAddRes({
+//     required this.symbol,
+//     required this.image,
+//     required this.name,
+//   });
+// }

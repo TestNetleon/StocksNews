@@ -10,12 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
@@ -223,10 +225,12 @@ class FirebaseApi {
       );
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-    FirebaseMessaging.onMessage.listen((message) async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       try {
-        Utils().showLog("on Message  ==> Notification ${message.notification}");
-        Utils().showLog("on Message  ==> Data ${message.data}");
+        Utils().showLog("on Message  0 ==>  ${message.toMap()}");
+        Utils().showLog("on Message  1 ==>  ${message.toString()}");
+        // Utils().showLog("on Message  ==> Notification ${message.notification}");
+        // Utils().showLog("on Message  ==> Data ${message.data}");
       } catch (e) {
         if (kDebugMode) print(e.toString());
       }
@@ -321,23 +325,26 @@ class FirebaseApi {
       }
     });
 
+    // Stream<String> token = await _firebaseMessaging.onTokenRefresh;
+
     initPushNotification();
     initLocalNotifications();
   }
 }
 
 Future<String?> _getUserLocation() async {
-  LocationPermission permission = await Geolocator.requestPermission();
-  if (permission == LocationPermission.denied) {
-    return null;
-  }
-
-  // Get current position
-  Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high);
-
-  // Reverse geocoding
   try {
+    LocationPermission permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      return null;
+    }
+
+    // Get current position
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    // Reverse geocoding
+
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
@@ -356,15 +363,18 @@ Future saveFCMapi({String? value, String? address}) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String versionName = packageInfo.version;
   String buildNumber = packageInfo.buildNumber;
+  bool granted = await Permission.notification.isGranted;
 
   try {
     Map request = {
-      "token": "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "fcm_token": value ?? "",
       "platform": Platform.operatingSystem,
       "address": address ?? "",
       "build_version": versionName,
       "build_code": buildNumber,
+      "fcm_permission": "$granted",
     };
 
     ApiResponse response = await apiRequest(

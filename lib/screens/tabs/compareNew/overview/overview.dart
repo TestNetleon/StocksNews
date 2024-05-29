@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/widgets/box.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import 'item.dart';
 
 class CompareNewOverview extends StatefulWidget {
   const CompareNewOverview({super.key});
@@ -55,17 +56,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: symbolOpen,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].symbol,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].symbol),
                   ),
                 ),
               ),
@@ -81,17 +79,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: nameOpen,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].name,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].name),
                   ),
                 ),
               ),
@@ -107,17 +102,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: priceOpen,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].price,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].price),
                   ),
                 ),
               ),
@@ -133,17 +125,15 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: change,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].changes.toCurrency(),
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index,
+                        item: provider.company[index].changes.toCurrency()),
                   ),
                 ),
               ),
@@ -159,17 +149,15 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: changePer,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      "${provider.company[index].changesPercentage}%",
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index,
+                        item: "${provider.company[index].changesPercentage}%"),
                   ),
                 ),
               ),
@@ -185,17 +173,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: dayLow,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].dayLow,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].dayLow),
                   ),
                 ),
               ),
@@ -211,17 +196,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: dayHigh,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].dayHigh,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].dayHigh),
                   ),
                 ),
               ),
@@ -237,17 +219,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: yearLow,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].yearLow,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].yearLow),
                   ),
                 ),
               ),
@@ -263,17 +242,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: yearHigh,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].yearHigh,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].yearHigh),
                   ),
                 ),
               ),
@@ -289,17 +265,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: volume,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].volume,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].volume),
                   ),
                 ),
               ),
@@ -315,17 +288,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: avgVolume,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].avgVolume,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].avgVolume),
                   ),
                 ),
               ),
@@ -341,17 +311,15 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: previousClose,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].previousClose,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index,
+                        item: provider.company[index].previousClose),
                   ),
                 ),
               ),
@@ -367,17 +335,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: open,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].open,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].open),
                   ),
                 ),
               ),
@@ -393,17 +358,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: eps,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      "${provider.company[index].eps}",
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: "${provider.company[index].eps}"),
                   ),
                 ),
               ),
@@ -419,17 +381,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: peRatio,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      "${provider.company[index].pe}",
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: "${provider.company[index].pe}"),
                   ),
                 ),
               ),
@@ -445,17 +404,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: avg50Ema,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].priceAvg50,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].priceAvg50),
                   ),
                 ),
               ),
@@ -471,17 +427,15 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: avg200Ema,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].priceAvg200,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index,
+                        item: provider.company[index].priceAvg200),
                   ),
                 ),
               ),
@@ -497,18 +451,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: revenue,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      // provider.company[index].revenue,
-                      'N/A',
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) =>
+                        CompareNewOverviewItem(index: index, item: "N/A"),
                   ),
                 ),
               ),
@@ -524,18 +474,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: bookValue,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      // provider.company[index].revenue,
-                      'N/A',
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) =>
+                        CompareNewOverviewItem(index: index, item: "N/A"),
                   ),
                 ),
               ),
@@ -551,18 +497,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: dividend,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      // provider.company[index].revenue,
-                      'N/A',
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) =>
+                        CompareNewOverviewItem(index: index, item: "N/A"),
                   ),
                 ),
               ),
@@ -578,18 +520,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: ev,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      // provider.company[index].revenue,
-                      'N/A',
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) =>
+                        CompareNewOverviewItem(index: index, item: "N/A"),
                   ),
                 ),
               ),
@@ -605,18 +543,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: bidAsk,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      // provider.company[index].revenue,
-                      'N/A',
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) =>
+                        CompareNewOverviewItem(index: index, item: "N/A"),
                   ),
                 ),
               ),
@@ -632,17 +566,14 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: marketCap,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].mktCap,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index, item: provider.company[index].mktCap),
                   ),
                 ),
               ),
@@ -658,17 +589,15 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: shareOutstanding,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].sharesOutstanding,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index,
+                        item: provider.company[index].sharesOutstanding),
                   ),
                 ),
               ),
@@ -684,17 +613,15 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
             open: earning,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  provider.company.length,
-                  (index) => Expanded(
-                    child: Text(
-                      provider.company[index].earningsAnnouncement,
-                      textAlign: TextAlign.left,
-                      style: stylePTSansRegular(fontSize: 13),
-                    ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    provider.company.length,
+                    (index) => CompareNewOverviewItem(
+                        index: index,
+                        item: provider.company[index].earningsAnnouncement),
                   ),
                 ),
               ),

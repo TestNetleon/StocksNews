@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -168,6 +169,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
     NotificationProvider notificationProvider =
         navigatorKey.currentContext!.read<NotificationProvider>();
+
+    if (request["fcm_token"].isEmpty) {
+      String? fcm = await FirebaseMessaging.instance.getToken();
+      request["fcm_token"] = fcm ?? "";
+    }
+
     try {
       ApiResponse response = await apiRequest(
         url: Apis.googleLogin,
@@ -232,6 +239,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
     NotificationProvider notificationProvider =
         navigatorKey.currentContext!.read<NotificationProvider>();
+
+    if (request["fcm_token"].isEmpty) {
+      String? fcm = await FirebaseMessaging.instance.getToken();
+      request["fcm_token"] = fcm ?? "";
+    }
+
     try {
       ApiResponse response = await apiRequest(
         url: Apis.appleLogin,
@@ -364,6 +377,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   Future verifySignupOtp(request) async {
     setStatus(Status.loading);
+
+    if (request["fcm_token"].isEmpty) {
+      String? fcm = await FirebaseMessaging.instance.getToken();
+      request["fcm_token"] = fcm ?? "";
+    }
+
     try {
       ApiResponse response = await apiRequest(
         url: Apis.verifySignupOtp,
@@ -412,6 +431,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
     NotificationProvider notificationProvider =
         navigatorKey.currentContext!.read<NotificationProvider>();
+
+    if (request["fcm_token"].isEmpty) {
+      String? fcm = await FirebaseMessaging.instance.getToken();
+      request["fcm_token"] = fcm ?? "";
+    }
+
     try {
       ApiResponse response = await apiRequest(
         url: Apis.verifyLoginOtp,

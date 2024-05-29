@@ -51,6 +51,6 @@ class Preference {
 
   static void saveLocation(address) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("@location", address);
+    preferences.setString("@location", address ?? "");
   }
 }

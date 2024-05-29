@@ -3,7 +3,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../../../utils/colors.dart';
-import '../../../../utils/constants.dart';
 
 class CompareNewBox extends StatelessWidget {
   final String title;
@@ -27,7 +26,7 @@ class CompareNewBox extends StatelessWidget {
         InkWell(
           onTap: onTap,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             decoration: BoxDecoration(
               border: Border(
                 top: hideTop
@@ -44,7 +43,7 @@ class CompareNewBox extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: stylePTSansBold(),
+                    style: stylePTSansBold(fontSize: 15),
                   ),
                 ),
                 const SpacerHorizontal(width: 10),
@@ -57,8 +56,17 @@ class CompareNewBox extends StatelessWidget {
           duration: const Duration(milliseconds: 100),
           alignment: Alignment.topCenter,
           child: Container(
+            decoration: BoxDecoration(
+              color: ThemeColors.greyBorder.withOpacity(0.2),
+              border: Border(
+                bottom: BorderSide(
+                  color: ThemeColors.greyBorder.withOpacity(0.2),
+                ),
+              ),
+            ),
             height: open ? null : 0,
-            padding: const EdgeInsets.only(top: Dimen.itemSpacing),
+            // padding: const EdgeInsets.only(
+            //     top: Dimen.itemSpacing, bottom: Dimen.itemSpacing),
             child: child,
           ),
         ),
