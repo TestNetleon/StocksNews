@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -25,7 +24,6 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
@@ -121,11 +119,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future refreshData(String? inAppMsgId) async {
+    retryCount = 0;
     _getLastMarketOpen();
     getHomeSlider();
     getHomeTrendingData();
     getHomeAlerts();
-
     // getIpoData();
     // getStockInFocus();
     // getHomeSentimentData();
@@ -397,6 +395,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   // -------------  Start Update Chart data on HomePage ------------
+  int retryCount = 0;
   void _updateChartData() async {
     if (_homeAlertData == null || (_homeAlertData?.isEmpty ?? true)) return;
     for (var item in _homeAlertData!) {
@@ -412,7 +411,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         break;
       }
     }
-    if (callAgain) _updateChartData();
+    if (callAgain && retryCount < 1) {
+      retryCount++;
+      _updateChartData();
+    }
   }
 
   DateTime? _lastMarketOpen;
