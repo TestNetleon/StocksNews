@@ -44,41 +44,14 @@ class HomeContainer extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Visibility(
-              //   visible:
-              //       provider.homeSliderRes?.sliderPosts?.isNotEmpty ?? false,
-              //   child:
               const HomeTopNewsSlider(),
-              // ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingTrending,
-                    //   error: provider.statusTrending != Status.ideal &&
-                    //           !provider.isLoadingTrending &&
-                    //           provider.homeTrendingRes == null
-                    //       ? HomeError.stockBuzz
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child:
                     const StockInBuzz(),
-                    // ),
-
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingHomeAlert,
-                    //   error: provider.statusHomeAlert != Status.ideal &&
-                    //           !provider.isLoadingHomeAlert &&
-                    //           provider.homeAlertData == null
-                    //       ? HomeError.homeAlert
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child:
                     const HomeMyAlerts(),
-                    // ),
-
                     HomePartialLoading(
                       loading: provider.isLoadingTrending,
                       error: provider.statusTrending != Status.ideal &&

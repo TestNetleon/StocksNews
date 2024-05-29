@@ -180,10 +180,14 @@ class HomeMyAlertItem extends StatelessWidget {
                     ),
                     child: Container(
                       width: 220,
-                      color: const Color.fromARGB(255, 35, 35, 35),
+                      // color: const Color.fromARGB(255, 35, 35, 35),
                       constraints: const BoxConstraints(
                         maxHeight: 88,
                         minHeight: 30,
+                      ),
+                      child: Image.asset(
+                        Images.graphHolder,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   )
