@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings_list.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -15,15 +16,15 @@ class EarningsScreen extends StatelessWidget {
         canSearch: true,
       ),
       body: Padding(
-          padding: EdgeInsets.fromLTRB(
-            Dimen.padding,
-            Dimen.padding,
-            Dimen.padding,
-            0,
-          ),
-          child: SizedBox()
-          // child: EarningsList(),
-          ),
+        padding: EdgeInsets.fromLTRB(
+          Dimen.padding,
+          Dimen.padding,
+          Dimen.padding,
+          0,
+        ),
+        // child: SizedBox()
+        child: EarningsList(),
+      ),
     );
   }
 }
