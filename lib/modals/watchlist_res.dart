@@ -37,6 +37,8 @@ class WatchlistData {
   final String image;
   final String price;
   final num changes;
+  final String displayChange;
+  final num changesPercentage;
   // final DateTime updatedAt;
   // final DateTime createdAt;
 
@@ -47,6 +49,8 @@ class WatchlistData {
     required this.image,
     required this.price,
     required this.changes,
+    required this.displayChange,
+    required this.changesPercentage,
     // required this.updatedAt,
     // required this.createdAt,
   });
@@ -55,6 +59,8 @@ class WatchlistData {
         id: json["_id"],
         symbol: json["symbol"],
         name: json["name"],
+        displayChange: json["display_change"],
+        changesPercentage: json["changesPercentage"],
         image: json["image"],
         price: json["price"],
         changes: json["changes"],
@@ -66,6 +72,8 @@ class WatchlistData {
         "_id": id,
         "symbol": symbol,
         "name": name,
+        "display_change": displayChange,
+        "changesPercentage": changesPercentage,
         "image": image,
         "price": price,
         "changes": changes,

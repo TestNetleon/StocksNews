@@ -115,6 +115,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../searchTicker/index.dart';
+
 class CompareNewHeader extends StatelessWidget {
   const CompareNewHeader({super.key});
 
@@ -148,13 +150,33 @@ class CompareNewHeader extends StatelessWidget {
     }
   }
 
-  _showPopUp(BuildContext context) {
-    context.read<SearchProvider>().clearSearch();
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const CompareStocksPopup();
-        });
+  // _showPopUp(BuildContext context) {
+  //   context.read<SearchProvider>().clearSearch();
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return const CompareStocksPopup();
+  //       });
+  // }
+  _showBottomSheet() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      backgroundColor: ThemeColors.transparent,
+      // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5.sp),
+          topRight: Radius.circular(5.sp),
+        ),
+      ),
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return const CompareNewSearch(
+          fromAdd: true,
+        );
+      },
+    );
   }
 
   Widget _afterAdd(
@@ -249,7 +271,8 @@ class CompareNewHeader extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          _showPopUp(navigatorKey.currentContext!);
+          // _showPopUp(navigatorKey.currentContext!);
+          _showBottomSheet();
         },
         child: Ink(
           padding: const EdgeInsets.all(10),

@@ -1,74 +1,3 @@
-// import 'dart:convert';
-// import 'package:stocks_news_new/utils/utils.dart';
-// import 'package:web_socket_channel/web_socket_channel.dart';
-// import 'package:web_socket_channel/status.dart' as status;
-
-// class WebSocketService {
-//   final String url;
-//   final String apiKey;
-//   final String ticker;
-
-//   late WebSocketChannel _channel;
-//   Function(String price, String change, String percentage)? onDataReceived;
-
-//   WebSocketService({
-//     required this.url,
-//     required this.apiKey,
-//     required this.ticker,
-//   });
-
-//   void connect() {
-//     Utils().showLog("Trying to start SOCKET---");
-//     _channel = WebSocketChannel.connect(Uri.parse(url));
-
-//     _channel.sink.add(jsonEncode({
-//       'event': 'login',
-//       'data': {
-//         'apiKey': apiKey,
-//       },
-//     }));
-//     Utils().showLog("Trying to start LOGIN---");
-
-//     _channel.stream.listen((message) {
-//       final data = jsonDecode(message);
-//       if (data['status'] == 200) {
-//         Utils().showLog("data $data");
-
-//         // Successful login
-//         _channel.sink.add(jsonEncode({
-//           'event': 'subscribe',
-//           'data': {
-//             'ticker': ticker,
-//           },
-//         }));
-//       } else {
-//         Utils().showLog("data in else case $data");
-
-//         // Handle incoming data
-//         if (data.containsKey('ap') && data['ap'] != null) {
-//           final ap = data['ap'];
-//           final bp = data['bp'];
-//           final change = (ap - bp).toStringAsFixed(3);
-//           final percentage = ((ap - bp) / ap * 100).toStringAsFixed(3);
-//           Utils().showLog("AP $ap");
-//           Utils().showLog("BP $bp");
-//           Utils().showLog("Change $change");
-//           Utils().showLog("Percentage $percentage");
-
-//           if (onDataReceived != null) {
-//             onDataReceived!('\$${ap.toString()}', '\$${change.toString()}',
-//                 '($percentage%)');
-//           }
-//         }
-//       }
-//     });
-//   }
-
-//   void disconnect() {
-//     _channel.sink.close(status.goingAway);
-//   }
-// }
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
@@ -148,110 +77,121 @@ class WebSocketService {
     );
   }
 
-  void disconnect() {
-    _channel.sink.close();
-  }
-}
-
-class CryptoWebSocket {
-  final String apiKey;
-  final String ticker;
-  final String url = 'wss://crypto.financialmodelingprep.com';
-  late final WebSocketChannel channel;
-
-  late double ap;
-  late double bp;
-  late String change;
-  late String percentage;
-
-  CryptoWebSocket({required this.apiKey, required this.ticker}) {
-    debugPrint('Initializing WebSocket connection...');
-    channel = IOWebSocketChannel.connect(url);
-    login();
-    subscribe();
-    channel.stream.listen(
-      _onData,
-      onError: _onError,
-      onDone: _onDone,
-    );
-  }
-
-  void login() {
-    debugPrint('Logging in with API key...');
-    var loginData = {
-      "event": "login",
-      "data": {"apiKey": apiKey}
-    };
-    channel.sink.add(jsonEncode(loginData));
-    debugPrint('Login data sent: $loginData');
-  }
-
-  void subscribe() {
-    debugPrint('Subscribing to ticker: $ticker...');
-    var subscribeData = {
-      "event": "subscribe",
-      "data": {"ticker": ticker}
-    };
-    channel.sink.add(jsonEncode(subscribeData));
-    debugPrint('Subscription data sent: $subscribeData');
-  }
-
   void unsubscribe() {
     debugPrint('Unsubscribing from ticker: $ticker...');
     var unsubscribeData = {
       "event": "unsubscribe",
       "data": {"ticker": ticker}
     };
-    channel.sink.add(jsonEncode(unsubscribeData));
+    _channel.sink.add(jsonEncode(unsubscribeData));
     debugPrint('Un subscription data sent: $unsubscribeData');
   }
 
-  void _onData(dynamic data) {
-    debugPrint('Data received: $data');
-    Map<String, dynamic> decodedData = jsonDecode(data);
-
-    if (decodedData.containsKey('event')) {
-      String event = decodedData['event'];
-      switch (event) {
-        case 'login':
-          debugPrint('Login response: $decodedData');
-          break;
-        case 'subscribe':
-          debugPrint('Subscribe response: $decodedData');
-          break;
-        case 'unsubscribe':
-          debugPrint('Unsubscribe response: $decodedData');
-          break;
-        default:
-          debugPrint('Unknown event: $decodedData');
-          break;
-      }
-    } else if (decodedData['s'] == ticker) {
-      ap = decodedData['ap'];
-      bp = decodedData['bp'];
-      double changeValue = ap - bp;
-      change = changeValue.toStringAsFixed(3);
-      double percentageValue = (changeValue / ap * 100);
-      percentage = percentageValue.toStringAsFixed(3);
-      debugPrint("AP $ap");
-      debugPrint("BP $bp");
-      debugPrint("Change $change");
-      debugPrint("Percentage $percentage");
-    }
-  }
-
-  void _onError(Object error) {
-    debugPrint('WebSocket error: $error');
-  }
-
-  void _onDone() {
-    debugPrint('WebSocket connection closed.');
-  }
-
-  void close() {
-    debugPrint('Closing WebSocket connection...');
+  void disconnect() {
     unsubscribe();
-    channel.sink.close();
-    debugPrint('WebSocket connection closed.');
+    _channel.sink.close();
   }
 }
+
+// class CryptoWebSocket {
+//   final String apiKey;
+//   final String ticker;
+//   final String url = 'wss://crypto.financialmodelingprep.com';
+//   late final WebSocketChannel channel;
+
+//   late double ap;
+//   late double bp;
+//   late String change;
+//   late String percentage;
+
+//   CryptoWebSocket({required this.apiKey, required this.ticker}) {
+//     debugPrint('Initializing WebSocket connection...');
+//     channel = IOWebSocketChannel.connect(url);
+//     login();
+//     subscribe();
+//     channel.stream.listen(
+//       _onData,
+//       onError: _onError,
+//       onDone: _onDone,
+//     );
+//   }
+
+//   void login() {
+//     debugPrint('Logging in with API key...');
+//     var loginData = {
+//       "event": "login",
+//       "data": {"apiKey": apiKey}
+//     };
+//     channel.sink.add(jsonEncode(loginData));
+//     debugPrint('Login data sent: $loginData');
+//   }
+
+//   void subscribe() {
+//     debugPrint('Subscribing to ticker: $ticker...');
+//     var subscribeData = {
+//       "event": "subscribe",
+//       "data": {"ticker": ticker}
+//     };
+//     channel.sink.add(jsonEncode(subscribeData));
+//     debugPrint('Subscription data sent: $subscribeData');
+//   }
+
+//   void unsubscribe() {
+//     debugPrint('Unsubscribing from ticker: $ticker...');
+//     var unsubscribeData = {
+//       "event": "unsubscribe",
+//       "data": {"ticker": ticker}
+//     };
+//     channel.sink.add(jsonEncode(unsubscribeData));
+//     debugPrint('Un subscription data sent: $unsubscribeData');
+//   }
+
+//   void _onData(dynamic data) {
+//     debugPrint('Data received: $data');
+//     Map<String, dynamic> decodedData = jsonDecode(data);
+
+//     if (decodedData.containsKey('event')) {
+//       String event = decodedData['event'];
+//       switch (event) {
+//         case 'login':
+//           debugPrint('Login response: $decodedData');
+//           break;
+//         case 'subscribe':
+//           debugPrint('Subscribe response: $decodedData');
+//           break;
+//         case 'unsubscribe':
+//           debugPrint('Unsubscribe response: $decodedData');
+//           break;
+//         default:
+//           debugPrint('Unknown event: $decodedData');
+//           break;
+//       }
+//     } else if (decodedData['s'] == ticker) {
+//       ap = decodedData['ap'];
+//       bp = decodedData['bp'];
+//       double changeValue = ap - bp;
+//       change = changeValue.toStringAsFixed(3);
+//       double percentageValue = (changeValue / ap * 100);
+//       percentage = percentageValue.toStringAsFixed(3);
+//       debugPrint("AP $ap");
+//       debugPrint("BP $bp");
+//       debugPrint("Change $change");
+//       debugPrint("Percentage $percentage");
+//     }
+//   }
+
+//   void _onError(Object error) {
+//     debugPrint('WebSocket error: $error');
+//   }
+
+//   void _onDone() {
+//     debugPrint('WebSocket connection closed.');
+//   }
+
+//   void close() {
+//     debugPrint('Closing WebSocket connection...');
+//     unsubscribe();
+//     channel.sink.close();
+//     debugPrint('WebSocket connection closed.');
+//   }
+// }

@@ -15,19 +15,42 @@ import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../../route/my_app.dart';
+import '../../../utils/colors.dart';
 import '../../auth/bottomSheets/login_sheet.dart';
 import '../../auth/bottomSheets/login_sheet_tablet.dart';
+import '../compareNew/searchTicker/index.dart';
 
 class CompareStocksContainer extends StatelessWidget {
   const CompareStocksContainer({super.key});
 
-  _showPopUp(BuildContext context) {
-    context.read<SearchProvider>().clearSearch();
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const CompareStocksPopup();
-        });
+  // _showPopUp(BuildContext context) {
+  //   context.read<SearchProvider>().clearSearch();
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return const CompareStocksPopup();
+  //       });
+  // }
+  _showBottomSheet() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      backgroundColor: ThemeColors.transparent,
+      // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5.sp),
+          topRight: Radius.circular(5.sp),
+        ),
+      ),
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return const CompareNewSearch(
+          fromAdd: true,
+        );
+      },
+    );
   }
 
   @override
@@ -89,12 +112,16 @@ class CompareStocksContainer extends StatelessWidget {
                         visible: company.isEmpty,
                         child: AddCompanyContainer(
                             onTap: () => company.length < 4
-                                ? _showPopUp(context)
+                                // ? _showPopUp(context)
+                                ? _showBottomSheet()
                                 : null),
                       ),
                       HeaderList(
-                        onTap: () =>
-                            company.length < 5 ? _showPopUp(context) : null,
+                        onTap: () => company.length < 5
+                            ?
+                            //  _showPopUp(context)
+                            _showBottomSheet()
+                            : null,
                       ),
                       const FooterList(),
                     ],

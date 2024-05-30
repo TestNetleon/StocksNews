@@ -46,6 +46,8 @@ class AlertData {
   // final String sentiment;
   final String price;
   final num changes;
+  final String displayChange;
+  final num changesPercentage;
   // final num mentions;
   // final num rank;
   // final String alertName;
@@ -58,6 +60,8 @@ class AlertData {
     required this.id,
     // required this.userId,
     required this.symbol,
+    required this.displayChange,
+    required this.changesPercentage,
     required this.name,
     required this.image,
     // required this.sentiment,
@@ -78,6 +82,9 @@ class AlertData {
         symbol: json["symbol"],
         name: json["name"],
         image: json["image"],
+
+        displayChange: json["display_change"],
+        changesPercentage: json["changesPercentage"],
         // sentiment: json["sentiment"]!,
         price: json["price"],
         changes: json["changes"]?.toDouble(),
@@ -96,6 +103,8 @@ class AlertData {
         "symbol": symbol,
         "name": name,
         "image": image,
+        "display_change": displayChange,
+        "changesPercentage": changesPercentage,
         // "sentiment": sentiment,
         "price": price,
         "changes": changes,
