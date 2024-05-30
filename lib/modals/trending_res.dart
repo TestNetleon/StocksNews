@@ -125,6 +125,8 @@ class MostBullishData {
   final num changes;
   final num? mention;
   final num mentionChange;
+  final String displayChange;
+  final num changesPercentage;
   int isAlertAdded;
   int isWatchlistAdded;
   // final dynamic sites;
@@ -134,6 +136,8 @@ class MostBullishData {
     // required this.publishedDate,
     this.image,
     this.price,
+    required this.displayChange,
+    required this.changesPercentage,
     required this.changes,
     this.mention,
     required this.mentionChange,
@@ -147,6 +151,8 @@ class MostBullishData {
         symbol: json["symbol"],
         // publishedDate: DateTime.parse(json["published_date"]),
         image: json["image"],
+        displayChange: json["display_change"],
+        changesPercentage: json["changesPercentage"],
         price: json["price"],
         changes: json["changes"],
         mention: json["mention"],
@@ -164,6 +170,8 @@ class MostBullishData {
         "image": image,
         "price": price,
         "changes": changes,
+        "display_change": displayChange,
+        "changesPercentage": changesPercentage,
         "mention": mention,
         "mention_change": mentionChange,
         "is_alert_added": isAlertAdded,

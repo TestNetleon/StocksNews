@@ -204,11 +204,11 @@ class MostBullishItem extends StatelessWidget {
                         // ),
 
                         child: Text(
-                          "${data.changes.toCurrency()}%",
+                          "${data.displayChange} (${data.changesPercentage}%)",
                           style: stylePTSansRegular(
-                            color: data.changes == 0
+                            color: data.changesPercentage == 0
                                 ? Colors.white
-                                : data.changes > 0
+                                : data.changesPercentage > 0
                                     ? ThemeColors.accent
                                     : Colors.red,
                             fontSize: 11,
