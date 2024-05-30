@@ -12,6 +12,7 @@ class BaseContainer extends StatelessWidget {
     this.moreGradient = false,
     super.key,
     this.resizeToAvoidBottomInset,
+    this.bottomSafeAreaColor,
   });
 
   final Widget? drawer;
@@ -21,6 +22,7 @@ class BaseContainer extends StatelessWidget {
   final bool showSync;
   final bool? resizeToAvoidBottomInset;
   final bool moreGradient;
+  final Color? bottomSafeAreaColor;
 //
   @override
   Widget build(BuildContext context) {
@@ -54,9 +56,22 @@ class BaseContainer extends StatelessWidget {
           appBar: appBar,
           resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           drawer: drawer,
-          body: SafeArea(
-            child: body,
-          ),
+          body: bottomSafeAreaColor != null
+              ? Column(
+                  children: [
+                    Container(
+                      color: bottomSafeAreaColor,
+                      height: MediaQuery.of(context).padding.top +
+                          (appBar?.preferredSize.height ?? 0),
+                    ),
+                    Expanded(child: body),
+                    Container(
+                      color: bottomSafeAreaColor,
+                      height: MediaQuery.of(context).padding.bottom,
+                    ),
+                  ],
+                )
+              : SafeArea(child: body),
           bottomNavigationBar: bottomNavigationBar,
         ),
       ),

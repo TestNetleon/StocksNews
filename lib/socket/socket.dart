@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -8,11 +9,11 @@ class WebSocketService {
 
   void connect() {
     channel = IOWebSocketChannel.connect(
-        'wss://websockets.financialmodelingprep.com');
+      'wss://websockets.financialmodelingprep.com',
+    );
 
     // Send login event
-    channel.sink.add(
-        '{"event":"login","data":{"apiKey":"5e5573e6668fcd5327987ab3b912ef3e"}}');
+    channel.sink.add('{"event":"login","data":{"apiKey":$apiKeyFMP}}');
 
     // Listen for incoming messages
     channel.stream.listen((message) {

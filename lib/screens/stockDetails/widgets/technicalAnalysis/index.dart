@@ -23,9 +23,10 @@ class _StocksTechnicalAnalysisState extends State<StocksTechnicalAnalysis> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context
-          .read<StockDetailProvider>()
-          .technicalAnalysisData(symbol: widget.symbol);
+      StockDetailProvider provider = context.read<StockDetailProvider>();
+      if (provider.technicalAnalysisRes == null) {
+        provider.technicalAnalysisData(symbol: widget.symbol);
+      }
     });
   }
 

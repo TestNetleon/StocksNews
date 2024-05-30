@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -50,49 +51,15 @@ class _StockDetailsState extends State<StockDetails> {
 
   @override
   Widget build(BuildContext context) {
-    // StockDetailProvider provider = context.watch<StockDetailProvider>();
     return BaseContainer(
       moreGradient: true,
       drawer: const BaseDrawer(),
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
-      // body: provider.isLoading && provider.data == null
-      //     ? const Loading()
-      //     : !provider.isLoading &&
-      //             provider.data == null &&
-      //             provider.otherData == null &&
-      //             provider.analysisRes == null &&
-      //             provider.technicalAnalysisRes == null &&
-      //             provider.dataMentions == null
-      //         ? ErrorDisplayWidget(
-      //             error: provider.error,
-      //             onRefresh: _getData,
-      //           )
-      //         : provider.data != null
-      //             ? const StockDetailsBase()
-      //             : const SizedBox()
+      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
       body: StockDetailsBase(
         symbol: widget.symbol,
         inAppMsgId: widget.inAppMsgId,
       ),
-
-      // RefreshIndicator(
-      //     onRefresh: () async {
-      //       _getData();
-      //     },
-      //     child: const StockDetailsBase(),
-      //   )
-
-      // BaseUiContainer(
-      //   isLoading: provider.isLoading && provider.data == null,
-      //   hasData: provider.data != null,
-      //   error: provider.error,
-      //   errorDispCommon: true,
-      //   onRefresh: () => _getData(),
-      //   child: const StockDetailsBase(),
-      // ),
     );
   }
 }
