@@ -54,6 +54,7 @@ class _StockDetailsState extends State<StockDetails> {
       apiKey: apiKeyFMP,
       ticker: widget.symbol, // Replace with your ticker symbol
     );
+    _webSocketService.connect();
 
     _webSocketService.onDataReceived = (price, change, percentage) {
       setState(() {
@@ -66,7 +67,6 @@ class _StockDetailsState extends State<StockDetails> {
       Utils().showLog("ticker change $tickerChange");
     };
 
-    _webSocketService.connect();
     // _webSocket = CryptoWebSocket(
     //   apiKey: apiKeyFMP,
     //   ticker: widget.symbol,

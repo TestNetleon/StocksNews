@@ -42,7 +42,7 @@ class WebSocketService {
           _channel.sink.add(jsonEncode({
             'event': 'subscribe',
             'data': {
-              'ticker': ticker,
+              'ticker': ticker.toLowerCase(),
             },
           }));
         } else if (data['event'] == 'subscribe' && data['status'] == 200) {
