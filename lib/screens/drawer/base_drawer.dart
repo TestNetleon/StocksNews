@@ -191,7 +191,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
       // 1: TrendingIndustries.path,
       // 2: Notifications.path,
       1: MyAccount.path,
-      2: IndexBlog.path,
+      2: Blog.path,
       3: TCandPolicy.path,
       4: WhatWeDoIndex.path,
       5: ContactUs.path,
