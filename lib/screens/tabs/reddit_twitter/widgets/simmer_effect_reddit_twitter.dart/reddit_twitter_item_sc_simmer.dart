@@ -7,13 +7,20 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class RedditTwitterItemScreenSimmer extends StatelessWidget {
   const RedditTwitterItemScreenSimmer(
-      {this.recentMentionData = false, super.key});
+      {this.recentMentionData = false,
+      this.itemListCountIncrement = false,
+      super.key});
   final bool recentMentionData;
+  final bool itemListCountIncrement;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: recentMentionData ? 10 : 5,
+      itemCount: itemListCountIncrement
+          ? 10
+          : recentMentionData
+              ? 10
+              : 5,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: const EdgeInsets.only(top: 12),

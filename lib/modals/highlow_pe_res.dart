@@ -20,6 +20,7 @@ class HIghLowPeRes {
   final dynamic volume;
   final dynamic avgVolume;
   final dynamic image;
+  final dynamic pegRatio;
 
   HIghLowPeRes({
     this.symbol,
@@ -31,6 +32,7 @@ class HIghLowPeRes {
     this.volume,
     this.avgVolume,
     this.image,
+    this.pegRatio,
   });
 
   factory HIghLowPeRes.fromJson(Map<String, dynamic> json) => HIghLowPeRes(
@@ -43,6 +45,7 @@ class HIghLowPeRes {
         volume: json["volume"],
         avgVolume: json["avgVolume"],
         image: json["image"],
+        pegRatio: json["pegRatio"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,6 +58,7 @@ class HIghLowPeRes {
         "volume": volume,
         "avgVolume": avgVolume,
         "image": image,
+        "pegRatio": pegRatio,
       };
 }
 

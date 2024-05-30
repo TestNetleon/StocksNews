@@ -4,12 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/search/search_container.dart';
+import 'package:stocks_news_new/screens/search/widget/searchSimmer/search_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search_common.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -55,7 +54,7 @@ class _SearchState extends State<Search> {
         drawer: const BaseDrawer(),
         appBar: const AppBarHome(isPopback: true),
         body: provider.isLoading && provider.topSearch == null
-            ? const Loading()
+            ? const SearchScreenSimmer()
             : SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(Dimen.padding.sp),

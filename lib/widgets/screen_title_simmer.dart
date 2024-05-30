@@ -51,7 +51,7 @@ class ScreenTitleSimmer extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: leftPaddingSubTitle.sp),
           child: GradientContainerWidget(
-            height: twoLineSubTitle == true ? 30 : 18,
+            height: twoLineSubTitle == true ? 40 : 18,
             borderRadius: 2.sp,
             width: twoLineSubTitle == true ? null : 200.sp,
           ),

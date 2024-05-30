@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/screens/blogDetail/widgets/blogDetailSimmer/blog_detail_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -33,6 +34,7 @@ class BlogDetailContainer extends StatelessWidget {
           // const ScreenTitle(title: "Blog Detail"),
           Expanded(
             child: BaseUiContainer(
+              placeholder: const BlogDetailScreenSimmer(),
               error: provider.error,
               hasData:
                   provider.blogsDetail != null && !provider.isLoadingDetail,

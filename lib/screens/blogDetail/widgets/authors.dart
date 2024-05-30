@@ -27,7 +27,8 @@ class BlogDetailAuthor extends StatelessWidget {
         return InkWell(
           onTap: () {
             Navigator.of(context).popUntil((route) {
-              return route.settings.name == IndexBlog.path;
+              // return route.settings.name == IndexBlog.path;
+              return route.settings.name == Blog.path;
             });
             Navigator.pushNamed(context, Blog.path, arguments: {
               "type": BlogsType.author,

@@ -53,6 +53,7 @@ class HomeContainer extends StatelessWidget {
                     const StockInBuzz(),
                     const HomeMyAlerts(),
                     HomePartialLoading(
+                      // placeHolder: const HomeScreenSimmer(),
                       loading: provider.isLoadingTrending,
                       error: provider.statusTrending != Status.ideal &&
                               !provider.isLoadingTrending &&

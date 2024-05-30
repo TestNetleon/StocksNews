@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/congressionalData/item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/congressionalData/widget/congressionSimmer/congression_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -33,6 +34,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
       padding: const EdgeInsets.fromLTRB(
           Dimen.padding, Dimen.padding, Dimen.padding, 0),
       child: BaseUiContainer(
+        placeholder: const CongressionScreenSimmer(),
         onRefresh: provider.getData,
         error: provider.error,
         isLoading: provider.isLoading,

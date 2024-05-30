@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
@@ -15,16 +16,19 @@ class HighLowPEItem extends StatelessWidget {
   final HIghLowPeRes? data;
   final int index;
   const HighLowPEItem({super.key, this.data, required this.index});
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data?.symbol},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     HighLowPeProvider provider = context.watch<HighLowPeProvider>();
     return InkWell(
-      onTap: () {
-        provider.setOpenIndex(
-          provider.openIndex == index ? -1 : index,
-        );
-      },
+      onTap: () => _onTap(context),
       child: Column(
         children: [
           Row(
@@ -126,19 +130,26 @@ class HighLowPEItem extends StatelessWidget {
                 children: [
                   InnerRowItem(
                     lable: "PE Ratio",
-                    value: "${data?.pe ?? "N?A"}",
+                    value: "${data?.pe ?? "N/A"}",
+                  ),
+                  Visibility(
+                    visible: data?.pegRatio != null,
+                    child: InnerRowItem(
+                      lable: "PEG Ratio",
+                      value: "${data?.pegRatio ?? "N/A"}",
+                    ),
                   ),
                   InnerRowItem(
                     lable: "Market Cap",
-                    value: data?.marketCap ?? "N?A",
+                    value: data?.marketCap ?? "N/A",
                   ),
                   InnerRowItem(
                     lable: "Volume",
-                    value: data?.volume ?? "N?A",
+                    value: data?.volume ?? "N/A",
                   ),
                   InnerRowItem(
                     lable: "Average Volume",
-                    value: data?.avgVolume ?? "N?A",
+                    value: data?.avgVolume ?? "N/A",
                   ),
                 ],
               ),

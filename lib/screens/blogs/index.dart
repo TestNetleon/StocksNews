@@ -29,7 +29,7 @@ class _BlogState extends State<Blog> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BlogProvider>().getData(
-            showProgress: true,
+            showProgress: false,
             type: widget.type,
             id: widget.id,
             inAppMsgId: widget.inAppMsgId,
@@ -51,53 +51,54 @@ class _BlogState extends State<Blog> {
       );
     }
 
-    if (widget.type == BlogsType.category) {
-      return CategoryContainer(
-        type: widget.type,
-        id: widget.id,
-      );
-    }
+    // if (widget.type == BlogsType.category) {
+    //   return CategoryContainer(
+    //     type: widget.type,
+    //     id: widget.id,
+    //   );
+    // }
 
-    if (widget.type == BlogsType.tag) {
-      return TagsContainer(
-        type: widget.type,
-        id: widget.id,
-      );
-    }
+    // if (widget.type == BlogsType.tag) {
+    //   return TagsContainer(
+    //     type: widget.type,
+    //     id: widget.id,
+    //   );
+    // }
 
     return const BlogContainer();
   }
 }
 
-class IndexBlog extends StatefulWidget {
-  static const path = "IndexBlog";
-  const IndexBlog({super.key});
+// class IndexBlog extends StatefulWidget {
+//   static const path = "IndexBlog";
 
-  @override
-  State<IndexBlog> createState() => _IndexBlogState();
-}
+//   const IndexBlog({super.key});
 
-class _IndexBlogState extends State<IndexBlog> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _callAPi();
-    });
-  }
+//   @override
+//   State<IndexBlog> createState() => _IndexBlogState();
+// }
 
-  _callAPi() {
-    BlogProvider provider = context.read<BlogProvider>();
-    Utils().showLog(" Blog Data ->${provider.blogData == null}");
-    if (provider.blogData == null || provider.blogData?.isEmpty == true) {
-      context
-          .read<BlogProvider>()
-          .getData(showProgress: true, type: BlogsType.blog);
-    }
-  }
+// class _IndexBlogState extends State<IndexBlog> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+//       _callAPi();
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return const BlogContainer();
-  }
-}
+//   _callAPi() {
+//     BlogProvider provider = context.read<BlogProvider>();
+//     Utils().showLog(" Blog Data ->${provider.blogData == null}");
+//     if (provider.blogData == null || provider.blogData?.isEmpty == true) {
+//       context
+//           .read<BlogProvider>()
+//           .getData(showProgress: true, type: BlogsType.blog);
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const BlogContainer();
+//   }
+// }

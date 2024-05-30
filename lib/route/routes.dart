@@ -110,7 +110,7 @@ class Routes {
     CompareStocks.path: (_) => const CompareStocks(),
     QrScan.path: (_) => const QrScan(),
     // StocksIndex.path: (_) => const StocksIndex(),
-    IndexBlog.path: (_) => const IndexBlog(),
+    // IndexBlog.path: (_) => const IndexBlog(),
     TrendingIndustries.path: (_) => const TrendingIndustries(),
     HighLowPEIndex.path: (_) => const HighLowPEIndex(),
     FiftyTwoWeeksIndex.path: (_) => const FiftyTwoWeeksIndex(),

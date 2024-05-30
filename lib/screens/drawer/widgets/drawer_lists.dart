@@ -181,7 +181,8 @@ List<DrawerRes> marketData = [
     onTap: () {
       Navigator.pushNamed(
         navigatorKey.currentContext!,
-        IndexBlog.path,
+        // IndexBlog.path,
+        Blog.path,
       );
     },
   ),
