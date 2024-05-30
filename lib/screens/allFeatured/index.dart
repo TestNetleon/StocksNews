@@ -24,7 +24,7 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<FeaturedTickerProvider>()
-          .getFeaturedTicker(showProgress: true);
+          .getFeaturedTicker(showProgress: false);
     });
   }
 

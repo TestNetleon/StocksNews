@@ -16,7 +16,7 @@ class AllFeaturedContainer extends StatelessWidget {
     FeaturedTickerProvider provider = context.watch<FeaturedTickerProvider>();
 
     return RefreshControl(
-      onRefresh: () async => provider.getFeaturedTicker(showProgress: true),
+      onRefresh: () async => provider.getFeaturedTicker(showProgress: false),
       canLoadMore: provider.canLoadMore,
       onLoadMore: () async => provider.getFeaturedTicker(loadMore: true),
       child: ListView.separated(

@@ -35,7 +35,7 @@ class HighLowPEItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () => _onTap(context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0),
                   child: Container(
@@ -49,7 +49,7 @@ class HighLowPEItem extends StatelessWidget {
               const SpacerHorizontal(width: 12),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () => _onTap(context),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
