@@ -21,7 +21,7 @@ class NewsScreenSimmer extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const GradientContainerWidget(height: 200),
+              GradientContainerWidget(height: ScreenUtil().screenWidth / 2),
               const SpacerVertical(),
               GradientContainerWidget(height: 20, borderRadius: 2.sp),
               const SpacerVertical(height: 5),

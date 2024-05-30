@@ -18,6 +18,7 @@ class CompareStockRes {
   final String image;
   final String price;
   final double changes;
+  final String displayChange;
   final double changesPercentage;
   final String dayLow;
   final String dayHigh;
@@ -49,6 +50,7 @@ class CompareStockRes {
     required this.image,
     required this.price,
     required this.changes,
+    required this.displayChange,
     required this.changesPercentage,
     required this.dayLow,
     required this.dayHigh,
@@ -81,6 +83,7 @@ class CompareStockRes {
         name: json["name"],
         image: json["image"],
         price: json["price"],
+        displayChange: json["change"],
         changes: json["changes"]?.toDouble(),
         changesPercentage: json["changesPercentage"]?.toDouble(),
         dayLow: json["dayLow"],
@@ -114,6 +117,7 @@ class CompareStockRes {
         "short_term_percent": shortTermPercent,
         "symbol": symbol,
         "name": name,
+        "change": displayChange,
         "image": image,
         "price": price,
         "changes": changes,

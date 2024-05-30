@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
@@ -315,49 +316,56 @@ class NewsItemSeparated extends StatelessWidget {
           : openUrl(news?.url),
       child: Column(
         children: [
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              // ThemeImageView(url: news?.image ?? ""),
-              CachedNetworkImagesWidget(
-                news?.image,
-                height: 200,
-                width: double.infinity,
-              ),
-              // Container(
-              //   height: 30,
-              //   width: double.infinity,
-              //   decoration: BoxDecoration(
-              //     gradient: RadialGradient(
-              //       // begin: Alignment.topCenter,
-              //       // end: Alignment.bottomCenter,
-              //       colors: [
-              //         ThemeColors.blackShade.shade600.withOpacity(0.5),
-              //         ThemeColors.blackShade.shade700.withOpacity(0.5),
-              //         ThemeColors.blackShade.shade700.withOpacity(0.5),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Align(
-              //   alignment: Alignment.bottomCenter,
-              //   child: Container(
-              //     height: 20,
-              //     width: double.infinity,
-              //     decoration: const BoxDecoration(
-              //       gradient: LinearGradient(
-              //         end: Alignment(0.0, -1),
-              //         begin: Alignment(0.0, 2),
-              //         colors: <Color>[
-              //           ThemeColors.background,
-              //           Color(0x8A000000),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
-            ],
+          AspectRatio(
+            aspectRatio: 6 / 3,
+            child: CachedNetworkImagesWidget(
+              news?.image,
+              width: double.infinity,
+            ),
           ),
+          // Stack(
+          //   alignment: Alignment.bottomCenter,
+          //   children: [
+          //     // ThemeImageView(url: news?.image ?? ""),
+          //     // CachedNetworkImagesWidget(
+          //     //   news?.image,
+          //       // height: 200,
+          //     //   width: double.infinity,
+          //     // ),
+          //     // Container(
+          //     //   height: 30,
+          //     //   width: double.infinity,
+          //     //   decoration: BoxDecoration(
+          //     //     gradient: RadialGradient(
+          //     //       // begin: Alignment.topCenter,
+          //     //       // end: Alignment.bottomCenter,
+          //     //       colors: [
+          //     //         ThemeColors.blackShade.shade600.withOpacity(0.5),
+          //     //         ThemeColors.blackShade.shade700.withOpacity(0.5),
+          //     //         ThemeColors.blackShade.shade700.withOpacity(0.5),
+          //     //       ],
+          //     //     ),
+          //     //   ),
+          //     // ),
+          //     // Align(
+          //     //   alignment: Alignment.bottomCenter,
+          //     //   child: Container(
+          //     //     height: 20,
+          //     //     width: double.infinity,
+          //     //     decoration: const BoxDecoration(
+          //     //       gradient: LinearGradient(
+          //     //         end: Alignment(0.0, -1),
+          //     //         begin: Alignment(0.0, 2),
+          //     //         colors: <Color>[
+          //     //           ThemeColors.background,
+          //     //           Color(0x8A000000),
+          //     //         ],
+          //     //       ),
+          //     //     ),
+          //     //   ),
+          //     // ),
+          //   ],
+          // ),
           const SpacerVertical(height: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

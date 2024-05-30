@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/allFeatured/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item_copy.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -47,7 +48,7 @@ class HomeMyAlerts extends StatelessWidget {
             Visibility(
               // visible: provider.userAlert != 0,
               child: Padding(
-                padding: const EdgeInsets.only(top: 0),
+                padding: EdgeInsets.only(top: isPhone ? 0 : 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -83,7 +84,7 @@ class HomeMyAlerts extends StatelessWidget {
             ),
             const SpacerVertical(height: 10),
             SizedBox(
-              height: 150.sp,
+              height: 160,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -99,7 +100,11 @@ class HomeMyAlerts extends StatelessWidget {
                   return AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
                     child: data == null
-                        ? Placeholder(height: constraints.maxWidth * 0.60)
+                        ? Placeholder(
+                            height: isPhone
+                                ? constraints.maxWidth * 0.60
+                                : constraints.maxWidth * 0.25,
+                          )
                         : (homeAlert?.length == 1 && userRes != null)
                             ? AddAlert(
                                 data: data,

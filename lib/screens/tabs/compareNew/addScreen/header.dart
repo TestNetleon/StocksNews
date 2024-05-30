@@ -46,16 +46,16 @@ class CompareNewAddHeader extends StatelessWidget {
     }
   }
 
-  _showPopUp(BuildContext context) {
-    context.read<SearchProvider>().clearSearch();
-    showDialog(
-        context: context,
-        builder: (context) {
-          return const CompareStocksPopup(
-            fromAdd: true,
-          );
-        });
-  }
+  // _showPopUp(BuildContext context) {
+  //   context.read<SearchProvider>().clearSearch();
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return const CompareStocksPopup(
+  //           fromAdd: true,
+  //         );
+  //       });
+  // }
 
   _showBottomSheet() {
     showModalBottomSheet(
@@ -71,7 +71,9 @@ class CompareNewAddHeader extends StatelessWidget {
       ),
       context: navigatorKey.currentContext!,
       builder: (context) {
-        return const CompareNewSearch();
+        return const CompareNewSearch(
+          fromAdd: true,
+        );
       },
     );
   }
@@ -142,7 +144,19 @@ class CompareNewAddHeader extends StatelessWidget {
                   right: 0,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(30),
-                    onTap: () => provider.removeFromCompare(index: index),
+                    onTap: () {
+                      String symbol = provider.compareData[index].symbol;
+
+                      // Check if the ticker symbol is present in provider.company
+                      bool symbolExists = provider.company
+                          .any((company) => company.symbol == symbol);
+
+                      if (symbolExists) {
+                        provider.removeStockItem(index: index);
+                      } else {
+                        provider.removeFromCompare(index: index);
+                      }
+                    },
                     child: const Align(
                       alignment: Alignment.topRight,
                       child: Padding(

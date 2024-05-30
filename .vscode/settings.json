@@ -6,6 +6,7 @@
         "Geolocator",
         "loosers",
         "Placemark",
-        "screenutil"
+        "screenutil",
+        "taindex"
     ]
 }

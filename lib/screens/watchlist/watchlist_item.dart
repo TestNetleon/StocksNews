@@ -159,10 +159,12 @@ class WatchlistItem extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "${data.changes.toCurrency()}%",
+                  "${data.displayChange} (${data.changesPercentage.toCurrency()}%)",
                   style: stylePTSansRegular(
                     fontSize: 12,
-                    color: data.changes > 0 ? ThemeColors.accent : Colors.red,
+                    color: data.changesPercentage > 0
+                        ? ThemeColors.accent
+                        : Colors.red,
                   ),
                 ),
               ],

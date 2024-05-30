@@ -70,15 +70,16 @@ class CompareNew extends StatelessWidget {
           Visibility(
             visible: userProvider.user != null,
             child: Expanded(
-              child: provider.company.isEmpty && !provider.isLoading
-                  ? const CompareNewAddScreen()
-                  : BaseUiContainer(
-                      isLoading: provider.isLoading && provider.company.isEmpty,
-                      hasData: provider.company.isNotEmpty,
-                      error: provider.error,
-                      showPreparingText: true,
-                      child: const CompareStockNewContainer(),
-                    ),
+              child: BaseUiContainer(
+                isLoading: provider.isLoading && provider.company.isEmpty,
+                hasData: true,
+                error: provider.error,
+                showPreparingText: true,
+                child: provider.company.isEmpty ||
+                        (!provider.isLoading && provider.company.length == 1)
+                    ? const CompareNewAddScreen()
+                    : const CompareStockNewContainer(),
+              ),
             ),
           ),
         ],

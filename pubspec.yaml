@@ -91,7 +91,7 @@ dependencies:
   app_links: ^6.0.2
   audioplayers: ^5.2.1
   readmore: ^3.0.0
-  socket_io_client: ^2.0.3+1
+  # socket_io_client: ^2.0.3+1
   web_socket_channel: ^2.4.3
   flutter_html: ^3.0.0-beta.2
   # flutter_offline: ^3.0.1
@@ -125,6 +125,8 @@ flutter:
     - assets/images/
     - assets/audios/
     - assets/audios/alert_watchlist.mp3
+    - assets/audios/refresh.wav
+
 
     # - assets/icons/
 

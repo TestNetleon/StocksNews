@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
@@ -11,8 +12,13 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class StocksItem extends StatelessWidget {
   final bool gainer;
+  final bool priceData;
   final Top top;
-  const StocksItem({required this.top, this.gainer = true, super.key});
+  const StocksItem(
+      {required this.top,
+      this.gainer = true,
+      super.key,
+      this.priceData = true});
 //
   @override
   Widget build(BuildContext context) {
@@ -70,28 +76,31 @@ class StocksItem extends StatelessWidget {
             ),
           ),
           const SpacerHorizontal(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(top.price, style: stylePTSansBold(fontSize: 14)),
-              const SpacerVertical(height: 2),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text:
-                          "${top.displayChange} (${top.displayPercentage.toCurrency()}%)",
-                      style: stylePTSansRegular(
-                        fontSize: 11,
-                        color: top.displayPercentage > 0
-                            ? Colors.green
-                            : Colors.red,
+          Visibility(
+            visible: priceData,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(top.price, style: stylePTSansBold(fontSize: 14)),
+                const SpacerVertical(height: 2),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            "${top.displayChange} (${top.displayPercentage.toCurrency()}%)",
+                        style: stylePTSansRegular(
+                          fontSize: 11,
+                          color: top.displayPercentage > 0
+                              ? Colors.green
+                              : Colors.red,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

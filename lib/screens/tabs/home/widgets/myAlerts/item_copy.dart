@@ -87,7 +87,7 @@ class HomeMyAlertItem extends StatelessWidget {
     return Container(
       width: 220,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.sp),
+        borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -180,6 +180,9 @@ class HomeMyAlertItem extends StatelessWidget {
                     ),
                     child: Container(
                       width: 220,
+                      padding: isPhone
+                          ? EdgeInsets.zero
+                          : const EdgeInsets.only(bottom: 20),
                       // color: const Color.fromARGB(255, 35, 35, 35),
                       constraints: const BoxConstraints(
                         maxHeight: 88,

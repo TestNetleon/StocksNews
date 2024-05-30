@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -27,12 +28,12 @@ class StockDetails extends StatefulWidget {
 
 //
 class _StockDetailsState extends State<StockDetails> {
-  // late WebSocketService _webSocketService;
-  // String? tickerPrice;
-  // String? tickerChange;
-  // String? tickerPercentage;
+  late WebSocketService _webSocketService;
+  String? tickerPrice;
+  String? tickerChange;
+  String? tickerPercentage;
 
-  late CryptoWebSocket _webSocket;
+  // late CryptoWebSocket _webSocket;
 
   @override
   void initState() {
@@ -48,28 +49,28 @@ class _StockDetailsState extends State<StockDetails> {
   }
 
   _addSocket() {
-    // _webSocketService = WebSocketService(
-    //   url: 'wss://websockets.financialmodelingprep.com',
-    //   apiKey: '5e5573e6668fcd5327987ab3b912ef3e',
-    //   ticker: widget.symbol, // Replace with your ticker symbol
-    // );
-
-    // _webSocketService.onDataReceived = (price, change, percentage) {
-    //   setState(() {
-    //     tickerPrice = price;
-    //     tickerChange = change;
-    //     tickerPercentage = percentage;
-    //   });
-    //   Utils().showLog("ticker price $tickerPrice");
-    //   Utils().showLog("ticker percentage $tickerPercentage");
-    //   Utils().showLog("ticker change $tickerChange");
-    // };
-
-    // _webSocketService.connect();
-    _webSocket = CryptoWebSocket(
+    _webSocketService = WebSocketService(
+      url: 'wss://websockets.financialmodelingprep.com',
       apiKey: apiKeyFMP,
-      ticker: widget.symbol,
+      ticker: widget.symbol, // Replace with your ticker symbol
     );
+
+    _webSocketService.onDataReceived = (price, change, percentage) {
+      setState(() {
+        tickerPrice = price;
+        tickerChange = change;
+        tickerPercentage = percentage;
+      });
+      Utils().showLog("ticker price $tickerPrice");
+      Utils().showLog("ticker percentage $tickerPercentage");
+      Utils().showLog("ticker change $tickerChange");
+    };
+
+    _webSocketService.connect();
+    // _webSocket = CryptoWebSocket(
+    //   apiKey: apiKeyFMP,
+    //   ticker: widget.symbol,
+    // );
   }
 
   void _getData() {
@@ -80,8 +81,8 @@ class _StockDetailsState extends State<StockDetails> {
 
   @override
   void dispose() {
-    // _webSocketService.disconnect();
-    _webSocket.close();
+    _webSocketService.disconnect();
+    // _webSocket.close();
     super.dispose();
   }
 
