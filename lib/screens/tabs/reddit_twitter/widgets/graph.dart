@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
+import 'package:stocks_news_new/providers/trending_provider.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -61,14 +63,8 @@ class SocialSentimentsGraph extends StatelessWidget {
             "Current average sentiment across all stocks",
             style: stylePTSansRegular(fontSize: 12, letterSpacing: 0.0),
           ),
-          const SpacerVertical(height: 5),
-          Text(
-            "See which stocks are bearish vs bullish",
-            style: styleGeorgiaBold(
-              fontSize: 15,
-              // decoration: TextDecoration.underline,
-            ),
-          ),
+          // const SpacerVertical(height: 5),
+
           // const SpacerVertical(),
           LayoutBuilder(
             builder: (context, constraints) => Container(
@@ -241,7 +237,25 @@ class SocialSentimentsGraph extends StatelessWidget {
               ),
             ],
           ),
-          const SpacerVertical(),
+          const SpacerVertical(height: 10),
+
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Tabs.path, arguments: 1);
+            },
+            child: Text(
+              "See which stocks are bearish vs bullish",
+              style: styleGeorgiaBold(
+                fontSize: 15,
+                color: ThemeColors.accent,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+
+          const SpacerVertical(
+            height: 15,
+          ),
 
           // Stack(
           //   alignment: Alignment.bottomCenter,

@@ -19,6 +19,7 @@ import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_item.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'widgets/buttons.dart';
 import 'widgets/graph.dart';
 
 class RedditTwitter extends StatefulWidget {
@@ -110,13 +111,25 @@ class _RedditTwitterState extends State<RedditTwitter> {
               editable: true,
             ),
             const SpacerVertical(height: 10),
-            // RedditTwitterButtons(constraints: constraints),
-            // const SpacerVertical(height: 8),
-            Text(
-              "SHOW THE LAST - ",
-              style: stylePTSansBold(fontSize: 12),
+            Row(
+              children: [
+                Text(
+                  "DATA SOURCE - ",
+                  style: stylePTSansBold(fontSize: 12),
+                ),
+                Flexible(child: RedditTwitterButtons(constraints: constraints)),
+              ],
             ),
-            RedditTwitterDays(constraints: constraints),
+            const SpacerVertical(height: 5),
+            Row(
+              children: [
+                Text(
+                  "SHOW THE LAST - ",
+                  style: stylePTSansBold(fontSize: 12),
+                ),
+                RedditTwitterDays(constraints: constraints),
+              ],
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

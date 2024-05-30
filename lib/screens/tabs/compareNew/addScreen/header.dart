@@ -11,6 +11,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../utils/bottom_sheets.dart';
+import '../searchTicker/index.dart';
+
 class CompareNewAddHeader extends StatelessWidget {
   const CompareNewAddHeader({super.key});
 
@@ -52,6 +55,25 @@ class CompareNewAddHeader extends StatelessWidget {
             fromAdd: true,
           );
         });
+  }
+
+  _showBottomSheet() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      backgroundColor: ThemeColors.transparent,
+      // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5.sp),
+          topRight: Radius.circular(5.sp),
+        ),
+      ),
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return const CompareNewSearch();
+      },
+    );
   }
 
   Widget _afterAdd(
@@ -146,7 +168,8 @@ class CompareNewAddHeader extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          _showPopUp(navigatorKey.currentContext!);
+          // _showPopUp(navigatorKey.currentContext!);
+          _showBottomSheet();
         },
         child: Ink(
           padding: const EdgeInsets.all(10),

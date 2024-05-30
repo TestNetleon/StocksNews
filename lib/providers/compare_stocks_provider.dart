@@ -197,6 +197,7 @@ class CompareStocksProvider extends ChangeNotifier {
       if (res.status) {
         if (!_company.any((company) => company.symbol == symbol)) {
           _company = compareStockResFromJson(jsonEncode(res.data));
+
           if (fromMain) {
             _compareData.add(SearchRes(
               symbol: symbol,
@@ -219,6 +220,7 @@ class CompareStocksProvider extends ChangeNotifier {
       }
       setStatus(Status.loaded);
     } catch (e) {
+      Utils().showLog(e);
       setStatus(Status.loaded);
       // showErrorMessage(
       //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,

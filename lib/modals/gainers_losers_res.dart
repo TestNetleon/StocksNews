@@ -45,23 +45,27 @@ class GainersLosersDataRes {
   final String symbol;
   final String name;
   final String? price;
-  final num? changesPercentage;
+  // final num? changesPercentage;
   final String? range;
   final String? volume;
   final String? avgVolume;
   final String? previousClose;
   final String? image;
+  final String displayChange;
+  final num displayPercentage;
 
   GainersLosersDataRes({
     required this.symbol,
     required this.name,
     this.price,
-    this.changesPercentage,
+    // this.changesPercentage,
     this.volume,
     this.avgVolume,
     this.previousClose,
     this.image,
     this.range,
+    required this.displayChange,
+    required this.displayPercentage,
   });
 
   factory GainersLosersDataRes.fromJson(Map<String, dynamic> json) =>
@@ -69,9 +73,11 @@ class GainersLosersDataRes {
           symbol: json["symbol"],
           name: json["name"],
           price: json["price"],
-          changesPercentage: json["changesPercentage"],
+          // changesPercentage: json["changesPercentage"],
           volume: json["volume"],
           avgVolume: json["avgVolume"],
+          displayChange: json["display_change"],
+          displayPercentage: json["changesPercentage"],
           previousClose: json["previousClose"],
           image: json["image"],
           range: json["range"]);
@@ -80,9 +86,11 @@ class GainersLosersDataRes {
         "symbol": symbol,
         "name": name,
         "price": price,
-        "changesPercentage": changesPercentage,
+        // "changesPercentage": changesPercentage,
         "volume": volume,
         "avgVolume": avgVolume,
+        "changesPercentage": displayPercentage,
+        "display_change": displayChange,
         "previousClose": previousClose,
         "image": image,
         "range": range,

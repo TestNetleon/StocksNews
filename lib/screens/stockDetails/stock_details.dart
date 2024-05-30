@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -25,14 +26,17 @@ class StockDetails extends StatefulWidget {
 
 //
 class _StockDetailsState extends State<StockDetails> {
-  late WebSocketService _webSocketService;
+  // late WebSocketService _webSocketService;
+  // String? tickerPrice;
+  // String? tickerChange;
+  // String? tickerPercentage;
+
+  late CryptoWebSocket _webSocket;
 
   @override
   void initState() {
     super.initState();
-    _webSocketService = WebSocketService();
-    _webSocketService.connect();
-    _webSocketService.subscribe(widget.symbol);
+    _addSocket();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getData();
       FirebaseAnalytics.instance.logEvent(
@@ -42,10 +46,42 @@ class _StockDetailsState extends State<StockDetails> {
     });
   }
 
+  _addSocket() {
+    // _webSocketService = WebSocketService(
+    //   url: 'wss://websockets.financialmodelingprep.com',
+    //   apiKey: '5e5573e6668fcd5327987ab3b912ef3e',
+    //   ticker: widget.symbol, // Replace with your ticker symbol
+    // );
+
+    // _webSocketService.onDataReceived = (price, change, percentage) {
+    //   setState(() {
+    //     tickerPrice = price;
+    //     tickerChange = change;
+    //     tickerPercentage = percentage;
+    //   });
+    //   Utils().showLog("ticker price $tickerPrice");
+    //   Utils().showLog("ticker percentage $tickerPercentage");
+    //   Utils().showLog("ticker change $tickerChange");
+    // };
+
+    // _webSocketService.connect();
+    _webSocket = CryptoWebSocket(
+      apiKey: '5e5573e6668fcd5327987ab3b912ef3e',
+      ticker: widget.symbol,
+    );
+  }
+
   void _getData() {
     StockDetailProvider provider = context.read<StockDetailProvider>();
     provider.getStockDetails(symbol: widget.symbol, refresh: true);
     provider.getStockGraphData(symbol: widget.symbol);
+  }
+
+  @override
+  void dispose() {
+    // _webSocketService.disconnect();
+    _webSocket.close();
+    super.dispose();
   }
 
   @override
