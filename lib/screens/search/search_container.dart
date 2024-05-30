@@ -39,7 +39,11 @@ class SearchContainer extends StatelessWidget {
               displayChange: "",
               displayPercentage: 0,
             );
-            return StocksItem(top: top, gainer: true);
+            return StocksItem(
+              top: top,
+              gainer: true,
+              priceData: false,
+            );
           },
           separatorBuilder: (BuildContext context, int index) {
             // return const SpacerVertical(height: 12);

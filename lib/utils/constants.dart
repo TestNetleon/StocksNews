@@ -81,6 +81,7 @@ class Images {
 
 class AudioFiles {
   static const alertWeathlist = "audios/alert_watchlist.mp3";
+  static const refresh = "audios/refresh.wav";
 }
 
 class AppIcons {
