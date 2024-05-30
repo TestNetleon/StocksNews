@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/allFeatured/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/item_copy.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -99,7 +100,11 @@ class HomeMyAlerts extends StatelessWidget {
                   return AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
                     child: data == null
-                        ? Placeholder(height: constraints.maxWidth * 0.60)
+                        ? Placeholder(
+                            height: isPhone
+                                ? constraints.maxWidth * 0.60
+                                : constraints.maxWidth * 0.25,
+                          )
                         : (homeAlert?.length == 1 && userRes != null)
                             ? AddAlert(
                                 data: data,
