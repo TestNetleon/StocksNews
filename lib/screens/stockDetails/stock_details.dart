@@ -30,9 +30,9 @@ class StockDetails extends StatefulWidget {
 class _StockDetailsState extends State<StockDetails> {
   late WebSocketService _webSocketService;
   String? tickerPrice;
-  String? tickerChange;
-  String? tickerPercentage;
-
+  num? tickerChange;
+  num? tickerPercentage;
+  String? tickerChangeString;
   // late CryptoWebSocket _webSocket;
 
   @override
@@ -55,15 +55,25 @@ class _StockDetailsState extends State<StockDetails> {
       ticker: widget.symbol, // Replace with your ticker symbol
     );
 
-    _webSocketService.onDataReceived = (price, change, percentage) {
+    _webSocketService.onDataReceived =
+        (price, change, percentage, changeString) {
       setState(() {
         tickerPrice = price;
         tickerChange = change;
         tickerPercentage = percentage;
+        tickerChangeString = changeString;
       });
+
       Utils().showLog("ticker price $tickerPrice");
       Utils().showLog("ticker percentage $tickerPercentage");
       Utils().showLog("ticker change $tickerChange");
+
+      context.read<StockDetailProvider>().updateSocket(
+            change: tickerChange,
+            changePercentage: tickerPercentage,
+            changeString: tickerChangeString,
+            price: tickerPrice,
+          );
     };
 
     _webSocketService.connect();

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:math' as math;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -118,6 +119,28 @@ class StockDetailProvider with ChangeNotifier {
   //   selectedTwo = false;
   //   notifyListeners();
   // }
+
+  void updateSocket({
+    String? price,
+    num? change,
+    num? changePercentage,
+    String? changeString,
+  }) {
+    if (change != null) {
+      _data?.keyStats?.change = change;
+    }
+    if (price != null) {
+      _data?.keyStats?.price = price;
+    }
+    if (changePercentage != null) {
+      _data?.keyStats?.changesPercentage = changePercentage;
+    }
+    if (changeString != null) {
+      _data?.keyStats?.changeWithCur = changeString;
+    }
+    log("1");
+    notifyListeners();
+  }
 
   Future getStockDetails(
       {required String symbol, loadOther = true, refresh = false}) async {

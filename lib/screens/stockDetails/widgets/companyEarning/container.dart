@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/stocksDetailSimmer/
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 
 import 'item.dart';
 
@@ -83,7 +84,7 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
       showPreparingText: true,
       child: Padding(
         padding: EdgeInsets.only(bottom: 20.sp),
-        child: RefreshIndicator(
+        child: CommonRefreshIndicator(
           onRefresh: () async {
             provider.getStockOtherDetails(symbol: widget.symbol);
           },

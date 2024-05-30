@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 import '../../utils/constants.dart';
 
@@ -17,7 +16,7 @@ class CommonRefreshIndicator extends StatelessWidget {
   Future<void> _handleRefresh() async {
     try {
       final player = AudioPlayer();
-      player.play(AssetSource(AudioFiles.refresh));
+      player.play(AssetSource(AudioFiles.refresh), volume: 0.1);
     } catch (e) {
       debugPrint("$e");
     }

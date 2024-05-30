@@ -1,5 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
@@ -8,57 +11,87 @@ import '../../../utils/utils.dart';
 import '../../t&cAndPolicy/tc_policy.dart';
 
 class AgreeConditions extends StatelessWidget {
-  const AgreeConditions({super.key});
+  final bool fromLogin;
+  const AgreeConditions({super.key, this.fromLogin = true});
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: 'By signing up you agree to our ',
-        style: stylePTSansRegular(fontSize: isPhone ? 13 : 15, height: 1.4),
-        children: [
-          TextSpan(
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                Navigator.push(
-                  context,
-                  createRoute(
-                    const TCandPolicy(
-                      policyType: PolicyType.tC,
+    HomeProvider provider = context.watch<HomeProvider>();
+    if ((provider.loginTxt == null || provider.loginTxt == '') &&
+        (provider.signUpTxt == null || provider.signUpTxt == '')) {
+      return RichText(
+        text: TextSpan(
+          text: fromLogin
+              ? 'By signing in you agree to our '
+              : 'By signing up you agree to our ',
+          style: stylePTSansRegular(fontSize: isPhone ? 13 : 15, height: 1.4),
+          children: [
+            TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    createRoute(
+                      const TCandPolicy(
+                        policyType: PolicyType.tC,
+                      ),
                     ),
-                  ),
-                );
-              },
-            text: 'terms of service',
-            style: stylePTSansRegular(
-                fontSize: 13, color: ThemeColors.accent, height: 1.4),
-          ),
-          TextSpan(
-            text: ' and ',
-            style: stylePTSansRegular(fontSize: 13, height: 1.4),
-          ),
-          TextSpan(
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                Navigator.push(
-                  context,
-                  createRoute(
-                    const TCandPolicy(
-                      policyType: PolicyType.privacy,
+                  );
+                },
+              text: 'terms of service',
+              style: stylePTSansRegular(
+                  fontSize: 13, color: ThemeColors.accent, height: 1.4),
+            ),
+            TextSpan(
+              text: ' and ',
+              style: stylePTSansRegular(fontSize: 13, height: 1.4),
+            ),
+            TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    createRoute(
+                      const TCandPolicy(
+                        policyType: PolicyType.privacy,
+                      ),
                     ),
-                  ),
-                );
-              },
-            text: 'privacy policy',
-            style: stylePTSansRegular(
-                fontSize: 13, color: ThemeColors.accent, height: 1.4),
-          ),
-          TextSpan(
-            text: '.',
-            style: stylePTSansRegular(fontSize: 13, height: 1.4),
-          ),
-        ],
-      ),
+                  );
+                },
+              text: 'privacy policy',
+              style: stylePTSansRegular(
+                  fontSize: 13, color: ThemeColors.accent, height: 1.4),
+            ),
+            TextSpan(
+              text: '.',
+              style: stylePTSansRegular(fontSize: 13, height: 1.4),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return HtmlWidget(
+      customStylesBuilder: (element) {
+        if (element.localName == 'a') {
+          return {'color': '#1bb449', 'text-decoration': 'none'};
+        }
+        return null;
+      },
+      onTapUrl: (url) async {
+        Navigator.push(
+            context,
+            createRoute(TCandPolicy(
+                policyType: url == "terms-of-service"
+                    ? PolicyType.tC
+                    : PolicyType.privacy)));
+
+        Utils().showLog("clicked url---$url");
+
+        return true;
+      },
+      fromLogin ? provider.loginTxt ?? "" : provider.signUpTxt ?? "",
+      textStyle: styleGeorgiaRegular(fontSize: 13),
     );
   }
 }

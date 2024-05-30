@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
@@ -41,7 +42,7 @@ class BlogDetailContainer extends StatelessWidget {
               isLoading: provider.isLoadingDetail,
               showPreparingText: true,
               onRefresh: () => provider.getBlogDetailData(slug: slug),
-              child: RefreshIndicator(
+              child: CommonRefreshIndicator(
                 onRefresh: () => provider.getBlogDetailData(slug: slug),
                 child: Stack(
                   children: [

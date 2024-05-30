@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WebSocketService {
@@ -9,7 +9,8 @@ class WebSocketService {
   final String ticker;
 
   late WebSocketChannel _channel;
-  Function(String price, String change, String percentage)? onDataReceived;
+  Function(String price, num change, num percentage, String changeString)?
+      onDataReceived;
 
   WebSocketService({
     required this.url,
@@ -42,10 +43,11 @@ class WebSocketService {
           _channel.sink.add(jsonEncode({
             'event': 'subscribe',
             'data': {
-              'ticker': ticker,
+              'ticker': ticker.toLowerCase(),
             },
           }));
         } else if (data['event'] == 'subscribe' && data['status'] == 200) {
+          Utils().showLog(data);
           debugPrint("Subscription successful for ticker: $ticker");
         } else {
           debugPrint("data in else case $data");
@@ -54,16 +56,22 @@ class WebSocketService {
           if (data.containsKey('ap') && data['ap'] != null) {
             final ap = data['ap'];
             final bp = data['bp'];
-            final change = (ap - bp).toStringAsFixed(3);
-            final percentage = ((ap - bp) / ap * 100).toStringAsFixed(3);
+            final change = (ap - bp);
+            final changeString = change.toStringAsFixed(3);
+
+            final percentage = ((ap - bp) / ap * 100);
             debugPrint("AP $ap");
             debugPrint("BP $bp");
             debugPrint("Change $change");
             debugPrint("Percentage $percentage");
 
             if (onDataReceived != null) {
-              onDataReceived!('\$${ap.toString()}', '\$${change.toString()}',
-                  '($percentage%)');
+              onDataReceived!(
+                '\$${ap.toString()}',
+                change,
+                percentage,
+                "\$$changeString",
+              );
             }
           }
         }

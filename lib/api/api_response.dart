@@ -60,6 +60,7 @@ class Extra {
   final String? subTitle;
   final int? totalPages;
   final String? apiKeyFMP;
+  String? loginText, signUpText;
 
   Extra({
     this.search,
@@ -71,6 +72,8 @@ class Extra {
     this.notificationCount,
     this.text,
     this.title,
+    this.loginText,
+    this.signUpText,
     this.txnSize,
     this.totalPages,
     this.userAlert,
@@ -91,6 +94,8 @@ class Extra {
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         title: json["title"],
         subTitle: json["sub_title"],
+        loginText: json["login_text"],
+        signUpText: json["signup_text"],
         totalPages: json["total_pages"],
         exchangeShortName: json["exchange_short_name"] == null
             ? []
@@ -134,7 +139,8 @@ class Extra {
         "user_alerts": userAlert,
         "title": title,
         "sub_title": subTitle,
-        "total_pages": totalPages,
+        "login_text"
+            "total_pages": totalPages,
         "exchange_short_name": exchangeShortName == null
             ? []
             : List<dynamic>.from(exchangeShortName!.map((x) => x.toJson())),
@@ -157,6 +163,8 @@ class Extra {
         "in_app_notification": inAppMsg?.toJson(),
         "android_build_version": androidBuildVersion,
         "android_build_code": androidBuildCode,
+        "login_text": loginText,
+        "signup_text": signUpText,
         "ios_build_version": iOSBuildVersion,
         "ios_build_code": iOSBuildCode,
         "app_update_title": appUpdateTitle,

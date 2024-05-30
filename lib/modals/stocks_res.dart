@@ -43,9 +43,9 @@ class AllStocks {
   final String? name;
   final String? exchangeShortName;
   final String? image;
-  final double? change;
+  final num? change;
   final String? price;
-  final double? changesPercentage;
+  final num? changesPercentage;
   final String? dayHigh;
   final String? dayLow;
   final String? open;
