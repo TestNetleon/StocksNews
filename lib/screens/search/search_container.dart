@@ -37,7 +37,6 @@ class SearchContainer extends StatelessWidget {
               changesPercentage: topSearch.changes,
               image: topSearch.image,
               displayChange: "",
-              displayPercentage: 0,
             );
             return StocksItem(
               top: top,

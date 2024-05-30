@@ -88,10 +88,10 @@ class StocksItem extends StatelessWidget {
                     children: [
                       TextSpan(
                         text:
-                            "${top.displayChange} (${top.displayPercentage.toCurrency()}%)",
+                            "${top.displayChange} (${top.changesPercentage.toCurrency()}%)",
                         style: stylePTSansRegular(
                           fontSize: 11,
-                          color: top.displayPercentage > 0
+                          color: top.changesPercentage > 0
                               ? Colors.green
                               : Colors.red,
                         ),

@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import '../../utils/colors.dart';
+import '../../widgets/custom/refresh_indicator.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/analysis.dart';
 import 'widgets/companyBrief/container.dart';
@@ -76,7 +77,7 @@ class StockDetailsBase extends StatelessWidget {
                       ? provider.graphError
                       : null,
               showPreparingText: true,
-              child: RefreshIndicator(
+              child: CommonRefreshIndicator(
                 onRefresh: () async {
                   provider.getStockDetails(symbol: symbol);
                   provider.getStockGraphData(symbol: symbol);

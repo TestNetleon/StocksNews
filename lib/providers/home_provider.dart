@@ -91,9 +91,17 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   StockInFocusRes? get focusRes => _focusRes;
 
   bool notificationSeen = false;
+  String? loginTxt;
+  String? signUpTxt;
 
   int totalAlerts = 0;
   int totalWatchList = 0;
+
+  void setSheetText({String? loginText, String? signupText}) {
+    loginTxt = loginText;
+    signUpTxt = signupText;
+    notifyListeners();
+  }
 
   void setTotalsAlerts(int value) {
     totalAlerts = value;

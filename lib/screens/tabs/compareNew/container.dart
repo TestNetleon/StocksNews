@@ -12,6 +12,7 @@ import '../../../providers/search_provider.dart';
 import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
+import '../../../widgets/custom/refresh_indicator.dart';
 import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../compareStocks/widgets/pop_up.dart';
@@ -135,7 +136,7 @@ class CompareStockNewContainer extends StatelessWidget {
   }
 
   Widget _onRefresh(child, CompareStocksProvider provider) {
-    return RefreshIndicator(
+    return CommonRefreshIndicator(
         child: child,
         onRefresh: () async {
           provider.getCompareStock();

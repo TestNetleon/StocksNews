@@ -13,6 +13,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
@@ -74,7 +75,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                             onRefresh: _getRedditTwitterData,
                           ),
                         )
-                      : RefreshIndicator(
+                      : CommonRefreshIndicator(
                           onRefresh: () async {
                             await _getRedditTwitterData();
                           },

@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
@@ -107,7 +108,7 @@ class IndicesData extends StatelessWidget {
       onRefresh: () {
         provider.getIndicesData(showProgress: false);
       },
-      child: RefreshIndicator(
+      child: CommonRefreshIndicator(
         onRefresh: () async {
           provider.getIndicesData(showProgress: false);
         },

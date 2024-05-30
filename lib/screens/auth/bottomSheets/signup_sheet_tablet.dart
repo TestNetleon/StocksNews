@@ -378,7 +378,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
                             ),
                           ),
                           const SpacerVertical(),
-                          const AgreeConditions(),
+                          const AgreeConditions(
+                            fromLogin: false,
+                          ),
                         ],
                       ),
                       const SpacerVertical(height: 15),
