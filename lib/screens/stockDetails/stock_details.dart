@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 
 class StockDetails extends StatefulWidget {
   final String symbol;
@@ -66,7 +69,7 @@ class _StockDetailsState extends State<StockDetails> {
 
     // _webSocketService.connect();
     _webSocket = CryptoWebSocket(
-      apiKey: '5e5573e6668fcd5327987ab3b912ef3e',
+      apiKey: apiKeyFMP,
       ticker: widget.symbol,
     );
   }
