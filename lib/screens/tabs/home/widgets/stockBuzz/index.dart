@@ -26,7 +26,7 @@ class StockInBuzz extends StatelessWidget {
             //   title: "Stock In Buzz",
             //   // subTitle: "Dynamic description for Stocks in Buss.",
             // ),
-            // const SpacerVertical(height: 5),
+            SpacerVertical(height: isPhone ? 0 : 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

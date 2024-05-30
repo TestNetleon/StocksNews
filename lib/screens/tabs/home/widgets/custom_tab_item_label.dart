@@ -115,12 +115,12 @@ class CustomTabLabelNews extends StatelessWidget {
   }
 }
 
-class CutomTabHome extends StatelessWidget {
+class CustomTabHome extends StatelessWidget {
   final bool selected;
   final String label;
   final Function() onTap;
 
-  const CutomTabHome({
+  const CustomTabHome({
     super.key,
     required this.label,
     required this.selected,

@@ -30,6 +30,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        SpacerVertical(height: isPhone ? 0 : 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -73,7 +74,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
             //     });
             //   },
             // ),
-            CutomTabHome(
+            CustomTabHome(
               label: "Trending",
               selected: _selectedIndex == 0,
               onTap: () {
@@ -82,7 +83,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                 });
               },
             ),
-            CutomTabHome(
+            CustomTabHome(
               label: "Top Gainers",
               selected: _selectedIndex == 1,
               onTap: () {
@@ -91,7 +92,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                 });
               },
             ),
-            CutomTabHome(
+            CustomTabHome(
               label: "Top Losers",
               selected: _selectedIndex == 2,
               onTap: () {

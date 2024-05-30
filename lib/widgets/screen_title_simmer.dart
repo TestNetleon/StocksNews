@@ -33,7 +33,7 @@ class ScreenTitleSimmer extends StatelessWidget {
               visible: titleVisible,
               child: GradientContainerWidget(
                 height: 20,
-                borderRadius: 2.sp,
+                borderRadius: 2,
                 width: 100.sp,
               ),
             ),
@@ -41,7 +41,7 @@ class ScreenTitleSimmer extends StatelessWidget {
               visible: optionalWidget != null,
               child: GradientContainerWidget(
                 height: 30,
-                borderRadius: 2.sp,
+                borderRadius: 2,
                 width: 30.sp,
               ),
             ),
@@ -49,7 +49,8 @@ class ScreenTitleSimmer extends StatelessWidget {
         ),
         SpacerVertical(height: 5.sp),
         Padding(
-          padding: EdgeInsets.only(left: leftPaddingSubTitle.sp),
+          // padding: EdgeInsets.only(left: leftPaddingSubTitle.sp) ,
+          padding: EdgeInsets.only(left: 0),
           child: GradientContainerWidget(
             height: twoLineSubTitle == true ? 40 : 18,
             borderRadius: 2.sp,

@@ -48,7 +48,7 @@ class HomeMyAlerts extends StatelessWidget {
             Visibility(
               // visible: provider.userAlert != 0,
               child: Padding(
-                padding: const EdgeInsets.only(top: 0),
+                padding: EdgeInsets.only(top: isPhone ? 0 : 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -84,7 +84,7 @@ class HomeMyAlerts extends StatelessWidget {
             ),
             const SpacerVertical(height: 10),
             SizedBox(
-              height: 150.sp,
+              height: 160,
               child: ListView.separated(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
