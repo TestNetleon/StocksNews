@@ -109,15 +109,17 @@ class StocksItemTrending extends StatelessWidget {
                   children: [
                     TextSpan(
                       text:
-                          "${trending.change > 0 ? '+\$' : '-\$'}${trending.change.toCurrency().replaceAll("-", "")}",
+                          "${trending.displayChange} (${trending.displayPercentage.toCurrency()}%)",
                       style: stylePTSansRegular(
-                        fontSize: 12,
-                        color: trending.change > 0 ? Colors.green : Colors.red,
+                        fontSize: 11,
+                        color: trending.displayPercentage > 0
+                            ? Colors.green
+                            : Colors.red,
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           )
         ],

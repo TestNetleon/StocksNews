@@ -29,6 +29,7 @@ enum SocialTrendingType { now, recently, cap }
 bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
+String apiKeyFMP = "";
 //------------------------------------------------
 
 class Images {

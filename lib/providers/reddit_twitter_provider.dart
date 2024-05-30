@@ -37,8 +37,8 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
 
   List<RtButtons> buttons = [
     RtButtons(name: "X, Reddit", value: "FinnHub"),
-    RtButtons(name: "StockTwits", value: "Historical"),
-    RtButtons(name: "Both", value: "both"),
+    // RtButtons(name: "StockTwits", value: "Historical"),
+    // RtButtons(name: "Both", value: "both"),
   ];
 
   List<RtShowTheLast> showTheLast = [

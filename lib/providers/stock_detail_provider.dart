@@ -67,8 +67,13 @@ class StockDetailProvider with ChangeNotifier {
   List<StockDetailGraph>? _extraData;
   List<StockDetailGraph>? get extraData => _extraData;
   final AudioPlayer _player = AudioPlayer();
+
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
+
+  int _graphIndex = 0;
+  int get graphIndex => _graphIndex;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -427,9 +432,12 @@ class StockDetailProvider with ChangeNotifier {
     showProgress = false,
     bool clearData = true,
     String? from,
+    index,
   }) async {
     if (clearData) _graphChart = null;
+
     _statusGraph = Status.loading;
+    _graphIndex = index ?? 0;
     notifyListeners();
 
     // String newInterval = interval == "1M"

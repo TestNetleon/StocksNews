@@ -50,6 +50,7 @@ class AllStocks {
   final String? dayLow;
   final String? open;
   final String? previousClose;
+  final String displayChange;
 
   AllStocks({
     this.id,
@@ -60,6 +61,7 @@ class AllStocks {
     this.change,
     this.price,
     this.changesPercentage,
+    required this.displayChange,
     this.dayHigh,
     this.dayLow,
     this.open,
@@ -72,9 +74,10 @@ class AllStocks {
         name: json["name"],
         exchangeShortName: json["exchange_short_name"],
         image: json["image"],
-        change: json["change"]?.toDouble(),
+        change: json["change"],
+        displayChange: json["display_change"],
         price: json["price"],
-        changesPercentage: json["changesPercentage"]?.toDouble(),
+        changesPercentage: json["changesPercentage"],
         dayHigh: json["dayHigh"],
         dayLow: json["dayLow"],
         open: json["open"],
@@ -87,6 +90,7 @@ class AllStocks {
         "name": name,
         "exchange_short_name": exchangeShortName,
         "image": image,
+        "display_change": displayChange,
         "change": change,
         "price": price,
         "changesPercentage": changesPercentage,

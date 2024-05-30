@@ -255,6 +255,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       } else {
         _homeAlertData = null;
       }
+      apiKeyFMP = response.extra?.apiKeyFMP;
       userAlert = response.extra?.userAlert;
       _statusHomeAlert = Status.loaded;
       notifyListeners();
@@ -482,7 +483,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     try {
       ApiResponse response = await third_party_api.apiRequest(
         url:
-            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+            // "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=$apiKeyFMP",
         showProgress: false,
       );
 
@@ -501,7 +503,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       if (kDebugMode) print(e.toString());
     }
   }
-
   // -------------  End Update Chart data on HomePage ------------
 
   void _checkForNewVersion(Extra extra) async {

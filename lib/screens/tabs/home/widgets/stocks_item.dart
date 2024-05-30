@@ -74,13 +74,21 @@ class StocksItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(top.price, style: stylePTSansBold(fontSize: 14)),
-              const SpacerVertical(height: 5),
-              Text(
-                // "${gainer ? "+" : "-"}${top.changesPercentage.toCurrency()}%",
-                "${top.changesPercentage.toCurrency()}%",
-                style: stylePTSansRegular(
-                  fontSize: 12,
-                  color: top.changesPercentage > 0 ? Colors.green : Colors.red,
+              const SpacerVertical(height: 2),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text:
+                          "${top.displayChange} (${top.displayPercentage.toCurrency()}%)",
+                      style: stylePTSansRegular(
+                        fontSize: 11,
+                        color: top.displayPercentage > 0
+                            ? Colors.green
+                            : Colors.red,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

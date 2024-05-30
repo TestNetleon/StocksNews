@@ -59,6 +59,7 @@ class Extra {
   final String? title;
   final String? subTitle;
   final int? totalPages;
+  final String? apiKeyFMP;
 
   Extra({
     this.search,
@@ -81,6 +82,7 @@ class Extra {
     this.iOSBuildCode,
     this.appUpdateTitle,
     this.appUpdateMsg,
+    this.apiKeyFMP,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -124,6 +126,7 @@ class Extra {
         iOSBuildCode: json["ios_build_code"],
         appUpdateTitle: json["app_update_title"],
         appUpdateMsg: json["app_update_msg"],
+        apiKeyFMP: json["api_key"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -158,6 +161,7 @@ class Extra {
         "ios_build_code": iOSBuildCode,
         "app_update_title": appUpdateTitle,
         "app_update_msg": appUpdateMsg,
+        "api_key": apiKeyFMP,
       };
 }
 

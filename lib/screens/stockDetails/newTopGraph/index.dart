@@ -23,6 +23,16 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
 
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        _selectedIndex = context.read<StockDetailProvider>().graphIndex;
+      });
+    });
+  }
+
   // @override
   // void initState() {
   //   super.initState();
@@ -74,32 +84,37 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        _selectedIndex = index;
-                        setState(() {});
+                        setState(() {
+                          _selectedIndex = index;
+                        });
                         provider.getStockGraphData(
                           clearData: false,
-                          showProgress: false,
+                          showProgress: true,
                           symbol: provider.data?.keyStats?.symbol ?? "",
                           range: range?[_selectedIndex] ?? "1H",
+                          index: _selectedIndex,
                         );
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.sp, vertical: 5.sp),
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: _selectedIndex == index
-                                    ? ThemeColors.accent
-                                    : ThemeColors.greyBorder),
-                            borderRadius: BorderRadius.circular(5.sp)),
+                          border: Border.all(
+                            color: _selectedIndex == index
+                                ? ThemeColors.accent
+                                : ThemeColors.greyBorder,
+                          ),
+                          borderRadius: BorderRadius.circular(5.sp),
+                        ),
                         child: Center(
                           child: Text(
                             "${range?[index]}",
                             style: styleGeorgiaRegular(
-                                fontSize: 13,
-                                color: _selectedIndex == index
-                                    ? ThemeColors.accent
-                                    : ThemeColors.white),
+                              fontSize: 13,
+                              color: _selectedIndex == index
+                                  ? ThemeColors.accent
+                                  : ThemeColors.white,
+                            ),
                           ),
                         ),
                       ),

@@ -19,6 +19,8 @@ class RedditTwitterDays extends StatelessWidget {
       height:
           isPhone ? constraints.maxWidth * 0.1 : constraints.maxWidth * 0.06,
       child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return InkWell(

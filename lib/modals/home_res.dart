@@ -418,44 +418,52 @@
 class HomeTrendingData {
   final String symbol;
   final String name;
-  final num rank;
+  // final num rank;
   final num sentiment;
-  final num lastSentiment;
+  // final num lastSentiment;
   final String price;
-  final num change;
+  // final num change;
   final String image;
+  final String displayChange;
+  final num displayPercentage;
 
   HomeTrendingData({
     required this.symbol,
     required this.name,
-    required this.rank,
+    // required this.rank,
     required this.sentiment,
-    required this.lastSentiment,
+    // required this.lastSentiment,
     required this.price,
-    required this.change,
+    // required this.change,
     required this.image,
+    required this.displayChange,
+    required this.displayPercentage,
   });
 
   factory HomeTrendingData.fromJson(Map<String, dynamic> json) =>
       HomeTrendingData(
         symbol: json["symbol"],
         name: json["name"],
-        rank: json["rank"],
-        sentiment: json["sentiment"]?.toDouble(),
-        lastSentiment: json["last_sentiment"],
+        // rank: json["rank"],
+        sentiment: json["sentiment"],
+        // lastSentiment: json["last_sentiment"],
         price: json["price"],
-        change: json["change"]?.toDouble(),
+        displayChange: json["display_change"],
+        displayPercentage: json["changesPercentage"],
+        // change: json["change"]?.toDouble(),
         image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "name": name,
-        "rank": rank,
+        // "rank": rank,
         "sentiment": sentiment,
-        "last_sentiment": lastSentiment,
+        "changesPercentage": displayPercentage,
+        "display_change": displayChange,
+        // "last_sentiment": lastSentiment,
         "price": price,
-        "change": change,
+        // "change": change,
         "image": image,
       };
 }

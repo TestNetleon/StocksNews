@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_res.dart';
@@ -92,58 +93,81 @@ class StocksItemAll extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      maxLines: 2,
-                      "${data?.price}",
-                      overflow: TextOverflow.ellipsis,
-                      style: stylePTSansRegular(
-                          fontSize: 12, color: ThemeColors.white),
-                    ),
+                    // Text(
+                    //   maxLines: 2,
+                    //   "${data?.price}",
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: stylePTSansRegular(
+                    //       fontSize: 12, color: ThemeColors.white),
+                    // ),
+                    Text(data?.price ?? "",
+                        style: stylePTSansBold(fontSize: 14)),
+                    const SpacerVertical(height: 2),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    (data?.change ?? 0) > 0
-                                        ? Icons.arrow_upward
-                                        : Icons.arrow_downward,
-                                    size: 15,
-                                    color: (data?.change ?? 0) > 0
-                                        ? ThemeColors.accent
+                          child: RichText(
+                            textAlign: TextAlign.end,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      "${data?.displayChange} (${data?.changesPercentage?.toCurrency()}%)",
+                                  style: stylePTSansRegular(
+                                    fontSize: 11,
+                                    color: (data?.changesPercentage ?? 0) > 0
+                                        ? Colors.green
                                         : Colors.red,
                                   ),
-                                  Flexible(
-                                    child: Text(
-                                      maxLines: 2,
-                                      "${data?.change?.toCurrency()} (${data?.changesPercentage?.toCurrency()}%)",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: (data?.change ?? 0) > 0
-                                            ? ThemeColors.accent
-                                            : Colors.red,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Text(
-                              //   maxLines: 2,
-                              //   "${data?.changesPercentage?.toCurrency()}%",
-                              //   style: stylePTSansRegular(
-                              //     fontSize: 12,
-                              //     color: (data?.changesPercentage ?? 0) > 0
-                              //         ? ThemeColors.accent
-                              //         : Colors.red,
-                              //   ),
-                              // ),
-                            ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        // Flexible(
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       // Row(
+                        //       //   children: [
+                        //       //     Icon(
+                        //       //       (data?.change ?? 0) > 0
+                        //       //           ? Icons.arrow_upward
+                        //       //           : Icons.arrow_downward,
+                        //       //       size: 15,
+                        //       //       color: (data?.change ?? 0) > 0
+                        //       //           ? ThemeColors.accent
+                        //       //           : Colors.red,
+                        //       //     ),
+                        //       //     Flexible(
+                        //       //       child: Text(
+                        //       //         maxLines: 2,
+                        //       //         "${data?.change?.toCurrency()} (${data?.changesPercentage?.toCurrency()}%)",
+                        //       //         style: stylePTSansRegular(
+                        //       //           fontSize: 12,
+                        //       //           color: (data?.change ?? 0) > 0
+                        //       //               ? ThemeColors.accent
+                        //       //               : Colors.red,
+                        //       //         ),
+                        //       //       ),
+                        //       //     ),
+                        //       //   ],
+                        //       // ),
+
+                        //       // Text(
+                        //       //   maxLines: 2,
+                        //       //   "${data?.changesPercentage?.toCurrency()}%",
+                        //       //   style: stylePTSansRegular(
+                        //       //     fontSize: 12,
+                        //       //     color: (data?.changesPercentage ?? 0) > 0
+                        //       //         ? ThemeColors.accent
+                        //       //         : Colors.red,
+                        //       //   ),
+                        //       // ),
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           decoration: const BoxDecoration(
                             color: ThemeColors.accent,

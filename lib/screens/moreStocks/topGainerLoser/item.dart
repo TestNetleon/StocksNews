@@ -94,20 +94,22 @@ class GainerLoserItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    data.price ?? "",
-                    style: stylePTSansBold(fontSize: 14),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    "${data.changesPercentage?.toCurrency()}%",
-                    style: stylePTSansRegular(
-                      fontSize: 12,
-                      color: (data.changesPercentage ?? 0) > 0
-                          ? ThemeColors.accent
-                          : Colors.red,
+                  Text(data.price ?? "", style: stylePTSansBold(fontSize: 14)),
+                  const SpacerVertical(height: 2),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "${data.displayChange} (${data.displayPercentage.toCurrency()}%)",
+                          style: stylePTSansRegular(
+                            fontSize: 11,
+                            color: data.displayPercentage > 0
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

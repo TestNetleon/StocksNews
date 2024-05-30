@@ -40,13 +40,17 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: tabs.length, vsync: this);
+    _selectedIndex = context.read<StockDetailProvider>().selectedIndex;
+    _controller = TabController(
+      length: tabs.length,
+      vsync: this,
+      initialIndex: _selectedIndex,
+    );
   }
 
   @override
   void dispose() {
     _controller?.dispose();
-
     super.dispose();
   }
 

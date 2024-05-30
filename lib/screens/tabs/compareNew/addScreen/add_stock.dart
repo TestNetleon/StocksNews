@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
@@ -26,14 +25,12 @@ class CompareNewAddScreen extends StatelessWidget {
         });
   }
 
-  _onTap(BuildContext context) {
+  _onTap(BuildContext context) async {
     CompareStocksProvider provider = context.read<CompareStocksProvider>();
 
     for (var i = 0; i < provider.compareData.length; i++) {
-      Timer(Duration(seconds: i == 0 ? 0 : 2), () {
-        provider.addStockItem(
-            fromNewAdd: true, symbol: provider.compareData[i].symbol);
-      });
+      await provider.addStockItem(
+          fromNewAdd: true, symbol: provider.compareData[i].symbol);
     }
   }
 
@@ -68,12 +65,7 @@ class CompareNewAddScreen extends StatelessWidget {
                     ),
                     onPressed: provider.compareData.length == 2
                         ? () {
-                            _showPopUp(context);
-                            // easeOutBuilder(
-                            //   duration: const Duration(milliseconds: 100),
-                            //   context,
-                            //   child: const CompareNewSearch(),
-                            // );
+                            // _showPopUp(context);
                           }
                         : null,
                     child: Row(
@@ -101,7 +93,7 @@ class CompareNewAddScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeColors.accent),
-                    onPressed: () {
+                    onPressed: () async {
                       if (provider.compareData.length <= 1) {
                         popUpAlert(
                           message: "At least add 2 Stocks to compare.",
@@ -109,7 +101,7 @@ class CompareNewAddScreen extends StatelessWidget {
                           icon: Images.alertPopGIF,
                         );
                       } else {
-                        _onTap(context);
+                        await _onTap(context);
                       }
                     },
                     child: Text(

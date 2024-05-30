@@ -102,10 +102,11 @@ Route createRoute(Widget widget) {
 }
 
 easeOutBuilder(BuildContext context,
-    {required Widget child, Duration? duration}) {
+    {required Widget child, Duration? duration, bool opaque = true}) {
   Navigator.push(
     context,
     PageRouteBuilder(
+      opaque: opaque,
       transitionDuration: duration ?? const Duration(milliseconds: 400),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
