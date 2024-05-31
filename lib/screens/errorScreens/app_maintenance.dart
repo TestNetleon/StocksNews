@@ -130,9 +130,7 @@ class _ServerErrorState extends State<AppMaintenance> {
               onPressed: () async {
                 isShowingError = false;
                 Navigator.pop(context);
-                if (widget.onClick != null && !isInternetError) {
-                  widget.onClick();
-                } else if (isInternetError) {
+                if (isInternetError) {
                   bool isNet = await _checkForInternet();
                   if (isNet) {
                     Navigator.popUntil(context, (route) => route.isFirst);

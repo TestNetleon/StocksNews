@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -67,6 +68,8 @@ class _InsiderDetailGraphState extends State<InsiderDetailGraph> {
 
     String sellString = chartSale?.map((sell) => "'$sell'").join(',') ?? '';
 
+    double fontSize = isPhone ? 20 : 15;
+
     return '''
       <!DOCTYPE html>
       <html>
@@ -111,7 +114,7 @@ class _InsiderDetailGraphState extends State<InsiderDetailGraph> {
           categories: [$categoriesString],
           labels: {
             style: {
-              fontSize: '20px' 
+              fontSize: '${fontSize}px' 
             }
           }
         },
@@ -152,6 +155,8 @@ class _InsiderDetailGraphState extends State<InsiderDetailGraph> {
     String sellString =
         chartSaleInsider?.map((sell) => "'$sell'").join(',') ?? '';
 
+    double fontSize = isPhone ? 20 : 15;
+
     return '''
       <!DOCTYPE html>
       <html>
@@ -160,64 +165,64 @@ class _InsiderDetailGraphState extends State<InsiderDetailGraph> {
     </style>
       </head>
       <body>
-    <div id="chart" style="height: 500px; font-size: 16px;"></div>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-    var height = "500";
-    var options = {
-    legend: {
-        fontSize: '20px',
-    },
-        series: [{
-          name: 'Purchase',
-          data: [$purchaseString]
-        }, {
-          name: 'Sell',
-          data: [$sellString]
-        }],
-        chart: {
-          height: height,
-          type: 'area',
-          zoom: {
-              enabled: false
-          },
-          toolbar: {
-              show: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        xaxis: {
-          type: 'date',
-          categories: [$categoriesString],
-          labels: {
-            style: {
-              fontSize: '20px' 
-            }
-          }
-        },
-        tooltip: {
-          x: {
-            format: 'MM/dd/yy',
-          },
-          style: {
-            fontSize: '20px'  
-          }
-        },
-        colors: ['green', 'red'],
-        theme: {
-          mode: 'dark',
-          palette: 'palette7', 
-        },
-    };
+      <div id="chart" style="height: 500px; font-size: 16px;"></div>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script>
+            var height = "500";
+            var options = {
+                legend: {
+                    fontSize: '20px',
+                },
+                series: [{
+                  name: 'Purchase',
+                  data: [$purchaseString]
+                }, {
+                  name: 'Sell',
+                  data: [$sellString]
+                }],
+                chart: {
+                  height: height,
+                  type: 'area',
+                  zoom: {
+                      enabled: false
+                  },
+                  toolbar: {
+                      show: false
+                  }
+                },
+                dataLabels: {
+                  enabled: false
+                },
+                stroke: {
+                  curve: 'smooth'
+                },
+                xaxis: {
+                  type: 'date',
+                  categories: [$categoriesString],
+                  labels: {
+                    style: {
+                      fontSize: '${fontSize}px' 
+                    }
+                  }
+                },
+                tooltip: {
+                  x: {
+                    format: 'MM/dd/yy',
+                  },
+                  style: {
+                    fontSize: '20px'  
+                  }
+                },
+                colors: ['green', 'red'],
+                theme: {
+                  mode: 'dark',
+                  palette: 'palette7', 
+                },
+            };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
-</script>
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+        </script>
       </body>
       </html>
     ''';
@@ -226,7 +231,7 @@ class _InsiderDetailGraphState extends State<InsiderDetailGraph> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ScreenUtil().screenWidth / 2,
+      height: ScreenUtil().screenWidth / (isPhone ? 2 : 1.5),
       width: ScreenUtil().screenWidth,
       child: WebViewWidget(controller: controller),
     );
