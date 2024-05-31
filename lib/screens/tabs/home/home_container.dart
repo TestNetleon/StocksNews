@@ -54,12 +54,11 @@ class HomeContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    (provider.homeTrendingRes?.popular.isEmpty == true ||
-                                provider.homeTrendingRes?.popular == null ||
-                                provider.homeTrendingRes == null) &&
-                            provider.statusTrending != Status.loading
-                        ? const SizedBox()
-                        : const StockInBuzz(),
+                    if (!((provider.homeTrendingRes?.popular.isEmpty == true ||
+                            provider.homeTrendingRes?.popular == null ||
+                            provider.homeTrendingRes == null) &&
+                        provider.statusTrending != Status.loading))
+                      const StockInBuzz(),
                     const HomeMyAlerts(),
                     HomePartialLoading(
                       placeHolder: const HomeScreenSimmer(),
