@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -128,9 +130,7 @@ class _ServerErrorState extends State<AppMaintenance> {
               onPressed: () async {
                 isShowingError = false;
                 Navigator.pop(context);
-                if (widget.onClick != null && !isInternetError) {
-                  widget.onClick();
-                } else if (isInternetError) {
+                if (isInternetError) {
                   bool isNet = await _checkForInternet();
                   if (isNet) {
                     Navigator.popUntil(context, (route) => route.isFirst);
