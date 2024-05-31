@@ -352,7 +352,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  void onRefresh() async {
+  Future onRefresh() async {
     await getNewsData(id: _tabs?[selectedIndex].id, refreshing: true);
   }
 

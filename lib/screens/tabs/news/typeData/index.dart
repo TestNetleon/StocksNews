@@ -33,7 +33,11 @@ class NewsTypeData extends StatelessWidget {
       placeholder: const NewsScreenSimmer(),
       onRefresh: () => provider.onRefresh(),
       child: RefreshControl(
-        onRefresh: () async => provider.onRefresh(),
+        onRefresh: () async => await provider.onRefresh(),
+        // onRefresh: () async {
+        //   log("message");
+        // },
+
         canLoadMore:
             (newsHolder?.currentPage ?? 1) < (newsHolder?.data?.lastPage ?? 1),
         onLoadMore: () async => provider.onLoadMore(),

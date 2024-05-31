@@ -86,10 +86,11 @@ class MostBearish extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // const SpacerHorizontal(width: 40),
+                      const SpacerHorizontal(width: 10),
                       Expanded(
-                        flex: 2,
+                        // flex: 2,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AutoSizeText(
                               maxLines: 1,
@@ -111,7 +112,6 @@ class MostBearish extends StatelessWidget {
                         ),
                       ),
                       const SpacerHorizontal(width: 15),
-
                       Column(
                         children: [
                           AutoSizeText(

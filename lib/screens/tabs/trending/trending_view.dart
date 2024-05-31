@@ -188,7 +188,7 @@ class _TrendingViewState extends State<TrendingView> {
                 if (index == 0) {
                   return CommonRefreshIndicator(
                     onRefresh: () async {
-                      provider.getMostBullish();
+                      await provider.getMostBullish();
                     },
                     child: TrendingTabWidget(
                       index: 0,
@@ -215,7 +215,7 @@ class _TrendingViewState extends State<TrendingView> {
                 if (index == 1) {
                   return CommonRefreshIndicator(
                     onRefresh: () async {
-                      provider.getMostBearish();
+                      await provider.getMostBearish();
                     },
                     child: TrendingTabWidget(
                       index: 1,

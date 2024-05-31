@@ -41,7 +41,7 @@ class HomeContainer extends StatelessWidget {
     }
     return CommonRefreshIndicator(
       onRefresh: () async {
-        provider.refreshData(null);
+        await provider.refreshData(null);
       },
       child: DefaultTextStyle(
         style: styleGeorgiaBold(),
