@@ -14,53 +14,9 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 class FilterInsiders extends StatelessWidget {
   const FilterInsiders({super.key});
-//
 
-  // void showTransactionPicker(BuildContext context) {
-  //   InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FilterDropDownCupertino(
-  //         children: (provider.transactionType ?? []).map((item) {
-  //           return Center(
-  //             child: Text(
-  //               item.value ?? "", // Replace with the text you want to display
-  //               style: const TextStyle(
-  //                 fontSize: 20,
-  //               ), // Adjust font size as needed
-  //             ),
-  //           );
-  //         }).toList(),
-  //         onSelected: (index) {
-  //           provider.onChangeTransactionType(
-  //             selectedItem: provider.transactionType?[index],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
   void showTransactionPicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    // showPlatformBottomSheet(
-    //   showClose: false,
-    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-    //   context: context,
-    //   content: FilterListing(
-    //     items: List.generate(provider.transactionType?.length ?? 0, (index) {
-    //       return KeyValueElement(
-    //           key: provider.transactionType?[index].key,
-    //           value: provider.transactionType?[index].value);
-    //     }),
-    //     onSelected: (index) {
-    //       provider.onChangeTransactionType(
-    //         selectedItem: provider.transactionType?[index],
-    //       );
-    //     },
-    //   ),
-    // );
-
     BaseBottomSheets().gradientBottomSheet(
       child: FilterListing(
         items: List.generate(provider.transactionType?.length ?? 0, (index) {
@@ -77,50 +33,8 @@ class FilterInsiders extends StatelessWidget {
     );
   }
 
-  // void showMarketCapPicker(BuildContext context) {
-  //   InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FilterDropDownCupertino(
-  //         children: (provider.cap ?? []).map((item) {
-  //           return Center(
-  //             child: Text(
-  //               // Replace with the text you want to display
-  //               item.value ?? "",
-  //               style: const TextStyle(fontSize: 20),
-  //               // Adjust font size as needed
-  //             ),
-  //           );
-  //         }).toList(),
-  //         onSelected: (index) {
-  //           provider.onChangeCap(
-  //             selectedItem: provider.cap?[index],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-
   void showMarketCapPicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    // showPlatformBottomSheet(
-    //   showClose: false,
-    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-    //   context: context,
-    //   content: FilterListing(
-    //     items: List.generate(provider.cap?.length ?? 0, (index) {
-    //       return KeyValueElement(
-    //           key: provider.cap?[index].key, value: provider.cap?[index].value);
-    //     }),
-    //     onSelected: (index) {
-    //       provider.onChangeCap(
-    //         selectedItem: provider.cap?[index],
-    //       );
-    //     },
-    //   ),
-    // );
 
     BaseBottomSheets().gradientBottomSheet(
       child: FilterListing(
@@ -137,77 +51,9 @@ class FilterInsiders extends StatelessWidget {
     );
   }
 
-  // void showSectorPicker(BuildContext context) {
-  //   InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FilterDropDownCupertino(
-  //         children: (provider.sector ?? []).map((item) {
-  //           return Center(
-  //             child: Text(
-  //               // Replace with the text you want to display
-  //               item.value ?? "",
-  //               style: const TextStyle(fontSize: 20),
-  //               // Adjust font size as needed
-  //             ),
-  //           );
-  //         }).toList(),
-  //         onSelected: (index) {
-  //           provider.onChangeSector(
-  //             selectedItem: provider.sector?[index],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-
-  // void showSectorPicker(BuildContext context) {
-  //   InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FilterDropDownCupertino(
-  //         children: (provider.sector ?? []).map((item) {
-  //           return Center(
-  //             child: Text(
-  //               // Replace with the text you want to display
-  //               item.value ?? "",
-  //               style: const TextStyle(fontSize: 20),
-  //               // Adjust font size as needed
-  //             ),
-  //           );
-  //         }).toList(),
-  //         onSelected: (index) {
-  //           provider.onChangeSector(
-  //             selectedItem: provider.sector?[index],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-
   void showSectorPicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    // showPlatformBottomSheet(
-    //   showClose: false,
-    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-    //   context: context,
-    //   content: FilterListing(
-    //     items: List.generate(provider.sector?.length ?? 0, (index) {
-    //       return KeyValueElement(
-    //           key: provider.sector?[index].key,
-    //           value: provider.sector?[index].value);
-    //     }),
-    //     onSelected: (index) {
-    //       provider.onChangeSector(
-    //         selectedItem: provider.sector?[index],
-    //       );
-    //     },
-    //   ),
-    // );
+
     BaseBottomSheets().gradientBottomSheet(
       child: FilterListing(
         paddingLeft: ScreenUtil().screenWidth * 0.26,
@@ -226,50 +72,9 @@ class FilterInsiders extends StatelessWidget {
     );
   }
 
-  // void showTransactionSizePicker(BuildContext context) {
-  //   InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return FilterDropDownCupertino(
-  //         children: (provider.txnSize ?? []).map((item) {
-  //           return Center(
-  //             child: Text(
-  //               // Replace with the text you want to display
-  //               item.value ?? "",
-  //               style: const TextStyle(fontSize: 20),
-  //               // Adjust font size as needed
-  //             ),
-  //           );
-  //         }).toList(),
-  //         onSelected: (index) {
-  //           provider.onChangeTransactionSize(
-  //             selectedItem: provider.txnSize?[index],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
   void showTransactionSizePicker(BuildContext context) {
     InsiderTradingProvider provider = context.read<InsiderTradingProvider>();
-    // showPlatformBottomSheet(
-    //   showClose: false,
-    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-    //   context: context,
-    //   content: FilterListing(
-    //     items: List.generate(provider.txnSize?.length ?? 0, (index) {
-    //       return KeyValueElement(
-    //           key: provider.txnSize?[index].key,
-    //           value: provider.txnSize?[index].value);
-    //     }),
-    //     onSelected: (index) {
-    //       provider.onChangeTransactionSize(
-    //         selectedItem: provider.txnSize?[index],
-    //       );
-    //     },
-    //   ),
-    // );
+
     BaseBottomSheets().gradientBottomSheet(
       child: FilterListing(
         items: List.generate(provider.txnSize?.length ?? 0, (index) {
@@ -336,7 +141,9 @@ class FilterInsiders extends StatelessWidget {
                     color: ThemeColors.background,
                   ),
                   editable: false,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                  ),
                   controller: provider.type,
                 ),
               ],
