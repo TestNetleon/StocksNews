@@ -569,7 +569,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                     color: ThemeColors.greyText,
                                     fontSize: 13,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
