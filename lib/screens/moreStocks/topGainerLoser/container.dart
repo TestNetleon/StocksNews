@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/screens/allFeatured/widget/all_featured_simmer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 
@@ -73,6 +74,9 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             ),
             Expanded(
               child: BaseUiContainer(
+                placeholder: const AllFeatureScreenSimmer(
+                  dataVisibleLastIndex: true,
+                ),
                 error: provider.error,
                 hasData: data != null && data.isNotEmpty,
                 isLoading: provider.isLoading,

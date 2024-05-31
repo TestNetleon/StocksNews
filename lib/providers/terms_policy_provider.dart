@@ -46,7 +46,15 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.infoPage,
         request: request,
-        showProgress: true,
+        showProgress: type == PolicyType.contactUs
+            ? false
+            : type == PolicyType.aboutUs
+                ? false
+                : type == PolicyType.privacy
+                    ? false
+                    : type == PolicyType.tC
+                        ? false
+                        : false,
       );
 
       if (response.status) {

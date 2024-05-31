@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/whatWeDo/widget/whatWeDoSimmer/what_we_do_sc_simmer.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
@@ -86,6 +87,7 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                               provider.weDoData[provider.data?[index].slug];
 
                           return BaseUiContainer(
+                            placeholder: const WhatWeDoScreenSimmer(),
                             // isLoading: provider.isLoadingData
                             // hasData:
                             //     !provider.isLoadingData && provider.res != null,
@@ -107,7 +109,8 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                                 child: HtmlWidget(
                                   onLoadingBuilder:
                                       (context, element, loadingProgress) {
-                                    return const ProgressDialog();
+                                    return const WhatWeDoScreenSimmer();
+                                    // return const ProgressDialog();
                                   },
                                   whatWeDoHolder?.data?.page.description ?? "",
                                   textStyle: stylePTSansRegular(height: 1.5),
