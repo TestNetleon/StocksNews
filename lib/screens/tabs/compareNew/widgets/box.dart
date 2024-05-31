@@ -48,14 +48,13 @@ class CompareNewBox extends StatelessWidget {
                 ),
                 const SpacerHorizontal(width: 10),
                 // Icon(open ? Icons.arrow_drop_up : Icons.arrow_drop_down),
-
                 TweenAnimationBuilder(
-                  tween: Tween<double>(begin: 0, end: open ? 1.0 : 0.0),
+                  tween: Tween<double>(begin: 0, end: open ? 1 : 0.0),
                   duration: const Duration(milliseconds: 300),
                   builder: (context, double value, child) {
                     return Transform.rotate(
                       angle: value * 3.14159,
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.center,
                       child: const Icon(
                         Icons.arrow_drop_down,
                       ),
