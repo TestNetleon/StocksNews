@@ -50,7 +50,7 @@ class ScreenTitleSimmer extends StatelessWidget {
         SpacerVertical(height: 5.sp),
         Padding(
           // padding: EdgeInsets.only(left: leftPaddingSubTitle.sp) ,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: GradientContainerWidget(
             height: twoLineSubTitle == true ? 40 : 18,
             borderRadius: 2.sp,
