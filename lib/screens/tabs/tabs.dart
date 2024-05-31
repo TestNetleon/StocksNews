@@ -26,7 +26,6 @@ import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
 import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
@@ -82,9 +81,10 @@ class _TabsState extends State<Tabs> {
         }
       },
       child: BaseContainer(
-        appBar: const AppBarHome(
+        appBar: AppBarHome(
           canSearch: true,
           showTrailing: true,
+          isHome: _selectedIndex == 0,
         ),
         drawer: const BaseDrawer(),
         body: Screens.screens.elementAt(_selectedIndex),
