@@ -4,6 +4,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -34,6 +37,7 @@ class AppMaintenance extends StatefulWidget {
 
 class _ServerErrorState extends State<AppMaintenance> {
   bool isInternetError = false;
+  bool checking = false;
 
   @override
   void initState() {
@@ -55,6 +59,23 @@ class _ServerErrorState extends State<AppMaintenance> {
       });
     }
     return isInternetError;
+  }
+
+  Future _checkForMaintenanceMode() async {
+    setState(() {
+      checking = true;
+    });
+    bool isUnderMaintenance =
+        await context.read<HomeProvider>().checkMaintenanceMode() ?? true;
+
+    setState(() {
+      checking = false;
+    });
+
+    if (!isUnderMaintenance) {
+      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushReplacementNamed(context, Tabs.path);
+    }
   }
 
   @override
@@ -126,25 +147,30 @@ class _ServerErrorState extends State<AppMaintenance> {
                 ),
               ),
             const SpacerVertical(),
-            ThemeButtonSmall(
-              onPressed: () async {
-                isShowingError = false;
-                Navigator.pop(context);
-                if (isInternetError) {
-                  bool isNet = await _checkForInternet();
-                  if (isNet) {
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                    Navigator.pushReplacementNamed(context, Tabs.path);
-                  }
-                } else {
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                  Navigator.pushReplacementNamed(context, Tabs.path);
-                }
-              },
-              showArrow: false,
-              text: "Refresh",
-              fontBold: true,
-            ),
+            checking
+                ? Image.asset(
+                    Images.progressGIF,
+                    width: 100,
+                    height: 100,
+                  )
+                : ThemeButtonSmall(
+                    onPressed: () async {
+                      if (isInternetError) {
+                        bool isNet = await _checkForInternet();
+                        if (isNet) {
+                          // Navigator.pop(context);
+                          isShowingError = false;
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.pushReplacementNamed(context, Tabs.path);
+                        }
+                      } else {
+                        _checkForMaintenanceMode();
+                      }
+                    },
+                    showArrow: false,
+                    text: "Refresh",
+                    fontBold: true,
+                  ),
           ],
         ),
       ),

@@ -148,17 +148,19 @@ class _ServerErrorState extends State<ServerError> {
             const SpacerVertical(),
             ThemeButtonSmall(
               onPressed: () async {
-                isShowingError = false;
-                Navigator.pop(context);
                 if (widget.onClick != null && !isInternetError) {
+                  isShowingError = false;
+                  Navigator.pop(context);
                   widget.onClick();
                 } else if (isInternetError) {
                   bool isNet = await _checkForInternet();
                   if (isNet) {
+                    isShowingError = false;
                     Navigator.popUntil(context, (route) => route.isFirst);
                     Navigator.pushReplacementNamed(context, Tabs.path);
                   }
                 } else {
+                  isShowingError = false;
                   Navigator.popUntil(context, (route) => route.isFirst);
                   Navigator.pushReplacementNamed(context, Tabs.path);
                 }
