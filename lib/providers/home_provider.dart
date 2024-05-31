@@ -419,6 +419,39 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
+  Future checkMaintenanceMode() async {
+    _statusSlider = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    String? fcmToken = await Preference.getFcmToken();
+    bool granted = await Permission.notification.isGranted;
+
+    try {
+      fcmToken ??= await FirebaseMessaging.instance.getToken();
+      Map request = {
+        "token": provider.user?.token ?? "",
+        "fcm_token": fcmToken ?? "",
+        "fcm_permission": "$granted",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeSlider,
+        request: request,
+        showProgress: false,
+        onRefresh: () => refreshData(null),
+      );
+      _statusSlider = Status.loaded;
+      notifyListeners();
+      if (response.status) {
+        if ((response.extra as Extra).maintenance == null) return false;
+      }
+      return false;
+    } catch (e) {
+      _statusSlider = Status.loaded;
+      notifyListeners();
+      return false;
+    }
+  }
+
   // -------------  Start Update Chart data on HomePage ------------
   int retryCount = 0;
   void _updateChartData() async {

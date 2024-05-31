@@ -103,7 +103,8 @@ Future<ApiResponse> apiRequest({
         // TO show in app messages only, comment this if want to hide
         // OR
         // DO NOT REMOVE THIS
-        if (maintenanceDialog != null) {
+        if (maintenanceDialog != null && !isShowingError) {
+          isShowingError = true;
           showMaintenanceDialog(
             title: maintenanceDialog.title,
             description: maintenanceDialog.description,
