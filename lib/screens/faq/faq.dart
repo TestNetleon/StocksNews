@@ -10,6 +10,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
+import '../../widgets/custom/refresh_indicator.dart';
+
 class FAQBase extends StatefulWidget {
   const FAQBase({super.key});
 //
@@ -60,7 +62,7 @@ class _FAQBaseState extends State<FAQBase> {
     return provider.isLoading
         ? const FaqScreenSimmer()
         : provider.data != null
-            ? RefreshIndicator(
+            ? CommonRefreshIndicator(
                 onRefresh: () => provider.getFAQs(),
                 child: const FAQContainer())
             : ErrorDisplayWidget(

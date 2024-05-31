@@ -230,8 +230,8 @@ class CompareStocksProvider extends ChangeNotifier {
 
   //================================================NEW COMPARE =========================================
 
-  List<CompareStockRes>? _companyNEW = [];
-  List<CompareStockRes>? get companyNEW => _companyNEW;
+  // List<CompareStockRes>? _companyNEW = [];
+  // List<CompareStockRes>? get companyNEW => _companyNEW;
 
   List<String> tabs = [
     "Overview",

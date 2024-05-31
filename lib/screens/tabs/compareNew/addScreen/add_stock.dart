@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/searchTicker/index.dart';
-import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/pop_up.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../../providers/search_provider.dart';
 import '../../../../route/my_app.dart';
 import '../../../../utils/constants.dart';
 import 'header.dart';

@@ -395,7 +395,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
                       ),
                     ),
                     const SpacerVertical(),
-                    const AgreeConditions(),
+                    const AgreeConditions(
+                      fromLogin: false,
+                    ),
 
                     // Visibility(
                     //     visible: Platform.isIOS,

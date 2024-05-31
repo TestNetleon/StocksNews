@@ -35,12 +35,12 @@ class LowPriceStocksProvider extends ChangeNotifier {
   String? title;
   String? subTitle;
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
-  bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
+  // bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   int _page = 1;
-  int _pageDown = 1;
+  // int _pageDown = 1;
   Extra? _extraUp;
   Extra? get extraUp => _extraUp;
-  Extra? _extraDown;
+  // Extra? _extraDown;
 
   void setStatus(status) {
     _status = status;

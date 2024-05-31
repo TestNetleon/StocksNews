@@ -149,7 +149,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
-          message: "Something went wrong",
+          message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
       setStatus(Status.loaded);
@@ -219,7 +219,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
-          message: "Something went wrong",
+          message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
       setStatus(Status.loaded);
@@ -285,7 +285,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
-          message: "Something went wrong",
+          message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
       setStatus(Status.loaded);
@@ -332,7 +332,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
-          message: "Something went wrong",
+          message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
       setStatus(Status.loaded);
@@ -411,7 +411,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
-          message: "Something went wrong",
+          message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
       setStatus(Status.loaded);
@@ -483,7 +483,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
-          message: "Something went wrong",
+          message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
       setStatus(Status.loaded);

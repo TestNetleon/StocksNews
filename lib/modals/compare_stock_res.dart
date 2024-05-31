@@ -17,9 +17,9 @@ class CompareStockRes {
   final String name;
   final String image;
   final String price;
-  final double changes;
+  final num changes;
   final String displayChange;
-  final double changesPercentage;
+  final num changesPercentage;
   final String dayLow;
   final String dayHigh;
   final String yearLow;

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
@@ -8,13 +6,12 @@ import 'package:stocks_news_new/screens/tabs/compareNew/earnings/earnings.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
-import '../../../providers/search_provider.dart';
 import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
+import '../../../widgets/custom/refresh_indicator.dart';
 import '../../../widgets/spacer_horizontal.dart';
 import '../../../widgets/spacer_vertical.dart';
-import '../compareStocks/widgets/pop_up.dart';
 import 'analysis/analysis.dart';
 import 'dividends/dividends.dart';
 import 'searchTicker/index.dart';
@@ -73,7 +70,7 @@ class CompareStockNewContainer extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(color: ThemeColors.accent),
+                        side: const BorderSide(color: ThemeColors.accent),
                         borderRadius: BorderRadius.circular(5)),
                     padding: const EdgeInsets.only(left: 10, right: 15),
                     backgroundColor: ThemeColors.transparent),
@@ -135,7 +132,7 @@ class CompareStockNewContainer extends StatelessWidget {
   }
 
   Widget _onRefresh(child, CompareStocksProvider provider) {
-    return RefreshIndicator(
+    return CommonRefreshIndicator(
         child: child,
         onRefresh: () async {
           provider.getCompareStock();

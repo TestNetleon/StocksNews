@@ -111,7 +111,8 @@ class Const {
   // static const String dateFormat = "yyyy-MM-dd";
   // static const String dateFormatDisplay = "dd-MMM-yyyy";
   // static const String submit = "Submit";
-  static const String errSomethingWrong = "Something went wrong.";
+  static const String errSomethingWrong =
+      "Oops! We encountered a hiccup. Please try again.";
   static const String errNoRecord = "No record found.";
   static const String noInternet = "Please check your internet connection.";
   static const String timedOut = "Request timed out.";

@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 
 class RefreshControl extends StatefulWidget {
   const RefreshControl({
@@ -67,6 +69,8 @@ class _RefreshControlState extends State<RefreshControl> {
       ),
       controller: _refreshController,
       onRefresh: () async {
+        final player = AudioPlayer();
+        player.play(AssetSource(AudioFiles.refresh), volume: 0.1);
         await widget.onRefresh();
         _refreshController.refreshCompleted();
       },

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -128,7 +129,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     return provider.isLoading
         ? const NewsDetailScreenSimmer()
         : provider.data != null && !provider.isLoading
-            ? RefreshIndicator(
+            ? CommonRefreshIndicator(
                 onRefresh: () async {
                   provider.getNewsDetailData(
                     slug: widget.slug,

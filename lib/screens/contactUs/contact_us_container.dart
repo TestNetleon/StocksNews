@@ -7,6 +7,8 @@ import 'package:stocks_news_new/screens/contactUs/widgets/bullet_point.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../widgets/custom/refresh_indicator.dart';
+
 class ContactUsContainer extends StatelessWidget {
   const ContactUsContainer({super.key});
   @override
@@ -16,7 +18,7 @@ class ContactUsContainer extends StatelessWidget {
       return const SizedBox();
     }
 //
-    return RefreshIndicator(
+    return CommonRefreshIndicator(
       onRefresh: () async {
         provider.getTermsPolicy(type: PolicyType.contactUs);
       },

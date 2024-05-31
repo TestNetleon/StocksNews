@@ -136,7 +136,6 @@ class Top {
   final String image;
   final bool gained;
   final String displayChange;
-  final num displayPercentage;
 
   Top({
     required this.name,
@@ -146,7 +145,6 @@ class Top {
     required this.image,
     this.gained = false,
     required this.displayChange,
-    required this.displayPercentage,
   });
 
   factory Top.fromJson(Map<String, dynamic> json) => Top(
@@ -154,7 +152,6 @@ class Top {
         symbol: json["symbol"],
         price: json["price"],
         displayChange: json["display_change"],
-        displayPercentage: json["changesPercentage"],
         changesPercentage: json["changesPercentage"],
         image: json["image"],
       );
@@ -163,7 +160,6 @@ class Top {
         "name": name,
         "symbol": symbol,
         "price": price,
-        "changesPercentage": displayPercentage,
         "display_change": displayChange,
         "changesPercentage": changesPercentage,
         "image": image,

@@ -32,11 +32,11 @@ class EarningsProvider extends ChangeNotifier with AuthProviderBase {
 
   // ************* GAP DOWN **************** //
   String? _errorDown;
-  int _pageDown = 1;
+  // int _pageDown = 1;
   // int? _totalPageDown;
-  Extra? _extraDown;
+  // Extra? _extraDown;
 
-  bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
+  // bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
 

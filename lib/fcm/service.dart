@@ -385,6 +385,10 @@ Future saveFCMapi({String? value, String? address}) async {
     );
 
     if (response.status) {
+      navigatorKey.currentContext!.read<HomeProvider>().setSheetText(
+            loginText: response.extra?.loginText,
+            signupText: response.extra?.signUpText,
+          );
       Preference.saveFcmToken(value);
       Preference.saveLocation(address);
     } else {

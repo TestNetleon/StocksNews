@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
@@ -88,10 +87,10 @@ class StocksItem extends StatelessWidget {
                     children: [
                       TextSpan(
                         text:
-                            "${top.displayChange} (${top.displayPercentage.toCurrency()}%)",
+                            "${top.displayChange} (${top.changesPercentage.toCurrency()}%)",
                         style: stylePTSansRegular(
                           fontSize: 11,
-                          color: top.displayPercentage > 0
+                          color: top.changesPercentage > 0
                               ? Colors.green
                               : Colors.red,
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -52,7 +53,11 @@ class HomeContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const StockInBuzz(),
+                    Visibility(
+                        visible: !provider.isLoadingTrending &&
+                            provider.homeTrendingRes?.popular.isNotEmpty ==
+                                true,
+                        child: const StockInBuzz()),
                     const HomeMyAlerts(),
                     HomePartialLoading(
                       placeHolder: const HomeScreenSimmer(),

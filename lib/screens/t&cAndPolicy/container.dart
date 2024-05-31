@@ -12,6 +12,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -106,7 +107,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
 
   Widget _getWidget(TermsAndPolicyProvider provider) {
     return Expanded(
-      child: RefreshIndicator(
+      child: CommonRefreshIndicator(
         onRefresh: () => provider.getTermsPolicy(type: widget.policyType),
         child: provider.isLoading
             ? const TermsAndConditionsScreenSimmer()

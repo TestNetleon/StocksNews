@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_tren
 import 'package:stocks_news_new/screens/tabs/trending/widgets/simmer_effect_trending/trending_stories_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 import '../../trendingIndustries/index.dart';
@@ -185,7 +186,7 @@ class _TrendingViewState extends State<TrendingView> {
               provider.tabs.length,
               (index) {
                 if (index == 0) {
-                  return RefreshIndicator(
+                  return CommonRefreshIndicator(
                     onRefresh: () async {
                       provider.getMostBullish();
                     },
@@ -212,7 +213,7 @@ class _TrendingViewState extends State<TrendingView> {
                 }
 
                 if (index == 1) {
-                  return RefreshIndicator(
+                  return CommonRefreshIndicator(
                     onRefresh: () async {
                       provider.getMostBearish();
                     },
@@ -240,7 +241,7 @@ class _TrendingViewState extends State<TrendingView> {
                 }
 
                 if (index == 2) {
-                  return RefreshIndicator(
+                  return CommonRefreshIndicator(
                     onRefresh: () async {
                       provider.getTrendingStories();
                     },
@@ -268,7 +269,7 @@ class _TrendingViewState extends State<TrendingView> {
                 }
 
                 if (index == 3) {
-                  return RefreshIndicator(
+                  return CommonRefreshIndicator(
                     onRefresh: () async {
                       provider.getTrendingStories();
                     },

@@ -11,6 +11,7 @@ import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/pop_up.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/add_company_container.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -79,7 +80,7 @@ class CompareStocksContainer extends StatelessWidget {
         error: provider.error,
         errorDispCommon: true,
         showPreparingText: true,
-        child: RefreshIndicator(
+        child: CommonRefreshIndicator(
           onRefresh: () => provider.getCompareStock(),
           child: userProvider.user == null
               ? Column(

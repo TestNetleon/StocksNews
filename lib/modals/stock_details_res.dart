@@ -161,10 +161,10 @@ class CompanyInfo {
 class KeyStats {
   final String symbol;
   final String name;
-  final String? price;
+  String? price;
   final num? priceWithoutCur;
-  final num? changesPercentage;
-  final num? change;
+  num? changesPercentage;
+  num? change;
   final String? dayLow;
   final String? dayHigh;
   final String? yearHigh;
@@ -187,7 +187,7 @@ class KeyStats {
   final num? timestamp;
   final String? text;
   final String? forecastText;
-  final String? changeWithCur;
+  String? changeWithCur;
   final num? priceValue;
   final num? dayLowValue;
   final num? dayHighValue;
