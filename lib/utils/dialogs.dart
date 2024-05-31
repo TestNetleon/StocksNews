@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/errorScreens/app_maintenance.dart';
 import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -376,6 +377,61 @@ void showErrorFullScreenDialog({errorCode, onClick, log}) {
                         errorCode: errorCode,
                         onClick: onClick,
                         log: log,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 200),
+    barrierDismissible: false,
+    barrierLabel: '',
+    context: navigatorKey.currentContext!,
+    pageBuilder: (context, animation1, animation2) {
+      return const PopScope(
+        canPop: false,
+        child: SizedBox(),
+      );
+    },
+  );
+}
+
+void showMaintenanceDialog({title, description, onClick, log}) {
+  showGeneralDialog(
+    barrierColor: Colors.black.withOpacity(0.5),
+    transitionBuilder: (context, a1, a2, widget) {
+      return SafeArea(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  Dialog(
+                    insetPadding: EdgeInsets.zero,
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    child: PopScope(
+                      canPop: false,
+                      child: AppMaintenance(
+                        onClick: onClick,
+                        log: log,
+                        title: title,
+                        description: description,
                       ),
                     ),
                   ),

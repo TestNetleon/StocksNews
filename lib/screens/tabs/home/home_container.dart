@@ -54,10 +54,10 @@ class HomeContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Visibility(
-                        visible: !provider.isLoadingTrending &&
-                            provider.homeTrendingRes?.popular.isNotEmpty ==
-                                true,
-                        child: const StockInBuzz()),
+                      visible: !provider.isLoadingTrending &&
+                          provider.homeTrendingRes?.popular.isNotEmpty == true,
+                      child: const StockInBuzz(),
+                    ),
                     const HomeMyAlerts(),
                     HomePartialLoading(
                       placeHolder: const HomeScreenSimmer(),

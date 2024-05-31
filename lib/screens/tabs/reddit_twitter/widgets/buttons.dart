@@ -5,7 +5,6 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 class RedditTwitterButtons extends StatelessWidget {
   final BoxConstraints constraints;
