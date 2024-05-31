@@ -89,7 +89,7 @@ class WebSocketService {
     debugPrint('Unsubscribing from ticker: $ticker...');
     var unsubscribeData = {
       "event": "unsubscribe",
-      "data": {"ticker": ticker}
+      "data": {"ticker": ticker.toLowerCase()}
     };
     _channel.sink.add(jsonEncode(unsubscribeData));
     debugPrint('Un subscription data sent: $unsubscribeData');

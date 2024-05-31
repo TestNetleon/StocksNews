@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
-
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -34,7 +33,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<MoreStocksProvider>()
-          .getGainersLosers(showProgress: true, type: widget.type.name);
+          .getGainersLosers(showProgress: false, type: widget.type.name);
 
       String title = widget.type == StocksType.gainers
           ? "Today’s Top Gainers"
@@ -78,10 +77,10 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 isLoading: provider.isLoading,
                 errorDispCommon: true,
                 onRefresh: () => provider.getGainersLosers(
-                    showProgress: true, type: widget.type.name),
+                    showProgress: false, type: widget.type.name),
                 child: RefreshControl(
                   onRefresh: () async => provider.getGainersLosers(
-                      showProgress: true, type: widget.type.name),
+                      showProgress: false, type: widget.type.name),
                   canLoadMore: provider.canLoadMore,
                   onLoadMore: () async => provider.getGainersLosers(
                       loadMore: true, type: widget.type.name),

@@ -16,7 +16,7 @@ class CommonRefreshIndicator extends StatelessWidget {
   Future<void> _handleRefresh() async {
     try {
       final player = AudioPlayer();
-      player.play(AssetSource(AudioFiles.refresh), volume: 0.1);
+      player.play(AssetSource(AudioFiles.refresh), volume: 0.18);
     } catch (e) {
       debugPrint("$e");
     }

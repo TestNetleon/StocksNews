@@ -187,6 +187,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         onRefresh: () => refreshData(null),
       );
       if (response.status) {
+        loginTxt = response.data?.loginText;
+        signUpTxt = response.data?.signUpText;
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;

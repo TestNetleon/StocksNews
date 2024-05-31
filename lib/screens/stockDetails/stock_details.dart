@@ -7,7 +7,6 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -64,11 +63,6 @@ class _StockDetailsState extends State<StockDetails> {
         tickerPercentage = percentage;
         tickerChangeString = changeString;
       });
-
-      Utils().showLog("ticker price $tickerPrice");
-      Utils().showLog("ticker percentage $tickerPercentage");
-      Utils().showLog("ticker change $tickerChange");
-
       context.read<StockDetailProvider>().updateSocket(
             change: tickerChange,
             changePercentage: tickerPercentage,
