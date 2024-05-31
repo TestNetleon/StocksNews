@@ -22,7 +22,7 @@ class SectorIndustryList extends StatelessWidget {
 
     return RefreshControl(
       onRefresh: () async => provider.getStateIndustry(
-          name: name, stockStates: stockStates, showProgress: true),
+          name: name, stockStates: stockStates, showProgress: false),
       canLoadMore: provider.canLoadMore,
       onLoadMore: () async => provider.getStateIndustry(
           name: name, stockStates: stockStates, loadMore: true),
