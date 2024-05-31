@@ -7,14 +7,14 @@ String insiderTradingResToJson(InsiderTradingRes data) =>
     json.encode(data.toJson());
 
 class InsiderTradingRes {
-  final num currentPage;
+  // final num currentPage;
   final List<InsiderTradingData> data;
   final num lastPage;
   final String perPage;
   final num total;
 //
   InsiderTradingRes({
-    required this.currentPage,
+    // required this.currentPage,
     required this.data,
     required this.lastPage,
     required this.perPage,
@@ -23,7 +23,7 @@ class InsiderTradingRes {
 
   factory InsiderTradingRes.fromJson(Map<String, dynamic> json) =>
       InsiderTradingRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: List<InsiderTradingData>.from(
             json["data"].map((x) => InsiderTradingData.fromJson(x))),
         lastPage: json["last_page"],
@@ -32,7 +32,7 @@ class InsiderTradingRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "last_page": lastPage,
         "per_page": perPage,

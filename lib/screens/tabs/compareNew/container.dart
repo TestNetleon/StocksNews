@@ -69,11 +69,13 @@ class CompareStockNewContainer extends StatelessWidget {
                   provider.compareData.length < 3,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: ThemeColors.accent),
-                        borderRadius: BorderRadius.circular(5)),
-                    padding: const EdgeInsets.only(left: 10, right: 15),
-                    backgroundColor: ThemeColors.transparent),
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: ThemeColors.accent),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: const EdgeInsets.only(left: 10, right: 15),
+                  backgroundColor: ThemeColors.transparent,
+                ),
                 onPressed: () {
                   // _showPopUp(context);
                   _showBottomSheet();
@@ -101,8 +103,10 @@ class CompareStockNewContainer extends StatelessWidget {
             child: CustomTabContainerNEW(
               physics: const NeverScrollableScrollPhysics(),
               scrollable: true,
-              tabsPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+              tabsPadding: const EdgeInsets.symmetric(
+                horizontal: 0,
+                vertical: 10,
+              ),
               tabs: List.generate(
                   provider.tabs.length, (index) => provider.tabs[index]),
               widgets: List.generate(

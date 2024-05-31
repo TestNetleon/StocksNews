@@ -77,6 +77,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
   bool get isLoadingStockFocus => _statusFocus == Status.loading;
 
+  bool popularPresent = true;
+
   int? userAlert;
 
   int _openIndex = -1;
@@ -187,8 +189,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         onRefresh: () => refreshData(null),
       );
       if (response.status) {
-        loginTxt = response.data?.loginText;
-        signUpTxt = response.data?.signUpText;
+        loginTxt = response.extra.loginText;
+        signUpTxt = response.extra?.signUpText;
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
@@ -211,7 +213,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future getHomeTrendingData() async {
     topLoading = true;
-
+    // popularPresent = true;
     _statusTrending = Status.loading;
     notifyListeners();
 
@@ -228,6 +230,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
+        // if (_homeTrendingRes?.popular.isEmpty == true ||
+        //     _homeTrendingRes?.popular == null ||
+        //     _homeTrendingRes == null) {
+        //   popularPresent = false;
+        //   notifyListeners();
+        // }
       } else {
         _homeTrendingRes = null;
         _error = "Data not found";
@@ -435,6 +443,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   DateTime? _lastMarketOpen;
+
   Future _getLastMarketOpen() async {
     ApiResponse response = await third_party_api.apiRequest(
       url: "quote/AAPL?apikey=5e5573e6668fcd5327987ab3b912ef3e",
@@ -519,7 +528,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     // String versionName = packageInfo.version;
     String buildCode = packageInfo.buildNumber;
-
     if (Platform.isAndroid &&
         (extra.androidBuildCode ?? 0) > int.parse(buildCode)) {
       showAppUpdateDialog(extra);

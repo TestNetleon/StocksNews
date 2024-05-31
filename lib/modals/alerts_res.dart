@@ -9,18 +9,18 @@ AlertRes alertResFromJson(String str) => AlertRes.fromJson(json.decode(str));
 String alertResToJson(AlertRes data) => json.encode(data.toJson());
 
 class AlertRes {
-  final num currentPage;
+  // final num currentPage;
   final List<AlertData>? data;
   final num lastPage;
 
   AlertRes({
-    required this.currentPage,
+    // required this.currentPage,
     required this.data,
     required this.lastPage,
   });
 
   factory AlertRes.fromJson(Map<String, dynamic> json) => AlertRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: json["data"] == null
             ? []
             : List<AlertData>.from(
@@ -29,7 +29,7 @@ class AlertRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),

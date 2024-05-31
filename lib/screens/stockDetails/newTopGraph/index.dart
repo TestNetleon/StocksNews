@@ -1,11 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class NewTopGraphIndex extends StatefulWidget {
@@ -19,7 +18,7 @@ class NewTopGraphIndex extends StatefulWidget {
 class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
   // List<String>? interval = ['1M', '5M', '15M', '30M', '1H', '4H'];
 
-  List<String>? range = ['1H', '1D', '1W', '1M', '1Y'];
+  List<String> range = ['1H', '1D', '1W', '1M', '1Y'];
 
   int _selectedIndex = 0;
 
@@ -75,56 +74,92 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
               ),
             ),
             const SpacerVertical(height: 5),
-            SizedBox(
-              height: 28.sp,
-              child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                        provider.getStockGraphData(
-                          clearData: false,
-                          showProgress: true,
-                          symbol: provider.data?.keyStats?.symbol ?? "",
-                          range: range?[_selectedIndex] ?? "1H",
-                          index: _selectedIndex,
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 15.sp, vertical: 5.sp),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: _selectedIndex == index
-                                ? ThemeColors.accent
-                                : ThemeColors.greyBorder,
-                          ),
-                          borderRadius: BorderRadius.circular(5.sp),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "${range?[index]}",
-                            style: styleGeorgiaRegular(
-                              fontSize: 13,
-                              color: _selectedIndex == index
-                                  ? ThemeColors.accent
-                                  : ThemeColors.white,
-                            ),
-                          ),
-                        ),
+
+            // SizedBox(
+            //   height: 28.sp,
+            //   child: ListView.separated(
+            //       physics: const BouncingScrollPhysics(),
+            //       scrollDirection: Axis.horizontal,
+            //       shrinkWrap: true,
+            //       itemBuilder: (context, index) {
+            //         return GestureDetector(
+            //           onTap: () {
+            //             setState(() {
+            //               _selectedIndex = index;
+            //             });
+            //             provider.getStockGraphData(
+            //               clearData: false,
+            //               showProgress: true,
+            //               symbol: provider.data?.keyStats?.symbol ?? "",
+            //               range: range?[_selectedIndex] ?? "1H",
+            //               index: _selectedIndex,
+            //             );
+            //           },
+            //           child: Container(
+            //             padding: EdgeInsets.symmetric(
+            //                 horizontal: 15.sp, vertical: 5.sp),
+            //             decoration: BoxDecoration(
+            //               border: Border.all(
+            //                 color: _selectedIndex == index
+            //                     ? ThemeColors.accent
+            //                     : ThemeColors.greyBorder,
+            //               ),
+            //               borderRadius: BorderRadius.circular(5.sp),
+            //             ),
+            //             child: Center(
+            //               child: Text(
+            //                 "${range?[index]}",
+            //                 style: styleGeorgiaRegular(
+            //                   fontSize: 13,
+            //                   color: _selectedIndex == index
+            //                       ? ThemeColors.accent
+            //                       : ThemeColors.white,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //       separatorBuilder: (context, index) {
+            //         return const SpacerHorizontal(width: 15);
+            //       },
+            //       itemCount: range?.length ?? 0),
+            // ),
+
+            CupertinoSlidingSegmentedControl<int>(
+              groupValue: _selectedIndex,
+              thumbColor: ThemeColors.greyBorder.withOpacity(0.4),
+              onValueChanged: (int? index) {
+                setState(() {
+                  _selectedIndex = index!;
+                });
+                provider.getStockGraphData(
+                  clearData: false,
+                  showProgress: true,
+                  symbol: provider.data?.keyStats?.symbol ?? "",
+                  range: range[_selectedIndex],
+                  index: _selectedIndex,
+                );
+              },
+              children: {
+                for (int i = 0; i < range.length; i++)
+                  i: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    child: Text(
+                      range[i],
+                      style: styleGeorgiaRegular(
+                        fontSize: 13,
+                        color: _selectedIndex == i
+                            ? ThemeColors.accent
+                            : ThemeColors.white,
+                        // color: ThemeColors.white,
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SpacerHorizontal(width: 15);
-                  },
-                  itemCount: range?.length ?? 0),
+                    ),
+                  ),
+              },
             ),
+
             // const SpacerVertical(height: 10),
 
             // StockDetailTopDisclaimer(),

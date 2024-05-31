@@ -93,12 +93,24 @@ Future<ApiResponse> apiRequest({
       }
 
       ApiResponse res = ApiResponse.fromJson(jsonDecode(response.body));
-      // TO show in app messages only, comment this if want to hide
-      // OR
-      // DO NOT REMOVE THIS
-      if (res.extra is Extra) {
+      if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
-        checkForInAppMessage(inAppMsg);
+        MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
+        // MaintenanceDialog? maintenanceDialog = MaintenanceDialog(
+        //     title: "App Under Maintenance",
+        //     description:
+        //         "Scheduled maintenance in progress.\nWe'll be back soon. Thanks for your support!");
+        // TO show in app messages only, comment this if want to hide
+        // OR
+        // DO NOT REMOVE THIS
+        if (maintenanceDialog != null) {
+          showMaintenanceDialog(
+            title: maintenanceDialog.title,
+            description: maintenanceDialog.description,
+          );
+        } else if (inAppMsg != null) {
+          checkForInAppMessage(inAppMsg);
+        }
       }
 
       return res;

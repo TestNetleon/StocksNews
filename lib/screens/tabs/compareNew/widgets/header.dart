@@ -107,9 +107,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
-import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/pop_up.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -207,7 +205,6 @@ class CompareNewHeader extends StatelessWidget {
                           )
                         : BorderSide.none,
           )),
-          width: ScreenUtil().screenWidth * 0.3,
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -284,7 +281,6 @@ class CompareNewHeader extends StatelessWidget {
                   )
                 : BorderSide.none,
           )),
-          width: ScreenUtil().screenWidth * 0.3,
           child: Stack(
             alignment: Alignment.center,
             children: [

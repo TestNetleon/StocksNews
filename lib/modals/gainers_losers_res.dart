@@ -12,19 +12,19 @@ String gainersLosersResToJson(GainersLosersRes data) =>
 
 //
 class GainersLosersRes {
-  final int currentPage;
+  // final int currentPage;
   final List<GainersLosersDataRes>? data;
   final int lastPage;
 
   GainersLosersRes({
-    required this.currentPage,
+    // required this.currentPage,
     this.data,
     required this.lastPage,
   });
 
   factory GainersLosersRes.fromJson(Map<String, dynamic> json) =>
       GainersLosersRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: json["data"] == null
             ? []
             : List<GainersLosersDataRes>.from(
@@ -33,7 +33,7 @@ class GainersLosersRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),

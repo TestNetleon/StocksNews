@@ -450,9 +450,7 @@ class _FooterListState extends State<FooterList> {
                                           text:
                                               "${company[index - 1].changesPercentage.toCurrency()}%"),
                                       _textItem(
-                                        text: company[index - 1]
-                                            .changes
-                                            .toCurrency(),
+                                        text: company[index - 1].displayChange,
                                       ),
                                       _textItem(
                                           text: company[index - 1].dayLow),

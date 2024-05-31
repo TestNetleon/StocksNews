@@ -6,25 +6,25 @@ WatchlistRes watchlistResFromJson(String str) =>
 String watchlistResToJson(WatchlistRes data) => json.encode(data.toJson());
 
 class WatchlistRes {
-  final num currentPage;
+  // final num currentPage;
   final List<WatchlistData> data;
   final num lastPage;
 
   WatchlistRes({
-    required this.currentPage,
+    // required this.currentPage,
     required this.data,
     required this.lastPage,
   });
 //
   factory WatchlistRes.fromJson(Map<String, dynamic> json) => WatchlistRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: List<WatchlistData>.from(
             json["data"].map((x) => WatchlistData.fromJson(x))),
         lastPage: json["last_page"],
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "last_page": lastPage,
       };

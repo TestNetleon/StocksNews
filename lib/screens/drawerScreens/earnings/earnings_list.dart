@@ -51,7 +51,7 @@ class _EarningsListState extends State<EarningsList> {
             if (provider.data == null || provider.data!.isEmpty) {
               return const SizedBox();
             }
-            EarningsRes dataItem = provider.data![index] as EarningsRes;
+            EarningsRes dataItem = provider.data![index];
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

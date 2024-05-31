@@ -10,18 +10,18 @@ TopTrendingRes topTrendingResFromJson(String str) =>
 String topTrendingResToJson(TopTrendingRes data) => json.encode(data.toJson());
 
 class TopTrendingRes {
-  final int? currentPage;
+  // final int? currentPage;
   final List<TopTrendingDataRes>? data;
   final int? lastPage;
 //
   TopTrendingRes({
-    this.currentPage,
+    // this.currentPage,
     this.data,
     this.lastPage,
   });
 
   factory TopTrendingRes.fromJson(Map<String, dynamic> json) => TopTrendingRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: json["data"] == null
             ? []
             : List<TopTrendingDataRes>.from(
@@ -30,7 +30,7 @@ class TopTrendingRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),

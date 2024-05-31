@@ -50,6 +50,7 @@ class Extra {
   final TextRes? text;
   final int? userAlert;
   final InAppNotification? inAppMsg;
+  final MaintenanceDialog? maintenance;
   final String? androidBuildVersion;
   final int? androidBuildCode;
   final String? iOSBuildVersion;
@@ -79,6 +80,7 @@ class Extra {
     this.userAlert,
     this.subTitle,
     this.inAppMsg,
+    this.maintenance,
     this.androidBuildVersion,
     this.androidBuildCode,
     this.iOSBuildVersion,
@@ -125,6 +127,9 @@ class Extra {
         inAppMsg: json["in_app_notification"] == null
             ? null
             : InAppNotification.fromJson(json["in_app_notification"]),
+        maintenance: json["maintenance"] == null
+            ? null
+            : MaintenanceDialog.fromJson(json["maintenance"]),
         androidBuildVersion: json["android_build_version"],
         androidBuildCode: json["android_build_code"],
         iOSBuildVersion: json["ios_build_version"],
@@ -139,8 +144,7 @@ class Extra {
         "user_alerts": userAlert,
         "title": title,
         "sub_title": subTitle,
-        "login_text"
-            "total_pages": totalPages,
+        "total_pages": totalPages,
         "exchange_short_name": exchangeShortName == null
             ? []
             : List<dynamic>.from(exchangeShortName!.map((x) => x.toJson())),
@@ -161,6 +165,7 @@ class Extra {
         "notification_count": notificationCount,
         "text": text?.toJson(),
         "in_app_notification": inAppMsg?.toJson(),
+        "maintenance": maintenance?.toJson(),
         "android_build_version": androidBuildVersion,
         "android_build_code": androidBuildCode,
         "login_text": loginText,
@@ -170,6 +175,31 @@ class Extra {
         "app_update_title": appUpdateTitle,
         "app_update_msg": appUpdateMsg,
         "api_key": apiKeyFMP,
+      };
+}
+
+class MaintenanceDialog {
+  final String? title;
+  final String? description;
+  final String? image;
+
+  MaintenanceDialog({
+    this.title,
+    this.description,
+    this.image,
+  });
+
+  factory MaintenanceDialog.fromJson(Map<String, dynamic> json) =>
+      MaintenanceDialog(
+        title: json["title"],
+        description: json["description"],
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "image": image,
       };
 }
 

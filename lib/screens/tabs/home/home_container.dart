@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,11 +54,11 @@ class HomeContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Visibility(
-                        visible: !provider.isLoadingTrending &&
-                            provider.homeTrendingRes?.popular.isNotEmpty ==
-                                true,
-                        child: const StockInBuzz()),
+                    if (!((provider.homeTrendingRes?.popular.isEmpty == true ||
+                            provider.homeTrendingRes?.popular == null ||
+                            provider.homeTrendingRes == null) &&
+                        provider.statusTrending != Status.loading))
+                      const StockInBuzz(),
                     const HomeMyAlerts(),
                     HomePartialLoading(
                       placeHolder: const HomeScreenSimmer(),
