@@ -41,11 +41,12 @@ class HomeContainer extends StatelessWidget {
     }
     return CommonRefreshIndicator(
       onRefresh: () async {
-        await provider.refreshData(null);
+        provider.refreshData(null);
       },
       child: DefaultTextStyle(
         style: styleGeorgiaBold(),
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               const HomeTopNewsSlider(),

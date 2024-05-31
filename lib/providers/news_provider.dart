@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -561,6 +563,7 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
       _page++;
       setStatus(Status.loadingMore);
     } else {
+      _data = null;
       _page = 1;
       setStatus(Status.loading);
     }

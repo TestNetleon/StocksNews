@@ -21,8 +21,8 @@ class SectorScreenSimmer extends StatelessWidget {
             titleVisible: false,
           ),
           if (graphDataVisible)
-            const GradientContainerWidget(
-              height: 150,
+            GradientContainerWidget(
+              height: ScreenUtil().screenWidth / 2,
             ),
           const Expanded(child: WatchListScreenSimmer())
         ],
