@@ -442,7 +442,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _statusSlider = Status.loaded;
       notifyListeners();
       if (response.status) {
-        if ((response.extra as Extra).maintenance == null) return false;
+        if ((response.extra as Extra).maintenance != null) return true;
       }
       return false;
     } catch (e) {
