@@ -53,8 +53,8 @@ class _GradientContainerWidgetState extends State<GradientContainerWidget>
         shape: widget.shape,
         borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
         gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
           colors: [
             Color.fromARGB(255, 23, 23, 23),
             Color.fromARGB(255, 48, 48, 48),

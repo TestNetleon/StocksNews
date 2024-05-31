@@ -70,7 +70,7 @@ class _RefreshControlState extends State<RefreshControl> {
       controller: _refreshController,
       onRefresh: () async {
         final player = AudioPlayer();
-        player.play(AssetSource(AudioFiles.refresh), volume: 0.1);
+        player.play(AssetSource(AudioFiles.refresh), volume: 0.18);
         await widget.onRefresh();
         _refreshController.refreshCompleted();
       },

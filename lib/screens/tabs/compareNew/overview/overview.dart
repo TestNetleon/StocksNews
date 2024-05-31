@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/widgets/box.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
@@ -133,7 +132,7 @@ class _CompareNewOverviewState extends State<CompareNewOverview> {
                     provider.company.length,
                     (index) => CompareNewOverviewItem(
                         index: index,
-                        item: provider.company[index].changes.toCurrency()),
+                        item: provider.company[index].displayChange),
                   ),
                 ),
               ),

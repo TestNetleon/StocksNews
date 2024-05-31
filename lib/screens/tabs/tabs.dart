@@ -18,7 +18,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 // ignore: unused_import
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
-import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
+import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider.dart';
@@ -241,7 +241,7 @@ class Screens {
     const RedditTwitter(),
     // const WatchList(),
     const News(),
-    // const CompareStocks(),
-    const CompareNew(),
+    const CompareStocks(),
+    // const CompareNew(),
   ];
 }

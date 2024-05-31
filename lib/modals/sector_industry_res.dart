@@ -7,13 +7,13 @@ String sectorIndustryResToJson(SectorIndustryRes data) =>
     json.encode(data.toJson());
 
 class SectorIndustryRes {
-  final num currentPage;
+  // final num currentPage;
   final List<SectorIndustryData> data;
   final num total;
   final num lastPage;
 //
   SectorIndustryRes({
-    required this.currentPage,
+    // required this.currentPage,
     required this.data,
     required this.total,
     required this.lastPage,
@@ -21,7 +21,7 @@ class SectorIndustryRes {
 
   factory SectorIndustryRes.fromJson(Map<String, dynamic> json) =>
       SectorIndustryRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: List<SectorIndustryData>.from(
             json["data"].map((x) => SectorIndustryData.fromJson(x))),
         total: json["total"],
@@ -29,7 +29,7 @@ class SectorIndustryRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "total": total,
         "last_page": lastPage,

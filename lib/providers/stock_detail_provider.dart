@@ -251,9 +251,12 @@ class StockDetailProvider with ChangeNotifier {
           return spotIndexes.map((spotIndex) {
             return TouchedSpotIndicatorData(
               FlLine(
-                color: Colors.grey[400],
+                // color: Colors.grey[400],
+                color: spots.first.y > spots.last.y
+                    ? ThemeColors.sos
+                    : ThemeColors.accent,
                 strokeWidth: 1,
-                dashArray: [5, 5],
+                dashArray: [5, 0],
               ),
               FlDotData(
                 show: true,
@@ -266,8 +269,8 @@ class StockDetailProvider with ChangeNotifier {
         },
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
-          tooltipHorizontalOffset: 10,
-          tooltipRoundedRadius: 10.0,
+          tooltipHorizontalOffset: 0,
+          tooltipRoundedRadius: 4.0,
           showOnTopOfTheChartBoxArea: true,
           fitInsideHorizontally: true,
           fitInsideVertically: true,
@@ -276,41 +279,46 @@ class StockDetailProvider with ChangeNotifier {
               EdgeInsets.symmetric(horizontal: 10.sp, vertical: 5.sp),
           tooltipMargin: 1,
           getTooltipItems: (touchedSpots) {
+            // return touchedSpots.map(
+            //   (LineBarSpot touchedSpot) {
+            //     return LineTooltipItem(
+            //       !showDate
+            //           ? '\$${touchedSpot.y.toStringAsFixed(2)} | ${DateFormat('dd MMM, yyyy').format(reversedData[touchedSpot.x.toInt()].date)}'
+            //           : '\$${touchedSpot.y.toStringAsFixed(2)} | ${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
+            //       stylePTSansBold(color: ThemeColors.white, fontSize: 10),
+            //     );
+            //   },
+            // ).toList();
             return touchedSpots.map(
               (LineBarSpot touchedSpot) {
                 return LineTooltipItem(
-                  // children: [
-                  //   TextSpan(
-                  //     text: "\$${touchedSpot.y.toStringAsFixed(2)}",
-                  //     style: styleGeorgiaBold(
-                  //       // color: (_data?.keyStats?.previousCloseNUM ?? 0) >
-                  //       //         spots.last.y
-                  //       //     ? ThemeColors.sos
-                  //       //     : ThemeColors.accent,
-                  //       color: ThemeColors.accent,
-                  //     ),
-                  //   ),
-                  //   const TextSpan(text: "\n"), // Add a new line
-
-                  //   TextSpan(
-                  //     text:
-                  //         "Y: ${DateFormat('HH:mm').format(reversedData[touchedSpot.x.toInt()].date)}",
-                  //     style: styleGeorgiaBold(
-                  //         fontSize: 12, color: ThemeColors.background),
-                  //   ),
-                  // ],
-
-                  !showDate
-                      ? '\$${touchedSpot.y.toStringAsFixed(2)} | ${DateFormat('dd MMM, yyyy').format(reversedData[touchedSpot.x.toInt()].date)}'
-                      : '\$${touchedSpot.y.toStringAsFixed(2)} | ${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
-
+                  children: [
+                    TextSpan(
+                      text: "\$${touchedSpot.y.toStringAsFixed(2)}\n",
+                      style: stylePTSansRegular(
+                        color: ThemeColors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                    TextSpan(
+                      text: !showDate
+                          ? DateFormat('dd MMM, yyyy')
+                              .format(reversedData[touchedSpot.x.toInt()].date)
+                          : '${DateFormat('dd MMM').format(reversedData[touchedSpot.x.toInt()].date)}, ${DateFormat('h:mm a').format(reversedData[touchedSpot.x.toInt()].date)}',
+                      style: stylePTSansRegular(
+                          height: 1.5,
+                          color: ThemeColors.greyText,
+                          fontSize: 13),
+                    ),
+                  ],
+                  '',
                   stylePTSansBold(color: ThemeColors.white, fontSize: 10),
                 );
               },
             ).toList();
           },
           getTooltipColor: (touchedSpot) {
-            return Colors.transparent;
+            return const Color.fromARGB(255, 25, 25, 25);
           },
         ),
       ),

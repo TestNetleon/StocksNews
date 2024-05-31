@@ -13,7 +13,7 @@ String blogsDetailResToJson(BlogsDetailRes data) => json.encode(data.toJson());
 
 //
 class BlogsDetailRes {
-  final String id;
+  // final String id;
   final String name;
   final String description;
   final String slug;
@@ -24,7 +24,7 @@ class BlogsDetailRes {
   final String image;
 
   BlogsDetailRes({
-    required this.id,
+    // required this.id,
     required this.name,
     required this.description,
     this.authors,
@@ -36,7 +36,7 @@ class BlogsDetailRes {
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
-        id: json["_id"],
+        // id: json["_id"],
         name: json["name"],
         description: json["description"],
         slug: json["slug"],
@@ -55,7 +55,7 @@ class BlogsDetailRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
+        // "_id": id,
         "name": name,
         "description": description,
         "slug": slug,

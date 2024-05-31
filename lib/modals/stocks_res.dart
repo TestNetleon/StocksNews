@@ -9,18 +9,18 @@ StocksRes stocksResFromJson(String str) => StocksRes.fromJson(json.decode(str));
 String stocksResToJson(StocksRes data) => json.encode(data.toJson());
 
 class StocksRes {
-  final int currentPage;
+  // final int currentPage;
   final List<AllStocks>? data;
   final int lastPage;
 //
   StocksRes({
-    required this.currentPage,
+    // required this.currentPage,
     this.data,
     required this.lastPage,
   });
 
   factory StocksRes.fromJson(Map<String, dynamic> json) => StocksRes(
-        currentPage: json["current_page"],
+        // currentPage: json["current_page"],
         data: json["data"] == null
             ? []
             : List<AllStocks>.from(
@@ -29,7 +29,7 @@ class StocksRes {
       );
 
   Map<String, dynamic> toJson() => {
-        "current_page": currentPage,
+        // "current_page": currentPage,
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),

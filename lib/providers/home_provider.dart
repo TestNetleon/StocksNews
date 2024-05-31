@@ -77,6 +77,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
   bool get isLoadingStockFocus => _statusFocus == Status.loading;
 
+  bool popularPresent = true;
+
   int? userAlert;
 
   int _openIndex = -1;
@@ -211,7 +213,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future getHomeTrendingData() async {
     topLoading = true;
-
+    // popularPresent = true;
     _statusTrending = Status.loading;
     notifyListeners();
 
@@ -228,6 +230,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
+        // if (_homeTrendingRes?.popular.isEmpty == true ||
+        //     _homeTrendingRes?.popular == null ||
+        //     _homeTrendingRes == null) {
+        //   popularPresent = false;
+        //   notifyListeners();
+        // }
       } else {
         _homeTrendingRes = null;
         _error = "Data not found";
