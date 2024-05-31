@@ -112,6 +112,7 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                 ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return Column(

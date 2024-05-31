@@ -5,6 +5,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/gradient_con_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingScreenSimmer extends StatelessWidget {
   const TrendingScreenSimmer({super.key});
@@ -19,6 +20,7 @@ class TrendingScreenSimmer extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SpacerVertical(),
               Padding(
                 padding: EdgeInsets.only(bottom: 20.sp),
                 child: GradientContainerWidget(height: 40, borderRadius: 2.sp),

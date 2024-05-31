@@ -21,7 +21,7 @@ class CongressionScreenSimmer extends StatelessWidget {
             itemCount: 10,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 12),
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.end,

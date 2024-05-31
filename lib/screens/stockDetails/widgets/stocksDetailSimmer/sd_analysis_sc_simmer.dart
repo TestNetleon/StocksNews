@@ -61,6 +61,7 @@ class StocksDetailAnalysisSimmer extends StatelessWidget {
             itemCount: 5,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               return GradientContainerWidget(
                 height: 50,

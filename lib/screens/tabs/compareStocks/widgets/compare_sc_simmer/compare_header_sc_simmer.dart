@@ -13,6 +13,7 @@ class CompareHeaderScreenSimmer extends StatelessWidget {
         return SizedBox(
             height: constraints.maxWidth * .29,
             child: ListView.separated(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: const AlwaysScrollableScrollPhysics(),

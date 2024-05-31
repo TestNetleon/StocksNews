@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist_container.dart';
+import 'package:stocks_news_new/screens/watchlist/widget/watchlist_sc_simmer.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -88,6 +89,7 @@ class _WatchListState extends State<WatchList> {
                   )
                 : Expanded(
                     child: BaseUiContainer(
+                      placeholder: const WatchListScreenSimmer(),
                       isLoading: provider.isLoading && provider.data == null,
                       hasData:
                           provider.data != null && provider.data!.isNotEmpty,

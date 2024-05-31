@@ -85,7 +85,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
       ApiResponse response = await apiRequest(
         url: Apis.menuWhatWeDo,
         request: request,
-        showProgress: true,
+        showProgress: false,
         onRefresh: onRefresh,
       );
 

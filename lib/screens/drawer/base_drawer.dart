@@ -390,7 +390,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ),
                               const SpacerVertical(height: 5),
                               Text(
-                                provider.totalAlerts == 1
+                                provider.totalAlerts == 1 ||
+                                        provider.totalAlerts == 0
                                     ? "Stock Alert"
                                     : "Stock Alerts",
                                 style: stylePTSansRegular(

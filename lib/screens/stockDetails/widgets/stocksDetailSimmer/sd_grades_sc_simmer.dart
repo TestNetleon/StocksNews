@@ -52,6 +52,7 @@ class StocksDetailGradesSimmer extends StatelessWidget {
             leftPaddingSubTitle: 0,
           ),
           ListView.separated(
+            padding: EdgeInsets.zero,
             itemCount: 3,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,

@@ -11,6 +11,7 @@ class InsiderDetailScreenSimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.zero,
       itemCount: 15,
       itemBuilder: (context, index) {
         if (index == 0) {

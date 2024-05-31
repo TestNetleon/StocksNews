@@ -5,17 +5,14 @@ import 'package:stocks_news_new/widgets/gradient_con_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class AllFeatureScreenSimmer extends StatelessWidget {
-  const AllFeatureScreenSimmer({this.dataVisibleLastIndex = false, super.key});
-  final bool dataVisibleLastIndex;
+class WatchListScreenSimmer extends StatelessWidget {
+  const WatchListScreenSimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: 20,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(top: 12),
       itemBuilder: (context, index) {
         return Row(
           children: [
@@ -60,19 +57,6 @@ class AllFeatureScreenSimmer extends StatelessWidget {
                       width: 70.sp,
                     ),
                   ],
-                ),
-                Visibility(
-                    visible: dataVisibleLastIndex,
-                    child: const SpacerHorizontal(
-                      width: 15,
-                    )),
-                Visibility(
-                  visible: dataVisibleLastIndex,
-                  child: GradientContainerWidget(
-                    height: 25.sp,
-                    borderRadius: 2.sp,
-                    width: 25.sp,
-                  ),
                 ),
               ],
             ),

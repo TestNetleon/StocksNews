@@ -11,6 +11,7 @@ class DaysScreenSimmer extends StatelessWidget {
     return SizedBox(
       height: 30.sp,
       child: ListView.separated(
+        padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Center(

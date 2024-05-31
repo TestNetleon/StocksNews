@@ -11,6 +11,7 @@ class TabViewScreenSimmer extends StatelessWidget {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: 10,
+      padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,

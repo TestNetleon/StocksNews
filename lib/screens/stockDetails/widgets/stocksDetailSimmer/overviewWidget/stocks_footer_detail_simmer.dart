@@ -58,6 +58,7 @@ class StocksFooterDetailSimmer extends StatelessWidget {
           itemCount: 7,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
+          padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
             return const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
