@@ -9,6 +9,7 @@ import 'package:stocks_news_new/providers/scroll_controller.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/widget/newsDetailSimmer/news_detail_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -125,186 +126,190 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     ScrollControllerProvider controllerProvider =
         context.watch<ScrollControllerProvider>();
 
-    return provider.data != null && !provider.isLoading
-        ? CommonRefreshIndicator(
-            onRefresh: () async {
-              provider.getNewsDetailData(
-                slug: widget.slug,
-                showProgress: false,
-              );
-            },
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  controller: controllerProvider.scrollController,
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: (scrollNotification) {
-                      return true;
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          provider.data?.postDetail?.title ?? "",
-                          style: styleGeorgiaBold(fontSize: 25),
-                        ),
-                        const SpacerVertical(height: 5),
-                        provider.data?.postDetail?.authors?.isNotEmpty ==
-                                    true ||
-                                provider.data?.postDetail?.categories
-                                        ?.isNotEmpty ==
-                                    true
-                            ? Padding(
-                                padding: EdgeInsets.only(bottom: 15.sp),
-                                child: ListAlignment(
-                                  date: date,
-                                  list1: provider.data?.postDetail?.authors,
-                                  // list2: provider.data?.postDetail?.categories,
-                                ),
-                              )
-                            : foundSite
+    return provider.isLoading
+        ? const NewsDetailScreenSimmer()
+        : provider.data != null && !provider.isLoading
+            ? CommonRefreshIndicator(
+                onRefresh: () async {
+                  provider.getNewsDetailData(
+                    slug: widget.slug,
+                    showProgress: false,
+                  );
+                },
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      controller: controllerProvider.scrollController,
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (scrollNotification) {
+                          return true;
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              provider.data?.postDetail?.title ?? "",
+                              style: styleGeorgiaBold(fontSize: 25),
+                            ),
+                            const SpacerVertical(height: 5),
+                            provider.data?.postDetail?.authors?.isNotEmpty ==
+                                        true ||
+                                    provider.data?.postDetail?.categories
+                                            ?.isNotEmpty ==
+                                        true
                                 ? Padding(
-                                    padding: EdgeInsets.only(bottom: 10.sp),
-                                    child: Text(
-                                      "Source - ${provider.data?.postDetail?.site} | $date",
-                                      style: stylePTSansRegular(
-                                          fontSize: 13,
-                                          color: ThemeColors.greyText),
+                                    padding: EdgeInsets.only(bottom: 15.sp),
+                                    child: ListAlignment(
+                                      date: date,
+                                      list1: provider.data?.postDetail?.authors,
+                                      // list2: provider.data?.postDetail?.categories,
                                     ),
                                   )
-                                : Padding(
-                                    padding: EdgeInsets.only(bottom: 10.sp),
-                                    child: Text(
-                                      date,
+                                : foundSite
+                                    ? Padding(
+                                        padding: EdgeInsets.only(bottom: 10.sp),
+                                        child: Text(
+                                          "Source - ${provider.data?.postDetail?.site} | $date",
+                                          style: stylePTSansRegular(
+                                              fontSize: 13,
+                                              color: ThemeColors.greyText),
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: EdgeInsets.only(bottom: 10.sp),
+                                        child: Text(
+                                          date,
+                                          style: stylePTSansRegular(
+                                              fontSize: 13,
+                                              color: ThemeColors.greyText),
+                                        ),
+                                      ),
+                            CachedNetworkImagesWidget(
+                              provider.data?.postDetail?.image ?? "",
+                              height: ScreenUtil().screenHeight * 0.27,
+                              width: double.infinity,
+                              // fit: BoxFit.contain,
+                            ),
+                            SpacerVertical(height: Dimen.itemSpacing.sp),
+                            HtmlWidget(
+                              customStylesBuilder: (element) {
+                                if (element.localName == 'a') {
+                                  return {
+                                    'color': '#1bb449',
+                                    'text-decoration': 'none'
+                                  };
+                                }
+                                return null;
+                              },
+                              onTapUrl: (url) async {
+                                bool a = await launchUrl(Uri.parse(url));
+                                Utils().showLog(
+                                    "clicked ur---$url, return value $a");
+
+                                return a;
+                              },
+                              provider.data?.postDetail?.text ?? "",
+                              textStyle: styleGeorgiaRegular(
+                                  fontSize: 18, height: 1.5),
+                            ),
+                            // const SpacerVertical(height: 20),
+                            Visibility(
+                              visible: (provider.data?.postDetail?.categories
+                                          ?.length ??
+                                      0) >
+                                  0,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 20.sp),
+                                child: Wrap(
+                                  children: [
+                                    Text(
+                                      "Posted under - ",
                                       style: stylePTSansRegular(
                                           fontSize: 13,
                                           color: ThemeColors.greyText),
                                     ),
-                                  ),
-                        CachedNetworkImagesWidget(
-                          provider.data?.postDetail?.image ?? "",
-                          height: ScreenUtil().screenHeight * 0.27,
-                          width: double.infinity,
-                          // fit: BoxFit.contain,
-                        ),
-                        SpacerVertical(height: Dimen.itemSpacing.sp),
-                        HtmlWidget(
-                          customStylesBuilder: (element) {
-                            if (element.localName == 'a') {
-                              return {
-                                'color': '#1bb449',
-                                'text-decoration': 'none'
-                              };
-                            }
-                            return null;
-                          },
-                          onTapUrl: (url) async {
-                            bool a = await launchUrl(Uri.parse(url));
-                            Utils()
-                                .showLog("clicked ur---$url, return value $a");
-
-                            return a;
-                          },
-                          provider.data?.postDetail?.text ?? "",
-                          textStyle:
-                              styleGeorgiaRegular(fontSize: 18, height: 1.5),
-                        ),
-                        // const SpacerVertical(height: 20),
-                        Visibility(
-                          visible:
-                              (provider.data?.postDetail?.categories?.length ??
-                                      0) >
-                                  0,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 20.sp),
-                            child: Wrap(
-                              children: [
-                                Text(
-                                  "Posted under - ",
-                                  style: stylePTSansRegular(
-                                      fontSize: 13,
-                                      color: ThemeColors.greyText),
+                                    const ListAlignment().buildList(
+                                      list:
+                                          provider.data?.postDetail?.categories,
+                                      isLastList: true,
+                                      type: BlogsType.category,
+                                    ),
+                                  ],
                                 ),
-                                const ListAlignment().buildList(
-                                  list: provider.data?.postDetail?.categories,
-                                  isLastList: true,
-                                  type: BlogsType.category,
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                        const SpacerVertical(height: 20),
-                        Visibility(
-                          visible:
-                              provider.data?.postDetail?.tags?.isNotEmpty ==
-                                  true,
-                          child: NewsDetailAuthor(
-                            type: BlogsType.tag,
-                            title: "Tags: ",
-                            data: provider.data?.postDetail?.tags,
-                          ),
-                        ),
-                        const SpacerVertical(height: 25),
-                        const ScreenTitle(title: "More News to Read"),
-                        ListView.separated(
-                          itemCount: provider.data?.otherPost?.length ?? 0,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(12.sp),
-                          itemBuilder: (context, index) {
-                            PostDetail? moreNewsData =
-                                provider.data?.otherPost?[index];
+                            const SpacerVertical(height: 20),
+                            Visibility(
+                              visible:
+                                  provider.data?.postDetail?.tags?.isNotEmpty ==
+                                      true,
+                              child: NewsDetailAuthor(
+                                type: BlogsType.tag,
+                                title: "Tags: ",
+                                data: provider.data?.postDetail?.tags,
+                              ),
+                            ),
+                            const SpacerVertical(height: 25),
+                            const ScreenTitle(title: "More News to Read"),
+                            ListView.separated(
+                              itemCount: provider.data?.otherPost?.length ?? 0,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.all(12.sp),
+                              itemBuilder: (context, index) {
+                                PostDetail? moreNewsData =
+                                    provider.data?.otherPost?[index];
 
-                            return NewsDetailList(
-                              moreNewsData: moreNewsData,
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            // return const SpacerVertical(height: 16);
-                            return Divider(
-                              color: ThemeColors.greyBorder,
-                              height: 16.sp,
-                            );
-                          },
+                                return NewsDetailList(
+                                  moreNewsData: moreNewsData,
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                // return const SpacerVertical(height: 16);
+                                return Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 16.sp,
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 6.sp,
-                  right: 0,
-                  child: FloatingActionButton(
-                    backgroundColor: ThemeColors.accent,
-                    child: const Icon(Icons.share),
-                    onPressed: () {
-                      commonShare(
-                        title: provider.data?.postDetail?.title ?? "",
-                        url: provider.data?.postDetail?.slug ?? "",
-                      );
-                    },
-                  ),
-                ),
-                // CommonShare(
-                //   visible: controllerProvider.isVisible,
-                //   linkShare: provider.data?.postDetail?.slug ?? "",
-                //   title: provider.data?.postDetail?.title ?? "",
-                // ),
-              ],
-            ),
-          )
-        : !provider.isLoading && provider.data == null
-            ? Center(
-                child: ErrorDisplayWidget(
-                  error: provider.error,
-                  onRefresh: () => provider.getNewsDetailData(
-                      slug: widget.slug, showProgress: true),
+                    Positioned(
+                      bottom: 6.sp,
+                      right: 0,
+                      child: FloatingActionButton(
+                        backgroundColor: ThemeColors.accent,
+                        child: const Icon(Icons.share),
+                        onPressed: () {
+                          commonShare(
+                            title: provider.data?.postDetail?.title ?? "",
+                            url: provider.data?.postDetail?.slug ?? "",
+                          );
+                        },
+                      ),
+                    ),
+                    // CommonShare(
+                    //   visible: controllerProvider.isVisible,
+                    //   linkShare: provider.data?.postDetail?.slug ?? "",
+                    //   title: provider.data?.postDetail?.title ?? "",
+                    // ),
+                  ],
                 ),
               )
-            : provider.isLoading
-                ? const Loading()
-                : const SizedBox();
+            : !provider.isLoading && provider.data == null
+                ? Center(
+                    child: ErrorDisplayWidget(
+                      error: provider.error,
+                      onRefresh: () => provider.getNewsDetailData(
+                          slug: widget.slug, showProgress: true),
+                    ),
+                  )
+                : provider.isLoading
+                    ? const Loading()
+                    : const SizedBox();
   }
 }
 
