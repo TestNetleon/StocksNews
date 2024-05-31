@@ -185,7 +185,7 @@ class FooterItem extends StatelessWidget {
         _value(title: company?.name),
         _value(title: "${company?.price}"),
         _value(title: "${company?.changesPercentage.toCurrency()}%"),
-        _value(title: "${company?.changes.toCurrency()}"),
+        _value(title: "${company?.displayChange}"),
         _value(title: company?.dayLow),
         _value(title: company?.dayHigh),
         _value(title: company?.yearLow),

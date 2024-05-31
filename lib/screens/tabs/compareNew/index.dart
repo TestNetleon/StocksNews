@@ -26,32 +26,13 @@ class CompareNew extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(
-                Dimen.padding, Dimen.padding, Dimen.padding, 0),
-            child: ScreenTitle(
+          Container(
+            color: Colors.black,
+            padding:
+                const EdgeInsets.fromLTRB(Dimen.padding, 16, Dimen.padding, 0),
+            child: const ScreenTitle(
               dividerPadding: EdgeInsets.fromLTRB(0, Dimen.itemSpacing, 0, 0),
               title: "Compare Stocks",
-
-              // optionalWidget: Visibility(
-              //   visible: userProvider.user != null &&
-              //       provider.company.length < 3 &&
-              //       !provider.isLoading,
-              //   child: Row(
-              //     children: [
-              //       InkWell(
-              //         onTap: () {
-              //           _showPopUp(context);
-              //         },
-              //         child: const Icon(
-              //           Icons.add,
-              //           color: ThemeColors.accent,
-              //           size: 22,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ),
           ),
           Visibility(
@@ -77,7 +58,9 @@ class CompareNew extends StatelessWidget {
                 showPreparingText: true,
                 child: provider.company.isEmpty ||
                         (!provider.isLoading && provider.company.length == 1)
-                    ? const CompareNewAddScreen()
+                    ? const Align(
+                        alignment: Alignment.topCenter,
+                        child: CompareNewAddScreen())
                     : const CompareStockNewContainer(),
               ),
             ),

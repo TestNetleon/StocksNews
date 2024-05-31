@@ -9,7 +9,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
-import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../utils/colors.dart';

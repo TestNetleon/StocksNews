@@ -30,93 +30,96 @@ class ScreenTitle extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (title != null)
-          OptionalParent(
-            addParent: optionalText != null || optionalWidget != null,
-            parentBuilder: (child) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Text(
-                      title ?? "",
-                      style: style ?? styleGeorgiaBold(fontSize: 17),
-                    ),
-                  ),
-                  Visibility(
-                    visible: optionalText != null,
-                    child: Text(
-                      optionalText ?? "",
-                      style: style ?? stylePTSansRegular(fontSize: 12),
-                    ),
-                  ),
-                  Visibility(
-                    visible: optionalWidget != null,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10.sp),
-                      child: optionalWidget ?? const SizedBox(),
-                    ),
-                  ),
-                ],
-              );
-            },
-            child: OptionalParent(
-              addParent: canPopBack,
+    return Container(
+      color: Colors.black,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (title != null)
+            OptionalParent(
+              addParent: optionalText != null || optionalWidget != null,
               parentBuilder: (child) {
                 return Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          size: 20,
-                        )),
                     Expanded(
                       child: Text(
                         title ?? "",
                         style: style ?? styleGeorgiaBold(fontSize: 17),
-                        textAlign: TextAlign.center,
                       ),
                     ),
-                    const SpacerHorizontal(width: 20),
+                    Visibility(
+                      visible: optionalText != null,
+                      child: Text(
+                        optionalText ?? "",
+                        style: style ?? stylePTSansRegular(fontSize: 12),
+                      ),
+                    ),
+                    Visibility(
+                      visible: optionalWidget != null,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10.sp),
+                        child: optionalWidget ?? const SizedBox(),
+                      ),
+                    ),
                   ],
                 );
               },
+              child: OptionalParent(
+                addParent: canPopBack,
+                parentBuilder: (child) {
+                  return Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            size: 20,
+                          )),
+                      Expanded(
+                        child: Text(
+                          title ?? "",
+                          style: style ?? styleGeorgiaBold(fontSize: 17),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SpacerHorizontal(width: 20),
+                    ],
+                  );
+                },
+                child: Text(
+                  title ?? "",
+                  style: style ?? styleGeorgiaBold(fontSize: 17),
+                ),
+              ),
+            ),
+          Visibility(
+            visible: subTitle != null,
+            child: Container(
+              margin: EdgeInsets.only(top: 3.sp),
               child: Text(
-                title ?? "",
-                style: style ?? styleGeorgiaBold(fontSize: 17),
+                subTitle ?? "",
+                style: stylePTSansRegular(
+                    fontSize: 14, color: ThemeColors.greyText),
               ),
             ),
           ),
-        Visibility(
-          visible: subTitle != null,
-          child: Container(
-            margin: EdgeInsets.only(top: 3.sp),
-            child: Text(
-              subTitle ?? "",
-              style:
-                  stylePTSansRegular(fontSize: 14, color: ThemeColors.greyText),
+          Visibility(
+            visible: divider,
+            child: Padding(
+              padding: dividerPadding ??
+                  const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+              child: const Divider(
+                color: ThemeColors.accent,
+                height: 2,
+                thickness: 2,
+              ),
             ),
           ),
-        ),
-        Visibility(
-          visible: divider,
-          child: Padding(
-            padding: dividerPadding ??
-                const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-            child: const Divider(
-              color: ThemeColors.accent,
-              height: 2,
-              thickness: 2,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

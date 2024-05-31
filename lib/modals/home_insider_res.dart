@@ -45,7 +45,7 @@ class HomeInsiderRes {
 }
 
 class RecentMention {
-  final String? id;
+  // final String? id;
   final String symbol;
   final num? mentionCount;
   final DateTime? publishedDate;
@@ -58,7 +58,7 @@ class RecentMention {
   final String? image;
 
   RecentMention({
-    this.id,
+    // this.id,
     required this.symbol,
     this.mentionCount,
     this.publishedDate,
@@ -72,7 +72,7 @@ class RecentMention {
   });
 
   factory RecentMention.fromJson(Map<String, dynamic> json) => RecentMention(
-        id: json["_id"],
+        // id: json["_id"],
         symbol: json["symbol"],
         mentionCount: json["mention_count"],
         publishedDate: json["published_date"] == null
@@ -92,7 +92,7 @@ class RecentMention {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
+        // "_id": id,
         "symbol": symbol,
         "mention_count": mentionCount,
         "published_date":

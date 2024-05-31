@@ -11,7 +11,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../../utils/theme.dart';

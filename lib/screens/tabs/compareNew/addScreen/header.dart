@@ -103,7 +103,6 @@ class CompareNewAddHeader extends StatelessWidget {
                           )
                         : BorderSide.none,
           )),
-          width: ScreenUtil().screenWidth * 0.3,
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -192,7 +191,6 @@ class CompareNewAddHeader extends StatelessWidget {
                   )
                 : BorderSide.none,
           )),
-          width: ScreenUtil().screenWidth * 0.3,
           child: Stack(
             alignment: Alignment.center,
             children: [

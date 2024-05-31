@@ -3,11 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
-import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/footerList/footer_list.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/headerList/header.dart';
-import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/pop_up.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/add_company_container.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -16,43 +14,42 @@ import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-import '../../../route/my_app.dart';
-import '../../../utils/colors.dart';
+import '../../../providers/search_provider.dart';
 import '../../auth/bottomSheets/login_sheet.dart';
 import '../../auth/bottomSheets/login_sheet_tablet.dart';
-import '../compareNew/searchTicker/index.dart';
+import 'widgets/pop_up.dart';
 
 class CompareStocksContainer extends StatelessWidget {
   const CompareStocksContainer({super.key});
 
-  // _showPopUp(BuildContext context) {
-  //   context.read<SearchProvider>().clearSearch();
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return const CompareStocksPopup();
-  //       });
-  // }
-  _showBottomSheet() {
-    showModalBottomSheet(
-      useSafeArea: true,
-      backgroundColor: ThemeColors.transparent,
-      // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5.sp),
-          topRight: Radius.circular(5.sp),
-        ),
-      ),
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return const CompareNewSearch(
-          fromAdd: true,
-        );
-      },
-    );
+  _showPopUp(BuildContext context) {
+    context.read<SearchProvider>().clearSearch();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const CompareStocksPopup();
+        });
   }
+  // _showBottomSheet() {
+  //   showModalBottomSheet(
+  //     useSafeArea: true,
+  //     backgroundColor: ThemeColors.transparent,
+  //     // constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 100),
+  //     isScrollControlled: true,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(5.sp),
+  //         topRight: Radius.circular(5.sp),
+  //       ),
+  //     ),
+  //     context: navigatorKey.currentContext!,
+  //     builder: (context) {
+  //       return const CompareNewSearch(
+  //         fromAdd: true,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -113,15 +110,14 @@ class CompareStocksContainer extends StatelessWidget {
                         visible: company.isEmpty,
                         child: AddCompanyContainer(
                             onTap: () => company.length < 4
-                                // ? _showPopUp(context)
-                                ? _showBottomSheet()
+                                ? _showPopUp(context)
+                                // ? _showBottomSheet()
                                 : null),
                       ),
                       HeaderList(
                         onTap: () => company.length < 5
-                            ?
-                            //  _showPopUp(context)
-                            _showBottomSheet()
+                            ? _showPopUp(context)
+                            // _showBottomSheet()
                             : null,
                       ),
                       const FooterList(),
