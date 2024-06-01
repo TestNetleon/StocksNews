@@ -199,29 +199,26 @@ class AlalysisBase extends StatelessWidget {
             value: (analysisRes?.setimentPercent.toDouble() ?? 1.0) / 100),
 
         const SpacerVertical(height: 20),
-        Column(
-          children: [
-            const ScreenTitle(
-              title: "Stock Peers",
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return PeerStockItem(
-                  data: provider.analysisRes?.peersData?[index],
-                  index: index,
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 12.sp,
-                );
-              },
-              itemCount: provider.analysisRes?.peersData?.length ?? 0,
-            ),
-          ],
+        const ScreenTitle(
+          title: "Stock Peers",
+        ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.only(top: 0),
+          itemBuilder: (context, index) {
+            return PeerStockItem(
+              data: provider.analysisRes?.peersData?[index],
+              index: index,
+            );
+          },
+          separatorBuilder: (context, index) {
+            return Divider(
+              color: ThemeColors.greyBorder,
+              height: 12.sp,
+            );
+          },
+          itemCount: provider.analysisRes?.peersData?.length ?? 0,
         ),
       ],
     );
