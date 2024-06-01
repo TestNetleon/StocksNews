@@ -130,7 +130,9 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
             CupertinoSlidingSegmentedControl<int>(
               groupValue: _selectedIndex,
               thumbColor: ThemeColors.greyBorder.withOpacity(0.4),
+              // thumbColor: ThemeColors.white,
               padding: const EdgeInsets.all(4),
+              // backgroundColor: Color.fromARGB(255, 190, 255, 253),
               onValueChanged: (int? index) {
                 setState(() {
                   _selectedIndex = index!;
