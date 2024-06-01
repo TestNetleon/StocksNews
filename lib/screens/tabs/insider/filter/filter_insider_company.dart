@@ -146,7 +146,7 @@ class FilterInsiderCompany extends StatelessWidget {
                 editable: false,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 10.sp,
-                  vertical: 13.sp,
+                  // vertical: 13.sp,
                 ),
                 controller: reportingSlug == ""
                     ? provider.tnxTypeControllerCP
@@ -200,7 +200,7 @@ class FilterInsiderCompany extends StatelessWidget {
                 editable: false,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 10.sp,
-                  vertical: 13.sp,
+                  // vertical: 13.sp,
                 ),
                 controller: reportingSlug == ""
                     ? provider.tnxSizeControllerCP
@@ -243,8 +243,10 @@ class FilterInsiderCompany extends StatelessWidget {
                       fontSize: 15, color: ThemeColors.background),
                   hintText: "mm dd, yyyy",
                   editable: false,
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10.sp, vertical: 13.sp),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 10.sp,
+                    // vertical: 13.sp,
+                  ),
                   controller:
                       reportingSlug == "" ? provider.dateCP : provider.dateIP),
             ],

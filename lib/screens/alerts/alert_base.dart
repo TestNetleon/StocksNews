@@ -65,9 +65,10 @@ class _AlertBaseState extends State<AlertBase> {
         child: Column(
           children: [
             ScreenTitle(
-                title: homeProvider.totalAlerts == 1
-                    ? "Stock Alert"
-                    : "Stock Alerts"),
+              title: homeProvider.totalAlerts == 1
+                  ? "Stock Alert"
+                  : "Stock Alerts",
+            ),
             userProvider.user == null
                 ? Expanded(
                     child: LoginError(
@@ -79,7 +80,14 @@ class _AlertBaseState extends State<AlertBase> {
                     ),
                   )
                 : provider.isLoading
-                    ? const Loading()
+                    ? const Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Loading(),
+                          ],
+                        ),
+                      )
                     : Expanded(
                         child: Column(
                           children: [

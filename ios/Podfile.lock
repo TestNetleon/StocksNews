@@ -226,6 +226,10 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
+  - Plaid (4.7.6)
+  - plaid_flutter (0.0.1):
+    - Flutter
+    - Plaid (= 4.7.6)
   - PromisesObjC (2.4.0)
   - SDWebImage (5.19.1):
     - SDWebImage/Core (= 5.19.1)
@@ -284,6 +288,7 @@ DEPENDENCIES:
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - plaid_flutter (from `.symlinks/plugins/plaid_flutter/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
@@ -315,6 +320,7 @@ SPEC REPOS:
     - libwebp
     - Mantle
     - nanopb
+    - Plaid
     - PromisesObjC
     - SDWebImage
     - SDWebImageWebPCoder
@@ -367,6 +373,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  plaid_flutter:
+    :path: ".symlinks/plugins/plaid_flutter/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
@@ -430,6 +438,8 @@ SPEC CHECKSUMS:
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  Plaid: b21002f53b0b7c418df45d4848e3b30b02ed9cd1
+  plaid_flutter: 76d09038ab535549632be1ea108032ca86ac6862
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
