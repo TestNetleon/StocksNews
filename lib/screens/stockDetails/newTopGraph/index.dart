@@ -132,7 +132,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
               thumbColor: ThemeColors.greyBorder.withOpacity(0.4),
               // thumbColor: ThemeColors.white,
               padding: const EdgeInsets.all(4),
-              // backgroundColor: Color.fromARGB(255, 190, 255, 253),
+              backgroundColor: const Color.fromARGB(255, 28, 28, 28),
               onValueChanged: (int? index) {
                 setState(() {
                   _selectedIndex = index!;
