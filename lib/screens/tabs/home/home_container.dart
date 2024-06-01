@@ -11,6 +11,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index_copy.da
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
 import 'widgets/home_inner_tabs.dart';
@@ -61,6 +62,7 @@ class HomeContainer extends StatelessWidget {
                       const StockInBuzz(),
                     const HomeMyAlerts(),
                     HomePartialLoading(
+                      loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
                       error: provider.statusTrending != Status.ideal &&
                               !provider.isLoadingTrending &&
