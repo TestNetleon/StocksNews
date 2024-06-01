@@ -17,37 +17,14 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
-import 'package:html/parser.dart' show parse;
 
 import '../tabs/news/newsDetail/news_details_body.dart';
 
 //
-class BlogDetailContainer extends StatefulWidget {
+class BlogDetailContainer extends StatelessWidget {
   final String slug;
 
   const BlogDetailContainer({super.key, required this.slug});
-
-  @override
-  State<BlogDetailContainer> createState() => _BlogDetailContainerState();
-}
-
-class _BlogDetailContainerState extends State<BlogDetailContainer> {
-  String? image;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getDetail();
-  }
-
-  getDetail() {
-    BlogProvider provider = context.read<BlogProvider>();
-
-    String? extractedImage =
-        extractImageUrl(provider.blogsDetail?.description ?? "");
-    image = extractedImage;
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +44,9 @@ class _BlogDetailContainerState extends State<BlogDetailContainer> {
                   provider.blogsDetail != null && !provider.isLoadingDetail,
               isLoading: provider.isLoadingDetail,
               showPreparingText: true,
-              onRefresh: () => provider.getBlogDetailData(slug: widget.slug),
+              onRefresh: () => provider.getBlogDetailData(slug: slug),
               child: CommonRefreshIndicator(
-                onRefresh: () => provider.getBlogDetailData(slug: widget.slug),
+                onRefresh: () => provider.getBlogDetailData(slug: slug),
                 child: Stack(
                   children: [
                     SingleChildScrollView(
@@ -135,6 +112,15 @@ class _BlogDetailContainerState extends State<BlogDetailContainer> {
                             onTapImage: (data) {
                               Utils().showLog(data.sources.first.url);
                             },
+                            customWidgetBuilder: (element) {
+                              if (element.localName == 'img') {
+                                final src = element.attributes['src'];
+
+                                return ZoomableImage(url: src ?? "");
+                              }
+
+                              return null;
+                            },
                             onLoadingBuilder:
                                 (context, element, loadingProgress) {
                               return const ProgressDialog();
@@ -174,10 +160,53 @@ class _BlogDetailContainerState extends State<BlogDetailContainer> {
   }
 }
 
-String? extractImageUrl(String html) {
-  final document = parse(html);
-  final imgElement = document.querySelector('img');
-  final imgSrc = imgElement?.attributes['src'];
-  log("Image->$imgSrc");
-  return imgSrc;
+// String? extractImageUrl(String html) {
+//   final document = parse(html);
+//   final imgElement = document.querySelector('img');
+//   final imgSrc = imgElement?.attributes['src'];
+//   log("Image->$imgSrc");
+//   return imgSrc;
+// }
+
+class ZoomableImage extends StatefulWidget {
+  final String url;
+
+  const ZoomableImage({super.key, required this.url});
+
+  @override
+  State<ZoomableImage> createState() => _ZoomableImageState();
+}
+
+class _ZoomableImageState extends State<ZoomableImage> {
+  double _scale = 1.0;
+  Offset _startOffset = Offset.zero;
+  Offset _currentOffset = Offset.zero;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onScaleStart: (details) {
+        _startOffset = details.focalPoint;
+      },
+      onScaleUpdate: (details) {
+        setState(() {
+          _scale = details.scale;
+          _currentOffset = details.focalPoint - _startOffset + _currentOffset;
+          _startOffset = details.focalPoint;
+        });
+      },
+      onScaleEnd: (details) {
+        setState(() {
+          _scale = 1.0;
+          _currentOffset = Offset.zero;
+        });
+      },
+      child: Transform(
+        transform: Matrix4.identity()
+          ..translate(_currentOffset.dx, _currentOffset.dy)
+          ..scale(_scale),
+        child: Image.network(widget.url),
+      ),
+    );
+  }
 }

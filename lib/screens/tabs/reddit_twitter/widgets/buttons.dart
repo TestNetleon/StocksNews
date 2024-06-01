@@ -37,22 +37,34 @@ class RedditTwitterButtons extends StatelessWidget {
           //       : ThemeColors.border,
           //   padding: EdgeInsets.symmetric(horizontal: 12.sp),
           // );
-          return InkWell(
-            onTap: () => provider.onButtonTap(
-              index: index,
-              media: provider.buttons[index].value,
-            ),
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.only(left: 8.sp, right: 8.sp),
-                child: Text(
-                  provider.buttons[index].name,
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: provider.buttonIndex == index
-                        ? ThemeColors.accent
-                        : ThemeColors.border,
-                  ),
+          // return InkWell(
+          //   onTap: () => provider.onButtonTap(
+          //     index: index,
+          //     media: provider.buttons[index].value,
+          //   ),
+          //   child: Center(
+          //     child: Padding(
+          //       padding: EdgeInsets.only(left: 8.sp, right: 8.sp),
+          //       child: Text(
+          //         provider.buttons[index].name,
+          //         style: stylePTSansRegular(
+          //           fontSize: 12,
+          //           color: provider.buttonIndex == index
+          //               ? ThemeColors.accent
+          //               : ThemeColors.border,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // );
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.only(left: 8.sp, right: 8.sp),
+              child: Text(
+                provider.buttons[index].name,
+                style: stylePTSansRegular(
+                  fontSize: 12,
+                  color: ThemeColors.white,
                 ),
               ),
             ),
