@@ -116,10 +116,15 @@ class StockDetailsBase extends StatelessWidget {
                 left: Dimen.padding.sp,
                 right: Dimen.padding.sp,
               ),
-              child: StockDetailsTabContainer(
-                content: CompanyEarningStockDetail(
-                  symbol: symbol,
-                  inAppMsgId: inAppMsgId,
+              child: CommonRefreshIndicator(
+                onRefresh: () async {
+                  provider.getStockOtherDetails(symbol: symbol);
+                },
+                child: StockDetailsTabContainer(
+                  content: CompanyEarningStockDetail(
+                    symbol: symbol,
+                    inAppMsgId: inAppMsgId,
+                  ),
                 ),
               ),
             ),
@@ -265,6 +270,7 @@ class StockDetailsTabContainer extends StatelessWidget {
     return Stack(
       children: [
         SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           // padding: EdgeInsets.all(Dimen.padding.sp),
           padding: EdgeInsets.only(
             top: isPhone ? Dimen.padding.sp : Dimen.paddingTablet.sp,

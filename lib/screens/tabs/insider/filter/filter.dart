@@ -212,7 +212,7 @@ class FilterInsiders extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Sector", style: stylePTSansRegular()),
+                Text("Select Sector", style: stylePTSansRegular()),
                 const SpacerVertical(height: 5),
                 TextInputField(
                   hintText: provider.sector?[0].value,
