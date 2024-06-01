@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class HomePartialLoading extends StatelessWidget {
   const HomePartialLoading({
@@ -12,6 +13,7 @@ class HomePartialLoading extends StatelessWidget {
     this.marginTop = true,
     this.onRefresh,
     this.placeHolder,
+    this.loadingWidget,
     super.key,
   });
 
@@ -21,13 +23,16 @@ class HomePartialLoading extends StatelessWidget {
   final String? error;
   final Function()? onRefresh;
   final Widget? placeHolder;
+  final Widget? loadingWidget;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SpacerVertical(),
         if (loading)
-          placeHolder ??
+          loadingWidget ??
+              placeHolder ??
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 margin: EdgeInsets.all(20.sp),
