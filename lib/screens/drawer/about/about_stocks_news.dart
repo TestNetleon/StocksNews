@@ -1,20 +1,46 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_lists.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/logout.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../widgets/drawer_top_new.dart';
 
-class AboutStocksNews extends StatelessWidget {
+class AboutStocksNews extends StatefulWidget {
   final String version;
   const AboutStocksNews({super.key, required this.version});
+
+  @override
+  State<AboutStocksNews> createState() => _AboutStocksNewsState();
+}
+
+class _AboutStocksNewsState extends State<AboutStocksNews> {
+  bool userPresent = false;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getData();
+    });
+  }
+
+  void _getData() async {
+    UserProvider provider = context.read<UserProvider>();
+    if (await provider.checkForUser()) {
+      userPresent = true;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +76,7 @@ class AboutStocksNews extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "App Version: $version",
+                  "App Version: ${widget.version}",
                   style: stylePTSansRegular(
                     fontSize: 13,
                     color: ThemeColors.greyText,
@@ -65,8 +91,11 @@ class AboutStocksNews extends StatelessWidget {
                 ),
               ),
               ListView.separated(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 30.sp),
+                padding: EdgeInsets.only(
+                  left: 10.sp,
+                  right: 10.sp,
+                  top: 30.sp,
+                ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -78,7 +107,65 @@ class AboutStocksNews extends StatelessWidget {
                 },
                 itemCount: aboutTiles.length,
               ),
-              const SpacerVertical(height: 30),
+              Visibility(
+                  visible: !userPresent, child: SpacerVertical(height: 30.sp)),
+              Visibility(
+                visible: userPresent,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 10.sp,
+                    right: 10.sp,
+                    bottom: 30.sp,
+                  ),
+                  child: Column(
+                    children: [
+                      Ink(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 3),
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(50.sp),
+                        ),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(50.sp),
+                          onTap: () {
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (context) {
+                            //     return const LogoutDialog();
+                            //   },
+                            // );
+                            logoutPopUp();
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.sp, vertical: 6.sp),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(right: 2.sp),
+                                  child: const Icon(
+                                    Icons.logout_outlined,
+                                    size: 20,
+                                    color: ThemeColors.sos,
+                                  ),
+                                ),
+                                const SpacerHorizontal(width: 20),
+                                Expanded(
+                                  child: Text('Logout',
+                                      style: stylePTSansBold(
+                                          fontSize: 14,
+                                          color: ThemeColors.sos)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(color: ThemeColors.greyBorder, height: 5.sp),
+                    ],
+                  ),
+                ),
+              ),
               Align(
                 alignment: Alignment.center,
                 child: RichText(
