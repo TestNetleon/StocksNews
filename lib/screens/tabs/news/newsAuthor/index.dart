@@ -67,7 +67,7 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callAPI(showProgress: false);
+      _callAPI(showProgress: true);
     });
   }
 
@@ -88,9 +88,9 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
       hasData: provider.data != null && provider.data!.isNotEmpty,
       error: provider.error,
       errorDispCommon: true,
-      onRefresh: () async => _callAPI(showProgress: false),
+      onRefresh: () async => _callAPI(showProgress: true),
       child: RefreshControl(
-          onRefresh: () async => _callAPI(showProgress: false),
+          onRefresh: () async => _callAPI(showProgress: true),
           canLoadMore: provider.canLoadMore,
           onLoadMore: () async => _callAPI(loadMore: true),
           child: ListView.separated(
