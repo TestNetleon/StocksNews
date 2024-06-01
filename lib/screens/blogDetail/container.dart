@@ -107,15 +107,15 @@ class BlogDetailContainer extends StatelessWidget {
                             onTapImage: (data) {
                               Utils().showLog(data.sources.first.url);
                             },
-                            customWidgetBuilder: (element) {
-                              if (element.localName == 'img') {
-                                final src = element.attributes['src'];
+                            // customWidgetBuilder: (element) {
+                            //   if (element.localName == 'img') {
+                            //     final src = element.attributes['src'];
 
-                                return ZoomableImage(url: src ?? "");
-                              }
+                            //     return ZoomableImage(url: src ?? "");
+                            //   }
 
-                              return null;
-                            },
+                            //   return null;
+                            // },
                             onLoadingBuilder:
                                 (context, element, loadingProgress) {
                               return const ProgressDialog();
@@ -163,45 +163,45 @@ class BlogDetailContainer extends StatelessWidget {
 //   return imgSrc;
 // }
 
-class ZoomableImage extends StatefulWidget {
-  final String url;
+// class ZoomableImage extends StatefulWidget {
+//   final String url;
 
-  const ZoomableImage({super.key, required this.url});
+//   const ZoomableImage({super.key, required this.url});
 
-  @override
-  State<ZoomableImage> createState() => _ZoomableImageState();
-}
+//   @override
+//   State<ZoomableImage> createState() => _ZoomableImageState();
+// }
 
-class _ZoomableImageState extends State<ZoomableImage> {
-  double _scale = 1.0;
-  Offset _startOffset = Offset.zero;
-  Offset _currentOffset = Offset.zero;
+// class _ZoomableImageState extends State<ZoomableImage> {
+//   double _scale = 1.0;
+//   Offset _startOffset = Offset.zero;
+//   Offset _currentOffset = Offset.zero;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onScaleStart: (details) {
-        _startOffset = details.focalPoint;
-      },
-      onScaleUpdate: (details) {
-        setState(() {
-          _scale = details.scale;
-          _currentOffset = details.focalPoint - _startOffset + _currentOffset;
-          _startOffset = details.focalPoint;
-        });
-      },
-      onScaleEnd: (details) {
-        setState(() {
-          _scale = 1.0;
-          _currentOffset = Offset.zero;
-        });
-      },
-      child: Transform(
-        transform: Matrix4.identity()
-          ..translate(_currentOffset.dx, _currentOffset.dy)
-          ..scale(_scale),
-        child: Image.network(widget.url),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onScaleStart: (details) {
+//         _startOffset = details.focalPoint;
+//       },
+//       onScaleUpdate: (details) {
+//         setState(() {
+//           _scale = details.scale;
+//           _currentOffset = details.focalPoint - _startOffset + _currentOffset;
+//           _startOffset = details.focalPoint;
+//         });
+//       },
+//       onScaleEnd: (details) {
+//         setState(() {
+//           _scale = 1.0;
+//           _currentOffset = Offset.zero;
+//         });
+//       },
+//       child: Transform(
+//         transform: Matrix4.identity()
+//           ..translate(_currentOffset.dx, _currentOffset.dy)
+//           ..scale(_scale),
+//         child: Image.network(widget.url),
+//       ),
+//     );
+//   }
+// }
