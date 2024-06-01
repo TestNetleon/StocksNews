@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import 'item.dart';
 
@@ -132,11 +133,14 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                                   color: ThemeColors.greyText,
                                 ),
                               ),
+                              const SpacerHorizontal(width: 10),
                               Expanded(
                                 flex: 3,
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       AutoSizeText(
                                           maxLines: 1,
@@ -163,6 +167,8 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                                 child: Align(
                                   alignment: Alignment.centerRight,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       AutoSizeText(
                                         textAlign: TextAlign.center,
