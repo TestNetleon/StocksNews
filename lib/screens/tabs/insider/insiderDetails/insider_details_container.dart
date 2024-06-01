@@ -6,7 +6,6 @@ import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/screens/tabs/insider/graph/graph.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
-import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/widget/insider_detail_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -27,7 +26,6 @@ class InsiderCompanyContainer extends StatelessWidget {
     InsiderTradingDetailsProvider provider =
         context.watch<InsiderTradingDetailsProvider>();
     return BaseUiContainer(
-        placeholder: const InsiderDetailScreenSimmer(),
         isLoading: provider.isLoading,
         hasData: provider.companyData != null,
         error: provider.error,
@@ -233,7 +231,6 @@ class InsiderReportingContainer extends StatelessWidget {
     InsiderTradingDetailsProvider provider =
         context.watch<InsiderTradingDetailsProvider>();
     return BaseUiContainer(
-        placeholder: const InsiderDetailScreenSimmer(),
         isLoading: provider.isLoading,
         hasData: provider.reporterData != null,
         error: provider.error,

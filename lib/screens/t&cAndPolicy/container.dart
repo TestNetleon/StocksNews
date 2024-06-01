@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
-import 'package:stocks_news_new/screens/t&cAndPolicy/t&cAndPolicySimmer/t&c_and_policy_sc_simmer.dart';
 
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -17,6 +16,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -113,7 +113,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
       child: CommonRefreshIndicator(
         onRefresh: () => provider.getTermsPolicy(type: widget.policyType),
         child: provider.isLoading
-            ? const TermsAndConditionsScreenSimmer()
+            ? const Loading()
             : provider.data != null
                 ? SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),

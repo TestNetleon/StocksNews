@@ -6,7 +6,6 @@ import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
-import 'package:stocks_news_new/screens/stocks/widgets/stocksSimmer/stocks_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -16,6 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -76,9 +76,7 @@ class StocksContainer extends StatelessWidget {
               editable: true,
             ),
             provider.isLoading
-                ? const Expanded(
-                    child: StocksScreenSimmer(),
-                  )
+                ? const Loading()
                 : Expanded(
                     child: BaseUiContainer(
                       isLoading: provider.isLoading,

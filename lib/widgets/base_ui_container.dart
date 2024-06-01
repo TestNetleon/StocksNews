@@ -36,11 +36,10 @@ class BaseUiContainer extends StatelessWidget {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 400),
       child: isLoading
-          ?
-          // ? showPreparingText
-          //     ? placeholder ?? const Loading()
-          //     : const SizedBox()
-          placeholder ?? const Loading()
+          ? showPreparingText
+              ? placeholder ?? const Loading()
+              : const SizedBox()
+          // const Loading()
           : hasData
               ? child
               : OptionalParent(

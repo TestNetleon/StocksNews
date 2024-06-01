@@ -4,7 +4,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
-import 'package:stocks_news_new/screens/blogDetail/widgets/blogDetailSimmer/blog_detail_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -35,7 +34,6 @@ class BlogDetailContainer extends StatelessWidget {
           // const ScreenTitle(title: "Blog Detail"),
           Expanded(
             child: BaseUiContainer(
-              placeholder: const BlogDetailScreenSimmer(),
               error: provider.error,
               hasData:
                   provider.blogsDetail != null && !provider.isLoadingDetail,
@@ -106,6 +104,18 @@ class BlogDetailContainer extends StatelessWidget {
                           // const SpacerVertical(height: 5),
                           // const BlogDetailTags(),
                           HtmlWidget(
+                            onTapImage: (data) {
+                              Utils().showLog(data.sources.first.url);
+                            },
+                            // customWidgetBuilder: (element) {
+                            //   if (element.localName == 'img') {
+                            //     final src = element.attributes['src'];
+
+                            //     return ZoomableImage(url: src ?? "");
+                            //   }
+
+                            //   return null;
+                            // },
                             onLoadingBuilder:
                                 (context, element, loadingProgress) {
                               return const ProgressDialog();
@@ -144,3 +154,54 @@ class BlogDetailContainer extends StatelessWidget {
     );
   }
 }
+
+// String? extractImageUrl(String html) {
+//   final document = parse(html);
+//   final imgElement = document.querySelector('img');
+//   final imgSrc = imgElement?.attributes['src'];
+//   log("Image->$imgSrc");
+//   return imgSrc;
+// }
+
+// class ZoomableImage extends StatefulWidget {
+//   final String url;
+
+//   const ZoomableImage({super.key, required this.url});
+
+//   @override
+//   State<ZoomableImage> createState() => _ZoomableImageState();
+// }
+
+// class _ZoomableImageState extends State<ZoomableImage> {
+//   double _scale = 1.0;
+//   Offset _startOffset = Offset.zero;
+//   Offset _currentOffset = Offset.zero;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onScaleStart: (details) {
+//         _startOffset = details.focalPoint;
+//       },
+//       onScaleUpdate: (details) {
+//         setState(() {
+//           _scale = details.scale;
+//           _currentOffset = details.focalPoint - _startOffset + _currentOffset;
+//           _startOffset = details.focalPoint;
+//         });
+//       },
+//       onScaleEnd: (details) {
+//         setState(() {
+//           _scale = 1.0;
+//           _currentOffset = Offset.zero;
+//         });
+//       },
+//       child: Transform(
+//         transform: Matrix4.identity()
+//           ..translate(_currentOffset.dx, _currentOffset.dy)
+//           ..scale(_scale),
+//         child: Image.network(widget.url),
+//       ),
+//     );
+//   }
+// }

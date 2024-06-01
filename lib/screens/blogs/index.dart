@@ -29,7 +29,7 @@ class _BlogState extends State<Blog> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<BlogProvider>().getData(
-            showProgress: false,
+            showProgress: widget.type == BlogsType.author,
             type: widget.type,
             id: widget.id,
             inAppMsgId: widget.inAppMsgId,

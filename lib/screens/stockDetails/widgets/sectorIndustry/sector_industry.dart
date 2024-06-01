@@ -7,12 +7,11 @@ import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry_container.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/widget/sector_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/screens/watchlist/widget/watchlist_sc_simmer.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -50,7 +49,7 @@ class _SectorIndustryState extends State<SectorIndustry> {
     context.read<SectorIndustryProvider>().getStateIndustry(
           stockStates: widget.stockStates,
           name: widget.name,
-          showProgress: false,
+          showProgress: true,
         );
   }
 
@@ -88,11 +87,6 @@ class SectorIndustryBase extends StatelessWidget {
       drawer: const BaseDrawer(resetIndex: true),
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: BaseUiContainer(
-        placeholder: stockStates == StockStates.sector
-            ? const SectorScreenSimmer(
-                graphDataVisible: true,
-              )
-            : const SectorScreenSimmer(),
         isLoading: provider.isLoading,
         hasData: provider.data != null,
         error: provider.error,

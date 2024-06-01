@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/screens/faq/faq_container.dart';
-import 'package:stocks_news_new/screens/faq/widget/faq_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../widgets/custom/refresh_indicator.dart';
@@ -60,7 +60,7 @@ class _FAQBaseState extends State<FAQBase> {
   Widget _getWidget() {
     FaqProvide provider = context.watch<FaqProvide>();
     return provider.isLoading
-        ? const FaqScreenSimmer()
+        ? const Loading()
         : provider.data != null
             ? CommonRefreshIndicator(
                 onRefresh: () => provider.getFAQs(),

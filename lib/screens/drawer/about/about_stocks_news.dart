@@ -1,23 +1,53 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_lists.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/logout.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../widgets/drawer_top_new.dart';
 
-class AboutStocksNews extends StatelessWidget {
+class AboutStocksNews extends StatefulWidget {
   final String version;
   const AboutStocksNews({super.key, required this.version});
 
   @override
+  State<AboutStocksNews> createState() => _AboutStocksNewsState();
+}
+
+class _AboutStocksNewsState extends State<AboutStocksNews> {
+  bool userPresent = false;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getData();
+    });
+  }
+
+  void _getData() async {
+    UserProvider provider = context.read<UserProvider>();
+    if (await provider.checkForUser()) {
+      userPresent = true;
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    HomeProvider provider = context.watch<HomeProvider>();
     return Scaffold(
       backgroundColor: ThemeColors.background,
       body: SafeArea(
@@ -50,7 +80,7 @@ class AboutStocksNews extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "App Version: $version",
+                  "App Version: ${widget.version}",
                   style: stylePTSansRegular(
                     fontSize: 13,
                     color: ThemeColors.greyText,
@@ -65,8 +95,11 @@ class AboutStocksNews extends StatelessWidget {
                 ),
               ),
               ListView.separated(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 10.sp, vertical: 30.sp),
+                padding: EdgeInsets.only(
+                  left: 10.sp,
+                  right: 10.sp,
+                  top: 30.sp,
+                ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -78,7 +111,137 @@ class AboutStocksNews extends StatelessWidget {
                 },
                 itemCount: aboutTiles.length,
               ),
-              const SpacerVertical(height: 30),
+              Visibility(
+                  visible: !userPresent, child: SpacerVertical(height: 30.sp)),
+              Visibility(
+                visible: userPresent,
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(left: 10.sp, right: 10.sp, bottom: 30.sp),
+                  child: Column(
+                    children: [
+                      Ink(
+                        // decoration: BoxDecoration(
+                        //   border: Border.all(color: Colors.black, width: 3),
+                        //   color: Colors.black,
+                        //   borderRadius: BorderRadius.circular(50.sp),
+                        // ),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(50.sp),
+                          onTap: () {
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (context) {
+                            //     return const LogoutDialog();
+                            //   },
+                            // );
+                            logoutPopUp(pop: true);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.sp, vertical: 10.sp),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(right: 2.sp),
+                                  child: const Icon(
+                                    Icons.logout_outlined,
+                                    size: 20,
+                                    color: ThemeColors.sos,
+                                  ),
+                                ),
+                                const SpacerHorizontal(width: 20),
+                                Expanded(
+                                  child: Text('Logout',
+                                      style: stylePTSansBold(
+                                          fontSize: 14,
+                                          color: ThemeColors.sos)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(color: ThemeColors.greyBorder, height: 5.sp),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: navigatorKey.currentContext!,
+                                barrierColor: Colors.black.withOpacity(0.5),
+                                builder: (context) {
+                                  return const ReviewAppPopUp();
+                                },
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(15.sp),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 36, 36, 36),
+                                  shape: BoxShape.circle),
+                              child: const Icon(
+                                Icons.reviews_outlined,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 5),
+                          Text(
+                            "Review app",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              commonShare(
+                                title: provider.homeSliderRes?.shareText ?? "",
+                                url: provider.homeSliderRes?.shareUrl,
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(15.sp),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 36, 36, 36),
+                                  shape: BoxShape.circle),
+                              child: const Icon(
+                                Icons.ios_share_outlined,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 5),
+                          Text(
+                            "Share app",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SpacerVertical(height: 26.sp),
               Align(
                 alignment: Alignment.center,
                 child: RichText(

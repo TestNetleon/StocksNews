@@ -4,12 +4,11 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/screens/whatWeDo/widget/whatWeDoSimmer/what_we_do_sc_simmer.dart';
-import 'package:stocks_news_new/screens/whatWeDo/widget/whatWeDoSimmer/what_we_do_tab_sc_simmer.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
@@ -61,7 +60,7 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
     WhatWeDoProvider provider = context.watch<WhatWeDoProvider>();
 
     return provider.isLoading && provider.data == null
-        ? const WhatWeDoTabScreenSimmer()
+        ? const Loading()
         : !provider.isLoading && provider.data == null
             ? ErrorDisplayWidget(
                 error: provider.error,
@@ -88,7 +87,6 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                               provider.weDoData[provider.data?[index].slug];
 
                           return BaseUiContainer(
-                            placeholder: const WhatWeDoScreenSimmer(),
                             // isLoading: provider.isLoadingData
                             // hasData:
                             //     !provider.isLoadingData && provider.res != null,

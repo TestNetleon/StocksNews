@@ -77,6 +77,7 @@ class Images {
   static const facebook = "assets/images/facebook_share.png";
   static const linkedin = "assets/images/linkedin_share.png";
   static const telegram = "assets/images/telegram_share.png";
+  static const ratingIcon = "assets/images/rating_icon.png";
 }
 
 class AudioFiles {

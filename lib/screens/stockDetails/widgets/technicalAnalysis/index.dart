@@ -39,8 +39,8 @@ class _StocksTechnicalAnalysisState extends State<StocksTechnicalAnalysis> {
         const CommonHeadingStockDetail(),
         ScreenTitle(
           // title: "${provider.data?.keyStats?.symbol} ",
-          title:
-              "${provider.data?.keyStats?.name} (${provider.data?.keyStats?.symbol})",
+          // title:
+          //     "${provider.data?.keyStats?.name} (${provider.data?.keyStats?.symbol})",
           subTitle: provider.dataMentions?.technicalText,
         ),
         provider.tALoading && provider.technicalAnalysisRes == null
