@@ -9,7 +9,6 @@ import 'package:stocks_news_new/providers/scroll_controller.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/widget/newsDetailSimmer/news_detail_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -127,7 +126,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
         context.watch<ScrollControllerProvider>();
 
     return provider.isLoading
-        ? const NewsDetailScreenSimmer()
+        ? const Loading()
         : provider.data != null && !provider.isLoading
             ? CommonRefreshIndicator(
                 onRefresh: () async {

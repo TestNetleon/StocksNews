@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/featured_ticker.dart';
 import 'package:stocks_news_new/screens/allFeatured/container.dart';
-import 'package:stocks_news_new/screens/allFeatured/widget/all_featured_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -46,7 +45,6 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
             const ScreenTitle(title: "Featured Stocks"),
             Expanded(
               child: BaseUiContainer(
-                placeholder: const AllFeatureScreenSimmer(),
                 error: provider.error,
                 hasData:
                     provider.data?.isNotEmpty == true && !provider.isLoading,

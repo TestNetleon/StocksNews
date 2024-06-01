@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/analysis_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/stocksDetailSimmer/sd_analysis_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -47,7 +46,6 @@ class _AnalysisState extends State<Analysis> {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
 
     return BaseUiContainer(
-      placeholder: const StocksDetailAnalysisSimmer(),
       isLoading: provider.analysisLoading && provider.analysisRes == null,
       hasData: !provider.analysisLoading && provider.analysisRes != null,
       showPreparingText: true,

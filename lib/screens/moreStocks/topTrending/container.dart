@@ -12,7 +12,6 @@ import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/mega_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/micro_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/small_cap.dart';
-import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/topTrendingSimmer/top_trending_sc_simmer.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/trending_recently.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/technicalAnalysis/base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -22,6 +21,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgets/trending_now.dart';
@@ -101,7 +101,7 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                               : "cap",
                     ),
                     child: provider.isLoading
-                        ? const TopTrendingScreenSimmer()
+                        ? const Loading()
                         // Center(
                         //     child: Row(
                         //       mainAxisSize: MainAxisSize.min,

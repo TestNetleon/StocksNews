@@ -163,14 +163,14 @@ class _AppBarHomeState extends State<AppBarHome> {
                       if (provider.user != null) {
                         homeProvider.setNotification(true);
                       }
-                      // Navigator.pushNamed(context, Notifications.path);
+                      Navigator.pushNamed(context, Notifications.path);
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PlaidIntegrationUI(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const PlaidIntegrationUI(),
+                      //   ),
+                      // );
                     },
                     icon: const Icon(
                       Icons.notifications,

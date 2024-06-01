@@ -11,7 +11,6 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dar
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/notifications/item.dart';
-import 'package:stocks_news_new/screens/notifications/widget/notificationSimmer/notification_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -89,7 +88,6 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
                       ],
                     )
                   : BaseUiContainer(
-                      placeholder: const NotificationScreenSimmer(),
                       error: provider.error,
                       hasData: data != null && data.isNotEmpty,
                       isLoading: provider.isLoading,

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/earnings_res.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
 import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -32,7 +31,6 @@ class _EarningsListState extends State<EarningsList> {
     EarningsProvider provider = context.watch<EarningsProvider>();
 
     return BaseUiContainer(
-      placeholder: const SimmerScreenDrawerCommon(),
       error: provider.error,
       hasData: provider.data != null && provider.data!.isNotEmpty,
       isLoading: provider.isLoading,

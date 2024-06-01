@@ -7,7 +7,6 @@ import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/modals/news_res.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
-import 'package:stocks_news_new/screens/tabs/news/widget/news_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -85,7 +84,6 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
   Widget build(BuildContext context) {
     NewsTypeProvider provider = context.watch<NewsTypeProvider>();
     return BaseUiContainer(
-      placeholder: const NewsScreenSimmer(),
       isLoading: provider.isLoading && provider.data == null,
       hasData: provider.data != null && provider.data!.isNotEmpty,
       error: provider.error,

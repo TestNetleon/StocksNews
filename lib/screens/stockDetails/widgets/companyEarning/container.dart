@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stockTopWidgets/common_heading.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/stocksDetailSimmer/sd_company_earnings_sc_simmer.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -77,7 +76,6 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
     // }
 
     return BaseUiContainer(
-      placeholder: const StocksDetailCompanyEarningsSimmer(),
       isLoading: provider.otherLoading,
       hasData: !provider.otherLoading && earning != null,
       error: provider.errorOther,

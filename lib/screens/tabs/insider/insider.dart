@@ -10,8 +10,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/screen_title_simmer.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -67,10 +67,7 @@ class Insider extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             provider.isLoading
-                ? const ScreenTitleSimmer(
-                    optionalWidget: true,
-                    twoLineSubTitle: true,
-                  )
+                ? const Loading()
                 : ScreenTitle(
                     title: "Insider Trading",
                     subTitle: provider.textRes?.subTitle,

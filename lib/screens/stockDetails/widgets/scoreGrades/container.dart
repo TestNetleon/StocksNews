@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_other_detail_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/stocksDetailSimmer/sd_grades_sc_simmer.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
@@ -71,7 +70,6 @@ class _StocksScoreGradesState extends State<StocksScoreGrades> {
     // }
 
     return BaseUiContainer(
-      placeholder: const StocksDetailGradesSimmer(),
       isLoading: provider.otherLoading,
       hasData: !provider.otherLoading && provider.otherData != null,
       error: provider.errorOther,

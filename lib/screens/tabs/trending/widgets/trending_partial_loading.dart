@@ -28,26 +28,25 @@ class TrendingPartialLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      return placeholder ??
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(
-                  Images.progressGIF,
-                  width: 100,
-                  height: 100,
-                ),
-                Text(
-                  "We are preparing data for you. Please wait...",
-                  textAlign: TextAlign.center,
-                  style: styleGeorgiaRegular(
-                    color: ThemeColors.accent,
-                  ),
-                ),
-              ],
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              Images.progressGIF,
+              width: 100,
+              height: 100,
             ),
-          );
+            Text(
+              "We are preparing data for you. Please wait...",
+              textAlign: TextAlign.center,
+              style: styleGeorgiaRegular(
+                color: ThemeColors.accent,
+              ),
+            ),
+          ],
+        ),
+      );
     }
 
     if (error != null) {

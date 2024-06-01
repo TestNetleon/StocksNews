@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/blogs_res.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/screens/blogs/widgets/item.dart';
 import 'package:stocks_news_new/screens/blogs/widgets/header.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/drawer_blog_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -31,7 +30,6 @@ class BlogContainer extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: BaseUiContainer(
-          placeholder: const DrawerBlogScreenSimmer(),
           isLoading: provider.isLoading,
           hasData: provider.blogData != null &&
               provider.blogData?.isNotEmpty == true,
@@ -98,7 +96,6 @@ class AuthorContainer extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: BaseUiContainer(
-          placeholder: const DrawerBlogScreenSimmer(),
           isLoading: provider.isLoading,
           hasData: provider.authorsData != null &&
               provider.authorsData?.isNotEmpty == true,

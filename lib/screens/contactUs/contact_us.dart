@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_container.dart';
-import 'package:stocks_news_new/screens/contactUs/widgets/contactUsSimmer/conatct_us_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 
 import '../../widgets/screen_title.dart';
 
@@ -51,7 +51,7 @@ class _ContactUsBaseState extends State<ContactUsBase> {
             const ScreenTitle(title: "Contact Us"),
             Expanded(
               child: provider.isLoading
-                  ? const ContactUsScreenSimmer()
+                  ? const Loading()
                   : const ContactUsContainer(),
             ),
           ],
