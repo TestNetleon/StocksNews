@@ -47,21 +47,21 @@
 // class _BaseDrawerState extends State<BaseDrawer> {
 //   String? version;
 //   bool userPresent = false;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     _getData();
-  //     widget.resetIndex ? _resetIndex() : null;
-  //   });
-  // }
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+//       _getData();
+//       widget.resetIndex ? _resetIndex() : null;
+//     });
+//   }
 
-  // void _getData() async {
-  //   UserProvider provider = context.read<UserProvider>();
-  //   if (await provider.checkForUser()) {
-  //     userPresent = true;
-  //     setState(() {});
-  //   }
+//   void _getData() async {
+//     UserProvider provider = context.read<UserProvider>();
+//     if (await provider.checkForUser()) {
+//       userPresent = true;
+//       setState(() {});
+//     }
 
 //     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 //     version = packageInfo.version;

@@ -65,20 +65,22 @@ import '../utils/colors.dart';
 //   }
 // }
 
-void logoutPopUp() {
+void logoutPopUp({pop = false}) {
   showDialog(
     context: navigatorKey.currentContext!,
     barrierColor: ThemeColors.transparentDark,
     builder: (context) {
-      return const LogoutPopUpCustom();
+      return LogoutPopUpCustom(pop: pop);
     },
   );
 }
 
 class LogoutPopUpCustom extends StatelessWidget {
   const LogoutPopUpCustom({
+    required this.pop,
     super.key,
   });
+  final bool pop;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +143,10 @@ class LogoutPopUpCustom extends StatelessWidget {
                                       "",
                             };
                             Navigator.pop(context);
-                            context.read<UserProvider>().logoutUser(request);
+                            // if (pop) Navigator.of(context).pop();
+                            context
+                                .read<UserProvider>()
+                                .logoutUser(request, pop);
                             context
                                 .read<HomeProvider>()
                                 .getHomeAlerts(userAvail: false);

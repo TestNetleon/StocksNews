@@ -141,6 +141,13 @@ class UpDownStocksItem extends StatelessWidget {
               child: Column(
                 children: [
                   InnerRowItem(
+                    lable: "Gap Up%",
+                    value: "${data.gapPer}%",
+                    valueColor: "${data.gapPer}".contains("-")
+                        ? Colors.red
+                        : ThemeColors.accent,
+                  ),
+                  InnerRowItem(
                     lable: "Opening Price",
                     value: "${data.open}",
                   ),

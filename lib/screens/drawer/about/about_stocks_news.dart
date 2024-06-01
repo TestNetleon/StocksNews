@@ -2,9 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_lists.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -44,6 +47,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
 
   @override
   Widget build(BuildContext context) {
+    HomeProvider provider = context.watch<HomeProvider>();
     return Scaffold(
       backgroundColor: ThemeColors.background,
       body: SafeArea(
@@ -112,19 +116,16 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
               Visibility(
                 visible: userPresent,
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 10.sp,
-                    right: 10.sp,
-                    bottom: 30.sp,
-                  ),
+                  padding:
+                      EdgeInsets.only(left: 10.sp, right: 10.sp, bottom: 30.sp),
                   child: Column(
                     children: [
                       Ink(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 3),
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(50.sp),
-                        ),
+                        // decoration: BoxDecoration(
+                        //   border: Border.all(color: Colors.black, width: 3),
+                        //   color: Colors.black,
+                        //   borderRadius: BorderRadius.circular(50.sp),
+                        // ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(50.sp),
                           onTap: () {
@@ -134,11 +135,11 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                             //     return const LogoutDialog();
                             //   },
                             // );
-                            logoutPopUp();
+                            logoutPopUp(pop: true);
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 10.sp, vertical: 6.sp),
+                                horizontal: 10.sp, vertical: 10.sp),
                             child: Row(
                               children: [
                                 Padding(
@@ -166,6 +167,81 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.sp),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: navigatorKey.currentContext!,
+                                barrierColor: Colors.black.withOpacity(0.5),
+                                builder: (context) {
+                                  return const ReviewAppPopUp();
+                                },
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(15.sp),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 36, 36, 36),
+                                  shape: BoxShape.circle),
+                              child: const Icon(
+                                Icons.reviews_outlined,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 5),
+                          Text(
+                            "Review app",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              commonShare(
+                                title: provider.homeSliderRes?.shareText ?? "",
+                                url: provider.homeSliderRes?.shareUrl,
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(15.sp),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 36, 36, 36),
+                                  shape: BoxShape.circle),
+                              child: const Icon(
+                                Icons.ios_share_outlined,
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 5),
+                          Text(
+                            "Share app",
+                            style: stylePTSansRegular(
+                              color: ThemeColors.greyText,
+                              fontSize: 13,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SpacerVertical(height: 26.sp),
               Align(
                 alignment: Alignment.center,
                 child: RichText(

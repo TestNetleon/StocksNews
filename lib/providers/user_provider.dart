@@ -490,7 +490,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future logoutUser(request) async {
+  Future logoutUser(request, pop) async {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
 
     try {
@@ -502,6 +502,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (res.status) {
         setStatus(Status.loaded);
         // handleSessionOut();
+        if (pop) Navigator.pop(navigatorKey.currentContext!);
         Navigator.pop(navigatorKey.currentContext!);
         // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
         Preference.logout();
