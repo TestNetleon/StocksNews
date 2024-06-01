@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -14,14 +17,37 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
+import 'package:html/parser.dart' show parse;
 
 import '../tabs/news/newsDetail/news_details_body.dart';
 
 //
-class BlogDetailContainer extends StatelessWidget {
+class BlogDetailContainer extends StatefulWidget {
   final String slug;
 
   const BlogDetailContainer({super.key, required this.slug});
+
+  @override
+  State<BlogDetailContainer> createState() => _BlogDetailContainerState();
+}
+
+class _BlogDetailContainerState extends State<BlogDetailContainer> {
+  String? image;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDetail();
+  }
+
+  getDetail() {
+    BlogProvider provider = context.read<BlogProvider>();
+
+    String? extractedImage =
+        extractImageUrl(provider.blogsDetail?.description ?? "");
+    image = extractedImage;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +67,9 @@ class BlogDetailContainer extends StatelessWidget {
                   provider.blogsDetail != null && !provider.isLoadingDetail,
               isLoading: provider.isLoadingDetail,
               showPreparingText: true,
-              onRefresh: () => provider.getBlogDetailData(slug: slug),
+              onRefresh: () => provider.getBlogDetailData(slug: widget.slug),
               child: CommonRefreshIndicator(
-                onRefresh: () => provider.getBlogDetailData(slug: slug),
+                onRefresh: () => provider.getBlogDetailData(slug: widget.slug),
                 child: Stack(
                   children: [
                     SingleChildScrollView(
@@ -106,6 +132,9 @@ class BlogDetailContainer extends StatelessWidget {
                           // const SpacerVertical(height: 5),
                           // const BlogDetailTags(),
                           HtmlWidget(
+                            onTapImage: (data) {
+                              Utils().showLog(data.sources.first.url);
+                            },
                             onLoadingBuilder:
                                 (context, element, loadingProgress) {
                               return const ProgressDialog();
@@ -143,4 +172,12 @@ class BlogDetailContainer extends StatelessWidget {
       ),
     );
   }
+}
+
+String? extractImageUrl(String html) {
+  final document = parse(html);
+  final imgElement = document.querySelector('img');
+  final imgSrc = imgElement?.attributes['src'];
+  log("Image->$imgSrc");
+  return imgSrc;
 }

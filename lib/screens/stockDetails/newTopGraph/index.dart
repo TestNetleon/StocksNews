@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
@@ -129,6 +130,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
             CupertinoSlidingSegmentedControl<int>(
               groupValue: _selectedIndex,
               thumbColor: ThemeColors.greyBorder.withOpacity(0.4),
+              padding: const EdgeInsets.all(4),
               onValueChanged: (int? index) {
                 setState(() {
                   _selectedIndex = index!;
@@ -159,6 +161,29 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
                   ),
               },
             ),
+            // SegmentedButton(
+            //   segments: const <ButtonSegment<String>>[
+            //     ButtonSegment<String>(
+            //         value: 'day',
+            //         label: Text('Day'),
+            //         icon: Icon(Icons.calendar_view_day)),
+            //     ButtonSegment<String>(
+            //         value: 'week',
+            //         label: Text('Week'),
+            //         icon: Icon(Icons.calendar_view_week)),
+            //     ButtonSegment<String>(
+
+            //         value: 'month',
+            //         label: Text('Month'),
+            //         icon: Icon(Icons.calendar_view_month)),
+            //     ButtonSegment<String>(
+            //         value: 'year',
+            //         label: Text('Year'),
+            //         icon: Icon(Icons.calendar_today)),
+            //   ],
+            //   selected: <String>{'day'},
+            //   onSelectionChanged: (Set<String> newSelection) {},
+            // ),
 
             // const SpacerVertical(height: 10),
 
