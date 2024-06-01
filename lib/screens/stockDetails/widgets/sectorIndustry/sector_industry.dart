@@ -49,7 +49,7 @@ class _SectorIndustryState extends State<SectorIndustry> {
     context.read<SectorIndustryProvider>().getStateIndustry(
           stockStates: widget.stockStates,
           name: widget.name,
-          showProgress: false,
+          showProgress: true,
         );
   }
 

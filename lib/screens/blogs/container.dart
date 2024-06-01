@@ -102,10 +102,10 @@ class AuthorContainer extends StatelessWidget {
           error: provider.error,
           errorDispCommon: true,
           onRefresh: () =>
-              provider.getData(showProgress: false, type: type, id: id),
+              provider.getData(showProgress: true, type: type, id: id),
           child: RefreshControl(
             onRefresh: () async =>
-                provider.getData(showProgress: false, type: type, id: id),
+                provider.getData(showProgress: true, type: type, id: id),
             canLoadMore: provider.canLoadMore,
             onLoadMore: () async =>
                 provider.getData(loadMore: true, type: type, id: id),
