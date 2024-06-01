@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gap_up_res.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
@@ -33,7 +32,6 @@ class _GapDownStocksState extends State<GapDownStocks> {
     GapUpDownProvider provider = context.watch<GapUpDownProvider>();
     List<GapUpRes>? data = provider.dataDown;
     return BaseUiContainer(
-      placeholder: const SimmerScreenDrawerCommon(),
       error: provider.errorDown,
       hasData: data != null && data.isNotEmpty,
       isLoading: provider.isLoadingDown,

@@ -6,7 +6,6 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/newTopGraph/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analysis_forecast.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/stocksDetailSimmer/sd_overview_sc_simmer.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mentions.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_stories.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -59,7 +58,6 @@ class StockDetailsBase extends StatelessWidget {
           ],
           widgets: [
             BaseUiContainer(
-              placeholder: const StocksDetailOverviewScreenSimmer(),
               hasData: !provider.isLoading ||
                   !provider.isLoadingGraph ||
                   provider.data != null &&

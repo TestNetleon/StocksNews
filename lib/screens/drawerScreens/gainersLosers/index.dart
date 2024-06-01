@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -59,7 +58,6 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
           tabs: const ["Today's Gainers", " Today's Losers"],
           widgets: [
             BaseUiContainer(
-              placeholder: const SimmerScreenDrawerCommon(),
               error: provider.error,
               hasData: gainers != null && gainers.isNotEmpty,
               isLoading: provider.isLoading,
@@ -104,7 +102,6 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
               ),
             ),
             BaseUiContainer(
-              placeholder: const SimmerScreenDrawerCommon(),
               error: provider.errorLosers,
               hasData: losers != null && losers.isNotEmpty,
               isLoading: provider.isLoadingLosers,

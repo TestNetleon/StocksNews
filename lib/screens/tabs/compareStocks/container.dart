@@ -7,7 +7,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/footerList/footer_list.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/headerList/header.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/add_company_container.dart';
-import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/compare_sc_simmer/compare_sc_simmer.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
@@ -73,7 +72,6 @@ class CompareStocksContainer extends StatelessWidget {
         0,
       ),
       child: BaseUiContainer(
-        placeholder: const CompareScreenSimmer(),
         isLoading: provider.isLoading && provider.company.isEmpty,
         hasData: true,
         error: provider.error,

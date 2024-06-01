@@ -40,7 +40,7 @@ class BaseUiContainer extends StatelessWidget {
           // ? showPreparingText
           //     ? placeholder ?? const Loading()
           //     : const SizedBox()
-          placeholder ?? const Loading()
+          const Loading()
           : hasData
               ? child
               : OptionalParent(
