@@ -35,7 +35,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<MoreStocksProvider>()
-          .getGainersLosers(showProgress: false, type: widget.type.name);
+          .getGainersLosers(showProgress: true, type: widget.type.name);
 
       String title = widget.type == StocksType.gainers
           ? "Today’s Top Gainers"
@@ -79,10 +79,10 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                 isLoading: provider.isLoading,
                 errorDispCommon: true,
                 onRefresh: () => provider.getGainersLosers(
-                    showProgress: false, type: widget.type.name),
+                    showProgress: true, type: widget.type.name),
                 child: RefreshControl(
                   onRefresh: () async => provider.getGainersLosers(
-                      showProgress: false, type: widget.type.name),
+                      showProgress: true, type: widget.type.name),
                   canLoadMore: provider.canLoadMore,
                   onLoadMore: () async => provider.getGainersLosers(
                       loadMore: true, type: widget.type.name),
