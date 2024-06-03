@@ -102,13 +102,11 @@ class MostActiveItem extends StatelessWidget {
                   Text(
                     "${data.priceChange.toString()}(${data.percentageChange.toString()})%",
                     style: stylePTSansRegular(
-                        fontSize: 12,
-                        color:
-                            //(data.changesPercentage ?? 0) > 0
-                            //     ?
-                            ThemeColors.accent
-                        //     : Colors.red,
-                        ),
+                      fontSize: 12,
+                      color: (data.percentageChange ?? 0) > 0
+                          ? ThemeColors.accent
+                          : Colors.red,
+                    ),
                   ),
                 ],
               ),
@@ -174,6 +172,13 @@ class MostActiveItem extends StatelessWidget {
               child: Column(
                 children: [
                   Visibility(
+                    visible: data.exchange != null,
+                    child: InnerRowItem(
+                      lable: "Exchange",
+                      value: "${data.exchange}",
+                    ),
+                  ),
+                  Visibility(
                     visible: data.volatility != null,
                     child: InnerRowItem(
                       lable: "Volatility",
@@ -192,7 +197,7 @@ class MostActiveItem extends StatelessWidget {
                     child: InnerRowItem(
                       valueColor: ThemeColors.accent,
                       lable: "Volume Growth",
-                      value: "(${data.volumeGrowth})%",
+                      value: "${data.volumeGrowth}%",
                     ),
                   ),
                   Visibility(

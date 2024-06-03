@@ -289,7 +289,7 @@ class InnerRowItem extends StatelessWidget {
                   Text(lable, style: stylePTSansBold(fontSize: 14)),
                   Flexible(
                     child: onDetailsClick == null
-                        ? Text(value ?? '',
+                        ? Text("null" == value ? "N/A" : value ?? '',
                             style: stylePTSansBold(
                                 fontSize: 14,
                                 color: valueColor ?? Colors.white))

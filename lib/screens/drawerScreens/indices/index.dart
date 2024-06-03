@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/tab_bar_sc_simmer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -52,9 +50,7 @@ class _IndicesIndexState extends State<IndicesIndex> {
           Dimen.padding,
           0,
         ),
-        child: provider.tabLoading
-            ? const TabViewScreenSimmer()
-            : _getWidget(provider),
+        child: provider.tabLoading ? const Loading() : _getWidget(provider),
       ),
     );
   }
@@ -100,7 +96,6 @@ class IndicesData extends StatelessWidget {
 
   Widget _getWidgets(IndicesProvider provider) {
     return BaseUiContainer(
-      placeholder: const SimmerScreenDrawerCommon(),
       error: provider.error,
       hasData: !provider.isLoading && provider.data != null,
       isLoading: provider.isLoading,
