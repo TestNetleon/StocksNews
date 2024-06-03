@@ -45,12 +45,6 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     final name = event.name;
     final metadata = event.metadata.description();
     Utils().showLog("onEvent: $name, metadata: $metadata");
-    if (name == "ERROR") {
-      popUpAlert(
-          message: event.metadata.errorMessage ?? "",
-          title: event.name,
-          icon: Images.alertPopGIF);
-    }
   }
 
   void _onSuccess(LinkSuccess event) {
@@ -87,7 +81,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
       "public_token": publicToken ?? "",
     };
 
-    const String url = "https://sandbox.plaid.com/item/public_token/exchange";
+    const String url =
+        "https://production.plaid.com/item/public_token/exchange";
 
     final Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -124,7 +119,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
       "access_token": accessToken ?? "",
     };
 
-    const String url = "https://sandbox.plaid.com/investments/holdings/get";
+    const String url = "https://production.plaid.com/investments/holdings/get";
 
     final Map<String, String> headers = {
       "Content-Type": "application/json",
