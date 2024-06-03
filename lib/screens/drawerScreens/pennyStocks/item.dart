@@ -98,7 +98,7 @@ class PennyStocksItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.change} (${data.changesPercentage})%",
+                    "${data.change} (${data.changesPercentage}%)",
                     style: stylePTSansRegular(
                       fontSize: 12,
                       color: (data.changesPercentage ?? 0) < 0
@@ -156,7 +156,7 @@ class PennyStocksItem extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: data.exchange != null,
+                    visible: false,
                     child: InnerRowItem(
                       lable: "Exchange",
                       value: "${data.exchange}",
@@ -169,7 +169,7 @@ class PennyStocksItem extends StatelessWidget {
                   InnerRowItem(
                       lable: "Average Volume", value: "${data.avgVolume}"),
                   Visibility(
-                    visible: data.dollarVolume != null,
+                    visible: false,
                     child: InnerRowItem(
                       lable: "Dollar Volume",
                       value: data.dollarVolume,

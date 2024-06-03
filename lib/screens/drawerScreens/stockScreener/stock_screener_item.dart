@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
-import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
+import 'package:stocks_news_new/modals/dividends_res.dart';
+import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -11,15 +11,15 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class FiftyTwoWeeksItem extends StatelessWidget {
-  final FiftyTwoWeeksRes data;
+class StockScreenerItem extends StatelessWidget {
+  final DividendsRes data;
   final int index;
-  final bool fiftyTwoWeeks;
+  final bool dividends;
 //
-  const FiftyTwoWeeksItem({
+  const StockScreenerItem({
     required this.data,
     required this.index,
-    this.fiftyTwoWeeks = false,
+    this.dividends = false,
     super.key,
   });
 
@@ -33,7 +33,7 @@ class FiftyTwoWeeksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FiftyTwoWeeksProvider provider = context.watch<FiftyTwoWeeksProvider>();
+    DividendsProvider provider = context.watch<DividendsProvider>();
 
     return InkWell(
       onTap: () {
@@ -100,10 +100,10 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.changesPercentage.toString()}%",
+                    data.change.toString(),
                     style: stylePTSansRegular(
                       fontSize: 12,
-                      color: (data.changesPercentage ?? 0) > 0
+                      color: (data.change ?? 0) > 0
                           ? ThemeColors.accent
                           : Colors.red,
                     ),
@@ -113,9 +113,9 @@ class FiftyTwoWeeksItem extends StatelessWidget {
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  if (fiftyTwoWeeks) {
-                    provider.setOpenIndexFiftyTwoWeeks(
-                      provider.openIndexFiftyTwoWeeks == index ? -1 : index,
+                  if (dividends) {
+                    provider.setOpenIndexDividendsStocks(
+                      provider.openIndexDividendsStocks == index ? -1 : index,
                     );
                   } else {
                     provider.setOpenIndex(
@@ -130,8 +130,8 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    fiftyTwoWeeks
-                        ? provider.openIndexFiftyTwoWeeks == index
+                    dividends
+                        ? provider.openIndexDividendsStocks == index
                             ? Icons.arrow_upward_rounded
                             : Icons.arrow_downward_rounded
                         : provider.openIndex == index
@@ -146,44 +146,66 @@ class FiftyTwoWeeksItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: fiftyTwoWeeks
-                  ? provider.openIndexFiftyTwoWeeks == index
+              height: dividends
+                  ? provider.openIndexDividendsStocks == index
                       ? null
                       : 0
                   : provider.openIndex == index
                       ? null
                       : 0,
               margin: EdgeInsets.only(
-                top: fiftyTwoWeeks
-                    ? provider.openIndexFiftyTwoWeeks == index
+                top: dividends
+                    ? provider.openIndexDividendsStocks == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
                         ? 10.sp
                         : 0,
-                bottom: fiftyTwoWeeks
-                    ? provider.openIndexFiftyTwoWeeks == index
+                bottom: dividends
+                    ? provider.openIndexDividendsStocks == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
                         ? 10.sp
                         : 0,
               ),
-              child: Column(
+              child: const Column(
                 children: [
                   InnerRowItem(
-                    lable: "52-Week High",
-                    value: "${data.yearHigh}",
+                    lable: "Sector",
+                    value: "Technology",
                   ),
                   InnerRowItem(
-                    lable: "52-Week Low",
-                    value: "${data.yearLow}",
+                    lable: "Industry",
+                    value: "Software - Infrastructure",
                   ),
                   InnerRowItem(
-                      lable: "Previous Close", value: "${data.previousClose}"),
+                    lable: "Country",
+                    value: "us",
+                  ),
                   InnerRowItem(
-                    lable: "Intraday Range",
-                    value: "${data.dayLow}-${data.dayHigh}",
+                    lable: "Beta",
+                    value: "0.893",
+                  ),
+                  InnerRowItem(
+                    lable: "Is Etf",
+                    value: "NO",
+                  ),
+                  InnerRowItem(
+                    lable: "is Fund",
+                    value: "NO",
+                  ),
+                  InnerRowItem(
+                    lable: "Is Actively Trading",
+                    value: "Yes",
+                  ),
+                  InnerRowItem(
+                    lable: "Market Cap",
+                    value: "3.09 T",
+                  ),
+                  InnerRowItem(
+                    lable: "Volume",
+                    value: "47.68 M",
                   ),
                 ],
               ),

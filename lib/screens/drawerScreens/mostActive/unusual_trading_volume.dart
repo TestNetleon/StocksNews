@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/most_active_stocks_res.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/simmer_sc_common.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
@@ -34,7 +33,6 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
     List<MostActiveStocksRes>? data = provider.data;
 
     return BaseUiContainer(
-      placeholder: const SimmerScreenDrawerCommon(),
       error: provider.error,
       hasData: data != null && data.isNotEmpty,
       isLoading: provider.isLoading,

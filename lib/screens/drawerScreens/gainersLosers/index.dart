@@ -31,10 +31,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<MoreStocksProvider>()
-          .getGainersLosers(showProgress: false, type: widget.type.name);
+          .getGainersLosers(showProgress: true, type: widget.type.name);
       context
           .read<MoreStocksProvider>()
-          .getLosers(showProgress: false, type: "losers");
+          .getLosers(showProgress: true, type: "losers");
     });
   }
 
@@ -63,10 +63,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
               isLoading: provider.isLoading,
               errorDispCommon: true,
               onRefresh: () => provider.getGainersLosers(
-                  showProgress: false, type: widget.type.name),
+                  showProgress: true, type: widget.type.name),
               child: RefreshControl(
                 onRefresh: () async => provider.getGainersLosers(
-                    showProgress: false, type: widget.type.name),
+                    showProgress: true, type: widget.type.name),
                 canLoadMore: provider.canLoadMore,
                 onLoadMore: () async => provider.getGainersLosers(
                     loadMore: true, type: widget.type.name),
@@ -107,10 +107,10 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
               isLoading: provider.isLoadingLosers,
               errorDispCommon: true,
               onRefresh: () =>
-                  provider.getLosers(showProgress: false, type: "losers"),
+                  provider.getLosers(showProgress: true, type: "losers"),
               child: RefreshControl(
                 onRefresh: () async =>
-                    provider.getLosers(showProgress: false, type: "losers"),
+                    provider.getLosers(showProgress: true, type: "losers"),
                 canLoadMore: provider.canLoadMoreLosers,
                 onLoadMore: () async =>
                     provider.getLosers(loadMore: true, type: "losers"),

@@ -44,6 +44,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
             ScreenTitle(
               title: provider.title,
               subTitle: provider.subTitle,
+              subTitleHtml: true,
             ),
             Expanded(
               child: RefreshControl(

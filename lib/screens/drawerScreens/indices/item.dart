@@ -190,6 +190,10 @@ class IndicesItem extends StatelessWidget {
               child: Column(
                 children: [
                   InnerRowItem(
+                    lable: "Sector",
+                    value: "${data.sector}",
+                  ),
+                  InnerRowItem(
                     lable: "P/E Ratio",
                     value: "${data.peRatio}",
                   ),

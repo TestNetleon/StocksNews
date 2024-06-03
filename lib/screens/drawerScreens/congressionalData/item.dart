@@ -111,19 +111,19 @@ class CongressionalItem extends StatelessWidget {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "${data?.amount} Shares @ ${data?.currentPrice}",
-                style: stylePTSansRegular(
-                  color: ThemeColors.greyText,
-                  fontSize: 12,
-                ),
-                maxLines: 2,
-                textAlign: TextAlign.end,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Text(
+            //     "${data?.amount} Shares @ ${data?.currentPrice}",
+            //     style: stylePTSansRegular(
+            //       color: ThemeColors.greyText,
+            //       fontSize: 12,
+            //     ),
+            //     maxLines: 2,
+            //     textAlign: TextAlign.end,
+            //     overflow: TextOverflow.ellipsis,
+            //   ),
+            // ),
           ],
         ),
         AnimatedSize(
@@ -136,6 +136,14 @@ class CongressionalItem extends StatelessWidget {
             ),
             child: Column(
               children: [
+                InnerRowItem(
+                  lable: "Current Price ",
+                  value: "${data!.currentPrice}",
+                ),
+                InnerRowItem(
+                  lable: "Trade Data",
+                  value: "${data?.amount}",
+                ),
                 InnerRowItem(
                   lable: "Date Filed",
                   value: "${data!.dateFiled}",
