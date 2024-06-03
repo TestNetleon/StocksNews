@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
@@ -38,6 +39,7 @@ Future<ApiResponse> apiRequest({
   RequestType type = RequestType.post,
   required String url,
   Map? request,
+  FormData? formData,
   callback,
   header,
   baseUrl = Apis.baseUrl,
@@ -56,10 +58,14 @@ Future<ApiResponse> apiRequest({
     Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
     headers.addAll(fcmHeaders);
   }
-
   Utils().showLog("URL  =  ${baseUrl + url}");
   Utils().showLog("HEADERS  =  ${headers.toString()}");
-  Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
+  if (formData != null) {
+    Utils().showLog(
+        "REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}");
+  } else {
+    Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
+  }
 
   Future.delayed(Duration.zero, () {
     if (showProgress) {
@@ -69,9 +75,29 @@ Future<ApiResponse> apiRequest({
 
   try {
     late http.Response response;
-    response = await http
-        .post(Uri.parse(baseUrl + url), body: request, headers: headers)
-        .timeout(timeoutDuration);
+    if (formData != null) {
+      var request = http.MultipartRequest("POST", Uri.parse(baseUrl + url));
+      request.headers.addAll(headers);
+      request.fields.addAll(Map.fromEntries(formData.fields));
+
+      if (formData.files.isNotEmpty) {
+        for (var file in formData.files) {
+          request.files.add(await http.MultipartFile.fromPath(
+              file.key, file.value as String));
+        }
+      }
+      var streamedResponse = await request.send();
+      response = await http.Response.fromStream(streamedResponse);
+    } else {
+      response = await http
+          .post(
+            Uri.parse(baseUrl + url),
+            body: request,
+            headers: headers,
+          )
+          .timeout(timeoutDuration);
+    }
+
     Utils().showLog("RESPONSE  =  ${response.body}");
     if (response.statusCode == 200) {
       if (showProgress) closeGlobalProgressDialog();
@@ -290,4 +316,23 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   }
+}
+
+FormData mapToFormData(Map<String, dynamic>? map) {
+  FormData formData = FormData();
+  map?.forEach((key, value) {
+    if (value is List) {
+      for (var listItem in value) {
+        formData.fields.add(MapEntry(key, listItem));
+      }
+    } else if (value is Map) {
+      for (var entry in value.entries) {
+        formData.fields.add(MapEntry('$key[${entry.key}]', entry.value));
+      }
+    } else {
+      formData.fields.add(MapEntry(key, value));
+    }
+  });
+
+  return formData;
 }

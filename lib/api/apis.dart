@@ -20,6 +20,8 @@ class Apis {
   static const whatWeDo = "/what-we-do";
   static const lowPricesTab = "/low-priced-stocks";
   static const exchanageTab = "/exchanage";
+  static const savePlaidPortfolio = "/save-plaid-portfolio";
+  static const plaidPortfolio = "/plaid-portfolio";
 
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const indices = "/indices";
