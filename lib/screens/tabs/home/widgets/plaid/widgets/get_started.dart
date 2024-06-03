@@ -101,7 +101,6 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
         Utils().showLog("ACCESS TOKEN ${responseData['access_token']}");
         Utils().showLog("Exchange Token Data: $responseData");
         String accessToken = '${responseData['access_token']}';
-
         _getHoldings(accessToken: accessToken);
       } else {
         debugPrint("Failed to load data: ${response.statusCode}");
@@ -120,7 +119,6 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     };
 
     const String url = "https://production.plaid.com/investments/holdings/get";
-
     final Map<String, String> headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
