@@ -189,6 +189,14 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         onRefresh: () => refreshData(null),
       );
       if (response.status) {
+        //...........PLAID KEYS SET............
+        String basePlaidUrl = "https://sandbox.plaid.com";
+        clientId = "665336b8bff5c6001ce3aafc";
+        secret = "7181521c1dd4c3353ea995024697ef";
+        createAPI = "$basePlaidUrl/link/token/create";
+        exchangeAPI = "$basePlaidUrl/item/public_token/exchange";
+        holdingsAPI = "$basePlaidUrl/investments/holdings/get";
+        //.....................................
         loginTxt = response.extra.loginText;
         signUpTxt = response.extra?.signUpText;
         _homeSliderRes = HomeSliderRes.fromJson(response.data);

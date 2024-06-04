@@ -31,14 +31,12 @@ bool isAppInForeground = false;
 bool isShowingError = false;
 String apiKeyFMP = "";
 
-class PlaidKeys {
-  String clientId;
-  String secret;
-  PlaidKeys({
-    required this.clientId,
-    required this.secret,
-  });
-}
+String? clientId;
+String? secret;
+String? createAPI;
+String? exchangeAPI;
+String? holdingsAPI;
+
 //------------------------------------------------
 
 class Images {
@@ -71,7 +69,6 @@ class Images {
   static const String otpSuccessGIT = "assets/images/otp_success.gif";
   static const String updateGIF = "assets/images/update.gif";
   static const String serverErrorGIF = "assets/images/server_error.json";
-  // static const String networkErrorGIF = "assets/images/connection_error.json";
   static const String connectionGIF = "assets/images/connection.gif";
 
   static const String start1 = "assets/images/1st_page.png";

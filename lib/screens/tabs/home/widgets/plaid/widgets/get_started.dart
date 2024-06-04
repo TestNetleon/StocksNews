@@ -15,6 +15,9 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../../../../../auth/bottomSheets/login_sheet.dart';
+import '../../../../../auth/bottomSheets/login_sheet_tablet.dart';
+
 class PlaidHomeGetStarted extends StatefulWidget {
   const PlaidHomeGetStarted({super.key});
 
@@ -25,9 +28,6 @@ class PlaidHomeGetStarted extends StatefulWidget {
 class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   // String clientId = "665336b8bff5c6001ce3aafc";
   // String secret = "7181521c1dd4c3353ea995024697ef";
-
-  String clientId = "665336b8bff5c6001ce3aafc";
-  String secret = "d4e4ecf0577bd79bd09576789cbde4";
 
   StreamSubscription<LinkEvent>? _streamEvent;
   StreamSubscription<LinkExit>? _streamExit;
@@ -40,6 +40,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     _streamExit = PlaidLink.onExit.listen(_onExit);
     _streamSuccess = PlaidLink.onSuccess.listen(_onSuccess);
   }
+
+  void getPlaidKeys() {}
 
   void _onEvent(LinkEvent event) {
     final name = event.name;
@@ -77,12 +79,12 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
 
   void _exchangeToken({String? publicToken}) async {
     final Map<String, dynamic> request = {
-      "client_id": clientId,
-      "secret": secret,
+      "client_id": clientId ?? "665336b8bff5c6001ce3aafc",
+      "secret": secret ?? "d4e4ecf0577bd79bd09576789cbde4",
       "public_token": publicToken ?? "",
     };
 
-    const String url =
+    String url = exchangeAPI ??
         "https://production.plaid.com/item/public_token/exchange";
 
     final Map<String, String> headers = {
@@ -119,7 +121,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
       "access_token": accessToken ?? "",
     };
 
-    const String url = "https://production.plaid.com/investments/holdings/get";
+    String url =
+        holdingsAPI ?? "https://production.plaid.com/investments/holdings/get";
     final Map<String, String> headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -148,9 +151,12 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     }
   }
 
-  void _plaidAPi() async {
+  Future _plaidAPi() async {
     Utils().showLog("Client ID => $clientId");
     Utils().showLog("Secret => $secret");
+    Utils().showLog("Create API => $createAPI");
+    Utils().showLog("Exchange API => $exchangeAPI");
+    Utils().showLog("Holdings API => $holdingsAPI");
 
     UserRes? userRes = context.read<UserProvider>().user;
     final Map<String, dynamic> request = {
@@ -160,14 +166,13 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
       "client_name": "Personal Finance App",
       // "products": ["auth", "investments"],
       "products": ["investments"],
-
       "transactions": {"days_requested": 730},
       "country_codes": ["US"],
       "language": "en",
       "android_package_name": "com.stocks.news"
     };
 
-    const String url = "https://production.plaid.com/link/token/create";
+    String url = createAPI ?? "https://production.plaid.com/link/token/create";
 
     final Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -196,17 +201,33 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
         debugPrint("Response body: ${response.body}");
       }
     } catch (e) {
+      popUpAlert(
+        message: Const.errSomethingWrong,
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
       debugPrint("Error: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    UserProvider provider = context.watch<UserProvider>();
+
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
-      onTap: () {
-        _plaidAPi();
-      },
+      onTap: provider.user == null
+          ? () async {
+              isPhone ? await loginSheet() : await loginSheetTablet();
+              if (navigatorKey.currentContext!.read<UserProvider>().user ==
+                  null) {
+                return;
+              }
+              await _plaidAPi();
+            }
+          : () {
+              _plaidAPi();
+            },
       child: Ink(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
