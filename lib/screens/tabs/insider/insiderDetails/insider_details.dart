@@ -1,9 +1,10 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-// ignore: unused_import
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter_insider_company.dart';

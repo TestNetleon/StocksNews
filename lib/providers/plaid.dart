@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_final_fields
+
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -29,8 +32,23 @@ class PlaidProvider extends ChangeNotifier {
   Status get statusG => _statusG;
   bool get isLoadingG => _statusG == Status.loading;
 
-  List<PlaidDataRes>? _data;
-  List<PlaidDataRes>? get data => _data;
+  // List<PlaidDataRes>? _data;
+  // List<PlaidDataRes>? get data => _data;
+
+  //Get Tab PortFolio
+  String? _errorT;
+  String? get errorT => _errorT ?? Const.errSomethingWrong;
+  Status _statusT = Status.ideal;
+  Status get statusT => _statusT;
+  bool get isLoadingT => _statusT == Status.loading;
+
+  List<String> _tabs = [];
+  List<String> get tabs => _tabs;
+
+  Map<String, PlaidTabHolder?> _tabsData = {};
+  Map<String, PlaidTabHolder?> get tabsData => _tabsData;
+
+  int selectedTab = 0;
 
   void setStatus(status) {
     _status = status;
@@ -40,6 +58,84 @@ class PlaidProvider extends ChangeNotifier {
   void setStatusG(status) {
     _statusG = status;
     notifyListeners();
+  }
+
+  void setStatusT(status) {
+    _statusT = status;
+    notifyListeners();
+  }
+
+  void tabChange(index, String? name) {
+    selectedTab = index;
+    notifyListeners();
+    if (name == null) return;
+    if (_tabsData[name]?.data != null || _tabsData[name]?.error != null) return;
+    getPlaidPortfolioData(name: name);
+  }
+
+  Future getTabData() async {
+    _tabs = [];
+    selectedTab = 0;
+    setStatusT(Status.loading);
+    Timer(const Duration(seconds: 1), () {
+      _tabs = ['Equality', 'Cash', 'Mutual Fund', 'Etf', 'Derivative'];
+      if (_tabs.isNotEmpty) {
+        getPlaidPortfolioData(name: _tabs[selectedTab]);
+      }
+      setStatusT(Status.loaded);
+    });
+  }
+
+  Future onRefresh() async {
+    await getPlaidPortfolioData(name: _tabs[selectedTab], refreshing: true);
+  }
+
+  Future getPlaidPortfolioData({
+    refreshing = false,
+    String name = "Equity",
+  }) async {
+    Utils().showLog("=====NAME $name======");
+    // setStatusG(Status.loading);
+    if (_tabsData[name]?.data == null || refreshing) {
+      _tabsData[name] = PlaidTabHolder(
+        data: null,
+        error: null,
+        loading: true,
+      );
+    }
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.plaidPortfolio,
+        formData: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        // _data = plaidDataResFromJson(jsonEncode(response.data));
+        _tabsData[name] = PlaidTabHolder(
+          data: plaidDataResFromJson(jsonEncode(response.data)),
+          error: null,
+          loading: false,
+        );
+      } else {
+        // _data = null;
+        _errorG = response.message;
+        _tabsData[name] = PlaidTabHolder(
+          data: null,
+          error: response.message,
+          loading: false,
+        );
+      }
+      setStatusG(Status.loaded);
+    } catch (e) {
+      // _data = null;
+      // _errorG = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusG(Status.loaded);
+    }
   }
 
   Future sendPlaidPortfolio({showProgress = true, List<dynamic>? data}) async {
@@ -74,31 +170,16 @@ class PlaidProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     }
   }
+}
 
-  Future getPlaidPortfolioData({showProgress = true}) async {
-    setStatusG(Status.loading);
-    try {
-      FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      });
-      ApiResponse response = await apiRequest(
-        url: Apis.plaidPortfolio,
-        formData: request,
-        showProgress: showProgress,
-      );
-      if (response.status) {
-        _data = plaidDataResFromJson(jsonEncode(response.data));
-      } else {
-        _data = null;
-        _errorG = response.message;
-      }
-      setStatusG(Status.loaded);
-    } catch (e) {
-      _data = null;
-      _errorG = Const.errSomethingWrong;
-      Utils().showLog(e.toString());
-      setStatusG(Status.loaded);
-    }
-  }
+class PlaidTabHolder {
+  List<PlaidDataRes>? data;
+  String? error;
+  bool loading;
+
+  PlaidTabHolder({
+    this.data,
+    this.loading = true,
+    this.error,
+  });
 }
