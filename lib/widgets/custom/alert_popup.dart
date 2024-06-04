@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -13,6 +14,7 @@ void popUpAlert({
   bool cancel = false,
   String? okText,
   bool canPop = true,
+  bool showButton = true,
 }) {
   showDialog(
     context: navigatorKey.currentContext!,
@@ -26,6 +28,7 @@ void popUpAlert({
         cancel: cancel,
         okText: okText,
         canPop: canPop,
+        showButton: showButton,
       );
     },
   );
@@ -36,12 +39,14 @@ class AlertPopupCustom extends StatelessWidget {
   final String? okText;
   final Function()? onTap;
   final bool cancel;
+  final bool showButton;
   final bool canPop;
   const AlertPopupCustom({
     super.key,
     required this.message,
     required this.title,
     required this.icon,
+    this.showButton = true,
     this.cancel = false,
     this.onTap,
     this.okText,
@@ -92,34 +97,37 @@ class AlertPopupCustom extends StatelessWidget {
                             stylePTSansRegular(color: ThemeColors.background),
                       ),
                       const SpacerVertical(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Visibility(
-                            visible: cancel,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
+                      Visibility(
+                        visible: showButton,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Visibility(
+                              visible: cancel,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "Cancel",
+                                  style: stylePTSansBold(
+                                      color: ThemeColors.background),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: onTap ??
+                                  () {
+                                    Navigator.of(context).pop();
+                                  },
                               child: Text(
-                                "Cancel",
+                                okText ?? "OK",
                                 style: stylePTSansBold(
                                     color: ThemeColors.background),
                               ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: onTap ??
-                                () {
-                                  Navigator.of(context).pop();
-                                },
-                            child: Text(
-                              okText ?? "OK",
-                              style: stylePTSansBold(
-                                  color: ThemeColors.background),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

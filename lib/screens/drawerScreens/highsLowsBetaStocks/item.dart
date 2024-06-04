@@ -99,18 +99,6 @@ class HighLowBetaStocksItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    "${data.beta.toString()}%",
-                    style: stylePTSansRegular(
-                        fontSize: 12,
-                        color:
-                            //(data.changesPercentage ?? 0) > 0
-                            //     ?
-                            ThemeColors.accent
-                        //     : Colors.red,
-                        ),
-                  ),
                 ],
               ),
               const SpacerHorizontal(width: 10),
@@ -174,6 +162,10 @@ class HighLowBetaStocksItem extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  InnerRowItem(
+                    lable: "Beta",
+                    value: "${data.beta}",
+                  ),
                   InnerRowItem(
                     lable: "PE Ratio",
                     value: "${data.pe}",

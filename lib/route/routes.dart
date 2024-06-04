@@ -24,10 +24,12 @@ import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
+import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
@@ -55,6 +57,7 @@ import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.
 import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
@@ -123,6 +126,7 @@ class Routes {
     DividendsScreen.path: (_) => const DividendsScreen(),
     CompareNew.path: (_) => const CompareNew(),
     EarningsScreen.path: (_) => const EarningsScreen(),
+    StockScreenerScreen.path: (_) => const StockScreenerScreen(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -353,6 +357,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => FaqProvide()),
       ChangeNotifierProvider(create: (_) => DividendsProvider()),
       ChangeNotifierProvider(create: (_) => EarningsProvider()),
+      ChangeNotifierProvider(create: (_) => StockScreenerProvider()),
+      ChangeNotifierProvider(create: (_) => PlaidProvider()),
 
       // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(create: (_) => PennyStocksProvider()),

@@ -102,13 +102,11 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                   Text(
                     "${data.changesPercentage.toString()}%",
                     style: stylePTSansRegular(
-                        fontSize: 12,
-                        color:
-                            //(data.changesPercentage ?? 0) > 0
-                            //     ?
-                            ThemeColors.accent
-                        //     : Colors.red,
-                        ),
+                      fontSize: 12,
+                      color: (data.changesPercentage ?? 0) > 0
+                          ? ThemeColors.accent
+                          : Colors.red,
+                    ),
                   ),
                 ],
               ),

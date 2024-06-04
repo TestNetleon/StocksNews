@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -15,6 +16,7 @@ class ScreenTitle extends StatelessWidget {
   final String? subTitle;
   final bool divider;
   final EdgeInsets? dividerPadding;
+  final bool subTitleHtml;
 
   const ScreenTitle({
     this.title,
@@ -25,6 +27,7 @@ class ScreenTitle extends StatelessWidget {
     this.subTitle,
     this.canPopBack = false,
     this.divider = true,
+    this.subTitleHtml = false,
     this.optionalWidget,
   });
 //
@@ -95,17 +98,23 @@ class ScreenTitle extends StatelessWidget {
                 ),
               ),
             ),
-          Visibility(
-            visible: subTitle != null,
-            child: Container(
-              margin: EdgeInsets.only(top: 3.sp),
-              child: Text(
-                subTitle ?? "",
-                style: stylePTSansRegular(
-                    fontSize: 14, color: ThemeColors.greyText),
-              ),
-            ),
-          ),
+          subTitleHtml
+              ? HtmlWidget(
+                  subTitle ?? "",
+                  textStyle: stylePTSansRegular(
+                      fontSize: 14, color: ThemeColors.greyText),
+                )
+              : Visibility(
+                  visible: subTitle != null,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 3.sp),
+                    child: Text(
+                      subTitle ?? "",
+                      style: stylePTSansRegular(
+                          fontSize: 14, color: ThemeColors.greyText),
+                    ),
+                  ),
+                ),
           Visibility(
             visible: divider,
             child: Padding(

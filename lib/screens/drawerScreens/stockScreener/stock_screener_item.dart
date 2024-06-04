@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
-import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/modals/dividends_res.dart';
+import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-class GainerLoserItem extends StatelessWidget {
-  final GainersLosersDataRes data;
+class StockScreenerItem extends StatelessWidget {
+  final DividendsRes data;
   final int index;
-  final bool losers;
+  final bool dividends;
 //
-  const GainerLoserItem({
+  const StockScreenerItem({
     required this.data,
     required this.index,
-    this.losers = false,
+    this.dividends = false,
     super.key,
   });
 
@@ -28,14 +27,13 @@ class GainerLoserItem extends StatelessWidget {
     Navigator.pushNamed(
       context,
       StockDetails.path,
-      // arguments: data.symbol,
       arguments: {"slug": data.symbol},
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    MoreStocksProvider provider = context.watch<MoreStocksProvider>();
+    DividendsProvider provider = context.watch<DividendsProvider>();
 
     return InkWell(
       onTap: () {
@@ -94,52 +92,30 @@ class GainerLoserItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(data.price ?? "", style: stylePTSansBold(fontSize: 14)),
-                  const SpacerVertical(height: 2),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      data.displayPercentage > 0
-                          ? Icon(
-                              Icons.arrow_upward,
-                              size: 14,
-                              color: data.displayPercentage > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                            )
-                          : Icon(
-                              Icons.arrow_downward_rounded,
-                              size: 14,
-                              color: data.displayPercentage > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text:
-                                  "${data.displayChange} (${data.displayPercentage.toCurrency()}%)",
-                              style: stylePTSansRegular(
-                                fontSize: 11,
-                                color: data.displayPercentage > 0
-                                    ? Colors.green
-                                    : Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "${data.price}",
+                    style: stylePTSansBold(fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SpacerVertical(height: 5),
+                  Text(
+                    data.change.toString(),
+                    style: stylePTSansRegular(
+                      fontSize: 12,
+                      color: (data.change ?? 0) > 0
+                          ? ThemeColors.accent
+                          : Colors.red,
+                    ),
                   ),
                 ],
               ),
               const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
-                  if (losers) {
-                    provider.setOpenIndexLosers(
-                      provider.openIndexLosers == index ? -1 : index,
+                  if (dividends) {
+                    provider.setOpenIndexDividendsStocks(
+                      provider.openIndexDividendsStocks == index ? -1 : index,
                     );
                   } else {
                     provider.setOpenIndex(
@@ -154,8 +130,8 @@ class GainerLoserItem extends StatelessWidget {
                   margin: EdgeInsets.only(left: 8.sp),
                   padding: const EdgeInsets.all(3),
                   child: Icon(
-                    losers
-                        ? provider.openIndexLosers == index
+                    dividends
+                        ? provider.openIndexDividendsStocks == index
                             ? Icons.arrow_upward_rounded
                             : Icons.arrow_downward_rounded
                         : provider.openIndex == index
@@ -170,46 +146,66 @@ class GainerLoserItem extends StatelessWidget {
           AnimatedSize(
             duration: const Duration(milliseconds: 150),
             child: Container(
-              height: losers
-                  ? provider.openIndexLosers == index
+              height: dividends
+                  ? provider.openIndexDividendsStocks == index
                       ? null
                       : 0
                   : provider.openIndex == index
                       ? null
                       : 0,
               margin: EdgeInsets.only(
-                top: losers
-                    ? provider.openIndexLosers == index
+                top: dividends
+                    ? provider.openIndexDividendsStocks == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
                         ? 10.sp
                         : 0,
-                bottom: losers
-                    ? provider.openIndexLosers == index
+                bottom: dividends
+                    ? provider.openIndexDividendsStocks == index
                         ? 10.sp
                         : 0
                     : provider.openIndex == index
                         ? 10.sp
                         : 0,
               ),
-              child: Column(
+              child: const Column(
                 children: [
                   InnerRowItem(
-                    lable: "Previous Close",
-                    value: data.previousClose,
+                    lable: "Sector",
+                    value: "Technology",
                   ),
                   InnerRowItem(
-                    lable: "Range",
-                    value: data.range,
+                    lable: "Industry",
+                    value: "Software - Infrastructure",
+                  ),
+                  InnerRowItem(
+                    lable: "Country",
+                    value: "us",
+                  ),
+                  InnerRowItem(
+                    lable: "Beta",
+                    value: "0.893",
+                  ),
+                  InnerRowItem(
+                    lable: "Is Etf",
+                    value: "NO",
+                  ),
+                  InnerRowItem(
+                    lable: "is Fund",
+                    value: "NO",
+                  ),
+                  InnerRowItem(
+                    lable: "Is Actively Trading",
+                    value: "Yes",
+                  ),
+                  InnerRowItem(
+                    lable: "Market Cap",
+                    value: "3.09 T",
                   ),
                   InnerRowItem(
                     lable: "Volume",
-                    value: "${data.volume}",
-                  ),
-                  InnerRowItem(
-                    lable: "Average Volume",
-                    value: "${data.avgVolume}",
+                    value: "47.68 M",
                   ),
                 ],
               ),

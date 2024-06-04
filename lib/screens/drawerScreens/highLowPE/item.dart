@@ -84,14 +84,34 @@ class HighLowPEItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
-                  Text(
-                    "${data?.change?.value} (${data?.change?.percentage})%",
-                    style: stylePTSansRegular(
-                      fontSize: 12,
-                      color: data?.change?.direction == "up"
-                          ? ThemeColors.accent
-                          : Colors.red,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      data?.change?.percentage > 0
+                          ? Icon(
+                              Icons.arrow_upward,
+                              size: 14,
+                              color: data?.change?.percentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            )
+                          : Icon(
+                              Icons.arrow_downward_rounded,
+                              size: 14,
+                              color: data?.change?.percentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                      Text(
+                        "${data?.change?.value} (${data?.change?.percentage})%",
+                        style: stylePTSansRegular(
+                          fontSize: 12,
+                          color: data?.change?.direction == "up"
+                              ? ThemeColors.accent
+                              : Colors.red,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
