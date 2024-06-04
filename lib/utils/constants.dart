@@ -30,6 +30,15 @@ bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
 String apiKeyFMP = "";
+
+class PlaidKeys {
+  String clientId;
+  String secret;
+  PlaidKeys({
+    required this.clientId,
+    required this.secret,
+  });
+}
 //------------------------------------------------
 
 class Images {

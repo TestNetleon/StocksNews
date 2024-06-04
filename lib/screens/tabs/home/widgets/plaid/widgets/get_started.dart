@@ -52,11 +52,12 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     final metadata = event.metadata.description();
     Utils().showLog("onSuccess: $token, metadata: $metadata");
     popUpAlert(
-        message: "Please wait while we are fetching your data...",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-        canPop: false,
-        showButton: false);
+      message: "Please wait while we are fetching your data...",
+      title: "Alert",
+      icon: Images.alertPopGIF,
+      canPop: false,
+      showButton: false,
+    );
     _exchangeToken(publicToken: token);
   }
 
