@@ -63,15 +63,17 @@ class HomeContainer extends StatelessWidget {
                         provider.statusTrending != Status.loading))
                       const StockInBuzz(),
                     const HomeMyAlerts(),
+
                     HomePartialLoading(
                       loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
                       error: provider.statusTrending != Status.ideal &&
                               !provider.isLoadingTrending &&
                               provider.homeTrendingRes == null
-                          ? provider.homeTrendingRes?.gainers.isEmpty == true
+                          ? provider.homeTrendingRes?.gainers?.isEmpty == true
                               ? HomeError.gainers
-                              : provider.homeTrendingRes?.losers.isEmpty == true
+                              : provider.homeTrendingRes?.losers?.isEmpty ==
+                                      true
                                   ? HomeError.loosers
                                   : HomeError.trending
                           : null,

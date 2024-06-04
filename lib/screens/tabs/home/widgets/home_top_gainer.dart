@@ -8,27 +8,40 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 
-class HomeTopGainer extends StatelessWidget {
+class HomeTopGainer extends StatefulWidget {
   const HomeTopGainer({super.key});
+
+  @override
+  State<HomeTopGainer> createState() => _HomeTopGainerState();
+}
+
+class _HomeTopGainerState extends State<HomeTopGainer> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<HomeProvider>().getHomeTopGainerData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
 
-    if (provider.homeTrendingRes?.gainers.isEmpty == true) {
+    if (provider.homeTopGainerRes?.gainers?.isEmpty == true) {
       return const ErrorDisplayWidget(
         error: Const.errNoRecord,
         smallHeight: true,
       );
     }
-//
+
     return ListView.separated(
-      itemCount: provider.homeTrendingRes?.gainers.length ?? 0,
+      itemCount: provider.homeTopGainerRes?.gainers?.length ?? 0,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.only(top: 12.sp),
       itemBuilder: (context, index) {
-        Top top = provider.homeTrendingRes!.gainers[index];
+        Top top = provider.homeTopGainerRes!.gainers![index];
         return StocksItem(top: top, gainer: true);
       },
       separatorBuilder: (BuildContext context, int index) {

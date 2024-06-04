@@ -3,7 +3,6 @@
 //     final HomeTrendingRes = HomeTrendingResFromJson(jsonString);
 
 import 'dart:convert';
-
 import 'home_res.dart';
 
 HomeTrendingRes homeTrendingResFromJson(String str) =>
@@ -12,12 +11,11 @@ HomeTrendingRes homeTrendingResFromJson(String str) =>
 String homeTrendingResToJson(HomeTrendingRes data) =>
     json.encode(data.toJson());
 
-//
 class HomeTrendingRes {
   final List<HomeTrendingData> trending;
-  final List<Top> gainers;
-  final List<Top> losers;
   final List<Top> popular;
+  final List<Top>? gainers;
+  final List<Top>? losers;
 
   final TextRes? text;
 
@@ -35,16 +33,24 @@ class HomeTrendingRes {
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         trending: List<HomeTrendingData>.from(
             json["trending"].map((x) => HomeTrendingData.fromJson(x))),
-        gainers: List<Top>.from(json["gainers"].map((x) => Top.fromJson(x))),
-        losers: List<Top>.from(json["losers"].map((x) => Top.fromJson(x))),
+        gainers: json["gainers"] == null
+            ? null
+            : List<Top>.from(json["gainers"].map((x) => Top.fromJson(x))),
+        losers: json["gainers"] == null
+            ? null
+            : List<Top>.from(json["losers"].map((x) => Top.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "trending": List<dynamic>.from(trending.map((x) => x.toJson())),
-        "gainers": List<dynamic>.from(gainers.map((x) => x.toJson())),
-        "actives": List<dynamic>.from(gainers.map((x) => x.toJson())),
-        "losers": List<dynamic>.from(losers.map((x) => x.toJson())),
+        "actives": List<dynamic>.from(popular.map((x) => x.toJson())),
         "text": text?.toJson(),
+        "gainers": gainers == null
+            ? null
+            : List<dynamic>.from(gainers!.map((x) => x.toJson())),
+        "losers": losers == null
+            ? null
+            : List<dynamic>.from(losers!.map((x) => x.toJson())),
       };
 }
 
