@@ -96,21 +96,41 @@ class GainerLoserItem extends StatelessWidget {
                 children: [
                   Text(data.price ?? "", style: stylePTSansBold(fontSize: 14)),
                   const SpacerVertical(height: 2),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              "${data.displayChange} (${data.displayPercentage.toCurrency()}%)",
-                          style: stylePTSansRegular(
-                            fontSize: 11,
-                            color: data.displayPercentage > 0
-                                ? Colors.green
-                                : Colors.red,
-                          ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      data.displayPercentage > 0
+                          ? Icon(
+                              Icons.arrow_upward,
+                              size: 14,
+                              color: data.displayPercentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            )
+                          : Icon(
+                              Icons.arrow_downward_rounded,
+                              size: 14,
+                              color: data.displayPercentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  "${data.displayChange} (${data.displayPercentage.toCurrency()}%)",
+                              style: stylePTSansRegular(
+                                fontSize: 11,
+                                color: data.displayPercentage > 0
+                                    ? Colors.green
+                                    : Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
