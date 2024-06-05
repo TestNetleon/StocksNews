@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -66,6 +67,7 @@ class HomePlaidAddedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaidProvider provider = context.watch<PlaidProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -83,7 +85,7 @@ class HomePlaidAddedContainer extends StatelessWidget {
                 ),
                 const SpacerHorizontal(width: 5),
                 Text(
-                  "\$0.00",
+                  homeProvider.homePortfolio?.bottom?.currentBalance ?? "",
                   style: stylePTSansRegular(),
                 ),
               ],
@@ -102,118 +104,113 @@ class HomePlaidAddedContainer extends StatelessWidget {
               widgets: List.generate(
                 provider.tabs.length,
                 (index) => CommonRefreshIndicator(
-                  onRefresh: () async {
-                    provider.onRefresh();
-                  },
-                  child: BaseUiContainer(
-                    error: provider
-                        .tabsData[provider.tabs[provider.selectedTab]]?.error,
-                    hasData: provider
-                                .tabsData[provider.tabs[provider.selectedTab]]
-                                ?.data !=
-                            null &&
-                        (provider.tabsData[provider.tabs[provider.selectedTab]]
-                                ?.data?.isNotEmpty ??
-                            false),
-                    isLoading: provider
-                            .tabsData[provider.tabs[provider.selectedTab]]
-                            ?.loading ??
-                        true,
-                    errorDispCommon: true,
-                    showPreparingText: true,
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(bottom: Dimen.padding),
-                      // scrollDirection: Axis.horizontal,
-                      // physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        PlaidDataRes? data = provider
-                            .tabsData[provider.tabs[provider.selectedTab]]
-                            ?.data?[index];
-
-                        return Stack(
-                          children: [
-                            Positioned(
-                              left: 6,
-                              right: 6,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(5),
-                                        topRight: Radius.circular(5)),
-                                    color: ThemeColors.greyBorder),
-                                height: 30,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 2, vertical: 4),
-                                child: Row(
-                                  children: [
-                                    const CircleAvatar(
-                                      child: Icon(
-                                        Icons.trending_up_rounded,
-                                        size: 10,
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: RichText(
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        text: TextSpan(
-                                            text: "2K ",
-                                            style:
-                                                stylePTSansBold(fontSize: 12),
-                                            children: [
-                                              TextSpan(
-                                                  text:
-                                                      "users bought this in last 30 days.",
-                                                  style: stylePTSansRegular(
-                                                      fontSize: 12))
-                                            ]),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 30),
-                              // width: constraints.maxWidth / 1.2,
-                              padding: const EdgeInsets.all(10),
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color.fromARGB(255, 23, 23, 23),
-                                    // ThemeColors.greyBorder,
-                                    Color.fromARGB(255, 48, 48, 48),
-                                  ],
-                                ),
-                              ),
-                              child: HomePlaidItem(data: data),
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        // return const Divider(
-                        //   height: 20,
-                        //   color: ThemeColors.greyBorder,
-                        // );
-                        return const SpacerVertical(height: 20);
-                      },
-                      itemCount: provider
-                              .tabsData[provider.tabs[provider.selectedTab]]
-                              ?.data
-                              ?.length ??
-                          0,
-                    ),
-                  ),
-                ),
+                    onRefresh: () async {
+                      provider.onRefresh();
+                    },
+                    child: HomePlaidBase(
+                      name: provider.tabs[index],
+                    )),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HomePlaidBase extends StatelessWidget {
+  final String name;
+  const HomePlaidBase({super.key, required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    PlaidProvider provider = context.watch<PlaidProvider>();
+    PlaidTabHolder? plaidTabHolder = provider.tabsData[name];
+
+    return BaseUiContainer(
+      error: plaidTabHolder?.error,
+      hasData: plaidTabHolder?.data != null &&
+          (plaidTabHolder?.data?.isNotEmpty ?? false),
+      isLoading: plaidTabHolder?.loading ?? true,
+      errorDispCommon: true,
+      showPreparingText: true,
+      child: ListView.separated(
+        padding: const EdgeInsets.only(bottom: Dimen.padding),
+        // scrollDirection: Axis.horizontal,
+        // physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          PlaidDataRes? data = plaidTabHolder?.data?[index];
+
+          return Stack(
+            children: [
+              Positioned(
+                left: 6,
+                right: 6,
+                child: Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5)),
+                      color: ThemeColors.greyBorder),
+                  height: 30,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+                  child: Row(
+                    children: [
+                      const CircleAvatar(
+                        child: Icon(
+                          Icons.trending_up_rounded,
+                          size: 10,
+                        ),
+                      ),
+                      Flexible(
+                        child: RichText(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                              text: "2K ",
+                              style: stylePTSansBold(fontSize: 12),
+                              children: [
+                                TextSpan(
+                                    text: "users bought this in last 30 days.",
+                                    style: stylePTSansRegular(fontSize: 12))
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 30),
+                // width: constraints.maxWidth / 1.2,
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 23, 23, 23),
+                      // ThemeColors.greyBorder,
+                      Color.fromARGB(255, 48, 48, 48),
+                    ],
+                  ),
+                ),
+                child: HomePlaidItem(data: data),
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (context, index) {
+          // return const Divider(
+          //   height: 20,
+          //   color: ThemeColors.greyBorder,
+          // );
+          return const SpacerVertical(height: 20);
+        },
+        itemCount: plaidTabHolder?.data?.length ?? 0,
       ),
     );
   }

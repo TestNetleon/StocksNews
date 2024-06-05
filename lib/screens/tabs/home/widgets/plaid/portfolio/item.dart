@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -172,9 +171,9 @@ class HomePlaidItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
-                visible: data?.type != '' && data?.type != null,
+                visible: data?.closePrice != '' && data?.closePrice != null,
                 child: Text(
-                  data?.type.toString().capitalizeWords() ?? "",
+                  data?.closePrice ?? "",
                   style: stylePTSansRegular(),
                 ),
               ),
