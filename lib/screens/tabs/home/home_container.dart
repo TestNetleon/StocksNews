@@ -8,6 +8,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_w
 // ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index_copy.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
@@ -16,7 +17,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
 import 'widgets/home_inner_tabs.dart';
-import 'widgets/plaid/index.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
 

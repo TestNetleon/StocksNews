@@ -56,8 +56,9 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
 
   void _onSuccess(LinkSuccess event) {
     final token = event.publicToken;
-    final metadata = event.metadata.description();
+    final metadata = event.metadata;
     Utils().showLog("onSuccess: $token, metadata: $metadata");
+
     popUpAlert(
       message: "Please wait while we are fetching your data...",
       title: "Alert",
@@ -144,7 +145,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-        // Utils().showLog("Get Holdings Securities Data: $responseData");
+        Utils().showLog("Get Holdings Securities Data: $responseData");
         Navigator.pop(navigatorKey.currentContext!);
         navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
               data: responseData["securities"],

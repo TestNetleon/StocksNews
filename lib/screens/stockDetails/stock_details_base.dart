@@ -5,14 +5,13 @@ import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/newTopGraph/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analysis_forecast.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/analyst_data.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_mentions.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/stocks_trending_stories.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/custom/no_data.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/error_display_common.dart';
 import '../../utils/colors.dart';
 import '../../widgets/custom/refresh_indicator.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
@@ -99,14 +98,14 @@ class StockDetailsBase extends StatelessWidget {
                         ),
                         child: NewTopGraphIndex(symbol: symbol),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: Dimen.padding.sp,
-                          right: Dimen.padding.sp,
-                          bottom: Dimen.padding.sp,
-                        ),
-                        child: const StockDetailAnalystData(),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //     left: Dimen.padding.sp,
+                      //     right: Dimen.padding.sp,
+                      //     bottom: Dimen.padding.sp,
+                      //   ),
+                      //   child: const StockDetailAnalystData(),
+                      // ),
                       Padding(
                         padding: EdgeInsets.only(
                           left: Dimen.padding.sp,
@@ -174,13 +173,13 @@ class StockDetailsBase extends StatelessWidget {
               ),
               child: StockDetailsTabContainer(
                 content: html == null || html.isEmpty
-                    // ? const ErrorDisplayWidget(
-                    //     smallHeight: true,
-                    //     error: 'No analysis forecast found.',
-                    //   )
-                    ? const NoDataCustom(
-                        error: "No analysis forecast data found.",
+                    ? const ErrorDisplayWidget(
+                        smallHeight: true,
+                        error: 'No analysis forecast found.',
                       )
+                    // ? const NoDataCustom(
+                    //     error: "No analysis forecast data found.",
+                    //   )
                     : AnalysisForecast(html: html),
               ),
             ),
