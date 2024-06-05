@@ -25,6 +25,24 @@ class GainersLosersIndex extends StatefulWidget {
 }
 
 class _GainersLosersIndexState extends State<GainersLosersIndex> {
+  int selectedIndex = 0;
+
+  void onChange(index) {
+    if (selectedIndex != index) {
+      selectedIndex = index;
+      setState(() {});
+      if (index == 0) {
+        context
+            .read<MoreStocksProvider>()
+            .getGainersLosers(showProgress: true, type: widget.type.name);
+      } else {
+        context
+            .read<MoreStocksProvider>()
+            .getLosers(showProgress: true, type: "losers");
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -32,9 +50,9 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
       context
           .read<MoreStocksProvider>()
           .getGainersLosers(showProgress: true, type: widget.type.name);
-      context
-          .read<MoreStocksProvider>()
-          .getLosers(showProgress: true, type: "losers");
+      // context
+      //     .read<MoreStocksProvider>()
+      //     .getLosers(showProgress: true, type: "losers");
     });
   }
 
@@ -56,6 +74,7 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
           scrollable: false,
           tabsPadding: EdgeInsets.zero,
           tabs: const ["Today's Gainers", " Today's Losers"],
+          onChange: (index) => onChange(index),
           widgets: [
             BaseUiContainer(
               error: provider.error,

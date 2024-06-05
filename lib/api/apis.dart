@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
-  static const baseUrl = kDebugMode
-      ? "https://dev.stocks.news/api/v1"
-      : "https://app.stocks.news/api/v1"; // live server
+  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = kDebugMode
+  //     ? "https://dev.stocks.news/api/v1"
+  //     : "https://app.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
@@ -13,6 +13,7 @@ class Apis {
   static const login = "/login";
   static const googleLogin = "/signup-google";
   static const appleLogin = "/signup-apple";
+  static const homePortfolio = "/home-plaid-portfolio";
   static const verifyLoginOtp = "/check-login-otp";
   static const home = "/home";
   static const homeNew = "/home-new";

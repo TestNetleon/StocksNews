@@ -31,11 +31,11 @@ bool isAppInForeground = false;
 bool isShowingError = false;
 String apiKeyFMP = "";
 
-String? clientId;
-String? secret;
-String? createAPI;
-String? exchangeAPI;
-String? holdingsAPI;
+// String? clientId;
+// String? secret;
+// String? createAPI;
+// String? exchangeAPI;
+// String? holdingsAPI;
 
 //------------------------------------------------
 

@@ -113,8 +113,8 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // }
 
 class HomePlaidItem extends StatelessWidget {
-  final PlaidDataRes data;
-  const HomePlaidItem({super.key, required this.data});
+  final PlaidDataRes? data;
+  const HomePlaidItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class HomePlaidItem extends StatelessWidget {
                 height: 44,
                 padding: const EdgeInsets.all(5),
                 child: CachedNetworkImagesWidget(
-                  data.image,
+                  data?.image,
                 ),
               ),
             ),
@@ -139,16 +139,16 @@ class HomePlaidItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${data.tickerSymbol}",
+                    "${data?.tickerSymbol}",
                     style: stylePTSansBold(fontSize: 14),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
                   Visibility(
-                    visible: data.name != null && data.name != '',
+                    visible: data?.name != null && data?.name != '',
                     child: Text(
-                      "${data.name}",
+                      "${data?.name}",
                       style: stylePTSansRegular(
                         color: ThemeColors.greyText,
                         fontSize: 12,
@@ -163,8 +163,8 @@ class HomePlaidItem extends StatelessWidget {
           ],
         ),
         Visibility(
-            visible: (data.type != '' && data.type != null) ||
-                (data.closePriceAsOf != "" && data.closePriceAsOf != null),
+            visible: (data?.type != '' && data?.type != null) ||
+                (data?.closePriceAsOf != "" && data?.closePriceAsOf != null),
             child: const SpacerVertical(height: 20)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -172,17 +172,17 @@ class HomePlaidItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
-                visible: data.type != '' && data.type != null,
+                visible: data?.type != '' && data?.type != null,
                 child: Text(
-                  data.type.toString().capitalizeWords(),
+                  data?.type.toString().capitalizeWords() ?? "",
                   style: stylePTSansRegular(),
                 ),
               ),
               Visibility(
                 visible:
-                    data.closePriceAsOf != "" && data.closePriceAsOf != null,
+                    data?.closePriceAsOf != "" && data?.closePriceAsOf != null,
                 child: Text(
-                  "Close price as of: ${data.closePriceAsOf ?? "N/A"}",
+                  "Close price as of: ${data?.closePriceAsOf ?? "N/A"}",
                   style: stylePTSansRegular(
                     color: ThemeColors.greyText,
                     fontSize: 14,

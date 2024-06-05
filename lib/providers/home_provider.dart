@@ -15,6 +15,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
+import 'package:stocks_news_new/modals/home_portfolio.dart';
 import 'package:stocks_news_new/modals/home_sentiment_res.dart';
 import 'package:stocks_news_new/modals/home_slider_res.dart';
 import 'package:stocks_news_new/modals/home_top_gainer_res.dart';
@@ -42,6 +43,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   Status _statusTrending = Status.ideal;
   Status get statusTrending => _statusTrending;
 
+  Status _statusGainers = Status.ideal;
+  Status get statusGainers => _statusGainers;
+
+  Status _statusLosers = Status.ideal;
+  Status get statusLosers => _statusLosers;
+
   Status _statusInsider = Status.ideal;
   Status get statusInsider => _statusInsider;
 
@@ -53,6 +60,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Status _statusFocus = Status.ideal;
   Status get statusFocus => _statusFocus;
+
+  Status _statusPortfolio = Status.ideal;
+  Status get statusPortfolio => _statusPortfolio;
 
   // HomeRes? get data => _home;
 
@@ -74,6 +84,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   HomeInsiderRes? _homeInsiderRes;
   HomeInsiderRes? get homeInsiderRes => _homeInsiderRes;
 
+  HomePortfolioRes? _homePortfolio;
+  HomePortfolioRes? get homePortfolio => _homePortfolio;
+
   List<IpoRes>? _ipoRes;
   List<IpoRes>? get ipoRes => _ipoRes;
 
@@ -84,6 +97,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingIpo => _statusIpo == Status.loading;
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
   bool get isLoadingStockFocus => _statusFocus == Status.loading;
+  bool get isLoadingGainers => _statusGainers == Status.loading;
+  bool get isLoadingLosers => _statusLosers == Status.loading;
+  bool get isLoadingPortfolio => _statusPortfolio == Status.loading;
 
   bool popularPresent = true;
 
@@ -140,10 +156,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future refreshData(String? inAppMsgId) async {
     retryCount = 0;
+    getHomePortfolio();
     _getLastMarketOpen();
     getHomeSlider();
     getHomeAlerts();
-    getHomeTrendingData();
+    // getHomeTrendingData();//ADD AGAIN AFTER BACKEND MERGING
     // getIpoData();
     // getStockInFocus();
     // getHomeSentimentData();
@@ -198,12 +215,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         //...........PLAID KEYS SET............
-        String basePlaidUrl = "https://sandbox.plaid.com";
-        clientId = "665336b8bff5c6001ce3aafc";
-        secret = "7181521c1dd4c3353ea995024697ef";
-        createAPI = "$basePlaidUrl/link/token/create";
-        exchangeAPI = "$basePlaidUrl/item/public_token/exchange";
-        holdingsAPI = "$basePlaidUrl/investments/holdings/get";
+        // String basePlaidUrl = "https://sandbox.plaid.com";
+        // clientId = "665336b8bff5c6001ce3aafc";
+        // secret = "7181521c1dd4c3353ea995024697ef";
+        // createAPI = "$basePlaidUrl/link/token/create";
+        // exchangeAPI = "$basePlaidUrl/item/public_token/exchange";
+        // holdingsAPI = "$basePlaidUrl/investments/holdings/get";
         //.....................................
         loginTxt = response.extra.loginText;
         signUpTxt = response.extra?.signUpText;
@@ -267,9 +284,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getHomeTopGainerData() async {
-    topLoading = true;
     // popularPresent = true;
-    _statusTrending = Status.loading;
+    _statusGainers = Status.loading;
     notifyListeners();
 
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -297,22 +313,19 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         _homeTopGainerRes = null;
         _error = "Data not found";
       }
-      topLoading = false;
-      _statusTrending = Status.loaded;
+      _statusGainers = Status.loaded;
       notifyListeners();
     } catch (e) {
       _homeTopGainerRes = null;
       _error = Const.errSomethingWrong;
-      topLoading = false;
-      _statusTrending = Status.loaded;
+      _statusGainers = Status.loaded;
       notifyListeners();
     }
   }
 
   Future getHomeTopLoserData() async {
-    topLoading = true;
     // popularPresent = true;
-    _statusTrending = Status.loading;
+    _statusLosers = Status.loading;
     notifyListeners();
 
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -339,16 +352,58 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         _homeTopLosersRes = null;
         _error = "Data not found";
       }
-      topLoading = false;
-      _statusTrending = Status.loaded;
+      _statusLosers = Status.loaded;
       notifyListeners();
     } catch (e) {
       _homeTopLosersRes = null;
       _error = Const.errSomethingWrong;
-      topLoading = false;
-      _statusTrending = Status.loaded;
+      _statusLosers = Status.loaded;
       notifyListeners();
     }
+  }
+
+  Future getHomePortfolio() async {
+    _statusPortfolio = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homePortfolio,
+        request: request,
+        showProgress: false,
+        onRefresh: () => refreshData(null),
+      );
+
+      if (response.status) {
+        _homePortfolio = homePortfolioResFromJson(jsonEncode(response.data));
+
+        if (kDebugMode) {
+          _homePortfolio = HomePortfolioRes(
+              top: _homePortfolio?.top,
+              bottom: _homePortfolio?.bottom,
+              keys: PortfolioKeys(
+                plaidSecret: "7181521c1dd4c3353ea995024697ef",
+                plaidClient: "665336b8bff5c6001ce3aafc",
+                plaidEnv: "sandbox",
+              ));
+        }
+      } else {
+        //
+      }
+      _statusPortfolio = Status.loaded;
+      notifyListeners();
+
+      return ApiResponse(status: true, data: response.data);
+    } catch (e) {
+      _homePortfolio = null;
+      _statusPortfolio = Status.loaded;
+      notifyListeners();
+      return ApiResponse(status: false);
+    }
+    // closeGlobalProgressDialog();
   }
 
   Future getHomeAlerts({bool userAvail = true}) async {

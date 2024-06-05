@@ -96,8 +96,8 @@ class HomePlaidAddedContainer extends StatelessWidget {
               },
               scrollable: true,
               physics: const NeverScrollableScrollPhysics(),
-              tabs: List.generate(
-                  provider.tabs.length, (index) => provider.tabs[index]),
+              tabs: List.generate(provider.tabs.length,
+                  (index) => provider.tabs[index].capitalizeWords()),
               tabsPadding: const EdgeInsets.only(bottom: 10),
               widgets: List.generate(
                 provider.tabs.length,
@@ -129,9 +129,7 @@ class HomePlaidAddedContainer extends StatelessWidget {
                         PlaidDataRes? data = provider
                             .tabsData[provider.tabs[provider.selectedTab]]
                             ?.data?[index];
-                        if (data == null) {
-                          return const SizedBox();
-                        }
+
                         return Stack(
                           children: [
                             Positioned(
