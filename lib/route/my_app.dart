@@ -159,27 +159,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _checkForConnection() async {
-    Connectivity()
-        .onConnectivityChanged
-        .listen((List<ConnectivityResult>? result) async {
-      if ((result?.length ?? 0) == 1) {
-        if (result![0] == ConnectivityResult.none &&
-            result.length == 1 &&
-            !isShowingError) {
-          Timer(const Duration(milliseconds: 2000), () async {
-            final result = await (Connectivity().checkConnectivity());
-            if (result[0] == ConnectivityResult.none && result.length == 1) {
-              isShowingError = true;
-              showErrorFullScreenDialog(
-                errorCode: 0,
-                onClick: null,
-                log: "From My App",
-              );
-            }
-          });
-        }
-      }
-    });
+    // Connectivity()
+    //     .onConnectivityChanged
+    //     .listen((List<ConnectivityResult>? result) async {
+    //   if ((result?.length ?? 0) == 1) {
+    //     if (result![0] == ConnectivityResult.none &&
+    //         result.length == 1 &&
+    //         !isShowingError) {
+    //       Timer(const Duration(milliseconds: 2000), () async {
+    //         final result = await (Connectivity().checkConnectivity());
+    //         if (result[0] == ConnectivityResult.none && result.length == 1) {
+    //           isShowingError = true;
+    //           showErrorFullScreenDialog(
+    //             errorCode: 0,
+    //             onClick: null,
+    //             log: "From My App",
+    //           );
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
   }
 
   @override
