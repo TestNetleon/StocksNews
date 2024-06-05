@@ -3,52 +3,66 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/dividends_res.dart';
+import 'package:stocks_news_new/modals/stock_screener_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
-  // ************* GAP DOWN **************** //
-  List<DividendsRes>? _data;
+
   String? _error;
   int _page = 1;
   Extra? _extraUp;
+  List<Result>? _data;
 
-  List<DividendsRes>? get data => _data;
+  List<Result>? get data => _data;
   Extra? get extraUp => _extraUp;
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
-  Status _statusDividendsStocks = Status.ideal;
-  Status get statusDividendsStocks => _statusDividendsStocks;
-  bool get isLoadingDividendsStocks => _statusDividendsStocks == Status.loading;
-  int get openIndexDividendsStocks => _openIndexDividendsStocks;
-  int _openIndexDividendsStocks = -1;
+  Status _statusStockScreenerStocks = Status.ideal;
+  Status get statusStockScreenerStocks => _statusStockScreenerStocks;
+  bool get isLoadingStockScreenerStocks =>
+      _statusStockScreenerStocks == Status.loading;
+  int get openIndexStockScreenerStocks => _openIndexStockScreenerStocks;
+  int _openIndexStockScreenerStocks = -1;
   int _openIndex = -1;
 
   int get openIndex => _openIndex;
-
-  // ************* GAP DOWN **************** //
   String? _errorDown;
   int _pageDown = 1;
-  // int? _totalPageDown;
   Extra? _extraDown;
 
   bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   String? get errorDown => _errorDown ?? Const.errSomethingWrong;
   bool get isLoadingDown => _status == Status.loading;
 
+  StockScreenerRes? _dataFilterBottomSheet;
+
+  StockScreenerRes? get dataFilterBottomSheet => _dataFilterBottomSheet;
+
+  TextEditingController exchangeController = TextEditingController();
+  TextEditingController sectorController = TextEditingController();
+  TextEditingController industryController = TextEditingController();
+  TextEditingController marketCapController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController betaController = TextEditingController();
+  TextEditingController dividendController = TextEditingController();
+  TextEditingController isEtfController = TextEditingController();
+  TextEditingController isFundController = TextEditingController();
+  TextEditingController isActivelyTradingController = TextEditingController();
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
   }
 
-  void setStatusDividendsStocks(status) {
-    _statusDividendsStocks = status;
+  void setStatusStockScreenerStocks(status) {
+    _statusStockScreenerStocks = status;
     notifyListeners();
   }
 
@@ -57,12 +71,12 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  void setOpenIndexDividendsStocks(index) {
-    _openIndexDividendsStocks = index;
+  void setOpenIndexStockScreenerStocks(index) {
+    _openIndexStockScreenerStocks = index;
     notifyListeners();
   }
 
-  Future getDividendsStocks({loadMore = false}) async {
+  Future getStockScreenerStocks({loadMore = false}) async {
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
@@ -74,18 +88,22 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
       Map request = {"page": "$_page"};
 
       ApiResponse response = await apiRequest(
-        url: Apis.dividends,
+        url: Apis.stockScreener,
         request: request,
         showProgress: false,
       );
 
       if (response.status) {
         _error = null;
+        _dataFilterBottomSheet =
+            stockScreenerResFromJson(jsonEncode(response.data));
+
         if (_page == 1) {
-          _data = dividendsResFromJson(jsonEncode(response.data));
+          _data = stockScreenerResFromJson(jsonEncode(response.data)).result;
           _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _data?.addAll(dividendsResFromJson(jsonEncode(response.data)));
+          _data?.addAll(stockScreenerResFromJson(jsonEncode(response.data))
+              .result as Iterable<Result>);
         }
       } else {
         if (_page == 1) {

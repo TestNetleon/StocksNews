@@ -12,14 +12,14 @@ String congressionalResToJson(List<CongressionalRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CongressionalRes {
-  final String? name;
-  final String? symbol;
-  final String? company;
-  final String? currentPrice;
-  final String? type;
-  final String? amount;
-  final String? dateFiled;
-  final String? dateTraded;
+  final dynamic name;
+  final dynamic symbol;
+  final dynamic company;
+  final dynamic currentPrice;
+  final dynamic type;
+  final dynamic amount;
+  final dynamic dateFiled;
+  final dynamic dateTraded;
 
   CongressionalRes({
     this.name,

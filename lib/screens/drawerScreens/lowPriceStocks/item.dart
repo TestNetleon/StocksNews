@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:readmore/readmore.dart';
@@ -154,6 +155,14 @@ class LowPriceStocksItem extends StatelessWidget {
     );
   }
 
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data.symbol},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -163,18 +172,21 @@ class LowPriceStocksItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(0),
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              width: 43,
-              height: 43,
-              // child: ThemeImageView(
-              //   url: "${data?.image}",
-              // ),
-              child: CachedNetworkImagesWidget(
-                data.image,
-                placeHolder: Images.placeholder,
+          InkWell(
+            onTap: () => _onTap(context),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(0),
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                width: 43,
+                height: 43,
+                // child: ThemeImageView(
+                //   url: "${data?.image}",
+                // ),
+                child: CachedNetworkImagesWidget(
+                  data.image,
+                  placeHolder: Images.placeholder,
+                ),
               ),
             ),
           ),
@@ -183,11 +195,14 @@ class LowPriceStocksItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  data.symbol ?? "",
-                  style: stylePTSansBold(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                InkWell(
+                  onTap: () => _onTap(context),
+                  child: Text(
+                    data.symbol ?? "",
+                    style: stylePTSansBold(fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 const SpacerVertical(height: 5),
                 Text(

@@ -2,19 +2,22 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/home_portfolio.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../widgets/custom/alert_popup.dart';
 import 'user_provider.dart';
 
 class PlaidProvider extends ChangeNotifier {
@@ -66,24 +69,46 @@ class PlaidProvider extends ChangeNotifier {
   }
 
   void tabChange(index, String? name) {
-    selectedTab = index;
-    notifyListeners();
-    if (name == null) return;
-    if (_tabsData[name]?.data != null || _tabsData[name]?.error != null) return;
-    getPlaidPortfolioData(name: name);
+    if (selectedTab != index) {
+      selectedTab = index;
+      notifyListeners();
+      log("----Name $name-----");
+      if (name == null) return;
+      if (_tabsData[name]?.data != null || _tabsData[name]?.error != null) {
+        log("--returned");
+        return;
+      }
+      getPlaidPortfolioData(name: name);
+    }
   }
 
   Future getTabData() async {
     _tabs = [];
     selectedTab = 0;
     setStatusT(Status.loading);
-    Timer(const Duration(seconds: 1), () {
-      _tabs = ['Equality', 'Cash', 'Mutual Fund', 'Etf', 'Derivative'];
-      if (_tabs.isNotEmpty) {
-        getPlaidPortfolioData(name: _tabs[selectedTab]);
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.plaidPortfolio,
+        formData: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _tabs = homePortfolioTabResFromJson(jsonEncode(response.data));
+        if (_tabs.isNotEmpty) {
+          getPlaidPortfolioData(name: _tabs[selectedTab]);
+        }
+      } else {
+        //
       }
       setStatusT(Status.loaded);
-    });
+    } catch (e) {
+      Utils().showLog(e.toString());
+      setStatusT(Status.loaded);
+    }
   }
 
   Future onRefresh() async {
@@ -92,7 +117,7 @@ class PlaidProvider extends ChangeNotifier {
 
   Future getPlaidPortfolioData({
     refreshing = false,
-    String name = "Equity",
+    required String name,
   }) async {
     Utils().showLog("=====NAME $name======");
     // setStatusG(Status.loading);
@@ -107,6 +132,7 @@ class PlaidProvider extends ChangeNotifier {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "type": name,
       });
       ApiResponse response = await apiRequest(
         url: Apis.plaidPortfolio,
@@ -138,8 +164,12 @@ class PlaidProvider extends ChangeNotifier {
     }
   }
 
-  Future sendPlaidPortfolio({showProgress = true, List<dynamic>? data}) async {
+  Future sendPlaidPortfolio(
+      {showProgress = true,
+      List<dynamic>? data,
+      List<dynamic>? dataAccounts}) async {
     List<dynamic>? jsonArray = data;
+    List<dynamic>? jsonArrayAccounts = dataAccounts;
 
     setStatus(Status.loading);
     try {
@@ -147,6 +177,7 @@ class PlaidProvider extends ChangeNotifier {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "securities": jsonArray ?? [],
+        "accounts": jsonArrayAccounts ?? [],
       });
       ApiResponse response = await apiRequest(
         url: Apis.savePlaidPortfolio,
@@ -155,11 +186,13 @@ class PlaidProvider extends ChangeNotifier {
       );
       if (response.status) {
         // getPlaidPortfolioData();
-        popUpAlert(
-          message: response.message ?? "Data fetched successfully.",
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
+        navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
+
+        // popUpAlert(
+        //   message: response.message ?? "Data fetched successfully.",
+        //   title: "Alert",
+        //   icon: Images.alertPopGIF,
+        // );
       } else {
         _error = response.message;
       }

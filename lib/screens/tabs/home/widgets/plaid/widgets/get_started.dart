@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:plaid_flutter/plaid_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -78,14 +83,15 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   }
 
   void _exchangeToken({String? publicToken}) async {
+    HomeProvider provider = context.read<HomeProvider>();
     final Map<String, dynamic> request = {
-      "client_id": clientId ?? "665336b8bff5c6001ce3aafc",
-      "secret": secret ?? "d4e4ecf0577bd79bd09576789cbde4",
+      "client_id": provider.homePortfolio?.keys?.plaidClient ?? "",
+      "secret": provider.homePortfolio?.keys?.plaidSecret ?? "",
       "public_token": publicToken ?? "",
     };
 
-    String url = exchangeAPI ??
-        "https://production.plaid.com/item/public_token/exchange";
+    String url =
+        "https://${provider.homePortfolio?.keys?.plaidEnv ?? "sandbox"}.plaid.com/item/public_token/exchange";
 
     final Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -115,14 +121,15 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   }
 
   void _getHoldings({String? accessToken}) async {
+    HomeProvider provider = context.read<HomeProvider>();
     final Map<String, dynamic> request = {
-      "client_id": clientId,
-      "secret": secret,
+      "client_id": provider.homePortfolio?.keys?.plaidClient ?? "",
+      "secret": provider.homePortfolio?.keys?.plaidSecret ?? "",
       "access_token": accessToken ?? "",
     };
 
     String url =
-        holdingsAPI ?? "https://production.plaid.com/investments/holdings/get";
+        "https://${provider.homePortfolio?.keys?.plaidEnv ?? "sandbox"}.plaid.com/investments/holdings/get";
     final Map<String, String> headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -139,9 +146,10 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         // Utils().showLog("Get Holdings Securities Data: $responseData");
         Navigator.pop(navigatorKey.currentContext!);
-        navigatorKey.currentContext!
-            .read<PlaidProvider>()
-            .sendPlaidPortfolio(data: responseData["securities"]);
+        navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
+              data: responseData["securities"],
+              dataAccounts: responseData["accounts"],
+            );
       } else {
         debugPrint("Failed to load data: ${response.statusCode}");
         debugPrint("Response body: ${response.body}");
@@ -152,16 +160,18 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   }
 
   Future _plaidAPi() async {
-    Utils().showLog("Client ID => $clientId");
-    Utils().showLog("Secret => $secret");
-    Utils().showLog("Create API => $createAPI");
-    Utils().showLog("Exchange API => $exchangeAPI");
-    Utils().showLog("Holdings API => $holdingsAPI");
+    // Utils().showLog("Client ID => $clientId");
+    // Utils().showLog("Secret => $secret");
+    // Utils().showLog("Create API => $createAPI");
+    // Utils().showLog("Exchange API => $exchangeAPI");
+    // Utils().showLog("Holdings API => $holdingsAPI");
 
-    UserRes? userRes = context.read<UserProvider>().user;
+    HomeProvider provider = context.read<HomeProvider>();
+
+    UserRes? userRes = navigatorKey.currentContext!.read<UserProvider>().user;
     final Map<String, dynamic> request = {
-      "client_id": clientId,
-      "secret": secret,
+      "client_id": provider.homePortfolio?.keys?.plaidClient ?? "",
+      "secret": provider.homePortfolio?.keys?.plaidSecret ?? "",
       "user": {"client_user_id": userRes?.token ?? "N/A", "phone_number": ""},
       "client_name": "Personal Finance App",
       // "products": ["auth", "investments"],
@@ -172,7 +182,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
       "android_package_name": "com.stocks.news"
     };
 
-    String url = createAPI ?? "https://production.plaid.com/link/token/create";
+    String url =
+        "https://${provider.homePortfolio?.keys?.plaidEnv ?? "sandbox"}.plaid.com/link/token/create";
 
     final Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -213,7 +224,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-
+    HomeProvider homeProvider = context.watch<HomeProvider>();
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       onTap: provider.user == null
@@ -223,7 +234,18 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
                   null) {
                 return;
               }
-              await _plaidAPi();
+              try {
+                ApiResponse res = await homeProvider.getHomePortfolio();
+                if (res.status && res.data['bottom'] == null) {
+                  Timer(const Duration(seconds: 1), () async {
+                    await _plaidAPi();
+                  });
+                } else {
+                  log("${res.status}, ${res.data['bottom'] == null}");
+                }
+              } catch (e) {
+                //
+              }
             }
           : () {
               _plaidAPi();
@@ -257,23 +279,20 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "What are smallcases?",
+                    homeProvider.homePortfolio?.top?.title ?? "",
                     style: stylePTSansBold(),
                   ),
-                  RichText(
-                    text: TextSpan(
-                      text: "Understand in 60 seconds. ",
-                      style: stylePTSansRegular(fontSize: 13),
-                      children: [
-                        TextSpan(
-                          text: "Get started",
-                          style: stylePTSansBold(
-                            decoration: TextDecoration.underline,
-                            color: ThemeColors.accent,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
+                  HtmlWidget(
+                    customStylesBuilder: (element) {
+                      if (element.localName == 'span') {
+                        return {'color': '#1bb449', 'text-decoration': 'none'};
+                      }
+                      return null;
+                    },
+                    homeProvider.homePortfolio?.top?.subTitle ?? "",
+                    textStyle: stylePTSansRegular(
+                      fontSize: 12,
+                      color: ThemeColors.greyText,
                     ),
                   ),
                 ],

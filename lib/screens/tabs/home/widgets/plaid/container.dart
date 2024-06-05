@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/widgets/get_started.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/widgets/overview.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -10,13 +12,20 @@ class PlaidHomeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dimen.padding, vertical: 10),
+    HomeProvider provider = context.watch<HomeProvider>();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PlaidHomeGetStarted(),
-          PlaidHomeInvestmentOverview(),
+          // if (provider.homePortfolio?.top != null &&
+          //     provider.homePortfolio?.bottom == null)
+          //   const PlaidHomeGetStarted(),
+
+          const PlaidHomeGetStarted(),
+
+          if (provider.homePortfolio?.bottom != null)
+            const PlaidHomeInvestmentOverview(),
         ],
       ),
     );

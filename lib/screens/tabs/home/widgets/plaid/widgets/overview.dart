@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class PlaidHomeInvestmentOverview extends StatelessWidget {
@@ -9,6 +12,7 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeProvider provider = context.watch<HomeProvider>();
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: InkWell(
@@ -48,33 +52,36 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "NIFTY",
+                          "Total Close Price",
                           style:
                               stylePTSansRegular(color: ThemeColors.greyText),
                         ),
                         const SpacerVertical(height: 5),
                         RichText(
                           text: TextSpan(
-                            text: "22,530.70 ",
+                            text: provider.homePortfolio?.bottom?.closePrice ??
+                                "N/A",
                             style: stylePTSansRegular(
                               fontSize: 18,
                             ),
-                            children: [
-                              TextSpan(
-                                text: "0.18%",
-                                style: stylePTSansRegular(
-                                  fontSize: 13,
-                                  color: ThemeColors.accent,
-                                ),
-                              ),
-                            ],
+                            // children: [
+                            //   TextSpan(
+                            //     text: "0.18%",
+                            //     style: stylePTSansRegular(
+                            //       fontSize: 13,
+                            //       color: ThemeColors.accent,
+                            //     ),
+                            //   ),
+                            // ],
                           ),
                         ),
                       ],
                     ),
                   ),
+                  const SpacerHorizontal(width: 10),
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -87,7 +94,9 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
                         const SpacerVertical(height: 5),
                         RichText(
                           text: TextSpan(
-                            text: "\$0.00",
+                            text: provider
+                                    .homePortfolio?.bottom?.currentBalance ??
+                                "N/A",
                             style: stylePTSansRegular(
                               fontSize: 18,
                             ),
