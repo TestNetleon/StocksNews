@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -14,7 +13,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';

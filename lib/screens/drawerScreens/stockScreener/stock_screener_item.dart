@@ -13,12 +13,12 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 class StockScreenerItem extends StatelessWidget {
   final List<Result>? data;
   final int index;
-  final bool StockScreener;
+  final bool stockScreener;
 //
   const StockScreenerItem({
     required this.data,
     required this.index,
-    this.StockScreener = false,
+    this.stockScreener = false,
     super.key,
   });
 
@@ -80,7 +80,7 @@ class StockScreenerItem extends StatelessWidget {
             const SpacerHorizontal(width: 10),
             InkWell(
               onTap: () {
-                if (StockScreener) {
+                if (stockScreener) {
                   provider.setOpenIndexStockScreenerStocks(
                     provider.openIndexStockScreenerStocks == index ? -1 : index,
                   );
@@ -97,7 +97,7 @@ class StockScreenerItem extends StatelessWidget {
                 margin: EdgeInsets.only(left: 8.sp),
                 padding: const EdgeInsets.all(3),
                 child: Icon(
-                  StockScreener
+                  stockScreener
                       ? provider.openIndexStockScreenerStocks == index
                           ? Icons.arrow_upward_rounded
                           : Icons.arrow_downward_rounded
@@ -113,7 +113,7 @@ class StockScreenerItem extends StatelessWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 150),
           child: Container(
-            height: StockScreener
+            height: stockScreener
                 ? provider.openIndexStockScreenerStocks == index
                     ? null
                     : 0
@@ -121,14 +121,14 @@ class StockScreenerItem extends StatelessWidget {
                     ? null
                     : 0,
             margin: EdgeInsets.only(
-              top: StockScreener
+              top: stockScreener
                   ? provider.openIndexStockScreenerStocks == index
                       ? 10.sp
                       : 0
                   : provider.openIndex == index
                       ? 10.sp
                       : 0,
-              bottom: StockScreener
+              bottom: stockScreener
                   ? provider.openIndexStockScreenerStocks == index
                       ? 10.sp
                       : 0

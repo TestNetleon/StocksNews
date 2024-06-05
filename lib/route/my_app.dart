@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:stocks_news_new/dummy.dart';
@@ -15,7 +15,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+// import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';

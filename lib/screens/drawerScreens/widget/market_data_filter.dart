@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter_textfiled.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
