@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -25,6 +26,8 @@ class IndicesProvider extends ChangeNotifier {
 
   List<IndicesRes>? _data;
   List<IndicesRes>? get data => _data;
+  List<Result>? _dataDowThirtyStocks;
+  List<Result>? get dataDowThirtyStocks => _dataDowThirtyStocks;
 
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
@@ -40,6 +43,10 @@ class IndicesProvider extends ChangeNotifier {
   int get openIndexIndices => _openIndexIndices;
   int _openIndex = -1;
   int get openIndex => _openIndex;
+  bool _typeDowThirty = false;
+  bool get typeDowThirty => _typeDowThirty;
+  bool _typeSpFifty = false;
+  bool get typeSpFifty => _typeSpFifty;
 
   void setStatus(status) {
     _status = status;
@@ -63,9 +70,19 @@ class IndicesProvider extends ChangeNotifier {
 
   void tabChange(index) {
     if (selectedIndex != index) {
-      selectedIndex = index;
-      notifyListeners();
-      getIndicesData(showProgress: false);
+      if (tabs?[index].key == "DOW30") {
+        selectedIndex = index;
+        notifyListeners();
+        getIndicesData(showProgress: true, dowThirtyStocks: true);
+      } else if (tabs?[index].key == "SP500") {
+        selectedIndex = index;
+        notifyListeners();
+        getIndicesData(showProgress: true, sPFiftyStocks: true);
+      } else {
+        selectedIndex = index;
+        notifyListeners();
+        getIndicesData(showProgress: false);
+      }
     }
   }
 
@@ -114,7 +131,11 @@ class IndicesProvider extends ChangeNotifier {
     getTabsData();
   }
 
-  Future getIndicesData({loadMore = false, showProgress = false}) async {
+  Future getIndicesData(
+      {loadMore = false,
+      showProgress = false,
+      dowThirtyStocks = false,
+      sPFiftyStocks = false}) async {
     setStatus(Status.loading);
     if (loadMore) {
       _page++;
@@ -123,6 +144,18 @@ class IndicesProvider extends ChangeNotifier {
       _page = 1;
       setStatus(Status.loading);
     }
+    if (dowThirtyStocks == true) {
+      _typeSpFifty = false;
+
+      _typeDowThirty = true;
+    } else if (sPFiftyStocks == true) {
+      _typeDowThirty = false;
+      _typeSpFifty = true;
+    } else {
+      _typeSpFifty = false;
+      _typeDowThirty = false;
+    }
+    notifyListeners();
 
     try {
       Map request = {
@@ -131,28 +164,69 @@ class IndicesProvider extends ChangeNotifier {
         "exchange": _tabs?[selectedIndex].key,
         "page": "$_page"
       };
+      Map requestDowThirty = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "page": "$_page"
+      };
+      Map requestSPFifty = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "page": "$_page"
+      };
 
       ApiResponse response = await apiRequest(
-        url: Apis.indices,
-        request: request,
+        url: dowThirtyStocks == true
+            ? Apis.dowThirty
+            : sPFiftyStocks == true
+                ? Apis.spFifty
+                : Apis.indices,
+        request: dowThirtyStocks
+            ? requestDowThirty
+            : sPFiftyStocks
+                ? requestSPFifty
+                : request,
         showProgress: false,
         onRefresh: onRefreshIndicesData,
       );
       if (response.status) {
         _error = null;
         if (_page == 1) {
-          _data = indicesResFromJson(jsonEncode(response.data));
+          if (dowThirtyStocks == true) {
+            _dataDowThirtyStocks =
+                dowThirtyResFromJson(jsonEncode(response.data)).result;
+          } else if (sPFiftyStocks == true) {
+            _dataDowThirtyStocks =
+                dowThirtyResFromJson(jsonEncode(response.data)).result;
+          } else {
+            _data = indicesResFromJson(jsonEncode(response.data));
+          }
+
+          // _data =  indicesResFromJson(jsonEncode(response.data));
           _extraUp = response.extra is Extra ? response.extra : null;
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
         } else {
-          _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
+          if (dowThirtyStocks == true) {
+            _dataDowThirtyStocks?.addAll(
+                dowThirtyResFromJson(jsonEncode(response.data)).result
+                    as Iterable<Result>);
+          } else if (sPFiftyStocks == true) {
+            _dataDowThirtyStocks?.addAll(
+                dowThirtyResFromJson(jsonEncode(response.data)).result
+                    as Iterable<Result>);
+          } else {
+            _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
+          }
+
+          // _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
 
           notifyListeners();
         }
       } else {
         if (_page == 1) {
           _data = null;
+          _dataDowThirtyStocks = null;
           _error = response.message;
           // showErrorMessage(message: response.message);
         }

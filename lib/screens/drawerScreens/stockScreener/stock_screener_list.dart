@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_screener_res.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener_item.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
-import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
@@ -25,15 +23,10 @@ class _StockScreenerListState extends State<StockScreenerList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<StockScreenerProvider>().onChangeNullValueSet();
+
       context.read<StockScreenerProvider>().getStockScreenerStocks();
     });
-  }
-
-  void _onFilterClick(BuildContext context, dynamic provider) {
-    BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Insider Trades",
-      child: MarketDataFilterBottomSheet(provider: provider),
-    );
   }
 
   @override
@@ -64,22 +57,7 @@ class _StockScreenerListState extends State<StockScreenerList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (index == 0)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: HtmlTitle(
-                            subTitle: provider.extraUp?.subTitle ?? ""),
-                      ),
-                      InkWell(
-                        onTap: () => _onFilterClick(context, provider),
-                        child: const Icon(
-                          Icons.filter_alt,
-                          color: ThemeColors.accent,
-                        ),
-                      )
-                    ],
-                  ),
+                  HtmlTitle(subTitle: provider.extraUp?.subTitle ?? ""),
                 StockScreenerItem(
                   data: data,
                   index: index,
