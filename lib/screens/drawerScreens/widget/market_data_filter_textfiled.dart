@@ -14,13 +14,13 @@ class MarketDataTextFiledClickable extends StatelessWidget {
   final String label;
   final String hintText;
 
-  final void Function()? onTap;
+  final void Function() onTap;
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +34,7 @@ class MarketDataTextFiledClickable extends StatelessWidget {
               color: ThemeColors.background,
             ),
             style: stylePTSansRegular(
-              fontSize: 15,
+              fontSize: 12,
               color: ThemeColors.background,
             ),
             editable: false,

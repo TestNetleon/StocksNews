@@ -28,6 +28,9 @@ class Apis {
 
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const indices = "/indices";
+  static const spFifty = "/sp-500-stocks";
+
+  static const dowThirty = "/dow-30-stocks";
 
   static const saleOnStocks = "/stocks-on-sale";
   static const highPE = "/high-pe-ratio-stocks";

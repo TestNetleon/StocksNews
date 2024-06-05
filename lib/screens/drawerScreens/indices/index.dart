@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -101,19 +102,35 @@ class IndicesData extends StatelessWidget {
       isLoading: provider.isLoading,
       showPreparingText: true,
       onRefresh: () {
-        provider.getIndicesData(showProgress: false);
+        provider.typeDowThirty == true
+            ? provider.getIndicesData(
+                showProgress: false, dowThirtyStocks: true)
+            : provider.typeSpFifty == true
+                ? provider.getIndicesData(
+                    showProgress: false, sPFiftyStocks: true)
+                : provider.getIndicesData(showProgress: false);
       },
       child: RefreshControl(
-        onRefresh: () async => provider.getIndicesData(),
+        onRefresh: () async => provider.typeDowThirty == true
+            ? provider.getIndicesData(dowThirtyStocks: true)
+            : provider.typeSpFifty == true
+                ? provider.getIndicesData(sPFiftyStocks: true)
+                : provider.getIndicesData(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.getIndicesData(loadMore: true),
+        onLoadMore: () async => provider.typeDowThirty == true
+            ? provider.getIndicesData(loadMore: true, dowThirtyStocks: true)
+            : provider.typeSpFifty == true
+                ? provider.getIndicesData(loadMore: true, sPFiftyStocks: true)
+                : provider.getIndicesData(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.symmetric(vertical: 10.sp),
           itemBuilder: (context, index) {
             IndicesRes? data = provider.data?[index];
+            Result? dataDowThirtyStocks = provider.dataDowThirtyStocks?[index];
             if (data == null) {
               return const SizedBox();
             }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -121,7 +138,11 @@ class IndicesData extends StatelessWidget {
                   HtmlTitle(
                     subTitle: provider.subTitle,
                   ),
-                IndicesItem(data: data, index: index),
+                IndicesItem(
+                    data: provider.typeDowThirty || provider.typeSpFifty
+                        ? dataDowThirtyStocks
+                        : data,
+                    index: index),
               ],
             );
           },

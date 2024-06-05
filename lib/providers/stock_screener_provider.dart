@@ -44,16 +44,121 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
 
   StockScreenerRes? get dataFilterBottomSheet => _dataFilterBottomSheet;
 
-  TextEditingController exchangeController = TextEditingController();
-  TextEditingController sectorController = TextEditingController();
-  TextEditingController industryController = TextEditingController();
-  TextEditingController marketCapController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController betaController = TextEditingController();
-  TextEditingController dividendController = TextEditingController();
-  TextEditingController isEtfController = TextEditingController();
-  TextEditingController isFundController = TextEditingController();
-  TextEditingController isActivelyTradingController = TextEditingController();
+  TextEditingController exchangeController = TextEditingController(text: "");
+  String? _exchangeKey;
+  String? get exchangeKey => _exchangeKey;
+  TextEditingController sectorController = TextEditingController(text: "");
+  String? _sectorKey;
+  String? get sectorKey => _sectorKey;
+  TextEditingController industryController = TextEditingController(text: "");
+  String? _industriesKey;
+  String? get industriesKey => _industriesKey;
+  TextEditingController marketCapController = TextEditingController(text: "");
+  String? _marketCapKey;
+  String? get marketCapKey => _marketCapKey;
+  TextEditingController priceController = TextEditingController(text: "");
+  String? _priceKey;
+  String? get priceKey => _priceKey;
+  TextEditingController betaController = TextEditingController(text: "");
+  String? _betaKey;
+  String? get betaKey => _betaKey;
+  TextEditingController dividendController = TextEditingController(text: "");
+  String? _dividendKey;
+  String? get dividendKey => _dividendKey;
+  TextEditingController isEtfController = TextEditingController(text: "");
+  String? _isEtfKey;
+  String? get isEtfKey => _isEtfKey;
+  TextEditingController isFundController = TextEditingController(text: "");
+  String? _isFundKey;
+  String? get isFundKey => _isFundKey;
+  TextEditingController isActivelyTradingController =
+      TextEditingController(text: "");
+  String? _isActivelyTradingKey;
+  String? get isActivelyTradingKey => _isActivelyTradingKey;
+
+  void onChangeExchange(key, value) {
+    exchangeController.text = value;
+    _exchangeKey = key;
+    notifyListeners();
+  }
+
+  void onChangeNullValueSet() {
+    exchangeController.text = "All Exchange";
+    _exchangeKey = null;
+    sectorController.text = "All Sector";
+    _sectorKey = null;
+    industryController.text = "All Industry";
+    _industriesKey = null;
+    marketCapController.text = "All Market Cap";
+    _marketCapKey = null;
+    priceController.text = "All Price";
+    _priceKey = null;
+    betaController.text = "All Beta";
+    _betaKey = null;
+    dividendController.text = "All Dividend";
+    _dividendKey = null;
+    isEtfController.text = "All";
+    _isEtfKey = null;
+    isFundController.text = "All";
+    _isFundKey = null;
+    isActivelyTradingController.text = "All";
+    _isActivelyTradingKey = null;
+    notifyListeners();
+  }
+
+  void onChangeSector(key, value) {
+    sectorController.text = value;
+    _sectorKey = key;
+    notifyListeners();
+  }
+
+  void onChangeIndustries(key, value) {
+    industryController.text = value;
+    _industriesKey = key;
+    notifyListeners();
+  }
+
+  void onChangeMarketcap(key, value) {
+    marketCapController.text = value;
+    _marketCapKey = key;
+    notifyListeners();
+  }
+
+  void onChangePrice(key, value) {
+    priceController.text = value;
+    _priceKey = key;
+    notifyListeners();
+  }
+
+  void onChangeBeta(key, value) {
+    betaController.text = value;
+    _betaKey = key;
+    notifyListeners();
+  }
+
+  void onChangeDividend(key, value) {
+    dividendController.text = value;
+    _dividendKey = key;
+    notifyListeners();
+  }
+
+  void onChangeIsEtf(key, value) {
+    isEtfController.text = value;
+    _isEtfKey = key;
+    notifyListeners();
+  }
+
+  void onChangeIsFund(key, value) {
+    isFundController.text = value;
+    _isFundKey = key;
+    notifyListeners();
+  }
+
+  void onChangeIsActivelyTrading(key, value) {
+    isActivelyTradingController.text = value;
+    _isActivelyTradingKey = key;
+    notifyListeners();
+  }
 
   void setStatus(status) {
     _status = status;
@@ -84,7 +189,20 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loading);
     }
     try {
-      Map request = {"page": "$_page"};
+      Map request = {
+        "price": priceKey == null ? "" : priceKey.toString(),
+        "industry": industriesKey == null ? "" : industriesKey.toString(),
+        "exchange_name": exchangeKey == null ? "" : exchangeKey.toString(),
+        "market_cap": marketCapKey == null ? "" : marketCapKey.toString(),
+        "beta": betaKey == null ? "" : betaKey.toString(),
+        "dividend": dividendKey == null ? "" : dividendKey.toString(),
+        "isEtf": isEtfKey == null ? "" : isEtfKey.toString(),
+        "isFund": isFundKey == null ? "" : isFundKey.toString(),
+        "isActivelyTrading":
+            isActivelyTradingKey == null ? "" : isActivelyTradingKey.toString(),
+        "sector": sectorKey == null ? "" : sectorKey.toString(),
+        "page": "$_page",
+      };
 
       ApiResponse response = await apiRequest(
         url: Apis.stockScreener,
