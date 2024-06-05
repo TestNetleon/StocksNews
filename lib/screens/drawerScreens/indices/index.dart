@@ -8,11 +8,11 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
 import '../../../modals/low_price_stocks_tab.dart';
 import 'item.dart';
@@ -103,10 +103,10 @@ class IndicesData extends StatelessWidget {
       onRefresh: () {
         provider.getIndicesData(showProgress: false);
       },
-      child: CommonRefreshIndicator(
-        onRefresh: () async {
-          provider.getIndicesData(showProgress: false);
-        },
+      child: RefreshControl(
+        onRefresh: () async => provider.getIndicesData(),
+        canLoadMore: provider.canLoadMore,
+        onLoadMore: () async => provider.getIndicesData(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.symmetric(vertical: 10.sp),
           itemBuilder: (context, index) {
@@ -131,7 +131,7 @@ class IndicesData extends StatelessWidget {
               height: 16,
             );
           },
-          itemCount: 20,
+          itemCount: provider.data?.length ?? 0,
         ),
       ),
     );

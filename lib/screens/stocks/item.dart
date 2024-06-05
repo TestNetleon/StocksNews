@@ -16,158 +16,164 @@ class StocksItemAll extends StatelessWidget {
   final AllStocks? data;
   final int index;
   const StocksItemAll({super.key, this.data, required this.index});
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data?.symbol},
+    );
+  }
+
 //
   @override
   Widget build(BuildContext context) {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
     return Column(
       children: [
-        InkWell(
-          onTap: () => provider.open(provider.openIndex == index ? -1 : index),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    StockDetails.path,
-                    // arguments: data?.symbol ?? "",
-                    arguments: {"slug": data?.symbol ?? ""},
-                  ),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(0.sp),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          width: 43,
-                          height: 43,
-                          child: ThemeImageView(url: data?.image ?? ""),
-                        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () => _onTap(context),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0.sp),
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 43,
+                        height: 43,
+                        child: ThemeImageView(url: data?.image ?? ""),
                       ),
-                      const SpacerHorizontal(width: 3),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              data?.symbol ?? "",
-                              style: stylePTSansRegular(
-                                fontSize: 12,
-                                color: ThemeColors.white,
-                              ),
-                            ),
-                            Text(
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              data?.name ?? "",
-                              style: stylePTSansRegular(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              // const SpacerHorizontal(width: 10),
-              // Expanded(
-              //   child: Text(
-              //     maxLines: 1,
-              //     data?.exchangeShortName ?? "",
-              //     style: stylePTSansRegular(
-              //       fontSize: 12,
-              //       color: ThemeColors.white,
-              //     ),
-              //   ),
-              // ),
-              const SpacerHorizontal(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Text(
-                    //   maxLines: 2,
-                    //   "${data?.price}",
-                    //   overflow: TextOverflow.ellipsis,
-                    //   style: stylePTSansRegular(
-                    //       fontSize: 12, color: ThemeColors.white),
-                    // ),
-                    Text(data?.price ?? "",
-                        style: stylePTSansBold(fontSize: 14)),
-                    const SpacerVertical(height: 2),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  const SpacerHorizontal(width: 3),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Flexible(
-                          child: RichText(
-                            textAlign: TextAlign.end,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text:
-                                      "${data?.displayChange} (${data?.changesPercentage?.toCurrency()}%)",
-                                  style: stylePTSansRegular(
-                                    fontSize: 11,
-                                    color: (data?.changesPercentage ?? 0) > 0
-                                        ? Colors.green
-                                        : Colors.red,
-                                  ),
-                                ),
-                              ],
+                        InkWell(
+                          onTap: () => _onTap(context),
+                          child: Text(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            data?.symbol ?? "",
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.white,
                             ),
                           ),
                         ),
-                        // Flexible(
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       // Row(
-                        //       //   children: [
-                        //       //     Icon(
-                        //       //       (data?.change ?? 0) > 0
-                        //       //           ? Icons.arrow_upward
-                        //       //           : Icons.arrow_downward,
-                        //       //       size: 15,
-                        //       //       color: (data?.change ?? 0) > 0
-                        //       //           ? ThemeColors.accent
-                        //       //           : Colors.red,
-                        //       //     ),
-                        //       //     Flexible(
-                        //       //       child: Text(
-                        //       //         maxLines: 2,
-                        //       //         "${data?.change?.toCurrency()} (${data?.changesPercentage?.toCurrency()}%)",
-                        //       //         style: stylePTSansRegular(
-                        //       //           fontSize: 12,
-                        //       //           color: (data?.change ?? 0) > 0
-                        //       //               ? ThemeColors.accent
-                        //       //               : Colors.red,
-                        //       //         ),
-                        //       //       ),
-                        //       //     ),
-                        //       //   ],
-                        //       // ),
+                        Text(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          data?.name ?? "",
+                          style: stylePTSansRegular(
+                            fontSize: 12,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // const SpacerHorizontal(width: 10),
+            // Expanded(
+            //   child: Text(
+            //     maxLines: 1,
+            //     data?.exchangeShortName ?? "",
+            //     style: stylePTSansRegular(
+            //       fontSize: 12,
+            //       color: ThemeColors.white,
+            //     ),
+            //   ),
+            // ),
+            const SpacerHorizontal(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   maxLines: 2,
+                  //   "${data?.price}",
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: stylePTSansRegular(
+                  //       fontSize: 12, color: ThemeColors.white),
+                  // ),
+                  Text(data?.price ?? "", style: stylePTSansBold(fontSize: 14)),
+                  const SpacerVertical(height: 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: RichText(
+                          textAlign: TextAlign.end,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                    "${data?.displayChange} (${data?.changesPercentage?.toCurrency()}%)",
+                                style: stylePTSansRegular(
+                                  fontSize: 11,
+                                  color: (data?.changesPercentage ?? 0) > 0
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Flexible(
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       // Row(
+                      //       //   children: [
+                      //       //     Icon(
+                      //       //       (data?.change ?? 0) > 0
+                      //       //           ? Icons.arrow_upward
+                      //       //           : Icons.arrow_downward,
+                      //       //       size: 15,
+                      //       //       color: (data?.change ?? 0) > 0
+                      //       //           ? ThemeColors.accent
+                      //       //           : Colors.red,
+                      //       //     ),
+                      //       //     Flexible(
+                      //       //       child: Text(
+                      //       //         maxLines: 2,
+                      //       //         "${data?.change?.toCurrency()} (${data?.changesPercentage?.toCurrency()}%)",
+                      //       //         style: stylePTSansRegular(
+                      //       //           fontSize: 12,
+                      //       //           color: (data?.change ?? 0) > 0
+                      //       //               ? ThemeColors.accent
+                      //       //               : Colors.red,
+                      //       //         ),
+                      //       //       ),
+                      //       //     ),
+                      //       //   ],
+                      //       // ),
 
-                        //       // Text(
-                        //       //   maxLines: 2,
-                        //       //   "${data?.changesPercentage?.toCurrency()}%",
-                        //       //   style: stylePTSansRegular(
-                        //       //     fontSize: 12,
-                        //       //     color: (data?.changesPercentage ?? 0) > 0
-                        //       //         ? ThemeColors.accent
-                        //       //         : Colors.red,
-                        //       //   ),
-                        //       // ),
-                        //     ],
-                        //   ),
-                        // ),
-                        Container(
+                      //       // Text(
+                      //       //   maxLines: 2,
+                      //       //   "${data?.changesPercentage?.toCurrency()}%",
+                      //       //   style: stylePTSansRegular(
+                      //       //     fontSize: 12,
+                      //       //     color: (data?.changesPercentage ?? 0) > 0
+                      //       //         ? ThemeColors.accent
+                      //       //         : Colors.red,
+                      //       //   ),
+                      //       // ),
+                      //     ],
+                      //   ),
+                      // ),
+                      InkWell(
+                        onTap: () => provider
+                            .open(provider.openIndex == index ? -1 : index),
+                        child: Container(
                           decoration: const BoxDecoration(
                             color: ThemeColors.accent,
                           ),
@@ -180,13 +186,13 @@ class StocksItemAll extends StatelessWidget {
                             size: 16,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
         AnimatedSize(
           duration: const Duration(milliseconds: 150),

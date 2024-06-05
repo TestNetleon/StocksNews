@@ -29,6 +29,10 @@ class IndicesProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
   bool get tabLoading => _tabStatus == Status.loading;
+  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
+  int _page = 1;
+  Extra? _extraUp;
+  Extra? get extraUp => _extraUp;
 
   String? title;
   String? subTitle;
@@ -110,14 +114,22 @@ class IndicesProvider extends ChangeNotifier {
     getTabsData();
   }
 
-  Future getIndicesData({showProgress = false}) async {
+  Future getIndicesData({loadMore = false, showProgress = false}) async {
     setStatus(Status.loading);
+    if (loadMore) {
+      _page++;
+      setStatus(Status.loadingMore);
+    } else {
+      _page = 1;
+      setStatus(Status.loading);
+    }
 
     try {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "exchange": _tabs?[selectedIndex].key,
+        "page": "$_page"
       };
 
       ApiResponse response = await apiRequest(
@@ -126,17 +138,25 @@ class IndicesProvider extends ChangeNotifier {
         showProgress: false,
         onRefresh: onRefreshIndicesData,
       );
-
       if (response.status) {
         _error = null;
-        _data = indicesResFromJson(jsonEncode(response.data));
-        title = response.extra?.title;
-        subTitle = response.extra?.subTitle;
-      } else {
-        _data = null;
-        _error = response.message;
-      }
+        if (_page == 1) {
+          _data = indicesResFromJson(jsonEncode(response.data));
+          _extraUp = response.extra is Extra ? response.extra : null;
+          title = response.extra?.title;
+          subTitle = response.extra?.subTitle;
+        } else {
+          _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
 
+          notifyListeners();
+        }
+      } else {
+        if (_page == 1) {
+          _data = null;
+          _error = response.message;
+          // showErrorMessage(message: response.message);
+        }
+      }
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;

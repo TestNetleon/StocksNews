@@ -13,6 +13,7 @@ import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -196,6 +197,10 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.screen_search_desktop_outlined,
     text: "Stock Screener",
+    onTap: () {
+      Navigator.pushNamed(
+          navigatorKey.currentContext!, StockScreenerScreen.path);
+    },
   ),
 ];
 

@@ -112,6 +112,7 @@ class Apis {
   static const updateInAppCount = "/update-inapp-count";
   static const dividends = "/dividends";
   static const earnings = "/earnings";
+  static const stockScreener = "/stock-screener";
 }
 
 //
