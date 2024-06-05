@@ -29,7 +29,6 @@ void main() async {
     );
 
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
-
     // FirebaseMessaging.instance.getToken().then((token) {
     //   if (token != null) {
     //     // Use the token as needed (e.g., store it or pass it to FIAM)
@@ -40,7 +39,6 @@ void main() async {
     // }).catchError((error) {
     //   print("Error getting messaging token: $error");
     // });
-
     // if (Platform.isAndroid) {
     //   await Firebase.initializeApp(
     //     // // If apply android won't work and if doesn't iOS wont

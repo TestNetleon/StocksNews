@@ -64,6 +64,7 @@ import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/redditComments/i_frame_item.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
@@ -186,6 +187,17 @@ class Routes {
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             return StockDetails(
+              symbol: arguments!['slug'],
+              inAppMsgId: arguments['inAppMsgId'],
+            );
+            // return StockDetails(symbol: settings.arguments as String);
+          },
+        );
+      case StockDetail.path:
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            return StockDetail(
               symbol: arguments!['slug'],
               inAppMsgId: arguments['inAppMsgId'],
             );
