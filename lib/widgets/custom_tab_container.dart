@@ -261,6 +261,7 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
       length: widget.tabs.length,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SpacerVertical(height: 5),
           // Visibility(

@@ -15,19 +15,19 @@ class HomeTopLoser extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
 
-    if (provider.homeTrendingRes?.losers.isEmpty == true) {
+    if (provider.homeTrendingRes?.losers?.isEmpty == true) {
       return const ErrorDisplayWidget(
         error: Const.errNoRecord,
         smallHeight: true,
       );
     } //
     return ListView.separated(
-      itemCount: provider.homeTrendingRes?.losers.length ?? 0,
+      itemCount: provider.homeTrendingRes?.losers?.length ?? 0,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       padding: EdgeInsets.only(top: 12.sp),
       itemBuilder: (context, index) {
-        Top top = provider.homeTrendingRes!.losers[index];
+        Top top = provider.homeTrendingRes!.losers![index];
         return StocksItem(top: top, gainer: false);
       },
       separatorBuilder: (BuildContext context, int index) {

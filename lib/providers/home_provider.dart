@@ -17,6 +17,8 @@ import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_sentiment_res.dart';
 import 'package:stocks_news_new/modals/home_slider_res.dart';
+import 'package:stocks_news_new/modals/home_top_gainer_res.dart';
+import 'package:stocks_news_new/modals/home_top_loser_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/ipo_res.dart';
 import 'package:stocks_news_new/modals/stock_infocus.dart';
@@ -62,6 +64,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   HomeTrendingRes? _homeTrendingRes;
   HomeTrendingRes? get homeTrendingRes => _homeTrendingRes;
+
+  HomeTopGainerRes? _homeTopGainerRes;
+  HomeTopGainerRes? get homeTopGainerRes => _homeTopGainerRes;
+
+  HomeTopLosersRes? _homeTopLosersRes;
+  HomeTopLosersRes? get homeTopLosersRes => _homeTopLosersRes;
 
   HomeInsiderRes? _homeInsiderRes;
   HomeInsiderRes? get homeInsiderRes => _homeInsiderRes;
@@ -134,8 +142,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     retryCount = 0;
     _getLastMarketOpen();
     getHomeSlider();
-    getHomeTrendingData();
     getHomeAlerts();
+    getHomeTrendingData();
     // getIpoData();
     // getStockInFocus();
     // getHomeSentimentData();
@@ -227,9 +235,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     try {
-      Map request = {
-        "token": provider.user?.token ?? "",
-      };
+      Map request = {"token": provider.user?.token ?? ""};
       ApiResponse response = await apiRequest(
         url: Apis.homeTrending,
         request: request,
@@ -253,6 +259,91 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
     } catch (e) {
       _homeTrendingRes = null;
+      _error = Const.errSomethingWrong;
+      topLoading = false;
+      _statusTrending = Status.loaded;
+      notifyListeners();
+    }
+  }
+
+  Future getHomeTopGainerData() async {
+    topLoading = true;
+    // popularPresent = true;
+    _statusTrending = Status.loading;
+    notifyListeners();
+
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+        "type": "gainers",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeTopGainerLoser,
+        request: request,
+        showProgress: false,
+        onRefresh: () => refreshData(null),
+      );
+
+      if (response.status) {
+        _homeTopGainerRes = HomeTopGainerRes.fromJson(response.data);
+        // if (_homeTrendingRes?.popular.isEmpty == true ||
+        //     _homeTrendingRes?.popular == null ||
+        //     _homeTrendingRes == null) {
+        //   popularPresent = false;
+        //   notifyListeners();
+        // }
+      } else {
+        _homeTopGainerRes = null;
+        _error = "Data not found";
+      }
+      topLoading = false;
+      _statusTrending = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _homeTopGainerRes = null;
+      _error = Const.errSomethingWrong;
+      topLoading = false;
+      _statusTrending = Status.loaded;
+      notifyListeners();
+    }
+  }
+
+  Future getHomeTopLoserData() async {
+    topLoading = true;
+    // popularPresent = true;
+    _statusTrending = Status.loading;
+    notifyListeners();
+
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+        "type": "losers",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.homeTopGainerLoser,
+        request: request,
+        showProgress: false,
+        onRefresh: () => refreshData(null),
+      );
+      if (response.status) {
+        _homeTopLosersRes = HomeTopLosersRes.fromJson(response.data);
+        // if (_homeTrendingRes?.popular.isEmpty == true ||
+        //     _homeTrendingRes?.popular == null ||
+        //     _homeTrendingRes == null) {
+        //   popularPresent = false;
+        //   notifyListeners();
+        // }
+      } else {
+        _homeTopLosersRes = null;
+        _error = "Data not found";
+      }
+      topLoading = false;
+      _statusTrending = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _homeTopLosersRes = null;
       _error = Const.errSomethingWrong;
       topLoading = false;
       _statusTrending = Status.loaded;
