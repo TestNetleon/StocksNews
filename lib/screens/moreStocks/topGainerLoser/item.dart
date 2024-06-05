@@ -16,11 +16,14 @@ class GainerLoserItem extends StatelessWidget {
   final GainersLosersDataRes data;
   final int index;
   final bool losers;
+  final bool marketData;
+
 //
   const GainerLoserItem({
     required this.data,
     required this.index,
     this.losers = false,
+    this.marketData = false,
     super.key,
   });
 
@@ -38,21 +41,23 @@ class GainerLoserItem extends StatelessWidget {
     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
 
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          StockDetails.path,
-          // arguments: data.symbol,
-          arguments: {"slug": data.symbol},
-        );
-      },
+      onTap: marketData
+          ? null
+          : () {
+              Navigator.pushNamed(
+                context,
+                StockDetails.path,
+                // arguments: data.symbol,
+                arguments: {"slug": data.symbol},
+              );
+            },
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () => _onTap(context),
+              InkWell(
+                onTap: marketData ? null : () => _onTap(context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0.sp),
                   child: Container(
@@ -65,16 +70,19 @@ class GainerLoserItem extends StatelessWidget {
               ),
               const SpacerHorizontal(width: 12),
               Expanded(
-                child: GestureDetector(
-                  onTap: () => _onTap(context),
+                child: InkWell(
+                  onTap: !marketData ? null : () => _onTap(context),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        data.symbol,
-                        style: stylePTSansBold(fontSize: 14),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      InkWell(
+                        onTap: () => _onTap(context),
+                        child: Text(
+                          data.symbol,
+                          style: stylePTSansBold(fontSize: 14),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       const SpacerVertical(height: 5),
                       Text(

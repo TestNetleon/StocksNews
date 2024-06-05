@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
@@ -15,6 +16,13 @@ class CongressionalItem extends StatelessWidget {
   final CongressionalRes? data;
   final int index;
   const CongressionalItem({super.key, this.data, required this.index});
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data?.symbol},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,7 @@ class CongressionalItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () => _onTap(context),
                         child: Text(
                           "${data?.name}",
                           style: stylePTSansBold(fontSize: 14),
@@ -42,25 +50,25 @@ class CongressionalItem extends StatelessWidget {
                         ),
                       ),
                       const SpacerVertical(height: 3),
-                      Text(
-                        "${data?.symbol}",
-                        style: stylePTSansBold(
-                          fontSize: 13,
-                          color: ThemeColors.accent,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SpacerVertical(height: 3),
                       InkWell(
-                        onTap: () {},
+                        onTap: () => _onTap(context),
                         child: Text(
-                          "${data?.company}",
+                          "${data?.symbol}",
                           style: stylePTSansBold(
-                              fontSize: 14, color: ThemeColors.greyText),
+                            fontSize: 13,
+                            color: ThemeColors.accent,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
+                      ),
+                      const SpacerVertical(height: 3),
+                      Text(
+                        "${data?.company}",
+                        style: stylePTSansBold(
+                            fontSize: 14, color: ThemeColors.greyText),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 3),
                     ],

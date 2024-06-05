@@ -6,6 +6,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/gainers_losers_res.dart';
 import '../../../providers/more_stocks_provider.dart';
@@ -53,6 +54,9 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
       // context
       //     .read<MoreStocksProvider>()
       //     .getLosers(showProgress: true, type: "losers");
+      // context
+      //     .read<MoreStocksProvider>()
+      //     .getLosers(showProgress: true, type: "losers");
     });
   }
 
@@ -71,6 +75,22 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
         padding: const EdgeInsets.fromLTRB(
             Dimen.padding, Dimen.padding, Dimen.padding, 0),
         child: CustomTabContainerNEW(
+          onChange: (index) {
+            print("index =============$index");
+            if (selectedIndex != index) {
+              selectedIndex = index;
+              if (index == 1) {
+                context
+                    .read<MoreStocksProvider>()
+                    .getLosers(showProgress: true, type: "losers");
+              } else if (index == 0) {
+                context.read<MoreStocksProvider>().getGainersLosers(
+                    showProgress: true, type: widget.type.name);
+              }
+              setState(() {});
+            }
+            return;
+          },
           scrollable: false,
           tabsPadding: EdgeInsets.zero,
           tabs: const ["Today's Gainers", " Today's Losers"],
@@ -103,9 +123,11 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                           HtmlTitle(
                               subTitle:
                                   provider.extraUpGainers?.subTitle ?? ""),
+                        const SpacerVertical(),
                         GainerLoserItem(
                           data: gainers[index],
                           index: index,
+                          marketData: true,
                         ),
                       ],
                     );
@@ -150,6 +172,7 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                           losers: true,
                           data: losers[index],
                           index: index,
+                          marketData: true,
                         ),
                       ],
                     );

@@ -36,155 +36,145 @@ class HighLowBetaStocksItem extends StatelessWidget {
     HighLowBetaStocksProvider provider =
         context.watch<HighLowBetaStocksProvider>();
 
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          StockDetails.path,
-          // arguments: data.symbol,
-          arguments: {"slug": data.symbol},
-        );
-      },
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () => _onTap(context),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0.sp),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: 43,
-                    height: 43,
-                    child: ThemeImageView(url: data.image),
-                  ),
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: () => _onTap(context),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0.sp),
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  width: 43,
+                  height: 43,
+                  child: ThemeImageView(url: data.image),
                 ),
               ),
-              const SpacerHorizontal(width: 12),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => _onTap(context),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        data.symbol,
-                        style: stylePTSansBold(fontSize: 14),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SpacerVertical(height: 5),
-                      Text(
-                        data.name,
-                        style: stylePTSansRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 12,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SpacerHorizontal(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+            ),
+            const SpacerHorizontal(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  InkWell(
+                    onTap: () => _onTap(context),
+                    child: Text(
+                      data.symbol,
+                      style: stylePTSansBold(fontSize: 14),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SpacerVertical(height: 5),
                   Text(
-                    "${data.price}",
-                    style: stylePTSansBold(fontSize: 14),
-                    maxLines: 1,
+                    data.name,
+                    style: stylePTSansRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 12,
+                    ),
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-              const SpacerHorizontal(width: 10),
-              InkWell(
-                onTap: () {
-                  if (highLowBetaStocks) {
-                    provider.setOpenIndexHighLowBetaStocks(
-                      provider.openIndexHighLowBetaStocks == index ? -1 : index,
-                    );
-                  } else {
-                    provider.setOpenIndex(
-                      provider.openIndex == index ? -1 : index,
-                    );
-                  }
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.accent,
-                  ),
-                  margin: EdgeInsets.only(left: 8.sp),
-                  padding: const EdgeInsets.all(3),
-                  child: Icon(
-                    highLowBetaStocks
-                        ? provider.openIndexHighLowBetaStocks == index
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded
-                        : provider.openIndex == index
-                            ? Icons.arrow_upward_rounded
-                            : Icons.arrow_downward_rounded,
-                    size: 16,
-                  ),
+            ),
+            const SpacerHorizontal(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "${data.price}",
+                  style: stylePTSansBold(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              )
-            ],
-          ),
-          AnimatedSize(
-            duration: const Duration(milliseconds: 150),
-            child: Container(
-              height: highLowBetaStocks
+              ],
+            ),
+            const SpacerHorizontal(width: 10),
+            InkWell(
+              onTap: () {
+                if (highLowBetaStocks) {
+                  provider.setOpenIndexHighLowBetaStocks(
+                    provider.openIndexHighLowBetaStocks == index ? -1 : index,
+                  );
+                } else {
+                  provider.setOpenIndex(
+                    provider.openIndex == index ? -1 : index,
+                  );
+                }
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: ThemeColors.accent,
+                ),
+                margin: EdgeInsets.only(left: 8.sp),
+                padding: const EdgeInsets.all(3),
+                child: Icon(
+                  highLowBetaStocks
+                      ? provider.openIndexHighLowBetaStocks == index
+                          ? Icons.arrow_upward_rounded
+                          : Icons.arrow_downward_rounded
+                      : provider.openIndex == index
+                          ? Icons.arrow_upward_rounded
+                          : Icons.arrow_downward_rounded,
+                  size: 16,
+                ),
+              ),
+            )
+          ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            height: highLowBetaStocks
+                ? provider.openIndexHighLowBetaStocks == index
+                    ? null
+                    : 0
+                : provider.openIndex == index
+                    ? null
+                    : 0,
+            margin: EdgeInsets.only(
+              top: highLowBetaStocks
                   ? provider.openIndexHighLowBetaStocks == index
-                      ? null
+                      ? 10.sp
                       : 0
                   : provider.openIndex == index
-                      ? null
+                      ? 10.sp
                       : 0,
-              margin: EdgeInsets.only(
-                top: highLowBetaStocks
-                    ? provider.openIndexHighLowBetaStocks == index
-                        ? 10.sp
-                        : 0
-                    : provider.openIndex == index
-                        ? 10.sp
-                        : 0,
-                bottom: highLowBetaStocks
-                    ? provider.openIndexHighLowBetaStocks == index
-                        ? 10.sp
-                        : 0
-                    : provider.openIndex == index
-                        ? 10.sp
-                        : 0,
-              ),
-              child: Column(
-                children: [
-                  InnerRowItem(
-                    lable: "Beta",
-                    value: "${data.beta}",
-                  ),
-                  InnerRowItem(
-                    lable: "PE Ratio",
-                    value: "${data.pe}",
-                  ),
-                  InnerRowItem(
-                    lable: "Market Cap",
-                    value: data.marketCap,
-                  ),
-                  InnerRowItem(lable: "Volume", value: "${data.volume}"),
-                  InnerRowItem(
-                    lable: "Average Volume",
-                    value: "${data.avgVolume}",
-                  ),
-                ],
-              ),
+              bottom: highLowBetaStocks
+                  ? provider.openIndexHighLowBetaStocks == index
+                      ? 10.sp
+                      : 0
+                  : provider.openIndex == index
+                      ? 10.sp
+                      : 0,
             ),
-          )
-        ],
-      ),
+            child: Column(
+              children: [
+                InnerRowItem(
+                  lable: "Beta",
+                  value: "${data.beta}",
+                ),
+                InnerRowItem(
+                  lable: "PE Ratio",
+                  value: "${data.pe}",
+                ),
+                InnerRowItem(
+                  lable: "Market Cap",
+                  value: data.marketCap,
+                ),
+                InnerRowItem(lable: "Volume", value: "${data.volume}"),
+                InnerRowItem(
+                  lable: "Average Volume",
+                  value: "${data.avgVolume}",
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 }
