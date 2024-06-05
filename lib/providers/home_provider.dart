@@ -160,7 +160,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     _getLastMarketOpen();
     getHomeSlider();
     getHomeAlerts();
-    // getHomeTrendingData();//ADD AGAIN AFTER BACKEND MERGING
+    getHomeTrendingData(); //ADD AGAIN AFTER BACKEND MERGING
     // getIpoData();
     // getStockInFocus();
     // getHomeSentimentData();

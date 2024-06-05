@@ -58,89 +58,89 @@ class HomeContainer extends StatelessWidget {
                     provider.getHomePortfolio();
                   },
                   child: const PlaidHome()),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.stretch,
-              //     children: [
-              //       if (!((provider.homeTrendingRes?.popular.isEmpty == true ||
-              //               provider.homeTrendingRes?.popular == null ||
-              //               provider.homeTrendingRes == null) &&
-              //           provider.statusTrending != Status.loading))
-              //         const StockInBuzz(),
-              //       const HomeMyAlerts(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (!((provider.homeTrendingRes?.popular.isEmpty == true ||
+                            provider.homeTrendingRes?.popular == null ||
+                            provider.homeTrendingRes == null) &&
+                        provider.statusTrending != Status.loading))
+                      const StockInBuzz(),
+                    const HomeMyAlerts(),
 
-              //       HomePartialLoading(
-              //         loadingWidget: const Loading(),
-              //         loading: provider.isLoadingTrending,
-              //         error: provider.statusTrending != Status.ideal &&
-              //                 !provider.isLoadingTrending &&
-              //                 provider.homeTrendingRes == null
-              //             ? provider.homeTrendingRes?.gainers?.isEmpty == true
-              //                 ? HomeError.gainers
-              //                 : provider.homeTrendingRes?.losers?.isEmpty ==
-              //                         true
-              //                     ? HomeError.loosers
-              //                     : HomeError.trending
-              //             : null,
-              //         onRefresh: provider.refreshWithCheck,
-              //         child: const HomeInnerTabs(),
-              //       ),
+                    HomePartialLoading(
+                      loadingWidget: const Loading(),
+                      loading: provider.isLoadingTrending,
+                      error: provider.statusTrending != Status.ideal &&
+                              !provider.isLoadingTrending &&
+                              provider.homeTrendingRes == null
+                          ? provider.homeTrendingRes?.gainers?.isEmpty == true
+                              ? HomeError.gainers
+                              : provider.homeTrendingRes?.losers?.isEmpty ==
+                                      true
+                                  ? HomeError.loosers
+                                  : HomeError.trending
+                          : null,
+                      onRefresh: provider.refreshWithCheck,
+                      child: const HomeInnerTabs(),
+                    ),
 
-              //       // HomePartialLoading(
-              //       //   loading: provider.isLoadingIpo,
-              //       //   error: !provider.isLoadingIpo && provider.ipoRes == null
-              //       //       ? HomeError.ipo
-              //       //       : null,
-              //       //   onRefresh: provider.refreshWithCheck,
-              //       //   child: const IpoIndex(),
-              //       // ),
-              //       // Visibility(
-              //       //   visible: provider.focusRes != null,
-              //       //   child: HomePartialLoading(
-              //       //     loading: provider.isLoadingStockFocus,
-              //       //     error: null,
-              //       //     onRefresh: provider.refreshWithCheck,
-              //       //     child: const StocksInFocus(),
-              //       //   ),
-              //       // ),
-              //       // const SpacerVertical(height: 10),
-              //       // const HomeBanner(),
-              //       // HomePartialLoading(
-              //       //   loading: provider.isLoadingSentiment,
-              //       //   error: !provider.isLoadingSentiment &&
-              //       //           provider.homeSentimentRes == null
-              //       //       ? HomeError.sentiment
-              //       //       : null,
-              //       //   onRefresh: provider.refreshWithCheck,
-              //       //   child: const SentimentsGraph(),
-              //       // ),
-              //       // HomePartialLoading(
-              //       //   loading: provider.isLoadingInsider,
-              //       //   error: !provider.isLoadingInsider &&
-              //       //           provider.homeInsiderRes == null
-              //       //       ? provider.homeInsiderRes?.news.isEmpty == true
-              //       //           ? HomeError.news
-              //       //           : provider.homeInsiderRes?.recentMentions
-              //       //                       ?.isEmpty ==
-              //       //                   true
-              //       //               ? HomeError.mentions
-              //       //               : HomeError.insiderTrading
-              //       //       : null,
-              //       //   onRefresh: provider.refreshWithCheck,
-              //       //   child: const Column(
-              //       //     children: [
-              //       //       MostRecentMentions(),
-              //       //       // InsiderSocialTabs(),
-              //       //       // SpacerVertical(),
-              //       //       // HomeNewsItem(),
-              //       //       // SpacerVertical(),
-              //       //     ],
-              //       //   ),
-              //       // ),
-              //     ],
-              //   ),
-              // ),
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingIpo,
+                    //   error: !provider.isLoadingIpo && provider.ipoRes == null
+                    //       ? HomeError.ipo
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child: const IpoIndex(),
+                    // ),
+                    // Visibility(
+                    //   visible: provider.focusRes != null,
+                    //   child: HomePartialLoading(
+                    //     loading: provider.isLoadingStockFocus,
+                    //     error: null,
+                    //     onRefresh: provider.refreshWithCheck,
+                    //     child: const StocksInFocus(),
+                    //   ),
+                    // ),
+                    // const SpacerVertical(height: 10),
+                    // const HomeBanner(),
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingSentiment,
+                    //   error: !provider.isLoadingSentiment &&
+                    //           provider.homeSentimentRes == null
+                    //       ? HomeError.sentiment
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child: const SentimentsGraph(),
+                    // ),
+                    // HomePartialLoading(
+                    //   loading: provider.isLoadingInsider,
+                    //   error: !provider.isLoadingInsider &&
+                    //           provider.homeInsiderRes == null
+                    //       ? provider.homeInsiderRes?.news.isEmpty == true
+                    //           ? HomeError.news
+                    //           : provider.homeInsiderRes?.recentMentions
+                    //                       ?.isEmpty ==
+                    //                   true
+                    //               ? HomeError.mentions
+                    //               : HomeError.insiderTrading
+                    //       : null,
+                    //   onRefresh: provider.refreshWithCheck,
+                    //   child: const Column(
+                    //     children: [
+                    //       MostRecentMentions(),
+                    //       // InsiderSocialTabs(),
+                    //       // SpacerVertical(),
+                    //       // HomeNewsItem(),
+                    //       // SpacerVertical(),
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
