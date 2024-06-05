@@ -75,22 +75,6 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
         padding: const EdgeInsets.fromLTRB(
             Dimen.padding, Dimen.padding, Dimen.padding, 0),
         child: CustomTabContainerNEW(
-          onChange: (index) {
-            print("index =============$index");
-            if (selectedIndex != index) {
-              selectedIndex = index;
-              if (index == 1) {
-                context
-                    .read<MoreStocksProvider>()
-                    .getLosers(showProgress: true, type: "losers");
-              } else if (index == 0) {
-                context.read<MoreStocksProvider>().getGainersLosers(
-                    showProgress: true, type: widget.type.name);
-              }
-              setState(() {});
-            }
-            return;
-          },
           scrollable: false,
           tabsPadding: EdgeInsets.zero,
           tabs: const ["Today's Gainers", " Today's Losers"],
