@@ -20,6 +20,8 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../widgets/progress_dialog.dart';
+
 class TermsPolicyContainer extends StatefulWidget {
   final PolicyType policyType;
 //
@@ -120,6 +122,9 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                     child: Padding(
                       padding: EdgeInsets.only(bottom: Dimen.padding.sp),
                       child: HtmlWidget(
+                        onLoadingBuilder: (context, element, loadingProgress) {
+                          return const ProgressDialog();
+                        },
                         provider.data?.description ?? "",
                         textStyle: stylePTSansRegular(height: 1.5),
                       ),
