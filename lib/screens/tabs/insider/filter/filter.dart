@@ -96,9 +96,7 @@ class FilterInsiders extends StatelessWidget {
     InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: isPhone ? 0 : 0 // ScreenUtil().screenWidth * .15,
-          ),
+      padding: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

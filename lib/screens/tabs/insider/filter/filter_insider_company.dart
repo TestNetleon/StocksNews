@@ -277,7 +277,7 @@ class FilterInsiderCompany extends StatelessWidget {
           text: "FILTER",
           textColor: Colors.white,
         ),
-        const SpacerVertical(height: 10),
+        SpacerVertical(height: ScreenUtil().bottomBarHeight),
       ],
     );
   }

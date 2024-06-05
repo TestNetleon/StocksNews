@@ -161,6 +161,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     getHomeSlider();
     getHomeAlerts();
     getHomeTrendingData(); //ADD AGAIN AFTER BACKEND MERGING
+    _homeTopGainerRes = null;
+    _homeTopLosersRes = null;
     // getIpoData();
     // getStockInFocus();
     // getHomeSentimentData();
@@ -171,11 +173,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     if (_homeSliderRes == null) {
       getHomeSlider();
     }
-    if (_homeTrendingRes == null) {
-      getHomeTrendingData();
-    }
     if (_homeAlertData == null) {
       getHomeAlerts();
+    }
+    if (_homeTrendingRes == null) {
+      getHomeTrendingData();
     }
     // if (_ipoRes == null) {
     //   getIpoData();

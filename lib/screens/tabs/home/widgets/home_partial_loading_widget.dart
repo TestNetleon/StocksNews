@@ -29,7 +29,7 @@ class HomePartialLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SpacerVertical(),
+        // const SpacerVertical(),
         if (loading)
           loadingWidget ??
               placeHolder ??

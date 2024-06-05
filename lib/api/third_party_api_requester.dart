@@ -45,7 +45,7 @@ Future<ApiResponse> apiRequest({
       response =
           await http.get(Uri.parse(baseUrl + url)).timeout(timeoutDuration);
     }
-    Utils().showLog("RESPONSE  =  ${response.body}");
+    // Utils().showLog("RESPONSE  =  ${response.body}");
     if (response.statusCode == 200) {
       // if (showProgress) closeGlobalProgressDialog();
       final data = jsonDecode(response.body);
