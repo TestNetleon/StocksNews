@@ -1,0 +1,151 @@
+In-app-messaging-Key => AIzaSyDfQ4P4VgjFrLklgVkTvzTVlnv4tKXZjRU
+
+In app messaging title
+
+In App messaging full description text.
+
+
+
+
+======================================
+Apple Account (Access)
+
+netleonweb@gmail.com
+Lucky1989!@#$%^
+
+======================================
+
+echo "# StocksNews" >> README.md
+  git init
+  git add README.md
+  git commit -m "first commit"
+  git branch -M main
+  git remote add origin https://github.com/TestNetleon/StocksNews.git
+  git push -u origin main+
+
+
+
+
+
+
+
+========= DEbug ==========
+Alias name: androiddebugkey
+Creation date: 05-Dec-2022
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: C=US, O=Android, CN=Android Debug
+Issuer: C=US, O=Android, CN=Android Debug
+Serial number: 1
+Valid from: Mon Dec 05 19:11:32 IST 2022 until: Wed Nov 27 19:11:32 IST 2052
+Certificate fingerprints:
+         SHA1: D2:1C:8C:6C:B6:EA:D2:BF:42:E5:D8:EB:C3:02:20:FC:6B:87:39:C6
+         SHA256: BB:0B:24:42:89:2C:BB:0A:E4:30:11:27:1C:AC:EF:42:FE:C9:86:96:48:D7:37:B9:69:83:A4:2C:0A:13:00:63
+Signature algorithm name: SHA1withRSA (weak)
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 1
+
+
+
+Stocks News - Your Ultimate Stock News Source
+
+
+
+Stocks News - Your Ultimate Stock News Source
+
+Welcome to Stocks News, the ultimate app designed to keep you at the forefront of the ever-evolving stock market! Whether you're a seasoned trader or just starting, our app ensures you're equipped with the latest market insights to make informed investment decisions.
+
+Key Features:
+
+Real-Time Market Updates: Stay on top of market trends with up-to-the-minute news from reputable sources. Our app delivers breaking news and insightful analyses to keep you in the loop.
+
+Customizable Watchlists: Tailor your watchlists to monitor the stocks that matter to you. Receive personalized alerts on price fluctuations, breaking news, and key events impacting your investments.
+
+Live Stock Quotes: Access real-time stock quotes and performance data, including opening and closing prices, volume, and interactive charts. Make informed decisions based on accurate and current information.
+
+User-Friendly Interface: Our intuitive design ensures a seamless experience for users of all levels. Navigate effortlessly between news articles, stock quotes, and your personalized watchlists.
+
+Financial Education: Whether you're a novice or an experienced investor, Stocks News offers educational content to enhance your financial literacy. Learn about investment strategies, market trends, and financial planning to empower your decision-making.
+
+Why Choose Stocks News?
+
+Comprehensive Coverage: We cover a wide spectrum of stocks, sectors, and global markets to provide a comprehensive view of the financial landscape.
+
+Trusted Sources: We curate news from reliable financial sources to ensure the information you receive is accurate and trustworthy.
+
+Tailored Alerts: Customize alerts according to your preferences. Receive notifications for breaking news, price changes, or specific events relevant to your portfolio.
+
+Accessible Anytime, Anywhere: Stay connected to the markets on the go. Stocks News is accessible on multiple devices, ensuring you never miss a market-moving event.
+
+Elevate your investment game with Stocks News. Download the app now and take charge of your financial journey!
+
+
+
+
+
+
+
+
+
+
+
+=========== DETAILS =================
+password: $TOKSnews.
+ALias: StocksNews
+Organization: StocksNews
+keystore path: C:\Users\DELL\StudioProjects\StocksNews_keystore\keystore.jks
+Bitly App ID: Ao1uh273EZS
+
+======================================
+to get key details 
+keytool -list -v -keystore keystorePath
+
+=======================================
+Alias name: StocksNews
+Creation date: 12-Jan-2024
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: O=StocksNews
+Issuer: O=StocksNews
+Serial number: 1
+Valid from: Fri Jan 12 15:55:00 IST 2024 until: Tue Jan 05 15:55:00 IST 2049
+Certificate fingerprints:
+         SHA1: 49:A3:1D:7A:20:D8:29:6F:24:F6:56:89:9E:BF:91:B0:4E:90:F7:B5
+         SHA256: 6D:32:D3:85:D3:21:F1:0E:DB:F9:8D:7C:27:92:9F:93:B2:B7:30:44:A6:CC:C9:3F:BC:D0:7B:0D:73:92:8F:8F
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+
+
+
+Bitly App ID: Ao1seSO8XNS 
+
+
+
+
+
+--------20-05-24--------
+1. notification sound android (D)
+2. notification sound android (ND)
+3. image home 
+4. Stock Alerts text (D)
+5. audio alert/watchList add (D)
+
+--- 
+1. force update API
+2. text changes for single and multiple data
+3. iOS error pop up detail changes (ND)
+4. if url passed open Dashboard
+
+5. Please wait while we are processing
+6. remove something went wrong on aap API
+7. contact us alert
+8. text in watchlist (remove text )
+
+- review app
+- WatchList page Change
+
+-------------------
+1. portfolio on drawer
+2. bar graph

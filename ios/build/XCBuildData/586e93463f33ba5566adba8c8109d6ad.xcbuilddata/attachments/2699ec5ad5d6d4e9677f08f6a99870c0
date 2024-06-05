@@ -1,0 +1,18 @@
+{
+  "" : {
+    "diagnostics" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/smart_auth-master.dia",
+    "emit-module-dependencies" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/smart_auth-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/smart_auth-master-emit-module.dia",
+    "swift-dependencies" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/smart_auth-master.swiftdeps"
+  },
+  "/Users/netleonmacmini1/.pub-cache/hosted/pub.dev/smart_auth-1.1.1/ios/Classes/SwiftSmartAuthPlugin.swift" : {
+    "const-values" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.swiftconstvalues",
+    "dependencies" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.d",
+    "diagnostics" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.dia",
+    "index-unit-output-path" : "/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.o",
+    "llvm-bc" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.bc",
+    "object" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.o",
+    "swift-dependencies" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin.swiftdeps",
+    "swiftmodule" : "/Users/netleonmacmini1/Documents/Flutter/workspace/StocksNewsMain/ios/build/Pods.build/Debug-iphoneos/smart_auth.build/Objects-normal/arm64/SwiftSmartAuthPlugin~partial.swiftmodule"
+  }
+}
