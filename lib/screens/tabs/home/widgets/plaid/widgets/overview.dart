@@ -87,7 +87,7 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "Net Worth",
+                          "Current Balance",
                           style:
                               stylePTSansRegular(color: ThemeColors.greyText),
                         ),

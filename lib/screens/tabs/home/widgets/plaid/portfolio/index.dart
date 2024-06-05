@@ -4,7 +4,6 @@ import 'package:stocks_news_new/modals/plaid_data_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -76,11 +75,11 @@ class HomePlaidAddedContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ScreenTitle(
-            title: "Investments",
+            title: "Portfolio",
             optionalWidget: Row(
               children: [
                 Text(
-                  "Net Worth:",
+                  "Current Balance:",
                   style: stylePTSansBold(),
                 ),
                 const SpacerHorizontal(width: 5),
@@ -98,8 +97,11 @@ class HomePlaidAddedContainer extends StatelessWidget {
               },
               scrollable: true,
               physics: const NeverScrollableScrollPhysics(),
-              tabs: List.generate(provider.tabs.length,
-                  (index) => provider.tabs[index].capitalizeWords()),
+              tabs: List.generate(
+                  provider.tabs.length,
+                  (index) => index == 0
+                      ? provider.tabs[index].toUpperCase()
+                      : provider.tabs[index].capitalizeWords()),
               tabsPadding: const EdgeInsets.only(bottom: 10),
               widgets: List.generate(
                 provider.tabs.length,
@@ -144,46 +146,47 @@ class HomePlaidBase extends StatelessWidget {
 
           return Stack(
             children: [
-              Positioned(
-                left: 6,
-                right: 6,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5)),
-                      color: ThemeColors.greyBorder),
-                  height: 30,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                        child: Icon(
-                          Icons.trending_up_rounded,
-                          size: 10,
-                        ),
-                      ),
-                      Flexible(
-                        child: RichText(
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          text: TextSpan(
-                              text: "2K ",
-                              style: stylePTSansBold(fontSize: 12),
-                              children: [
-                                TextSpan(
-                                    text: "users bought this in last 30 days.",
-                                    style: stylePTSansRegular(fontSize: 12))
-                              ]),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   left: 6,
+              //   right: 6,
+              //   child: Container(
+              //     decoration: const BoxDecoration(
+              //         borderRadius: BorderRadius.only(
+              //             topLeft: Radius.circular(5),
+              //             topRight: Radius.circular(5)),
+              //         color: ThemeColors.greyBorder),
+              //     height: 30,
+              //     padding:
+              //         const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+              //     child: Row(
+              //       children: [
+              //         const CircleAvatar(
+              //           child: Icon(
+              //             Icons.trending_up_rounded,
+              //             size: 10,
+              //           ),
+              //         ),
+              //         Flexible(
+              //           child: RichText(
+              //             maxLines: 1,
+              //             overflow: TextOverflow.ellipsis,
+              //             text: TextSpan(
+              //                 text: "2K ",
+              //                 style: stylePTSansBold(fontSize: 12),
+              //                 children: [
+              //                   TextSpan(
+              //                       text: "users bought this in last 30 days.",
+              //                       style: stylePTSansRegular(fontSize: 12))
+              //                 ]),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+
               Container(
-                margin: const EdgeInsets.only(top: 30),
+                // margin: const EdgeInsets.only(top: 30),
                 // width: constraints.maxWidth / 1.2,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
@@ -208,7 +211,7 @@ class HomePlaidBase extends StatelessWidget {
           //   height: 20,
           //   color: ThemeColors.greyBorder,
           // );
-          return const SpacerVertical(height: 20);
+          return const SpacerVertical(height: 15);
         },
         itemCount: plaidTabHolder?.data?.length ?? 0,
       ),

@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
@@ -54,10 +55,10 @@ class _TrendingIndustriesContainerState
             ? const Loading()
 
             // ? const Loading()
-            : (provider.data == null || provider.data?.isEmpty == true) &&
+            : (provider.data == null || provider.data?.isNotEmpty == true) &&
                     !provider.isLoading
                 ? Center(
-                    child: ErrorDisplayNewWidget(
+                    child: ErrorDisplayWidget(
                       error: provider.error,
                       onRefresh: provider.getData,
                     ),

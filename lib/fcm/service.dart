@@ -30,15 +30,15 @@ import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  Utils().showLog("****************** GOT THE SILENT PUSH *****************");
-
   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
   // provider.user?.notificationSeen = false;
-  HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+  HomeProvider? provider = navigatorKey.currentContext?.read<HomeProvider>();
   // provider.notificationSeen = false;
-  provider.setNotification(false);
-  Utils().showLog("Data Payload: ${message.data}");
-  Utils().showLog("Notification Payload: ${message.notification}");
+  if (provider != null) {
+    provider.setNotification(false);
+    Utils().showLog("Data Payload: ${message.data}");
+    Utils().showLog("Notification Payload: ${message.notification}");
+  }
 }
 
 class FirebaseApi {

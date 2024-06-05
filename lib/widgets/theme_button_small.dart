@@ -16,6 +16,7 @@ class ThemeButtonSmall extends StatelessWidget {
     this.showArrow = true,
     this.elevation = 2,
     this.padding,
+    this.icon,
     this.margin,
     this.textAlign = TextAlign.center,
     super.key,
@@ -27,6 +28,7 @@ class ThemeButtonSmall extends StatelessWidget {
   final Function onPressed;
   final double textSize;
   final double radius;
+  final IconData? icon;
   final bool fontBold;
   final bool showArrow;
   final double elevation;
@@ -67,7 +69,7 @@ class ThemeButtonSmall extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(left: 8.sp),
               child: Icon(
-                Icons.arrow_forward,
+                icon ?? Icons.arrow_forward,
                 size: 20,
                 color: textColor,
               ),

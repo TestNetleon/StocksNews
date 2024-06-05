@@ -236,6 +236,7 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
         const SpacerVertical(height: 10),
         ListView.separated(
             shrinkWrap: true,
+            padding: const EdgeInsets.only(top: 0),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               if (index == 0) {
@@ -436,6 +437,7 @@ class TechnicalMovingAverages extends StatelessWidget {
         const SpacerVertical(height: 10),
         ListView.separated(
             shrinkWrap: true,
+            padding: const EdgeInsets.only(top: 0),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               if (index == 0) {

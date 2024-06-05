@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
-import 'package:stocks_news_new/providers/scroll_controller.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
@@ -122,8 +121,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     bool foundSite = provider.data?.postDetail?.site != "" &&
         provider.data?.postDetail?.site != null;
 
-    ScrollControllerProvider controllerProvider =
-        context.watch<ScrollControllerProvider>();
+    // ScrollControllerProvider controllerProvider =
+    //     context.watch<ScrollControllerProvider>();
 
     return provider.isLoading
         ? const Loading()
@@ -138,7 +137,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                 child: Stack(
                   children: [
                     SingleChildScrollView(
-                      controller: controllerProvider.scrollController,
                       child: NotificationListener<ScrollNotification>(
                         onNotification: (scrollNotification) {
                           return true;
