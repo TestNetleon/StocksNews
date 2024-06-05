@@ -13,10 +13,12 @@ class BaseContainer extends StatelessWidget {
     super.key,
     this.resizeToAvoidBottomInset,
     this.bottomSafeAreaColor,
+    this.floatingActionButton,
   });
 
   final Widget? drawer;
   final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
   final PreferredSizeWidget? appBar;
   final Widget body;
   final bool showSync;
@@ -73,6 +75,7 @@ class BaseContainer extends StatelessWidget {
                 )
               : SafeArea(child: body),
           bottomNavigationBar: bottomNavigationBar,
+          floatingActionButton: floatingActionButton,
         ),
       ),
     );

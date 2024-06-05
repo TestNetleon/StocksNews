@@ -160,7 +160,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     _getLastMarketOpen();
     getHomeSlider();
     getHomeAlerts();
-    // getHomeTrendingData();//ADD AGAIN AFTER BACKEND MERGING
+    getHomeTrendingData(); //ADD AGAIN AFTER BACKEND MERGING
+    _homeTopGainerRes = null;
+    _homeTopLosersRes = null;
     // getIpoData();
     // getStockInFocus();
     // getHomeSentimentData();
@@ -171,11 +173,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     if (_homeSliderRes == null) {
       getHomeSlider();
     }
-    if (_homeTrendingRes == null) {
-      getHomeTrendingData();
-    }
     if (_homeAlertData == null) {
       getHomeAlerts();
+    }
+    if (_homeTrendingRes == null) {
+      getHomeTrendingData();
     }
     // if (_ipoRes == null) {
     //   getIpoData();
@@ -380,16 +382,16 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _homePortfolio = homePortfolioResFromJson(jsonEncode(response.data));
 
-        if (kDebugMode) {
-          _homePortfolio = HomePortfolioRes(
-              top: _homePortfolio?.top,
-              bottom: _homePortfolio?.bottom,
-              keys: PortfolioKeys(
-                plaidSecret: "7181521c1dd4c3353ea995024697ef",
-                plaidClient: "665336b8bff5c6001ce3aafc",
-                plaidEnv: "sandbox",
-              ));
-        }
+        // if (kDebugMode) {
+        //   _homePortfolio = HomePortfolioRes(
+        //       top: _homePortfolio?.top,
+        //       bottom: _homePortfolio?.bottom,
+        //       keys: PortfolioKeys(
+        //         plaidSecret: "7181521c1dd4c3353ea995024697ef",
+        //         plaidClient: "665336b8bff5c6001ce3aafc",
+        //         plaidEnv: "sandbox",
+        //       ));
+        // }
       } else {
         //
       }

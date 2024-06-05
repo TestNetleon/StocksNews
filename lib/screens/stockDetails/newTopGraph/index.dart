@@ -190,7 +190,7 @@ class _NewTopGraphIndexState extends State<NewTopGraphIndex> {
 
             // StockDetailTopDisclaimer(),
 
-            const SpacerVertical(height: 40),
+            const SpacerVertical(height: 20),
           ],
         );
       },

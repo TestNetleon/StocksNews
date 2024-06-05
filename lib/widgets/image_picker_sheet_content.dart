@@ -79,6 +79,7 @@ class ImagePickerSheetContent extends StatelessWidget {
               ),
             ),
           ),
+          SpacerVertical(height: ScreenUtil().bottomBarHeight),
         ],
       ),
     );

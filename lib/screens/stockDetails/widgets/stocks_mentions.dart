@@ -6,7 +6,7 @@ import 'package:stocks_news_new/modals/stock_details_mentions_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/custom/no_data.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -30,18 +30,19 @@ class StocksMentions extends StatelessWidget {
       );
     }
     if (!provider.mentionLoading && mentions?.isEmpty == true) {
-      return Center(
-        child: ErrorDisplayWidget(
-          smallHeight: true,
-          error: "No mentions found.",
-          onRefresh: () async {
-            provider.getStockDetailsMentions(
-              symbol: provider.data?.keyStats?.symbol ?? "",
-              sectorSlug: provider.data?.companyInfo?.sectorSlug ?? '',
-              price: provider.data?.keyStats?.priceWithoutCur,
-            );
-          },
-        ),
+      return const Center(
+        // child: ErrorDisplayWidget(
+        //   smallHeight: true,
+        //   error: "No mentions found.",
+        //   onRefresh: () async {
+        //     provider.getStockDetailsMentions(
+        //       symbol: provider.data?.keyStats?.symbol ?? "",
+        //       sectorSlug: provider.data?.companyInfo?.sectorSlug ?? '',
+        //       price: provider.data?.keyStats?.priceWithoutCur,
+        //     );
+        //   },
+        // ),
+        child: NoDataCustom(error: 'No mentions data found.'),
       );
     }
 

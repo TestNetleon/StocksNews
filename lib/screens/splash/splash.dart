@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -14,7 +13,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -42,8 +40,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _startProcess() async {
-    final connection = await _checkForConnection();
-    if (!connection) return;
+    // final connection = await _checkForConnection();
+    // if (!connection) return;
 
     _callAPI();
     Timer(const Duration(seconds: 3), () {
@@ -51,21 +49,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     });
   }
 
-  Future<bool> _checkForConnection() async {
-    try {
-      final result = await (Connectivity().checkConnectivity());
-      if (result[0] == ConnectivityResult.none && result.length == 1) {
-        isShowingError = true;
-        showErrorFullScreenDialog(
-            errorCode: 0, onClick: null, log: "From Splash");
-        return false;
-      }
-    } catch (e) {
-      return true;
-    }
-
-    return true;
-  }
+  // Future<bool> _checkForConnection() async {
+  //   try {
+  //     final result = await (Connectivity().checkConnectivity());
+  //     if (result[0] == ConnectivityResult.none && result.length == 1) {
+  //       isShowingError = true;
+  //       showErrorFullScreenDialog(
+  //           errorCode: 0, onClick: null, log: "From Splash");
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     return true;
+  //   }
+  //   return true;
+  // }
 
   void _callAPI() async {
     bool firstTime = await Preference.getFirstTime();

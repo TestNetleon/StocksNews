@@ -188,7 +188,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SpacerVertical(height: 40),
+                      const SpacerVertical(),
                       Text(
                         "NEW EMAIL ADDRESS",
                         style: stylePTSansBold(fontSize: 22),
@@ -206,7 +206,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
                         text: "Next",
                         onPressed: _onPressed,
                       ),
-                      const SpacerVertical(),
+                      SpacerVertical(height: ScreenUtil().bottomBarHeight),
                     ],
                   ),
                 ),

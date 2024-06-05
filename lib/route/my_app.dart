@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:stocks_news_new/dummy.dart';
@@ -15,7 +15,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
+// import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -159,27 +159,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _checkForConnection() async {
-    Connectivity()
-        .onConnectivityChanged
-        .listen((List<ConnectivityResult>? result) async {
-      if ((result?.length ?? 0) == 1) {
-        if (result![0] == ConnectivityResult.none &&
-            result.length == 1 &&
-            !isShowingError) {
-          Timer(const Duration(milliseconds: 2000), () async {
-            final result = await (Connectivity().checkConnectivity());
-            if (result[0] == ConnectivityResult.none && result.length == 1) {
-              isShowingError = true;
-              showErrorFullScreenDialog(
-                errorCode: 0,
-                onClick: null,
-                log: "From My App",
-              );
-            }
-          });
-        }
-      }
-    });
+    // Connectivity()
+    //     .onConnectivityChanged
+    //     .listen((List<ConnectivityResult>? result) async {
+    //   if ((result?.length ?? 0) == 1) {
+    //     if (result![0] == ConnectivityResult.none &&
+    //         result.length == 1 &&
+    //         !isShowingError) {
+    //       Timer(const Duration(milliseconds: 2000), () async {
+    //         final result = await (Connectivity().checkConnectivity());
+    //         if (result[0] == ConnectivityResult.none && result.length == 1) {
+    //           isShowingError = true;
+    //           showErrorFullScreenDialog(
+    //             errorCode: 0,
+    //             onClick: null,
+    //             log: "From My App",
+    //           );
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
   }
 
   @override

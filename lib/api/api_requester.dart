@@ -159,12 +159,12 @@ Future<ApiResponse> apiRequest({
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
       if (!isShowingError && showErrorOnFull) {
-        isShowingError = true;
-        showErrorFullScreenDialog(
-          errorCode: response.statusCode,
-          onClick: onRefresh,
-          log: "API REQUEST ERROR",
-        );
+        // isShowingError = true;
+        // showErrorFullScreenDialog(
+        //   errorCode: response.statusCode,
+        //   onClick: onRefresh,
+        //   log: "API REQUEST ERROR",
+        // );
       }
       return ApiResponse(
         status: false,
@@ -190,12 +190,12 @@ Future<ApiResponse> apiRequest({
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {
-      isShowingError = true;
-      showErrorFullScreenDialog(
-        errorCode: -1,
-        onClick: onRefresh,
-        log: "API REQUEST ERROR",
-      );
+      // isShowingError = true;
+      // showErrorFullScreenDialog(
+      //   errorCode: -1,
+      //   onClick: onRefresh,
+      //   log: "API REQUEST ERROR",
+      // );
     }
     return ApiResponse(
       status: false,

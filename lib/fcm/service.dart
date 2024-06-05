@@ -30,15 +30,15 @@ import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  Utils().showLog("****************** GOT THE SILENT PUSH *****************");
-
   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
   // provider.user?.notificationSeen = false;
-  HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+  HomeProvider? provider = navigatorKey.currentContext?.read<HomeProvider>();
   // provider.notificationSeen = false;
-  provider.setNotification(false);
-  Utils().showLog("Data Payload: ${message.data}");
-  Utils().showLog("Notification Payload: ${message.notification}");
+  if (provider != null) {
+    provider.setNotification(false);
+    Utils().showLog("Data Payload: ${message.data}");
+    Utils().showLog("Notification Payload: ${message.notification}");
+  }
 }
 
 class FirebaseApi {
@@ -54,7 +54,7 @@ class FirebaseApi {
 
   void handleMessage(RemoteMessage? message, {whenAppKilled = false}) {
     if (message == null) return;
-    Timer(const Duration(seconds: 1), () {
+    Timer(Duration(seconds: Platform.isIOS ? 0 : 1), () {
       _navigateToRequiredScreen(
         message.data,
         whenAppKilled: whenAppKilled,
@@ -154,7 +154,10 @@ class FirebaseApi {
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
+        navigatorKey.currentContext!,
+        Tabs.path,
+        (route) => false,
+      );
     }
   }
 
@@ -209,22 +212,20 @@ class FirebaseApi {
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       Utils().showLog("getInitialMessage");
-
       Future.delayed(const Duration(seconds: 4), () {
         handleMessage(message, whenAppKilled: true);
       });
     });
+
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       Utils().showLog("OnMessageOpenedApp ==> ${message.data}");
-
-      Future.delayed(
-        const Duration(seconds: 1),
-        () {
-          handleMessage(message);
-        },
-      );
+      Future.delayed(Duration(seconds: Platform.isIOS ? 0 : 1), () {
+        handleMessage(message);
+      });
     });
+
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       try {
         Utils().showLog("on Message  0 ==>  ${message.toMap()}");
@@ -298,9 +299,9 @@ class FirebaseApi {
                     ),
             ),
             iOS: const DarwinNotificationDetails(
-                // sound: "notifications",
-                // presentSound: true,
-                ),
+              sound: "notifications.wav",
+              presentSound: true,
+            ),
           ),
           payload: jsonEncode(message.toMap()),
         );

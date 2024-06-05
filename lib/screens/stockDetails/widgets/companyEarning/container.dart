@@ -8,9 +8,11 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/stockTopWidgets/com
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/no_data.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
+import '../../../../widgets/screen_title.dart';
 import 'item.dart';
 
 class CompanyEarningStockDetail extends StatefulWidget {
@@ -94,125 +96,134 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
               //   subTitle: earning?.text,
               // ),
               const CommonHeadingStockDetail(),
-              Visibility(
-                visible: earning?.text != '',
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20.sp),
-                  child: Text(
-                    earning?.text ?? "",
-                    style: stylePTSansRegular(
-                        fontSize: 13, color: ThemeColors.greyText),
-                  ),
-                ),
+              // Visibility(
+              //   visible: earning?.text != '',
+              //   child: Padding(
+              //     padding: EdgeInsets.only(bottom: 20.sp),
+              //     child: Text(
+              //       earning?.text ?? "",
+              //       style: stylePTSansRegular(
+              //           fontSize: 13, color: ThemeColors.greyText),
+              //     ),
+              //   ),
+              // ),
+              ScreenTitle(
+                // title: earning?.title ?? "",
+                subTitle: earning?.text,
               ),
-
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Column(
-                      children: [
-                        Divider(
+              earning?.data?.isEmpty == true || earning?.data == null
+                  ? const NoDataCustom(
+                      error: "Company earnings data not found.",
+                    )
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15.sp,
+                                thickness: 1,
+                              ),
+                              Row(
+                                children: [
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "QUARTER",
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                  const SpacerHorizontal(width: 10),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                              maxLines: 1,
+                                              "EPS",
+                                              textAlign: TextAlign.center,
+                                              style: stylePTSansRegular(
+                                                fontSize: 12,
+                                                color: ThemeColors.greyText,
+                                              )),
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "(% Change)",
+                                            textAlign: TextAlign.center,
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                            textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            "REVENUE",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                          AutoSizeText(
+                                            textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            "(% Change)",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15.sp,
+                                thickness: 1,
+                              ),
+                              // const SpacerVertical(height: 5),
+                              CompanyEarningItem(index: index),
+                            ],
+                          );
+                        }
+                        return CompanyEarningItem(index: index);
+                      },
+                      separatorBuilder: (context, index) {
+                        // return const SpacerVertical(height: 10);
+                        return Divider(
                           color: ThemeColors.greyBorder,
-                          height: 15.sp,
-                          thickness: 1,
-                        ),
-                        Row(
-                          children: [
-                            AutoSizeText(
-                              maxLines: 1,
-                              "QUARTER",
-                              style: stylePTSansRegular(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
-                            const SpacerHorizontal(width: 10),
-                            Expanded(
-                              flex: 3,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AutoSizeText(
-                                        maxLines: 1,
-                                        "EPS",
-                                        textAlign: TextAlign.center,
-                                        style: stylePTSansRegular(
-                                          fontSize: 12,
-                                          color: ThemeColors.greyText,
-                                        )),
-                                    AutoSizeText(
-                                      maxLines: 1,
-                                      "(% Change)",
-                                      textAlign: TextAlign.center,
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AutoSizeText(
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      "REVENUE",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                    AutoSizeText(
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      "(% Change)",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 15.sp,
-                          thickness: 1,
-                        ),
-                        // const SpacerVertical(height: 5),
-                        CompanyEarningItem(index: index),
-                      ],
-                    );
-                  }
-                  return CompanyEarningItem(index: index);
-                },
-                separatorBuilder: (context, index) {
-                  // return const SpacerVertical(height: 10);
-                  return Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 20.sp,
-                  );
-                },
-                itemCount: earning?.data?.length ?? 0,
-              ),
-              Divider(
-                color: ThemeColors.greyBorder,
-                height: 20.sp,
-              ),
+                          height: 20.sp,
+                        );
+                      },
+                      itemCount: earning?.data?.length ?? 0,
+                    ),
+              // Divider(
+              //   color: ThemeColors.greyBorder,
+              //   height: 20.sp,
+              // ),
 
               // Container(
               //   height: 300,

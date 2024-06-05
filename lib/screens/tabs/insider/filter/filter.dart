@@ -5,7 +5,6 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/filter_list.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -96,9 +95,7 @@ class FilterInsiders extends StatelessWidget {
     InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: isPhone ? 0 : 0 // ScreenUtil().screenWidth * .15,
-          ),
+      padding: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

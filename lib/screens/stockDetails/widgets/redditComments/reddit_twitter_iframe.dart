@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/custom/no_data.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
@@ -89,8 +89,11 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
   Widget build(BuildContext context) {
     if (widget.redditRssId == null && widget.twitterRssId != null) {
       return const Center(
-        child: ErrorDisplayWidget(
-          smallHeight: true,
+        // child: ErrorDisplayWidget(
+        //   smallHeight: true,
+        //   error: "No recent reddit comments found.",
+        // ),
+        child: NoDataCustom(
           error: "No recent reddit comments found.",
         ),
       );
@@ -98,18 +101,24 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
 
     if (widget.twitterRssId == null && widget.redditRssId != null) {
       return const Center(
-        child: ErrorDisplayWidget(
-          smallHeight: true,
-          error: "No recent X tweets found.",
+        // child: ErrorDisplayWidget(
+        //   smallHeight: true,
+        //   error: "No recent X tweets found.",
+        // ),
+        child: NoDataCustom(
+          error: "No recent X tweets data found.",
         ),
       );
     }
 
     if (widget.twitterRssId == null && widget.redditRssId == null) {
       return const Center(
-        child: ErrorDisplayWidget(
-          smallHeight: true,
-          error: "No recent reddit comments/X tweets found.",
+        // child: ErrorDisplayWidget(
+        //   smallHeight: true,
+        //   error: "No recent reddit comments/X tweets found.",
+        // ),
+        child: NoDataCustom(
+          error: "No recent reddit comments/X tweets data found.",
         ),
       );
     }

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/no_data.dart';
 import 'package:stocks_news_new/widgets/gradient_con_widget.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';

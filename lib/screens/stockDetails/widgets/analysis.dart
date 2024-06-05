@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/no_data.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -202,24 +203,28 @@ class AlalysisBase extends StatelessWidget {
         const ScreenTitle(
           title: "Stock Peers",
         ),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(top: 0),
-          itemBuilder: (context, index) {
-            return PeerStockItem(
-              data: provider.analysisRes?.peersData?[index],
-              index: index,
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 12.sp,
-            );
-          },
-          itemCount: provider.analysisRes?.peersData?.length ?? 0,
-        ),
+        provider.analysisRes?.peersData?.isEmpty == true
+            ? const NoDataCustom(
+                error: "Stock peers data not found.",
+              )
+            : ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 0),
+                itemBuilder: (context, index) {
+                  return PeerStockItem(
+                    data: provider.analysisRes?.peersData?[index],
+                    index: index,
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 12.sp,
+                  );
+                },
+                itemCount: provider.analysisRes?.peersData?.length ?? 0,
+              ),
       ],
     );
   }
