@@ -69,7 +69,6 @@ class HomeContainer extends StatelessWidget {
                         provider.statusTrending != Status.loading))
                       const StockInBuzz(),
                     const HomeMyAlerts(),
-
                     HomePartialLoading(
                       loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
