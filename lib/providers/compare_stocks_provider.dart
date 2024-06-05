@@ -95,7 +95,7 @@ class CompareStocksProvider extends ChangeNotifier {
     Map request = {
       "token":
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      "default_compare_add": "0",
+      "default_compare_add": "1",
     };
     try {
       ApiResponse res = await apiRequest(

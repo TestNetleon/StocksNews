@@ -46,7 +46,7 @@ class HomeContainer extends StatelessWidget {
       child: DefaultTextStyle(
         style: styleGeorgiaBold(),
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               const HomeTopNewsSlider(),

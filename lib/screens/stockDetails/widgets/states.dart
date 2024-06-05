@@ -200,12 +200,18 @@ class _StatesState extends State<States> {
               if (index == 2)
                 StateItemNEW(label: "Price", value: keyStats?.price),
               if (index == 3)
-                StateItemNEW(
-                    label: "Change", value: "\$${keyStats?.change ?? ""}"),
+                Visibility(
+                  visible: keyStats?.change != null,
+                  child: StateItemNEW(
+                      label: "Change", value: "\$${keyStats?.change ?? ""}"),
+                ),
               if (index == 4)
-                StateItemNEW(
-                  label: "Change Per.",
-                  value: "${keyStats?.changesPercentage?.toCurrency()}%",
+                Visibility(
+                  visible: keyStats?.changesPercentage != null,
+                  child: StateItemNEW(
+                    label: "Change Per.",
+                    value: "${keyStats?.changesPercentage?.toCurrency()}%",
+                  ),
                 ),
               if (index == 5)
                 StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
@@ -255,9 +261,14 @@ class _StatesState extends State<States> {
                     label: "EV/Ebitda",
                     value: keyStats?.enterpriseValueOverEbitda),
               if (index == 21)
-                StateItemNEW(
-                    label: "Bid/Ask",
-                    value: "${keyStats?.bid}/${keyStats?.ask}"),
+                Visibility(
+                  visible: (keyStats?.bid != null && keyStats?.bid != '') ||
+                      keyStats?.ask != null && keyStats?.ask != '',
+                  child: StateItemNEW(
+                      label: "Bid/Ask",
+                      value:
+                          "${keyStats?.bid ?? "N/A"}/${keyStats?.ask ?? "N/A"}"),
+                ),
               // if (index == 22) StateItemNEW(label: "Fair Value", value: "-"),
               // if (index == 23)
               //   StateItemNEW(label: "Analyst target price", value: "-"),
