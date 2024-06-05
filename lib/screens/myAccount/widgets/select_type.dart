@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/theme.dart';
 
@@ -60,6 +61,7 @@ class MyAccountImageType extends StatelessWidget {
             ),
           ),
         ),
+        SpacerVertical(height: ScreenUtil().bottomBarHeight),
       ],
     );
   }
