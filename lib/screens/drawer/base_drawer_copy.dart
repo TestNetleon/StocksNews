@@ -26,7 +26,6 @@ import '../alerts/alerts.dart';
 import '../myAccount/my_account.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
-import 'widgets/drawer_more_service.dart';
 import 'widgets/profile_image.dart';
 // import '../t&cAndPolicy/tc_policy.dart';
 
@@ -266,32 +265,32 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             },
                           ),
 
-                          Align(
-                            alignment: Alignment.center,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(20.sp),
-                              onTap: () {
-                                easeOutBuilder(context,
-                                    child: const DrawerMoreService());
-                              },
-                              child: Ink(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.sp, vertical: 5.sp),
-                                decoration: BoxDecoration(
-                                    color:
-                                        ThemeColors.greyBorder.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(20.sp),
-                                    border: Border.all(
-                                        color: ThemeColors.greyBorder)),
-                                child: Text(
-                                  "More services",
-                                  style: stylePTSansRegular(
-                                      fontSize: 12, color: ThemeColors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SpacerVertical(height: 20),
+                          // Align(
+                          //   alignment: Alignment.center,
+                          //   child: InkWell(
+                          //     borderRadius: BorderRadius.circular(20.sp),
+                          //     onTap: () {
+                          //       easeOutBuilder(context,
+                          //           child: const DrawerMoreService());
+                          //     },
+                          //     child: Ink(
+                          //       padding: EdgeInsets.symmetric(
+                          //           horizontal: 10.sp, vertical: 5.sp),
+                          //       decoration: BoxDecoration(
+                          //           color:
+                          //               ThemeColors.greyBorder.withOpacity(0.2),
+                          //           borderRadius: BorderRadius.circular(20.sp),
+                          //           border: Border.all(
+                          //               color: ThemeColors.greyBorder)),
+                          //       child: Text(
+                          //         "More services",
+                          //         style: stylePTSansRegular(
+                          //             fontSize: 12, color: ThemeColors.white),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // const SpacerVertical(height: 20),
                           InkWell(
                             onTap: () {
                               easeOutBuilder(context,
