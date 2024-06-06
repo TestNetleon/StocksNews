@@ -63,6 +63,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     BlogsType type = BlogsType.blog,
     String id = "",
     inAppMsgId,
+    notificationId,
   }) async {
     if (loadMore) {
       _page++;
@@ -113,6 +114,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
 
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId!});
+      }
+      if (notificationId != null) {
+        request.addAll({"notification_id": notificationId!});
       }
 
       ApiResponse response = await apiRequest(
@@ -185,6 +189,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     // required String blogId,
     String? slug,
     inAppMsgId,
+    notificationId,
   }) async {
     // setStatus(Status.loading);
     _statusDetail = Status.loading;

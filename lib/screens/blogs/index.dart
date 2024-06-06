@@ -10,12 +10,14 @@ class Blog extends StatefulWidget {
   final BlogsType type;
   final String id;
   final String? inAppMsgId;
+  final String? notificationId;
   static const path = "Blog";
   const Blog({
     super.key,
     this.type = BlogsType.blog,
     this.id = "",
     this.inAppMsgId,
+    this.notificationId,
   });
 
   @override
@@ -36,6 +38,7 @@ class _BlogState extends State<Blog> {
             type: widget.type,
             id: widget.id,
             inAppMsgId: widget.inAppMsgId,
+            notificationId: widget.notificationId,
           );
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',

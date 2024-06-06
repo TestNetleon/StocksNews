@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter_list.dart';
@@ -185,10 +186,11 @@ class MarketDataFilterBottomSheet extends StatelessWidget {
               children: [
                 Expanded(
                   child: MarketDataTextFiledClickable(
-                      hintText: "All Exchange",
-                      label: "Exchange Type",
-                      onTap: () => _showExchangePicker(context),
-                      controller: provider.exchangeController),
+                    hintText: "All Exchange",
+                    label: "Exchange Type",
+                    onTap: () => _showExchangePicker(context),
+                    controller: provider.exchangeController,
+                  ),
                 ),
                 const SpacerHorizontal(width: 10),
                 Expanded(
@@ -201,98 +203,98 @@ class MarketDataFilterBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          const SpacerVertical(height: 20),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All Industry",
-                      label: "Industry",
-                      onTap: () => _showIndustryPicker(context),
-                      controller: provider.industryController),
-                ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All Market Cap",
-                      label: "Market Cap",
-                      onTap: () => _showMarketCapPicker(context),
-                      controller: provider.marketCapController),
-                ),
-              ],
-            ),
-          ),
-          const SpacerVertical(height: 20),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All Price",
-                      label: "Price",
-                      onTap: () => _showPricePicker(context),
-                      controller: provider.priceController),
-                ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All Beta",
-                      label: "Beta",
-                      onTap: () => _showBetaPicker(context),
-                      controller: provider.betaController),
-                ),
-              ],
-            ),
-          ),
-          const SpacerVertical(height: 20),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All Dividend",
-                      label: "Dividend",
-                      onTap: () => _showDividendPicker(context),
-                      controller: provider.dividendController),
-                ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All",
-                      label: "Is ETF",
-                      onTap: () => _showETFPicker(context),
-                      controller: provider.isEtfController),
-                ),
-              ],
-            ),
-          ),
-          const SpacerVertical(height: 20),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All",
-                      label: "Is Fund",
-                      onTap: () => _showFundPicker(context),
-                      controller: provider.isFundController),
-                ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All",
-                      label: "Is ActivelyTrading",
-                      onTap: () => _showActivelyTradingPicker(context),
-                      controller: provider.isActivelyTradingController),
-                ),
-              ],
-            ),
-          ),
+          // const SpacerVertical(height: 20),
+          // IntrinsicHeight(
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All Industry",
+          //             label: "Industry",
+          //             onTap: () => _showIndustryPicker(context),
+          //             controller: provider.industryController),
+          //       ),
+          //       const SpacerHorizontal(width: 10),
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All Market Cap",
+          //             label: "Market Cap",
+          //             onTap: () => _showMarketCapPicker(context),
+          //             controller: provider.marketCapController),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const SpacerVertical(height: 20),
+          // IntrinsicHeight(
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All Price",
+          //             label: "Price",
+          //             onTap: () => _showPricePicker(context),
+          //             controller: provider.priceController),
+          //       ),
+          //       const SpacerHorizontal(width: 10),
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All Beta",
+          //             label: "Beta",
+          //             onTap: () => _showBetaPicker(context),
+          //             controller: provider.betaController),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const SpacerVertical(height: 20),
+          // IntrinsicHeight(
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All Dividend",
+          //             label: "Dividend",
+          //             onTap: () => _showDividendPicker(context),
+          //             controller: provider.dividendController),
+          //       ),
+          //       const SpacerHorizontal(width: 10),
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All",
+          //             label: "Is ETF",
+          //             onTap: () => _showETFPicker(context),
+          //             controller: provider.isEtfController),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const SpacerVertical(height: 20),
+          // IntrinsicHeight(
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All",
+          //             label: "Is Fund",
+          //             onTap: () => _showFundPicker(context),
+          //             controller: provider.isFundController),
+          //       ),
+          //       const SpacerHorizontal(width: 10),
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //             hintText: "All",
+          //             label: "Is ActivelyTrading",
+          //             onTap: () => _showActivelyTradingPicker(context),
+          //             controller: provider.isActivelyTradingController),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           const SpacerVertical(height: 20),
           ThemeButton(
             color: ThemeColors.accent,
@@ -303,7 +305,7 @@ class MarketDataFilterBottomSheet extends StatelessWidget {
             text: "FILTER",
             textColor: Colors.white,
           ),
-          const SpacerVertical(height: 10),
+          SpacerVertical(height: ScreenUtil().bottomBarHeight),
         ],
       ),
     );

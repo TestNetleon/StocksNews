@@ -14,8 +14,14 @@ class NewsDetails extends StatelessWidget {
   static const String path = "NewsDetails";
   final String? slug;
   final String? inAppMsgId;
+  final String? notificationId;
 
-  const NewsDetails({super.key, this.inAppMsgId, this.slug});
+  const NewsDetails({
+    super.key,
+    this.inAppMsgId,
+    this.notificationId,
+    this.slug,
+  });
 //
   @override
   Widget build(BuildContext context) {
@@ -31,6 +37,7 @@ class NewsDetails extends StatelessWidget {
         child: NewsDetailsBody(
           slug: slug,
           inAppMsgId: inAppMsgId,
+          notificationId: notificationId,
         ),
       ),
     );

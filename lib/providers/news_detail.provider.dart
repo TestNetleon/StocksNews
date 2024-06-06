@@ -34,6 +34,7 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
     showProgress = false,
     String? slug,
     inAppMsgId,
+    notificationId,
   }) async {
     setStatus(Status.loading);
     try {
@@ -44,6 +45,9 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
       };
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId!});
+      }
+      if (notificationId != null) {
+        request.addAll({"notification_id": notificationId!});
       }
       ApiResponse response = await apiRequest(
         url: Apis.newsDetails,

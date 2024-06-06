@@ -1,7 +1,7 @@
 class Apis {
   static const baseUrl = "https://app.stocks.news/api/v1"; // live server
   // static const baseUrl = kDebugMode
-  //     ? "https://dev.stocks.news/api/v1"
+  //     ? "https://notification.stocks.news/api/v1"
   //     : "https://app.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";

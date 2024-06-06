@@ -20,8 +20,13 @@ import 'item.dart';
 class CompanyEarningStockDetail extends StatefulWidget {
   final String symbol;
   final String? inAppMsgId;
-  const CompanyEarningStockDetail(
-      {super.key, required this.symbol, this.inAppMsgId});
+  final String? notificationId;
+  const CompanyEarningStockDetail({
+    super.key,
+    required this.symbol,
+    this.inAppMsgId,
+    this.notificationId,
+  });
 
   @override
   State<CompanyEarningStockDetail> createState() =>
@@ -43,6 +48,7 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
       provider.getStockOtherDetails(
         symbol: widget.symbol,
         inAppMsgId: widget.inAppMsgId,
+        notificationId: widget.notificationId,
       );
     }
   }

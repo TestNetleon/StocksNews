@@ -29,130 +29,119 @@ class BlogDetailContainer extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
-      child: Column(
-        children: [
-          // const ScreenTitle(title: "Blog Detail"),
-          Expanded(
-            child: BaseUiContainer(
-              error: provider.error,
-              hasData:
-                  provider.blogsDetail != null && !provider.isLoadingDetail,
-              isLoading: provider.isLoadingDetail,
-              showPreparingText: true,
-              onRefresh: () => provider.getBlogDetailData(slug: slug),
-              child: CommonRefreshIndicator(
-                onRefresh: () => provider.getBlogDetailData(slug: slug),
-                child: Stack(
+      child: BaseUiContainer(
+        error: provider.error,
+        hasData: provider.blogsDetail != null && !provider.isLoadingDetail,
+        isLoading: provider.isLoadingDetail,
+        showPreparingText: true,
+        onRefresh: () => provider.getBlogDetailData(slug: slug),
+        child: CommonRefreshIndicator(
+          onRefresh: () => provider.getBlogDetailData(slug: slug),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // const SpacerVertical(height: 5),
-                          Text(
-                            provider.blogsDetail?.name ?? "",
-                            style: styleGeorgiaBold(fontSize: 25),
-                          ),
-                          const SpacerVertical(height: 5),
-
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 15.sp),
-                            child: ListAlignment(
-                              date: DateFormat("MMMM dd, yyyy").format(
-                                  provider.blogsDetail?.publishedDate ??
-                                      DateTime.now()),
-                              list1: provider.blogsDetail?.authors,
-                              list2: const [],
-                              blog: true,
-                            ),
-                          ),
-
-                          SizedBox(
-                            width: double.infinity,
-                            height: isPhone
-                                ? ScreenUtil().screenHeight * 0.3
-                                : ScreenUtil().screenHeight * 0.4,
-                            child: ThemeImageView(
-                              url: provider.blogsDetail?.image ?? "",
-                              // fit: BoxFit.contain,
-                            ),
-                          ),
-                          // const SpacerVertical(height: 5),
-                          // RichText(
-                          //   text: TextSpan(
-                          //     children: [
-                          //       TextSpan(
-                          //         text: "Published Date: ",
-                          //         style: stylePTSansRegular(
-                          //           fontSize: 14,
-                          //           color: ThemeColors.white,
-                          //         ),
-                          //       ),
-                          //       TextSpan(
-                          //         text: DateFormat("MMMM dd, yyyy").format(
-                          //             provider.blogsDetail?.publishedDate ??
-                          //                 DateTime.now()),
-                          //         style: stylePTSansRegular(
-                          //             fontSize: 14, color: ThemeColors.greyText),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
-
-                          SpacerVertical(height: Dimen.itemSpacing.sp),
-                          // const BlogDetailAuthor(),
-                          // const SpacerVertical(height: 5),
-                          // const BlogDetailCategory(),
-                          // const SpacerVertical(height: 5),
-                          // const BlogDetailTags(),
-                          HtmlWidget(
-                            onTapImage: (data) {
-                              Utils().showLog(data.sources.first.url);
-                            },
-                            // customWidgetBuilder: (element) {
-                            //   if (element.localName == 'img') {
-                            //     final src = element.attributes['src'];
-
-                            //     return ZoomableImage(url: src ?? "");
-                            //   }
-
-                            //   return null;
-                            // },
-                            onLoadingBuilder:
-                                (context, element, loadingProgress) {
-                              return const ProgressDialog();
-                            },
-                            provider.blogsDetail?.description ?? "",
-                            textStyle: styleGeorgiaRegular(
-                              fontSize: 14,
-                              height: 1.5,
-                            ),
-                          ),
-                          const SpacerVertical(height: 10),
-                        ],
+                    // const SpacerVertical(height: 5),
+                    Text(
+                      provider.blogsDetail?.name ?? "",
+                      style: styleGeorgiaBold(fontSize: 25),
+                    ),
+                    const SpacerVertical(height: 5),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 15.sp),
+                      child: ListAlignment(
+                        date: DateFormat("MMMM dd, yyyy").format(
+                            provider.blogsDetail?.publishedDate ??
+                                DateTime.now()),
+                        list1: provider.blogsDetail?.authors,
+                        list2: const [],
+                        blog: true,
                       ),
                     ),
-                    Positioned(
-                      bottom: 6.sp,
-                      right: 0,
-                      child: FloatingActionButton(
-                        backgroundColor: ThemeColors.accent,
-                        child: const Icon(Icons.share),
-                        onPressed: () {
-                          commonShare(
-                            title: provider.blogsDetail?.name ?? "",
-                            url: provider.blogsDetail?.slug ?? "",
-                          );
-                        },
+                    SizedBox(
+                      width: double.infinity,
+                      height: isPhone
+                          ? ScreenUtil().screenHeight * 0.3
+                          : ScreenUtil().screenHeight * 0.4,
+                      child: ThemeImageView(
+                        url: provider.blogsDetail?.image ?? "",
+                        // fit: BoxFit.contain,
                       ),
                     ),
+                    // const SpacerVertical(height: 5),
+                    // RichText(
+                    //   text: TextSpan(
+                    //     children: [
+                    //       TextSpan(
+                    //         text: "Published Date: ",
+                    //         style: stylePTSansRegular(
+                    //           fontSize: 14,
+                    //           color: ThemeColors.white,
+                    //         ),
+                    //       ),
+                    //       TextSpan(
+                    //         text: DateFormat("MMMM dd, yyyy").format(
+                    //             provider.blogsDetail?.publishedDate ??
+                    //                 DateTime.now()),
+                    //         style: stylePTSansRegular(
+                    //             fontSize: 14, color: ThemeColors.greyText),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+
+                    SpacerVertical(height: Dimen.itemSpacing.sp),
+                    // const BlogDetailAuthor(),
+                    // const SpacerVertical(height: 5),
+                    // const BlogDetailCategory(),
+                    // const SpacerVertical(height: 5),
+                    // const BlogDetailTags(),
+                    HtmlWidget(
+                      onTapImage: (data) {
+                        Utils().showLog(data.sources.first.url);
+                      },
+                      // customWidgetBuilder: (element) {
+                      //   if (element.localName == 'img') {
+                      //     final src = element.attributes['src'];
+
+                      //     return ZoomableImage(url: src ?? "");
+                      //   }
+
+                      //   return null;
+                      // },
+                      onLoadingBuilder: (context, element, loadingProgress) {
+                        return const ProgressDialog();
+                      },
+                      provider.blogsDetail?.description ?? "",
+                      textStyle: styleGeorgiaRegular(
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SpacerVertical(height: 10),
                   ],
                 ),
               ),
-            ),
-          )
-        ],
+              Positioned(
+                bottom: 6.sp,
+                right: 0,
+                child: FloatingActionButton(
+                  backgroundColor: ThemeColors.accent,
+                  child: const Icon(Icons.share),
+                  onPressed: () {
+                    commonShare(
+                      title: provider.blogsDetail?.name ?? "",
+                      url: provider.blogsDetail?.slug ?? "",
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -538,6 +538,7 @@ class StockDetailProvider with ChangeNotifier {
     required String symbol,
     loadOther = true,
     inAppMsgId,
+    notificationId,
   }) async {
     otherLoading = true;
     notifyListeners();
@@ -549,6 +550,9 @@ class StockDetailProvider with ChangeNotifier {
       };
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId!});
+      }
+      if (inAppMsgId != null) {
+        request.addAll({"notification_id": notificationId!});
       }
 
       ApiResponse response = await apiRequest(

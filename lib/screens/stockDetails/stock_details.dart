@@ -16,11 +16,14 @@ import 'package:stocks_news_new/utils/colors.dart';
 class StockDetails extends StatefulWidget {
   final String symbol;
   final String? inAppMsgId;
+  final String? notificationId;
   static const String path = "StockDetails";
+
   const StockDetails({
     super.key,
     required this.symbol,
     this.inAppMsgId,
+    this.notificationId,
   });
 
   @override
@@ -102,6 +105,7 @@ class _StockDetailsState extends State<StockDetails> {
       body: StockDetailsBase(
         symbol: widget.symbol,
         inAppMsgId: widget.inAppMsgId,
+        notificationId: widget.notificationId,
       ),
     );
   }

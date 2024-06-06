@@ -9,7 +9,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebviewLink extends StatefulWidget {
   final Uri? url;
   final String? stringURL;
-  const WebviewLink({super.key, this.url, this.stringURL});
+  final String? notificationId;
+  const WebviewLink({
+    super.key,
+    this.url,
+    this.stringURL,
+    this.notificationId,
+  });
 
   @override
   State<WebviewLink> createState() => _AnalysisForecastState();

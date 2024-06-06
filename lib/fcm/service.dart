@@ -63,18 +63,27 @@ class FirebaseApi {
   }
 
   void _navigateToRequiredScreen(payload, {whenAppKilled = false}) async {
+    String? type = payload["type"];
+    String? slug = payload['slug'];
+    String? notificationId = payload['notification_id'];
     try {
-      String? type = payload["type"];
-      String? slug = payload['slug'];
+      // String? type = payload["type"];
+      // String? slug = payload['slug'];
+      // String? notificationId = payload['notification_id'];
+
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
         Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+          arguments: {"notificationId": notificationId},
+        );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           NewsDetails.path,
-          arguments: {"slug": slug},
+          arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
@@ -82,25 +91,31 @@ class FirebaseApi {
           MaterialPageRoute(
             builder: (context) => WebviewLink(
               stringURL: slug,
+              notificationId: notificationId,
             ),
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Navigator.push(
+        Navigator.pushNamed(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => BlogDetail(
-              slug: slug ?? "",
-            ),
-          ),
+          BlogDetail.path,
+          arguments: {"slug": slug, "notificationId": notificationId},
         );
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => BlogDetail(
+        //       slug: slug ?? "",
+        //     ),
+        //   ),
+        // );
       } else if (slug != '' && type == NotificationType.register.name) {
         signupSheet();
       } else {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetails.path,
-          arguments: {"slug": type},
+          arguments: {"slug": type, "notificationId": notificationId},
         );
       }
     } catch (e) {
@@ -109,6 +124,7 @@ class FirebaseApi {
         navigatorKey.currentContext!,
         Tabs.path,
         (route) => false,
+        arguments: {"notificationId": notificationId},
       );
     }
   }

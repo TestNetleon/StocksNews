@@ -27,7 +27,13 @@ import 'news_details_list.dart';
 class NewsDetailsBody extends StatefulWidget {
   final String? slug;
   final String? inAppMsgId;
-  const NewsDetailsBody({super.key, this.slug, this.inAppMsgId});
+  final String? notificationId;
+  const NewsDetailsBody({
+    super.key,
+    this.slug,
+    this.inAppMsgId,
+    this.notificationId,
+  });
 
   @override
   State<NewsDetailsBody> createState() => _NewsDetailsBodyState();
@@ -45,6 +51,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
             showProgress: false,
             slug: widget.slug,
             inAppMsgId: widget.inAppMsgId,
+            notificationId: widget.notificationId,
           );
     });
   }

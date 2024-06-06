@@ -7,12 +7,14 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 class StockDetail extends StatelessWidget {
   final String symbol;
   final String? inAppMsgId;
+  final String? notificationId;
   static const String path = "StockDetail";
 
   const StockDetail({
     super.key,
     required this.symbol,
     this.inAppMsgId,
+    this.notificationId,
   });
 
   @override
