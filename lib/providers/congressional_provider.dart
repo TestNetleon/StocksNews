@@ -30,6 +30,9 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   int get openIndex => _openIndex;
 
   String? title;
@@ -83,6 +86,7 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
           _data = congressionalResFromJson(jsonEncode(response.data));
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
         } else {
           List<CongressionalRes> parsedData = List<CongressionalRes>.from(
               (response.data as List).map((x) => CongressionalRes.fromJson(x)));

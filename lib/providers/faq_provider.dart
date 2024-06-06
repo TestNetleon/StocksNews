@@ -24,6 +24,9 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
   List<FaQsRes>? _data;
   List<FaQsRes>? get data => _data;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -62,6 +65,7 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _data = faQsResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;

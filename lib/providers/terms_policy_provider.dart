@@ -22,6 +22,9 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
   TermsPolicyRes? _data;
   TermsPolicyRes? get data => _data;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -59,6 +62,7 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
 
       if (response.status) {
         _data = termsPolicyResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;

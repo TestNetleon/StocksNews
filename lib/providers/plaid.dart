@@ -51,6 +51,9 @@ class PlaidProvider extends ChangeNotifier {
   Map<String, PlaidTabHolder?> _tabsData = {};
   Map<String, PlaidTabHolder?> get tabsData => _tabsData;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   int selectedTab = 0;
 
   void setStatus(status) {
@@ -146,6 +149,7 @@ class PlaidProvider extends ChangeNotifier {
           error: null,
           loading: false,
         );
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         // _data = null;
         _errorG = response.message;

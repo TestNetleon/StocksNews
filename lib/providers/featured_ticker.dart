@@ -25,6 +25,9 @@ class FeaturedTickerProvider extends ChangeNotifier {
   // int? get page => _page;
   bool get isLoading => _status == Status.loading;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -63,6 +66,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
         _error = null;
         if (_page == 1) {
           _data = featuredTickerResFromJson(jsonEncode(response.data));
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
         } else {
           _data?.data.addAll(
               featuredTickerResFromJson(jsonEncode(response.data)).data);

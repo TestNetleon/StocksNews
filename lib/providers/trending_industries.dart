@@ -35,6 +35,9 @@ class TrendingIndustriesProvider extends ChangeNotifier {
   Status _isGraphLoading = Status.ideal;
   bool get isGraphLoading => _isGraphLoading == Status.loading;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -75,6 +78,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
         neutralMentions =
             trendingIndustriesGraphResFromJson(jsonEncode(response.data))
                 .neutralMentions;
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         labels = null;
         totalMentions = null;
@@ -114,6 +118,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
       );
       if (response.status) {
         _data = trendingIndustriesResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;

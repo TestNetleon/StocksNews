@@ -22,6 +22,10 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<CongressionalProvider>().data != null) {
+        return;
+      }
+
       context.read<CongressionalProvider>().getData(showProgress: false);
     });
   }

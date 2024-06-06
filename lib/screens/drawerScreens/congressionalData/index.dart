@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/congressional_provider.dart';
+
 import 'package:stocks_news_new/screens/drawerScreens/congressionalData/container.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -12,12 +11,9 @@ class CongressionalIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: CongressionalProvider(),
-      child: const BaseContainer(
-        appBar: AppBarHome(isPopback: true, canSearch: true),
-        body: CongressionalContainer(),
-      ),
+    return const BaseContainer(
+      appBar: AppBarHome(isPopback: true, canSearch: true),
+      body: CongressionalContainer(),
     );
   }
 }

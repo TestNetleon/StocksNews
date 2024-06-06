@@ -16,6 +16,10 @@ class QRcodePRovider extends ChangeNotifier {
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
   final FocusNode searchFocusNode = FocusNode();
+
+  Extra? _extra;
+  Extra? get extra => _extra;
+
 //
   void setStatus(status) {
     _status = status;
@@ -36,6 +40,7 @@ class QRcodePRovider extends ChangeNotifier {
         showProgress: true,
       );
       if (response.status) {
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {}
       Navigator.pop(navigatorKey.currentContext!);
       // showErrorMessage(

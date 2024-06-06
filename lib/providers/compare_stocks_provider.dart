@@ -33,6 +33,9 @@ class CompareStocksProvider extends ChangeNotifier {
   TextRes? _textRes;
   TextRes? get textRes => _textRes;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   bool wholeListEmpty = false;
 
   void setStatus(status) {

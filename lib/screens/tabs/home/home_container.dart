@@ -11,6 +11,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index_copy.da
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -142,6 +143,8 @@ class HomeContainer extends StatelessWidget {
                   ],
                 ),
               ),
+              if (provider.extra?.disclaimer != null)
+                DisclaimerWidget(data: provider.extra!.disclaimer!)
             ],
           ),
         ),

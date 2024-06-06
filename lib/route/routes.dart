@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
@@ -372,7 +373,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => StockScreenerProvider()),
       ChangeNotifierProvider(create: (_) => PlaidProvider()),
 
-      // ChangeNotifierProvider(create: (_) => CongressionalProvider()),
+      ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
 

@@ -31,6 +31,9 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
   SearchNewRes? _dataNew;
   SearchNewRes? get dataNew => _dataNew;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -62,6 +65,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _data = searchResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         notifyListeners();
@@ -87,6 +91,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _dataNew = searchNewResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _dataNew = null;
         // showErrorMessage(message: response.message);

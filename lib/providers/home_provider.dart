@@ -66,6 +66,9 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   // HomeRes? get data => _home;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   HomeSliderRes? _homeSliderRes;
   HomeSliderRes? get homeSliderRes => _homeSliderRes;
 
@@ -224,9 +227,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         // exchangeAPI = "$basePlaidUrl/item/public_token/exchange";
         // holdingsAPI = "$basePlaidUrl/investments/holdings/get";
         //.....................................
+
+        _homeSliderRes = HomeSliderRes.fromJson(response.data);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
         loginTxt = response.extra.loginText;
         signUpTxt = response.extra?.signUpText;
-        _homeSliderRes = HomeSliderRes.fromJson(response.data);
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
         if (response.extra != null && response.extra is Extra) {

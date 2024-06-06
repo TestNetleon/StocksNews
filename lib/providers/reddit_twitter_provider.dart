@@ -28,6 +28,9 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
 
   bool get daysLoading => _status == Status.loading;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   // bool searching = false;
 
   void setStatus(status) {
@@ -118,6 +121,7 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _socialSentimentRes =
             socialSentimentsResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
         if (_socialSentimentRes?.data == null ||
             _socialSentimentRes?.data.isEmpty == true) {
           _error = "Social Sentiment is unavailable at this moment.";

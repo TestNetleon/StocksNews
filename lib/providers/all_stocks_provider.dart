@@ -31,6 +31,9 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   List<KeyValueElement>? _priceRange;
   List<KeyValueElement>? get priceRange => _priceRange;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   String keyPrice = "";
   String keyExchange = "";
   String valuePrice = "";
@@ -187,6 +190,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
 
         _exchangeShortName = response.extra?.exchangeShortName;
         _priceRange = response.extra?.priceRange;
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;

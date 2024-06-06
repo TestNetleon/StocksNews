@@ -23,6 +23,9 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<PennyStocksProvider>().data != null) {
+        return;
+      }
       context.read<PennyStocksProvider>().getData(type: 1);
     });
   }
