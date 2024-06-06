@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
@@ -105,13 +106,30 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                             child: SingleChildScrollView(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 10.sp),
-                                child: HtmlWidget(
-                                  onLoadingBuilder:
-                                      (context, element, loadingProgress) {
-                                    return const ProgressDialog();
-                                  },
-                                  whatWeDoHolder?.data?.page.description ?? "",
-                                  textStyle: stylePTSansRegular(height: 1.5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    HtmlWidget(
+                                      onLoadingBuilder:
+                                          (context, element, loadingProgress) {
+                                        return const ProgressDialog();
+                                      },
+                                      whatWeDoHolder?.data?.page.description ??
+                                          "",
+                                      textStyle:
+                                          stylePTSansRegular(height: 1.5),
+                                    ),
+                                    if (context
+                                            .read<WhatWeDoProvider>()
+                                            .extra
+                                            ?.disclaimer !=
+                                        null)
+                                      DisclaimerWidget(
+                                          data: context
+                                              .read<WhatWeDoProvider>()
+                                              .extra!
+                                              .disclaimer!)
+                                  ],
                                 ),
                               ),
                             ),

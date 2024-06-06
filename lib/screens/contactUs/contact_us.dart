@@ -48,7 +48,7 @@ class _ContactUsBaseState extends State<ContactUsBase> {
         padding: EdgeInsets.all(Dimen.padding.sp),
         child: Column(
           children: [
-            const ScreenTitle(title: "Contact Us"),
+            const ScreenTitle(title: "Contact US"),
             Expanded(
               child: provider.isLoading
                   ? const Loading()
