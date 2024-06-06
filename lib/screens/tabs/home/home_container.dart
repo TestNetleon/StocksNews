@@ -144,7 +144,10 @@ class HomeContainer extends StatelessWidget {
                 ),
               ),
               if (provider.extra?.disclaimer != null)
-                DisclaimerWidget(data: provider.extra!.disclaimer!)
+                DisclaimerWidget(
+                  data: provider.extra!.disclaimer!,
+                  padding: const EdgeInsets.all(16),
+                )
             ],
           ),
         ),

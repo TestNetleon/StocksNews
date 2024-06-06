@@ -12,8 +12,10 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../utils/theme.dart';
+import '../../widgets/disclaimer_widget.dart';
 
 class TrendingIndustriesContainer extends StatefulWidget {
   const TrendingIndustriesContainer({super.key});
@@ -54,7 +56,7 @@ class _TrendingIndustriesContainerState
             ? const Loading()
 
             // ? const Loading()
-            : (provider.data == null || provider.data?.isNotEmpty == true) &&
+            : (provider.data == null || provider.data?.isEmpty == true) &&
                     !provider.isLoading
                 ? Center(
                     child: ErrorDisplayWidget(
@@ -113,6 +115,11 @@ class _TrendingIndustriesContainerState
                                   itemCount: provider.data?.length ?? 0,
                                 )
                               : const SizedBox(),
+                          const SpacerVertical(height: Dimen.itemSpacing),
+                          if (provider.extra?.disclaimer != null)
+                            DisclaimerWidget(
+                              data: provider.extra!.disclaimer!,
+                            ),
                         ],
                       ),
                     ),
