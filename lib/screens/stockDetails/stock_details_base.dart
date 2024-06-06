@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import '../../utils/colors.dart';
 import '../../widgets/custom/refresh_indicator.dart';
+import '../../widgets/disclaimer_widget.dart';
 import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/analysis.dart';
 import 'widgets/companyBrief/container.dart';
@@ -113,6 +114,12 @@ class StockDetailsBase extends StatelessWidget {
                         ),
                         child: const CompanyBrief(),
                       ),
+                      if (provider.extra?.disclaimer != null)
+                        DisclaimerWidget(
+                          data: provider.extra!.disclaimer!,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: Dimen.padding),
+                        ),
                       // SpacerVertical(height: 90),
                     ],
                   ),
@@ -287,7 +294,7 @@ class StockDetailsTabContainer extends StatelessWidget {
             top: isPhone ? Dimen.padding.sp : Dimen.paddingTablet.sp,
             // left: Dimen.padding.sp,
             // right: Dimen.padding.sp,
-            bottom: 90.sp,
+            bottom: 95.sp,
           ),
           child: content,
         ),

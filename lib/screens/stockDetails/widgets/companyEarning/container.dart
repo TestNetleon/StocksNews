@@ -10,7 +10,10 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../utils/constants.dart';
+import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/screen_title.dart';
 import 'item.dart';
 
@@ -219,6 +222,11 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                 },
                 itemCount: earning?.data?.length ?? 0,
               ),
+              const SpacerVertical(height: Dimen.itemSpacing),
+              if (provider.extra?.disclaimer != null)
+                DisclaimerWidget(
+                  data: provider.extra!.disclaimer!,
+                ),
               // Divider(
               //   color: ThemeColors.greyBorder,
               //   height: 20.sp,
