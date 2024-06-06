@@ -1,0 +1,235 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/stocks_res.dart';
+import 'package:stocks_news_new/providers/all_stocks_provider.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
+import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_image_view.dart';
+
+class StocksItemAll extends StatelessWidget {
+  final AllStocks? data;
+  final int index;
+  const StocksItemAll({super.key, this.data, required this.index});
+  void _onTap(context) {
+    Navigator.pushNamed(
+      context,
+      StockDetails.path,
+      arguments: {"slug": data?.symbol},
+    );
+  }
+
+//
+  @override
+  Widget build(BuildContext context) {
+    AllStocksProvider provider = context.watch<AllStocksProvider>();
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () => _onTap(context),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0.sp),
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 43,
+                        height: 43,
+                        child: ThemeImageView(url: data?.image ?? ""),
+                      ),
+                    ),
+                  ),
+                  const SpacerHorizontal(width: 3),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => _onTap(context),
+                          child: Text(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            data?.symbol ?? "",
+                            style: stylePTSansRegular(
+                              fontSize: 12,
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          data?.name ?? "",
+                          style: stylePTSansRegular(
+                            fontSize: 12,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // const SpacerHorizontal(width: 10),
+            // Expanded(
+            //   child: Text(
+            //     maxLines: 1,
+            //     data?.exchangeShortName ?? "",
+            //     style: stylePTSansRegular(
+            //       fontSize: 12,
+            //       color: ThemeColors.white,
+            //     ),
+            //   ),
+            // ),
+            const SpacerHorizontal(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   maxLines: 2,
+                  //   "${data?.price}",
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: stylePTSansRegular(
+                  //       fontSize: 12, color: ThemeColors.white),
+                  // ),
+                  Text(data?.price ?? "", style: stylePTSansBold(fontSize: 14)),
+                  const SpacerVertical(height: 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: RichText(
+                          textAlign: TextAlign.end,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                    "${data?.displayChange} (${data?.changesPercentage?.toCurrency()}%)",
+                                style: stylePTSansRegular(
+                                  fontSize: 11,
+                                  color: (data?.changesPercentage ?? 0) > 0
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Flexible(
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       // Row(
+                      //       //   children: [
+                      //       //     Icon(
+                      //       //       (data?.change ?? 0) > 0
+                      //       //           ? Icons.arrow_upward
+                      //       //           : Icons.arrow_downward,
+                      //       //       size: 15,
+                      //       //       color: (data?.change ?? 0) > 0
+                      //       //           ? ThemeColors.accent
+                      //       //           : Colors.red,
+                      //       //     ),
+                      //       //     Flexible(
+                      //       //       child: Text(
+                      //       //         maxLines: 2,
+                      //       //         "${data?.change?.toCurrency()} (${data?.changesPercentage?.toCurrency()}%)",
+                      //       //         style: stylePTSansRegular(
+                      //       //           fontSize: 12,
+                      //       //           color: (data?.change ?? 0) > 0
+                      //       //               ? ThemeColors.accent
+                      //       //               : Colors.red,
+                      //       //         ),
+                      //       //       ),
+                      //       //     ),
+                      //       //   ],
+                      //       // ),
+
+                      //       // Text(
+                      //       //   maxLines: 2,
+                      //       //   "${data?.changesPercentage?.toCurrency()}%",
+                      //       //   style: stylePTSansRegular(
+                      //       //     fontSize: 12,
+                      //       //     color: (data?.changesPercentage ?? 0) > 0
+                      //       //         ? ThemeColors.accent
+                      //       //         : Colors.red,
+                      //       //   ),
+                      //       // ),
+                      //     ],
+                      //   ),
+                      // ),
+                      InkWell(
+                        onTap: () => provider
+                            .open(provider.openIndex == index ? -1 : index),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: ThemeColors.accent,
+                          ),
+                          margin: EdgeInsets.only(left: 8.sp),
+                          padding: const EdgeInsets.all(3),
+                          child: Icon(
+                            provider.openIndex == index
+                                ? Icons.arrow_upward_rounded
+                                : Icons.arrow_downward_rounded,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 150),
+          child: Container(
+            height: provider.openIndex == index ? null : 0,
+            margin: EdgeInsets.only(
+              top: provider.openIndex == index ? 10.sp : 0,
+              bottom: provider.openIndex == index ? 10.sp : 0,
+            ),
+            child: Column(
+              children: [
+                InnerRowItem(
+                  lable: "Exchange",
+                  value: data?.exchangeShortName,
+                ),
+                InnerRowItem(
+                  lable: "Last Close",
+                  value: data?.previousClose,
+                ),
+                InnerRowItem(
+                  lable: "Open",
+                  value: data?.open,
+                ),
+                InnerRowItem(
+                  lable: "Day High",
+                  value: data?.dayHigh,
+                ),
+                InnerRowItem(
+                  lable: "Day Low",
+                  value: data?.dayLow,
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+      ],
+    );
+  }
+}

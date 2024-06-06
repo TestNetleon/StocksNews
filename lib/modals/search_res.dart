@@ -1,0 +1,31 @@
+import 'dart:convert';
+
+List<SearchRes> searchResFromJson(String str) =>
+    List<SearchRes>.from(json.decode(str).map((x) => SearchRes.fromJson(x)));
+
+String searchResToJson(List<SearchRes> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class SearchRes {
+  final String symbol;
+  final String name;
+  final String? image;
+//
+  SearchRes({
+    required this.symbol,
+    required this.name,
+    this.image,
+  });
+
+  factory SearchRes.fromJson(Map<String, dynamic> json) => SearchRes(
+        symbol: json["symbol"],
+        name: json["name"],
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "symbol": symbol,
+        "name": name,
+        "image": image,
+      };
+}

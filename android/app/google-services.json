@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "661986825229",
+    "project_id": "stocksnews-ef556",
+    "storage_bucket": "stocksnews-ef556.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661986825229:android:ce1c460925d54b155bb144",
+        "android_client_info": {
+          "package_name": "com.stocks.news"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661986825229-0de23kv34v919suf1ticnuth3f8rn9i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stocks.news",
+            "certificate_hash": "3508c22e06cc69d03638d89023ab3385c53688a6"
+          }
+        },
+        {
+          "client_id": "661986825229-foi7pbrdmiugrlmouvtnghuqenbr9sc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stocks.news",
+            "certificate_hash": "49a31d7a20d8296f24f656899ebf91b04e90f7b5"
+          }
+        },
+        {
+          "client_id": "661986825229-g34ri314qr0tbgq4q217dg379ql0s4id.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stocks.news",
+            "certificate_hash": "d21c8c6cb6ead2bf42e5d8ebc30220fc6b8739c6"
+          }
+        },
+        {
+          "client_id": "661986825229-i37lf3ga0052qdc52artb1h13pd0o8cv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA26KdOgpIBTIVuNfZwRoixNsfPnMKT2rE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661986825229-i37lf3ga0052qdc52artb1h13pd0o8cv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "661986825229-jrjm8ffa2meg5ld2drpmg9pgsg4mh6nq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.stocks.news"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

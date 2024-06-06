@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
+
+mixin AuthProviderBase {
+  // void logout() {
+  //   // Clear user data and perform any other logout-related tasks
+  //   Preference.logout();
+  //   Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+  //   Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+  //   navigatorKey.currentContext!.read<UserProvider>().clearUser();
+  // }
+//
+  void handleSessionOut() {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    // Navigator.pushReplacement(
+    //     navigatorKey.currentContext!,
+    //     MaterialPageRoute(
+    //         builder: (context) => const Login(
+    //               dontPop: "true",
+    //             )));
+    isPhone ? loginSheet(dontPop: "true") : loginSheetTablet(dontPop: "true");
+
+    Preference.logout();
+    navigatorKey.currentContext!.read<UserProvider>().clearUser();
+    //   Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    //   Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+  }
+}

@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/insider_trading_provider.dart';
+import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
+import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+
+import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/text_input_field_search.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
+//
+class Insider extends StatelessWidget {
+  const Insider({super.key});
+
+  // void _filterClick() {
+  //   showPlatformBottomSheet(
+  //     backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+  //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+  //     context: navigatorKey.currentContext!,
+  //     content: const FilterInsiders(),
+  //   );
+  // }
+
+  void _filterClick() {
+    // showPlatformBottomSheet(
+    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+    //   padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+    //   context: navigatorKey.currentContext!,
+    //   content: const FilterInsiders(),
+    // );
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Insider Trades",
+      child: const FilterInsiders(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    InsiderTradingProvider provider = context.watch<InsiderTradingProvider>();
+
+    FirebaseAnalytics.instance.logEvent(
+      name: 'ScreensVisit',
+      parameters: {'screen_name': "Insider Trending"},
+    );
+
+    return BaseContainer(
+      // drawer: const BaseDrawer(),
+      // appBar: AppBarHome(
+      //   filterClick: _filterClick,
+      //   canSearch: true,
+      // ),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(
+          Dimen.padding.sp,
+          isPhone ? Dimen.padding.sp : 8.sp,
+          Dimen.padding.sp,
+          0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            provider.isLoading
+                ? const SizedBox()
+                : ScreenTitle(
+                    title: "Insider Trading",
+                    subTitle: provider.textRes?.subTitle,
+                    optionalWidget: GestureDetector(
+                      onTap: _filterClick,
+                      child: const Icon(
+                        Icons.filter_alt,
+                        color: ThemeColors.accent,
+                      ),
+                    ),
+                  ),
+            if (provider.isLoading == false)
+              TextInputFieldSearch(
+                hintText: "Find by insider or company name",
+                onSubmitted: (text) {
+                  closeKeyboard();
+                  provider.getData(search: text, clear: false);
+                },
+                searching: provider.isSearching,
+                editable: true,
+              ),
+            const Expanded(child: InsiderContent())
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,108 @@
+// ignore_for_file: unused_import
+
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/socket/socket.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+
+class StockDetails extends StatefulWidget {
+  final String symbol;
+  final String? inAppMsgId;
+  static const String path = "StockDetails";
+  const StockDetails({
+    super.key,
+    required this.symbol,
+    this.inAppMsgId,
+  });
+
+  @override
+  State<StockDetails> createState() => _StockDetailsState();
+}
+
+//
+class _StockDetailsState extends State<StockDetails> {
+  late WebSocketService _webSocketService;
+  String? tickerPrice;
+  num? tickerChange;
+  num? tickerPercentage;
+  String? tickerChangeString;
+  // late CryptoWebSocket _webSocket;
+
+  @override
+  void initState() {
+    super.initState();
+    _addSocket();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getData();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Stock Detail"},
+      );
+    });
+  }
+
+  _addSocket() {
+    _webSocketService = WebSocketService(
+      url: 'wss://websockets.financialmodelingprep.com',
+      apiKey: apiKeyFMP,
+      ticker: widget.symbol, // Replace with your ticker symbol
+    );
+    _webSocketService.connect();
+
+    _webSocketService.onDataReceived =
+        (price, change, percentage, changeString) {
+      setState(() {
+        tickerPrice = price;
+        tickerChange = change;
+        tickerPercentage = percentage;
+        tickerChangeString = changeString;
+      });
+      context.read<StockDetailProvider>().updateSocket(
+            change: tickerChange,
+            changePercentage: tickerPercentage,
+            changeString: tickerChangeString,
+            price: tickerPrice,
+          );
+    };
+
+    // _webSocket = CryptoWebSocket(
+    //   apiKey: apiKeyFMP,
+    //   ticker: widget.symbol,
+    // );
+  }
+
+  void _getData() {
+    StockDetailProvider provider = context.read<StockDetailProvider>();
+    provider.getStockDetails(symbol: widget.symbol, refresh: true);
+    provider.getStockGraphData(symbol: widget.symbol);
+  }
+
+  @override
+  void dispose() {
+    _webSocketService.disconnect();
+    // _webSocket.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseContainer(
+      moreGradient: true,
+      drawer: const BaseDrawer(),
+      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
+      body: StockDetailsBase(
+        symbol: widget.symbol,
+        inAppMsgId: widget.inAppMsgId,
+      ),
+    );
+  }
+}
