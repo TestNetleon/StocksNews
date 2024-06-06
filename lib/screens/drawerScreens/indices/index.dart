@@ -82,6 +82,7 @@ class IndicesData extends StatelessWidget {
         ? const Loading()
         : CustomTabContainerNEW(
             onChange: (index) {
+              // provider.setData();
               provider.tabChange(index);
             },
             scrollable: true,
@@ -147,6 +148,9 @@ class IndicesData extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) {
+            if (provider.data == null) {
+              return const SizedBox();
+            }
             return const Divider(
               color: ThemeColors.greyBorder,
               height: 16,
