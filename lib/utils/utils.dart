@@ -158,7 +158,7 @@ void closeKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
 
-Future<void> openUrl(String? url,
+Future openUrl(String? url,
     {LaunchMode mode = LaunchMode.platformDefault, String? extraUrl}) async {
   if (url == null || url.isEmpty) {
     // showErrorMessage(message: "Exception: Could not launch.");

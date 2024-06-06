@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:developer';
+
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -134,10 +136,11 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                             textStyle: stylePTSansRegular(height: 1.5),
                           ),
                           if (context
-                                  .read<TermsAndPolicyProvider>()
-                                  .extra
-                                  ?.disclaimer !=
-                              null)
+                                      .read<TermsAndPolicyProvider>()
+                                      .extra
+                                      ?.disclaimer !=
+                                  null &&
+                              widget.policyType != PolicyType.disclaimer)
                             DisclaimerWidget(
                                 data: context
                                     .read<TermsAndPolicyProvider>()
