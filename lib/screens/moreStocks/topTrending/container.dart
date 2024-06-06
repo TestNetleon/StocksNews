@@ -20,6 +20,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
@@ -182,17 +183,23 @@ class _TopTrendingContainerState extends State<TopTrendingContainer> {
                                         ),
                                         Visibility(
                                           visible: index == 2,
-                                          child: const Column(
+                                          child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              MegaCapListView(),
-                                              LargeCapListView(),
-                                              MediumCapListView(),
-                                              SmallCapListView(),
-                                              MicroCapListView(),
+                                              const MegaCapListView(),
+                                              const LargeCapListView(),
+                                              const MediumCapListView(),
+                                              const SmallCapListView(),
+                                              const MicroCapListView(),
                                               // NanoCapListView(),
+                                              if (provider.extra?.disclaimer !=
+                                                  null)
+                                                DisclaimerWidget(
+                                                  data: provider
+                                                      .extra!.disclaimer!,
+                                                ),
                                             ],
                                           ),
                                         )

@@ -111,6 +111,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
             element.isAlertAdded = 1;
           });
         }
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
         navigatorKey.currentContext!
@@ -162,6 +163,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
             element.isWatchlistAdded = 1;
           });
         }
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
         navigatorKey.currentContext!
@@ -304,6 +306,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
 
       if (response.status) {
         _capData = topTrendingResFromJson(jsonEncode(response.data)).data;
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _capData = null;
         _error = response.message;

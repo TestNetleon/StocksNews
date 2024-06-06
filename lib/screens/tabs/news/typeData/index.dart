@@ -35,9 +35,8 @@ class NewsTypeData extends StatelessWidget {
         // onRefresh: () async {
         //   log("message");
         // },
-
         canLoadMore:
-            (newsHolder?.currentPage ?? 1) < (newsHolder?.data?.lastPage ?? 1),
+            (newsHolder?.currentPage ?? 1) <= (newsHolder?.data?.lastPage ?? 1),
         onLoadMore: () async => provider.onLoadMore(),
         child: ListView.separated(
           itemCount: newsHolder?.data?.data.length ?? 0,
