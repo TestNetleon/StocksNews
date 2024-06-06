@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
@@ -9,10 +8,11 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../widgets/spacer_vertical.dart';
 
 class MostBullish extends StatelessWidget {
   const MostBullish({super.key});
@@ -156,30 +156,11 @@ class MostBullish extends StatelessWidget {
             );
           },
         ),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          // color: ThemeColors.background,
-          child: HtmlWidget(
-            customStylesBuilder: (element) {
-              if (element.localName == 'a') {
-                return {'color': '#1bb449', 'text-decoration': 'none'};
-              }
-              return null;
-            },
-            onTapUrl: (url) async {
-              bool a = await launchUrl(Uri.parse(url));
-              Utils().showLog("clicked ur---$url, return value $a");
-              return a;
-            },
-            "<p style=\"background: #28312c; display: inline-block; padding: 10px; border-left: solid 3px #1bb449; margin: 0;\"><span style=\"color: #ffff00;\">Disclaimer:<\/span> Information provided is for informational purposes only, not investment advice. We do not recommend buying or selling stocks. Stock price discussions are based on publicly available data. Readers should conduct their own research or consult a financial advisor before investing. Owners of this site have current positions in stocks mentioned thru out the site, Please Read Full Disclaimer for details here <a href=\"https:\/\/app.stocks.news\/page\/disclaimer\">https:\/\/app.stocks.news\/page\/disclaimer<\/a><\/p>",
-            textStyle: styleGeorgiaRegular(
-              fontSize: 11,
-              height: 1.5,
-              color: ThemeColors.greyText,
-            ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+        if (provider.extra?.disclaimer != null)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
           ),
-        )
       ],
     );
   }

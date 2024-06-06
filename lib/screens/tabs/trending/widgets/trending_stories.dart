@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories_i
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -81,6 +82,10 @@ class TrendingStories extends StatelessWidget {
           },
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
+        if (provider.extra?.disclaimer != null)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
         // Align(
         //   alignment: Alignment.centerLeft,
         //   child: ThemeButtonSmall(

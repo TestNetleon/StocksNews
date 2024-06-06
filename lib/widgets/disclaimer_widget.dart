@@ -7,14 +7,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DisclaimerWidget extends StatelessWidget {
   final String data;
-
-  const DisclaimerWidget({required this.data, super.key});
+  final EdgeInsets? padding;
+  const DisclaimerWidget({required this.data, super.key, this.padding});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: padding ?? const EdgeInsets.only(bottom: 16, top: 16),
       // color: ThemeColors.background,
       child: HtmlWidget(
         customStylesBuilder: (element) {
