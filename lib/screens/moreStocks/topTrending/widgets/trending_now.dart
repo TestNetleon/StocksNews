@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -5,38 +6,99 @@ import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/validations.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class TrendingNowListView extends StatelessWidget {
+class TrendingNowListView extends StatefulWidget {
   const TrendingNowListView({super.key});
-//
+
+  @override
+  State<TrendingNowListView> createState() => _TrendingNowListViewState();
+}
+
+class _TrendingNowListViewState extends State<TrendingNowListView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<TopTrendingProvider>()
+          .getNowRecentlyData(showProgress: false, type: "now", reset: true);
+
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Top Trending"},
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    TopTrendingProvider provider = context.watch<TopTrendingProvider>();
     List<TopTrendingDataRes>? dataList =
         context.watch<TopTrendingProvider>().data;
 
-    return ListView.separated(
-        shrinkWrap: true,
-        padding: EdgeInsets.symmetric(vertical: 10.sp),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          TopTrendingDataRes? data = dataList?[index];
-          if (data == null) {
-            return const SizedBox();
-          }
-          return TopTrendingItem(
-            index: index,
-            data: data,
-            alertAdded: data.isAlertAdded == 1,
-            watchlistAdded: data.isWatchlistAdded == 1,
-          );
-        },
-        separatorBuilder: (context, index) {
-          // return const SpacerVertical(height: 10);
-          return Divider(
-            color: ThemeColors.greyBorder,
-            height: 20.sp,
-          );
-        },
-        itemCount: dataList?.length ?? 0);
+    return RefreshControl(
+      onRefresh: () async => provider.getNowRecentlyData(type: "now"),
+      canLoadMore: provider.canLoadMore,
+      onLoadMore: () async => provider.getNowRecentlyData(
+        loadMore: true,
+        type: "now",
+      ),
+      child: provider.isLoading
+          ? const Loading()
+          : SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                Dimen.padding,
+                Dimen.padding,
+                Dimen.padding,
+                0,
+              ),
+              child: Column(
+                children: [
+                  const SpacerVertical(height: 10),
+                  Visibility(
+                    visible: !isEmpty(provider.textTop?.now),
+                    child: Text(
+                      provider.textTop?.now ?? "",
+                      style: stylePTSansRegular(
+                        fontSize: 13,
+                        color: ThemeColors.greyText,
+                      ),
+                    ),
+                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(vertical: 10.sp),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      TopTrendingDataRes? data = dataList?[index];
+                      if (data == null) {
+                        return const SizedBox();
+                      }
+                      return TopTrendingItem(
+                        index: index,
+                        data: data,
+                        alertAdded: data.isAlertAdded == 1,
+                        watchlistAdded: data.isWatchlistAdded == 1,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      // return const SpacerVertical(height: 10);
+                      return Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 20.sp,
+                      );
+                    },
+                    itemCount: dataList?.length ?? 0,
+                  ),
+                ],
+              ),
+            ),
+    );
   }
 }
