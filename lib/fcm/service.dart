@@ -64,59 +64,9 @@ class FirebaseApi {
   }
 
   void _navigateToRequiredScreen(payload, {whenAppKilled = false}) async {
-    // Utils().showLog("--------- => notification => $payload");
-
-    // bool isLoggedIn = await Preference.isLoggedIn();
-
-    // if (isLoggedIn) {
-    //   Utils().showLog("is logged in");
-
-    //   try {
-    //     String type = payload["type"];
-
-    //     // Navigator.popUntil(
-    //     //   navigatorKey.currentContext!,
-    //     //   (route) => route.isFirst,
-    //     // );
-
-    //     if (type == NotificationType.dashboard.name) {
-    //       if (whenAppKilled) return null;
-    //       Navigator.pushNamedAndRemoveUntil(
-    //           navigatorKey.currentContext!, Tabs.path, (route) => false);
-    //     } else {
-    //       Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
-    //           arguments: {"slug": type},);
-    //     }
-    //   } catch (e) {
-    //     Utils().showLog("Exception ===>> $e");
-    //   }
-    // } else {
-    //   Utils().showLog("is not logged in");
-    //   try {
-    //     Navigator.popUntil(
-    //       navigatorKey.currentContext!,
-    //       (route) => route.isFirst,
-    //     );
-    //     Navigator.push(
-    //       navigatorKey.currentContext!,
-    //       MaterialPageRoute(
-    //         builder: (_) {
-    //           return const Login();
-    //         },
-    //       ),
-    //     );
-    //   } catch (e) {
-    //     //
-    //   }
-    // }
     try {
       String? type = payload["type"];
       String? slug = payload['slug'];
-      // Navigator.popUntil(
-      //   navigatorKey.currentContext!,
-      //   (route) => route.isFirst,
-      // );
-
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
         Navigator.pushNamedAndRemoveUntil(
