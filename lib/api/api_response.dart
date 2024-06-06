@@ -62,6 +62,7 @@ class Extra {
   final int? totalPages;
   final String? apiKeyFMP;
   String? loginText, signUpText;
+  final String? disclaimer;
 
   Extra({
     this.search,
@@ -88,6 +89,7 @@ class Extra {
     this.appUpdateTitle,
     this.appUpdateMsg,
     this.apiKeyFMP,
+    this.disclaimer,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -137,6 +139,7 @@ class Extra {
         appUpdateTitle: json["app_update_title"],
         appUpdateMsg: json["app_update_msg"],
         apiKeyFMP: json["api_key"],
+        disclaimer: json["footer_disclaimer"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -175,6 +178,7 @@ class Extra {
         "app_update_title": appUpdateTitle,
         "app_update_msg": appUpdateMsg,
         "api_key": apiKeyFMP,
+        "footer_disclaimer": disclaimer,
       };
 }
 

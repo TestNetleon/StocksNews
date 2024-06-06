@@ -25,6 +25,9 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   final AudioPlayer _player = AudioPlayer();
 
   void setStatus(status) {
@@ -73,6 +76,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _data = WatchlistRes.fromJson(response.data);
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
           if (_data!.data.isEmpty) {
             _error = "Your watchlist is currently empty.";
           }

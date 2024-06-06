@@ -89,6 +89,9 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   List<int>? chartPurchaseInsider;
   List<int>? chartSaleInsider;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   Future insiderGraphData({
     showProgress = false,
     String companySlug = "",
@@ -117,6 +120,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
             .chartPurchase;
         chartSale =
             insiderCompanyGraphFromJson(jsonEncode(response.data)).chartSale;
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         chartDates = null;
         chartPurchase = null;
@@ -166,6 +170,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
                 .chartPurchase;
         chartSaleInsider =
             insiderCompanyGraphFromJson(jsonEncode(response.data)).chartSale;
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         chartDatesInsider = null;
         chartPurchaseInsider = null;
@@ -384,6 +389,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
         if (reportingSlug == "") {
           if (_pageCompany == 1) {
             _companyData = InsiderTradingRes.fromJson(response.data);
+            _extra = (response.extra is Extra ? response.extra as Extra : null);
           } else {
             _companyData?.data
                 .addAll(InsiderTradingRes.fromJson(response.data).data);

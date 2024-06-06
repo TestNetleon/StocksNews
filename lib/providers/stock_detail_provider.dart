@@ -65,8 +65,8 @@ class StockDetailProvider with ChangeNotifier {
   List<StockDetailGraph>? _graphChart;
   List<StockDetailGraph>? get graphChart => _graphChart;
 
-  List<StockDetailGraph>? _extraData;
-  List<StockDetailGraph>? get extraData => _extraData;
+  // List<StockDetailGraph>? _extraData;
+  // List<StockDetailGraph>? get extraData => _extraData;
   final AudioPlayer _player = AudioPlayer();
 
   int _selectedIndex = 0;
@@ -74,6 +74,9 @@ class StockDetailProvider with ChangeNotifier {
 
   int _graphIndex = 0;
   int get graphIndex => _graphIndex;
+
+  Extra? _extra;
+  Extra? get extra => _extra;
 
   void setStatus(status) {
     _status = status;
@@ -167,7 +170,7 @@ class StockDetailProvider with ChangeNotifier {
       );
       if (response.status) {
         _data = stockDetailsResFromJson(jsonEncode(response.data));
-
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
         // // Assign random colors to mentions
         // math.Random random = math.Random();
         // _data?.mentions?.forEach((mention) {

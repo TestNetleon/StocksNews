@@ -42,6 +42,9 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
   bool get isLoadingBearish => _statusBearish == Status.loading;
   bool get isLoadingStories => _statusStories == Status.loading;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   final AudioPlayer _player = AudioPlayer();
 
   void setStatus(status) {
@@ -213,6 +216,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _mostBullish = TrendingRes.fromJson(response.data);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
         // if (_mostBullish?.trendingSymbolList == null ||
         //     _mostBullish?.trendingSymbolList?.isEmpty == true) {
         //   Utils().showLog("---------bullish trending symbol list not found----------");

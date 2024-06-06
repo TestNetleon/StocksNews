@@ -65,6 +65,9 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
   TextRes? _textTop;
   TextRes? get textTop => _textTop;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -249,6 +252,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _res = topTrendingResFromJson(jsonEncode(response.data));
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
         } else {
           _res?.data?.addAll(TopTrendingRes.fromJson(response.data).data ?? []);
         }

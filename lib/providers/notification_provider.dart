@@ -23,6 +23,9 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
   bool get isSearching => _status == Status.searching;
   String? get error => _error ?? Const.errSomethingWrong;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -61,6 +64,7 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
         // } else
         if (_page == 1) {
           _data = NotificationsRes.fromJson(response.data);
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
           if ((_data?.data?.isEmpty ?? false) && isSearching) {
             _error = Const.errNoRecord;
           }

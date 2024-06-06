@@ -15,7 +15,7 @@ class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   bool get isLoading => _status == Status.loading;
   String? get error => _error ?? Const.errSomethingWrong;
-//
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -52,7 +52,7 @@ class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
       }
 
       setStatus(Status.loaded);
-      return ApiResponse(status: response.status);
+      // return ApiResponse(status: response.status);
     } catch (e) {
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
