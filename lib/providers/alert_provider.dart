@@ -29,6 +29,9 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
   TextRes? _textRes;
   TextRes? get textRes => _textRes;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   // int? get page => _page;
   bool get isLoading => _status == Status.loading;
   void setStatus(status) {
@@ -67,6 +70,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _data = alertResFromJson(jsonEncode(response.data));
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
           if (_data?.data?.isEmpty == true) {
             _error = "Your alert list is currently empty.";
           }

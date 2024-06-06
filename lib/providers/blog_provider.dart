@@ -40,6 +40,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   BlogsDetailRes? _blogsDetail;
   BlogsDetailRes? get blogsDetail => _blogsDetail;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   bool get isLoading => _status == Status.loading;
   bool get isLoadingDetail => _statusDetail == Status.loading;
 
@@ -122,6 +125,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _data = blogsResFromJson(jsonEncode(response.data));
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
         } else {
           _data?.data.data
               .addAll(blogsResFromJson(jsonEncode(response.data)).data.data);
@@ -204,6 +208,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         _blogsDetail = BlogsDetailRes.fromJson(response.data);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _blogsDetail = null;
         _error = response.message;

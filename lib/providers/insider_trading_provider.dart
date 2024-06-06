@@ -57,6 +57,9 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   TextEditingController sectorController = TextEditingController();
   TextEditingController txnSizeController = TextEditingController();
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   String dateSend = "";
   Future<void> pickDate() async {
     final DateTime? picked = await showDatePicker(
@@ -171,6 +174,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
         // } else
         if (_page == 1) {
           _data = InsiderTradingRes.fromJson(response.data);
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
           if ((_data?.data.isEmpty ?? false) && isSearching) {
             _error = Const.errNoRecord;
           }

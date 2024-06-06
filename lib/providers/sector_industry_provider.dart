@@ -29,6 +29,9 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
   Status _isGraphLoading = Status.ideal;
   bool get isGraphLoading => _isGraphLoading == Status.loading;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   bool get isLoading => _status == Status.loading;
   void setStatus(status) {
     _status = status;
@@ -55,6 +58,7 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         dates = sectorGraphResFromJson(jsonEncode(response.data)).dates;
         values = sectorGraphResFromJson(jsonEncode(response.data)).values;
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         dates = null;
         values = null;
@@ -118,6 +122,7 @@ class SectorIndustryProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         if (_page == 1) {
           _data = sectorIndustryResFromJson(jsonEncode(response.data));
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
         } else {
           _data?.data.addAll(
               sectorIndustryResFromJson(jsonEncode(response.data)).data);

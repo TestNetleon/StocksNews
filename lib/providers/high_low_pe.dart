@@ -44,6 +44,9 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   String? _type;
   String? get type => _type;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -87,6 +90,7 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
         if (_pageUp == 1) {
+          _extra = (response.extra is Extra ? response.extra as Extra : null);
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
           type == "high"

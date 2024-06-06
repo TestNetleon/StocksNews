@@ -42,6 +42,9 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   Map<String, TabsWhatWeDoHolder?> _weDoData = {};
   Map<String, TabsWhatWeDoHolder?> get weDoData => _weDoData;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -95,6 +98,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
         _data = whatWeDoTabResFromJson(jsonEncode(response.data)).list;
         // getWhatWeDOData(slug: _data?[0].slug);
         getWhatWeDODataNew(slug: _data?[0].slug);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;
@@ -144,6 +148,7 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
           error: null,
           loading: false,
         );
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         // _res = null;
         _weDoData[slug ?? ""] = TabsWhatWeDoHolder(
@@ -174,7 +179,6 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   // Future getWhatWeDOData({showProgress = true, String? slug}) async {
   //   _statusData = Status.loading;
   //   notifyListeners();
-
   //   Map request = {
   //     "token":
   //         navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
@@ -186,21 +190,18 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   //       request: request,
   //       showProgress: showProgress,
   //     );
-
   //     if (response.status) {
   //       _res = whatWeDoResFromJson(jsonEncode(response.data));
   //     } else {
   //       _res = null;
   //       _error = response.message;
   //     }
-
   //     _statusData = Status.loaded;
   //     notifyListeners();
   //     return ApiResponse(status: response.status);
   //   } catch (e) {
   //     _res = null;
   //     _error = Const.errSomethingWrong;
-
   //      Utils().showLog(e.toString());
   //     _statusData = Status.loaded;
   //     notifyListeners();

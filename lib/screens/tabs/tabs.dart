@@ -156,33 +156,14 @@ class _TabsState extends State<Tabs> {
       HapticFeedback.lightImpact();
     }
 
-    // switch (currentIndex) {
-    //   case 0:
-    //     homeProvider.getHomeData();
-    //     break;
-    //   case 1:
-    //     trendingProvider.getData();
-    //     break;
-    //   case 2:
-    //     insiderProvider.getData(showProgress: true);
-    //     break;
-    //   case 3:
-    //     redditTwitterProvider.getRedditTwitterData(reset: true);
-    //     break;
-    //   case 4:
-    //     _watchList(context);
-    //     break;
-    //   case 5:
-    //     newsProvider.getNews(showProgress: true);
-    //     break;
-    //   case 6:
-    //     _compareStocks(context);
-    //     break;
-    // }
-
     switch (currentIndex) {
       case 0:
-        _home(context, widget.inAppMsgId);
+        final HomeProvider homeProvider = context.read<HomeProvider>();
+        if (homeProvider.homeSliderRes == null &&
+            homeProvider.homeAlertData == null &&
+            homeProvider.homeTrendingRes == null) {
+          homeProvider.refreshData(widget.inAppMsgId);
+        }
         break;
       case 1:
         if (trendingProvider.mostBullish == null) {
@@ -211,17 +192,6 @@ class _TabsState extends State<Tabs> {
         break;
     }
   }
-}
-
-void _home(BuildContext context, String? inAppMsgId) async {
-  final HomeProvider homeProvider = context.read<HomeProvider>();
-  if (homeProvider.homeSliderRes == null &&
-      homeProvider.homeAlertData == null &&
-      homeProvider.homeTrendingRes == null) {
-    homeProvider.refreshData(inAppMsgId);
-  }
-  // homeProvider.getHomeData();
-  // homeProvider.getHomeNewData();
 }
 
 void _compareStocks(BuildContext context) {
