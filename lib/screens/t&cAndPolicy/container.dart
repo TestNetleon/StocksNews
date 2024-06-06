@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -121,12 +122,28 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Padding(
                       padding: EdgeInsets.only(bottom: Dimen.padding.sp),
-                      child: HtmlWidget(
-                        onLoadingBuilder: (context, element, loadingProgress) {
-                          return const ProgressDialog();
-                        },
-                        provider.data?.description ?? "",
-                        textStyle: stylePTSansRegular(height: 1.5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          HtmlWidget(
+                            onLoadingBuilder:
+                                (context, element, loadingProgress) {
+                              return const ProgressDialog();
+                            },
+                            provider.data?.description ?? "",
+                            textStyle: stylePTSansRegular(height: 1.5),
+                          ),
+                          if (context
+                                  .read<TermsAndPolicyProvider>()
+                                  .extra
+                                  ?.disclaimer !=
+                              null)
+                            DisclaimerWidget(
+                                data: context
+                                    .read<TermsAndPolicyProvider>()
+                                    .extra!
+                                    .disclaimer!)
+                        ],
                       ),
                     ),
                   )

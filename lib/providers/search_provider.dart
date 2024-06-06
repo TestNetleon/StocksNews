@@ -143,6 +143,8 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
       );
 
       if (response.status) {
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
         _topSearch = topSearchFromJson(jsonEncode(response.data));
         FocusScope.of(navigatorKey.currentContext!)
             .requestFocus(searchFocusNode);
