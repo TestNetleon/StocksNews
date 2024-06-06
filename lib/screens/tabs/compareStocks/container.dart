@@ -122,21 +122,19 @@ class CompareStocksContainer extends StatelessWidget {
                             : null,
                       ),
                       const FooterList(),
-                      Text(
-                          "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"),
                       if (context
-                              .read<CompareStocksProvider>()
-                              .extra
-                              ?.disclaimer !=
-                          null)
-                        Container(
-                          height: 200,
-                          child: DisclaimerWidget(
-                              data: context
                                   .read<CompareStocksProvider>()
-                                  .extra!
-                                  .disclaimer!),
-                        )
+                                  .extra
+                                  ?.disclaimer !=
+                              null &&
+                          !context
+                              .watch<CompareStocksProvider>()
+                              .wholeListEmpty)
+                        DisclaimerWidget(
+                            data: context
+                                .read<CompareStocksProvider>()
+                                .extra!
+                                .disclaimer!)
                     ],
                   ),
                 ),

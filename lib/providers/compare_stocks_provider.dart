@@ -109,6 +109,7 @@ class CompareStocksProvider extends ChangeNotifier {
       );
       if (res.status) {
         _company = compareStockResFromJson(jsonEncode(res.data));
+        _extra = (res.extra is Extra ? res.extra as Extra : null);
         for (var i = 0; i < company.length; i++) {
           compareData.add(SearchRes(
             symbol: company[i].symbol,
@@ -152,6 +153,8 @@ class CompareStocksProvider extends ChangeNotifier {
         onRefresh: onRefresh,
       );
       if (res.status) {
+        _extra = (res.extra is Extra ? res.extra as Extra : null);
+
         _company.removeAt(index);
         _compareData.removeAt(index);
         if (_company.isEmpty) {
@@ -202,6 +205,7 @@ class CompareStocksProvider extends ChangeNotifier {
       if (res.status) {
         if (!_company.any((company) => company.symbol == symbol)) {
           _company = compareStockResFromJson(jsonEncode(res.data));
+          _extra = (res.extra is Extra ? res.extra as Extra : null);
 
           if (fromMain) {
             _compareData.add(SearchRes(
