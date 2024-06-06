@@ -24,6 +24,9 @@ class _FiftyTwoWeeksHighsStocksState extends State<FiftyTwoWeeksHighsStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<FiftyTwoWeeksProvider>().data != null) {
+        return;
+      }
       context.read<FiftyTwoWeeksProvider>().getFiftyTwoWeekHigh();
     });
   }

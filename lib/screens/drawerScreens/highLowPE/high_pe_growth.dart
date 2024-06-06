@@ -23,6 +23,9 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowPeProvider>().dataHighPEGrowth != null) {
+        return;
+      }
       context
           .read<HighLowPeProvider>()
           .getData(showProgress: true, type: "highGrowth");
@@ -37,8 +40,8 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
       error: provider.error,
       // hasData: up != null && up.isNotEmpty,
       hasData: !provider.isLoading &&
-          provider.data != null &&
-          provider.data?.isNotEmpty == true,
+          provider.dataHighPEGrowth != null &&
+          provider.dataHighPEGrowth?.isNotEmpty == true,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
@@ -55,7 +58,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
             // top: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
-            HIghLowPeRes? high = provider.data?[index];
+            HIghLowPeRes? high = provider.dataHighPEGrowth?[index];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -67,7 +70,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
           separatorBuilder: (BuildContext context, int index) {
             return Divider(color: ThemeColors.greyBorder, height: 20.sp);
           },
-          itemCount: provider.data?.length ?? 0,
+          itemCount: provider.dataHighPEGrowth?.length ?? 0,
         ),
       ),
     );

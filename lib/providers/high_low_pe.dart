@@ -16,6 +16,12 @@ import '../modals/highlow_pe_res.dart';
 class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   List<HIghLowPeRes>? _data;
   List<HIghLowPeRes>? get data => _data;
+  List<HIghLowPeRes>? _dataHighPERatio;
+  List<HIghLowPeRes>? get dataHighPERatio => _dataHighPERatio;
+  List<HIghLowPeRes>? _dataLowPERatio;
+  List<HIghLowPeRes>? get dataLowPERatio => _dataLowPERatio;
+  List<HIghLowPeRes>? _dataHighPEGrowth;
+  List<HIghLowPeRes>? get dataHighPEGrowth => _dataHighPEGrowth;
 
   Status _status = Status.ideal;
   Status get status => _status;
@@ -35,6 +41,8 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   int get openIndex => _openIndex;
   String? title;
   String? subTitle;
+  String? _type;
+  String? get type => _type;
 
   void setStatus(status) {
     _status = status;
@@ -81,22 +89,53 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
         if (_pageUp == 1) {
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
-          _data = hIghLowPeResFromJson(jsonEncode(response.data));
+          type == "high"
+              ? _dataHighPERatio =
+                  hIghLowPeResFromJson(jsonEncode(response.data))
+              : type == "low"
+                  ? _dataLowPERatio =
+                      hIghLowPeResFromJson(jsonEncode(response.data))
+                  : type == "highGrowth"
+                      ? _dataHighPEGrowth =
+                          hIghLowPeResFromJson(jsonEncode(response.data))
+                      : _data = hIghLowPeResFromJson(jsonEncode(response.data));
         } else {
           // List<HIghLowPeRes> parsedData = List<HIghLowPeRes>.from(
           //     (response.data as List).map((x) => HIghLowPeRes.fromJson(x)));
           // _data?.addAll(parsedData);
-          _data?.addAll(hIghLowPeResFromJson(jsonEncode(response.data)));
+          type == "high"
+              ? _dataHighPERatio
+                  ?.addAll(hIghLowPeResFromJson(jsonEncode(response.data)))
+              : type == "low"
+                  ? _dataLowPERatio
+                      ?.addAll(hIghLowPeResFromJson(jsonEncode(response.data)))
+                  : type == "highGrowth"
+                      ? _dataHighPEGrowth?.addAll(
+                          hIghLowPeResFromJson(jsonEncode(response.data)))
+                      : _data?.addAll(
+                          hIghLowPeResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_pageUp == 1) {
           _error = response.message;
-          _data = null;
+          type == "high"
+              ? _dataHighPERatio = null
+              : type == "low"
+                  ? _dataLowPERatio = null
+                  : type == "highGrowth"
+                      ? _dataHighPEGrowth = null
+                      : _data = null;
         }
       }
       setStatus(Status.loaded);
     } catch (e) {
-      _data = null;
+      type == "high"
+          ? _dataHighPERatio = null
+          : type == "low"
+              ? _dataLowPERatio = null
+              : type == "highGrowth"
+                  ? _dataHighPEGrowth = null
+                  : _data = null;
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);

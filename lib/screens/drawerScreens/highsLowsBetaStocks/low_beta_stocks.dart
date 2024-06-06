@@ -23,6 +23,9 @@ class _LowBetaStocksState extends State<LowBetaStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowBetaStocksProvider>().dataLowBetaStocks != null) {
+        return;
+      }
       context
           .read<HighLowBetaStocksProvider>()
           .getHighLowNegativeBetaStocks(type: 2);
@@ -33,7 +36,7 @@ class _LowBetaStocksState extends State<LowBetaStocks> {
   Widget build(BuildContext context) {
     HighLowBetaStocksProvider provider =
         context.watch<HighLowBetaStocksProvider>();
-    List<HighLowBetaStocksRes>? data = provider.data;
+    List<HighLowBetaStocksRes>? data = provider.dataLowBetaStocks;
 
     return BaseUiContainer(
       error: provider.error,

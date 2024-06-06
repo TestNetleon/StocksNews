@@ -23,6 +23,9 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<MostActiveProvider>().dataUnusualTradingVolume != null) {
+        return;
+      }
       context.read<MostActiveProvider>().getMostActiveData(type: 3);
     });
   }
@@ -30,7 +33,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
   @override
   Widget build(BuildContext context) {
     MostActiveProvider provider = context.watch<MostActiveProvider>();
-    List<MostActiveStocksRes>? data = provider.data;
+    List<MostActiveStocksRes>? data = provider.dataUnusualTradingVolume;
 
     return BaseUiContainer(
       error: provider.error,

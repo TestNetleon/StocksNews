@@ -23,6 +23,9 @@ class _LowPEStocksState extends State<LowPEStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowPeProvider>().dataLowPERatio != null) {
+        return;
+      }
       context
           .read<HighLowPeProvider>()
           .getData(showProgress: true, type: "low");
@@ -37,8 +40,8 @@ class _LowPEStocksState extends State<LowPEStocks> {
       error: provider.error,
       // hasData: up != null && up.isNotEmpty,
       hasData: !provider.isLoading &&
-          provider.data != null &&
-          provider.data?.isNotEmpty == true,
+          provider.dataLowPERatio != null &&
+          provider.dataLowPERatio?.isNotEmpty == true,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
@@ -64,7 +67,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
                   top: Dimen.padding.sp,
                 ),
                 itemBuilder: (context, index) {
-                  HIghLowPeRes? low = provider.data?[index];
+                  HIghLowPeRes? low = provider.dataLowPERatio?[index];
 
                   // if (up == null || up.isEmpty) {
                   //   return const SizedBox();
@@ -85,7 +88,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
                   );
                 },
                 // itemCount: up?.length ?? 0,
-                itemCount: provider.data?.length ?? 0,
+                itemCount: provider.dataLowPERatio?.length ?? 0,
               ),
             ],
           ),

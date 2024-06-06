@@ -23,6 +23,9 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowBetaStocksProvider>().data != null) {
+        return;
+      }
       context
           .read<HighLowBetaStocksProvider>()
           .getHighLowNegativeBetaStocks(type: 1);

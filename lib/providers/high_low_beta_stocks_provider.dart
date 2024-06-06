@@ -14,12 +14,20 @@ import 'package:stocks_news_new/utils/utils.dart';
 class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
-  List<HighLowBetaStocksRes>? _data;
+
   String? _error;
   int _page = 1;
   Extra? _extraUp;
+  List<HighLowBetaStocksRes>? _data;
 
   List<HighLowBetaStocksRes>? get data => _data;
+  List<HighLowBetaStocksRes>? _dataLowBetaStocks;
+
+  List<HighLowBetaStocksRes>? get dataLowBetaStocks => _dataLowBetaStocks;
+  List<HighLowBetaStocksRes>? _dataNegativeBetaStocks;
+
+  List<HighLowBetaStocksRes>? get dataNegativeBetaStocks =>
+      _dataNegativeBetaStocks;
   Extra? get extraUp => _extraUp;
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
@@ -93,14 +101,32 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         if (_page == 1) {
-          _data = highLowBetaStocksResFromJson(jsonEncode(response.data));
+          type == 1
+              ? _data = highLowBetaStocksResFromJson(jsonEncode(response.data))
+              : type == 2
+                  ? _dataLowBetaStocks =
+                      highLowBetaStocksResFromJson(jsonEncode(response.data))
+                  : _dataNegativeBetaStocks =
+                      highLowBetaStocksResFromJson(jsonEncode(response.data));
+
           _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _data
-              ?.addAll(highLowBetaStocksResFromJson(jsonEncode(response.data)));
+          type == 1
+              ? _data?.addAll(
+                  highLowBetaStocksResFromJson(jsonEncode(response.data)))
+              : type == 2
+                  ? _dataLowBetaStocks?.addAll(
+                      highLowBetaStocksResFromJson(jsonEncode(response.data)))
+                  : _dataNegativeBetaStocks?.addAll(
+                      highLowBetaStocksResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
+          type == 1
+              ? _data = null
+              : type == 2
+                  ? _dataLowBetaStocks = null
+                  : _dataNegativeBetaStocks = null;
           _data = null;
           _error = response.message;
           // showErrorMessage(message: response.message);
@@ -108,7 +134,11 @@ class HighLowBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
       }
       setStatus(Status.loaded);
     } catch (e) {
-      _data = null;
+      type == 1
+          ? _data = null
+          : type == 2
+              ? _dataLowBetaStocks = null
+              : _dataNegativeBetaStocks = null;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

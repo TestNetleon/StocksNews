@@ -23,6 +23,9 @@ class _GapUpStocksState extends State<GapUpStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<GapUpDownProvider>().dataUp != null) {
+        return;
+      }
       context.read<GapUpDownProvider>().getGapUpStocks();
     });
   }

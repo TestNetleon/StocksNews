@@ -53,6 +53,11 @@ class IndicesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setData() {
+    _data = null;
+    notifyListeners();
+  }
+
   void setTabStatus(status) {
     _tabStatus = status;
     notifyListeners();

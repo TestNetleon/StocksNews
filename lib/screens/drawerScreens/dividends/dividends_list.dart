@@ -23,6 +23,9 @@ class _DividendsListState extends State<DividendsList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<DividendsProvider>().data != null) {
+        return;
+      }
       context.read<DividendsProvider>().getDividendsStocks();
     });
   }

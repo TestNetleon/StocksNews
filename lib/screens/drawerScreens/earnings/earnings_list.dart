@@ -22,6 +22,9 @@ class _EarningsListState extends State<EarningsList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (context.read<EarningsProvider>().data != null) {
+        return;
+      }
       context.read<EarningsProvider>().getEarningsStocks();
     });
   }
