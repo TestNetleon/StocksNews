@@ -159,7 +159,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
   Future refreshData(String? inAppMsgId) async {
     retryCount = 0;
-    getHomePortfolio();
+    // getHomePortfolio();
     _getLastMarketOpen();
     getHomeSlider();
     getHomeAlerts();

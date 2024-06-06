@@ -141,130 +141,130 @@ class AuthorContainer extends StatelessWidget {
   }
 }
 
-class CategoryContainer extends StatelessWidget {
-  final BlogsType type;
-  final String id;
+// class CategoryContainer extends StatelessWidget {
+//   final BlogsType type;
+//   final String id;
 
-  const CategoryContainer({super.key, required this.type, this.id = ""});
+//   const CategoryContainer({super.key, required this.type, this.id = ""});
 
-  @override
-  Widget build(BuildContext context) {
-    BlogProvider provider = context.watch<BlogProvider>();
+//   @override
+//   Widget build(BuildContext context) {
+//     BlogProvider provider = context.watch<BlogProvider>();
 
-    return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
-        child: BaseUiContainer(
-          isLoading: provider.isLoading,
-          hasData: provider.categoryData != null &&
-              provider.categoryData?.isNotEmpty == true,
-          error: provider.error,
-          errorDispCommon: true,
-          onRefresh: () =>
-              provider.getData(showProgress: true, type: type, id: id),
-          child: RefreshControl(
-            onRefresh: () async =>
-                provider.getData(showProgress: true, type: type, id: id),
-            canLoadMore: provider.canLoadMore,
-            onLoadMore: () async =>
-                provider.getData(loadMore: true, type: type, id: id),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  BlogsHeader(data: provider.categoryRes),
-                  ListView.separated(
-                    padding: EdgeInsets.symmetric(vertical: 10.sp),
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: provider.categoryData?.length ?? 0,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      BlogItemRes? blogItem = provider.categoryData?[index];
-                      if (blogItem == null) {
-                        return const SizedBox();
-                      }
-                      return BlogItem(
-                        blogItem: blogItem,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVertical(height: 16);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//     return BaseContainer(
+//       appBar: const AppBarHome(
+//         isPopback: true,
+//         canSearch: true,
+//       ),
+//       body: Padding(
+//         padding: EdgeInsets.fromLTRB(
+//             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+//         child: BaseUiContainer(
+//           isLoading: provider.isLoading,
+//           hasData: provider.categoryData != null &&
+//               provider.categoryData?.isNotEmpty == true,
+//           error: provider.error,
+//           errorDispCommon: true,
+//           onRefresh: () =>
+//               provider.getData(showProgress: true, type: type, id: id),
+//           child: RefreshControl(
+//             onRefresh: () async =>
+//                 provider.getData(showProgress: true, type: type, id: id),
+//             canLoadMore: provider.canLoadMore,
+//             onLoadMore: () async =>
+//                 provider.getData(loadMore: true, type: type, id: id),
+//             child: SingleChildScrollView(
+//               child: Column(
+//                 children: [
+//                   BlogsHeader(data: provider.categoryRes),
+//                   ListView.separated(
+//                     padding: EdgeInsets.symmetric(vertical: 10.sp),
+//                     physics: const NeverScrollableScrollPhysics(),
+//                     itemCount: provider.categoryData?.length ?? 0,
+//                     shrinkWrap: true,
+//                     itemBuilder: (context, index) {
+//                       BlogItemRes? blogItem = provider.categoryData?[index];
+//                       if (blogItem == null) {
+//                         return const SizedBox();
+//                       }
+//                       return BlogItem(
+//                         blogItem: blogItem,
+//                       );
+//                     },
+//                     separatorBuilder: (BuildContext context, int index) {
+//                       return const SpacerVertical(height: 16);
+//                     },
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-class TagsContainer extends StatelessWidget {
-  final BlogsType type;
-  final String id;
+// class TagsContainer extends StatelessWidget {
+//   final BlogsType type;
+//   final String id;
 
-  const TagsContainer({super.key, required this.type, this.id = ""});
+//   const TagsContainer({super.key, required this.type, this.id = ""});
 
-  @override
-  Widget build(BuildContext context) {
-    BlogProvider provider = context.watch<BlogProvider>();
+//   @override
+//   Widget build(BuildContext context) {
+//     BlogProvider provider = context.watch<BlogProvider>();
 
-    return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
-        child: BaseUiContainer(
-          isLoading: provider.isLoading,
-          hasData: provider.tagsData != null &&
-              provider.tagsData?.isNotEmpty == true,
-          error: provider.error,
-          errorDispCommon: true,
-          onRefresh: () =>
-              provider.getData(showProgress: true, type: type, id: id),
-          child: RefreshControl(
-            onRefresh: () async =>
-                provider.getData(showProgress: true, type: type, id: id),
-            canLoadMore: provider.canLoadMore,
-            onLoadMore: () async =>
-                provider.getData(loadMore: true, type: type, id: id),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  BlogsHeader(data: provider.tagsRes),
-                  ListView.separated(
-                    padding: EdgeInsets.symmetric(vertical: 10.sp),
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: provider.tagsData?.length ?? 0,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      BlogItemRes? blogItem = provider.tagsData?[index];
-                      if (blogItem == null) {
-                        return const SizedBox();
-                      }
-                      return BlogItem(
-                        blogItem: blogItem,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SpacerVertical(height: 16);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//     return BaseContainer(
+//       appBar: const AppBarHome(
+//         isPopback: true,
+//         canSearch: true,
+//       ),
+//       body: Padding(
+//         padding: EdgeInsets.fromLTRB(
+//             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+//         child: BaseUiContainer(
+//           isLoading: provider.isLoading,
+//           hasData: provider.tagsData != null &&
+//               provider.tagsData?.isNotEmpty == true,
+//           error: provider.error,
+//           errorDispCommon: true,
+//           onRefresh: () =>
+//               provider.getData(showProgress: true, type: type, id: id),
+//           child: RefreshControl(
+//             onRefresh: () async =>
+//                 provider.getData(showProgress: true, type: type, id: id),
+//             canLoadMore: provider.canLoadMore,
+//             onLoadMore: () async =>
+//                 provider.getData(loadMore: true, type: type, id: id),
+//             child: SingleChildScrollView(
+//               child: Column(
+//                 children: [
+//                   BlogsHeader(data: provider.tagsRes),
+//                   ListView.separated(
+//                     padding: EdgeInsets.symmetric(vertical: 10.sp),
+//                     physics: const NeverScrollableScrollPhysics(),
+//                     itemCount: provider.tagsData?.length ?? 0,
+//                     shrinkWrap: true,
+//                     itemBuilder: (context, index) {
+//                       BlogItemRes? blogItem = provider.tagsData?[index];
+//                       if (blogItem == null) {
+//                         return const SizedBox();
+//                       }
+//                       return BlogItem(
+//                         blogItem: blogItem,
+//                       );
+//                     },
+//                     separatorBuilder: (BuildContext context, int index) {
+//                       return const SpacerVertical(height: 16);
+//                     },
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
