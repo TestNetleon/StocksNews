@@ -28,7 +28,14 @@ import 'widgets/technicalAnalysis/index.dart';
 class StockDetailsBase extends StatelessWidget {
   final String symbol;
   final String? inAppMsgId;
-  const StockDetailsBase({super.key, required this.symbol, this.inAppMsgId});
+  final String? notificationId;
+
+  const StockDetailsBase({
+    super.key,
+    required this.symbol,
+    this.inAppMsgId,
+    this.notificationId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +146,7 @@ class StockDetailsBase extends StatelessWidget {
                   content: CompanyEarningStockDetail(
                     symbol: symbol,
                     inAppMsgId: inAppMsgId,
+                    notificationId: notificationId,
                   ),
                 ),
               ),
@@ -161,6 +169,7 @@ class StockDetailsBase extends StatelessWidget {
                 content: StocksScoreGrades(
                   symbol: symbol,
                   inAppMsgId: inAppMsgId,
+                  notificationId: notificationId,
                 ),
               ),
             ),

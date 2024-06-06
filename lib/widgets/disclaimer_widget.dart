@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DisclaimerWidget extends StatelessWidget {
   final String data;
@@ -17,23 +16,31 @@ class DisclaimerWidget extends StatelessWidget {
       padding: padding ?? const EdgeInsets.symmetric(vertical: 16),
       // color: ThemeColors.background,
       child: HtmlWidget(
-        customStylesBuilder: (element) {
-          if (element.localName == 'a') {
-            return {'color': '#1bb449', 'text-decoration': 'none'};
-          }
-          return null;
-        },
+        // customStylesBuilder: (element) {
+        //   if (element.localName == 'a') {
+        //     return {'color': '#1bb449', 'text-decoration': 'none'};
+        //   }
+        //   return null;
+        // },
         onTapUrl: (url) async {
-          bool a = await launchUrl(Uri.parse(url));
-          Utils().showLog("clicked ur---$url, return value $a");
-          return a;
+          // bool a = await launchUrl(Uri.parse(url));
+          // bool a = await openUrl(url);
+
+          Navigator.push(
+            context,
+            createRoute(
+              const TCandPolicy(policyType: PolicyType.disclaimer),
+            ),
+          );
+
+          return true;
         },
         data,
-        textStyle: styleGeorgiaRegular(
-          fontSize: 11,
-          height: 1.5,
-          color: ThemeColors.greyText,
-        ),
+        // textStyle: styleGeorgiaRegular(
+        //   fontSize: 11,
+        //   height: 1.5,
+        //   color: ThemeColors.greyText,
+        // ),
       ),
     );
   }

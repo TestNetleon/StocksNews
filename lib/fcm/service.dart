@@ -19,14 +19,13 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
-
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 
@@ -64,68 +63,27 @@ class FirebaseApi {
   }
 
   void _navigateToRequiredScreen(payload, {whenAppKilled = false}) async {
-    // Utils().showLog("--------- => notification => $payload");
-
-    // bool isLoggedIn = await Preference.isLoggedIn();
-
-    // if (isLoggedIn) {
-    //   Utils().showLog("is logged in");
-
-    //   try {
-    //     String type = payload["type"];
-
-    //     // Navigator.popUntil(
-    //     //   navigatorKey.currentContext!,
-    //     //   (route) => route.isFirst,
-    //     // );
-
-    //     if (type == NotificationType.dashboard.name) {
-    //       if (whenAppKilled) return null;
-    //       Navigator.pushNamedAndRemoveUntil(
-    //           navigatorKey.currentContext!, Tabs.path, (route) => false);
-    //     } else {
-    //       Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
-    //           arguments: {"slug": type},);
-    //     }
-    //   } catch (e) {
-    //     Utils().showLog("Exception ===>> $e");
-    //   }
-    // } else {
-    //   Utils().showLog("is not logged in");
-    //   try {
-    //     Navigator.popUntil(
-    //       navigatorKey.currentContext!,
-    //       (route) => route.isFirst,
-    //     );
-    //     Navigator.push(
-    //       navigatorKey.currentContext!,
-    //       MaterialPageRoute(
-    //         builder: (_) {
-    //           return const Login();
-    //         },
-    //       ),
-    //     );
-    //   } catch (e) {
-    //     //
-    //   }
-    // }
+    String? type = payload["type"];
+    String? slug = payload['slug'];
+    String? notificationId = payload['notification_id'];
     try {
-      String? type = payload["type"];
-      String? slug = payload['slug'];
-      // Navigator.popUntil(
-      //   navigatorKey.currentContext!,
-      //   (route) => route.isFirst,
-      // );
+      // String? type = payload["type"];
+      // String? slug = payload['slug'];
+      // String? notificationId = payload['notification_id'];
 
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
         Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+          arguments: {"notificationId": notificationId},
+        );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           NewsDetails.path,
-          arguments: {"slug": slug},
+          arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
@@ -133,25 +91,31 @@ class FirebaseApi {
           MaterialPageRoute(
             builder: (context) => WebviewLink(
               stringURL: slug,
+              notificationId: notificationId,
             ),
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Navigator.push(
+        Navigator.pushNamed(
           navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => BlogDetail(
-              slug: slug ?? "",
-            ),
-          ),
+          BlogDetail.path,
+          arguments: {"slug": slug, "notificationId": notificationId},
         );
-      } else if (slug != '' && type == NotificationType.login.name) {
-        loginSheet();
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => BlogDetail(
+        //       slug: slug ?? "",
+        //     ),
+        //   ),
+        // );
+      } else if (slug != '' && type == NotificationType.register.name) {
+        signupSheet();
       } else {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetails.path,
-          arguments: {"slug": type},
+          arguments: {"slug": type, "notificationId": notificationId},
         );
       }
     } catch (e) {
@@ -160,6 +124,7 @@ class FirebaseApi {
         navigatorKey.currentContext!,
         Tabs.path,
         (route) => false,
+        arguments: {"notificationId": notificationId},
       );
     }
   }

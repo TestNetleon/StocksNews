@@ -25,13 +25,13 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   int _page = 1;
   BlogsRes? blogRes;
   BlogsRes? authorRes;
-  BlogsRes? categoryRes;
-  BlogsRes? tagsRes;
+  // BlogsRes? categoryRes;
+  // BlogsRes? tagsRes;
 
   List<BlogItemRes>? blogData;
   List<BlogItemRes>? authorsData;
-  List<BlogItemRes>? categoryData;
-  List<BlogItemRes>? tagsData;
+  // List<BlogItemRes>? categoryData;
+  // List<BlogItemRes>? tagsData;
 
   bool get canLoadMore => _page < (_data?.data.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
@@ -63,12 +63,14 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     BlogsType type = BlogsType.blog,
     String id = "",
     inAppMsgId,
+    notificationId,
   }) async {
     if (loadMore) {
       _page++;
       setStatus(Status.loadingMore);
     } else {
       _page = 1;
+
       setStatus(Status.loading);
     }
     try {
@@ -114,6 +116,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId!});
       }
+      if (notificationId != null) {
+        request.addAll({"notification_id": notificationId!});
+      }
 
       ApiResponse response = await apiRequest(
         url: Apis.blogs,
@@ -134,18 +139,26 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
         if (type == BlogsType.author) {
           authorRes = _data;
           authorsData = _data?.data.data;
-        } else if (type == BlogsType.category) {
-          categoryRes = _data;
-          categoryData = _data?.data.data;
-        } else if (type == BlogsType.tag) {
-          tagsRes = _data;
-          tagsData = _data?.data.data;
-        } else {
+        }
+
+        //  else if (type == BlogsType.category) {
+        //   categoryRes = _data;
+        //   categoryData = _data?.data.data;
+        // } else if (type == BlogsType.tag) {
+        //   tagsRes = _data;
+        //   tagsData = _data?.data.data;
+        // }
+
+        else {
           blogRes = _data;
           blogData = _data?.data.data;
         }
       } else {
+        blogRes = null;
+        blogData = null;
         _data = null;
+        authorRes = null;
+        authorsData = null;
         _error = response.message;
       }
       setStatus(Status.loaded);
@@ -185,6 +198,7 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     // required String blogId,
     String? slug,
     inAppMsgId,
+    notificationId,
   }) async {
     // setStatus(Status.loading);
     _statusDetail = Status.loading;

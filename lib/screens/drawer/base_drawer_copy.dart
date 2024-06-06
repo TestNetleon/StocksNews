@@ -443,7 +443,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                 size: 11,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

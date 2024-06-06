@@ -177,6 +177,7 @@ class Routes {
             return NewsDetails(
               slug: data['slug'],
               inAppMsgId: data['inAppMsgId'],
+              notificationId: data['notificationId'],
             );
             // return NewsDetails(
             //   slug: settings.arguments["slug"],
@@ -190,6 +191,7 @@ class Routes {
             return StockDetails(
               symbol: arguments!['slug'],
               inAppMsgId: arguments['inAppMsgId'],
+              notificationId: arguments['notificationId'],
             );
             // return StockDetails(symbol: settings.arguments as String);
           },
@@ -201,6 +203,7 @@ class Routes {
             return StockDetail(
               symbol: arguments!['slug'],
               inAppMsgId: arguments['inAppMsgId'],
+              notificationId: arguments['notificationId'],
             );
             // return StockDetails(symbol: settings.arguments as String);
           },
@@ -215,14 +218,16 @@ class Routes {
       case Blog.path:
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? id = arguments?['id'] as String?;
-        String? inAppMsgId = arguments?['inAppMsgId'] as String?;
         BlogsType? type = arguments?['type'] as BlogsType?;
+        String? inAppMsgId = arguments?['inAppMsgId'] as String?;
+        String? notificationId = arguments?['notificationId'] as String?;
         return MaterialWithModalsPageRoute(
           builder: (context) {
             return Blog(
               type: type ?? BlogsType.blog,
               id: id ?? "",
               inAppMsgId: inAppMsgId,
+              notificationId: notificationId,
             );
           },
         );
@@ -233,6 +238,7 @@ class Routes {
             return BlogDetail(
               slug: arguments!['slug'],
               inAppMsgId: arguments['inAppMsgId'],
+              notificationId: arguments['notificationId'],
             );
           },
         );

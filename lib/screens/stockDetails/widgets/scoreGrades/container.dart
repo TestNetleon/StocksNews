@@ -13,7 +13,13 @@ import '../stockTopWidgets/common_heading.dart';
 class StocksScoreGrades extends StatefulWidget {
   final String symbol;
   final String? inAppMsgId;
-  const StocksScoreGrades({super.key, required this.symbol, this.inAppMsgId});
+  final String? notificationId;
+  const StocksScoreGrades({
+    super.key,
+    required this.symbol,
+    this.inAppMsgId,
+    this.notificationId,
+  });
 
   @override
   State<StocksScoreGrades> createState() => _StocksScoreGradesState();
@@ -34,6 +40,7 @@ class _StocksScoreGradesState extends State<StocksScoreGrades> {
       provider.getStockOtherDetails(
         symbol: widget.symbol,
         inAppMsgId: widget.inAppMsgId,
+        notificationId: widget.notificationId,
       );
     }
   }
