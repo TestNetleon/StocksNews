@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
 import '../stockTopWidgets/common_heading.dart';
 
 class StocksScoreGrades extends StatefulWidget {
@@ -89,6 +90,12 @@ class _StocksScoreGradesState extends State<StocksScoreGrades> {
             StateItem(
                 label: "Piotroski Score", value: score?.data?.piotroskiScore),
             StateItem(label: "Grade", value: score?.data?.grade),
+            if (provider.extra?.disclaimer != null &&
+                (!provider.isLoading &&
+                    (!provider.otherLoading && provider.otherData != null)))
+              DisclaimerWidget(
+                data: provider.extra!.disclaimer!,
+              ),
           ],
         ),
       ),

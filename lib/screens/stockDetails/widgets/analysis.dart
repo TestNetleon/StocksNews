@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/analysis_res.dart';
@@ -13,6 +14,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../widgets/disclaimer_widget.dart';
 import '../../../widgets/theme_image_view.dart';
 import 'stockTopWidgets/common_heading.dart';
 
@@ -199,8 +201,11 @@ class AlalysisBase extends StatelessWidget {
             value: (analysisRes?.setimentPercent.toDouble() ?? 1.0) / 100),
 
         const SpacerVertical(height: 20),
-        const ScreenTitle(
-          title: "Stock Peers",
+        Visibility(
+          visible: provider.analysisRes?.peersData?.isNotEmpty == true,
+          child: const ScreenTitle(
+            title: "Stock Peers",
+          ),
         ),
         // provider.analysisRes?.peersData?.isEmpty == true
         //     ? const NoDataCustom(
@@ -225,6 +230,11 @@ class AlalysisBase extends StatelessWidget {
           },
           itemCount: provider.analysisRes?.peersData?.length ?? 0,
         ),
+        if (provider.extra?.disclaimer != null &&
+            (!provider.analysisLoading && provider.analysisRes != null))
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
       ],
     );
   }

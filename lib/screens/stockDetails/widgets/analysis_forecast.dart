@@ -3,9 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'stockTopWidgets/common_heading.dart';
@@ -62,7 +61,10 @@ class _AnalysisForecastState extends State<AnalysisForecast> {
             controller: controller,
           ),
         ),
-        const SpacerVertical(height: Dimen.itemSpacing),
+        if (provider.extra?.disclaimer != null)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
       ],
     );
   }

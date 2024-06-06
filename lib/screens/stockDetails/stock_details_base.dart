@@ -85,17 +85,17 @@ class StockDetailsBase extends StatelessWidget {
                   content: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                          left: Dimen.padding.sp,
-                          right: Dimen.padding.sp,
+                        padding: const EdgeInsets.only(
+                          left: Dimen.padding,
+                          right: Dimen.padding,
                         ),
                         child: StockTopDetail(symbol: symbol),
                       ),
                       // StockDetailTopGraph(),
                       Padding(
-                        padding: EdgeInsets.only(
-                          left: 8.sp,
-                          right: 8.sp,
+                        padding: const EdgeInsets.only(
+                          left: 8,
+                          right: 8,
                         ),
                         child: NewTopGraphIndex(symbol: symbol),
                       ),
@@ -107,12 +107,12 @@ class StockDetailsBase extends StatelessWidget {
                       //   ),
                       //   child: const StockDetailAnalystData(),
                       // ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(
-                          left: Dimen.padding.sp,
-                          right: Dimen.padding.sp,
+                          left: Dimen.padding,
+                          right: Dimen.padding,
                         ),
-                        child: const CompanyBrief(),
+                        child: CompanyBrief(),
                       ),
                       if (provider.extra?.disclaimer != null)
                         DisclaimerWidget(
@@ -127,9 +127,9 @@ class StockDetailsBase extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+              padding: const EdgeInsets.only(
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
               child: CommonRefreshIndicator(
                 onRefresh: () async {
@@ -143,19 +143,19 @@ class StockDetailsBase extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
-              child: const StockDetailsTabContainer(
+              child: StockDetailsTabContainer(
                 content: States(),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+              padding: const EdgeInsets.only(
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
               child: StockDetailsTabContainer(
                 content: StocksScoreGrades(
@@ -165,18 +165,18 @@ class StockDetailsBase extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+              padding: const EdgeInsets.only(
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
               child: StockDetailsTabContainer(
                 content: Analysis(symbol: symbol),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+              padding: const EdgeInsets.only(
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
               child: StockDetailsTabContainer(
                 content: html == null || html.isEmpty
@@ -191,9 +191,9 @@ class StockDetailsBase extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+              padding: const EdgeInsets.only(
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
               child: StockDetailsTabContainer(
                 content: StocksTechnicalAnalysis(
@@ -201,19 +201,19 @@ class StockDetailsBase extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
-              child: const StockDetailsTabContainer(
+              child: StockDetailsTabContainer(
                 content: StocksMentions(),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+              padding: const EdgeInsets.only(
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
               child: StockDetailsTabContainer(
                 content: RedditTwitterIframe(
@@ -222,12 +222,12 @@ class StockDetailsBase extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(
-                left: Dimen.padding.sp,
-                right: Dimen.padding.sp,
+                left: Dimen.padding,
+                right: Dimen.padding,
               ),
-              child: const StockDetailsTabContainer(
+              child: StockDetailsTabContainer(
                 content: StocksTrendingStories(),
               ),
             ),

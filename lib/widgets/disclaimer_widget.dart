@@ -14,7 +14,7 @@ class DisclaimerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: padding ?? const EdgeInsets.only(bottom: 16, top: 16),
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 16),
       // color: ThemeColors.background,
       child: HtmlWidget(
         customStylesBuilder: (element) {

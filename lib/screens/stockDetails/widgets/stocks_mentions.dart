@@ -10,6 +10,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../widgets/disclaimer_widget.dart';
 import '../../../widgets/error_display_common.dart';
 import 'stockTopWidgets/common_heading.dart';
 
@@ -107,7 +108,12 @@ class StocksMentions extends StatelessWidget {
             return const SpacerVertical(height: 12);
           },
           itemCount: mentions?.length ?? 0,
-        )
+        ),
+        if (provider.extra?.disclaimer != null &&
+            (!provider.mentionLoading && mentions?.isNotEmpty == true))
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
       ],
     );
   }

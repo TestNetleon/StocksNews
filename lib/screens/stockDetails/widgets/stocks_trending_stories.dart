@@ -6,6 +6,7 @@ import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
+import '../../../widgets/disclaimer_widget.dart';
 import 'stockTopWidgets/common_heading.dart';
 
 class StocksTrendingStories extends StatelessWidget {
@@ -47,6 +48,10 @@ class StocksTrendingStories extends StatelessWidget {
             );
           },
         ),
+        if (provider.extra?.disclaimer != null && newsPost.isNotEmpty)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
       ],
     );
   }

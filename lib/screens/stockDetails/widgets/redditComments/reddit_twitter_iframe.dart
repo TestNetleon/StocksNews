@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -8,6 +10,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/error_display_common.dart';
 import '../stockTopWidgets/common_heading.dart';
 import 'i_frame_item.dart';
@@ -87,6 +90,7 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
 
   @override
   Widget build(BuildContext context) {
+    StockDetailProvider provider = context.watch<StockDetailProvider>();
     if (widget.redditRssId == null && widget.twitterRssId != null) {
       return const Center(
         child: ErrorDisplayWidget(
@@ -188,7 +192,14 @@ class _RedditTwitterIframeState extends State<RedditTwitterIframe> {
                   ),
                 ],
               ),
-            )
+            ),
+            if (provider.extra?.disclaimer != null &&
+                (!provider.isLoading &&
+                    (widget.twitterRssId != null ||
+                        widget.redditRssId != null)))
+              DisclaimerWidget(
+                data: provider.extra!.disclaimer!,
+              ),
           ],
         );
       },

@@ -242,6 +242,11 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
               if (index == 0) {
                 return Column(
                   children: [
+                    Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 15.sp,
+                      thickness: 1,
+                    ),
                     Row(
                       children: [
                         SizedBox(
@@ -276,6 +281,11 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 15.sp,
+                      thickness: 1,
                     ),
                     const SpacerVertical(height: 10),
                     Row(
@@ -443,6 +453,11 @@ class TechnicalMovingAverages extends StatelessWidget {
               if (index == 0) {
                 return Column(
                   children: [
+                    Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 15.sp,
+                      thickness: 1,
+                    ),
                     Row(
                       children: [
                         SizedBox(
@@ -490,6 +505,11 @@ class TechnicalMovingAverages extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 15.sp,
+                      thickness: 1,
                     ),
                     const SpacerVertical(height: 10),
                     Row(

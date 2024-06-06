@@ -19,10 +19,10 @@ class CustomGridView extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: paddingVerticle.sp),
+      padding: EdgeInsets.symmetric(vertical: paddingVerticle),
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal.sp),
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
