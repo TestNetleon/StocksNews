@@ -25,6 +25,9 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<PennyStocksProvider>().dataTopTodays != null) {
+        return;
+      }
       context.read<PennyStocksProvider>().getData(type: 3);
     });
   }
@@ -32,7 +35,7 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
   @override
   Widget build(BuildContext context) {
     PennyStocksProvider provider = context.watch<PennyStocksProvider>();
-    List<PennyStocksRes>? data = provider.data;
+    List<PennyStocksRes>? data = provider.dataTopTodays;
 
     return BaseUiContainer(
       error: provider.error,

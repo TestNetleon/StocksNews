@@ -20,11 +20,14 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
 
   Status _status = Status.ideal;
   // ************* Most Active **************** //
-  List<PennyStocksRes>? _data;
   String? _error;
   int _page = 1;
+  List<PennyStocksRes>? _data;
 
   List<PennyStocksRes>? get data => _data;
+  List<PennyStocksRes>? _dataTopTodays;
+
+  List<PennyStocksRes>? get dataTopTodays => _dataTopTodays;
   bool get canLoadMore => _page < (extra?.totalPages ?? 0);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
@@ -94,20 +97,49 @@ class PennyStocksProvider extends ChangeNotifier with AuthProviderBase {
         _extraData = response.extra;
         _error = null;
         if (_page == 1) {
-          _data = pennyStocksResFromJson(jsonEncode(response.data));
+          type == 1
+              ? _data = pennyStocksResFromJson(jsonEncode(response.data))
+              : type == 2
+                  ? _data = pennyStocksResFromJson(jsonEncode(response.data))
+                  : type == 3
+                      ? _dataTopTodays =
+                          pennyStocksResFromJson(jsonEncode(response.data))
+                      : _data =
+                          pennyStocksResFromJson(jsonEncode(response.data));
         } else {
-          _data?.addAll(pennyStocksResFromJson(jsonEncode(response.data)));
+          type == 1
+              ? _data?.addAll(pennyStocksResFromJson(jsonEncode(response.data)))
+              : type == 2
+                  ? _data?.addAll(
+                      pennyStocksResFromJson(jsonEncode(response.data)))
+                  : type == 3
+                      ? _dataTopTodays?.addAll(
+                          pennyStocksResFromJson(jsonEncode(response.data)))
+                      : _data?.addAll(
+                          pennyStocksResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
-          _data = null;
+          type == 1
+              ? _data = null
+              : type == 2
+                  ? _data = null
+                  : type == 3
+                      ? _dataTopTodays = null
+                      : _data = null;
           _error = response.message;
           // showErrorMessage(message: response.message);
         }
       }
       setStatus(Status.loaded);
     } catch (e) {
-      _data = null;
+      type == 1
+          ? _data = null
+          : type == 2
+              ? _data = null
+              : type == 3
+                  ? _dataTopTodays = null
+                  : _data = null;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

@@ -28,6 +28,9 @@ class _BlogState extends State<Blog> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<BlogProvider>().blogData != null) {
+        return;
+      }
       context.read<BlogProvider>().getData(
             showProgress: widget.type == BlogsType.author,
             type: widget.type,
