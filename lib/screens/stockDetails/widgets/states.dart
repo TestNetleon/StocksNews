@@ -164,6 +164,7 @@ import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -180,14 +181,15 @@ class States extends StatefulWidget {
 class _StatesState extends State<States> {
   @override
   Widget build(BuildContext context) {
-    KeyStats? keyStats = context.watch<StockDetailProvider>().data?.keyStats;
+    StockDetailProvider provider = context.watch<StockDetailProvider>();
+    KeyStats? keyStats = provider.data?.keyStats;
 
     return Column(
       children: [
         const CommonHeadingStockDetail(),
         CustomGridView(
-          paddingVerticle: 8.sp,
-          paddingHorizontal: 5.sp,
+          paddingVerticle: 8,
+          paddingHorizontal: 0,
           length: 25,
           getChild: (index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,9 +285,15 @@ class _StatesState extends State<States> {
                 StateItemNEW(
                     label: "Earnings Announcement",
                     value: keyStats?.earningsAnnouncement),
+              const SpacerVertical(height: Dimen.itemSpacing),
             ],
           ),
         ),
+        if (provider.extra?.disclaimer != null &&
+            (!provider.isLoading && keyStats != null))
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
       ],
     );
   }

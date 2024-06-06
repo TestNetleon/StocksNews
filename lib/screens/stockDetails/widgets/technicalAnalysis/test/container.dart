@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/custom_tab.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../../widgets/disclaimer_widget.dart';
 import '../base.dart';
 import '../widgets/averages.dart';
 import '../widgets/indicators.dart';
@@ -164,7 +165,11 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
                         ],
                       );
                     },
-                  )
+                  ),
+        if (provider.extra?.disclaimer != null)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
       ],
     );
   }

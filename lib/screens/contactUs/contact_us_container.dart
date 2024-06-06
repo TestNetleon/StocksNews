@@ -5,6 +5,7 @@ import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_item.dart';
 import 'package:stocks_news_new/screens/contactUs/widgets/bullet_point.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../widgets/custom/refresh_indicator.dart';
@@ -71,6 +72,13 @@ class ContactUsContainer extends StatelessWidget {
               // ),
               const SpacerVertical(height: 30),
               const ContactUsItem(),
+              if (context.read<TermsAndPolicyProvider>().extra?.disclaimer !=
+                  null)
+                DisclaimerWidget(
+                    data: context
+                        .read<TermsAndPolicyProvider>()
+                        .extra!
+                        .disclaimer!)
             ],
           )),
     );

@@ -223,7 +223,8 @@ class _CompanyEarningStockDetailState extends State<CompanyEarningStockDetail> {
                 itemCount: earning?.data?.length ?? 0,
               ),
               const SpacerVertical(height: Dimen.itemSpacing),
-              if (provider.extra?.disclaimer != null)
+              if (provider.extra?.disclaimer != null &&
+                  (!provider.otherLoading && earning != null))
                 DisclaimerWidget(
                   data: provider.extra!.disclaimer!,
                 ),
