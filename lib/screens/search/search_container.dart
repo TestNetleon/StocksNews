@@ -9,6 +9,7 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/stocks_item.dart';
 import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -77,7 +78,10 @@ class SearchContainer extends StatelessWidget {
               height: 20.sp,
             );
           },
-        )
+        ),
+        if (context.read<SearchProvider>().extra?.disclaimer != null)
+          DisclaimerWidget(
+              data: context.read<SearchProvider>().extra!.disclaimer!)
       ],
     );
   }
