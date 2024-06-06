@@ -229,7 +229,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
                     );
                   },
                 ),
-                if (provider.extra?.disclaimer != null)
+                if (provider.extra?.disclaimer != null &&
+                    provider.socialSentimentRes != null &&
+                    !provider.isLoading)
                   DisclaimerWidget(
                     data: provider.extra!.disclaimer!,
                   )

@@ -157,7 +157,10 @@ class MostBullish extends StatelessWidget {
           },
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
-        if (provider.extra?.disclaimer != null)
+        if (provider.extra?.disclaimer != null &&
+            (!provider.isLoadingBullish &&
+                (provider.mostBullish?.mostBullish != null &&
+                    provider.mostBullish?.mostBullish?.isNotEmpty == true)))
           DisclaimerWidget(
             data: provider.extra!.disclaimer!,
           ),

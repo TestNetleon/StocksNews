@@ -5,10 +5,8 @@ import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class TrendingStories extends StatelessWidget {
@@ -81,8 +79,10 @@ class TrendingStories extends StatelessWidget {
             // return const SpacerVertical(height: 12);
           },
         ),
-        const SpacerVertical(height: Dimen.itemSpacing),
-        if (provider.extra?.disclaimer != null)
+        if (provider.extra?.disclaimer != null &&
+            (!provider.isLoadingStories &&
+                (provider.trendingStories?.generalNews != null &&
+                    provider.trendingStories?.generalNews?.isNotEmpty == true)))
           DisclaimerWidget(
             data: provider.extra!.disclaimer!,
           ),

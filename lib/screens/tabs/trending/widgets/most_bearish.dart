@@ -170,7 +170,10 @@ class MostBearish extends StatelessWidget {
           },
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
-        if (provider.extra?.disclaimer != null)
+        if (provider.extra?.disclaimer != null &&
+            (!provider.isLoadingBearish &&
+                (provider.mostBearish?.mostBearish != null &&
+                    provider.mostBearish?.mostBearish?.isNotEmpty == true)))
           DisclaimerWidget(
             data: provider.extra!.disclaimer!,
           ),

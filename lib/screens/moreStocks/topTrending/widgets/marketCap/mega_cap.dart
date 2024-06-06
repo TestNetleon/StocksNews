@@ -29,9 +29,10 @@ class MegaCapListView extends StatelessWidget {
                 (provider.megaCap == null || provider.megaCap?.isEmpty == true)
             ? const Center(
                 child: ErrorDisplayWidget(
-                    fontSize: 11,
-                    showHeight: false,
-                    error: TopTrendingError.megaCap),
+                  fontSize: 11,
+                  showHeight: false,
+                  error: TopTrendingError.megaCap,
+                ),
               )
             : ListView.separated(
                 shrinkWrap: true,
