@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener_list.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
 class StockScreenerScreen extends StatelessWidget {
   static const path = "StockScreenerScreen";
   const StockScreenerScreen({super.key});
-  void _onFilterClick(BuildContext context, dynamic provider) {
-    BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Insider Trades",
-      child: MarketDataFilterBottomSheet(provider: provider),
-    );
-  }
+  // void _onFilterClick(BuildContext context, dynamic provider) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     title: "Filter Insider Trades",
+  //     child: MarketDataFilterBottomSheet(provider: provider),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

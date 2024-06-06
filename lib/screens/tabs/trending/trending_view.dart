@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/trending_industries.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
@@ -9,14 +8,10 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bearish.dart'
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish.dart';
 
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../trendingIndustries/index.dart';
 import 'widgets/trending_partial_loading.dart';

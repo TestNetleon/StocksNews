@@ -6,8 +6,11 @@ import 'package:app_links/app_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
@@ -95,10 +98,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return '';
   }
 
-  _navigation({String? type, required Uri uri, String? slug}) {
+  _navigation({String? type, required Uri uri, String? slug}) async {
     Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
     String slugForTicker = extractSymbolValue(uri);
     Utils().showLog("slug for ticker $slugForTicker");
+    bool userPresent = false;
+
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    if (await provider.checkForUser()) {
+      userPresent = true;
+    }
+    Utils().showLog("----$userPresent---");
     if (type == "blog") {
       Navigator.push(
           navigatorKey.currentContext!,
@@ -121,6 +131,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           navigatorKey.currentContext!,
           MaterialPageRoute(
               builder: (context) => StockDetails(symbol: slugForTicker)));
+    } else if (type == "login") {
+      if (userPresent) {
+        if (_appLifecycleState == null) {
+          //
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!, Tabs.path, (route) => false);
+        }
+      } else {
+        loginSheet();
+      }
+    } else if (type == "signUp") {
+      if (userPresent) {
+        if (_appLifecycleState == null) {
+          //
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!, Tabs.path, (route) => false);
+        }
+      } else {
+        signupSheet();
+      }
     } else if (type == "dashboard") {
       if (_appLifecycleState == null) {
         //
@@ -153,6 +185,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } else if (uri.toString() == "https://app.stocks.news/" ||
         uri.toString() == "https://app.stocks.news") {
       return 'dashboard';
+    } else if (uri.path.contains('/login')) {
+      return 'login';
+    } else if (uri.path.contains('/sign-up')) {
+      return 'signUp';
     } else {
       return '';
     }
