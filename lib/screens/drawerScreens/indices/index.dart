@@ -156,7 +156,9 @@ class IndicesData extends StatelessWidget {
               height: 16,
             );
           },
-          itemCount: provider.data?.length ?? 0,
+          itemCount: provider.typeDowThirty || provider.typeSpFifty
+              ? provider.dataDowThirtyStocks?.length ?? 0
+              : provider.data?.length ?? 0,
         ),
       ),
     );

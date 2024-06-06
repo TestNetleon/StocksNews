@@ -195,39 +195,38 @@ class IndicesProvider extends ChangeNotifier {
         onRefresh: onRefreshIndicesData,
       );
       if (response.status) {
+        // _extraUp = response.extra;
+        // notifyListeners();
+        // title = response.extra?.title;
+        // subTitle = response.extra?.subTitle;
         _error = null;
         if (_page == 1) {
           if (dowThirtyStocks == true) {
             _dataDowThirtyStocks =
-                dowThirtyResFromJson(jsonEncode(response.data)).result;
+                dowThirtyResFromJson(jsonEncode(response.data));
           } else if (sPFiftyStocks == true) {
             _dataDowThirtyStocks =
-                dowThirtyResFromJson(jsonEncode(response.data)).result;
+                dowThirtyResFromJson(jsonEncode(response.data));
           } else {
             _data = indicesResFromJson(jsonEncode(response.data));
           }
 
           // _data =  indicesResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
-          title = response.extra?.title;
-          subTitle = response.extra?.subTitle;
         } else {
           if (dowThirtyStocks == true) {
-            _dataDowThirtyStocks?.addAll(
-                dowThirtyResFromJson(jsonEncode(response.data)).result
-                    as Iterable<Result>);
+            _dataDowThirtyStocks
+                ?.addAll(dowThirtyResFromJson(jsonEncode(response.data)));
           } else if (sPFiftyStocks == true) {
-            _dataDowThirtyStocks?.addAll(
-                dowThirtyResFromJson(jsonEncode(response.data)).result
-                    as Iterable<Result>);
+            _dataDowThirtyStocks
+                ?.addAll(dowThirtyResFromJson(jsonEncode(response.data)));
           } else {
             _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
           }
 
           // _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
-
-          notifyListeners();
         }
+        _extraUp = response.extra is Extra ? response.extra : null;
+        notifyListeners();
       } else {
         if (_page == 1) {
           _data = null;
