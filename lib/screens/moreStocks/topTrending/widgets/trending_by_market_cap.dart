@@ -11,6 +11,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
+import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -43,38 +44,43 @@ class _TrendingByMarketCapState extends State<TrendingByMarketCap> {
       onLoadMore: () async => {},
       child: provider.isLoading
           ? const Loading()
-          : SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                Dimen.padding,
-                Dimen.padding,
-                Dimen.padding,
-                0,
-              ),
-              child: Column(
-                children: [
-                  const SpacerVertical(height: 10),
-                  Visibility(
-                    visible: !isEmpty(provider.textTop?.now),
-                    child: Text(
-                      provider.textTop?.now ?? "",
-                      style: stylePTSansRegular(
-                        fontSize: 13,
-                        color: ThemeColors.greyText,
-                      ),
-                    ),
+          : provider.data == null
+              ? ErrorDisplayWidget(
+                  error: provider.error,
+                  onRefresh: () => provider.getCapData(),
+                )
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(
+                    Dimen.padding,
+                    Dimen.padding,
+                    Dimen.padding,
+                    0,
                   ),
-                  const MegaCapListView(),
-                  const LargeCapListView(),
-                  const MediumCapListView(),
-                  const SmallCapListView(),
-                  const MicroCapListView(),
-                  if (provider.extra?.disclaimer != null)
-                    DisclaimerWidget(
-                      data: provider.extra!.disclaimer!,
-                    ),
-                ],
-              ),
-            ),
+                  child: Column(
+                    children: [
+                      const SpacerVertical(height: 10),
+                      Visibility(
+                        visible: !isEmpty(provider.textTop?.now),
+                        child: Text(
+                          provider.textTop?.now ?? "",
+                          style: stylePTSansRegular(
+                            fontSize: 13,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      ),
+                      const MegaCapListView(),
+                      const LargeCapListView(),
+                      const MediumCapListView(),
+                      const SmallCapListView(),
+                      const MicroCapListView(),
+                      if (provider.extra?.disclaimer != null)
+                        DisclaimerWidget(
+                          data: provider.extra!.disclaimer!,
+                        ),
+                    ],
+                  ),
+                ),
     );
   }
 }
