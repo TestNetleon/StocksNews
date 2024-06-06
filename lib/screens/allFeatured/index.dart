@@ -45,6 +45,7 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
             const ScreenTitle(title: "Featured Stocks"),
             Expanded(
               child: BaseUiContainer(
+                showPreparingText: true,
                 error: provider.error,
                 hasData:
                     provider.data?.isNotEmpty == true && !provider.isLoading,
