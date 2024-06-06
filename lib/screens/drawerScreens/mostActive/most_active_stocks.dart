@@ -23,6 +23,9 @@ class _MostActiveStocksState extends State<MostActiveStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<MostActiveProvider>().data != null) {
+        return;
+      }
       context.read<MostActiveProvider>().getMostActiveData(type: 1);
     });
   }

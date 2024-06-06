@@ -23,6 +23,9 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowPeProvider>().data != null) {
+        return;
+      }
       context
           .read<HighLowPeProvider>()
           .getData(showProgress: true, type: "lowGrowth");

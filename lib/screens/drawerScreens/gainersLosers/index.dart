@@ -29,14 +29,23 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
   int selectedIndex = 0;
 
   void onChange(index) {
+    MoreStocksProvider provider = context.read<MoreStocksProvider>();
+
     if (selectedIndex != index) {
       selectedIndex = index;
       setState(() {});
       if (index == 0) {
+        if (provider.gainersLosers?.data != null) {
+          return;
+        }
+
         context
             .read<MoreStocksProvider>()
             .getGainersLosers(showProgress: true, type: widget.type.name);
       } else {
+        if (provider.losers?.data != null) {
+          return;
+        }
         context
             .read<MoreStocksProvider>()
             .getLosers(showProgress: true, type: "losers");
@@ -48,6 +57,9 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<MoreStocksProvider>().gainersLosers?.data != null) {
+        return;
+      }
       context
           .read<MoreStocksProvider>()
           .getGainersLosers(showProgress: true, type: widget.type.name);

@@ -24,6 +24,9 @@ class _StockScreenerListState extends State<StockScreenerList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<StockScreenerProvider>().onChangeNullValueSet();
+      if (context.read<StockScreenerProvider>().data != null) {
+        return;
+      }
 
       context.read<StockScreenerProvider>().getStockScreenerStocks();
     });

@@ -116,12 +116,19 @@ import 'package:stocks_news_new/utils/utils.dart';
 class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
-  List<MostActiveStocksRes>? _data;
   String? _error;
   int _page = 1;
   Extra? _extraUp;
+  List<MostActiveStocksRes>? _data;
 
   List<MostActiveStocksRes>? get data => _data;
+  List<MostActiveStocksRes>? _dataMostVolatile;
+
+  List<MostActiveStocksRes>? get dataMostVolatile => _dataMostVolatile;
+  List<MostActiveStocksRes>? _dataUnusualTradingVolume;
+
+  List<MostActiveStocksRes>? get dataUnusualTradingVolume =>
+      _dataUnusualTradingVolume;
   Extra? get extraUp => _extraUp;
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
@@ -189,21 +196,43 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         if (_page == 1) {
-          _data = mostActiveStocksFromJson(jsonEncode(response.data));
+          type == 1
+              ? _data = mostActiveStocksFromJson(jsonEncode(response.data))
+              : type == 2
+                  ? _dataMostVolatile =
+                      mostActiveStocksFromJson(jsonEncode(response.data))
+                  : _dataUnusualTradingVolume =
+                      mostActiveStocksFromJson(jsonEncode(response.data));
+
           _extraUp = response.extra is Extra ? response.extra : null;
         } else {
-          _data?.addAll(mostActiveStocksFromJson(jsonEncode(response.data)));
+          type == 1
+              ? _data
+                  ?.addAll(mostActiveStocksFromJson(jsonEncode(response.data)))
+              : type == 2
+                  ? _dataMostVolatile?.addAll(
+                      mostActiveStocksFromJson(jsonEncode(response.data)))
+                  : _dataUnusualTradingVolume?.addAll(
+                      mostActiveStocksFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
-          _data = null;
+          type == 1
+              ? _data = null
+              : type == 2
+                  ? _dataMostVolatile = null
+                  : _dataUnusualTradingVolume = null;
           _error = response.message;
           // showErrorMessage(message: response.message);
         }
       }
       setStatus(Status.loaded);
     } catch (e) {
-      _data = null;
+      type == 1
+          ? _data = null
+          : type == 2
+              ? _dataMostVolatile = null
+              : _dataUnusualTradingVolume = null;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

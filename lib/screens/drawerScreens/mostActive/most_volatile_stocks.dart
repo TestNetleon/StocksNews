@@ -23,6 +23,9 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<MostActiveProvider>().dataMostVolatile != null) {
+        return;
+      }
       context.read<MostActiveProvider>().getMostActiveData(type: 2);
     });
   }
@@ -30,7 +33,7 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
   @override
   Widget build(BuildContext context) {
     MostActiveProvider provider = context.watch<MostActiveProvider>();
-    List<MostActiveStocksRes>? data = provider.data;
+    List<MostActiveStocksRes>? data = provider.dataMostVolatile;
 
     return BaseUiContainer(
       error: provider.error,

@@ -23,6 +23,10 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowBetaStocksProvider>().dataNegativeBetaStocks !=
+          null) {
+        return;
+      }
       context
           .read<HighLowBetaStocksProvider>()
           .getHighLowNegativeBetaStocks(type: 3);
@@ -33,7 +37,7 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
   Widget build(BuildContext context) {
     HighLowBetaStocksProvider provider =
         context.watch<HighLowBetaStocksProvider>();
-    List<HighLowBetaStocksRes>? data = provider.data;
+    List<HighLowBetaStocksRes>? data = provider.dataNegativeBetaStocks;
 
     return BaseUiContainer(
       error: provider.error,

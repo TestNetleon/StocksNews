@@ -23,6 +23,9 @@ class _HighPeStocksState extends State<HighPeStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (context.read<HighLowPeProvider>().dataHighPERatio != null) {
+        return;
+      }
       context
           .read<HighLowPeProvider>()
           .getData(showProgress: true, type: "high");
@@ -37,8 +40,8 @@ class _HighPeStocksState extends State<HighPeStocks> {
       error: provider.error,
       // hasData: up != null && up.isNotEmpty,
       hasData: !provider.isLoading &&
-          provider.data != null &&
-          provider.data?.isNotEmpty == true,
+          provider.dataHighPERatio != null &&
+          provider.dataHighPERatio?.isNotEmpty == true,
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
@@ -55,7 +58,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
             // top: Dimen.padding.sp,
           ),
           itemBuilder: (context, index) {
-            HIghLowPeRes? high = provider.data?[index];
+            HIghLowPeRes? high = provider.dataHighPERatio?[index];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -67,7 +70,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
           separatorBuilder: (BuildContext context, int index) {
             return Divider(color: ThemeColors.greyBorder, height: 20.sp);
           },
-          itemCount: provider.data?.length ?? 0,
+          itemCount: provider.dataHighPERatio?.length ?? 0,
         ),
       ),
     );
