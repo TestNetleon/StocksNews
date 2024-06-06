@@ -97,21 +97,19 @@ class HomePlaidAddedContainer extends StatelessWidget {
               },
               scrollable: true,
               physics: const NeverScrollableScrollPhysics(),
-              tabs: List.generate(
-                  provider.tabs.length,
-                  (index) => index == 0
-                      ? provider.tabs[index].toUpperCase()
-                      : provider.tabs[index].capitalizeWords()),
+              tabs: List.generate(provider.tabs.length,
+                  (index) => provider.tabs[index].capitalizeWords()),
               tabsPadding: const EdgeInsets.only(bottom: 10),
               widgets: List.generate(
                 provider.tabs.length,
                 (index) => CommonRefreshIndicator(
-                    onRefresh: () async {
-                      provider.onRefresh();
-                    },
-                    child: HomePlaidBase(
-                      name: provider.tabs[index],
-                    )),
+                  onRefresh: () async {
+                    provider.onRefresh();
+                  },
+                  child: HomePlaidBase(
+                    name: provider.tabs[index],
+                  ),
+                ),
               ),
             ),
           ),
