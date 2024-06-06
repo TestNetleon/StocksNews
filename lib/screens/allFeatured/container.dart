@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/featured_ticker.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
 import '../../modals/home_alert_res.dart';
@@ -26,16 +28,20 @@ class AllFeaturedContainer extends StatelessWidget {
           if (data == null) {
             return const SizedBox();
           }
+          int count = provider.data?.length ?? 0;
 
-          // if (index == 0 || index == 1) {
-          //   return AllFeaturedItem(
-          //     data: data,
-          //   ).bigWidget();
-          // }
+          Utils().showLog("Count = $count, index = $index");
 
-          return AllFeaturedItem(
-            data: data,
-          );
+          if (count == index + 1 && provider.extra?.disclaimer != null) {
+            return Column(
+              children: [
+                AllFeaturedItem(data: data),
+                DisclaimerWidget(data: provider.extra!.disclaimer!)
+              ],
+            );
+          } else {
+            return AllFeaturedItem(data: data);
+          }
         },
         separatorBuilder: (context, index) {
           return const Divider(
