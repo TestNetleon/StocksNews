@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/add_company_c
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -121,6 +122,21 @@ class CompareStocksContainer extends StatelessWidget {
                             : null,
                       ),
                       const FooterList(),
+                      Text(
+                          "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"),
+                      if (context
+                              .read<CompareStocksProvider>()
+                              .extra
+                              ?.disclaimer !=
+                          null)
+                        Container(
+                          height: 200,
+                          child: DisclaimerWidget(
+                              data: context
+                                  .read<CompareStocksProvider>()
+                                  .extra!
+                                  .disclaimer!),
+                        )
                     ],
                   ),
                 ),

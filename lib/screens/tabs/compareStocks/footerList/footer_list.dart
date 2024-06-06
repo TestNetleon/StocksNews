@@ -281,6 +281,7 @@ import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/linear_bar.dart';
 
 class FooterList extends StatefulWidget {
@@ -494,6 +495,16 @@ class _FooterListState extends State<FooterList> {
                         },
                       ),
                     ),
+                    // if (context
+                    //         .read<CompareStocksProvider>()
+                    //         .extra
+                    //         ?.disclaimer !=
+                    //     null)
+                    //   DisclaimerWidget(
+                    //       data: context
+                    //           .read<CompareStocksProvider>()
+                    //           .extra!
+                    //           .disclaimer!)
                   ],
                 ),
               );
