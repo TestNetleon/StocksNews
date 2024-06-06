@@ -10,6 +10,10 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../../../utils/constants.dart';
+import '../../../../widgets/disclaimer_widget.dart';
+import '../../../../widgets/spacer_vertical.dart';
+
 class TrendingSectors extends StatelessWidget {
   const TrendingSectors({super.key});
 
@@ -90,6 +94,11 @@ class TrendingSectors extends StatelessWidget {
             );
           },
         ),
+        const SpacerVertical(height: Dimen.itemSpacing),
+        if (provider.extra?.disclaimer != null)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
         // const SpacerVertical(height: Dimen.itemSpacing),
         // Align(
         //   alignment: Alignment.centerLeft,

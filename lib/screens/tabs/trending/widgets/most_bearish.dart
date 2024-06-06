@@ -6,11 +6,13 @@ import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+
+import '../../../../utils/constants.dart';
+import '../../../../widgets/spacer_vertical.dart';
 
 class MostBearish extends StatelessWidget {
   const MostBearish({super.key});
@@ -168,6 +170,10 @@ class MostBearish extends StatelessWidget {
           },
         ),
         const SpacerVertical(height: Dimen.itemSpacing),
+        if (provider.extra?.disclaimer != null)
+          DisclaimerWidget(
+            data: provider.extra!.disclaimer!,
+          ),
         // Align(
         //   alignment: Alignment.centerLeft,
         //   child: ThemeButtonSmall(

@@ -96,6 +96,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
       positiveMentions = null;
       negativeMentions = null;
       neutralMentions = null;
+      Utils().showLog(e);
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
     }
