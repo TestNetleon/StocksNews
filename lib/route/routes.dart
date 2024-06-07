@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/providers/blog_provider_new.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
@@ -391,6 +392,7 @@ class Routes {
 
       ChangeNotifierProvider(create: (_) => GapUpProvider()),
       ChangeNotifierProvider(create: (_) => GapDownProvider()),
+      ChangeNotifierProvider(create: (_) => BlogProviderNew()),
     ];
   }
 }

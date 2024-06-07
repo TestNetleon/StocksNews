@@ -295,7 +295,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   List<NewsData>? get data => _data?.data;
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
-  // int? get page => _page;
+
   bool get isLoading => _status == Status.loading;
   bool get tabLoading => _tabStatus == Status.loading;
 

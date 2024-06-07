@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -176,13 +178,33 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              showDialog(
-                                context: navigatorKey.currentContext!,
-                                barrierColor: Colors.black.withOpacity(0.5),
-                                builder: (context) {
-                                  return const ReviewAppPopUp();
-                                },
-                              );
+                              if (context.read<UserProvider>().drawerData !=
+                                  null) {
+                                showDialog(
+                                  context: navigatorKey.currentContext!,
+                                  barrierColor: Colors.black.withOpacity(0.5),
+                                  builder: (context) {
+                                    return const ReviewAppPopUp();
+                                  },
+                                );
+
+                                return;
+                              }
+                              Map request = {
+                                "device_type":
+                                    Platform.isAndroid ? "android" : "ios",
+                              };
+                              context
+                                  .read<UserProvider>()
+                                  .getReviewTextDetail(request);
+
+                              // showDialog(
+                              //   context: navigatorKey.currentContext!,
+                              //   barrierColor: Colors.black.withOpacity(0.5),
+                              //   builder: (context) {
+                              //     return const ReviewAppPopUp();
+                              //   },
+                              // );
                             },
                             child: Container(
                               padding: EdgeInsets.all(15.sp),

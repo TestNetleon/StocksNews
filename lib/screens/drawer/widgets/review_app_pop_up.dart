@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -13,6 +15,8 @@ class ReviewAppPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = context.watch<UserProvider>();
+
     return Dialog(
       backgroundColor: ThemeColors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
@@ -39,7 +43,8 @@ class ReviewAppPopUp extends StatelessWidget {
                   ),
                   SpacerVertical(height: 30.sp),
                   Text(
-                    "Love Stocks.news?",
+                    userProvider.drawerData?.rating?.title ??
+                        "Love Stocks.news?",
                     style: stylePTSansBold(
                       color: ThemeColors.background,
                       fontSize: 18.sp,
@@ -47,19 +52,21 @@ class ReviewAppPopUp extends StatelessWidget {
                   ),
                   SpacerVertical(height: 20.sp),
                   Text(
-                    "Please recommend us to",
+                    textAlign: TextAlign.center,
+                    userProvider.drawerData?.rating?.description ??
+                        "Please recommend us to\nothers on the Play Store",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
                       fontSize: 18.sp,
                     ),
                   ),
-                  Text(
-                    "other on the App Store",
-                    style: stylePTSansRegular(
-                      color: ThemeColors.greyText,
-                      fontSize: 18.sp,
-                    ),
-                  ),
+                  // Text(
+                  //   "other on the App Store",
+                  //   style: stylePTSansRegular(
+                  //     color: ThemeColors.greyText,
+                  //     fontSize: 18.sp,
+                  //   ),
+                  // ),
                   SpacerVertical(height: 20.sp),
                 ],
               ),
@@ -72,11 +79,10 @@ class ReviewAppPopUp extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 Navigator.pop(context);
-                openUrl(
-                  Platform.isAndroid
-                      ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
-                      : 'https://apps.apple.com/us/app/stocks-news/id6476615803',
-                );
+                openUrl(userProvider.drawerData?.rating?.url ??
+                    (Platform.isAndroid
+                        ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
+                        : 'https://apps.apple.com/us/app/stocks-news/id6476615803'));
                 // final InAppReview inAppReview = InAppReview.instance;
 
                 // log("APp === ${await inAppReview.isAvailable()}");
