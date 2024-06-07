@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'container.dart';
@@ -43,12 +45,28 @@ class _BlogDetailState extends State<BlogDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
+        try {
+          if (popHome) {
+            Future.delayed(const Duration(milliseconds: 50), () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Tabs.path, (route) => false);
+              popHome = false;
+            });
+          }
+        } catch (e) {
+          //
+        }
+      },
+      child: BaseContainer(
+        appBar: const AppBarHome(
+          isPopback: true,
+          canSearch: true,
+        ),
+        body: BlogDetailContainer(slug: widget.slug ?? ""),
       ),
-      body: BlogDetailContainer(slug: widget.slug ?? ""),
     );
   }
 }

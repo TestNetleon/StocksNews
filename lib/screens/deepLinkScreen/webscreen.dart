@@ -6,6 +6,9 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../utils/constants.dart';
+import '../tabs/tabs.dart';
+
 class WebviewLink extends StatefulWidget {
   final Uri? url;
   final String? stringURL;
@@ -66,16 +69,32 @@ class _AnalysisForecastState extends State<WebviewLink> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) async {
+        try {
+          if (popHome) {
+            Future.delayed(const Duration(milliseconds: 50), () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Tabs.path, (route) => false);
+              popHome = false;
+            });
+          }
+        } catch (e) {
+          //
+        }
+      },
+      child: BaseContainer(
+        appBar: const AppBarHome(
+          isPopback: true,
+          canSearch: true,
+        ),
+        body: loading
+            ? const ProgressDialog()
+            : WebViewWidget(
+                controller: controller,
+              ),
       ),
-      body: loading
-          ? const ProgressDialog()
-          : WebViewWidget(
-              controller: controller,
-            ),
     );
   }
 }

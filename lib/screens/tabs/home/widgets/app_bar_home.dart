@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -56,8 +57,16 @@ class _AppBarHomeState extends State<AppBarHome> {
       leading: widget.isPopback
           ? IconButton(
               onPressed: () {
-                context.read<SearchProvider>().clearSearch();
-                Navigator.pop(context);
+                if (popHome) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Tabs.path, (route) => false);
+                  popHome = false;
+                } else {
+                  navigatorKey.currentContext!
+                      .read<SearchProvider>()
+                      .clearSearch();
+                  Navigator.pop(navigatorKey.currentContext!);
+                }
               },
               icon: const Icon(
                 Icons.arrow_back_ios,

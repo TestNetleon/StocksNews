@@ -32,7 +32,6 @@ class DisclaimerWidget extends StatelessWidget {
               const TCandPolicy(policyType: PolicyType.disclaimer),
             ),
           );
-
           return true;
         },
         data,

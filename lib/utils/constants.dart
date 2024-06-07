@@ -30,6 +30,7 @@ bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
 String apiKeyFMP = "";
+bool popHome = false;
 
 // String? clientId;
 // String? secret;
