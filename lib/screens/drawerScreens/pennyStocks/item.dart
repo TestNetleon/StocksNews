@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
+import 'package:stocks_news_new/modals/penny_stocks.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -10,15 +9,17 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
-import '../../../modals/penny_stocks.dart';
-
 class PennyStocksItem extends StatelessWidget {
   final PennyStocksRes data;
-  final int index;
+  // final int index;
+  final bool isOpen;
+  final Function() onTap;
 //
   const PennyStocksItem({
     required this.data,
-    required this.index,
+    // required this.index,
+    required this.isOpen,
+    required this.onTap,
     super.key,
   });
 
@@ -32,8 +33,6 @@ class PennyStocksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PennyStocksProvider provider = context.watch<PennyStocksProvider>();
-
     return Column(
       children: [
         Row(
@@ -47,7 +46,7 @@ class PennyStocksItem extends StatelessWidget {
                   padding: const EdgeInsets.all(5),
                   width: 43,
                   height: 43,
-                  child: ThemeImageView(url: data.image ?? ""),
+                  child: ThemeImageView(url: data.image),
                 ),
               ),
             ),
@@ -59,7 +58,7 @@ class PennyStocksItem extends StatelessWidget {
                   InkWell(
                     onTap: () => _onTap(context),
                     child: Text(
-                      "${data.symbol ?? "N?A"}",
+                      data.symbol,
                       style: stylePTSansBold(fontSize: 14),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -67,7 +66,7 @@ class PennyStocksItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.name ?? "N?A"}",
+                    data.name,
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
                       fontSize: 12,
@@ -102,11 +101,12 @@ class PennyStocksItem extends StatelessWidget {
             ),
             const SpacerHorizontal(width: 10),
             InkWell(
-              onTap: () {
-                provider.setOpenIndex(
-                  provider.openIndex == index ? -1 : index,
-                );
-              },
+              onTap: onTap,
+              // onTap: () {
+              //   provider.setOpenIndex(
+              //     provider.openIndex == index ? -1 : index,
+              //   );
+              // },
               child: Container(
                 decoration: const BoxDecoration(
                   color: ThemeColors.accent,
@@ -114,7 +114,8 @@ class PennyStocksItem extends StatelessWidget {
                 margin: EdgeInsets.only(left: 8.sp),
                 padding: const EdgeInsets.all(3),
                 child: Icon(
-                  provider.openIndex == index
+                  // provider.openIndex == index
+                  isOpen
                       ? Icons.arrow_upward_rounded
                       : Icons.arrow_downward_rounded,
                   size: 16,
@@ -126,10 +127,10 @@ class PennyStocksItem extends StatelessWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 150),
           child: Container(
-            height: provider.openIndex == index ? null : 0,
+            height: isOpen ? null : 0,
             margin: EdgeInsets.only(
-              top: provider.openIndex == index ? 10.sp : 0,
-              bottom: provider.openIndex == index ? 10.sp : 0,
+              top: isOpen ? 10.sp : 0,
+              bottom: isOpen ? 10.sp : 0,
             ),
             child: Column(
               children: [

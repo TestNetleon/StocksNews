@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/highlow_pe_res.dart';
-import 'package:stocks_news_new/providers/high_low_pe.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/high_pe_growth_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
@@ -23,56 +27,94 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<HighLowPeProvider>().dataHighPEGrowth != null) {
+      HighPeGrowthProvider provider = context.read<HighPeGrowthProvider>();
+      if (provider.data != null) {
         return;
       }
-      context
-          .read<HighLowPeProvider>()
-          .getData(showProgress: true, type: "highGrowth");
+      // if (context.read<HighPeProvider>().dataHighPERatio != null) {
+      //   return;
+      // }
+      provider.resetFilter();
+      provider.getData(showProgress: true);
+      //-------
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    FilteredParams? filterParams =
+        context.read<HighPeGrowthProvider>().filterParams;
+
+    if (provider.data == null) {
+      await provider.getFilterData();
+    }
+
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Stock Screener",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: filterParams,
+      ),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<HighPeGrowthProvider>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    HighLowPeProvider provider = context.watch<HighLowPeProvider>();
+    HighPeGrowthProvider provider = context.watch<HighPeGrowthProvider>();
 
-    return BaseUiContainer(
-      error: provider.error,
-      // hasData: up != null && up.isNotEmpty,
-      hasData: !provider.isLoading &&
-          provider.dataHighPEGrowth != null &&
-          provider.dataHighPEGrowth?.isNotEmpty == true,
-      isLoading: provider.isLoading,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getData(showProgress: true, type: "highGrowth"),
-      child: RefreshControl(
-        onRefresh: () async =>
-            provider.getData(showProgress: true, type: "highGrowth"),
-        canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.getData(
-            showProgress: false, type: "highGrowth", loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            // top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            HIghLowPeRes? high = provider.dataHighPEGrowth?[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (index == 0) HtmlTitle(subTitle: provider.subTitle),
-                HighLowPEItem(index: index, data: high),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(color: ThemeColors.greyBorder, height: 20.sp);
-          },
-          itemCount: provider.dataHighPEGrowth?.length ?? 0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        HtmlTitle(
+          subTitle: provider.extra?.subTitle ?? "",
+          onFilterClick: _onFilterClick,
+          margin: const EdgeInsets.only(top: 0, bottom: 0),
         ),
-      ),
+        if (provider.filterParams != null)
+          FilterUiValues(
+            params: provider.filterParams,
+            onDeleteExchange: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
+          ),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            // hasData: up != null && up.isNotEmpty,
+            hasData: !provider.isLoading &&
+                provider.data != null &&
+                provider.data?.isNotEmpty == true,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getData(showProgress: true),
+            child: RefreshControl(
+              onRefresh: () async => provider.getData(showProgress: true),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async =>
+                  provider.getData(showProgress: false, loadMore: true),
+              child: ListView.separated(
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  // top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  HIghLowPeRes? high = provider.data?[index];
+                  return HighLowPEItem(index: index, data: high);
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(color: ThemeColors.greyBorder, height: 20.sp);
+                },
+                itemCount: provider.data?.length ?? 0,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

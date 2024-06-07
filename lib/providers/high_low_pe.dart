@@ -16,10 +16,13 @@ import '../modals/highlow_pe_res.dart';
 class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   List<HIghLowPeRes>? _data;
   List<HIghLowPeRes>? get data => _data;
+
   List<HIghLowPeRes>? _dataHighPERatio;
   List<HIghLowPeRes>? get dataHighPERatio => _dataHighPERatio;
+
   List<HIghLowPeRes>? _dataLowPERatio;
   List<HIghLowPeRes>? get dataLowPERatio => _dataLowPERatio;
+
   List<HIghLowPeRes>? _dataHighPEGrowth;
   List<HIghLowPeRes>? get dataHighPEGrowth => _dataHighPEGrowth;
 

@@ -15,9 +15,10 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 class MarketDataFilterBottomSheet extends StatefulWidget {
   const MarketDataFilterBottomSheet({
     required this.onFiltered,
+    this.filterParam,
     super.key,
   });
-
+  final FilteredParams? filterParam;
   final Function(FilteredParams?) onFiltered;
 
   @override
@@ -28,6 +29,22 @@ class MarketDataFilterBottomSheet extends StatefulWidget {
 class _MarketDataFilterBottomSheetState
     extends State<MarketDataFilterBottomSheet> {
   FilteredParams? filterParams;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        filterParams = widget.filterParam;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    filterParams = null;
+    super.dispose();
+  }
 
   // final dynamic provider;
   void _showExchangePicker(BuildContext context) {
@@ -43,36 +60,29 @@ class _MarketDataFilterBottomSheetState
 
     BaseBottomSheets().gradientBottomSheet(
       child: FilterMultiSelectListing(
-        label: "All Exchange",
+        label: "Select Exchange",
         items: provider.data!.exchange!,
+        selectedData: filterParams?.exchange_name,
         onSelected: (List<FiltersDataItem> selected) {
           String selectedValues = selected.map((item) => item.value).join(',');
-
           if (filterParams == null) {
-            filterParams =
-                FilteredParams(exchange_name: selectedValues.split(","));
+            filterParams = FilteredParams(
+              exchange_name: selectedValues.split(","),
+            );
           } else {
             filterParams?.exchange_name = selectedValues.split(",");
           }
           setState(() {});
-
-          // print(commaSeparatedValues.split(","));
-          // context.read<StockScreenerProvider>().onChangeExchange(
-          //       provider.dataFilterBottomSheet.exchange[index].key.toString(),
-          //       provider.dataFilterBottomSheet.exchange[index].value.toString(),
-          //     );
         },
       ),
     );
   }
 
-  // void _showSectorPicker(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: isPhone ? 0 : 0 // ScreenUtil().screenWidth * .15,
-          ),
+      padding: EdgeInsets.symmetric(horizontal: isPhone ? 0 : 0),
+      // ScreenUtil().screenWidth * .15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

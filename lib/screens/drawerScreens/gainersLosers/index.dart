@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/break_out_item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_top_gainer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -103,57 +104,59 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
           tabsPadding: EdgeInsets.zero,
           tabs: const [
             "Today's Gainers",
-            " Today's Losers",
+            "Today's Losers",
             "Today's Breakout Stocks"
           ],
           onChange: (index) => onChange(index),
           widgets: [
-            BaseUiContainer(
-              error: provider.error,
-              hasData: gainers != null && gainers.isNotEmpty,
-              isLoading: provider.isLoading,
-              errorDispCommon: true,
-              onRefresh: () => provider.getGainersLosers(
-                  showProgress: true, type: widget.type.name),
-              child: RefreshControl(
-                onRefresh: () async => provider.getGainersLosers(
-                    showProgress: true, type: widget.type.name),
-                canLoadMore: provider.canLoadMore,
-                onLoadMore: () async => provider.getGainersLosers(
-                    loadMore: true, type: widget.type.name),
-                child: ListView.separated(
-                  padding: EdgeInsets.only(
-                      bottom: Dimen.padding.sp, top: Dimen.padding.sp),
-                  itemBuilder: (context, index) {
-                    if (gainers == null || gainers.isEmpty) {
-                      return const SizedBox();
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (index == 0)
-                          HtmlTitle(
-                              subTitle:
-                                  provider.extraUpGainers?.subTitle ?? ""),
-                        const SpacerVertical(),
-                        GainerLoserItem(
-                          data: gainers[index],
-                          index: index,
-                          marketData: true,
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 12.sp,
-                    );
-                  },
-                  itemCount: gainers?.length ?? 0,
-                ),
-              ),
-            ),
+            const TodaysTopGainer(),
+            // BaseUiContainer(
+            //   error: provider.error,
+            //   hasData: gainers != null && gainers.isNotEmpty,
+            //   isLoading: provider.isLoading,
+            //   errorDispCommon: true,
+            //   onRefresh: () => provider.getGainersLosers(
+            //       showProgress: true, type: widget.type.name),
+            //   child: RefreshControl(
+            //     onRefresh: () async => provider.getGainersLosers(
+            //         showProgress: true, type: widget.type.name),
+            //     canLoadMore: provider.canLoadMore,
+            //     onLoadMore: () async => provider.getGainersLosers(
+            //         loadMore: true, type: widget.type.name),
+            //     child: ListView.separated(
+            //       padding: EdgeInsets.only(
+            //           bottom: Dimen.padding.sp, top: Dimen.padding.sp),
+            //       itemBuilder: (context, index) {
+            //         if (gainers == null || gainers.isEmpty) {
+            //           return const SizedBox();
+            //         }
+            //         return Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             if (index == 0)
+            //               HtmlTitle(
+            //                   subTitle:
+            //                       provider.extraUpGainers?.subTitle ?? ""),
+            //             const SpacerVertical(),
+            //             GainerLoserItem(
+            //               data: gainers[index],
+            //               index: index,
+            //               marketData: true,
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //       separatorBuilder: (context, index) {
+            //         return Divider(
+            //           color: ThemeColors.greyBorder,
+            //           height: 12.sp,
+            //         );
+            //       },
+            //       itemCount: gainers?.length ?? 0,
+            //     ),
+            //   ),
+            // ),
+
             BaseUiContainer(
               error: provider.errorLosers,
               hasData: losers != null && losers.isNotEmpty,

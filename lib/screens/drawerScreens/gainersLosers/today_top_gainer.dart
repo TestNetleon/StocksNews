@@ -1,56 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/high_pe_provider.dart';
+import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
+import '../../../modals/gainers_losers_res.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import 'item.dart';
+import '../../moreStocks/topGainerLoser/item.dart';
 
-class HighPeStocks extends StatefulWidget {
-  const HighPeStocks({super.key});
+class TodaysTopGainer extends StatefulWidget {
+  const TodaysTopGainer({super.key});
 
   @override
-  State<HighPeStocks> createState() => _HighPeStocksState();
+  State<TodaysTopGainer> createState() => _TodaysTopGainerState();
 }
 
-class _HighPeStocksState extends State<HighPeStocks> {
+class _TodaysTopGainerState extends State<TodaysTopGainer> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      HighPeProvider provider = context.read<HighPeProvider>();
+      TodayTopGainerProvider provider = context.read<TodayTopGainerProvider>();
       if (provider.data != null) {
         return;
       }
-
-      // if (context.read<HighPeProvider>().dataHighPERatio != null) {
-      //   return;
-      // }
       provider.resetFilter();
       provider.getData(showProgress: true);
-      //-------
     });
   }
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
-    FilteredParams? filterParams = context.read<HighPeProvider>().filterParams;
+    FilteredParams? filterParams =
+        context.read<TodayTopGainerProvider>().filterParams;
 
     if (provider.data == null) {
       await provider.getFilterData();
     }
 
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter Today's Top Gainers",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: filterParams,
@@ -59,12 +55,13 @@ class _HighPeStocksState extends State<HighPeStocks> {
   }
 
   void _onFiltered(FilteredParams? params) {
-    context.read<HighPeProvider>().applyFilter(params);
+    context.read<TodayTopGainerProvider>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    HighPeProvider provider = context.watch<HighPeProvider>();
+    TodayTopGainerProvider provider = context.watch<TodayTopGainerProvider>();
+    List<GainersLosersDataRes>? gainers = provider.data?.data;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -72,7 +69,10 @@ class _HighPeStocksState extends State<HighPeStocks> {
         HtmlTitle(
           subTitle: provider.extra?.subTitle ?? "",
           onFilterClick: _onFilterClick,
-          margin: const EdgeInsets.only(top: 0, bottom: 0),
+          margin: EdgeInsets.only(
+            top: 10,
+            bottom: provider.filterParams != null ? 0 : 10,
+          ),
         ),
         if (provider.filterParams != null)
           FilterUiValues(
@@ -84,10 +84,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
         Expanded(
           child: BaseUiContainer(
             error: provider.error,
-            // hasData: up != null && up.isNotEmpty,
-            hasData: !provider.isLoading &&
-                provider.data != null &&
-                provider.data?.isNotEmpty == true,
+            hasData: gainers != null && gainers.isNotEmpty,
             isLoading: provider.isLoading,
             errorDispCommon: true,
             showPreparingText: true,
@@ -95,21 +92,26 @@ class _HighPeStocksState extends State<HighPeStocks> {
             child: RefreshControl(
               onRefresh: () async => provider.getData(showProgress: true),
               canLoadMore: provider.canLoadMore,
-              onLoadMore: () async =>
-                  provider.getData(showProgress: false, loadMore: true),
+              onLoadMore: () async => provider.getData(loadMore: true),
               child: ListView.separated(
                 padding: EdgeInsets.only(
                   bottom: Dimen.padding.sp,
-                  // top: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
                 ),
                 itemBuilder: (context, index) {
-                  HIghLowPeRes? high = provider.data?[index];
-                  return HighLowPEItem(index: index, data: high);
+                  return GainerLoserItem(
+                    data: gainers![index],
+                    index: index,
+                    marketData: true,
+                  );
                 },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: ThemeColors.greyBorder, height: 20.sp);
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 12.sp,
+                  );
                 },
-                itemCount: provider.data?.length ?? 0,
+                itemCount: gainers?.length ?? 0,
               ),
             ),
           ),
