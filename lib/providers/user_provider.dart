@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/drawer_data_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
@@ -19,6 +21,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -38,6 +41,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   bool isKeyboardVisible = false;
   // MessageRes? _messageObject;
   // MessageRes? get messageObject => _messageObject;
+  DrawerDataRes? _drawerData;
+
+  DrawerDataRes? get drawerData => _drawerData;
 
   void setStatus(status) {
     _status = status;
@@ -88,6 +94,37 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   void updateEmail(value) {
     _user?.username = value;
     notifyListeners();
+  }
+
+  Future getReviewTextDetail(request) async {
+    setStatus(Status.loading);
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.drawerData,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _drawerData = drawerDataResFromJson(jsonEncode(response.data));
+        showDialog(
+          context: navigatorKey.currentContext!,
+          barrierColor: Colors.black.withOpacity(0.5),
+          builder: (context) {
+            return const ReviewAppPopUp();
+          },
+        );
+      } else {
+        _drawerData = null;
+      }
+      setStatus(Status.loaded);
+      // showErrorMessage(
+      //   message: response.message,
+      //   type: response.status ? SnackbarType.info : SnackbarType.error,
+      // );
+    } catch (e) {
+      _drawerData = null;
+      setStatus(Status.loaded);
+    }
   }
 
   void logout() async {

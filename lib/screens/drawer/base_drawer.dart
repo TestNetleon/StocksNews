@@ -10,6 +10,7 @@
 // import 'package:stocks_news_new/modals/user_res.dart';
 // import 'package:stocks_news_new/providers/home_provider.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
+// import 'package:stocks_news_new/route/my_app.dart';
 // import 'package:stocks_news_new/screens/alerts/alerts.dart';
 // import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
@@ -18,6 +19,7 @@
 // import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 // import 'package:stocks_news_new/screens/drawer/widgets/back_press.dart';
 // import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
+// import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 // import 'package:stocks_news_new/screens/drawer/widgets/tile_widget.dart';
 // import 'package:stocks_news_new/screens/faq/index.dart';
 // import 'package:stocks_news_new/screens/myAccount/my_account.dart';
@@ -545,11 +547,34 @@
 //                               children: [
 //                                 GestureDetector(
 //                                   onTap: () {
-//                                     openUrl(
-//                                       Platform.isAndroid
-//                                           ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
-//                                           : 'https://apps.apple.com/us/app/stocks-news/id6476615803',
-//                                     );
+//                                     if (context
+//                                             .read<UserProvider>()
+//                                             .drawerData !=
+//                                         null) {
+//                                       showDialog(
+//                                         context: navigatorKey.currentContext!,
+//                                         barrierColor:
+//                                             Colors.black.withOpacity(0.5),
+//                                         builder: (context) {
+//                                           return const ReviewAppPopUp();
+//                                         },
+//                                       );
+
+//                                       return;
+//                                     }
+//                                     Map request = {
+//                                       "device_type": Platform.isAndroid
+//                                           ? "android"
+//                                           : "ios",
+//                                     };
+//                                     context
+//                                         .read<UserProvider>()
+//                                         .getReviewTextDetail(request);
+//                                     // openUrl(
+//                                     //   Platform.isAndroid
+//                                     //       ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
+//                                     //       : 'https://apps.apple.com/us/app/stocks-news/id6476615803',
+//                                     // );
 //                                   },
 //                                   child: Container(
 //                                     padding: EdgeInsets.all(15.sp),

@@ -124,6 +124,7 @@ class Apis {
   static const stockScreener = "/stock-screener";
 
   static const filters = "/common-filters";
+  static const drawerData = "/drawer-data";
 }
 
 //

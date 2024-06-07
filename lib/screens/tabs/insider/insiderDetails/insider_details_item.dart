@@ -178,11 +178,13 @@ class InnerRowItem extends StatelessWidget {
   final String lable;
   final String? value;
   final bool link;
+  final TextStyle? style;
 
   const InnerRowItem({
     required this.lable,
     this.value,
     this.link = false,
+    this.style,
     super.key,
   });
 
@@ -202,7 +204,8 @@ class InnerRowItem extends StatelessWidget {
               const SpacerHorizontal(width: 2),
               Flexible(
                 child: !link
-                    ? Text(value ?? '', style: stylePTSansBold(fontSize: 14))
+                    ? Text(value ?? '',
+                        style: style ?? stylePTSansBold(fontSize: 14))
                     : InkWell(
                         onTap: () => openUrl(value),
                         child: Text(
