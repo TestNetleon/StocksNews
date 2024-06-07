@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import '../auth/bottomSheets/signup_sheet.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
+import '../drawer/widgets/review_app_pop_up.dart';
 
 class HomeSplash extends StatefulWidget {
   static const path = "HomeSplash";
@@ -97,6 +98,23 @@ class _HomeSplashState extends State<HomeSplash> {
         );
         Timer(const Duration(seconds: 1), () {
           signupSheet();
+        });
+      } else if (slug != '' && type == NotificationType.review.name) {
+        //review pop up
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+        );
+
+        Timer(const Duration(seconds: 1), () {
+          showDialog(
+            context: navigatorKey.currentContext!,
+            barrierColor: Colors.black.withOpacity(0.5),
+            builder: (context) {
+              return const ReviewAppPopUp();
+            },
+          );
         });
       } else {
         Navigator.pushNamed(

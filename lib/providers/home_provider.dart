@@ -230,6 +230,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         //.....................................
 
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
+        Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
         loginTxt = response.extra.loginText;
@@ -237,6 +238,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
         Preference.saveLocalDataBase(response.extra.messageObject);
+        if (_extra?.messageObject?.error != null) {
+          Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
+          Const.loadingMessage = _extra?.messageObject?.loading ?? "";
+        }
 
         if (response.extra != null && response.extra is Extra) {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
@@ -251,6 +256,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     } catch (e) {
       _homeSliderRes = null;
       _statusSlider = Status.loaded;
+      Utils().showLog("-----$e-------");
       notifyListeners();
     }
   }
@@ -608,7 +614,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
       if (response.status) {
         Preference.saveLocalDataBase(response.extra.message);
-
+        if (_extra?.messageObject?.error != null) {
+          Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
+          Const.loadingMessage = _extra?.messageObject?.loading ?? "";
+        }
         MessageRes? localDataBase = await Preference.getLocalDataBase();
         Utils().showLog("localDataBase  =========${localDataBase?.error}");
 

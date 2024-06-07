@@ -73,6 +73,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   void _getDeviceType() async {
     var deviceType = getDeviceType(MediaQuery.of(context).size);
+    UserProvider provider = context.read<UserProvider>();
 
     MessageRes? messageObject = await Preference.getLocalDataBase();
 
@@ -89,7 +90,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       isPhone = true;
     }
 
-    UserProvider provider = context.read<UserProvider>();
     UserRes? user = await Preference.getUser();
     if (user != null) {
       Utils().showLog("-------FROM SPLASH USER UPDATING---------");

@@ -9,7 +9,7 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
-import 'package:stocks_news_new/screens/blogs/index.dart';
+import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -303,10 +303,15 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
     Utils().showLog("message");
     Navigator.pop(navigatorKey.currentContext!);
     Utils().showLog("message");
+    // Navigator.pushNamed(
+    //   navigatorKey.currentContext!,
+    //   Blog.path,
+    //   arguments: {"type": BlogsType.blog, "id": "", "inAppMsgId": inAppMsg?.id},
+    // );
     Navigator.pushNamed(
       navigatorKey.currentContext!,
-      Blog.path,
-      arguments: {"type": BlogsType.blog, "id": "", "inAppMsgId": inAppMsg?.id},
+      BlogIndexNew.path,
+      arguments: {"inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog_detail') {
     Navigator.pop(navigatorKey.currentContext!);

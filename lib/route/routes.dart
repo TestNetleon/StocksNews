@@ -61,6 +61,7 @@ import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
+import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
@@ -335,6 +336,19 @@ class Routes {
               reportingSlug: reportingSlug ?? "",
               companyName: companyName ?? "",
               reportingName: reportingName ?? "",
+            );
+          },
+        );
+
+      case BlogIndexNew.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String? inAppMsgId = arguments?['inAppMsgId'] as String?;
+        String? notificationId = arguments?['notificationId'] as String?;
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return BlogIndexNew(
+              inAppMsgId: inAppMsgId,
+              notificationId: notificationId,
             );
           },
         );

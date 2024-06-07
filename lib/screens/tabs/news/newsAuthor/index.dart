@@ -114,6 +114,7 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
                       site: newsItemData.site ?? '',
                       postDate: DateFormat("MMMM dd, yyyy")
                           .format(newsItemData.publishedDate),
+                      postDateString: newsItemData.postDateString,
                       url: newsItemData.url,
                       authors: newsItemData.authors
                       //  "November 29, 2023",
@@ -133,6 +134,7 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
                     postDate: DateFormat("MMMM dd, yyyy")
                         .format(newsItemData.publishedDate),
                     url: newsItemData.url,
+                    postDateString: newsItemData.postDateString,
                     authors: newsItemData.authors
                     //  "November 29, 2023",
                     ),

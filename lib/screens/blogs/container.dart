@@ -13,6 +13,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../blogNew/blogsNew/item.dart';
+
 //
 class BlogContainer extends StatelessWidget {
   const BlogContainer({super.key});
@@ -123,7 +125,11 @@ class AuthorContainer extends StatelessWidget {
                       if (blogItem == null) {
                         return const SizedBox();
                       }
-                      return BlogItem(
+                      // return BlogItem(
+                      //   blogItem: blogItem,
+                      // );
+                      return BlogItemNew(
+                        showCategory: blogItem.authors?.isEmpty == true,
                         blogItem: blogItem,
                       );
                     },
