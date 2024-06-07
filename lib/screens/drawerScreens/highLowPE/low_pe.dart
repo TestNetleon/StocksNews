@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/low_pe_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highLowPE/item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../modals/highlow_pe_res.dart';
-import '../../../providers/high_low_pe.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
@@ -23,59 +27,78 @@ class _LowPEStocksState extends State<LowPEStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<HighLowPeProvider>().dataLowPERatio != null) {
+      LowPeProvider provider = context.read<LowPeProvider>();
+      if (provider.data != null) {
         return;
       }
-      context
-          .read<HighLowPeProvider>()
-          .getData(showProgress: true, type: "low");
+      provider.resetFilter();
+      provider.getData(showProgress: true);
+      //-------
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    FilteredParams? filterParams = context.read<LowPeProvider>().filterParams;
+
+    if (provider.data == null) {
+      await provider.getFilterData();
+    }
+
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Stock Screener",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: filterParams,
+      ),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<LowPeProvider>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    HighLowPeProvider provider = context.watch<HighLowPeProvider>();
+    LowPeProvider provider = context.watch<LowPeProvider>();
 
-    return BaseUiContainer(
-      error: provider.error,
-      // hasData: up != null && up.isNotEmpty,
-      hasData: !provider.isLoading &&
-          provider.dataLowPERatio != null &&
-          provider.dataLowPERatio?.isNotEmpty == true,
-      isLoading: provider.isLoading,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getData(showProgress: true, type: "low"),
-      child: RefreshControl(
-        onRefresh: () async =>
-            provider.getData(showProgress: true, type: "low"),
-        canLoadMore: provider.canLoadMore,
-        onLoadMore: () async =>
-            provider.getData(showProgress: false, type: "low", loadMore: true),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HtmlTitle(
-                subTitle: provider.subTitle,
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        HtmlTitle(
+          subTitle: provider.extra?.subTitle ?? "",
+          onFilterClick: _onFilterClick,
+          margin: const EdgeInsets.only(top: 0, bottom: 0),
+        ),
+        if (provider.filterParams != null)
+          FilterUiValues(
+            params: provider.filterParams,
+            onDeleteExchange: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
+          ),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: !provider.isLoading &&
+                provider.data != null &&
+                provider.data?.isNotEmpty == true,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getData(showProgress: true),
+            child: RefreshControl(
+              onRefresh: () async => provider.getData(showProgress: true),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async =>
+                  provider.getData(showProgress: false, loadMore: true),
+              child: ListView.separated(
                 padding: EdgeInsets.only(
                   bottom: Dimen.padding.sp,
-                  top: Dimen.padding.sp,
+                  // top: Dimen.padding.sp,
                 ),
                 itemBuilder: (context, index) {
-                  HIghLowPeRes? low = provider.dataLowPERatio?[index];
-
-                  // if (up == null || up.isEmpty) {
-                  //   return const SizedBox();
-                  // }
-                  // return GainerLoserItem(
-                  //   data: up[index],
-                  //   index: index,
-                  // );
+                  HIghLowPeRes? low = provider.data?[index];
                   return HighLowPEItem(
                     index: index,
                     data: low,
@@ -88,12 +111,12 @@ class _LowPEStocksState extends State<LowPEStocks> {
                   );
                 },
                 // itemCount: up?.length ?? 0,
-                itemCount: provider.dataLowPERatio?.length ?? 0,
+                itemCount: provider.data?.length ?? 0,
               ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

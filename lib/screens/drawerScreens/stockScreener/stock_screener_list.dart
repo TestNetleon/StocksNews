@@ -27,7 +27,6 @@ class _StockScreenerListState extends State<StockScreenerList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // provider.resetFilter();
       StockScreenerProvider provider = context.read<StockScreenerProvider>();
       if (provider.data != null && provider.filterParams == null) {
         return;

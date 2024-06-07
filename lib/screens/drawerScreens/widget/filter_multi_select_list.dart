@@ -6,16 +6,18 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 class FilterMultiSelectListing extends StatefulWidget {
   final List<FiltersDataItem> items;
+  final List<String>? selectedData;
   final String? label;
   final Function(List<FiltersDataItem>) onSelected;
   final double paddingLeft;
 
   const FilterMultiSelectListing({
-    super.key,
+    required this.onSelected,
     required this.items,
     this.label,
-    required this.onSelected,
+    this.selectedData,
     this.paddingLeft = 0,
+    super.key,
   });
 
   @override
@@ -24,7 +26,20 @@ class FilterMultiSelectListing extends StatefulWidget {
 }
 
 class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
-  List<FiltersDataItem> _selected = [];
+  final List<FiltersDataItem> _selected = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.selectedData != null) {
+        for (var item in widget.items) {
+          if (widget.selectedData!.contains(item.value)) _selected.add(item);
+        }
+        setState(() {});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
