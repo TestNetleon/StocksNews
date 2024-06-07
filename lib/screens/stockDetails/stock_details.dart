@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details_base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/socket/socket.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -97,16 +98,31 @@ class _StockDetailsState extends State<StockDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      moreGradient: true,
-      drawer: const BaseDrawer(),
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
-      bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
-      body: StockDetailsBase(
-        symbol: widget.symbol,
-        inAppMsgId: widget.inAppMsgId,
-        notificationId: widget.notificationId,
-      ),
-    );
+    return PopScope(
+        canPop: true,
+        onPopInvoked: (didPop) async {
+          try {
+            if (popHome) {
+              Future.delayed(const Duration(milliseconds: 50), () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Tabs.path, (route) => false);
+                popHome = false;
+              });
+            }
+          } catch (e) {
+            //
+          }
+        },
+        child: BaseContainer(
+          moreGradient: true,
+          drawer: const BaseDrawer(),
+          appBar: const AppBarHome(isPopback: true, canSearch: true),
+          bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
+          body: StockDetailsBase(
+            symbol: widget.symbol,
+            inAppMsgId: widget.inAppMsgId,
+            notificationId: widget.notificationId,
+          ),
+        ));
   }
 }

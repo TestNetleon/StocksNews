@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
@@ -13,6 +14,7 @@ import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -60,6 +62,7 @@ import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
+import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
@@ -123,6 +126,8 @@ class Routes {
     IndicesIndex.path: (_) => const IndicesIndex(),
     MostActiveIndex.path: (_) => const MostActiveIndex(),
     WhatWeDoIndex.path: (_) => const WhatWeDoIndex(),
+    HomeSplash.path: (_) => const HomeSplash(),
+
     // ServerErrorWidget.path: (_) => const ServerErrorWidget(),
     // InternetErrorWidget.path: (_) => const InternetErrorWidget(),
     DividendsScreen.path: (_) => const DividendsScreen(),
@@ -157,6 +162,7 @@ class Routes {
 
     Utils().showLog(
         "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
+
     switch (routingData) {
       case TCandPolicy.path:
         return MaterialWithModalsPageRoute(
@@ -184,6 +190,7 @@ class Routes {
             // );
           },
         );
+
       case StockDetails.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
@@ -384,6 +391,7 @@ class Routes {
       // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
+      ChangeNotifierProvider(create: (_) => FilterProvider()),
     ];
   }
 }

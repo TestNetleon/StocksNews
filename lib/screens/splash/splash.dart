@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -11,12 +12,12 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import '../tabs/tabs.dart';
 
 class Splash extends StatefulWidget {
   static const String path = "splash";
@@ -89,7 +90,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     if (messageObject?.loading != null) {
       Const.loadingMessage = messageObject!.loading!;
     }
-
     if (user != null) {
       Utils().showLog("-------FROM SPLASH USER UPDATING---------");
       provider.setUser(user);
@@ -98,12 +98,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     _navigateToRequiredScreen();
   }
 
-  void _navigateToRequiredScreen() async {
+  Future _navigateToRequiredScreen() async {
     bool firstTime = await Preference.getFirstTime();
+
     if (firstTime) {
       if (welcome?.isEmpty == true || welcome == null) {
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        // Navigator.pushNamedAndRemoveUntil(
+        //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+        // Navigator.pushReplacementNamed(
+        //     navigatorKey.currentContext!, HomeSplash.path);
       } else {
         Navigator.pushAndRemoveUntil(
           navigatorKey.currentContext!,
@@ -114,9 +117,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         );
       }
     } else {
-      Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
+      // Navigator.pushNamedAndRemoveUntil(
+      //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+
+      Navigator.pushReplacementNamed(
+        navigatorKey.currentContext!,
+        HomeSplash.path,
+      );
     }
+
     // Navigator.pushNamedAndRemoveUntil(
     //     navigatorKey.currentContext!, Tabs.path, (route) => false);
   }

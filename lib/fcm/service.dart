@@ -54,7 +54,7 @@ class FirebaseApi {
 
   void handleMessage(RemoteMessage? message, {whenAppKilled = false}) {
     if (message == null) return;
-    Timer(Duration(seconds: Platform.isIOS ? 0 : 1), () {
+    Timer(Duration(seconds: Platform.isIOS ? 0 : 0), () {
       _navigateToRequiredScreen(
         message.data,
         whenAppKilled: whenAppKilled,
@@ -67,17 +67,12 @@ class FirebaseApi {
     String? slug = payload['slug'];
     String? notificationId = payload['notification_id'];
     try {
-      // String? type = payload["type"];
-      // String? slug = payload['slug'];
-      // String? notificationId = payload['notification_id'];
-
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,
           Tabs.path,
           (route) => false,
-          arguments: {"notificationId": notificationId},
         );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         Navigator.pushNamed(
@@ -178,16 +173,16 @@ class FirebaseApi {
       sound: true,
     );
 
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      Utils().showLog("getInitialMessage");
-      Future.delayed(const Duration(seconds: 4), () {
-        handleMessage(message, whenAppKilled: true);
-      });
-    });
+    // FirebaseMessaging.instance.getInitialMessage().then((message) {
+    //   Utils().showLog("getInitialMessage");
+    //   Future.delayed(const Duration(seconds: 4), () {
+    //     handleMessage(message, whenAppKilled: true);
+    //   });
+    // });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       Utils().showLog("OnMessageOpenedApp ==> ${message.data}");
-      Future.delayed(Duration(seconds: Platform.isIOS ? 0 : 1), () {
+      Future.delayed(Duration(seconds: Platform.isIOS ? 0 : 0), () {
         handleMessage(message);
       });
     });

@@ -122,6 +122,8 @@ class Apis {
   static const dividends = "/dividends";
   static const earnings = "/earnings";
   static const stockScreener = "/stock-screener";
+
+  static const filters = "/common-filters";
 }
 
 //
