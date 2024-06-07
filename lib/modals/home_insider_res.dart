@@ -246,7 +246,7 @@ class News {
   final String image;
   final String site;
   final String? url;
-  final String postDate;
+  final String? postDate;
   final String? postDateString;
   final String? slug;
   final List<DetailListType>? authors;
@@ -259,7 +259,7 @@ class News {
     required this.site,
     this.url,
     this.slug,
-    required this.postDate,
+    this.postDate,
     this.postDateString,
     this.authors,
   });

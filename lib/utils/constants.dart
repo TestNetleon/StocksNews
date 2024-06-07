@@ -16,7 +16,14 @@ enum StockStates { sector, industry }
 
 enum InsiderTradingName { company, reporter }
 
-enum NotificationType { dashboard, newsDetail, lpPage, blogDetail, register }
+enum NotificationType {
+  dashboard,
+  newsDetail,
+  lpPage,
+  blogDetail,
+  register,
+  review
+}
 
 enum BlogsType { blog, author, category, tag }
 

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -15,7 +15,8 @@ class ReviewAppPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = context.watch<UserProvider>();
+    // UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
 
     return Dialog(
       backgroundColor: ThemeColors.transparent,
@@ -43,7 +44,7 @@ class ReviewAppPopUp extends StatelessWidget {
                   ),
                   SpacerVertical(height: 30.sp),
                   Text(
-                    userProvider.drawerData?.rating?.title ??
+                    provider.homeSliderRes?.rating?.title ??
                         "Love Stocks.news?",
                     style: stylePTSansBold(
                       color: ThemeColors.background,
@@ -53,8 +54,10 @@ class ReviewAppPopUp extends StatelessWidget {
                   SpacerVertical(height: 20.sp),
                   Text(
                     textAlign: TextAlign.center,
-                    userProvider.drawerData?.rating?.description ??
-                        "Please recommend us to\nothers on the Play Store",
+                    provider.homeSliderRes?.rating?.description ??
+                        (Platform.isAndroid
+                            ? "Please recommend us to\nothers on the Play Store"
+                            : "Please recommend us to\nothers on the App Store"),
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
                       fontSize: 18.sp,
@@ -79,7 +82,7 @@ class ReviewAppPopUp extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 Navigator.pop(context);
-                openUrl(userProvider.drawerData?.rating?.url ??
+                openUrl(provider.homeSliderRes?.rating?.url ??
                     (Platform.isAndroid
                         ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
                         : 'https://apps.apple.com/us/app/stocks-news/id6476615803'));

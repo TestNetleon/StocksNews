@@ -152,7 +152,7 @@ class NewsItem extends StatelessWidget {
                               type: BlogsType.author),
                         ),
                         Text(
-                          "${news?.postDateString} ",
+                          " ${news?.postDateString} ",
                           style: stylePTSansRegular(
                               color: ThemeColors.greyText, fontSize: 13),
                         ),
@@ -170,7 +170,7 @@ class NewsItem extends StatelessWidget {
                   child: Text(
                     news?.site == "" || news?.site == null
                         ? "${news?.postDate}"
-                        : "Source - ${news?.site} | ${news?.postDate}",
+                        : "Source - ${news?.site} | ${news?.postDateString}",
                     style: stylePTSansRegular(
                         fontSize: 13, color: ThemeColors.greyText),
                   ),
@@ -435,8 +435,8 @@ class NewsItemSeparated extends StatelessWidget {
                 visible: showCategory,
                 child: Text(
                   news?.site == "" || news?.site == null
-                      ? "${news?.postDate}"
-                      : "Source - ${news?.site} | ${news?.postDate}",
+                      ? "${news?.postDateString}"
+                      : "Source - ${news?.site} | ${news?.postDateString}",
                   style: stylePTSansRegular(
                       fontSize: 13, color: ThemeColors.greyText),
                 ),

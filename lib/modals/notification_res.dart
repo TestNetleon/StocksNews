@@ -45,9 +45,11 @@ class NotificationData {
   final String? slug;
   final DateTime? updatedAt;
   final DateTime? createdAt;
+  final String? postDateString;
 
   NotificationData({
     required this.title,
+    this.postDateString,
     required this.type,
     required this.message,
     this.updatedAt,
@@ -62,6 +64,7 @@ class NotificationData {
         type: json["type"],
         slug: json['slug'],
         message: json["message"],
+        postDateString: json['published_date_string'],
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
@@ -74,6 +77,7 @@ class NotificationData {
   Map<String, dynamic> toJson() => {
         "title": title,
         "type": type,
+        'published_date_string': postDateString,
         "message": message,
         "image": image,
         'slug': slug,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
@@ -85,10 +84,10 @@ class NotificationsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String date =
-        DateFormat("MMM dd, yyyy").format(data.createdAt ?? DateTime.now());
+    // String date =
+    //     DateFormat("MMM dd, yyyy").format(data.createdAt ?? DateTime.now());
 
-    String time = DateFormat("h:mm a").format(data.createdAt ?? DateTime.now());
+    // String time = DateFormat("h:mm a").format(data.createdAt ?? DateTime.now());
     return InkWell(
       onTap: () => _onTap(context),
       // onTap: data.type == "dashboard"
@@ -173,7 +172,7 @@ class NotificationsItem extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "$date at $time",
+                  data.postDateString ?? "",
                   style: stylePTSansRegular(
                       fontSize: 12, color: ThemeColors.greyText),
                 ),

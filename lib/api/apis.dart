@@ -125,6 +125,8 @@ class Apis {
 
   static const filters = "/common-filters";
   static const drawerData = "/drawer-data";
+
+  static const blogCategory = "/blog-category-list";
 }
 
 //

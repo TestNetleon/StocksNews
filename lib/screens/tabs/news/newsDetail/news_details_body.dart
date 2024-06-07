@@ -533,10 +533,10 @@ class ListAlignment extends StatelessWidget {
             list1?.isEmpty == true && list2?.isNotEmpty == true
                 ? " $date"
                 : list2?.isEmpty == true && list1?.isNotEmpty == true
-                    ? " | $date"
+                    ? "  $date"
                     : list1?.isEmpty == true && list2?.isEmpty == true
                         ? "$date"
-                        : " | $date",
+                        : "  $date",
             style: stylePTSansRegular(
               color: ThemeColors.greyText,
               fontSize: 13,
