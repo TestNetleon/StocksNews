@@ -63,6 +63,7 @@ class Extra {
   final String? apiKeyFMP;
   String? loginText, signUpText;
   final String? disclaimer;
+  final MessageRes? messageObject;
 
   Extra({
     this.search,
@@ -90,6 +91,7 @@ class Extra {
     this.appUpdateMsg,
     this.apiKeyFMP,
     this.disclaimer,
+    this.messageObject,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -140,6 +142,9 @@ class Extra {
         appUpdateMsg: json["app_update_msg"],
         apiKeyFMP: json["api_key"],
         disclaimer: json["footer_disclaimer"],
+        messageObject: json["message"] == null
+            ? null
+            : MessageRes.fromJson(json["message"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -179,6 +184,27 @@ class Extra {
         "app_update_msg": appUpdateMsg,
         "api_key": apiKeyFMP,
         "footer_disclaimer": disclaimer,
+        "message": messageObject?.toJson(),
+      };
+}
+
+class MessageRes {
+  final String? error;
+  final String? loading;
+
+  MessageRes({
+    this.error,
+    this.loading,
+  });
+
+  factory MessageRes.fromJson(Map<String, dynamic> json) => MessageRes(
+        error: json["error"],
+        loading: json["loading"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "error": error,
+        "loading": loading,
       };
 }
 

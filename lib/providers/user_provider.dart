@@ -36,6 +36,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   UserRes? get user => _user;
   bool isKeyboardVisible = false;
+  // MessageRes? _messageObject;
+  // MessageRes? get messageObject => _messageObject;
 
   void setStatus(status) {
     _status = status;
@@ -47,6 +49,14 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     isKeyboardVisible = bottomInset > 0;
     notifyListeners();
   }
+
+  // void setMessageObject() async {
+  //   MessageRes? messageObject = await Preference.getLocalDataBase();
+  //   if (messageObject?.error != null) {
+  //     Const.errSomethingWrong = messageObject!.error!;
+  //   }
+  //   notifyListeners();
+  // }
 
   void setUser(UserRes user) {
     _user = user;

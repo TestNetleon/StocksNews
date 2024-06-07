@@ -98,6 +98,8 @@ class Apis {
   static const sectorChart = "/sector-chart";
   static const trendingIndustryChart = "/trending-industries-chart";
   static const gainerLoser = "/gainer_loser";
+  static const breakoutStocks = "/breakout-stocks";
+
   static const socialTrending = "/social-trending";
   static const featuredNews = "/featured-news";
   static const getOtherData = "/stock-other-details";

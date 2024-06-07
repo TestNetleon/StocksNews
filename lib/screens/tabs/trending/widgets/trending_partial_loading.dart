@@ -38,7 +38,7 @@ class TrendingPartialLoading extends StatelessWidget {
               height: 100,
             ),
             Text(
-              "We are preparing data for you. Please wait...",
+              Const.loadingMessage,
               textAlign: TextAlign.center,
               style: styleGeorgiaRegular(
                 color: ThemeColors.accent,

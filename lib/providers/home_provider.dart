@@ -29,6 +29,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class HomeProvider extends ChangeNotifier with AuthProviderBase {
   // HomeRes? _home;
@@ -235,6 +236,8 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         signUpTxt = response.extra?.signUpText;
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
+        Preference.saveLocalDataBase(response.extra.messageObject);
+
         if (response.extra != null && response.extra is Extra) {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
           _checkForNewVersion(response.extra as Extra);
@@ -604,6 +607,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _statusSlider = Status.loaded;
       notifyListeners();
       if (response.status) {
+        Preference.saveLocalDataBase(response.extra.message);
+
+        MessageRes? localDataBase = await Preference.getLocalDataBase();
+        Utils().showLog("localDataBase  =========${localDataBase?.error}");
+
         if ((response.extra as Extra).maintenance != null) return true;
       }
       return false;

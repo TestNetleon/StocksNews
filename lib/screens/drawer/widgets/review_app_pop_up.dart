@@ -25,7 +25,7 @@ class ReviewAppPopUp extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: EdgeInsets.only(left: 10.sp, right: 10.sp, top: 10.sp),
+              padding: EdgeInsets.only(left: 10.sp, right: 10.sp, top: 30.sp),
               decoration: BoxDecoration(
                 color: ThemeColors.white,
                 borderRadius: BorderRadius.circular(10.sp),
@@ -34,43 +34,38 @@ class ReviewAppPopUp extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    Images.ratingIcon,
-                    height: 50.sp,
-                    color: ThemeColors.ratingIconColor,
-                  ),
-                  Image.asset(
-                    Images.stockIcon,
-                    height: 50.sp,
+                    Images.appRating,
+                    height: 150.sp,
                   ),
                   SpacerVertical(height: 30.sp),
                   Text(
-                    "Stocks News App?",
+                    "Love Stocks.news?",
                     style: stylePTSansBold(
                       color: ThemeColors.background,
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
-                  SpacerVertical(height: 30.sp),
+                  SpacerVertical(height: 20.sp),
                   Text(
                     "Please recommend us to",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
                   Text(
                     "other on the App Store",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                     ),
                   ),
-                  SpacerVertical(height: 30.sp),
+                  SpacerVertical(height: 20.sp),
                 ],
               ),
             ),
             Divider(
-              color: ThemeColors.greyBorder,
+              color: ThemeColors.border,
               height: 1.sp,
             ),
             SpacerVertical(height: 10.sp),
@@ -109,7 +104,7 @@ class ReviewAppPopUp extends StatelessWidget {
             ),
             SpacerVertical(height: 10.sp),
             Divider(
-              color: ThemeColors.greyBorder,
+              color: ThemeColors.border,
               height: 1.sp,
             ),
             SpacerVertical(height: 10.sp),

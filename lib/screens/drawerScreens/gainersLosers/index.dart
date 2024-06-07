@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/break_out_item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -42,13 +44,22 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
         context
             .read<MoreStocksProvider>()
             .getGainersLosers(showProgress: true, type: widget.type.name);
-      } else {
+      } else if (index == 1) {
         if (provider.losers?.data != null) {
           return;
         }
+
         context
             .read<MoreStocksProvider>()
             .getLosers(showProgress: true, type: "losers");
+      } else {
+        if (provider.dataBreakoutStocks != null) {
+          return;
+        }
+
+        context
+            .read<MoreStocksProvider>()
+            .getBreakoutStocks(showProgress: true);
       }
     }
   }
@@ -77,6 +88,7 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
     MoreStocksProvider provider = context.watch<MoreStocksProvider>();
     List<GainersLosersDataRes>? gainers = provider.gainersLosers?.data;
     List<GainersLosersDataRes>? losers = provider.losers?.data;
+    List<BreakoutStocksRes>? breakoutStocks = provider.dataBreakoutStocks;
 
     return BaseContainer(
       appBar: const AppBarHome(
@@ -87,9 +99,13 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
         padding: const EdgeInsets.fromLTRB(
             Dimen.padding, Dimen.padding, Dimen.padding, 0),
         child: CustomTabContainerNEW(
-          scrollable: false,
+          scrollable: true,
           tabsPadding: EdgeInsets.zero,
-          tabs: const ["Today's Gainers", " Today's Losers"],
+          tabs: const [
+            "Today's Gainers",
+            " Today's Losers",
+            "Today's Breakout Stocks"
+          ],
           onChange: (index) => onChange(index),
           widgets: [
             BaseUiContainer(
@@ -180,6 +196,48 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
                     );
                   },
                   itemCount: losers?.length ?? 0,
+                ),
+              ),
+            ),
+            BaseUiContainer(
+              error: provider.errorBreakoutStocks,
+              hasData: breakoutStocks != null && breakoutStocks.isNotEmpty,
+              isLoading: provider.isLoadingBreakOut,
+              errorDispCommon: true,
+              onRefresh: () => provider.getBreakoutStocks(showProgress: true),
+              child: RefreshControl(
+                onRefresh: () async =>
+                    provider.getBreakoutStocks(showProgress: true),
+                canLoadMore: provider.canLoadMoreBreakOut,
+                onLoadMore: () async =>
+                    provider.getBreakoutStocks(loadMore: true),
+                child: ListView.separated(
+                  padding: EdgeInsets.only(
+                      bottom: Dimen.padding.sp, top: Dimen.padding.sp),
+                  itemBuilder: (context, index) {
+                    if (breakoutStocks == null || breakoutStocks.isEmpty) {
+                      return const SizedBox();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (index == 0)
+                          HtmlTitle(
+                              subTitle: provider.extraUpLosers?.subTitle ?? ""),
+                        BreakOutStocksItem(
+                          data: breakoutStocks[index],
+                          index: index,
+                        ),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 12.sp,
+                    );
+                  },
+                  itemCount: breakoutStocks?.length ?? 0,
                 ),
               ),
             ),

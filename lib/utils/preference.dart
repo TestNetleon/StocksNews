@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,5 +53,18 @@ class Preference {
   static void saveLocation(address) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("@location", address ?? "");
+  }
+
+  static void saveLocalDataBase(response) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("@localDataBase", jsonEncode(response));
+  }
+
+  static Future<MessageRes?> getLocalDataBase() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final localDataBaseString = preferences.getString("@localDataBase");
+    return localDataBaseString == null
+        ? null
+        : MessageRes.fromJson(jsonDecode(localDataBaseString));
   }
 }

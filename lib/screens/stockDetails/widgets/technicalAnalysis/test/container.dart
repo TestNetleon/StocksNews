@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/technicalAnalysis/widgets/summary.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_tab.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -123,7 +124,7 @@ class _TEstTechnicalAnalysisState extends State<TEstTechnicalAnalysis>
                       const SpacerHorizontal(width: 5),
                       Flexible(
                         child: Text(
-                          "We are preparing data for you. Please wait...",
+                          Const.loadingMessage,
                           textAlign: TextAlign.center,
                           style: stylePTSansRegular(color: ThemeColors.accent),
                         ),

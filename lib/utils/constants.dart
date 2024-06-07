@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+
 import 'package:stocks_news_new/utils/utils.dart';
 
 enum RequestType { get, post }
@@ -85,6 +86,7 @@ class Images {
   static const linkedin = "assets/images/linkedin_share.png";
   static const telegram = "assets/images/telegram_share.png";
   static const ratingIcon = "assets/images/rating_icon.png";
+  static const appRating = "assets/images/app_rating.png";
 }
 
 class AudioFiles {
@@ -119,8 +121,10 @@ class Const {
   // static const String dateFormat = "yyyy-MM-dd";
   // static const String dateFormatDisplay = "dd-MMM-yyyy";
   // static const String submit = "Submit";
-  static const String errSomethingWrong =
+  static String errSomethingWrong =
       "Oops! We encountered a hiccup. Please try again.";
+  static String loadingMessage =
+      "We are preparing data for you. Please wait...";
   static const String errNoRecord = "No record found.";
   static const String noInternet = "Please check your internet connection.";
   static const String timedOut = "Request timed out.";

@@ -20,7 +20,7 @@ class Loading extends StatelessWidget {
           ),
           Text(
             textAlign: TextAlign.center,
-            text ?? "We are preparing data for you. Please wait...",
+            text ?? Const.loadingMessage,
             style: styleGeorgiaRegular(color: ThemeColors.accent),
           ),
         ],

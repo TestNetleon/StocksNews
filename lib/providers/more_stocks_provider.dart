@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/modals/more_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
@@ -26,11 +27,17 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   List<MoreStocksRes>? _data;
   List<MoreStocksRes>? get data => _data;
 
+  List<BreakoutStocksRes>? _dataBreakoutStocks;
+  List<BreakoutStocksRes>? get dataBreakoutStocks => _dataBreakoutStocks;
+
   bool get isLoading => _status == Status.loading;
   bool get canLoadMore => _page < (_gainersLosers?.lastPage ?? 1);
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;
+  String? _errorBreakoutStocks;
+  String? get errorBreakoutStocks =>
+      _errorBreakoutStocks ?? Const.errSomethingWrong;
 
   int get openIndex => _openIndex;
 
@@ -41,10 +48,15 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   Status get statusLosers => _statusLosers;
 
   int _pageLosers = 1;
+  int _pageBreakOut = 1;
+
   int _openIndexLosers = -1;
 
   List<MoreStocksRes>? _dataLosers;
   List<MoreStocksRes>? get dataLosers => _dataLosers;
+  bool get isLoadingBreakOut => _statusLosers == Status.loading;
+  bool get canLoadMoreBreakOut =>
+      _pageBreakOut < (_extraBreakOutStocks?.totalPages ?? 1);
 
   bool get isLoadingLosers => _statusLosers == Status.loading;
   bool get canLoadMoreLosers => _pageLosers < (_losers?.lastPage ?? 1);
@@ -55,6 +67,8 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   int get openIndexLosers => _openIndexLosers;
   Extra? _extraUpGainers;
   Extra? get extraUpGainers => _extraUpGainers;
+  Extra? _extraBreakOutStocks;
+  Extra? get extraBreakOutStocks => _extraBreakOutStocks;
   Extra? _extraUpLosers;
   Extra? get extraUpLosers => _extraUpLosers;
 
@@ -128,6 +142,57 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   //     setStatus(Status.loaded);
   //   }
   // }
+
+  Future getBreakoutStocks({showProgress = false, loadMore = false}) async {
+    _openIndex = -1;
+    if (loadMore) {
+      _pageBreakOut++;
+      setStatusLosers(Status.loadingMore);
+    } else {
+      _extraBreakOutStocks = null;
+
+      _pageBreakOut = 1;
+      setStatusLosers(Status.loading);
+    }
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "page": "$_pageBreakOut",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.breakoutStocks,
+        request: request,
+        showProgress: showProgress,
+      );
+
+      if (response.status) {
+        _errorBreakoutStocks = null;
+        if (_pageBreakOut == 1) {
+          _dataBreakoutStocks =
+              breakoutStocksResFromJson(jsonEncode(response.data));
+          _extraBreakOutStocks =
+              response.extra is Extra ? response.extra : null;
+        } else {
+          _dataBreakoutStocks
+              ?.addAll(breakoutStocksResFromJson(jsonEncode(response.data)));
+        }
+      } else {
+        if (_pageBreakOut == 1) {
+          _errorBreakoutStocks = response.message;
+          _dataBreakoutStocks = null;
+        }
+      }
+      setStatusLosers(Status.loaded);
+    } catch (e) {
+      _dataBreakoutStocks = null;
+      _errorBreakoutStocks = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusLosers(Status.loaded);
+    }
+  }
 
   Future getLosers({
     showProgress = false,
