@@ -195,6 +195,9 @@ class IndicesProvider extends ChangeNotifier {
         onRefresh: onRefreshIndicesData,
       );
       if (response.status) {
+        _extraUp = response.extra is Extra ? response.extra : null;
+        notifyListeners();
+
         // _extraUp = response.extra;
         // notifyListeners();
         // title = response.extra?.title;
@@ -209,6 +212,7 @@ class IndicesProvider extends ChangeNotifier {
                 dowThirtyResFromJson(jsonEncode(response.data));
           } else {
             _data = indicesResFromJson(jsonEncode(response.data));
+            Utils().showLog("----------${_data?.length}");
           }
 
           // _data =  indicesResFromJson(jsonEncode(response.data));
@@ -221,11 +225,12 @@ class IndicesProvider extends ChangeNotifier {
                 ?.addAll(dowThirtyResFromJson(jsonEncode(response.data)));
           } else {
             _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
+            Utils().showLog("----------${_data?.length}");
           }
 
           // _data?.addAll(indicesResFromJson(jsonEncode(response.data)));
         }
-        _extraUp = response.extra is Extra ? response.extra : null;
+
         notifyListeners();
       } else {
         if (_page == 1) {
