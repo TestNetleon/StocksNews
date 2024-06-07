@@ -126,26 +126,40 @@ class IndicesData extends StatelessWidget {
         child: ListView.separated(
           padding: EdgeInsets.symmetric(vertical: 10.sp),
           itemBuilder: (context, index) {
-            IndicesRes? data = provider.data?[index];
-            Result? dataDowThirtyStocks = provider.dataDowThirtyStocks?[index];
-            if (data == null) {
-              return const SizedBox();
-            }
+            if (provider.typeDowThirty || provider.typeSpFifty) {
+              Result? dataDowThirtyStocks =
+                  provider.dataDowThirtyStocks?[index];
+              if (dataDowThirtyStocks == null) {
+                return const SizedBox();
+              }
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0)
-                  HtmlTitle(
-                    subTitle: provider.subTitle,
-                  ),
-                IndicesItem(
-                    data: provider.typeDowThirty || provider.typeSpFifty
-                        ? dataDowThirtyStocks
-                        : data,
-                    index: index),
-              ],
-            );
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (index == 0)
+                    HtmlTitle(
+                      subTitle: provider.subTitle,
+                    ),
+                  IndicesItem(data: dataDowThirtyStocks, index: index),
+                ],
+              );
+            } else {
+              IndicesRes? data = provider.data?[index];
+              if (data == null) {
+                return const SizedBox();
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (index == 0)
+                    HtmlTitle(
+                      subTitle: provider.subTitle,
+                    ),
+                  IndicesItem(data: data, index: index),
+                ],
+              );
+            }
           },
           separatorBuilder: (context, index) {
             if (provider.data == null) {
