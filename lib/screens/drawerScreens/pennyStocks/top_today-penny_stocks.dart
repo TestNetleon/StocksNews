@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/penny_stocks.dart';
-import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
+import 'package:stocks_news_new/providers/top_today_penny_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
@@ -25,17 +25,18 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<PennyStocksProvider>().dataTopTodays != null) {
+      if (context.read<TopTodayPennyStocksProviders>().data != null) {
         return;
       }
-      context.read<PennyStocksProvider>().getData(type: 3);
+      context.read<TopTodayPennyStocksProviders>().getData(type: 3);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    PennyStocksProvider provider = context.watch<PennyStocksProvider>();
-    List<PennyStocksRes>? data = provider.dataTopTodays;
+    TopTodayPennyStocksProviders provider =
+        context.watch<TopTodayPennyStocksProviders>();
+    List<PennyStocksRes>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -61,11 +62,20 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (index == 0) HtmlTitle(subTitle: provider.extra?.subTitle),
+                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
                 PennyStocksItem(
                   data: data[index],
-                  index: index,
-                ),
+                  isOpen: provider.openIndex == index,
+                  onTap: () {
+                    provider.setOpenIndex(
+                      provider.openIndex == index ? -1 : index,
+                    );
+                  },
+                )
+                // PennyStocksItem(
+                //   data: data[index],
+                //   index: index,
+                // ),
               ],
             );
           },

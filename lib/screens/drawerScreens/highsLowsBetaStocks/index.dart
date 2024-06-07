@@ -37,7 +37,7 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
           ],
           widgets: const [
             HighBetaStocks(),
-            LowBetaStocks(),
+            LowsBetaStocks(),
             NegativeBetaStocks(),
           ],
         ),

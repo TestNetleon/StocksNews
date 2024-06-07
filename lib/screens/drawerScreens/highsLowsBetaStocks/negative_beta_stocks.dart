@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
-import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
+import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
@@ -23,21 +23,18 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<HighLowBetaStocksProvider>().dataNegativeBetaStocks !=
-          null) {
+      if (context.read<NegativeBetaStocksProvider>().data != null) {
         return;
       }
-      context
-          .read<HighLowBetaStocksProvider>()
-          .getHighLowNegativeBetaStocks(type: 3);
+      context.read<NegativeBetaStocksProvider>().getNegativeBetaStocks(type: 3);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    HighLowBetaStocksProvider provider =
-        context.watch<HighLowBetaStocksProvider>();
-    List<HighLowBetaStocksRes>? data = provider.dataNegativeBetaStocks;
+    NegativeBetaStocksProvider provider =
+        context.watch<NegativeBetaStocksProvider>();
+    List<HighLowBetaStocksRes>? data = provider.data;
 
     return BaseUiContainer(
       error: provider.error,
@@ -45,12 +42,12 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getHighLowNegativeBetaStocks(type: 3),
+      onRefresh: () => provider.getNegativeBetaStocks(type: 3),
       child: RefreshControl(
-        onRefresh: () async => provider.getHighLowNegativeBetaStocks(type: 3),
+        onRefresh: () async => provider.getNegativeBetaStocks(type: 3),
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async =>
-            provider.getHighLowNegativeBetaStocks(loadMore: true, type: 3),
+            provider.getNegativeBetaStocks(loadMore: true, type: 3),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,
@@ -66,8 +63,17 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
                 if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
                 HighLowBetaStocksItem(
                   data: data[index],
-                  index: index,
-                ),
+                  isOpen: provider.openIndex == index,
+                  onTap: () {
+                    provider.setOpenIndex(
+                      provider.openIndex == index ? -1 : index,
+                    );
+                  },
+                )
+                // HighLowBetaStocksItem(
+                //   data: data[index],
+                //   index: index,
+                // ),
               ],
             );
           },

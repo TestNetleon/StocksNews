@@ -17,17 +17,21 @@ import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_down_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_provider.dart';
-import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
+import 'package:stocks_news_new/providers/high_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
+import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
+import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
+import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
-import 'package:stocks_news_new/providers/penny_stocks_provider.dart';
+import 'package:stocks_news_new/providers/most_active_penny_stocks_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
@@ -35,6 +39,7 @@ import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
+import 'package:stocks_news_new/providers/top_today_penny_stocks_provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 //
@@ -371,9 +376,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => NewsCategoryProvider()),
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
       ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
-      ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
+      // ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
-      ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
+      // ChangeNotifierProvider(create: (_) => HighLowBetaStocksProvider()),
       ChangeNotifierProvider(create: (_) => IndicesProvider()),
       ChangeNotifierProvider(create: (_) => MostActiveProvider()),
       ChangeNotifierProvider(create: (_) => WhatWeDoProvider()),
@@ -385,7 +390,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => StockScreenerProvider()),
       ChangeNotifierProvider(create: (_) => PlaidProvider()),
       ChangeNotifierProvider(create: (_) => CongressionalProvider()),
-      ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
+      // ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
       ChangeNotifierProvider(create: (_) => FilterProvider()),
@@ -393,6 +398,13 @@ class Routes {
       ChangeNotifierProvider(create: (_) => GapUpProvider()),
       ChangeNotifierProvider(create: (_) => GapDownProvider()),
       ChangeNotifierProvider(create: (_) => BlogProviderNew()),
+      ChangeNotifierProvider(create: (_) => HighBetaStocksProvider()),
+      ChangeNotifierProvider(create: (_) => LowsBetaStocksProvider()),
+      ChangeNotifierProvider(create: (_) => NegativeBetaStocksProvider()),
+      ChangeNotifierProvider(create: (_) => MostActivePennyStocksProviders()),
+      ChangeNotifierProvider(create: (_) => TopTodayPennyStocksProviders()),
+      ChangeNotifierProvider(create: (_) => UnusualTradingVolumeProvider()),
+      ChangeNotifierProvider(create: (_) => MostVolatileStocksProvider()),
     ];
   }
 }
