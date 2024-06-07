@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -74,14 +73,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   void _getDeviceType() async {
     var deviceType = getDeviceType(MediaQuery.of(context).size);
-    if (deviceType == DeviceScreenType.tablet) {
-      isPhone = false;
-    } else if (deviceType == DeviceScreenType.mobile) {
-      isPhone = true;
-    }
 
-    UserProvider provider = context.read<UserProvider>();
-    UserRes? user = await Preference.getUser();
     MessageRes? messageObject = await Preference.getLocalDataBase();
 
     if (messageObject?.error != null) {
@@ -90,6 +82,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     if (messageObject?.loading != null) {
       Const.loadingMessage = messageObject!.loading!;
     }
+
+    if (deviceType == DeviceScreenType.tablet) {
+      isPhone = false;
+    } else if (deviceType == DeviceScreenType.mobile) {
+      isPhone = true;
+    }
+
+    UserProvider provider = context.read<UserProvider>();
+    UserRes? user = await Preference.getUser();
     if (user != null) {
       Utils().showLog("-------FROM SPLASH USER UPDATING---------");
       provider.setUser(user);
