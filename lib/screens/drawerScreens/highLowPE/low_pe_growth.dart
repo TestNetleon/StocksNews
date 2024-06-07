@@ -45,13 +45,13 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getData(showProgress: true, type: "low"),
+      onRefresh: () => provider.getData(showProgress: true, type: "lowGrowth"),
       child: RefreshControl(
         onRefresh: () async =>
-            provider.getData(showProgress: true, type: "low"),
+            provider.getData(showProgress: true, type: "lowGrowth"),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () async =>
-            provider.getData(showProgress: false, type: "low", loadMore: true),
+        onLoadMore: () async => provider.getData(
+            showProgress: false, type: "lowGrowth", loadMore: true),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

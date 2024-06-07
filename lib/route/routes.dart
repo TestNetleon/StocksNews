@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
@@ -15,7 +14,8 @@ import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
+import 'package:stocks_news_new/providers/gap_down_provider.dart';
+import 'package:stocks_news_new/providers/gap_up_provider.dart';
 import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
@@ -369,7 +369,6 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TrendingIndustriesProvider()),
       ChangeNotifierProvider(create: (_) => NewsCategoryProvider()),
       ChangeNotifierProvider(create: (_) => LowPriceStocksProvider()),
-      ChangeNotifierProvider(create: (_) => GapUpDownProvider()),
       ChangeNotifierProvider(create: (_) => HighLowPeProvider()),
       ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
@@ -377,7 +376,6 @@ class Routes {
       ChangeNotifierProvider(create: (_) => IndicesProvider()),
       ChangeNotifierProvider(create: (_) => MostActiveProvider()),
       ChangeNotifierProvider(create: (_) => WhatWeDoProvider()),
-
       ChangeNotifierProvider(create: (_) => TermsAndPolicyProvider()),
       ChangeNotifierProvider(create: (_) => ContactUsProvider()),
       ChangeNotifierProvider(create: (_) => FaqProvide()),
@@ -385,13 +383,14 @@ class Routes {
       ChangeNotifierProvider(create: (_) => EarningsProvider()),
       ChangeNotifierProvider(create: (_) => StockScreenerProvider()),
       ChangeNotifierProvider(create: (_) => PlaidProvider()),
-
       ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
-
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
       ChangeNotifierProvider(create: (_) => FilterProvider()),
+
+      ChangeNotifierProvider(create: (_) => GapUpProvider()),
+      ChangeNotifierProvider(create: (_) => GapDownProvider()),
     ];
   }
 }

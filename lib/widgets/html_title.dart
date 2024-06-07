@@ -9,6 +9,7 @@ class HtmlTitle extends StatelessWidget {
   final String? title;
   final TextStyle? style;
   final String? subTitle;
+  final EdgeInsets? margin;
   final Function()? onFilterClick;
 
   const HtmlTitle({
@@ -17,12 +18,13 @@ class HtmlTitle extends StatelessWidget {
     super.key,
     this.subTitle,
     this.onFilterClick,
+    this.margin,
   });
 //
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10.sp),
+      margin: margin ?? EdgeInsets.only(bottom: 10.sp),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

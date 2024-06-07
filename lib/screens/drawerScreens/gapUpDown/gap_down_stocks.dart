@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gap_up_res.dart';
-import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/gap_down_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
@@ -23,48 +27,84 @@ class _GapDownStocksState extends State<GapDownStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<GapUpDownProvider>().dataDown != null) {
+      GapDownProvider provider = context.read<GapDownProvider>();
+      if (provider.data != null) {
         return;
       }
-      context.read<GapUpDownProvider>().getGapDownStocks();
+      provider.resetFilter();
+      provider.getGapDownStocks();
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null) {
+      await context.read<FilterProvider>().getFilterData();
+    }
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Stock Screener",
+      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<GapDownProvider>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    GapUpDownProvider provider = context.watch<GapUpDownProvider>();
-    List<GapUpRes>? data = provider.dataDown;
-    return BaseUiContainer(
-      error: provider.errorDown,
-      hasData: data != null && data.isNotEmpty,
-      isLoading: provider.isLoadingDown,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getGapDownStocks(),
-      child: RefreshControl(
-        onRefresh: () async => provider.getGapDownStocks(),
-        canLoadMore: provider.canLoadMoreDown,
-        onLoadMore: () async => provider.getGapDownStocks(loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                UpDownStocksItem(data: data![index], index: index),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(color: ThemeColors.greyBorder, height: 20.sp);
-          },
-          itemCount: data?.length ?? 0,
+    GapDownProvider provider = context.watch<GapDownProvider>();
+    List<GapUpRes>? data = provider.data;
+    return Column(
+      children: [
+        HtmlTitle(
+          subTitle: provider.extra?.subTitle ?? "",
+          onFilterClick: _onFilterClick,
         ),
-      ),
+        if (provider.filterParams != null)
+          FilterUiValues(
+            params: provider.filterParams,
+            onDeleteExchange: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
+          ),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: data != null && data.isNotEmpty,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getGapDownStocks(),
+            child: RefreshControl(
+              onRefresh: () async => provider.getGapDownStocks(),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async => provider.getGapDownStocks(loadMore: true),
+              child: ListView.separated(
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  return UpDownStocksItem(
+                    data: data![index],
+                    isOpen: provider.openIndex == index,
+                    onTap: () {
+                      provider.setOpenIndex(
+                        provider.openIndex == index ? -1 : index,
+                      );
+                    },
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(color: ThemeColors.greyBorder, height: 20.sp);
+                },
+                itemCount: data?.length ?? 0,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

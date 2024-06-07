@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gap_up_res.dart';
-import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -13,11 +11,15 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class UpDownStocksItem extends StatelessWidget {
   final GapUpRes data;
-  final int index;
+  // final int index;
+  final bool isOpen;
+  final Function() onTap;
 //
   const UpDownStocksItem({
     required this.data,
-    required this.index,
+    // required this.index,
+    required this.isOpen,
+    required this.onTap,
     super.key,
   });
 
@@ -31,7 +33,7 @@ class UpDownStocksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GapUpDownProvider provider = context.watch<GapUpDownProvider>();
+    // GapUpDownProvider provider = context.watch<GapUpDownProvider>();
 
     return Column(
       children: [
@@ -101,11 +103,12 @@ class UpDownStocksItem extends StatelessWidget {
             ),
             const SpacerHorizontal(width: 10),
             InkWell(
-              onTap: () {
-                provider.setOpenIndex(
-                  provider.openIndex == index ? -1 : index,
-                );
-              },
+              onTap: onTap,
+              // onTap: () {
+              //   provider.setOpenIndex(
+              //     provider.openIndex == index ? -1 : index,
+              //   );
+              // },
               child: Container(
                 decoration: const BoxDecoration(
                   color: ThemeColors.accent,
@@ -113,7 +116,8 @@ class UpDownStocksItem extends StatelessWidget {
                 margin: EdgeInsets.only(left: 8.sp),
                 padding: const EdgeInsets.all(3),
                 child: Icon(
-                  provider.openIndex == index
+                  // provider.openIndex == index
+                  isOpen
                       ? Icons.arrow_upward_rounded
                       : Icons.arrow_downward_rounded,
                   size: 16,
@@ -125,10 +129,13 @@ class UpDownStocksItem extends StatelessWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 150),
           child: Container(
-            height: provider.openIndex == index ? null : 0,
+            // height: provider.openIndex == index ? null : 0,
+            height: isOpen ? null : 0,
             margin: EdgeInsets.only(
-              top: provider.openIndex == index ? 10.sp : 0,
-              bottom: provider.openIndex == index ? 10.sp : 0,
+              // top: provider.openIndex == index ? 10.sp : 0,
+              top: isOpen ? 10.sp : 0,
+              // bottom: provider.openIndex == index ? 10.sp : 0,
+              bottom: isOpen ? 10.sp : 0,
             ),
             child: Column(
               children: [

@@ -45,13 +45,13 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
       isLoading: provider.isLoading,
       errorDispCommon: true,
       showPreparingText: true,
-      onRefresh: () => provider.getData(showProgress: true, type: "high"),
+      onRefresh: () => provider.getData(showProgress: true, type: "highGrowth"),
       child: RefreshControl(
         onRefresh: () async =>
-            provider.getData(showProgress: true, type: "high"),
+            provider.getData(showProgress: true, type: "highGrowth"),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () async =>
-            provider.getData(showProgress: false, type: "high", loadMore: true),
+        onLoadMore: () async => provider.getData(
+            showProgress: false, type: "highGrowth", loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.only(
             bottom: Dimen.padding.sp,

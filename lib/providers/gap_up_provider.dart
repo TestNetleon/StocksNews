@@ -1,0 +1,128 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/gap_up_res.dart';
+import 'package:stocks_news_new/providers/auth_provider_base.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
+
+class GapUpProvider extends ChangeNotifier with AuthProviderBase {
+  int _openIndex = -1;
+  int? get openIndex => _openIndex;
+
+  // ************* GAP Up **************** //
+  Status _status = Status.ideal;
+  List<GapUpRes>? _data;
+  String? _error;
+  int _page = 1;
+  Extra? _extra;
+
+  List<GapUpRes>? get data => _data;
+  Extra? get extra => _extra;
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
+  String? get error => _error ?? Const.errSomethingWrong;
+  bool get isLoading => _status == Status.loading;
+
+  FilteredParams? _filterParams;
+  FilteredParams? get filterParams => _filterParams;
+
+  void resetFilter() {
+    _filterParams = null;
+    _page = 1;
+    notifyListeners();
+  }
+
+  void applyFilter(FilteredParams? params) {
+    _filterParams = params;
+    _page = 1;
+    notifyListeners();
+    getGapUpStocks();
+  }
+
+  void exchangeFilter(String item) {
+    _filterParams!.exchange_name!.remove(item);
+    _page = 1;
+    notifyListeners();
+    getGapUpStocks();
+  }
+
+  void setStatusUp(status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
+
+  Future onRefreshGapUp() async {
+    getGapUpStocks();
+  }
+
+  Future getGapUpStocks({loadMore = false}) async {
+    if (loadMore) {
+      _page++;
+      setStatusUp(Status.loadingMore);
+    } else {
+      _page = 1;
+      setStatusUp(Status.loading);
+    }
+    _openIndex = -1;
+    // _extraDown = null;
+    // _extraUp = null;
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "page": "$_page",
+        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.gapUpStocks,
+        request: request,
+        showProgress: false,
+        onRefresh: onRefreshGapUp,
+      );
+
+      if (response.status) {
+        _error = null;
+        if (_page == 1) {
+          _data = gapUpResFromJson(jsonEncode(response.data));
+          _extra = response.extra is Extra ? response.extra : null;
+        } else {
+          _data?.addAll(gapUpResFromJson(jsonEncode(response.data)));
+        }
+      } else {
+        if (_page == 1) {
+          _data = null;
+          _error = response.message;
+          // showErrorMessage(message: response.message);
+        }
+      }
+      setStatusUp(Status.loaded);
+    } catch (e) {
+      _data = null;
+      Utils().showLog(e.toString());
+      setStatusUp(Status.loaded);
+    }
+  }
+}

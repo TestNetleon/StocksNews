@@ -33,7 +33,7 @@ class _StockScreenerListState extends State<StockScreenerList> {
         return;
       }
       provider.resetFilter();
-      context.read<StockScreenerProvider>().getStockScreenerStocks();
+      provider.getStockScreenerStocks();
     });
   }
 
