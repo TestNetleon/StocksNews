@@ -13,6 +13,7 @@ import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_down_provider.dart';
 import 'package:stocks_news_new/providers/high_low_beta_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -157,6 +158,7 @@ class Routes {
 
     Utils().showLog(
         "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
+
     switch (routingData) {
       case TCandPolicy.path:
         return MaterialWithModalsPageRoute(
@@ -384,6 +386,7 @@ class Routes {
       // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
+      ChangeNotifierProvider(create: (_) => FilterProvider()),
     ];
   }
 }

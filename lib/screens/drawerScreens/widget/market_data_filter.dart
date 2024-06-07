@@ -1,174 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/filters_res.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter_list.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/filter_list.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/filter_multi_select_list.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter_textfiled.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
-class MarketDataFilterBottomSheet extends StatelessWidget {
-  const MarketDataFilterBottomSheet({required this.provider, super.key});
-  final dynamic provider;
+class MarketDataFilterBottomSheet extends StatefulWidget {
+  const MarketDataFilterBottomSheet({
+    required this.onFiltered,
+    super.key,
+  });
 
+  final Function(FilteredParams?) onFiltered;
+
+  @override
+  State<MarketDataFilterBottomSheet> createState() =>
+      _MarketDataFilterBottomSheetState();
+}
+
+class _MarketDataFilterBottomSheetState
+    extends State<MarketDataFilterBottomSheet> {
+  FilteredParams? filterParams;
+
+  // final dynamic provider;
   void _showExchangePicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.exchange == null) {
+      popUpAlert(
+        message: "Exchange data not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+
     BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
+      child: FilterMultiSelectListing(
         label: "All Exchange",
-        items: provider.dataFilterBottomSheet.exchange,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeExchange(
-                provider.dataFilterBottomSheet.exchange[index].key.toString(),
-                provider.dataFilterBottomSheet.exchange[index].value.toString(),
-              );
+        items: provider.data!.exchange!,
+        onSelected: (List<FiltersDataItem> selected) {
+          String selectedValues = selected.map((item) => item.value).join(',');
+
+          if (filterParams == null) {
+            filterParams =
+                FilteredParams(exchange_name: selectedValues.split(","));
+          } else {
+            filterParams?.exchange_name = selectedValues.split(",");
+          }
+          setState(() {});
+
+          // print(commaSeparatedValues.split(","));
+          // context.read<StockScreenerProvider>().onChangeExchange(
+          //       provider.dataFilterBottomSheet.exchange[index].key.toString(),
+          //       provider.dataFilterBottomSheet.exchange[index].value.toString(),
+          //     );
         },
       ),
     );
   }
 
-  void _showSectorPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Sector",
-        items: provider.dataFilterBottomSheet.sectors,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeSector(
-                provider.dataFilterBottomSheet.sectors[index].key.toString(),
-                provider.dataFilterBottomSheet.sectors[index].value.toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showIndustryPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Industry",
-        items: provider.dataFilterBottomSheet.industries,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeIndustries(
-                provider.dataFilterBottomSheet.industries[index].key.toString(),
-                provider.dataFilterBottomSheet.industries[index].value
-                    .toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showMarketCapPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Market Cap",
-        items: provider.dataFilterBottomSheet.marketCap,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeMarketcap(
-                provider.dataFilterBottomSheet.marketCap[index].key.toString(),
-                provider.dataFilterBottomSheet.marketCap[index].value
-                    .toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showPricePicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Price",
-        items: provider.dataFilterBottomSheet.price,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangePrice(
-                provider.dataFilterBottomSheet.price[index].key.toString(),
-                provider.dataFilterBottomSheet.price[index].value.toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showBetaPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Beta",
-        items: provider.dataFilterBottomSheet.beta,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeBeta(
-                provider.dataFilterBottomSheet.beta[index].key.toString(),
-                provider.dataFilterBottomSheet.beta[index].value.toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showDividendPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Dividend",
-        items: provider.dataFilterBottomSheet.dividend,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeDividend(
-                provider.dataFilterBottomSheet.dividend[index].key.toString(),
-                provider.dataFilterBottomSheet.dividend[index].value.toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showETFPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All ETF",
-        items: provider.dataFilterBottomSheet.isEtf,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeIsEtf(
-                provider.dataFilterBottomSheet.isEtf[index].key.toString(),
-                provider.dataFilterBottomSheet.isEtf[index].value.toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showFundPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All Fund",
-        items: provider.dataFilterBottomSheet.isFund,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeIsFund(
-                provider.dataFilterBottomSheet.isFund[index].key.toString(),
-                provider.dataFilterBottomSheet.isFund[index].value.toString(),
-              );
-        },
-      ),
-    );
-  }
-
-  void _showActivelyTradingPicker(BuildContext context) {
-    BaseBottomSheets().gradientBottomSheet(
-      child: MarketDataFilterListing(
-        label: "All ActivelyTrading",
-        items: provider.dataFilterBottomSheet.isActivelyTrading,
-        onSelected: (index) {
-          context.read<StockScreenerProvider>().onChangeIsActivelyTrading(
-                provider.dataFilterBottomSheet.isActivelyTrading[index].key
-                    .toString(),
-                provider.dataFilterBottomSheet.isActivelyTrading[index].value
-                    .toString(),
-              );
-        },
-      ),
-    );
-  }
-
+  // void _showSectorPicker(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -186,20 +87,23 @@ class MarketDataFilterBottomSheet extends StatelessWidget {
               children: [
                 Expanded(
                   child: MarketDataTextFiledClickable(
-                    hintText: "All Exchange",
+                    hintText: filterParams?.exchange_name != null
+                        ? filterParams?.exchange_name?.join(", ") ?? ""
+                        : "All Exchange",
                     label: "Exchange Type",
                     onTap: () => _showExchangePicker(context),
-                    controller: provider.exchangeController,
+                    // controller: provider.exchangeController,
+                    controller: TextEditingController(),
                   ),
                 ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                      hintText: "All Sector",
-                      label: "Sector",
-                      onTap: () => _showSectorPicker(context),
-                      controller: provider.sectorController),
-                ),
+                // const SpacerHorizontal(width: 10),
+                // Expanded(
+                //   child: MarketDataTextFiledClickable(
+                //       hintText: "All Sector",
+                //       label: "Sector",
+                //       onTap: () => _showSectorPicker(context),
+                //       controller: provider.sectorController),
+                // ),
               ],
             ),
           ),
@@ -300,7 +204,8 @@ class MarketDataFilterBottomSheet extends StatelessWidget {
             color: ThemeColors.accent,
             onPressed: () {
               Navigator.pop(context);
-              context.read<StockScreenerProvider>().getStockScreenerStocks();
+              // context.read<StockScreenerProvider>().getStockScreenerStocks();
+              widget.onFiltered(filterParams);
             },
             text: "FILTER",
             textColor: Colors.white,

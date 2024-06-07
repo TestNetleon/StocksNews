@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_screener_res.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener_item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
@@ -23,13 +27,29 @@ class _StockScreenerListState extends State<StockScreenerList> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<StockScreenerProvider>().onChangeNullValueSet();
-      if (context.read<StockScreenerProvider>().data != null) {
+      // provider.resetFilter();
+      StockScreenerProvider provider = context.read<StockScreenerProvider>();
+      if (provider.data != null && provider.filterParams == null) {
         return;
       }
-
+      provider.resetFilter();
       context.read<StockScreenerProvider>().getStockScreenerStocks();
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null) {
+      await context.read<FilterProvider>().getFilterData();
+    }
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Stock Screener",
+      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<StockScreenerProvider>().applyFilter(params);
   }
 
   @override
@@ -37,47 +57,66 @@ class _StockScreenerListState extends State<StockScreenerList> {
     StockScreenerProvider provider = context.watch<StockScreenerProvider>();
     List<Result>? data = provider.data;
 
-    return BaseUiContainer(
-      error: provider.error,
-      hasData: data != null && data.isNotEmpty,
-      isLoading: provider.isLoading,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getStockScreenerStocks(),
-      child: RefreshControl(
-        onRefresh: () async => provider.getStockScreenerStocks(),
-        canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.getStockScreenerStocks(loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            if (data == null || data.isEmpty) {
-              return const SizedBox();
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0)
-                  HtmlTitle(subTitle: provider.extraUp?.subTitle ?? ""),
-                StockScreenerItem(
-                  data: data,
-                  index: index,
-                ),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          // itemCount: up?.length ?? 0,
-          itemCount: data?.length ?? 0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        HtmlTitle(
+          subTitle: provider.extraUp?.subTitle ?? "",
+          onFilterClick: _onFilterClick,
         ),
-      ),
+        if (provider.filterParams != null)
+          FilterUiValues(
+            params: provider.filterParams,
+            onDeleteExchange: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
+          ),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: data != null && data.isNotEmpty,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getStockScreenerStocks(),
+            child: RefreshControl(
+              onRefresh: () async => provider.getStockScreenerStocks(),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async =>
+                  provider.getStockScreenerStocks(loadMore: true),
+              child: ListView.separated(
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  if (data == null || data.isEmpty) {
+                    return const SizedBox();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // if (index == 0)
+                      //   HtmlTitle(subTitle: provider.extraUp?.subTitle ?? ""),
+                      StockScreenerItem(
+                        data: data,
+                        index: index,
+                      ),
+                    ],
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                // itemCount: up?.length ?? 0,
+                itemCount: data?.length ?? 0,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
