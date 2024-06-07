@@ -81,22 +81,28 @@ class BlogItemNew extends StatelessWidget {
                   visible: blogItem?.authors?.isNotEmpty == true,
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 15.sp),
-                    child: Wrap(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Visibility(
-                          visible: blogItem?.authors?.isNotEmpty == true,
-                          child: Text(
-                            "By ",
-                            style: stylePTSansRegular(
-                                color: ThemeColors.greyText, fontSize: 13),
-                          ),
-                        ),
                         Wrap(
-                          children: _buildTextWidgets(blogItem?.authors,
-                              type: BlogsType.author),
+                          children: [
+                            Visibility(
+                              visible: blogItem?.authors?.isNotEmpty == true,
+                              child: Text(
+                                "By ",
+                                style: stylePTSansRegular(
+                                    color: ThemeColors.greyText, fontSize: 13),
+                              ),
+                            ),
+                            Wrap(
+                              children: _buildTextWidgets(blogItem?.authors,
+                                  type: BlogsType.author),
+                            ),
+                          ],
                         ),
+                        const SpacerVertical(height: 2),
                         Text(
-                          " ${blogItem?.postDateString} ",
+                          "${blogItem?.postDateString} ",
                           style: stylePTSansRegular(
                               color: ThemeColors.greyText, fontSize: 13),
                         ),

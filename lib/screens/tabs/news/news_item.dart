@@ -137,42 +137,65 @@ class NewsItem extends StatelessWidget {
                   visible: news?.authors?.isNotEmpty == true,
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 15.sp),
-                    child: Wrap(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Visibility(
-                          visible: news?.authors?.isNotEmpty == true,
-                          child: Text(
-                            "By ",
-                            style: stylePTSansRegular(
-                                color: ThemeColors.greyText, fontSize: 13),
-                          ),
-                        ),
                         Wrap(
-                          children: _buildTextWidgets(news?.authors,
-                              type: BlogsType.author),
+                          children: [
+                            Visibility(
+                              visible: news?.authors?.isNotEmpty == true,
+                              child: Text(
+                                "By ",
+                                style: stylePTSansRegular(
+                                    color: ThemeColors.greyText, fontSize: 13),
+                              ),
+                            ),
+                            Wrap(
+                              children: _buildTextWidgets(news?.authors,
+                                  type: BlogsType.author),
+                            ),
+                          ],
                         ),
+                        const SpacerVertical(height: 2),
                         Text(
-                          " ${news?.postDateString} ",
+                          "${news?.postDateString} ",
                           style: stylePTSansRegular(
                               color: ThemeColors.greyText, fontSize: 13),
                         ),
-                        // Text(
-                        //   " | ${news?.postDateString} ",
-                        //   style: stylePTSansRegular(
-                        //       color: ThemeColors.greyText, fontSize: 13),
-                        // ),
                       ],
                     ),
                   ),
                 ),
                 Visibility(
                   visible: showCategory,
-                  child: Text(
-                    news?.site == "" || news?.site == null
-                        ? "${news?.postDate}"
-                        : "Source - ${news?.site} | ${news?.postDateString}",
-                    style: stylePTSansRegular(
-                        fontSize: 13, color: ThemeColors.greyText),
+                  child: Column(
+                    children: [
+                      if (news?.site == "" || news?.site == null)
+                        Text(
+                          "${news?.postDate}",
+                          style: stylePTSansRegular(
+                            fontSize: 13,
+                            color: ThemeColors.greyText,
+                          ),
+                        ),
+                      if (!(news?.site == "" || news?.site == null))
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              "Source - ${news?.site}",
+                              style: stylePTSansRegular(
+                                  fontSize: 13, color: ThemeColors.greyText),
+                            ),
+                            const SpacerVertical(height: 2),
+                            Text(
+                              "${news?.postDateString}",
+                              style: stylePTSansRegular(
+                                  fontSize: 13, color: ThemeColors.greyText),
+                            ),
+                          ],
+                        ),
+                    ],
                   ),
                   //  Container(
                   //   margin: EdgeInsets.only(bottom: 5.sp),
