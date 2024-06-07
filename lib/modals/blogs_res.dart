@@ -69,6 +69,7 @@ class BlogItemRes {
   final String slug;
   final String name;
   final DateTime? publishedDate;
+  final String? postDateString;
   final List<DetailListType>? authors;
 
   final String? image;
@@ -78,6 +79,7 @@ class BlogItemRes {
     required this.name,
     required this.slug,
     this.authors,
+    this.postDateString,
     this.publishedDate,
     this.image,
   });
@@ -85,6 +87,7 @@ class BlogItemRes {
   factory BlogItemRes.fromJson(Map<String, dynamic> json) => BlogItemRes(
         // id: json["_id"],
         name: json["name"],
+        postDateString: json['published_date_string'],
         authors: json["authors"] == null
             ? []
             : List<DetailListType>.from(
@@ -99,6 +102,7 @@ class BlogItemRes {
   Map<String, dynamic> toJson() => {
         // "_id": id,
         "name": name,
+        'published_date_string': postDateString,
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),

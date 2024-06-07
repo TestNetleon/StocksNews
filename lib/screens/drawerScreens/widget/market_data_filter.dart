@@ -3,15 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/stock_screener_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/filter_list.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/filter_multi_select_list.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter_textfiled.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 

@@ -21,6 +21,7 @@ class BlogsDetailRes {
   // final List<BlogItemRes> categories;
   // final List<BlogItemRes> tags;
   final DateTime? publishedDate;
+  final String? postDateString;
   final String image;
 
   BlogsDetailRes({
@@ -28,6 +29,7 @@ class BlogsDetailRes {
     required this.name,
     required this.description,
     this.authors,
+    this.postDateString,
     required this.slug,
     // required this.categories,
     // required this.tags,
@@ -51,6 +53,7 @@ class BlogsDetailRes {
         publishedDate: json["published_date"] == null
             ? null
             : DateTime.parse(json["published_date"]),
+        postDateString: json['published_date_string'],
         image: json["image"],
       );
 
@@ -58,6 +61,7 @@ class BlogsDetailRes {
         // "_id": id,
         "name": name,
         "description": description,
+        'published_date_string': postDateString,
         "slug": slug,
         "authors": authors == null
             ? []

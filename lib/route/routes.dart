@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/providers/blog_provider_new.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
@@ -392,6 +392,7 @@ class Routes {
 
       // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
       ChangeNotifierProvider(create: (_) => FilterProvider()),
+      ChangeNotifierProvider(create: (_) => BlogProviderNew()),
     ];
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
+// import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/newTopGraph/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analysis_forecast.dart';
@@ -19,7 +19,7 @@ import 'widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/analysis.dart';
 import 'widgets/companyBrief/container.dart';
 import 'widgets/companyEarning/container.dart';
-import 'widgets/redditComments/reddit_twitter_iframe.dart';
+// import 'widgets/redditComments/reddit_twitter_iframe.dart';
 import 'widgets/scoreGrades/container.dart';
 import 'widgets/stock_top_detail.dart';
 import 'widgets/technicalAnalysis/index.dart';
@@ -41,7 +41,7 @@ class StockDetailsBase extends StatelessWidget {
   Widget build(BuildContext context) {
     StockDetailProvider provider = context.watch<StockDetailProvider>();
 
-    CompanyInfo? companyInfo = provider.data?.companyInfo;
+    // CompanyInfo? companyInfo = provider.data?.companyInfo;
     // List<TradingStock>? tradingStock = provider.dataMentions?.tradingStock;
     // List<Mentions>? mentions = provider.dataMentions?.mentions;
     String? html = provider.dataMentions?.forecastAnalyst;
@@ -60,7 +60,7 @@ class StockDetailsBase extends StatelessWidget {
             "Analysis Forecast",
             "Technical Analysis",
             "News Mentions",
-            "Recent Reddit Posts and X Tweets",
+            // "Recent Reddit Posts and X Tweets",
             "Trending Stories",
             // "Popular Stocks",
           ],
@@ -219,18 +219,18 @@ class StockDetailsBase extends StatelessWidget {
                 content: StocksMentions(),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: Dimen.padding,
-                right: Dimen.padding,
-              ),
-              child: StockDetailsTabContainer(
-                content: RedditTwitterIframe(
-                  redditRssId: companyInfo?.redditRssId,
-                  twitterRssId: companyInfo?.twitterRssId,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     left: Dimen.padding,
+            //     right: Dimen.padding,
+            //   ),
+            //   child: StockDetailsTabContainer(
+            //     content: RedditTwitterIframe(
+            //       redditRssId: companyInfo?.redditRssId,
+            //       twitterRssId: companyInfo?.twitterRssId,
+            //     ),
+            //   ),
+            // ),
             const Padding(
               padding: EdgeInsets.only(
                 left: Dimen.padding,

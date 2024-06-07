@@ -39,6 +39,7 @@ class PostDetail {
   // final String? api;
   // final String? symbol;
   final DateTime? publishedDate;
+  final String? postDateString;
   final String? title;
   final String? slug;
   final String? image;
@@ -63,6 +64,7 @@ class PostDetail {
     // this.symbol,
     this.publishedDate,
     this.title,
+    this.postDateString,
     this.slug,
     this.image,
     this.site,
@@ -88,6 +90,7 @@ class PostDetail {
             ? null
             : DateTime.parse(json["published_date"]),
         title: json["title"],
+        postDateString: json['published_date_string'],
         slug: json["slug"],
         authors: json["authors"] == null
             ? []
@@ -125,6 +128,7 @@ class PostDetail {
         "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
+        'published_date_string': postDateString,
         "image": image,
         "site": site,
         "text": text,

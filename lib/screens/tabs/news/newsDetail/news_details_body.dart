@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
@@ -122,8 +121,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   @override
   Widget build(BuildContext context) {
     NewsDetailProvider provider = context.watch<NewsDetailProvider>();
-    String date = DateFormat("MMMM dd, yyyy")
-        .format(provider.data?.postDetail?.publishedDate ?? DateTime.now());
+    // String date = DateFormat("MMMM dd, yyyy")
+    //     .format(provider.data?.postDetail?.publishedDate ?? DateTime.now());
+    String date = provider.data?.postDetail?.postDateString ?? "";
 
     bool foundSite = provider.data?.postDetail?.site != "" &&
         provider.data?.postDetail?.site != null;
@@ -196,15 +196,15 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             ),
                             SpacerVertical(height: Dimen.itemSpacing.sp),
                             HtmlWidget(
-                              customStylesBuilder: (element) {
-                                if (element.localName == 'a') {
-                                  return {
-                                    'color': '#1bb449',
-                                    'text-decoration': 'none'
-                                  };
-                                }
-                                return null;
-                              },
+                              // customStylesBuilder: (element) {
+                              //   if (element.localName == 'a') {
+                              //     return {
+                              //       'color': '#1bb449',
+                              //       'text-decoration': 'none'
+                              //     };
+                              //   }
+                              //   return null;
+                              // },
                               onTapUrl: (url) async {
                                 bool a = await launchUrl(Uri.parse(url));
                                 Utils().showLog(
