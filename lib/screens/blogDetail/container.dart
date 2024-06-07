@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -53,9 +52,10 @@ class BlogDetailContainer extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 15.sp),
                       child: ListAlignment(
-                        date: DateFormat("MMMM dd, yyyy").format(
-                            provider.blogsDetail?.publishedDate ??
-                                DateTime.now()),
+                        // date: DateFormat("MMMM dd, yyyy").format(
+                        //     provider.blogsDetail?.publishedDate ??
+                        //         DateTime.now()),
+                        date: provider.blogsDetail?.postDateString ?? "",
                         list1: provider.blogsDetail?.authors,
                         list2: const [],
                         blog: true,

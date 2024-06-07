@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:stocks_news_new/modals/blogs_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -72,9 +71,14 @@ class BlogItem extends StatelessWidget {
                               data: blogItem?.authors, type: BlogsType.author),
                         ),
                         Text(
+                          // blogItem?.authors?.isNotEmpty == true
+                          //     ? " | ${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} "
+                          //     : "${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",
+
                           blogItem?.authors?.isNotEmpty == true
-                              ? " | ${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} "
-                              : "${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",
+                              ? " | ${blogItem?.postDateString} "
+                              : "${blogItem?.postDateString} ",
+
                           style: stylePTSansRegular(
                             color: ThemeColors.greyText,
                             fontSize: 13,

@@ -152,7 +152,7 @@ class NewsItem extends StatelessWidget {
                               type: BlogsType.author),
                         ),
                         Text(
-                          " | ${news?.postDate} ",
+                          "${news?.postDateString} ",
                           style: stylePTSansRegular(
                               color: ThemeColors.greyText, fontSize: 13),
                         ),
@@ -424,7 +424,7 @@ class NewsItemSeparated extends StatelessWidget {
                           type: BlogsType.author),
                     ),
                     Text(
-                      " | ${news?.postDate} ",
+                      " ${news?.postDateString} ",
                       style: stylePTSansRegular(
                           color: ThemeColors.greyText, fontSize: 13),
                     ),
