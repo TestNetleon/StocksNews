@@ -16,8 +16,6 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-
-import '../../../modals/low_price_stocks_tab.dart';
 import 'item.dart';
 
 class IndicesIndex extends StatefulWidget {
@@ -75,7 +73,7 @@ class IndicesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     IndicesProvider provider = context.watch<IndicesProvider>();
-    List<LowPriceStocksTabRes>? tabs = provider.tabs;
+    // List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
     return provider.tabLoading
         ? const Loading()

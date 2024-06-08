@@ -285,7 +285,68 @@ String containsSpecificPath(Uri uri) {
   } else if (uri.toString() == "https://app.stocks.news/" ||
       uri.toString() == "https://app.stocks.news") {
     return 'dashboard';
-  } else if (uri.path.contains('/login')) {
+  }
+
+  //will go with NEW DRAWER from here
+  // else if (uri.path.contains('/top-gainers') ||
+  //     uri.path.contains('/top-losers') ||
+  //     uri.path.contains('/market-data/breakout-stocks')) {
+  //   return "gainer_loser";
+  // } else if (uri.path.contains('/stocks/NYSE') ||
+  //     uri.path.contains('/stocks/NASDAQ') ||
+  //     uri.path.contains('/stocks/OTCMKTS') ||
+  //     uri.path.contains('/market-data/dow-30-stocks') ||
+  //     uri.path.contains('/market-data/sp-500-stocks')) {
+  //   return "indices";
+  // } else if (uri.path.contains('/market-data/gap-up-stocks') ||
+  //     uri.path.contains('/market-data/gap-down-stocks')) {
+  //   return "gapup_gapdown";
+  // } else if (uri.path.contains('/insider-trading')) {
+  //   return 'insider';
+  // } else if (uri.path.contains(' /social-sentiment')) {
+  //   return 'sentiments';
+  // } else if (uri.path.contains('/market-data/high-pe-ratio-stocks') ||
+  //     uri.path.contains('/market-data/low-pe-ratio-stocks') ||
+  //     uri.path.contains('/market-data/high-pe-growth-stocks') ||
+  //     uri.path.contains('/market-data/low-pe-growth-stocks')) {
+  //   return "high_lowPE";
+  // } else if (uri.path.contains('/market-data/52-week-highs') ||
+  //     uri.path.contains('/market-data/52-week-lows')) {
+  //   return "52_weeks";
+  // } else if (uri.path.contains('/market-data/high-beta-stocks') ||
+  //     uri.path.contains('/market-data/low-beta-stocks') ||
+  //     uri.path.contains('/market-data/negative-beta-stocks')) {
+  //   return "high_low_beta";
+  // } else if (uri.path
+  //         .contains('/market-data/low-priced-stocks/stocks-under-50-cents') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-1') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-2') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-5') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-10') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-20') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-30') ||
+  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-50')) {
+  //   return "low_prices";
+  // } else if (uri.path.contains('/market-data/most-active-stocks') ||
+  //     uri.path.contains('/market-data/most-volatile-stocks') ||
+  //     uri.path.contains('/market-data/unusual-volume-stocks')) {
+  //   return "most_active";
+  // } else if (uri.path.contains('/market-data/most-active-penny-stocks') ||
+  //     uri.path.contains('/market-data/top-penny-stocks-today')) {
+  //   return "penny";
+  // } else if (uri.path.contains('/congress-stock-trades')) {
+  //   return "congress";
+  // } else if (uri.path.contains('/dividend')) {
+  //   return "dividend";
+  // } else if (uri.path.contains('/earning')) {
+  //   return "earning";
+  // } else if (uri.path.contains('/stocks')) {
+  //   return "stocks";
+  // }
+
+  //will go with NEW DRAWER to here.
+
+  else if (uri.path.contains('/login')) {
     return 'login';
   } else if (uri.path.contains('/sign-up')) {
     return 'signUp';

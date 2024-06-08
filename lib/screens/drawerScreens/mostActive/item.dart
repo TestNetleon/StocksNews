@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/most_active_stocks_res.dart';
-import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -37,7 +35,7 @@ class MostActiveItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MostActiveProvider provider = context.watch<MostActiveProvider>();
+    // MostActiveProvider provider = context.watch<MostActiveProvider>();
 
     return Column(
       children: [

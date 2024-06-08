@@ -101,3 +101,102 @@ Bitly App ID: Ao1seSO8XNS
 7. stock alert home
 8. penny stock data changes
 9. filter check with empty condition
+
+
+
+
+
+
+
+---------------------
+|  Market Data Url  |
+---------------------
+
+=>Gainers Losers 
+https://app.stocks.news/top-gainers
+https://app.stocks.news/top-losers
+https://app.stocks.news/market-data/breakout-stocks
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Gap Up/Down 
+https://app.stocks.news/market-data/gap-up-stocks
+https://app.stocks.news/market-data/gap-down-stocks
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Indices
+https://app.stocks.news/public/stocks/NYSE
+https://app.stocks.news/public/stocks/NASDAQ
+https://app.stocks.news/public/stocks/OTCMKTS
+https://app.stocks.news/market-data/dow-30-stocks
+https://app.stocks.news/market-data/sp-500-stocks
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>High/LowPE 
+https://app.stocks.news/market-data/high-pe-ratio-stocks
+https://app.stocks.news/market-data/low-pe-ratio-stocks
+https://app.stocks.news/market-data/high-pe-growth-stocks
+https://app.stocks.news/market-data/low-pe-growth-stocks
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>52 weeks
+https://app.stocks.news/market-data/52-week-highs
+https://app.stocks.news/market-data/52-week-lows
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>High/Low Beta Stocks
+https://app.stocks.news/market-data/high-beta-stocks/
+https://app.stocks.news/market-data/low-beta-stocks/
+https://app.stocks.news/market-data/negative-beta-stocks/
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Low Price Stocks
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-50-cents
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-1
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-2
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-5
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-10
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-20
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-30
+https://app.stocks.news/market-data/low-priced-stocks/stocks-under-50
+https://app.stocks.news/market-data/stocks-on-sale
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Most Active
+https://app.stocks.news/market-data/most-active-stocks
+https://app.stocks.news/market-data/most-volatile-stocks
+https://app.stocks.news/market-data/unusual-volume-stocks
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Congress
+https://app.stocks.news/congress-stock-trades
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Penny Stock
+https://app.stocks.news/market-data/most-active-penny-stocks
+https://app.stocks.news/market-data/top-penny-stocks-today
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Stock Screener
+https://app.stocks.news/market-data/stock-screener
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Dividends
+https://app.stocks.news/dividend
+
+----------------------------------------------------------------------------------------------------------------------------
+
+=>Earnings
+https://app.stocks.news/earning
+
