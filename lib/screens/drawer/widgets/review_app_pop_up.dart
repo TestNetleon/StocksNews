@@ -86,17 +86,56 @@ class ReviewAppPopUp extends StatelessWidget {
                     (Platform.isAndroid
                         ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
                         : 'https://apps.apple.com/us/app/stocks-news/id6476615803'));
-                // final InAppReview inAppReview = InAppReview.instance;
 
-                // log("APp === ${await inAppReview.isAvailable()}");
+                // final InAppReview inAppReview = InAppReview.instance;
+                // final SharedPreferences preferences =
+                //     await SharedPreferences.getInstance();
+
                 // if (await inAppReview.isAvailable()) {
-                //   try {
-                //     await inAppReview.requestReview();
-                //   } catch (e) {
-                //     inAppReview.openStoreListing(
-                //       appStoreId: 'com.stocks.news',
+                //   final int lastReviewTimestamp =
+                //       preferences.getInt('last_review_timestamp') ?? 0;
+                //   final int currentTimeMillis =
+                //       DateTime.now().millisecondsSinceEpoch;
+                //   const int minTimeDifferenceMillis = 24 * 60 * 60 * 1000;
+                //   final bool rateLimitPassed =
+                //       currentTimeMillis - lastReviewTimestamp >
+                //           minTimeDifferenceMillis;
+
+                //   if (rateLimitPassed) {
+                //     try {
+                //       await inAppReview.requestReview();
+                //       final int currentTimeMillis =
+                //           DateTime.now().millisecondsSinceEpoch;
+                //       await preferences.setInt(
+                //           'last_review_timestamp', currentTimeMillis);
+                //     } catch (e) {
+                //       Utils().showLog("Error requesting review: $e");
+                //     }
+                //   } else {
+                //     Utils()
+                //         .showLog("Rate limit for review request not passed.");
+                //     openUrl(
+                //       provider.homeSliderRes?.rating?.url ??
+                //           (Platform.isAndroid
+                //               ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
+                //               : 'https://apps.apple.com/us/app/stocks-news/id6476615803'),
                 //     );
                 //   }
+                // } else {
+                //   openUrl(
+                //     provider.homeSliderRes?.rating?.url ??
+                //         (Platform.isAndroid
+                //             ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
+                //             : 'https://apps.apple.com/us/app/stocks-news/id6476615803'),
+                //   );
+                //   Utils().showLog(
+                //       "In-app review not available, opening store listing...");
+                //   openUrl(
+                //     provider.homeSliderRes?.rating?.url ??
+                //         (Platform.isAndroid
+                //             ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
+                //             : 'https://apps.apple.com/us/app/stocks-news/id6476615803'),
+                //   );
                 // }
               },
               child: SizedBox(
