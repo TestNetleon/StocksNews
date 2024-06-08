@@ -212,6 +212,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         "token": provider.user?.token ?? "",
         "fcm_token": fcmToken ?? "",
         "fcm_permission": "$granted",
+        "platform": Platform.operatingSystem,
       };
       ApiResponse response = await apiRequest(
         url: Apis.homeSlider,

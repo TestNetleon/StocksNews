@@ -4,9 +4,6 @@ In app messaging title
 
 In App messaging full description text.
 
-
-
-
 ======================================
 Apple Account (Access)
 
@@ -23,13 +20,8 @@ echo "# StocksNews" >> README.md
   git remote add origin https://github.com/TestNetleon/StocksNews.git
   git push -u origin main+
 
-
-
-
-
-
-
 ========= DEbug ==========
+
 Alias name: androiddebugkey
 Creation date: 05-Dec-2022
 Entry type: PrivateKeyEntry
@@ -46,51 +38,8 @@ Signature algorithm name: SHA1withRSA (weak)
 Subject Public Key Algorithm: 2048-bit RSA key
 Version: 1
 
-
-
-Stocks News - Your Ultimate Stock News Source
-
-
-
-Stocks News - Your Ultimate Stock News Source
-
-Welcome to Stocks News, the ultimate app designed to keep you at the forefront of the ever-evolving stock market! Whether you're a seasoned trader or just starting, our app ensures you're equipped with the latest market insights to make informed investment decisions.
-
-Key Features:
-
-Real-Time Market Updates: Stay on top of market trends with up-to-the-minute news from reputable sources. Our app delivers breaking news and insightful analyses to keep you in the loop.
-
-Customizable Watchlists: Tailor your watchlists to monitor the stocks that matter to you. Receive personalized alerts on price fluctuations, breaking news, and key events impacting your investments.
-
-Live Stock Quotes: Access real-time stock quotes and performance data, including opening and closing prices, volume, and interactive charts. Make informed decisions based on accurate and current information.
-
-User-Friendly Interface: Our intuitive design ensures a seamless experience for users of all levels. Navigate effortlessly between news articles, stock quotes, and your personalized watchlists.
-
-Financial Education: Whether you're a novice or an experienced investor, Stocks News offers educational content to enhance your financial literacy. Learn about investment strategies, market trends, and financial planning to empower your decision-making.
-
-Why Choose Stocks News?
-
-Comprehensive Coverage: We cover a wide spectrum of stocks, sectors, and global markets to provide a comprehensive view of the financial landscape.
-
-Trusted Sources: We curate news from reliable financial sources to ensure the information you receive is accurate and trustworthy.
-
-Tailored Alerts: Customize alerts according to your preferences. Receive notifications for breaking news, price changes, or specific events relevant to your portfolio.
-
-Accessible Anytime, Anywhere: Stay connected to the markets on the go. Stocks News is accessible on multiple devices, ensuring you never miss a market-moving event.
-
-Elevate your investment game with Stocks News. Download the app now and take charge of your financial journey!
-
-
-
-
-
-
-
-
-
-
-
 =========== DETAILS =================
+
 password: $TOKSnews.
 ALias: StocksNews
 Organization: StocksNews
@@ -98,10 +47,12 @@ keystore path: C:\Users\DELL\StudioProjects\StocksNews_keystore\keystore.jks
 Bitly App ID: Ao1uh273EZS
 
 ======================================
+
 to get key details 
 keytool -list -v -keystore keystorePath
 
 =======================================
+
 Alias name: StocksNews
 Creation date: 12-Jan-2024
 Entry type: PrivateKeyEntry
@@ -117,13 +68,7 @@ Certificate fingerprints:
 Signature algorithm name: SHA256withRSA
 Subject Public Key Algorithm: 2048-bit RSA key
 
-
-
 Bitly App ID: Ao1seSO8XNS 
-
-
-
-
 
 --------20-05-24--------
 1. notification sound android (D)
