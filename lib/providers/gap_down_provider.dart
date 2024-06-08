@@ -50,6 +50,9 @@ class GapDownProvider extends ChangeNotifier with AuthProviderBase {
 
   void exchangeFilter(String item) {
     _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
     _page = 1;
     notifyListeners();
     getGapDownStocks();
