@@ -11,9 +11,12 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../auth/bottomSheets/signup_sheet.dart';
-import '../blogDetail/index.dart';
-import '../deepLinkScreen/webscreen.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
+import 'package:stocks_news_new/screens/blogDetail/index.dart';
+import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
+import 'package:provider/provider.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
 
 class HomeSplash extends StatefulWidget {
@@ -29,9 +32,119 @@ class _HomeSplashState extends State<HomeSplash> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _navigation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getAppLinks();
     });
+  }
+
+  void _getAppLinks() {
+    if (deepLinkData != null) {
+      String type = containsSpecificPath(deepLinkData!);
+      String slug = extractLastPathComponent(deepLinkData!);
+
+      // Timer(const Duration(seconds: 5), () {
+      //   _navigation(uri: event, slug: slug, type: type);
+      // });
+
+      _navigationToDeepLink(uri: deepLinkData!, slug: slug, type: type);
+    } else {
+      _navigation();
+    }
+  }
+
+  _navigationToDeepLink({String? type, required Uri uri, String? slug}) async {
+    try {
+      Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+      String slugForTicker = extractSymbolValue(uri);
+      Utils().showLog("slug for ticker $slugForTicker");
+      bool userPresent = false;
+
+      UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+      if (await provider.checkForUser()) {
+        userPresent = true;
+      }
+      Utils().showLog("----$userPresent---");
+      if (type == "blog") {
+        Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (context) => BlogDetail(
+                      // id: "",
+                      slug: slug,
+                    )));
+      } else if (type == "news") {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => NewsDetails(
+              slug: slug,
+            ),
+          ),
+        );
+      } else if (type == "stock_detail") {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => StockDetails(symbol: slugForTicker),
+          ),
+        );
+      } else if (type == "login") {
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+        );
+
+        if (userPresent) {
+          //
+        } else {
+          // loginSheet();
+          Timer(const Duration(seconds: 1), () {
+            loginSheet();
+          });
+        }
+        deepLinkData = null;
+      } else if (type == "signUp") {
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+        );
+
+        if (userPresent) {
+          //
+        } else {
+          Timer(const Duration(seconds: 1), () {
+            signupSheet();
+          });
+        }
+        deepLinkData = null;
+      } else if (type == "dashboard") {
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+        );
+
+        //
+        Utils().showLog("--goto dashboard---");
+        deepLinkData = null;
+      } else {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: ((context) => WebviewLink(url: uri)),
+          ),
+        );
+      }
+    } catch (e) {
+      Navigator.pushNamedAndRemoveUntil(
+        navigatorKey.currentContext!,
+        Tabs.path,
+        (route) => false,
+      );
+      deepLinkData = null;
+    }
   }
 
   _navigation() {
@@ -98,6 +211,7 @@ class _HomeSplashState extends State<HomeSplash> {
         );
         Timer(const Duration(seconds: 1), () {
           signupSheet();
+          popHome = false;
         });
       } else if (slug != '' && type == NotificationType.review.name) {
         //review pop up
@@ -115,6 +229,7 @@ class _HomeSplashState extends State<HomeSplash> {
               return const ReviewAppPopUp();
             },
           );
+          popHome = false;
         });
       } else {
         Navigator.pushNamed(
@@ -130,6 +245,7 @@ class _HomeSplashState extends State<HomeSplash> {
         Tabs.path,
         (route) => false,
       );
+      popHome = false;
     }
   }
 

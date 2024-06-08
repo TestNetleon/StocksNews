@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
-    //  Utils().showLog("**** is in foreground ==>  $isAppInForeground");
+    Utils().showLog("**** is in foreground ==>  $isAppInForeground");
     setState(() {
       _appLifecycleState = state;
     });
@@ -72,30 +72,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String type = containsSpecificPath(event);
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
-        Timer(const Duration(seconds: 5), () {
-          _navigation(uri: event, slug: slug, type: type);
-        });
+        // Timer(const Duration(seconds: 5), () {
+        //   _navigation(uri: event, slug: slug, type: type);
+        // });
+
+        deepLinkData = event;
       } else {
-        Timer(const Duration(seconds: 1), () {
+        Timer(const Duration(milliseconds: 500), () {
           _navigation(uri: event, slug: slug, type: type);
         });
       }
     });
-  }
-
-  String extractLastPathComponent(Uri uri) {
-    List<String> parts = uri.pathSegments;
-    return parts.isNotEmpty ? parts.last : '';
-  }
-
-  String extractSymbolValue(Uri uri) {
-    if (uri.path.contains('/stock-detail')) {
-      // Check if the query parameters contain 'symbol'
-      if (uri.queryParameters.containsKey('symbol')) {
-        return uri.queryParameters['symbol'] ?? '';
-      }
-    }
-    return '';
   }
 
   _navigation({String? type, required Uri uri, String? slug}) async {
@@ -171,26 +158,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               )),
         ),
       );
-    }
-  }
-
-  String containsSpecificPath(Uri uri) {
-    Utils().showLog("-----contain path $uri");
-    if (uri.path.contains('/blog/')) {
-      return "blog";
-    } else if (uri.path.contains('/stock-detail')) {
-      return "stock_detail";
-    } else if (uri.path.contains('/news/')) {
-      return 'news';
-    } else if (uri.toString() == "https://app.stocks.news/" ||
-        uri.toString() == "https://app.stocks.news") {
-      return 'dashboard';
-    } else if (uri.path.contains('/login')) {
-      return 'login';
-    } else if (uri.path.contains('/sign-up')) {
-      return 'signUp';
-    } else {
-      return '';
     }
   }
 

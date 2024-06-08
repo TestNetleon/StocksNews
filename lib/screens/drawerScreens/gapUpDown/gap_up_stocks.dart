@@ -38,12 +38,17 @@ class _GapUpStocksState extends State<GapUpStocks> {
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
+    GapUpProvider gapUpProvider = context.read<GapUpProvider>();
+
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
       title: "Filter Stock Screener",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: gapUpProvider.filterParams,
+      ),
     );
   }
 

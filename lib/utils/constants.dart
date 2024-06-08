@@ -39,6 +39,7 @@ bool isAppInForeground = false;
 bool isShowingError = false;
 String apiKeyFMP = "";
 bool popHome = false;
+Uri? deepLinkData;
 
 // String? clientId;
 // String? secret;
@@ -271,4 +272,39 @@ extension CurrencyFormat on num {
 
     return result;
   }
+}
+
+String containsSpecificPath(Uri uri) {
+  Utils().showLog("-----contain path $uri");
+  if (uri.path.contains('/blog/')) {
+    return "blog";
+  } else if (uri.path.contains('/stock-detail')) {
+    return "stock_detail";
+  } else if (uri.path.contains('/news/')) {
+    return 'news';
+  } else if (uri.toString() == "https://app.stocks.news/" ||
+      uri.toString() == "https://app.stocks.news") {
+    return 'dashboard';
+  } else if (uri.path.contains('/login')) {
+    return 'login';
+  } else if (uri.path.contains('/sign-up')) {
+    return 'signUp';
+  } else {
+    return '';
+  }
+}
+
+String extractLastPathComponent(Uri uri) {
+  List<String> parts = uri.pathSegments;
+  return parts.isNotEmpty ? parts.last : '';
+}
+
+String extractSymbolValue(Uri uri) {
+  if (uri.path.contains('/stock-detail')) {
+    // Check if the query parameters contain 'symbol'
+    if (uri.queryParameters.containsKey('symbol')) {
+      return uri.queryParameters['symbol'] ?? '';
+    }
+  }
+  return '';
 }
