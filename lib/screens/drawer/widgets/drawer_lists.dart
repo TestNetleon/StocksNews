@@ -98,7 +98,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
-    text: "Highs & Lows Beta stocks",
+    text: "Highs & Lows Beta Stocks",
     onTap: () {
       Navigator.pushNamed(
           navigatorKey.currentContext!, HighLowsBetaStocksIndex.path);
@@ -116,7 +116,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.price_change_outlined,
-    text: "Low prices stocks",
+    text: "Low Prices Stocks",
     onTap: () {
       Navigator.pushNamed(
         navigatorKey.currentContext!,

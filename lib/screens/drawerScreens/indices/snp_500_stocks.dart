@@ -1,66 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/gap_up_res.dart';
+import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/gap_up_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
+import 'package:stocks_news_new/providers/snp_500_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
+import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
-import '../../../utils/constants.dart';
-import '../../../widgets/base_ui_container.dart';
-import '../../../widgets/refresh_controll.dart';
+import 'item.dart';
 
-class GapUpStocks extends StatefulWidget {
-  const GapUpStocks({super.key});
+class Snp500Stocks extends StatefulWidget {
+  const Snp500Stocks({super.key});
 
   @override
-  State<GapUpStocks> createState() => _GapUpStocksState();
+  State<Snp500Stocks> createState() => _Snp500StocksState();
 }
 
-class _GapUpStocksState extends State<GapUpStocks> {
+class _Snp500StocksState extends State<Snp500Stocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      GapUpProvider provider = context.read<GapUpProvider>();
+      SnP500Provider provider = context.read<SnP500Provider>();
       if (provider.data != null) {
         return;
       }
       provider.resetFilter();
-      provider.getGapUpStocks();
+      provider.getData();
     });
   }
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
-    GapUpProvider gapUpProvider = context.read<GapUpProvider>();
-
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
       title: "Filter Stock Screener",
-      child: MarketDataFilterBottomSheet(
-        onFiltered: _onFiltered,
-        filterParam: gapUpProvider.filterParams,
-      ),
+      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
     );
   }
 
   void _onFiltered(FilteredParams? params) {
-    context.read<GapUpProvider>().applyFilter(params);
+    context.read<SnP500Provider>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    GapUpProvider provider = context.watch<GapUpProvider>();
-    List<GapUpRes>? data = provider.data;
-
+    SnP500Provider provider = context.watch<SnP500Provider>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -79,36 +71,31 @@ class _GapUpStocksState extends State<GapUpStocks> {
         Expanded(
           child: BaseUiContainer(
             error: provider.error,
-            hasData: data != null && data.isNotEmpty,
+            hasData: !provider.isLoading && provider.data != null,
             isLoading: provider.isLoading,
-            errorDispCommon: true,
             showPreparingText: true,
-            onRefresh: () => provider.getGapUpStocks(),
+            errorDispCommon: true,
+            onRefresh: () async => await provider.onRefresh(),
             child: RefreshControl(
-              onRefresh: () async => await provider.getGapUpStocks(),
+              onRefresh: () async => await provider.onRefresh(),
               canLoadMore: provider.canLoadMore,
-              onLoadMore: () async =>
-                  await provider.getGapUpStocks(loadMore: true),
+              onLoadMore: () async => await provider.getData(loadMore: true),
               child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
-                  top: Dimen.padding.sp,
-                ),
+                padding: EdgeInsets.symmetric(vertical: 10.sp),
                 itemBuilder: (context, index) {
-                  return UpDownStocksItem(
-                    data: data![index],
-                    isOpen: provider.openIndex == index,
-                    onTap: () {
-                      provider.setOpenIndex(
-                        provider.openIndex == index ? -1 : index,
-                      );
-                    },
+                  Result? data = provider.data?[index];
+                  if (data == null) {
+                    return const SizedBox();
+                  }
+                  return IndicesItem(data: data, index: index);
+                },
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 16,
                   );
                 },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: ThemeColors.greyBorder, height: 20.sp);
-                },
-                itemCount: data?.length ?? 0,
+                itemCount: provider.data?.length ?? 0,
               ),
             ),
           ),

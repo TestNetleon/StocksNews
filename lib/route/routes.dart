@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
+import 'package:stocks_news_new/providers/dow_30_provider.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
@@ -29,6 +30,7 @@ import 'package:stocks_news_new/providers/low_pe_provider.dart';
 import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
+import 'package:stocks_news_new/providers/snp_500_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
@@ -433,6 +435,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MostVolatileStocksProvider()),
       ChangeNotifierProvider(create: (_) => TodayTopLoserProvider()),
       ChangeNotifierProvider(create: (_) => TodayBreakoutStockProvider()),
+      ChangeNotifierProvider(create: (_) => Dow30Provider()),
+      ChangeNotifierProvider(create: (_) => SnP500Provider()),
     ];
   }
 }
