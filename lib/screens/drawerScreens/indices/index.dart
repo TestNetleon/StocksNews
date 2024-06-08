@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/indices/dow_30_stocks.dart';
+import 'package:stocks_news_new/screens/drawerScreens/indices/snp_500_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -40,10 +42,7 @@ class _IndicesIndexState extends State<IndicesIndex> {
   Widget build(BuildContext context) {
     IndicesProvider provider = context.watch<IndicesProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(
-        canSearch: true,
-        isPopback: true,
-      ),
+      appBar: const AppBarHome(canSearch: true, isPopback: true),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           Dimen.padding,
@@ -87,12 +86,17 @@ class IndicesData extends StatelessWidget {
             },
             scrollable: true,
             tabsPadding: EdgeInsets.only(bottom: 10.sp),
-            tabs: List.generate(
-                tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
-            widgets: List.generate(
-              tabs?.length ?? 0,
-              (index) => _getWidgets(provider),
-            ),
+            // tabs: List.generate(
+            //     tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
+            // widgets: List.generate(
+            //   tabs?.length ?? 0,
+            //   (index) => _getWidgets(provider),
+            // ),
+            tabs: const ["DOW 30 Stocks", "S&P 500 Stocks"],
+            widgets: const [
+              Dow30Stocks(),
+              Snp500Stocks(),
+            ],
           );
   }
 

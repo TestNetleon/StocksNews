@@ -207,21 +207,21 @@ class _IndicesItemState extends State<IndicesItem> {
                     value: "${widget.data.mktCap}",
                   ),
                 ),
-                Visibility(
-                  visible: widget.data.consensusAnalystRating != null,
-                  child: InnerRowItem(
-                    lable: "Consensus Analyst Rating",
-                    value: "${widget.data.consensusAnalystRating}",
-                  ),
-                ),
-                Visibility(
-                  visible:
-                      widget.data.analystRatingConsensusPriceTarget != null,
-                  child: InnerRowItem(
-                    lable: "Analyst Rating Consensus Price Target",
-                    value: "${widget.data.analystRatingConsensusPriceTarget}",
-                  ),
-                ),
+                // Visibility(
+                //   visible: widget.data.consensusAnalystRating != null,
+                //   child: InnerRowItem(
+                //     lable: "Consensus Analyst Rating",
+                //     value: "${widget.data.consensusAnalystRating}",
+                //   ),
+                // ),
+                // Visibility(
+                //   visible:
+                //       widget.data.analystRatingConsensusPriceTarget != null,
+                //   child: InnerRowItem(
+                //     lable: "Analyst Rating Consensus Price Target",
+                //     value: "${widget.data.analystRatingConsensusPriceTarget}",
+                //   ),
+                // ),
                 Visibility(
                   visible: provider.typeDowThirty || provider.typeSpFifty,
                   child: InnerRowItem(

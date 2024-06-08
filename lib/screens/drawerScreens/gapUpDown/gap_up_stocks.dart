@@ -80,9 +80,10 @@ class _GapUpStocksState extends State<GapUpStocks> {
             showPreparingText: true,
             onRefresh: () => provider.getGapUpStocks(),
             child: RefreshControl(
-              onRefresh: () async => provider.getGapUpStocks(),
+              onRefresh: () async => await provider.getGapUpStocks(),
               canLoadMore: provider.canLoadMore,
-              onLoadMore: () async => provider.getGapUpStocks(loadMore: true),
+              onLoadMore: () async =>
+                  await provider.getGapUpStocks(loadMore: true),
               child: ListView.separated(
                 padding: EdgeInsets.only(
                   bottom: Dimen.padding.sp,
