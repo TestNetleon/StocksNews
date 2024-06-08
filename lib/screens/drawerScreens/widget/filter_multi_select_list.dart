@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 class FilterMultiSelectListing extends StatefulWidget {
@@ -132,6 +134,7 @@ class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
           text: "DONE",
           textColor: Colors.white,
         ),
+        SpacerVertical(height: ScreenUtil().bottomBarHeight),
       ],
     );
   }

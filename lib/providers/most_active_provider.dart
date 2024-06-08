@@ -185,6 +185,9 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
 
   void exchangeFilter(String item) {
     _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
     _page = 1;
     notifyListeners();
     getData();
@@ -218,6 +221,15 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
       };
 
       ApiResponse response = await apiRequest(
