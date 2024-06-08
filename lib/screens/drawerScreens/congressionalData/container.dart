@@ -3,12 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/congressionalData/item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
+
+import '../../../widgets/html_title.dart';
+import '../widget/filter_ui_values.dart';
 
 class CongressionalContainer extends StatefulWidget {
   const CongressionalContainer({super.key});
@@ -22,12 +27,34 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<CongressionalProvider>().data != null) {
+      CongressionalProvider provider = context.read<CongressionalProvider>();
+      if (provider.data != null) {
         return;
       }
-
-      context.read<CongressionalProvider>().getData(showProgress: false);
+      provider.resetFilter();
+      provider.getData();
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    CongressionalProvider congressionalProvider =
+        context.read<CongressionalProvider>();
+
+    if (provider.data == null) {
+      await provider.getFilterData();
+    }
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Most Active Penny Stock",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: congressionalProvider.filterParams,
+      ),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<CongressionalProvider>().applyFilter(params);
   }
 
   @override
@@ -36,21 +63,38 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
           Dimen.padding, Dimen.padding, Dimen.padding, 0),
-      child: BaseUiContainer(
-        onRefresh: provider.getData,
-        error: provider.error,
-        isLoading: provider.isLoading,
-        showPreparingText: true,
-        hasData: !provider.isLoading && provider.data != null ||
-            provider.data?.isNotEmpty == true,
-        child: Column(
-          children: [
-            ScreenTitle(
-              title: provider.title,
-              subTitle: provider.subTitle,
-              subTitleHtml: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          HtmlTitle(
+            title: provider.title ?? "",
+            subTitle: provider.subTitle ?? "",
+            onFilterClick: _onFilterClick,
+            margin: const EdgeInsets.only(top: 10, bottom: 0),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Divider(
+              color: ThemeColors.accent,
+              height: 2,
+              thickness: 2,
             ),
-            Expanded(
+          ),
+          if (provider.filterParams != null)
+            FilterUiValues(
+              params: provider.filterParams,
+              onDeleteExchange: (exchange) {
+                provider.exchangeFilter(exchange);
+              },
+            ),
+          Expanded(
+            child: BaseUiContainer(
+              onRefresh: provider.getData,
+              error: provider.error,
+              isLoading: provider.isLoading,
+              showPreparingText: true,
+              hasData: !provider.isLoading && provider.data != null ||
+                  provider.data?.isNotEmpty == true,
               child: RefreshControl(
                 onLoadMore: () async => provider.getData(loadMore: true),
                 onRefresh: () async => provider.getData(),
@@ -73,8 +117,8 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
                     itemCount: provider.data?.length ?? 0),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

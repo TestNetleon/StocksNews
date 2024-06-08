@@ -6,6 +6,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -37,6 +38,29 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
 
   String? title;
   String? subTitle;
+
+  FilteredParams? _filterParams;
+  FilteredParams? get filterParams => _filterParams;
+
+  void resetFilter() {
+    _filterParams = null;
+    _pageUp = 1;
+    notifyListeners();
+  }
+
+  void applyFilter(FilteredParams? params) {
+    _filterParams = params;
+    _pageUp = 1;
+    notifyListeners();
+    getData();
+  }
+
+  void exchangeFilter(String item) {
+    _filterParams!.exchange_name!.remove(item);
+    _pageUp = 1;
+    notifyListeners();
+    getData();
+  }
 
   void setStatus(status) {
     _status = status;
@@ -70,6 +94,16 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_pageUp",
+        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
       };
 
       ApiResponse response = await apiRequest(

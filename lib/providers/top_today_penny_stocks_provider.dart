@@ -205,6 +205,7 @@ class TopTodayPennyStocksProviders extends ChangeNotifier
 
   int get openIndex => _openIndex;
   int _openIndex = -1;
+
   FilteredParams? _filterParams;
   FilteredParams? get filterParams => _filterParams;
 
@@ -256,6 +257,15 @@ class TopTodayPennyStocksProviders extends ChangeNotifier
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
       };
 
       ApiResponse response = await apiRequest(

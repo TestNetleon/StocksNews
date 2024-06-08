@@ -11,11 +11,9 @@ import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
-import '../../../modals/gainers_losers_res.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../../moreStocks/topGainerLoser/item.dart';
 
 class TodaysBreakoutStocks extends StatefulWidget {
   const TodaysBreakoutStocks({super.key});

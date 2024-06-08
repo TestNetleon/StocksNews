@@ -90,13 +90,16 @@ class HtmlTitle extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: onFilterClick,
-            child: const Padding(
-              padding: EdgeInsets.only(top: 5, bottom: 5, left: 5),
-              child: Icon(
-                Icons.filter_alt,
-                color: ThemeColors.accent,
+          Visibility(
+            visible: onFilterClick != null,
+            child: GestureDetector(
+              onTap: onFilterClick,
+              child: const Padding(
+                padding: EdgeInsets.only(top: 5, bottom: 5, left: 5),
+                child: Icon(
+                  Icons.filter_alt,
+                  color: ThemeColors.accent,
+                ),
               ),
             ),
           )

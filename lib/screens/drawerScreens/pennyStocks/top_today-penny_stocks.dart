@@ -9,9 +9,13 @@ import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
+import '../../../providers/filter_provider.dart';
+import '../../../utils/bottom_sheets.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
+import '../widget/filter_ui_values.dart';
+import '../widget/market_data_filter.dart';
 
 class TopTodayPennyStocks extends StatefulWidget {
   const TopTodayPennyStocks({super.key});
@@ -25,11 +29,35 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<TopTodayPennyStocksProviders>().data != null) {
+      TopTodayPennyStocksProviders provider =
+          context.read<TopTodayPennyStocksProviders>();
+      if (provider.data != null) {
         return;
       }
-      context.read<TopTodayPennyStocksProviders>().getData(type: 3);
+      provider.resetFilter();
+      provider.getData(type: 3);
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    TopTodayPennyStocksProviders todayTopProvider =
+        context.read<TopTodayPennyStocksProviders>();
+
+    if (provider.data == null) {
+      await provider.getFilterData();
+    }
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Most Active Penny Stock",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: todayTopProvider.filterParams,
+      ),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<TopTodayPennyStocksProviders>().applyFilter(params);
   }
 
   @override
@@ -38,56 +66,65 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
         context.watch<TopTodayPennyStocksProviders>();
     List<PennyStocksRes>? data = provider.data;
 
-    return BaseUiContainer(
-      error: provider.error,
-      hasData: data != null && data.isNotEmpty,
-      isLoading: provider.isLoading,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getData(type: 3),
-      child: RefreshControl(
-        onRefresh: () async => provider.getData(type: 3),
-        canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.getData(loadMore: true, type: 3),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            if (data == null || data.isEmpty) {
-              return const SizedBox();
-            }
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                PennyStocksItem(
-                  data: data[index],
-                  isOpen: provider.openIndex == index,
-                  onTap: () {
-                    provider.setOpenIndex(
-                      provider.openIndex == index ? -1 : index,
-                    );
-                  },
-                )
-                // PennyStocksItem(
-                //   data: data[index],
-                //   index: index,
-                // ),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          itemCount: data?.length ?? 0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        HtmlTitle(
+          subTitle: provider.extraUp?.subTitle ?? "",
+          onFilterClick: _onFilterClick,
+          margin: const EdgeInsets.only(top: 10, bottom: 10),
         ),
-      ),
+        if (provider.filterParams != null)
+          FilterUiValues(
+            params: provider.filterParams,
+            onDeleteExchange: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
+          ),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: data != null && data.isNotEmpty,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getData(type: 3),
+            child: RefreshControl(
+              onRefresh: () async => provider.getData(type: 3),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async => provider.getData(loadMore: true, type: 3),
+              child: ListView.separated(
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  if (data == null || data.isEmpty) {
+                    return const SizedBox();
+                  }
+
+                  return PennyStocksItem(
+                    data: data[index],
+                    isOpen: provider.openIndex == index,
+                    onTap: () {
+                      provider.setOpenIndex(
+                        provider.openIndex == index ? -1 : index,
+                      );
+                    },
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                itemCount: data?.length ?? 0,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
