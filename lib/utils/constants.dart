@@ -137,6 +137,11 @@ class Const {
   static const String errNoRecord = "No record found.";
   static const String noInternet = "Please check your internet connection.";
   static const String timedOut = "Request timed out.";
+  static const String androidAppUrl =
+      "https://play.google.com/store/apps/details?id=com.stocks.news";
+  static const String iosAppUrl =
+      "https://apps.apple.com/us/app/stocks-news/id6476615803";
+
   // static const String errParse =
   //     "Unable to parse data, please check your response.";
   // static const String dummyText =

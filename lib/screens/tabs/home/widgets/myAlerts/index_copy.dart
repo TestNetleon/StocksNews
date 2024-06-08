@@ -225,8 +225,7 @@ class Placeholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      height: height,
-      width: 200,
+      width: isPhone ? 198 : 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(

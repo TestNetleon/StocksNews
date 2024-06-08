@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -82,61 +84,61 @@ class ReviewAppPopUp extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 Navigator.pop(context);
-                openUrl(provider.homeSliderRes?.rating?.url ??
-                    (Platform.isAndroid
-                        ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
-                        : 'https://apps.apple.com/us/app/stocks-news/id6476615803'));
+                // openUrl(provider.homeSliderRes?.rating?.url ??
+                //     (Platform.isAndroid
+                //         ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
+                //         : 'https://apps.apple.com/us/app/stocks-news/id6476615803'));
 
-                // final InAppReview inAppReview = InAppReview.instance;
+                final InAppReview inAppReview = InAppReview.instance;
                 // final SharedPreferences preferences =
                 //     await SharedPreferences.getInstance();
 
-                // if (await inAppReview.isAvailable()) {
-                //   final int lastReviewTimestamp =
-                //       preferences.getInt('last_review_timestamp') ?? 0;
-                //   final int currentTimeMillis =
-                //       DateTime.now().millisecondsSinceEpoch;
-                //   const int minTimeDifferenceMillis = 24 * 60 * 60 * 1000;
-                //   final bool rateLimitPassed =
-                //       currentTimeMillis - lastReviewTimestamp >
-                //           minTimeDifferenceMillis;
+                if (await inAppReview.isAvailable()) {
+                  final int lastReviewTimestamp =
+                      await Preference.getMinTimeDifferenceMillis();
+                  // preferences.getInt('last_review_timestamp') ?? 0;
+                  final int currentTimeMillis =
+                      DateTime.now().millisecondsSinceEpoch;
+                  const int minTimeDifferenceMillis = 24 * 60 * 60 * 1000;
+                  final bool rateLimitPassed =
+                      currentTimeMillis - lastReviewTimestamp >
+                          minTimeDifferenceMillis;
 
-                //   if (rateLimitPassed) {
-                //     try {
-                //       await inAppReview.requestReview();
-                //       final int currentTimeMillis =
-                //           DateTime.now().millisecondsSinceEpoch;
-                //       await preferences.setInt(
-                //           'last_review_timestamp', currentTimeMillis);
-                //     } catch (e) {
-                //       Utils().showLog("Error requesting review: $e");
-                //     }
-                //   } else {
-                //     Utils()
-                //         .showLog("Rate limit for review request not passed.");
-                //     openUrl(
-                //       provider.homeSliderRes?.rating?.url ??
-                //           (Platform.isAndroid
-                //               ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
-                //               : 'https://apps.apple.com/us/app/stocks-news/id6476615803'),
-                //     );
-                //   }
-                // } else {
-                //   openUrl(
-                //     provider.homeSliderRes?.rating?.url ??
-                //         (Platform.isAndroid
-                //             ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
-                //             : 'https://apps.apple.com/us/app/stocks-news/id6476615803'),
-                //   );
-                //   Utils().showLog(
-                //       "In-app review not available, opening store listing...");
-                //   openUrl(
-                //     provider.homeSliderRes?.rating?.url ??
-                //         (Platform.isAndroid
-                //             ? 'https://play.google.com/store/apps/details?id=com.stocks.news'
-                //             : 'https://apps.apple.com/us/app/stocks-news/id6476615803'),
-                //   );
-                // }
+                  if (rateLimitPassed) {
+                    try {
+                      await inAppReview.requestReview();
+                      final int currentTimeMillis =
+                          DateTime.now().millisecondsSinceEpoch;
+                      Preference.saveMinTimeDifferenceMillis(currentTimeMillis);
+                    } catch (e) {
+                      Utils().showLog("Error requesting review: $e");
+                    }
+                  } else {
+                    Utils()
+                        .showLog("Rate limit for review request not passed.");
+                    openUrl(
+                      provider.homeSliderRes?.rating?.url ??
+                          (Platform.isAndroid
+                              ? Const.androidAppUrl
+                              : Const.iosAppUrl),
+                    );
+                  }
+                } else {
+                  openUrl(
+                    provider.homeSliderRes?.rating?.url ??
+                        (Platform.isAndroid
+                            ? Const.androidAppUrl
+                            : Const.iosAppUrl),
+                  );
+                  Utils().showLog(
+                      "In-app review not available, opening store listing...");
+                  openUrl(
+                    provider.homeSliderRes?.rating?.url ??
+                        (Platform.isAndroid
+                            ? Const.androidAppUrl
+                            : Const.iosAppUrl),
+                  );
+                }
               },
               child: SizedBox(
                 width: double.infinity,

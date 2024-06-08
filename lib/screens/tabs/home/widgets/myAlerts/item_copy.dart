@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -83,7 +82,13 @@ class HomeMyAlertItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 220,
+      width: isPhone
+          ? data.chart?.isEmpty == true
+              ? 230
+              : 243
+          : data.chart?.isEmpty == true
+              ? 243
+              : 243,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(
@@ -173,11 +178,17 @@ class HomeMyAlertItem extends StatelessWidget {
             child: data.chart == null || data.chart?.isEmpty == true
                 ? ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      bottomRight: Radius.circular(14),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
                     ),
                     child: Container(
-                      width: 220,
+                      width: isPhone
+                          ? data.chart?.isEmpty == true
+                              ? 230
+                              : 243
+                          : data.chart?.isEmpty == true
+                              ? 243
+                              : 243,
                       padding: isPhone
                           ? EdgeInsets.zero
                           : const EdgeInsets.only(bottom: 20),
@@ -193,9 +204,9 @@ class HomeMyAlertItem extends StatelessWidget {
                     ),
                   )
                 : ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10.sp),
-                      bottomRight: Radius.circular(10.sp),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
                     ),
                     child: Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 15),

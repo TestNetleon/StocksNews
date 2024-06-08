@@ -45,6 +45,16 @@ class Preference {
     preferences.setString("@fcmToken", token);
   }
 
+  static Future<int> getMinTimeDifferenceMillis() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getInt("@last_review_timestamp") ?? 0;
+  }
+
+  static void saveMinTimeDifferenceMillis(minTimeDifferenceMillis) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setInt("@last_review_timestamp", minTimeDifferenceMillis);
+  }
+
   static Future<String?> getLocation() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString("@location");
