@@ -19,7 +19,7 @@ class NewsDetailList extends StatelessWidget {
         title: moreNewsData?.title ?? "",
         image: moreNewsData?.image ?? "",
         site: moreNewsData?.site ?? "",
-
+        postDateString: moreNewsData?.postDateString ?? "",
         postDate: DateFormat("MMMM dd, yyyy")
             .format(moreNewsData?.publishedDate ?? DateTime.now()),
         //  "November 29, 2023",

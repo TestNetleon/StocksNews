@@ -52,7 +52,17 @@ class _IOSemailErrorState extends State<IOSemailError> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Email Address",
+            "Enter Email Address",
+            style: stylePTSansBold(fontSize: 18),
+          ),
+          const SpacerVertical(height: 3),
+          Text(
+            "Looks like there is some issue with registration, please enter your Apple ID using that you want to sign up. You will receive an OTP for verification on this email address.",
+            style: stylePTSansRegular(fontSize: 14),
+          ),
+          const SpacerVertical(height: 3),
+          Text(
+            "After successful sign up you will be able to login with Apple ID.",
             style: stylePTSansRegular(fontSize: 14),
           ),
           const SpacerVertical(height: 5),
@@ -90,9 +100,9 @@ class _IOSemailErrorState extends State<IOSemailError> {
               // );
               UserProvider provider = context.read<UserProvider>();
               Map request = {
-                "username": controller.text.toLowerCase(),
-                "type": "email",
-                "id": widget.id,
+                "email": controller.text.toLowerCase(),
+                // "type": "email",
+                // "id": widget.id,
               };
               Navigator.pop(context);
               provider.sendEmailOTP(
