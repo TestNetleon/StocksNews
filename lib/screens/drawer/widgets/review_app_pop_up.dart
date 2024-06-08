@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -93,6 +94,8 @@ class ReviewAppPopUp extends StatelessWidget {
                 // final SharedPreferences preferences =
                 //     await SharedPreferences.getInstance();
 
+                showGlobalProgressDialog();
+
                 if (await inAppReview.isAvailable() &&
                     (provider.homeSliderRes?.rating?.isRating ?? false)) {
                   final int lastReviewTimestamp =
@@ -107,6 +110,7 @@ class ReviewAppPopUp extends StatelessWidget {
 
                   if (rateLimitPassed) {
                     try {
+                      closeGlobalProgressDialog();
                       await inAppReview.requestReview();
                       final int currentTimeMillis =
                           DateTime.now().millisecondsSinceEpoch;
@@ -115,6 +119,7 @@ class ReviewAppPopUp extends StatelessWidget {
                       Utils().showLog("Error requesting review: $e");
                     }
                   } else {
+                    closeGlobalProgressDialog();
                     Utils()
                         .showLog("Rate limit for review request not passed.");
                     openUrl(
@@ -125,12 +130,7 @@ class ReviewAppPopUp extends StatelessWidget {
                     );
                   }
                 } else {
-                  openUrl(
-                    provider.homeSliderRes?.rating?.url ??
-                        (Platform.isAndroid
-                            ? Const.androidAppUrl
-                            : Const.iosAppUrl),
-                  );
+                  closeGlobalProgressDialog();
                   Utils().showLog(
                       "In-app review not available, opening store listing...");
                   openUrl(
