@@ -13,21 +13,30 @@ import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import '../providers/user_provider.dart';
 import '../utils/dialogs.dart';
 
-void showIosEmailError({String? state, String? dontPop}) {
+void showIosEmailError({
+  String? state,
+  String? dontPop,
+  String? id,
+}) {
   showPlatformBottomSheet(
-      padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-      context: navigatorKey.currentContext!,
-      content: IOSemailError(
-        state: state,
-        dontPop: dontPop,
-      ));
+    padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
+    context: navigatorKey.currentContext!,
+    content: IOSemailError(state: state, dontPop: dontPop, id: id),
+  );
 }
 
 class IOSemailError extends StatefulWidget {
   final Function()? onPress;
   final String? state;
   final String? dontPop;
-  const IOSemailError({super.key, this.onPress, this.state, this.dontPop});
+  final String? id;
+  const IOSemailError({
+    super.key,
+    this.onPress,
+    this.state,
+    this.dontPop,
+    this.id,
+  });
 
   @override
   State<IOSemailError> createState() => _IOSemailErrorState();
@@ -58,14 +67,42 @@ class _IOSemailErrorState extends State<IOSemailError> {
           ThemeButton(
             text: "Next",
             onPressed: () {
+              // UserProvider provider = context.read<UserProvider>();
+              // Map request = {
+              //   "username": controller.text.toLowerCase(),
+              //   "type": "email",
+              //   //------------
+              //   "displayName": "",
+              //   "email": controller.text.toLowerCase(),
+              //   "id": id ?? "",
+              //   "fcm_token": fcmToken ?? "",
+              //   "platform": Platform.operatingSystem,
+              //   "address": address ?? "",
+              //   "build_version": versionName,
+              //   "build_code": buildNumber,
+              //   "fcm_permission": "$granted",
+              // };
+              // Navigator.pop(context);
+              // provider.appleLogin(
+              //   request,
+              //   state: widget.state,
+              //   dontPop: widget.dontPop,
+              // );
               UserProvider provider = context.read<UserProvider>();
               Map request = {
                 "username": controller.text.toLowerCase(),
                 "type": "email",
+                "id": widget.id,
               };
               Navigator.pop(context);
-              provider.login(request,
-                  state: widget.state, dontPop: widget.dontPop);
+              provider.sendEmailOTP(
+                request,
+                state: widget.state,
+                dontPop: widget.dontPop,
+                id: widget.id,
+                email: controller.text.toLowerCase(),
+                showOtp: true,
+              );
             },
           ),
           const SpacerVertical(height: Dimen.itemSpacing),
