@@ -551,8 +551,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Live_stock_app;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Live_stock_app;
+				PROVISIONING_PROFILE_SPECIFIER = Ad_hoc_stock_app;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ad_hoc_stock_app;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -591,8 +591,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news.ImageNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Live_stock_notifications;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Live_stock_notifications;
+				PROVISIONING_PROFILE_SPECIFIER = Ad_hoc_stock_notification;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ad_hoc_stock_notification;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -632,8 +632,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news.ImageNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Live_stock_notifications;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Live_stock_notifications;
+				PROVISIONING_PROFILE_SPECIFIER = Ad_hoc_stock_notification;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ad_hoc_stock_notification;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -673,8 +673,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news.ImageNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Live_stock_notifications;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Live_stock_notifications;
+				PROVISIONING_PROFILE_SPECIFIER = Ad_hoc_stock_notification;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ad_hoc_stock_notification;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -809,8 +809,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Live_stock_app;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Live_stock_app;
+				PROVISIONING_PROFILE_SPECIFIER = Ad_hoc_stock_app;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ad_hoc_stock_app;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -834,8 +834,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.stocks.news;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Live_stock_app;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Live_stock_app;
+				PROVISIONING_PROFILE_SPECIFIER = Ad_hoc_stock_app;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Ad_hoc_stock_app;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

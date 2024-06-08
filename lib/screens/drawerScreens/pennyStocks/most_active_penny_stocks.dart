@@ -27,12 +27,6 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (context.read<MostActivePennyStocksProviders>().data != null) {
-      //   return;
-      // }
-      // context
-      //     .read<MostActivePennyStocksProviders>()
-      //     .getMostActivePennyStocks(type: 1);
       MostActivePennyStocksProviders provider =
           context.read<MostActivePennyStocksProviders>();
       if (provider.data != null) {
@@ -45,12 +39,18 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
+    MostActivePennyStocksProviders mostActProvider =
+        context.read<MostActivePennyStocksProviders>();
+
     if (provider.data == null) {
-      await context.read<FilterProvider>().getFilterData();
+      await provider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      title: "Most Active Penny Stock",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: mostActProvider.filterParams,
+      ),
     );
   }
 

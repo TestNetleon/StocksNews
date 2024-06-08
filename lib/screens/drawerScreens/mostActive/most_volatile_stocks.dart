@@ -38,13 +38,18 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
   }
 
   void _onFilterClick() async {
-    FilterProvider provider = context.read<FilterProvider>();
-    if (provider.data == null) {
-      await context.read<FilterProvider>().getFilterData();
+    FilterProvider filterProvider = context.read<FilterProvider>();
+    MostVolatileStocksProvider provider =
+        context.read<MostVolatileStocksProvider>();
+    if (filterProvider.data == null) {
+      await filterProvider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      title: "Filter Most Volatile Stock",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: provider.filterParams,
+      ),
     );
   }
 
@@ -73,41 +78,46 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
               provider.exchangeFilter(exchange);
             },
           ),
-        BaseUiContainer(
-          error: provider.error,
-          hasData: data != null && data.isNotEmpty,
-          isLoading: provider.isLoading,
-          errorDispCommon: true,
-          showPreparingText: true,
-          onRefresh: () => provider.getData(type: 2),
-          child: RefreshControl(
-            onRefresh: () async => provider.getData(type: 2),
-            canLoadMore: provider.canLoadMore,
-            onLoadMore: () async => provider.getData(loadMore: true, type: 2),
-            child: ListView.separated(
-              padding: EdgeInsets.only(
-                bottom: Dimen.padding.sp,
-                top: Dimen.padding.sp,
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: data != null && data.isNotEmpty,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getData(type: 2),
+            child: RefreshControl(
+              onRefresh: () async => provider.getData(type: 2),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async => provider.getData(loadMore: true, type: 2),
+              child: ListView.separated(
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
+                ),
+                itemBuilder: (context, index) {
+                  if (data == null || data.isEmpty) {
+                    return const SizedBox();
+                  }
+                  return MostActiveItem(
+                    data: data[index],
+                    isOpen: provider.openIndex == index,
+                    onTap: () {
+                      provider.setOpenIndex(
+                        provider.openIndex == index ? -1 : index,
+                      );
+                    },
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                // itemCount: up?.length ?? 0,
+                itemCount: data?.length ?? 0,
               ),
-              itemBuilder: (context, index) {
-                if (data == null || data.isEmpty) {
-                  return const SizedBox();
-                }
-                return const SizedBox();
-
-                // return MostActiveItem(
-                //   data: data[index],
-                //   index: index,
-                // );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20.sp,
-                );
-              },
-              // itemCount: up?.length ?? 0,
-              itemCount: data?.length ?? 0,
             ),
           ),
         ),

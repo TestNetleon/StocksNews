@@ -6,7 +6,6 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
-import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -53,6 +52,9 @@ class TodayBreakoutStockProvider extends ChangeNotifier with AuthProviderBase {
 
   void exchangeFilter(String item) {
     _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
     _page = 1;
     notifyListeners();
     getData();
