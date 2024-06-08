@@ -57,10 +57,11 @@ class _AppBarHomeState extends State<AppBarHome> {
       leading: widget.isPopback
           ? IconButton(
               onPressed: () {
-                if (popHome) {
+                if (popHome || deepLinkData != null) {
                   Navigator.pushNamedAndRemoveUntil(
                       context, Tabs.path, (route) => false);
                   popHome = false;
+                  deepLinkData = null;
                 } else {
                   navigatorKey.currentContext!
                       .read<SearchProvider>()

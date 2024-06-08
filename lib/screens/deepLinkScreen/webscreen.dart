@@ -73,11 +73,12 @@ class _AnalysisForecastState extends State<WebviewLink> {
       canPop: true,
       onPopInvoked: (didPop) async {
         try {
-          if (popHome) {
+          if (popHome || deepLinkData != null) {
             Future.delayed(const Duration(milliseconds: 50), () {
               Navigator.pushNamedAndRemoveUntil(
                   context, Tabs.path, (route) => false);
               popHome = false;
+              deepLinkData = null;
             });
           }
         } catch (e) {

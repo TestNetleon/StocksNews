@@ -38,12 +38,18 @@ class _StockScreenerListState extends State<StockScreenerList> {
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
+    StockScreenerProvider screenerProvider =
+        context.read<StockScreenerProvider>();
+    ;
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
       title: "Filter Stock Screener",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: screenerProvider.filterParams,
+      ),
     );
   }
 

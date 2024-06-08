@@ -21,7 +21,8 @@ class DrawerNewWidget extends StatelessWidget {
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: stylePTSansRegular(fontSize: 11),
+          style: stylePTSansRegular(
+              fontSize: 13, color: const Color.fromARGB(255, 184, 187, 193)),
         ),
       ],
     );

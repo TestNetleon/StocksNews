@@ -245,10 +245,27 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           ),
                           const SpacerVertical(height: 15),
 
-                          Text(
-                            "Market Data",
-                            style: stylePTSansBold(),
+                          // Text(
+                          //   "Market Data",
+                          //   style: stylePTSansBold(),
+                          // ),
+
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            margin: const EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: ThemeColors.greyBorder.withOpacity(0.2),
+                            ),
+                            child: Text(
+                              "Market Data",
+                              textAlign: TextAlign.center,
+                              style: stylePTSansBold(),
+                            ),
                           ),
+
                           CustomGridViewPerChild(
                             paddingHorizontal: 5,
                             paddingVertical: 25,
