@@ -99,6 +99,7 @@ dependencies:
   photo_view: ^0.15.0
   plaid_flutter: ^3.1.8
   sqflite: ^2.3.3+1
+  in_app_update: ^4.2.3
 
 dev_dependencies:
   flutter_test:
