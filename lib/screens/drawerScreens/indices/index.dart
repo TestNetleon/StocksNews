@@ -79,10 +79,11 @@ class IndicesData extends StatelessWidget {
         ? const Loading()
         : CustomTabContainerNEW(
             onChange: (index) {
-              // provider.setData();
-              provider.tabChange(index);
+              if (index != 0 && index != 1) {
+                provider.tabChange(index);
+              }
             },
-            scrollable: true,
+            scrollable: (tabs?.length ?? 0) > 1 ? true : false,
             tabsPadding: EdgeInsets.only(bottom: 10.sp),
             // tabs: List.generate(
             //     tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
@@ -90,11 +91,25 @@ class IndicesData extends StatelessWidget {
             //   tabs?.length ?? 0,
             //   (index) => _getWidgets(provider),
             // ),
-            tabs: const ["DOW 30 Stocks", "S&P 500 Stocks"],
-            widgets: const [
-              Dow30Stocks(),
-              Snp500Stocks(),
-            ],
+            tabs: tabs == null
+                ? ["DOW 30 Stocks", "S&P 500 Stocks"]
+                : [
+                    "DOW 30 Stocks",
+                    "S&P 500 Stocks",
+                    ...(tabs.map((tab) => tab.name))
+                  ],
+            widgets: tabs == null
+                ? const [
+                    Dow30Stocks(),
+                    Snp500Stocks(),
+                  ]
+                : [
+                    const Dow30Stocks(),
+                    const Snp500Stocks(),
+                    ...(provider.tabs!
+                        .map((tab) => _getWidgets(provider))
+                        .toList()),
+                  ],
           );
   }
 

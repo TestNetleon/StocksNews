@@ -127,6 +127,7 @@ class Apis {
   static const drawerData = "/drawer-data";
 
   static const blogCategory = "/blog-category-list";
+  static const sendAppleOtp = "/send-apple-otp";
 }
 
 //

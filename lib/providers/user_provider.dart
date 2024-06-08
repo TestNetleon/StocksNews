@@ -18,6 +18,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/apple_otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
@@ -148,6 +149,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     String? state,
     String? dontPop,
     bool editEmail = false,
+    String? id,
   }) async {
     setStatus(Status.loading);
     try {
@@ -171,7 +173,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           Navigator.pop(navigatorKey.currentContext!);
           // showErrorMessage(message: response.message, snackbar: false);
         } else {
-          otpLoginSheet(state: state, dontPop: dontPop);
+          otpLoginSheet(state: state, dontPop: dontPop, id: id);
           Timer(const Duration(seconds: 1), () {
             // popUpAlert(
             //     message: "${response.message}",
@@ -197,6 +199,65 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           message: Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF);
+      setStatus(Status.loaded);
+    }
+  }
+
+  Future sendEmailOTP(
+    request, {
+    String? state,
+    String? dontPop,
+    bool editEmail = false,
+    String? id,
+    String? email,
+    bool showOtp = false,
+  }) async {
+    setStatus(Status.loading);
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.sendAppleOtp,
+        request: request,
+        showProgress: true,
+      );
+      setStatus(Status.loaded);
+      if (response.status) {
+        // if (editEmail) {
+        //   Navigator.pop(navigatorKey.currentContext!);
+        // } else {
+        if (showOtp) {
+          appleOtpLoginSheet(
+            state: state,
+            dontPop: dontPop,
+            id: id,
+            email: email,
+          );
+        } else {
+          popUpAlert(
+            message: "${response.message}",
+            title: "OTP Sent",
+            icon: Images.otpSuccessGIT,
+          );
+        }
+        // Timer(const Duration(seconds: 1), () {
+        // }
+      } else {
+        // if (editEmail) {
+        //   // showErrorMessage(message: response.message, snackbar: false);
+        //   Navigator.pop(navigatorKey.currentContext!);
+        // }
+        // showErrorMessage(message: response.message);
+        popUpAlert(
+            message: "${response.message}",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+    } catch (e) {
+      Utils().showLog(e.toString());
+      popUpAlert(
+        message: Const.errSomethingWrong,
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
       setStatus(Status.loaded);
     }
   }
@@ -271,7 +332,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future appleLogin(request, {String? state, String? dontPop}) async {
+  Future appleLogin(
+    request, {
+    String? state,
+    String? dontPop,
+    String? id,
+  }) async {
     setStatus(Status.loading);
     CompareStocksProvider compareProvider =
         navigatorKey.currentContext!.read<CompareStocksProvider>();
@@ -314,16 +380,17 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             await notificationProvider.getData(showProgress: false);
           }
         } else {
-          // kDebugMode ? Preference.setFirstTime(true) : null;
           Preference.setFirstTime(false);
-
           Navigator.pushNamedAndRemoveUntil(
-              navigatorKey.currentContext!, Tabs.path, (route) => false);
+            navigatorKey.currentContext!,
+            Tabs.path,
+            (route) => false,
+          );
         }
       } else {
         // showErrorMessage(message: response.message);
         if (response.message == "Invalid email address") {
-          showIosEmailError(state: state, dontPop: dontPop);
+          showIosEmailError(state: state, dontPop: dontPop, id: id);
         }
       }
       setStatus(Status.loaded);
