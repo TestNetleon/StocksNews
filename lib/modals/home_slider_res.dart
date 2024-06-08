@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'drawer_data_res.dart';
 import 'news_datail_res.dart';
 
 HomeSliderRes homeSliderResFromJson(String str) =>
@@ -16,11 +17,13 @@ class HomeSliderRes {
   final String? shareUrl;
   final String? shareText;
   final TextSliderRes text;
+  final Rating? rating;
 
   HomeSliderRes({
     this.sliderPosts,
     this.whatsappLink,
     this.telegramLink,
+    this.rating,
     this.shareUrl,
     this.shareText,
     required this.totalAlerts,
@@ -33,6 +36,7 @@ class HomeSliderRes {
         whatsappLink: json["whats-app-link"],
         text: TextSliderRes.fromJson(json["text"]),
         telegramLink: json['telegram-link'],
+        rating: json["rating"] == null ? null : Rating.fromJson(json["rating"]),
         shareUrl: json["share-url"],
         shareText: json["share_text"],
         totalWatchList: json["total_watchlist"],
@@ -49,6 +53,7 @@ class HomeSliderRes {
         "total_alerts": totalAlerts,
         "share-url": shareUrl,
         "share_text": shareText,
+        "rating": rating?.toJson(),
         "text": text.toJson(),
         "total_watchlist": totalWatchList,
         "telegram-link": telegramLink,

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/blogs/index.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -49,18 +53,19 @@ class BlogDetailContainer extends StatelessWidget {
                       style: styleGeorgiaBold(fontSize: 25),
                     ),
                     const SpacerVertical(height: 5),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 15.sp),
-                      child: ListAlignment(
-                        // date: DateFormat("MMMM dd, yyyy").format(
-                        //     provider.blogsDetail?.publishedDate ??
-                        //         DateTime.now()),
-                        date: provider.blogsDetail?.postDateString ?? "",
-                        list1: provider.blogsDetail?.authors,
-                        list2: const [],
-                        blog: true,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(bottom: 15.sp),
+                    //   child: ListAlignment(
+                    //     // date: DateFormat("MMMM dd, yyyy").format(
+                    //     //     provider.blogsDetail?.publishedDate ??
+                    //     //         DateTime.now()),
+                    //     date: provider.blogsDetail?.postDateString ?? "",
+                    //     list1: provider.blogsDetail?.authors,
+                    //     list2: const [],
+                    //     blog: true,
+                    //   ),
+                    // ),
+                    const SpacerVertical(height: 10),
                     SizedBox(
                       width: double.infinity,
                       height: isPhone
@@ -71,28 +76,16 @@ class BlogDetailContainer extends StatelessWidget {
                         // fit: BoxFit.contain,
                       ),
                     ),
-                    // const SpacerVertical(height: 5),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: "Published Date: ",
-                    //         style: stylePTSansRegular(
-                    //           fontSize: 14,
-                    //           color: ThemeColors.white,
-                    //         ),
-                    //       ),
-                    //       TextSpan(
-                    //         text: DateFormat("MMMM dd, yyyy").format(
-                    //             provider.blogsDetail?.publishedDate ??
-                    //                 DateTime.now()),
-                    //         style: stylePTSansRegular(
-                    //             fontSize: 14, color: ThemeColors.greyText),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
+                    const SpacerVertical(height: 10),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 0.sp),
+                      child: ListAlignment(
+                        date: provider.blogsDetail?.postDateString ?? "",
+                        list1: provider.blogsDetail?.authors,
+                        list2: const [],
+                        blog: true,
+                      ),
+                    ),
                     SpacerVertical(height: Dimen.itemSpacing.sp),
                     // const BlogDetailAuthor(),
                     // const SpacerVertical(height: 5),
@@ -146,6 +139,74 @@ class BlogDetailContainer extends StatelessWidget {
     );
   }
 }
+
+Widget buildList({
+  List<DetailListType>? list,
+  required bool isLastList,
+  bool clickable = true,
+  required BlogsType type,
+  bool blog = false,
+}) {
+  List<Widget> widgets = [];
+
+  if (list != null && list.isNotEmpty) {
+    for (int i = 0; i < list.length; i++) {
+      widgets.add(
+        InkWell(
+          onTap: () {
+            if (blog) {
+              Utils().showLog("1");
+              Navigator.pushReplacementNamed(
+                  navigatorKey.currentContext!, Blog.path,
+                  arguments: {
+                    "type": BlogsType.author,
+                    "id": list[i].id,
+                  });
+            } else {
+              Navigator.pushNamed(
+                  navigatorKey.currentContext!, NewsAuthorIndex.path,
+                  arguments: {
+                    "data": list[i],
+                    "type": type,
+                  });
+            }
+
+            // Navigator.pushNamed(
+            //     navigatorKey.currentContext!, NewsAuthorIndex.path,
+            //     arguments: {
+            //       "data": list[i],
+            //       "type": type,
+            //     });
+          },
+          child: Text(
+            list[i].name ?? "",
+            style: stylePTSansRegular(
+              color: ThemeColors.accent,
+              fontSize: 16,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      );
+
+      if (!isLastList || i != list.length - 1) {
+        widgets.add(
+          Text(
+            ', ',
+            style: stylePTSansRegular(
+              color: ThemeColors.accent,
+              fontSize: 16,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  return Wrap(children: widgets);
+}
+
 
 // String? extractImageUrl(String html) {
 //   final document = parse(html);

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
+import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/break_out_item.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
@@ -15,19 +17,20 @@ import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
 import '../../moreStocks/topGainerLoser/item.dart';
 
-class TodaysTopLoser extends StatefulWidget {
-  const TodaysTopLoser({super.key});
+class TodaysBreakoutStocks extends StatefulWidget {
+  const TodaysBreakoutStocks({super.key});
 
   @override
-  State<TodaysTopLoser> createState() => _TodaysTopLoserState();
+  State<TodaysBreakoutStocks> createState() => _TodaysBreakoutStocksState();
 }
 
-class _TodaysTopLoserState extends State<TodaysTopLoser> {
+class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      TodayTopLoserProvider provider = context.read<TodayTopLoserProvider>();
+      TodayBreakoutStockProvider provider =
+          context.read<TodayBreakoutStockProvider>();
       if (provider.data != null) {
         return;
       }
@@ -39,7 +42,7 @@ class _TodaysTopLoserState extends State<TodaysTopLoser> {
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
     FilteredParams? filterParams =
-        context.read<TodayTopLoserProvider>().filterParams;
+        context.read<TodayBreakoutStockProvider>().filterParams;
 
     if (provider.data == null) {
       await provider.getFilterData();
@@ -55,13 +58,14 @@ class _TodaysTopLoserState extends State<TodaysTopLoser> {
   }
 
   void _onFiltered(FilteredParams? params) {
-    context.read<TodayTopLoserProvider>().applyFilter(params);
+    context.read<TodayBreakoutStockProvider>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    TodayTopLoserProvider provider = context.watch<TodayTopLoserProvider>();
-    List<GainersLosersDataRes>? gainers = provider.data?.data;
+    TodayBreakoutStockProvider provider =
+        context.watch<TodayBreakoutStockProvider>();
+    List<BreakoutStocksRes>? gainers = provider.data;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,10 +103,10 @@ class _TodaysTopLoserState extends State<TodaysTopLoser> {
                   top: Dimen.padding.sp,
                 ),
                 itemBuilder: (context, index) {
-                  return GainerLoserItem(
+                  return BreakOutStocksItem(
                     data: gainers![index],
                     index: index,
-                    marketData: true,
+                    // marketData: true,
                   );
                 },
                 separatorBuilder: (context, index) {

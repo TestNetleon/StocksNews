@@ -26,6 +26,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 
@@ -62,7 +63,7 @@ class FirebaseApi {
     });
   }
 
-  void _navigateToRequiredScreen(payload, {whenAppKilled = false}) async {
+  _navigateToRequiredScreen(payload, {whenAppKilled = false}) {
     String? type = payload["type"];
     String? slug = payload['slug'];
     String? notificationId = payload['notification_id'];
@@ -106,6 +107,15 @@ class FirebaseApi {
         // );
       } else if (slug != '' && type == NotificationType.register.name) {
         signupSheet();
+      } else if (slug != '' && type == NotificationType.review.name) {
+        //review pop up
+        showDialog(
+          context: navigatorKey.currentContext!,
+          barrierColor: Colors.black.withOpacity(0.5),
+          builder: (context) {
+            return const ReviewAppPopUp();
+          },
+        );
       } else {
         Navigator.pushNamed(
           navigatorKey.currentContext!,

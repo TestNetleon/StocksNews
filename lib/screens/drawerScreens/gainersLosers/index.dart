@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/break_out_item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_breakout_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_top_gainer.dart';
+import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_top_losers.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../modals/gainers_losers_res.dart';
-import '../../../providers/more_stocks_provider.dart';
 import '../../../utils/constants.dart';
-import '../../../widgets/base_ui_container.dart';
-import '../../../widgets/refresh_controll.dart';
-import '../../moreStocks/topGainerLoser/item.dart';
 
 class GainersLosersIndex extends StatefulWidget {
   static const path = "GainersLosersIndex";
@@ -29,87 +19,33 @@ class GainersLosersIndex extends StatefulWidget {
 }
 
 class _GainersLosersIndexState extends State<GainersLosersIndex> {
-  int selectedIndex = 0;
-
-  void onChange(index) {
-    MoreStocksProvider provider = context.read<MoreStocksProvider>();
-
-    if (selectedIndex != index) {
-      selectedIndex = index;
-      setState(() {});
-      if (index == 0) {
-        if (provider.gainersLosers?.data != null) {
-          return;
-        }
-
-        context
-            .read<MoreStocksProvider>()
-            .getGainersLosers(showProgress: true, type: widget.type.name);
-      } else if (index == 1) {
-        if (provider.losers?.data != null) {
-          return;
-        }
-
-        context
-            .read<MoreStocksProvider>()
-            .getLosers(showProgress: true, type: "losers");
-      } else {
-        if (provider.dataBreakoutStocks != null) {
-          return;
-        }
-
-        context
-            .read<MoreStocksProvider>()
-            .getBreakoutStocks(showProgress: true);
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<MoreStocksProvider>().gainersLosers?.data != null) {
-        return;
-      }
-      context
-          .read<MoreStocksProvider>()
-          .getGainersLosers(showProgress: true, type: widget.type.name);
-      // context
-      //     .read<MoreStocksProvider>()
-      //     .getLosers(showProgress: true, type: "losers");
-      // context
-      //     .read<MoreStocksProvider>()
-      //     .getLosers(showProgress: true, type: "losers");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    MoreStocksProvider provider = context.watch<MoreStocksProvider>();
-    List<GainersLosersDataRes>? gainers = provider.gainersLosers?.data;
-    List<GainersLosersDataRes>? losers = provider.losers?.data;
-    List<BreakoutStocksRes>? breakoutStocks = provider.dataBreakoutStocks;
-
-    return BaseContainer(
-      appBar: const AppBarHome(
+    return const BaseContainer(
+      appBar: AppBarHome(
         isPopback: true,
         canSearch: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-            Dimen.padding, Dimen.padding, Dimen.padding, 0),
+        padding: EdgeInsets.fromLTRB(
+          Dimen.padding,
+          Dimen.padding,
+          Dimen.padding,
+          0,
+        ),
         child: CustomTabContainerNEW(
           scrollable: true,
           tabsPadding: EdgeInsets.zero,
-          tabs: const [
+          tabs: [
             "Today's Gainers",
             "Today's Losers",
             "Today's Breakout Stocks"
           ],
-          onChange: (index) => onChange(index),
+          // onChange: (index) => onChange(index),
           widgets: [
-            const TodaysTopGainer(),
+            TodaysTopGainer(),
+            TodaysTopLoser(),
+            TodaysBreakoutStocks(),
             // BaseUiContainer(
             //   error: provider.error,
             //   hasData: gainers != null && gainers.isNotEmpty,
@@ -156,94 +92,93 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
             //     ),
             //   ),
             // ),
-
-            BaseUiContainer(
-              error: provider.errorLosers,
-              hasData: losers != null && losers.isNotEmpty,
-              isLoading: provider.isLoadingLosers,
-              errorDispCommon: true,
-              onRefresh: () =>
-                  provider.getLosers(showProgress: true, type: "losers"),
-              child: RefreshControl(
-                onRefresh: () async =>
-                    provider.getLosers(showProgress: true, type: "losers"),
-                canLoadMore: provider.canLoadMoreLosers,
-                onLoadMore: () async =>
-                    provider.getLosers(loadMore: true, type: "losers"),
-                child: ListView.separated(
-                  padding: EdgeInsets.only(
-                      bottom: Dimen.padding.sp, top: Dimen.padding.sp),
-                  itemBuilder: (context, index) {
-                    if (losers == null || losers.isEmpty) {
-                      return const SizedBox();
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (index == 0)
-                          HtmlTitle(
-                              subTitle: provider.extraUpLosers?.subTitle ?? ""),
-                        GainerLoserItem(
-                          losers: true,
-                          data: losers[index],
-                          index: index,
-                          marketData: true,
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 12.sp,
-                    );
-                  },
-                  itemCount: losers?.length ?? 0,
-                ),
-              ),
-            ),
-            BaseUiContainer(
-              error: provider.errorBreakoutStocks,
-              hasData: breakoutStocks != null && breakoutStocks.isNotEmpty,
-              isLoading: provider.isLoadingBreakOut,
-              errorDispCommon: true,
-              onRefresh: () => provider.getBreakoutStocks(showProgress: true),
-              child: RefreshControl(
-                onRefresh: () async =>
-                    provider.getBreakoutStocks(showProgress: true),
-                canLoadMore: provider.canLoadMoreBreakOut,
-                onLoadMore: () async =>
-                    provider.getBreakoutStocks(loadMore: true),
-                child: ListView.separated(
-                  padding: EdgeInsets.only(
-                      bottom: Dimen.padding.sp, top: Dimen.padding.sp),
-                  itemBuilder: (context, index) {
-                    if (breakoutStocks == null || breakoutStocks.isEmpty) {
-                      return const SizedBox();
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (index == 0)
-                          HtmlTitle(
-                              subTitle: provider.extraUpLosers?.subTitle ?? ""),
-                        BreakOutStocksItem(
-                          data: breakoutStocks[index],
-                          index: index,
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 12.sp,
-                    );
-                  },
-                  itemCount: breakoutStocks?.length ?? 0,
-                ),
-              ),
-            ),
+            // BaseUiContainer(
+            //   error: provider.errorLosers,
+            //   hasData: losers != null && losers.isNotEmpty,
+            //   isLoading: provider.isLoadingLosers,
+            //   errorDispCommon: true,
+            //   onRefresh: () =>
+            //       provider.getLosers(showProgress: true, type: "losers"),
+            //   child: RefreshControl(
+            //     onRefresh: () async =>
+            //         provider.getLosers(showProgress: true, type: "losers"),
+            //     canLoadMore: provider.canLoadMoreLosers,
+            //     onLoadMore: () async =>
+            //         provider.getLosers(loadMore: true, type: "losers"),
+            //     child: ListView.separated(
+            //       padding: EdgeInsets.only(
+            //           bottom: Dimen.padding.sp, top: Dimen.padding.sp),
+            //       itemBuilder: (context, index) {
+            //         if (losers == null || losers.isEmpty) {
+            //           return const SizedBox();
+            //         }
+            //         return Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             if (index == 0)
+            //               HtmlTitle(
+            //                   subTitle: provider.extraUpLosers?.subTitle ?? ""),
+            //             GainerLoserItem(
+            //               losers: true,
+            //               data: losers[index],
+            //               index: index,
+            //               marketData: true,
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //       separatorBuilder: (context, index) {
+            //         return Divider(
+            //           color: ThemeColors.greyBorder,
+            //           height: 12.sp,
+            //         );
+            //       },
+            //       itemCount: losers?.length ?? 0,
+            //     ),
+            //   ),
+            // ),
+            // BaseUiContainer(
+            //   error: provider.errorBreakoutStocks,
+            //   hasData: breakoutStocks != null && breakoutStocks.isNotEmpty,
+            //   isLoading: provider.isLoadingBreakOut,
+            //   errorDispCommon: true,
+            //   onRefresh: () => provider.getBreakoutStocks(showProgress: true),
+            //   child: RefreshControl(
+            //     onRefresh: () async =>
+            //         provider.getBreakoutStocks(showProgress: true),
+            //     canLoadMore: provider.canLoadMoreBreakOut,
+            //     onLoadMore: () async =>
+            //         provider.getBreakoutStocks(loadMore: true),
+            //     child: ListView.separated(
+            //       padding: EdgeInsets.only(
+            //           bottom: Dimen.padding.sp, top: Dimen.padding.sp),
+            //       itemBuilder: (context, index) {
+            //         if (breakoutStocks == null || breakoutStocks.isEmpty) {
+            //           return const SizedBox();
+            //         }
+            //         return Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             if (index == 0)
+            //               HtmlTitle(
+            //                   subTitle: provider.extraUpLosers?.subTitle ?? ""),
+            //             BreakOutStocksItem(
+            //               data: breakoutStocks[index],
+            //               index: index,
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //       separatorBuilder: (context, index) {
+            //         return Divider(
+            //           color: ThemeColors.greyBorder,
+            //           height: 12.sp,
+            //         );
+            //       },
+            //       itemCount: breakoutStocks?.length ?? 0,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

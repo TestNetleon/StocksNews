@@ -156,6 +156,13 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               style: styleGeorgiaBold(fontSize: 25),
                             ),
                             const SpacerVertical(height: 5),
+                            CachedNetworkImagesWidget(
+                              provider.data?.postDetail?.image ?? "",
+                              height: ScreenUtil().screenHeight * 0.27,
+                              width: double.infinity,
+                              // fit: BoxFit.contain,
+                            ),
+                            SpacerVertical(height: Dimen.itemSpacing.sp),
                             provider.data?.postDetail?.authors?.isNotEmpty ==
                                         true ||
                                     provider.data?.postDetail?.categories
@@ -172,11 +179,52 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 : foundSite
                                     ? Padding(
                                         padding: EdgeInsets.only(bottom: 10.sp),
-                                        child: Text(
-                                          "Source - ${provider.data?.postDetail?.site} | $date",
-                                          style: stylePTSansRegular(
-                                              fontSize: 13,
-                                              color: ThemeColors.greyText),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Container(
+                                              constraints: const BoxConstraints(
+                                                  minHeight: 18),
+                                              padding: const EdgeInsets.only(
+                                                  left: 8),
+                                              alignment: Alignment.centerLeft,
+                                              decoration: const BoxDecoration(
+                                                border: Border(
+                                                  left: BorderSide(
+                                                    color: ThemeColors.accent,
+                                                    width: 3,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Source - ",
+                                                    style: stylePTSansRegular(
+                                                      fontSize: 16,
+                                                      color: ThemeColors.white,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "${provider.data?.postDetail?.site}",
+                                                    style: stylePTSansRegular(
+                                                        fontSize: 16,
+                                                        color:
+                                                            ThemeColors.white),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SpacerVertical(height: 8),
+                                            Text(
+                                              date,
+                                              style: stylePTSansRegular(
+                                                fontSize: 13,
+                                                color: ThemeColors.greyText,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       )
                                     : Padding(
@@ -188,12 +236,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               color: ThemeColors.greyText),
                                         ),
                                       ),
-                            CachedNetworkImagesWidget(
-                              provider.data?.postDetail?.image ?? "",
-                              height: ScreenUtil().screenHeight * 0.27,
-                              width: double.infinity,
-                              // fit: BoxFit.contain,
-                            ),
+
                             SpacerVertical(height: Dimen.itemSpacing.sp),
                             HtmlWidget(
                               // customStylesBuilder: (element) {
@@ -514,36 +557,58 @@ class ListAlignment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Utils().showLog("${list1?.isEmpty}, ${list2?.isEmpty}");
-    return Wrap(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Visibility(
-          visible: list1 != null && list1?.isNotEmpty == true,
-          child: Text(
-            "By ",
-            style:
-                styleGeorgiaRegular(color: ThemeColors.greyText, fontSize: 13),
+        Container(
+          constraints: const BoxConstraints(minHeight: 18),
+          padding: const EdgeInsets.only(left: 8),
+          alignment: Alignment.centerLeft,
+          decoration: const BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: ThemeColors.accent,
+                width: 3,
+              ),
+            ),
+          ),
+          child: Wrap(
+            children: [
+              Visibility(
+                visible: list1 != null && list1?.isNotEmpty == true,
+                child: Text(
+                  "By ",
+                  style: styleGeorgiaRegular(
+                      color: ThemeColors.white, fontSize: 16),
+                ),
+              ),
+              buildList(
+                  list: list1,
+                  isLastList: true,
+                  type: BlogsType.author,
+                  blog: blog),
+              // buildList(list: list2, isLastList: list3.isEmpty),
+              // buildList(list: list2, isLastList: true, type: BlogsType.category),
+            ],
           ),
         ),
-        buildList(
-            list: list1, isLastList: true, type: BlogsType.author, blog: blog),
-        // buildList(list: list2, isLastList: list3.isEmpty),
+        const SpacerVertical(height: 8),
         Visibility(
           visible: date != null,
           child: Text(
             list1?.isEmpty == true && list2?.isNotEmpty == true
-                ? " $date"
+                ? "$date"
                 : list2?.isEmpty == true && list1?.isNotEmpty == true
-                    ? " | $date"
+                    ? "$date"
                     : list1?.isEmpty == true && list2?.isEmpty == true
                         ? "$date"
-                        : " | $date",
+                        : "$date",
             style: stylePTSansRegular(
               color: ThemeColors.greyText,
               fontSize: 13,
             ),
           ),
         ),
-        // buildList(list: list2, isLastList: true, type: BlogsType.category),
       ],
     );
   }
@@ -588,8 +653,11 @@ class ListAlignment extends StatelessWidget {
             },
             child: Text(
               list[i].name ?? "",
-              style:
-                  stylePTSansRegular(color: ThemeColors.accent, fontSize: 13),
+              style: stylePTSansRegular(
+                color: ThemeColors.accent,
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
         );
@@ -598,8 +666,11 @@ class ListAlignment extends StatelessWidget {
           widgets.add(
             Text(
               ', ',
-              style:
-                  stylePTSansRegular(color: ThemeColors.accent, fontSize: 13),
+              style: stylePTSansRegular(
+                color: ThemeColors.accent,
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              ),
             ),
           );
         }

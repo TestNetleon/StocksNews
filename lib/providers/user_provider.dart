@@ -39,10 +39,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   UserRes? get user => _user;
   bool isKeyboardVisible = false;
-  // MessageRes? _messageObject;
-  // MessageRes? get messageObject => _messageObject;
-  DrawerDataRes? _drawerData;
 
+  DrawerDataRes? _drawerData;
   DrawerDataRes? get drawerData => _drawerData;
 
   void setStatus(status) {

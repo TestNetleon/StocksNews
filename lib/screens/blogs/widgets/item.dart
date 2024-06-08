@@ -76,8 +76,8 @@ class BlogItem extends StatelessWidget {
                           //     : "${DateFormat("MMMM dd, yyyy").format(blogItem?.publishedDate ?? DateTime.now())} ",
 
                           blogItem?.authors?.isNotEmpty == true
-                              ? " | ${blogItem?.postDateString} "
-                              : "${blogItem?.postDateString} ",
+                              ? " ${blogItem?.postDateString} "
+                              : " ${blogItem?.postDateString} ",
 
                           style: stylePTSansRegular(
                             color: ThemeColors.greyText,

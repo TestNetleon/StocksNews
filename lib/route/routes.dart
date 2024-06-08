@@ -29,6 +29,8 @@ import 'package:stocks_news_new/providers/low_pe_provider.dart';
 import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
+import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
+import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
 import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
@@ -59,6 +61,7 @@ import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
+import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
@@ -336,6 +339,19 @@ class Routes {
             );
           },
         );
+
+      case BlogIndexNew.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String? inAppMsgId = arguments?['inAppMsgId'] as String?;
+        String? notificationId = arguments?['notificationId'] as String?;
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return BlogIndexNew(
+              inAppMsgId: inAppMsgId,
+              notificationId: notificationId,
+            );
+          },
+        );
     }
     return _errorRoute();
   }
@@ -415,6 +431,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TopTodayPennyStocksProviders()),
       ChangeNotifierProvider(create: (_) => UnusualTradingVolumeProvider()),
       ChangeNotifierProvider(create: (_) => MostVolatileStocksProvider()),
+      ChangeNotifierProvider(create: (_) => TodayTopLoserProvider()),
+      ChangeNotifierProvider(create: (_) => TodayBreakoutStockProvider()),
     ];
   }
 }
