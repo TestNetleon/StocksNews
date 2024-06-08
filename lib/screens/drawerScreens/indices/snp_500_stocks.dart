@@ -36,13 +36,17 @@ class _Snp500StocksState extends State<Snp500Stocks> {
   }
 
   void _onFilterClick() async {
-    FilterProvider provider = context.read<FilterProvider>();
-    if (provider.data == null) {
-      await context.read<FilterProvider>().getFilterData();
+    FilterProvider filterProvider = context.read<FilterProvider>();
+    SnP500Provider provider = context.read<SnP500Provider>();
+    if (filterProvider.data == null) {
+      await filterProvider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
       title: "Filter Stock Screener",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: provider.filterParams,
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
+import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/dow_30_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/snp_500_stocks.dart';
@@ -16,8 +17,6 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-
-import '../../../modals/low_price_stocks_tab.dart';
 import 'item.dart';
 
 class IndicesIndex extends StatefulWidget {
@@ -81,10 +80,11 @@ class IndicesData extends StatelessWidget {
         ? const Loading()
         : CustomTabContainerNEW(
             onChange: (index) {
-              // provider.setData();
-              provider.tabChange(index);
+              if (index != 0 && index != 1) {
+                provider.tabChange(index);
+              }
             },
-            scrollable: true,
+            scrollable: (tabs?.length ?? 0) > 1 ? true : false,
             tabsPadding: EdgeInsets.only(bottom: 10.sp),
             // tabs: List.generate(
             //     tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
@@ -92,11 +92,25 @@ class IndicesData extends StatelessWidget {
             //   tabs?.length ?? 0,
             //   (index) => _getWidgets(provider),
             // ),
-            tabs: const ["DOW 30 Stocks", "S&P 500 Stocks"],
-            widgets: const [
-              Dow30Stocks(),
-              Snp500Stocks(),
-            ],
+            tabs: tabs == null
+                ? ["DOW 30 Stocks", "S&P 500 Stocks"]
+                : [
+                    "DOW 30 Stocks",
+                    "S&P 500 Stocks",
+                    ...(tabs.map((tab) => tab.name))
+                  ],
+            widgets: tabs == null
+                ? const [
+                    Dow30Stocks(),
+                    Snp500Stocks(),
+                  ]
+                : [
+                    const Dow30Stocks(),
+                    const Snp500Stocks(),
+                    ...(provider.tabs!
+                        .map((tab) => _getWidgets(provider))
+                        .toList()),
+                  ],
           );
   }
 

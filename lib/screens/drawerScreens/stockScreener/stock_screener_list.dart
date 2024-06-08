@@ -40,7 +40,7 @@ class _StockScreenerListState extends State<StockScreenerList> {
     FilterProvider provider = context.read<FilterProvider>();
     StockScreenerProvider screenerProvider =
         context.read<StockScreenerProvider>();
-    ;
+
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }

@@ -21,10 +21,11 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'edit_email.dart';
 
-otpLoginSheet({
+appleOtpLoginSheet({
   String? state,
   String? dontPop,
   String? id,
+  String? email,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -42,6 +43,7 @@ otpLoginSheet({
         dontPop: dontPop,
         state: state,
         id: id,
+        email: email,
       );
     },
   );
@@ -51,8 +53,15 @@ class OTPLoginBottom extends StatefulWidget {
   final String? state;
   final String? dontPop;
   final String? id;
+  final String? email;
 
-  const OTPLoginBottom({super.key, this.state, this.dontPop, this.id});
+  const OTPLoginBottom({
+    super.key,
+    this.state,
+    this.dontPop,
+    this.id,
+    this.email,
+  });
 
   @override
   State<OTPLoginBottom> createState() => _OTPLoginBottomState();
@@ -88,7 +97,8 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
 
     _startTime();
     Utils().showLog(
-        "---State is ${widget.state}, ---Don't pop up is${widget.dontPop}---");
+      "---State is ${widget.state}, ---Don't pop up is${widget.dontPop}---",
+    );
   }
 
   @override
@@ -115,19 +125,30 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
       bool granted = await Permission.notification.isGranted;
 
       Map request = {
-        "username": provider.user?.username ?? "",
-        "type": "email",
-        "otp": _controller.text,
-        "fcm_token": fcmToken ?? "",
+        // "username": widget.email,
+        // "type": "email",
+        // "otp": _controller.text,
+        // "fcm_token": fcmToken ?? "",
+        // "platform": Platform.operatingSystem,
+        // "address": address ?? "",
+        // "build_version": versionName,
+        // "build_code": buildNumber,
+        // "fcm_permission": "$granted",
+        // "apple_id": widget.id,
+        //
+        "displayName": "",
+        "email": widget.email ?? "",
+        "id": widget.id ?? "",
         "platform": Platform.operatingSystem,
         "address": address ?? "",
         "build_version": versionName,
         "build_code": buildNumber,
+        "fcm_token": fcmToken ?? "",
         "fcm_permission": "$granted",
-        "apple_id": widget.id,
+        "otp": _controller.text,
       };
 
-      provider.verifyLoginOtp(
+      provider.appleLogin(
         request,
         state: widget.state,
         dontPop: widget.dontPop,
@@ -141,10 +162,10 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
     setState(() {});
     UserProvider provider = context.read<UserProvider>();
     Map request = {
-      "username": provider.user?.username ?? "",
+      "email": widget.email,
       "type": "email",
     };
-    provider.resendOtp(request);
+    provider.sendEmailOTP(request, showOtp: false);
   }
 
   @override
@@ -183,7 +204,6 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
           //   width: MediaQuery.of(context).size.width * .45,
           //   child: Image.asset(Images.logo),
           // ),
-
           Container(
             height: 6.sp,
             width: 50.sp,
@@ -194,7 +214,6 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
             ),
           ),
           const SpacerVertical(height: 16),
-
           Container(
             width: MediaQuery.of(context).size.width * .45,
             constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
