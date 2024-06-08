@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
+import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/dow_30_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/snp_500_stocks.dart';
@@ -73,7 +74,7 @@ class IndicesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     IndicesProvider provider = context.watch<IndicesProvider>();
-    // List<LowPriceStocksTabRes>? tabs = provider.tabs;
+    List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
     return provider.tabLoading
         ? const Loading()
