@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -162,7 +163,12 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "build_code": buildNumber,
         "fcm_permission": "$granted",
       };
-      provider.appleLogin(request, dontPop: 'true', state: widget.state);
+      provider.appleLogin(
+        request,
+        dontPop: 'true',
+        state: widget.state,
+        id: id,
+      );
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -344,6 +350,14 @@ class _SignUpBottomState extends State<SignUpBottom> {
                                   AppleIDAuthorizationScopes.fullName,
                                 ],
                               );
+                              log("Apple ***** =>  ${credential.email}");
+                              log("Apple ***** =>  ${credential.authorizationCode}");
+                              log("Apple ***** =>  ${credential.familyName}");
+                              log("Apple ***** =>  ${credential.givenName}");
+                              log("Apple ***** =>  ${credential.identityToken}");
+                              log("Apple ***** =>  ${credential.state}");
+                              log("Apple ***** =>  ${credential.userIdentifier}");
+
                               _handleSignInApple(
                                 credential.userIdentifier,
                                 credential.givenName != null

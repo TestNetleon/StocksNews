@@ -20,6 +20,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
+import '../../../../widgets/disclaimer_widget.dart';
 import '../../../blogs/index.dart';
 import 'news_details_list.dart';
 
@@ -320,6 +321,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 );
                               },
                             ),
+                            if (provider.extra?.disclaimer != null && foundSite)
+                              DisclaimerWidget(
+                                  data: provider.extra?.disclaimer ?? "")
                           ],
                         ),
                       ),
@@ -351,7 +355,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     child: ErrorDisplayWidget(
                       error: provider.error,
                       onRefresh: () => provider.getNewsDetailData(
-                          slug: widget.slug, showProgress: true),
+                          slug: widget.slug, showProgress: false),
                     ),
                   )
                 : provider.isLoading

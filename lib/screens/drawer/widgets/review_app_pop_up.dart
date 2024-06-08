@@ -93,7 +93,8 @@ class ReviewAppPopUp extends StatelessWidget {
                 // final SharedPreferences preferences =
                 //     await SharedPreferences.getInstance();
 
-                if (await inAppReview.isAvailable()) {
+                if (await inAppReview.isAvailable() &&
+                    (provider.homeSliderRes?.rating?.isRating ?? false)) {
                   final int lastReviewTimestamp =
                       await Preference.getMinTimeDifferenceMillis();
                   // preferences.getInt('last_review_timestamp') ?? 0;

@@ -29,22 +29,26 @@ class Rating {
   final String? title;
   final String? description;
   final String? url;
+  final bool? isRating;
 
   Rating({
     this.title,
     this.description,
     this.url,
+    this.isRating,
   });
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
         title: json["title"],
         description: json["description"],
         url: json["url"],
+        isRating: json["is_rating"],
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "description": description,
         "url": url,
+        "is_rating": isRating,
       };
 }
