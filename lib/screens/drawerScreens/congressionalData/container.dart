@@ -67,22 +67,27 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          HtmlTitle(
-            title: provider.title ?? "",
-            style: stylePTSansBold(fontSize: 17),
-            subTitle: provider.subTitle ?? "",
-            onFilterClick: _onFilterClick,
-            // margin: const EdgeInsets.only(top: 10, bottom: 0),
-            hasFilter: provider.filterParams != null,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Divider(
-              color: ThemeColors.accent,
-              height: 2,
-              thickness: 2,
+          if (!(provider.data == null &&
+              provider.filterParams == null &&
+              provider.isLoading))
+            HtmlTitle(
+              title: provider.title ?? "",
+              style: stylePTSansBold(fontSize: 17),
+              subTitle: provider.subTitle ?? "",
+              onFilterClick: _onFilterClick,
+              hasFilter: provider.filterParams != null,
             ),
-          ),
+          if (!(provider.data == null &&
+              provider.filterParams == null &&
+              provider.isLoading))
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Divider(
+                color: ThemeColors.accent,
+                height: 2,
+                thickness: 2,
+              ),
+            ),
           if (provider.filterParams != null)
             FilterUiValues(
               params: provider.filterParams,

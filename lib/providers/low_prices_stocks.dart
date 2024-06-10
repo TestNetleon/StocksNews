@@ -35,12 +35,12 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
   String? title;
   String? subTitle;
-  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   // bool get canLoadMoreDown => _pageDown < (_extraDown?.totalPages ?? 1);
   int _page = 1;
   // int _pageDown = 1;
-  Extra? _extraUp;
-  Extra? get extraUp => _extraUp;
+  Extra? _extra;
+  Extra? get extra => _extra;
   // Extra? _extraDown;
 
   void setStatus(status) {
@@ -60,6 +60,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
 
   void tabChange(index) {
     _filterParams = null;
+    _extra = null;
     if (tabs?[index].key == "Stocks On Sale") {
       if (selectedIndex != index) {
         selectedIndex = index;
@@ -219,7 +220,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         _error = null;
         if (_page == 1) {
           _data = lowPriceStocksResFromJson(jsonEncode(response.data));
-          _extraUp = response.extra is Extra ? response.extra : null;
+          _extra = response.extra is Extra ? response.extra : null;
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
         } else {

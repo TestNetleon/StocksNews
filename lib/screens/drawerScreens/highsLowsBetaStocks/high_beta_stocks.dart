@@ -5,11 +5,10 @@ import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/high_beta_stocks_providers.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/item.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
+import 'package:stocks_news_new/widgets/market_data_header.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -73,18 +72,23 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HtmlTitle(
-          subTitle: provider.extraUp?.subTitle ?? "",
+        MarketDataHeader(
+          provider: provider,
           onFilterClick: _onFilterClick,
-          hasFilter: provider.filterParams != null,
+          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
-        if (provider.filterParams != null)
-          FilterUiValues(
-            params: provider.filterParams,
-            onDeleteExchange: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
-          ),
+        // HtmlTitle(
+        //   subTitle: provider.extraUp?.subTitle ?? "",
+        //   onFilterClick: _onFilterClick,
+        //   hasFilter: provider.filterParams != null,
+        // ),
+        // if (provider.filterParams != null)
+        //   FilterUiValues(
+        //     params: provider.filterParams,
+        //     onDeleteExchange: (exchange) {
+        //       provider.exchangeFilter(exchange);
+        //     },
+        //   ),
         Expanded(
           child: BaseUiContainer(
             error: provider.error,

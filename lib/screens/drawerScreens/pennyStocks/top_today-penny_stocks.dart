@@ -7,14 +7,13 @@ import 'package:stocks_news_new/modals/penny_stocks.dart';
 import 'package:stocks_news_new/providers/top_today_penny_stocks_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
+import 'package:stocks_news_new/widgets/market_data_header.dart';
 
 import '../../../providers/filter_provider.dart';
 import '../../../utils/bottom_sheets.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
-import '../widget/filter_ui_values.dart';
 import '../widget/market_data_filter.dart';
 
 class TopTodayPennyStocks extends StatefulWidget {
@@ -69,18 +68,23 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HtmlTitle(
-          subTitle: provider.extraUp?.subTitle ?? "",
+        MarketDataHeader(
+          provider: provider,
           onFilterClick: _onFilterClick,
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
+          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
-        if (provider.filterParams != null)
-          FilterUiValues(
-            params: provider.filterParams,
-            onDeleteExchange: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
-          ),
+        // HtmlTitle(
+        //   subTitle: provider.extraUp?.subTitle ?? "",
+        //   onFilterClick: _onFilterClick,
+        //   margin: const EdgeInsets.only(top: 10, bottom: 10),
+        // ),
+        // if (provider.filterParams != null)
+        //   FilterUiValues(
+        //     params: provider.filterParams,
+        //     onDeleteExchange: (exchange) {
+        //       provider.exchangeFilter(exchange);
+        //     },
+        //   ),
         Expanded(
           child: BaseUiContainer(
             error: provider.error,

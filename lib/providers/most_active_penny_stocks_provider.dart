@@ -193,13 +193,13 @@ class MostActivePennyStocksProviders extends ChangeNotifier
 
   String? _error;
   int _page = 1;
-  Extra? _extraUp;
+  Extra? _extra;
   List<PennyStocksRes>? _data;
 
   List<PennyStocksRes>? get data => _data;
 
-  Extra? get extraUp => _extraUp;
-  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
+  Extra? get extra => _extra;
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
 
@@ -282,8 +282,7 @@ class MostActivePennyStocksProviders extends ChangeNotifier
         _error = null;
         if (_page == 1) {
           _data = pennyStocksResFromJson(jsonEncode(response.data));
-
-          _extraUp = response.extra is Extra ? response.extra : null;
+          _extra = response.extra is Extra ? response.extra : null;
         } else {
           _data?.addAll(pennyStocksResFromJson(jsonEncode(response.data)));
         }
