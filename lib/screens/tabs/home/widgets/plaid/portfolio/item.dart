@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -62,9 +64,24 @@ class HomePlaidItem extends StatelessWidget {
               ),
             ),
             const SpacerHorizontal(width: 10),
-            Text(
-              data?.closePrice ?? "",
-              style: stylePTSansBold(fontSize: 14),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  data?.closePrice ?? "",
+                  style: stylePTSansBold(fontSize: 14),
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  "${data?.change} (${data?.changesPercentage})%",
+                  style: stylePTSansRegular(
+                    fontSize: 12,
+                    color: (data?.changesPercentage ?? 0) > 0
+                        ? ThemeColors.accent
+                        : Colors.red,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -75,16 +92,35 @@ class HomePlaidItem extends StatelessWidget {
           color: ThemeColors.greyBorder,
           height: 15,
         ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Investment value",
-              style: stylePTSansRegular(fontSize: 14),
+              "QTY",
+              style: stylePTSansRegular(fontSize: 13),
             ),
+            Flexible(
+              child: Text(
+                "${data?.qty}",
+                style: stylePTSansRegular(fontSize: 13),
+              ),
+            ),
+          ],
+        ),
+        const SpacerVertical(height: 5),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
             Text(
-              "N/A",
-              style: stylePTSansRegular(fontSize: 14),
+              "Current value (QTY X Close price)",
+              style: stylePTSansRegular(fontSize: 13),
+            ),
+            Flexible(
+              child: Text(
+                "${data?.investmentValue}",
+                style: stylePTSansRegular(fontSize: 13),
+              ),
             ),
           ],
         ),

@@ -108,7 +108,7 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
                 ),
                 const SpacerHorizontal(width: 5),
                 Text(
-                  homeProvider.homePortfolio?.bottom?.currentBalance ?? "",
+                  provider.extra?.currentBalance ?? "",
                   style: stylePTSansRegular(),
                 ),
               ],
@@ -121,8 +121,8 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
               },
               scrollable: true,
               physics: const NeverScrollableScrollPhysics(),
-              tabs: List.generate(provider.tabs.length,
-                  (index) => provider.tabs[index].capitalizeWords()),
+              tabs: List.generate(
+                  provider.tabs.length, (index) => provider.tabs[index]),
               tabsPadding: const EdgeInsets.only(bottom: 10),
               widgets: List.generate(
                 provider.tabs.length,

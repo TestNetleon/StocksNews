@@ -63,6 +63,7 @@ class Extra {
   final String? apiKeyFMP;
   String? loginText, signUpText;
   final String? disclaimer;
+  final String? currentBalance;
   final MessageRes? messageObject;
 
   Extra({
@@ -72,6 +73,7 @@ class Extra {
     this.transactionType,
     this.cap,
     this.sector,
+    this.currentBalance,
     this.notificationCount,
     this.text,
     this.title,
@@ -99,6 +101,7 @@ class Extra {
         userAlert: json["user_alerts"],
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         title: json["title"],
+        currentBalance: json['current_balance'],
         subTitle: json["sub_title"],
         loginText: json["login_text"],
         signUpText: json["signup_text"],
@@ -152,6 +155,7 @@ class Extra {
         "user_alerts": userAlert,
         "title": title,
         "sub_title": subTitle,
+        "current_balance": currentBalance,
         "total_pages": totalPages,
         "exchange_short_name": exchangeShortName == null
             ? []

@@ -268,6 +268,42 @@ class HighLowBetaStocksItem extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                const SpacerVertical(height: 5),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    data.changesPercentage > 0
+                        ? Icon(
+                            Icons.arrow_upward,
+                            size: 14,
+                            color: data.changesPercentage > 0
+                                ? Colors.green
+                                : Colors.red,
+                          )
+                        : Icon(
+                            Icons.arrow_downward_rounded,
+                            size: 14,
+                            color: data.changesPercentage > 0
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "${data.change} (${data.changesPercentage}%)",
+                            style: stylePTSansRegular(
+                              fontSize: 11,
+                              color: data.changesPercentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             const SpacerHorizontal(width: 10),

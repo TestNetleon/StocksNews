@@ -1,33 +1,41 @@
 import 'dart:convert';
 
-List<HighLowBetaStocksRes> highLowBetaStocksResFromJson(String str) => List<HighLowBetaStocksRes>.from(json.decode(str).map((x) => HighLowBetaStocksRes.fromJson(x)));
+List<HighLowBetaStocksRes> highLowBetaStocksResFromJson(String str) =>
+    List<HighLowBetaStocksRes>.from(
+        json.decode(str).map((x) => HighLowBetaStocksRes.fromJson(x)));
 
-String highLowBetaStocksResToJson(List<HighLowBetaStocksRes> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String highLowBetaStocksResToJson(List<HighLowBetaStocksRes> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class HighLowBetaStocksRes {
-    final dynamic symbol;
-    final dynamic name;
-    final dynamic price;
-    final dynamic beta;
-    final dynamic pe;
-    final dynamic marketCap;
-    final dynamic volume;
-    final dynamic avgVolume;
-    final dynamic image;
+  final dynamic symbol;
+  final dynamic name;
+  final dynamic price;
+  final dynamic beta;
+  final dynamic pe;
+  final dynamic marketCap;
+  final dynamic volume;
+  final dynamic avgVolume;
+  final dynamic image;
+  final dynamic change;
+  final dynamic changesPercentage;
 
-    HighLowBetaStocksRes({
-         this.symbol,
-         this.name,
-         this.price,
-         this.beta,
-         this.pe,
-         this.marketCap,
-         this.volume,
-         this.avgVolume,
-         this.image,
-    });
+  HighLowBetaStocksRes({
+    this.symbol,
+    this.name,
+    this.price,
+    this.beta,
+    this.pe,
+    this.marketCap,
+    this.volume,
+    this.avgVolume,
+    this.image,
+    required this.change,
+    this.changesPercentage,
+  });
 
-    factory HighLowBetaStocksRes.fromJson(Map<String, dynamic> json) => HighLowBetaStocksRes(
+  factory HighLowBetaStocksRes.fromJson(Map<String, dynamic> json) =>
+      HighLowBetaStocksRes(
         symbol: json["symbol"],
         name: json["name"],
         price: json["price"],
@@ -37,9 +45,11 @@ class HighLowBetaStocksRes {
         volume: json["volume"],
         avgVolume: json["avgVolume"],
         image: json["image"],
-    );
+        change: json["change"],
+        changesPercentage: json["changesPercentage"],
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "name": name,
         "price": price,
@@ -49,5 +59,7 @@ class HighLowBetaStocksRes {
         "volume": volume,
         "avgVolume": avgVolume,
         "image": image,
-    };
+        "change": change,
+        "changesPercentage": changesPercentage,
+      };
 }
