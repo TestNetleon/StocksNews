@@ -7,8 +7,8 @@ import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings_item.dar
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class EarningsList extends StatefulWidget {
   const EarningsList({super.key});
@@ -44,31 +44,41 @@ class _EarningsListState extends State<EarningsList> {
         onRefresh: () async => provider.getEarningsStocks(),
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => provider.getEarningsStocks(loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            if (provider.data == null || provider.data!.isEmpty) {
-              return const SizedBox();
-            }
-            EarningsRes dataItem = provider.data![index];
+        child: Column(
+          children: [
+            ScreenTitle(
+              htmlTitle: true,
+              title: provider.extraUp?.subTitle,
+            ),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Dimen.padding,
+                ),
+                itemBuilder: (context, index) {
+                  if (provider.data == null || provider.data!.isEmpty) {
+                    return const SizedBox();
+                  }
+                  EarningsRes dataItem = provider.data![index];
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                EarningsItem(data: dataItem, index: index)
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          itemCount: provider.data?.length ?? 0,
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
+                      EarningsItem(data: dataItem, index: index)
+                    ],
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                itemCount: provider.data?.length ?? 0,
+              ),
+            ),
+          ],
         ),
       ),
     );

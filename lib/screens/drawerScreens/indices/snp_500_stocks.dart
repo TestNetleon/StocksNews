@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
@@ -63,7 +62,8 @@ class _Snp500StocksState extends State<Snp500Stocks> {
         HtmlTitle(
           subTitle: provider.extra?.subTitle ?? "",
           onFilterClick: _onFilterClick,
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
+          // margin: const EdgeInsets.only(top: 10, bottom: 10),
+          hasFilter: provider.filterParams != null,
         ),
         if (provider.filterParams != null)
           FilterUiValues(
@@ -85,7 +85,7 @@ class _Snp500StocksState extends State<Snp500Stocks> {
               canLoadMore: provider.canLoadMore,
               onLoadMore: () async => await provider.getData(loadMore: true),
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 10.sp),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 itemBuilder: (context, index) {
                   Result? data = provider.data?[index];
                   if (data == null) {

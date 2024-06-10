@@ -47,34 +47,35 @@ class _FiftyTwoWeeksHighsStocksState extends State<FiftyTwoWeeksHighsStocks> {
         onRefresh: () async => provider.getFiftyTwoWeekHigh(),
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => provider.getFiftyTwoWeekHigh(loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-            top: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            if (data == null || data.isEmpty) {
-              return const SizedBox();
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                FiftyTwoWeeksItem(
-                  data: data[index],
-                  index: index,
+        child: Column(
+          children: [
+            HtmlTitle(subTitle: provider.extraUp?.subTitle),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.only(
+                  bottom: Dimen.padding,
+                  top: Dimen.padding,
                 ),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          // itemCount: up?.length ?? 0,
-          itemCount: data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  if (data == null || data.isEmpty) {
+                    return const SizedBox();
+                  }
+                  return FiftyTwoWeeksItem(
+                    data: data[index],
+                    index: index,
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                // itemCount: up?.length ?? 0,
+                itemCount: data?.length ?? 0,
+              ),
+            ),
+          ],
         ),
       ),
     );

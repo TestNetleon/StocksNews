@@ -97,9 +97,9 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
               canLoadMore: provider.canLoadMore,
               onLoadMore: () async => provider.getData(loadMore: true),
               child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
-                  top: Dimen.padding.sp,
+                padding: const EdgeInsets.only(
+                  bottom: Dimen.padding,
+                  top: Dimen.padding,
                 ),
                 itemBuilder: (context, index) {
                   return GainerLoserItem(

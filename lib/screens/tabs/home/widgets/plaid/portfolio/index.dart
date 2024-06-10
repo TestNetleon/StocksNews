@@ -71,7 +71,7 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
     PlaidProvider provider = context.watch<PlaidProvider>();
     UserRes? user = context.watch<UserProvider>().user;
     HomeProvider homeProvider = context.watch<HomeProvider>();
-    if (provider.isLoadingT) {
+    if (provider.isLoadingT || homeProvider.isLoadingPortfolio) {
       return const ProgressDialog();
     }
     if (user == null) {
@@ -154,8 +154,9 @@ class HomePlaidBase extends StatelessWidget {
 
     return BaseUiContainer(
       error: plaidTabHolder?.error,
-      hasData: plaidTabHolder?.data != null &&
-          (plaidTabHolder?.data?.isNotEmpty ?? false),
+      hasData: !(plaidTabHolder?.loading == true) &&
+          (plaidTabHolder?.data != null &&
+              (plaidTabHolder?.data?.isNotEmpty ?? false)),
       isLoading: plaidTabHolder?.loading ?? true,
       errorDispCommon: true,
       showPreparingText: true,

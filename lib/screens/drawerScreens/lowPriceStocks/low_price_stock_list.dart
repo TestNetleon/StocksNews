@@ -70,7 +70,8 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
         HtmlTitle(
           subTitle: provider.subTitle ?? "",
           onFilterClick: _onFilterClick,
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
+          // margin: const EdgeInsets.only(top: 10, bottom: 10),
+          hasFilter: provider.filterParams != null,
         ),
         if (provider.filterParams != null)
           FilterUiValues(

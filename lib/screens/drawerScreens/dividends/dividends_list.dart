@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -46,33 +46,44 @@ class _DividendsListState extends State<DividendsList> {
         onRefresh: () async => provider.getDividendsStocks(),
         canLoadMore: provider.canLoadMore,
         onLoadMore: () async => provider.getDividendsStocks(loadMore: true),
-        child: ListView.separated(
-          padding: EdgeInsets.only(
-            bottom: Dimen.padding.sp,
-          ),
-          itemBuilder: (context, index) {
-            if (data == null || data.isEmpty) {
-              return const SizedBox();
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (index == 0) HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                DividendsItem(
-                  data: data[index],
-                  index: index,
+        child: Column(
+          children: [
+            ScreenTitle(
+              htmlTitle: true,
+              title: provider.extraUp?.subTitle,
+            ),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Dimen.padding,
                 ),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
-          },
-          // itemCount: up?.length ?? 0,
-          itemCount: data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  if (data == null || data.isEmpty) {
+                    return const SizedBox();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // if (index == 0)
+                      //   HtmlTitle(subTitle: provider.extraUp?.subTitle),
+                      DividendsItem(
+                        data: data[index],
+                        index: index,
+                      ),
+                    ],
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 20.sp,
+                  );
+                },
+                // itemCount: up?.length ?? 0,
+                itemCount: data?.length ?? 0,
+              ),
+            ),
+          ],
         ),
       ),
     );

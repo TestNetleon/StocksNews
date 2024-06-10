@@ -67,7 +67,8 @@ class _GapUpStocksState extends State<GapUpStocks> {
         HtmlTitle(
           subTitle: provider.extra?.subTitle ?? "",
           onFilterClick: _onFilterClick,
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
+          // margin: const EdgeInsets.only(top: 10, bottom: 10),
+          hasFilter: provider.filterParams != null,
         ),
         if (provider.filterParams != null)
           FilterUiValues(
@@ -90,9 +91,9 @@ class _GapUpStocksState extends State<GapUpStocks> {
               onLoadMore: () async =>
                   await provider.getGapUpStocks(loadMore: true),
               child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
-                  top: Dimen.padding.sp,
+                padding: const EdgeInsets.only(
+                  bottom: Dimen.padding,
+                  top: Dimen.padding,
                 ),
                 itemBuilder: (context, index) {
                   return UpDownStocksItem(
