@@ -18,6 +18,7 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 // import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  void _getAppLinks() {
+  void _getAppLinks() async {
+    // -------- Check for referral Stat -------------
+    try {
+      if ((await Preference.getReferral()) == null) {
+        Uri? initialLink = await _appLinks.getInitialLink();
+        if (initialLink != null) {
+          String? referralCode = initialLink.queryParameters['referrer'] ??
+              initialLink.queryParameters['ref'];
+          if (referralCode != null && referralCode != "") {
+            Preference.saveReferral(referralCode);
+          }
+        }
+      }
+    } catch (e) {
+      print('Error Receiving referral $e');
+    }
+    // -------- Check for referral End -------------
+
     _appLinks.uriLinkStream.listen((event) {
       String type = containsSpecificPath(event);
       String slug = extractLastPathComponent(event);

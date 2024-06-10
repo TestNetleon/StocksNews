@@ -13,12 +13,13 @@ class StocksItem extends StatelessWidget {
   final bool gainer;
   final bool priceData;
   final Top top;
-  const StocksItem(
-      {required this.top,
-      this.gainer = true,
-      super.key,
-      this.priceData = true});
-//
+  const StocksItem({
+    required this.top,
+    this.gainer = true,
+    super.key,
+    this.priceData = true,
+  });
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -39,7 +40,8 @@ class StocksItem extends StatelessWidget {
               width: 43,
               height: 43,
               // Replace 'app_logo.png' with your app logo image path
-              child: ThemeImageView(url: top.image),
+              // child: ThemeImageView(url: top.image!),
+              child: ThemeImageView(url: top.image ?? ""),
               //  Image.network(
               //   top.image,
               //   // Images.userPlaceholder,

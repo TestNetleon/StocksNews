@@ -77,4 +77,14 @@ class Preference {
         ? null
         : MessageRes.fromJson(jsonDecode(localDataBaseString));
   }
+
+  static Future<String?> getReferral() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString("@referral");
+  }
+
+  static void saveReferral(token) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("@referral", token);
+  }
 }
