@@ -19,6 +19,8 @@ class DividendsRes {
   final dynamic recordDate;
   final dynamic declarationDate;
   final dynamic image;
+  final dynamic percentageChange;
+  final dynamic priceChange;
 
   DividendsRes({
     this.symbol,
@@ -33,6 +35,8 @@ class DividendsRes {
     this.recordDate,
     this.declarationDate,
     this.image,
+    this.percentageChange,
+    this.priceChange,
   });
 
   factory DividendsRes.fromJson(Map<String, dynamic> json) => DividendsRes(
@@ -48,6 +52,8 @@ class DividendsRes {
         recordDate: json["recordDate"],
         declarationDate: json["declarationDate"],
         image: json["image"],
+        percentageChange: json["percentage_change"],
+        priceChange: json["price_change"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +69,7 @@ class DividendsRes {
         "recordDate": recordDate,
         "declarationDate": declarationDate,
         "image": image,
+        "percentage_change": percentageChange,
+        "price_change": priceChange,
       };
 }
