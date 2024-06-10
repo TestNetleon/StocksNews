@@ -22,6 +22,7 @@ class FiftyTwoWeeksRes {
   final dynamic dayLow;
   final dynamic dayHigh;
   final dynamic image;
+  final dynamic change;
 
   FiftyTwoWeeksRes({
     required this.symbol,
@@ -34,6 +35,7 @@ class FiftyTwoWeeksRes {
     this.dayLow,
     this.dayHigh,
     this.image,
+    required this.change,
   });
 
   factory FiftyTwoWeeksRes.fromJson(Map<String, dynamic> json) =>
@@ -48,6 +50,7 @@ class FiftyTwoWeeksRes {
         dayLow: json["dayLow"],
         dayHigh: json["dayHigh"],
         image: json["image"],
+        change: json["change"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +64,6 @@ class FiftyTwoWeeksRes {
         "dayLow": dayLow,
         "dayHigh": dayHigh,
         "image": image,
+        "change": change,
       };
 }
