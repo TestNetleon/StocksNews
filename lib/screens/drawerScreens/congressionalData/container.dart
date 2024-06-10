@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
@@ -68,9 +69,11 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
         children: [
           HtmlTitle(
             title: provider.title ?? "",
+            style: stylePTSansBold(fontSize: 17),
             subTitle: provider.subTitle ?? "",
             onFilterClick: _onFilterClick,
-            margin: const EdgeInsets.only(top: 10, bottom: 0),
+            // margin: const EdgeInsets.only(top: 10, bottom: 0),
+            hasFilter: provider.filterParams != null,
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
@@ -100,7 +103,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
                 onRefresh: () async => provider.getData(),
                 canLoadMore: provider.canLoadMore,
                 child: ListView.separated(
-                    padding: EdgeInsets.only(bottom: 10.sp),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     itemBuilder: (context, index) {
                       CongressionalRes? data = provider.data?[index];
                       return CongressionalItem(

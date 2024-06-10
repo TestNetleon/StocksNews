@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/most_active_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/most_volatile_stocks.dart';
@@ -16,13 +15,13 @@ class MostActiveIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: const AppBarHome(
+    return const BaseContainer(
+      appBar: AppBarHome(
         isPopback: true,
         canSearch: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: EdgeInsets.fromLTRB(
           Dimen.padding,
           Dimen.padding,
           Dimen.padding,
@@ -30,13 +29,13 @@ class MostActiveIndex extends StatelessWidget {
         ),
         child: CustomTabContainerNEW(
           scrollable: true,
-          tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: const [
+          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+          tabs: [
             "Most Active Stocks",
             "Most Volatile Stocks",
             "Unusual Trading Volume",
           ],
-          widgets: const [
+          widgets: [
             MostActiveStocks(),
             MostVolatileStocks(),
             UnusualTradingVolume(),

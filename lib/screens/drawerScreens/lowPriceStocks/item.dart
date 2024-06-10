@@ -233,7 +233,7 @@ class LowPriceStocksItem extends StatelessWidget {
                   "${data.change} (${data.changesPercentage}%)",
                   style: stylePTSansRegular(
                     fontSize: 12,
-                    color: (data.change ?? 0) > 0
+                    color: (data.changesPercentage ?? 0) > 0
                         ? ThemeColors.accent
                         : Colors.red,
                   ),

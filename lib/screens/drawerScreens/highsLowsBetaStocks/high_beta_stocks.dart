@@ -76,6 +76,7 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
         HtmlTitle(
           subTitle: provider.extraUp?.subTitle ?? "",
           onFilterClick: _onFilterClick,
+          hasFilter: provider.filterParams != null,
         ),
         if (provider.filterParams != null)
           FilterUiValues(
@@ -98,9 +99,9 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
               onLoadMore: () async =>
                   provider.getHighBetaStocks(loadMore: true, type: 1),
               child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
-                  top: Dimen.padding.sp,
+                padding: const EdgeInsets.only(
+                  bottom: Dimen.padding,
+                  top: Dimen.padding,
                 ),
                 itemBuilder: (context, index) {
                   if (data == null || data.isEmpty) {

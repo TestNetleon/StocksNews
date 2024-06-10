@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/fifty_two_high.dart';
 import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/fifty_two_lows.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -14,13 +13,13 @@ class FiftyTwoWeeksIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: const AppBarHome(
+    return const BaseContainer(
+      appBar: AppBarHome(
         isPopback: true,
         canSearch: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: EdgeInsets.fromLTRB(
           Dimen.padding,
           Dimen.padding,
           Dimen.padding,
@@ -28,9 +27,9 @@ class FiftyTwoWeeksIndex extends StatelessWidget {
         ),
         child: CustomTabContainerNEW(
           scrollable: false,
-          tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: const ["52 Week Highs", "52 Week Lows"],
-          widgets: const [
+          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+          tabs: ["52 Week Highs", "52 Week Lows"],
+          widgets: [
             FiftyTwoWeeksHighsStocks(),
             FiftyTwoWeeksLowsStocks(),
           ],

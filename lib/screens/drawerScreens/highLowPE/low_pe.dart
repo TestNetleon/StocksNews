@@ -68,7 +68,8 @@ class _LowPEStocksState extends State<LowPEStocks> {
         HtmlTitle(
           subTitle: provider.extra?.subTitle ?? "",
           onFilterClick: _onFilterClick,
-          margin: const EdgeInsets.only(top: 0, bottom: 0),
+          // margin: const EdgeInsets.only(top: 0, bottom: 0),
+          hasFilter: provider.filterParams != null,
         ),
         if (provider.filterParams != null)
           FilterUiValues(
@@ -93,9 +94,9 @@ class _LowPEStocksState extends State<LowPEStocks> {
               onLoadMore: () async =>
                   provider.getData(showProgress: false, loadMore: true),
               child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
-                  // top: Dimen.padding.sp,
+                padding: const EdgeInsets.only(
+                  bottom: Dimen.padding,
+                  top: Dimen.padding,
                 ),
                 itemBuilder: (context, index) {
                   HIghLowPeRes? low = provider.data?[index];
