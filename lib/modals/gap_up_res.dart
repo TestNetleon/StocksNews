@@ -18,6 +18,8 @@ class GapUpRes {
   final dynamic priceChangeSinceOpen;
   final dynamic volume;
   final dynamic image;
+  final dynamic changesPercentage;
+  // final dynamic change;
 
   GapUpRes({
     required this.symbol,
@@ -31,6 +33,8 @@ class GapUpRes {
     required this.priceChangeSinceOpen,
     required this.volume,
     required this.image,
+    required this.changesPercentage,
+    // required this.change,
   });
 
   factory GapUpRes.fromJson(Map<String, dynamic> json) => GapUpRes(
@@ -43,6 +47,8 @@ class GapUpRes {
         priceChangeSinceOpen: json["priceChangeSinceOpen"],
         volume: json["volume"],
         image: json["image"],
+        changesPercentage: json["changesPercentage"],
+        change: json["change"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,5 +61,7 @@ class GapUpRes {
         "priceChangeSinceOpen": priceChangeSinceOpen,
         "volume": volume,
         "image": image,
+        "changesPercentage": changesPercentage,
+        "change": change,
       };
 }
