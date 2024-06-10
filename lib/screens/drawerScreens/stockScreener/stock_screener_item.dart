@@ -54,7 +54,7 @@ class StockScreenerItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    data?[index].companyName,
+                    "${data?[index].name}",
                     style: stylePTSansRegular(
                       color: ThemeColors.greyText,
                       fontSize: 12,

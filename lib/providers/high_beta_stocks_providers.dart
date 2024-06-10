@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -28,6 +29,32 @@ class HighBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
 
   int get openIndex => _openIndex;
   int _openIndex = -1;
+
+  FilteredParams? _filterParams;
+  FilteredParams? get filterParams => _filterParams;
+
+  void resetFilter() {
+    _filterParams = null;
+    _page = 1;
+    notifyListeners();
+  }
+
+  void applyFilter(FilteredParams? params) {
+    _filterParams = params;
+    _page = 1;
+    notifyListeners();
+    getHighBetaStocks();
+  }
+
+  void exchangeFilter(String item) {
+    _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
+    _page = 1;
+    notifyListeners();
+    getHighBetaStocks();
+  }
 
   void setStatus(status) {
     _status = status;
@@ -52,7 +79,19 @@ class HighBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loading);
     }
     try {
-      Map request = {"page": "$_page"};
+      Map request = {
+        "page": "$_page",
+        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
+      };
 
       ApiResponse response = await apiRequest(
         url: Apis.highBetaStocks,

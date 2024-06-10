@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/item_sale_on_stocks.dart';
+import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/low_price_stock_list.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -51,23 +52,17 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
           Dimen.padding,
           0,
         ),
-        child: provider.tabLoading ? const Loading() : _getWidget(provider),
+        child: provider.tabLoading
+            ? const Loading()
+            : !provider.tabLoading && provider.tabs == null
+                ? ErrorDisplayWidget(
+                    error: provider.error,
+                    onRefresh: () => provider.getTabsData(showProgress: false),
+                  )
+                : const LowPriceStocksData(),
       ),
     );
   }
-}
-
-Widget _getWidget(LowPriceStocksProvider provider) {
-  if (provider.tabLoading) {
-    return const SizedBox();
-  }
-  if (!provider.tabLoading && provider.tabs == null) {
-    return ErrorDisplayWidget(
-      error: provider.error,
-      onRefresh: () => provider.getTabsData(showProgress: true),
-    );
-  }
-  return const LowPriceStocksData();
 }
 
 class LowPriceStocksData extends StatelessWidget {
@@ -80,14 +75,19 @@ class LowPriceStocksData extends StatelessWidget {
 
     return CustomTabContainerNEW(
       onChange: (index) {
+        provider.resetFilter();
         provider.tabChange(index);
       },
       scrollable: true,
       tabsPadding: EdgeInsets.only(bottom: 10.sp),
-      tabs: List.generate(tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
+      tabs: List.generate(
+        tabs?.length ?? 0,
+        (index) => "${tabs?[index].key}",
+      ),
       widgets: List.generate(
         tabs?.length ?? 0,
-        (index) => _getWidgets(provider),
+        (index) => LowPriceStocksList(index: index),
+        // (index) => _getWidgets(provider),
       ),
     );
   }

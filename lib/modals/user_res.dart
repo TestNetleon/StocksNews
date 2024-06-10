@@ -17,6 +17,8 @@ class UserRes {
   bool notificationSeen;
   String? image;
   String? name;
+  String? signUpSuccessful;
+  String? yourAccountHasBeenCreated;
 //
   UserRes({
     required this.email,
@@ -31,6 +33,8 @@ class UserRes {
     this.notificationSeen = false,
     this.image,
     this.name,
+    this.signUpSuccessful,
+    this.yourAccountHasBeenCreated,
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
@@ -45,6 +49,8 @@ class UserRes {
         type: json["type"],
         image: json["image"],
         name: json["name"],
+        signUpSuccessful: json["sign_up_successful"],
+        yourAccountHasBeenCreated: json["your_account_has_been_created"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +65,7 @@ class UserRes {
         "type": type,
         "image": image,
         "name": name,
+        "sign_up_successful": signUpSuccessful,
+        "your_account_has_been_created": yourAccountHasBeenCreated,
       };
 }
