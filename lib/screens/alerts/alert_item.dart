@@ -164,7 +164,7 @@ class AlertsItem extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "${data.displayChange} (${data.changesPercentage})%",
+                  "${data.displayChange} (${data.changesPercentage}%)",
                   style: stylePTSansRegular(
                     fontSize: 12,
                     color: data.changesPercentage > 0

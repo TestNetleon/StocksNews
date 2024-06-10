@@ -22,7 +22,8 @@ enum NotificationType {
   lpPage,
   blogDetail,
   register,
-  review
+  review,
+  stockDetail
 }
 
 enum BlogsType { blog, author, category, tag }

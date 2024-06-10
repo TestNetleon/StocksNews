@@ -160,6 +160,7 @@ class HomePlaidBase extends StatelessWidget {
       isLoading: plaidTabHolder?.loading ?? true,
       errorDispCommon: true,
       showPreparingText: true,
+      onRefresh: provider.onRefresh,
       child: ListView.separated(
         padding: const EdgeInsets.only(bottom: Dimen.padding),
         // scrollDirection: Axis.horizontal,

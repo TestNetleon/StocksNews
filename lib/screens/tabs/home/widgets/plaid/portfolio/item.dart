@@ -71,7 +71,7 @@ class HomePlaidItem extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "${data?.change} (${data?.changesPercentage})%",
+                  "${data?.change} (${data?.changesPercentage}%)",
                   style: stylePTSansRegular(
                     fontSize: 12,
                     color: (data?.changesPercentage ?? 0) > 0
