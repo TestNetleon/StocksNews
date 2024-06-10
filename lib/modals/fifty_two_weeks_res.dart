@@ -15,7 +15,6 @@ class FiftyTwoWeeksRes {
   final dynamic symbol;
   final dynamic name;
   final dynamic price;
-  final dynamic changesPercentage;
   final dynamic yearHigh;
   final dynamic yearLow;
   final dynamic previousClose;
@@ -23,12 +22,12 @@ class FiftyTwoWeeksRes {
   final dynamic dayHigh;
   final dynamic image;
   final dynamic change;
+  final dynamic changesPercentage;
 
   FiftyTwoWeeksRes({
     required this.symbol,
     required this.name,
     this.price,
-    this.changesPercentage,
     this.yearHigh,
     this.yearLow,
     this.previousClose,
@@ -36,6 +35,7 @@ class FiftyTwoWeeksRes {
     this.dayHigh,
     this.image,
     required this.change,
+    this.changesPercentage,
   });
 
   factory FiftyTwoWeeksRes.fromJson(Map<String, dynamic> json) =>
@@ -43,7 +43,6 @@ class FiftyTwoWeeksRes {
         symbol: json["symbol"],
         name: json["name"],
         price: json["price"],
-        changesPercentage: json["changesPercentage"],
         yearHigh: json["yearHigh"],
         yearLow: json["yearLow"],
         previousClose: json["previousClose"],
@@ -51,13 +50,13 @@ class FiftyTwoWeeksRes {
         dayHigh: json["dayHigh"],
         image: json["image"],
         change: json["change"],
+        changesPercentage: json["changesPercentage"],
       );
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "name": name,
         "price": price,
-        "changesPercentage": changesPercentage,
         "yearHigh": yearHigh,
         "yearLow": yearLow,
         "previousClose": previousClose,
@@ -65,5 +64,6 @@ class FiftyTwoWeeksRes {
         "dayHigh": dayHigh,
         "image": image,
         "change": change,
+        "changesPercentage": changesPercentage,
       };
 }
