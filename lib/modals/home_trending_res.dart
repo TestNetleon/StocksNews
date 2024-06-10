@@ -139,7 +139,7 @@ class Top {
   final String symbol;
   final String price;
   final num changesPercentage;
-  final String image;
+  final String? image;
   final bool gained;
   final String displayChange;
 

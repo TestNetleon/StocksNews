@@ -8,8 +8,10 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
@@ -22,7 +24,7 @@ class NotificationsItem extends StatelessWidget {
 
   void _onTap(
     BuildContext context,
-  ) {
+  ) async {
     try {
       String? type = data.type;
       String? slug = data.slug;
@@ -75,17 +77,21 @@ class NotificationsItem extends StatelessWidget {
             return const ReviewAppPopUp();
           },
         );
-      }
-      // else if (slug != '' && type == NotificationType.register.name) {
-      //   Utils().showLog("--navigate to blog detail---");
+      } else if (slug != '' && type == NotificationType.register.name) {
+        Utils().showLog("--navigate to blog detail---");
+        if (await Preference.isLoggedIn()) {
+          Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!, Tabs.path, (route) => false);
+          popUpAlert(
+              message: "Welcome to the Home Screen!",
+              title: "Alert",
+              icon: Images.alertPopGIF);
 
-      //   Navigator.push(
-      //     navigatorKey.currentContext!,
-      //     MaterialPageRoute(
-      //       builder: (context) => const SignUpBottom(),
-      //     ),
-      //   );
-      // }
+          return;
+        }
+        Navigator.pop(context);
+        isPhone ? signupSheet() : signupSheetTablet();
+      }
       // else {
       //   Utils().showLog("--navigate to stock detail---");
 
