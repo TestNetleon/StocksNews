@@ -75,20 +75,20 @@ class IndicesProvider extends ChangeNotifier {
 
   void tabChange(index) {
     if (selectedIndex != index) {
-      if (tabs?[index].key == "DOW30") {
-        selectedIndex = index;
-        notifyListeners();
-        getIndicesData(showProgress: true, dowThirtyStocks: true);
-      } else if (tabs?[index].key == "SP500") {
-        selectedIndex = index;
-        notifyListeners();
-        getIndicesData(showProgress: true, sPFiftyStocks: true);
-      } else {
-        selectedIndex = index;
-        notifyListeners();
-        getIndicesData(showProgress: false);
-      }
+      // if (tabs?[index].key == "DOW30") {
+      //   selectedIndex = index;
+      //   notifyListeners();
+      //   getIndicesData(showProgress: true, dowThirtyStocks: true);
+      // } else if (tabs?[index].key == "SP500") {
+      //   selectedIndex = index;
+      //   notifyListeners();
+      //   getIndicesData(showProgress: true, sPFiftyStocks: true);
+      // } else {
+      selectedIndex = index - 2;
+      notifyListeners();
+      getIndicesData(showProgress: false);
     }
+    // }
   }
 
   Future onRefresh() async {
@@ -166,7 +166,7 @@ class IndicesProvider extends ChangeNotifier {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "exchange": _tabs?[selectedIndex].key,
+        "exchange": _tabs?[selectedIndex].name,
         "page": "$_page"
       };
       Map requestDowThirty = {
