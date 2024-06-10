@@ -144,7 +144,7 @@ class KeyValueElementStockScreener {
 
 class Result {
   final dynamic symbol;
-  final dynamic companyName;
+  final dynamic name;
   final dynamic marketCap;
   final dynamic sector;
   final dynamic industry;
@@ -161,7 +161,7 @@ class Result {
 
   Result({
     this.symbol,
-    this.companyName,
+    this.name,
     this.marketCap,
     this.sector,
     this.industry,
@@ -179,7 +179,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         symbol: json["symbol"],
-        companyName: json["companyName"],
+        name: json["name"],
         marketCap: json["marketCap"],
         sector: json["sector"],
         industry: json["industry"],
@@ -197,7 +197,7 @@ class Result {
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
-        "companyName": companyName,
+        "name": name,
         "marketCap": marketCap,
         "sector": sector,
         "industry": industry,

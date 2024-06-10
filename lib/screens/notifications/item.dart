@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -65,16 +67,37 @@ class NotificationsItem extends StatelessWidget {
             ),
           ),
         );
-      } else {
-        Utils().showLog("--navigate to stock detail---");
+      } else if (slug != '' && type == NotificationType.review.name) {
+        Utils().showLog("--navigate to blog detail---");
 
-        Navigator.pushNamed(
-          navigatorKey.currentContext!,
-          StockDetails.path,
-          // arguments: type,
-          arguments: {"slug": type},
+        showDialog(
+          context: navigatorKey.currentContext!,
+          barrierColor: Colors.black.withOpacity(0.5),
+          builder: (context) {
+            return const ReviewAppPopUp();
+          },
         );
       }
+      // else if (slug != '' && type == NotificationType.register.name) {
+      //   Utils().showLog("--navigate to blog detail---");
+
+      //   Navigator.push(
+      //     navigatorKey.currentContext!,
+      //     MaterialPageRoute(
+      //       builder: (context) => const SignUpBottom(),
+      //     ),
+      //   );
+      // }
+      // else {
+      //   Utils().showLog("--navigate to stock detail---");
+
+      //   Navigator.pushNamed(
+      //     navigatorKey.currentContext!,
+      //     StockDetails.path,
+      //     // arguments: type,
+      //     arguments: {"slug": type},
+      //   );
+      // }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.pushNamedAndRemoveUntil(

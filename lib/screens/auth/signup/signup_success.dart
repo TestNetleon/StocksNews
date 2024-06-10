@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -15,6 +17,7 @@ class SignUpSuccess extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = context.watch<UserProvider>();
     return BaseContainer(
       body: Column(
         children: [
@@ -33,12 +36,13 @@ class SignUpSuccess extends StatelessWidget {
                 ),
                 const SpacerVertical(),
                 Text(
-                  "Sign Up Successful",
+                  userProvider.user?.signUpSuccessful ?? "Sign Up Successful",
                   style: stylePTSansBold(fontSize: 24),
                 ),
                 const SpacerVertical(height: Dimen.itemSpacing),
                 Text(
-                  "Your account has been created. Let's begin analyzing stocks.",
+                  userProvider.user?.yourAccountHasBeenCreated ??
+                      "Your account has been created. Let's begin analyzing stocks.",
                   style: stylePTSansRegular(
                     fontSize: 14,
                     color: ThemeColors.greyText,

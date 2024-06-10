@@ -13,7 +13,6 @@ import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -26,10 +25,10 @@ import '../../t&cAndPolicy/tc_policy.dart';
 import '../../whatWeDo/index.dart';
 
 List<DrawerRes> marketData = [
-  DrawerRes(
-    iconData: Icons.calendar_month_outlined,
-    text: "Calendar",
-  ),
+  // DrawerRes(
+  //   iconData: Icons.calendar_month_outlined,
+  //   text: "Calendar",
+  // ),
   // DrawerRes(
   //   iconData: Icons.data_exploration_outlined,
   //   text: "Commodities",
@@ -194,14 +193,14 @@ List<DrawerRes> marketData = [
       Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
     },
   ),
-  DrawerRes(
-    iconData: Icons.screen_search_desktop_outlined,
-    text: "Stock Screener",
-    onTap: () {
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, StockScreenerScreen.path);
-    },
-  ),
+  // DrawerRes(
+  //   iconData: Icons.screen_search_desktop_outlined,
+  //   text: "Stock Screener",
+  //   onTap: () {
+  //     Navigator.pushNamed(
+  //         navigatorKey.currentContext!, StockScreenerScreen.path);
+  //   },
+  // ),
 ];
 
 List<DrawerRes> researchTools = [
