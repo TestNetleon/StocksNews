@@ -98,5 +98,8 @@
 	</array>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>SKStoreReviewControllerPromptStyle</key>
+    <string>0</string>
+
 </dict>
 </plist>

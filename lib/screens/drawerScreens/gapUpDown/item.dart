@@ -90,15 +90,50 @@ class UpDownStocksItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SpacerVertical(height: 5),
-                Text(
-                  "${data.priceChangeSinceOpen}%",
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: "${data.priceChangeSinceOpen}".contains("-")
-                        ? Colors.red
-                        : ThemeColors.accent,
-                  ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    data.changesPercentage > 0
+                        ? Icon(
+                            Icons.arrow_upward,
+                            size: 14,
+                            color: data.changesPercentage > 0
+                                ? Colors.green
+                                : Colors.red,
+                          )
+                        : Icon(
+                            Icons.arrow_downward_rounded,
+                            size: 14,
+                            color: data.changesPercentage > 0
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "${data.change} (${data.changesPercentage}%)",
+                            style: stylePTSansRegular(
+                              fontSize: 11,
+                              color: data.changesPercentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+                // Text(
+                //   "${data.priceChangeSinceOpen}%",
+                //   style: stylePTSansRegular(
+                //     fontSize: 12,
+                //     color: "${data.priceChangeSinceOpen}".contains("-")
+                //         ? Colors.red
+                //         : ThemeColors.accent,
+                //   ),
+                // ),
               ],
             ),
             const SpacerHorizontal(width: 10),
