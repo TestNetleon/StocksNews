@@ -390,7 +390,14 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       } else {
         // showErrorMessage(message: response.message);
         if (response.message == "Invalid email address") {
+          Utils().showLog("Apple ID => $id");
           showIosEmailError(state: state, dontPop: dontPop, id: id);
+        } else {
+          popUpAlert(
+            message: response.message ?? Const.errSomethingWrong,
+            title: "Alert",
+            icon: Images.alertPopGIF,
+          );
         }
       }
       setStatus(Status.loaded);

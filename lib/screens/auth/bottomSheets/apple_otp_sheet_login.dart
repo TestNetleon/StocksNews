@@ -246,7 +246,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 //     color: Colors.white,
                 //   ),
                 // ),
-                EditEmail(email: "${provider.user?.username}"),
+                EditEmail(email: "${widget.email}"),
 
                 const SpacerVertical(),
                 // Text(
