@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/usernot_present.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -18,37 +23,13 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
-class HomePlaidAdded extends StatefulWidget {
+class HomePlaidAdded extends StatelessWidget {
+  static const path = "HomePlaidAdded";
+
   const HomePlaidAdded({super.key});
 
   @override
-  State<HomePlaidAdded> createState() => _HomePlaidAddedState();
-}
-
-class _HomePlaidAddedState extends State<HomePlaidAdded> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<PlaidProvider>().getTabData();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    PlaidProvider provider = context.watch<PlaidProvider>();
-    if (provider.isLoadingT) {
-      return const ProgressDialog();
-    }
-
-    if (!provider.isLoadingT && provider.tabs.isEmpty) {
-      return ErrorDisplayWidget(
-        error: provider.error,
-        onRefresh: () {
-          provider.getTabData();
-        },
-      );
-    }
     return const BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
@@ -60,14 +41,57 @@ class _HomePlaidAddedState extends State<HomePlaidAdded> {
   }
 }
 
-class HomePlaidAddedContainer extends StatelessWidget {
+class HomePlaidAddedContainer extends StatefulWidget {
   const HomePlaidAddedContainer({super.key});
+
+  @override
+  State<HomePlaidAddedContainer> createState() =>
+      _HomePlaidAddedContainerState();
+}
+
+class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getData();
+    });
+  }
+
+  _getData() {
+    PlaidProvider provider = context.read<PlaidProvider>();
+    UserRes? user = context.read<UserProvider>().user;
+    if (user != null) {
+      provider.getTabData();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     PlaidProvider provider = context.watch<PlaidProvider>();
+    UserRes? user = context.watch<UserProvider>().user;
     HomeProvider homeProvider = context.watch<HomeProvider>();
+    if (provider.isLoadingT) {
+      return const ProgressDialog();
+    }
+    if (user == null) {
+      return PortfolioUserNotLoggedIn(
+        onTap: () async {
+          isPhone ? await loginSheet() : await loginSheetTablet();
 
+          await provider.getTabData();
+        },
+      );
+    }
+
+    if (!provider.isLoadingT && provider.tabs.isEmpty) {
+      return ErrorDisplayWidget(
+        error: provider.errorT,
+        onRefresh: () {
+          provider.getTabData();
+        },
+      );
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(
           Dimen.padding, Dimen.padding, Dimen.padding, 0),

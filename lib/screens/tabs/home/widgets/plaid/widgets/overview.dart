@@ -18,12 +18,7 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomePlaidAdded(),
-            ),
-          );
+          Navigator.pushNamed(context, HomePlaidAdded.path);
         },
         child: Ink(
           decoration: const BoxDecoration(

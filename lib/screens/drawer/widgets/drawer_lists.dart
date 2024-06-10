@@ -16,6 +16,7 @@ import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -338,6 +339,13 @@ List<DrawerRes> aboutTiles = [
     text: "My Profile",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, MyAccount.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.person_pin_outlined,
+    text: "Portfolio",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, HomePlaidAdded.path);
     },
   ),
   DrawerRes(

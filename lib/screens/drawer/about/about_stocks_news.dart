@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -30,26 +31,28 @@ class AboutStocksNews extends StatefulWidget {
 }
 
 class _AboutStocksNewsState extends State<AboutStocksNews> {
-  bool userPresent = false;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _getData();
-    });
-  }
+  // bool userPresent = false;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     _getData();
+  //   });
+  // }
 
-  void _getData() async {
-    UserProvider provider = context.read<UserProvider>();
-    if (await provider.checkForUser()) {
-      userPresent = true;
-      setState(() {});
-    }
-  }
+  // void _getData() async {
+  //   UserProvider provider = context.read<UserProvider>();
+  //   if (await provider.checkForUser()) {
+  //     userPresent = true;
+  //     setState(() {});
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    UserRes? user = context.watch<UserProvider>().user;
+
     return Scaffold(
       backgroundColor: ThemeColors.background,
       body: SafeArea(
@@ -114,9 +117,9 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                 itemCount: aboutTiles.length,
               ),
               Visibility(
-                  visible: !userPresent, child: SpacerVertical(height: 30.sp)),
+                  visible: user == null, child: SpacerVertical(height: 30.sp)),
               Visibility(
-                visible: userPresent,
+                visible: user != null,
                 child: Padding(
                   padding:
                       EdgeInsets.only(left: 10.sp, right: 10.sp, bottom: 30.sp),

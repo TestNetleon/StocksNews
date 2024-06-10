@@ -92,6 +92,7 @@ import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -150,6 +151,7 @@ class Routes {
     CompareNew.path: (_) => const CompareNew(),
     EarningsScreen.path: (_) => const EarningsScreen(),
     StockScreenerScreen.path: (_) => const StockScreenerScreen(),
+    HomePlaidAdded.path: (_) => const HomePlaidAdded(),
   };
 
   static Route bottomToTopScreenRoute(widget) {

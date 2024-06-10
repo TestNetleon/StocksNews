@@ -106,6 +106,7 @@ class PlaidProvider extends ChangeNotifier {
         }
       } else {
         //
+        _errorT = response.message;
       }
       setStatusT(Status.loaded);
     } catch (e) {
