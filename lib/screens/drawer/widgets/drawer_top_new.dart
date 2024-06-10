@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import '../../../providers/search_provider.dart';
 import '../../../utils/colors.dart';
@@ -28,13 +29,14 @@ class DrawerTopNew extends StatelessWidget {
           text ?? "",
           style: stylePTSansBold(fontSize: 20),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.settings,
-            color: ThemeColors.white,
-          ),
-        ),
+        const SpacerHorizontal(width: 40),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     Icons.settings,
+        //     color: ThemeColors.white,
+        //   ),
+        // ),
         // Row(
         //   children: [
         // IconButton(
