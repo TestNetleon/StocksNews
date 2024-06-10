@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ import 'package:stocks_news_new/modals/home_portfolio.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -101,6 +103,8 @@ class PlaidProvider extends ChangeNotifier {
       );
       if (response.status) {
         _tabs = homePortfolioTabResFromJson(jsonEncode(response.data));
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+
         if (_tabs.isNotEmpty) {
           getPlaidPortfolioData(name: _tabs[selectedTab]);
         }
@@ -171,6 +175,7 @@ class PlaidProvider extends ChangeNotifier {
 
   Future sendPlaidPortfolio({
     showProgress = true,
+    fromDrawer = true,
     List<dynamic>? data,
     List<dynamic>? dataAccounts,
     List<dynamic>? holdings,
@@ -197,6 +202,10 @@ class PlaidProvider extends ChangeNotifier {
         // getPlaidPortfolioData();
         navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
 
+        if (!fromDrawer) {
+          Navigator.pushNamed(
+              navigatorKey.currentContext!, HomePlaidAdded.path);
+        }
         // popUpAlert(
         //   message: response.message ?? "Data fetched successfully.",
         //   title: "Alert",

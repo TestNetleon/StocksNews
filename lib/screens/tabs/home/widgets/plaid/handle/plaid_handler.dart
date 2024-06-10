@@ -47,8 +47,8 @@ class PlaidLinkHandler {
 
     popUpAlert(
       message: "Please wait while we are fetching your data...",
-      title: "Alert",
-      icon: Images.alertPopGIF,
+      title: "Fetching data",
+      icon: Images.updateGIF,
       canPop: false,
       showButton: false,
     );
@@ -126,6 +126,7 @@ class PlaidLinkHandler {
         Utils().showLog("Get Holdings Securities Data: $responseData");
         Navigator.pop(navigatorKey.currentContext!);
         navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
+              fromDrawer: fromDrawer,
               data: responseData["securities"],
               dataAccounts: responseData["accounts"],
               holdings: responseData['holdings'],
