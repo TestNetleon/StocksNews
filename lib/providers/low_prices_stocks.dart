@@ -7,6 +7,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -58,7 +59,8 @@ class LowPriceStocksProvider extends ChangeNotifier {
   }
 
   void tabChange(index) {
-    if (tabs?[index].name == "Stocks On Sale") {
+    _filterParams = null;
+    if (tabs?[index].key == "Stocks On Sale") {
       if (selectedIndex != index) {
         selectedIndex = index;
         notifyListeners();
@@ -73,6 +75,36 @@ class LowPriceStocksProvider extends ChangeNotifier {
       }
     }
   }
+
+// --------- Filter ------------
+
+  FilteredParams? _filterParams;
+  FilteredParams? get filterParams => _filterParams;
+
+  void resetFilter() {
+    _filterParams = null;
+    _page = 1;
+    notifyListeners();
+  }
+
+  void applyFilter(FilteredParams? params) {
+    _filterParams = params;
+    _page = 1;
+    notifyListeners();
+    getLowPriceData();
+  }
+
+  void exchangeFilter(String item) {
+    _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
+    _page = 1;
+    notifyListeners();
+    getLowPriceData();
+  }
+
+// ---------------------
 
   Future onRefresh() async {
     getTabsData();
@@ -162,8 +194,18 @@ class LowPriceStocksProvider extends ChangeNotifier {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        if (typeIndex == 0) "slug": _tabs?[selectedIndex].key,
-        "page": "$_page"
+        if (typeIndex == 0) "slug": _tabs?[selectedIndex].value,
+        "page": "$_page",
+        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
       };
 
       ApiResponse response = await apiRequest(

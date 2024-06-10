@@ -57,7 +57,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   void _onSuccess(LinkSuccess event) {
     final token = event.publicToken;
     final metadata = event.metadata;
-    Utils().showLog("onSuccess: $token, metadata: $metadata");
+    Utils().showLog(
+        "onSuccess: $token, institution name: ${metadata.institution?.name}");
 
     popUpAlert(
       message: "Please wait while we are fetching your data...",

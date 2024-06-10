@@ -9,21 +9,21 @@ String lowPriceStocksTabResToJson(List<LowPriceStocksTabRes> data) =>
 
 class LowPriceStocksTabRes {
   final String key;
-  final String name;
+  final String value;
 
   LowPriceStocksTabRes({
     required this.key,
-    required this.name,
+    required this.value,
   });
 
   factory LowPriceStocksTabRes.fromJson(Map<String, dynamic> json) =>
       LowPriceStocksTabRes(
         key: json["key"],
-        name: json["name"],
+        value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "key": key,
-        "name": name,
+        "value": value,
       };
 }

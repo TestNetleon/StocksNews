@@ -63,7 +63,7 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             text: provider.homePortfolio?.bottom?.closePrice ??
-                                "N/A",
+                                "",
                             style: stylePTSansRegular(
                               fontSize: 18,
                             ),
@@ -96,7 +96,7 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
                           text: TextSpan(
                             text: provider
                                     .homePortfolio?.bottom?.currentBalance ??
-                                "N/A",
+                                "",
                             style: stylePTSansRegular(
                               fontSize: 18,
                             ),

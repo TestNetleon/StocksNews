@@ -9,6 +9,7 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -32,10 +33,10 @@ class IndicesProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
   bool get tabLoading => _tabStatus == Status.loading;
-  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   int _page = 1;
-  Extra? _extraUp;
-  Extra? get extraUp => _extraUp;
+  Extra? _extra;
+  Extra? get extra => _extra;
 
   String? title;
   String? subTitle;
@@ -75,22 +76,51 @@ class IndicesProvider extends ChangeNotifier {
 
   void tabChange(index) {
     if (selectedIndex != index) {
-      if (tabs?[index].key == "DOW30") {
-        selectedIndex = index;
-        notifyListeners();
-        getIndicesData(showProgress: true, dowThirtyStocks: true);
-      } else if (tabs?[index].key == "SP500") {
-        selectedIndex = index;
-        notifyListeners();
-        getIndicesData(showProgress: true, sPFiftyStocks: true);
-      } else {
-        selectedIndex = index;
-        notifyListeners();
-        getIndicesData(showProgress: false);
-      }
+      // if (tabs?[index].key == "DOW30") {
+      //   selectedIndex = index;
+      //   notifyListeners();
+      //   getIndicesData(showProgress: true, dowThirtyStocks: true);
+      // } else if (tabs?[index].key == "SP500") {
+      //   selectedIndex = index;
+      //   notifyListeners();
+      //   getIndicesData(showProgress: true, sPFiftyStocks: true);
+      // } else {
+      selectedIndex = index - 2;
+      notifyListeners();
+      getIndicesData(showProgress: false);
     }
+    // }
   }
 
+//----------Filter ------------------
+
+  FilteredParams? _filterParams;
+  FilteredParams? get filterParams => _filterParams;
+
+  void resetFilter() {
+    _filterParams = null;
+    _page = 1;
+    notifyListeners();
+  }
+
+  void applyFilter(FilteredParams? params) {
+    _filterParams = params;
+    _page = 1;
+    notifyListeners();
+    getIndicesData();
+  }
+
+  void exchangeFilter(String item) {
+    _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
+    _page = 1;
+    notifyListeners();
+    getIndicesData();
+  }
+
+//----------Filter ------------------
   Future onRefresh() async {
     getTabsData();
   }
@@ -166,36 +196,50 @@ class IndicesProvider extends ChangeNotifier {
       Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "exchange": _tabs?[selectedIndex].key,
-        "page": "$_page"
+        "page": "$_page",
+        "exchange": _tabs?[selectedIndex].value,
+        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "price": _filterParams?.price ?? "",
+        "industry": _filterParams?.industry ?? "",
+        "market_cap": _filterParams?.market_cap ?? "",
+        "beta": _filterParams?.beta ?? "",
+        "dividend": _filterParams?.dividend ?? "",
+        "isEtf": _filterParams?.isEtf ?? "",
+        "isFund": _filterParams?.isFund ?? "",
+        "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
+        "sector": _filterParams?.sector ?? "",
       };
-      Map requestDowThirty = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "page": "$_page"
-      };
-      Map requestSPFifty = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "page": "$_page"
-      };
+      // Map requestDowThirty = {
+      //   "token":
+      //       navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      //   "page": "$_page"
+      // };
+      // Map requestSPFifty = {
+      //   "token":
+      //       navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      //   "page": "$_page"
+      // };
 
       ApiResponse response = await apiRequest(
-        url: dowThirtyStocks == true
-            ? Apis.dowThirty
-            : sPFiftyStocks == true
-                ? Apis.spFifty
-                : Apis.indices,
-        request: dowThirtyStocks
-            ? requestDowThirty
-            : sPFiftyStocks
-                ? requestSPFifty
-                : request,
+        url:
+            // dowThirtyStocks == true
+            //     ? Apis.dowThirty
+            //     : sPFiftyStocks == true
+            //         ? Apis.spFifty
+            //         :
+            Apis.indices,
+        request:
+            // dowThirtyStocks
+            //     ? requestDowThirty
+            //     : sPFiftyStocks
+            //         ? requestSPFifty
+            //         :
+            request,
         showProgress: false,
         onRefresh: onRefreshIndicesData,
       );
       if (response.status) {
-        _extraUp = response.extra is Extra ? response.extra : null;
+        _extra = response.extra is Extra ? response.extra : null;
         notifyListeners();
 
         // _extraUp = response.extra;

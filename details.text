@@ -46,6 +46,15 @@ Organization: StocksNews
 keystore path: C:\Users\DELL\StudioProjects\StocksNews_keystore\keystore.jks
 Bitly App ID: Ao1uh273EZS
 
+============= PLAID ==================
+
+1. Robin hood 
+  stockmister@me.com and password Rafael@2021
+
+2. plaid.com
+  netleonweb@gmail.om
+  Stocks@123$$
+
 ======================================
 
 to get key details 
@@ -102,6 +111,64 @@ Bitly App ID: Ao1seSO8XNS
 8. penny stock data changes
 9. filter check with empty condition
 10. profile save success message
+11. vibration issue
+12. plaid integration changes on drawer
+
+------------------------
+
+=====PLAID HOLDINGS RES ==============
+holdings
+  {
+      account_id: 1kX6k356rXImaPzVANm7ux6RdN7rm3Cp9qBnJ,
+      cost_basis: 1.5,
+      institution_price: 2.11,
+      institution_price_as_of: 2021-05-25,
+      institution_price_datetime: null,
+      institution_value: 2.11,
+      iso_currency_code: USD,
+      quantity: 1,
+      security_id: KDwjlXj1Rqt58dVvmzRguxJybmyQL8FgeWWAy,
+      unofficial_currency_code: null,
+      vested_quantity: null,
+      vested_value: null
+    }
+------------------------------------------
+
+items
+  {
+    available_products: [
+      assets,
+      auth,
+      balance,
+      signal,
+      identity,
+      identity_match,
+      income_verification,
+      recurring_transactions,
+      transactions,
+      transfer
+    ],
+    billed_products: [
+      investments
+    ],
+    consent_expiration_time: null,
+    consented_products: [
+      identity,
+      investments,
+      processor_identity
+    ],
+    error: null,
+    institution_id: ins_54,
+    item_id: gyjMyZdMwjTrR1VmJ6rEsPB1EjDodDtgvKMZj,
+    products: [
+      investments
+    ],
+    update_type: background,
+    webhook: 
+  }
+---------------------------------------
+
+
 
 
 

@@ -84,20 +84,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  String extractLastPathComponent(Uri uri) {
-    List<String> parts = uri.pathSegments;
-    return parts.isNotEmpty ? parts.last : '';
-  }
+  // String extractLastPathComponent(Uri uri) {
+  //   List<String> parts = uri.pathSegments;
+  //   return parts.isNotEmpty ? parts.last : '';
+  // }
 
-  String extractSymbolValue(Uri uri) {
-    if (uri.path.contains('/stock-detail')) {
-      // Check if the query parameters contain 'symbol'
-      if (uri.queryParameters.containsKey('symbol')) {
-        return uri.queryParameters['symbol'] ?? '';
-      }
-    }
-    return '';
-  }
+  // String extractSymbolValue(Uri uri) {
+  //   if (uri.path.contains('/stock-detail')) {
+  //     // Check if the query parameters contain 'symbol'
+  //     if (uri.queryParameters.containsKey('symbol')) {
+  //       return uri.queryParameters['symbol'] ?? '';
+  //     }
+  //   }
+  //   return '';
+  // }
 
   _navigation({String? type, required Uri uri, String? slug}) async {
     Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
@@ -175,25 +175,25 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
-  String containsSpecificPath(Uri uri) {
-    Utils().showLog("-----contain path $uri");
-    if (uri.path.contains('/blog/')) {
-      return "blog";
-    } else if (uri.path.contains('/stock-detail')) {
-      return "stock_detail";
-    } else if (uri.path.contains('/news/')) {
-      return 'news';
-    } else if (uri.toString() == "https://app.stocks.news/" ||
-        uri.toString() == "https://app.stocks.news") {
-      return 'dashboard';
-    } else if (uri.path.contains('/login')) {
-      return 'login';
-    } else if (uri.path.contains('/sign-up')) {
-      return 'signUp';
-    } else {
-      return '';
-    }
-  }
+  // String containsSpecificPath(Uri uri) {
+  //   Utils().showLog("-----contain path $uri");
+  //   if (uri.path.contains('/blog/')) {
+  //     return "blog";
+  //   } else if (uri.path.contains('/stock-detail')) {
+  //     return "stock_detail";
+  //   } else if (uri.path.contains('/news/')) {
+  //     return 'news';
+  //   } else if (uri.toString() == "https://app.stocks.news/" ||
+  //       uri.toString() == "https://app.stocks.news") {
+  //     return 'dashboard';
+  //   } else if (uri.path.contains('/login')) {
+  //     return 'login';
+  //   } else if (uri.path.contains('/sign-up')) {
+  //     return 'signUp';
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
   void _checkForConnection() async {
     // Connectivity()
@@ -247,9 +247,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
 
 
-
-// // ignore_for_file: unused_element
-
 // import 'dart:async';
 
 // import 'package:app_links/app_links.dart';
@@ -281,6 +278,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 // import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 // import 'package:stocks_news_new/screens/tabs/tabs.dart';
 // import 'package:stocks_news_new/utils/constants.dart';
+// import 'package:stocks_news_new/utils/dialogs.dart';
 // // import 'package:stocks_news_new/utils/dialogs.dart';
 // import 'package:stocks_news_new/utils/theme.dart';
 // import 'package:provider/provider.dart';
@@ -312,7 +310,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 //     super.initState();
 //     WidgetsBinding.instance.addObserver(this);
 //     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _getAppLinks();
 //       Timer(const Duration(milliseconds: 7500), () {
 //         _checkForConnection();
 //       });
@@ -326,7 +323,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 //     Utils().showLog("**** is in foreground ==>  $isAppInForeground");
 //     setState(() {
 //       _appLifecycleState = state;
-//       Utils().showLog("Is in foreground ==>  $_appLifecycleState,$state");
+//       Utils().showLog("App lifeCycle ==>  $_appLifecycleState");
+//       showErrorMessage(message: "App lifeCycle ==>  $_appLifecycleState");
+//       _getAppLinks();
 //     });
 //   }
 
@@ -337,16 +336,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
 //       Utils().showLog("Current app lifecycle is $_appLifecycleState");
 
-//       if (_appLifecycleState == null) {
+//       if ((_appLifecycleState != AppLifecycleState.paused) &&
+//           _appLifecycleState != AppLifecycleState.resumed) {
 //         // Timer(const Duration(seconds: 5), () {
 //         //   _navigation(uri: event, slug: slug, type: type);
 //         // });
 
 //         deepLinkData = event;
+//         Utils().showLog(">>>>---------$deepLinkData");
 //       } else {
 //         Timer(const Duration(milliseconds: 500), () {
 //           _navigation(uri: event, slug: slug, type: type);
 //         });
+//         Utils().showLog(">>>>---------$deepLinkData");
 //       }
 //     });
 //   }

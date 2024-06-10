@@ -19,12 +19,12 @@ class PlaidHomeContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //LIVE
-          if (provider.homePortfolio?.top != null &&
-              provider.homePortfolio?.bottom == null)
-            const PlaidHomeGetStarted(),
+          // if (provider.homePortfolio?.top != null &&
+          //     provider.homePortfolio?.bottom == null)
+          //   const PlaidHomeGetStarted(),
 
           //LOCAL
-          // const PlaidHomeGetStarted(),
+          const PlaidHomeGetStarted(),
 
           if (provider.homePortfolio?.bottom != null)
             const PlaidHomeInvestmentOverview(),
