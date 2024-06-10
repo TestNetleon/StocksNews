@@ -121,63 +121,29 @@ class IndicesData extends StatelessWidget {
       isLoading: provider.isLoading,
       showPreparingText: true,
       onRefresh: () {
-        provider.typeDowThirty == true
-            ? provider.getIndicesData(
-                showProgress: false, dowThirtyStocks: true)
-            : provider.typeSpFifty == true
-                ? provider.getIndicesData(
-                    showProgress: false, sPFiftyStocks: true)
-                : provider.getIndicesData(showProgress: false);
+        provider.getIndicesData(showProgress: false);
       },
       child: RefreshControl(
-        onRefresh: () async => provider.typeDowThirty == true
-            ? provider.getIndicesData(dowThirtyStocks: true)
-            : provider.typeSpFifty == true
-                ? provider.getIndicesData(sPFiftyStocks: true)
-                : provider.getIndicesData(),
+        onRefresh: () async => provider.getIndicesData(),
         canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.typeDowThirty == true
-            ? provider.getIndicesData(loadMore: true, dowThirtyStocks: true)
-            : provider.typeSpFifty == true
-                ? provider.getIndicesData(loadMore: true, sPFiftyStocks: true)
-                : provider.getIndicesData(loadMore: true),
+        onLoadMore: () async => provider.getIndicesData(loadMore: true),
         child: ListView.separated(
           padding: EdgeInsets.symmetric(vertical: 10.sp),
           itemBuilder: (context, index) {
-            if (provider.typeDowThirty || provider.typeSpFifty) {
-              Result? dataDowThirtyStocks =
-                  provider.dataDowThirtyStocks?[index];
-              if (dataDowThirtyStocks == null) {
-                return const SizedBox();
-              }
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (index == 0)
-                    HtmlTitle(
-                      subTitle: provider.subTitle,
-                    ),
-                  IndicesItem(data: dataDowThirtyStocks, index: index),
-                ],
-              );
-            } else {
-              IndicesRes? data = provider.data?[index];
-              if (data == null) {
-                return const SizedBox();
-              }
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (index == 0)
-                    HtmlTitle(
-                      subTitle: provider.subTitle,
-                    ),
-                  IndicesItem(data: data, index: index),
-                ],
-              );
+            IndicesRes? data = provider.data?[index];
+            if (data == null) {
+              return const SizedBox();
             }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (index == 0)
+                  HtmlTitle(
+                    subTitle: provider.subTitle,
+                  ),
+                IndicesItem(data: data, index: index),
+              ],
+            );
           },
           separatorBuilder: (context, index) {
             if (provider.data == null) {

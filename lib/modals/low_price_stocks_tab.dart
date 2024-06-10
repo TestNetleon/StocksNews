@@ -19,11 +19,11 @@ class LowPriceStocksTabRes {
   factory LowPriceStocksTabRes.fromJson(Map<String, dynamic> json) =>
       LowPriceStocksTabRes(
         key: json["key"],
-        name: json["name"],
+        name: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "key": key,
-        "name": name,
+        "value": name,
       };
 }
