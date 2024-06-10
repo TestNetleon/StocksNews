@@ -66,14 +66,17 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HtmlTitle(
-          subTitle: provider.extra?.subTitle ?? "",
-          onFilterClick: _onFilterClick,
-          margin: EdgeInsets.only(
-            top: 10,
-            bottom: provider.filterParams != null ? 0 : 10,
+        if (!(provider.data == null &&
+            provider.filterParams == null &&
+            provider.isLoading))
+          HtmlTitle(
+            subTitle: provider.extra?.subTitle ?? "",
+            onFilterClick: _onFilterClick,
+            margin: EdgeInsets.only(
+              top: 10,
+              bottom: provider.filterParams != null ? 0 : 10,
+            ),
           ),
-        ),
         if (provider.filterParams != null)
           FilterUiValues(
             params: provider.filterParams,
