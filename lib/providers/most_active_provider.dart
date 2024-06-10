@@ -155,13 +155,13 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
 
   String? _error;
   int _page = 1;
-  Extra? _extraUp;
+  Extra? _extra;
   List<MostActiveStocksRes>? _data;
 
   List<MostActiveStocksRes>? get data => _data;
 
-  Extra? get extraUp => _extraUp;
-  bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
+  Extra? get extra => _extra;
+  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading;
 
@@ -243,8 +243,7 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         if (_page == 1) {
           _data = mostActiveStocksFromJson(jsonEncode(response.data));
-
-          _extraUp = response.extra is Extra ? response.extra : null;
+          _extra = response.extra is Extra ? response.extra : null;
         } else {
           _data?.addAll(mostActiveStocksFromJson(jsonEncode(response.data)));
         }

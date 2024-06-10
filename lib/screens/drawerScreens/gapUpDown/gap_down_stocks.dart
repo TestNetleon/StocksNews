@@ -5,11 +5,10 @@ import 'package:stocks_news_new/modals/gap_up_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_down_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/item.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
+import 'package:stocks_news_new/widgets/market_data_header.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -62,18 +61,23 @@ class _GapDownStocksState extends State<GapDownStocks> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HtmlTitle(
-          subTitle: provider.extra?.subTitle ?? "",
+        MarketDataHeader(
+          provider: provider,
           onFilterClick: _onFilterClick,
-          hasFilter: provider.filterParams != null,
+          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
-        if (provider.filterParams != null)
-          FilterUiValues(
-            params: provider.filterParams,
-            onDeleteExchange: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
-          ),
+        // HtmlTitle(
+        //   subTitle: provider.extra?.subTitle ?? "",
+        //   onFilterClick: _onFilterClick,
+        //   hasFilter: provider.filterParams != null,
+        // ),
+        // if (provider.filterParams != null)
+        //   FilterUiValues(
+        //     params: provider.filterParams,
+        //     onDeleteExchange: (exchange) {
+        //       provider.exchangeFilter(exchange);
+        //     },
+        //   ),
         Expanded(
           child: BaseUiContainer(
             error: provider.error,
