@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/dow_30_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/indices/snp_500_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -86,7 +83,6 @@ class IndicesData extends StatelessWidget {
               }
             },
             scrollable: (tabs?.length ?? 0) > 1 ? true : false,
-            tabsPadding: EdgeInsets.only(bottom: 10.sp),
             // tabs: List.generate(
             //     tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
             // widgets: List.generate(
@@ -118,67 +114,63 @@ class IndicesData extends StatelessWidget {
   }
 
   Widget _getWidgets(IndicesProvider provider) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        HtmlTitle(
-          subTitle: provider.extra?.subTitle ?? "",
-          // onFilterClick: _onFilterClick,
-          // margin: const EdgeInsets.only(top: 10, bottom: 10),
-        ),
-        if (provider.filterParams != null)
-          FilterUiValues(
-            params: provider.filterParams,
-            onDeleteExchange: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
+    return BaseUiContainer(
+      error: provider.error,
+      hasData: !provider.isLoading && provider.data != null,
+      isLoading: provider.isLoading,
+      showPreparingText: true,
+      onRefresh: () {
+        provider.getIndicesData(showProgress: false);
+      },
+      child: Column(
+        children: [
+          HtmlTitle(
+            subTitle: provider.extra?.subTitle ?? "",
+            hasFilter: false,
+
+            // onFilterClick: _onFilterClick,
+            // margin: const EdgeInsets.only(top: 10, bottom: 10),
           ),
-        BaseUiContainer(
-          error: provider.error,
-          hasData: !provider.isLoading && provider.data != null,
-          isLoading: provider.isLoading,
-          showPreparingText: true,
-          onRefresh: () {
-            provider.getIndicesData(showProgress: false);
-          },
-          child: RefreshControl(
-            onRefresh: () async => provider.getIndicesData(),
-            canLoadMore: provider.canLoadMore,
-            onLoadMore: () async => provider.getIndicesData(loadMore: true),
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(vertical: 10.sp),
-              itemBuilder: (context, index) {
-                IndicesRes? data = provider.data?[index];
-                if (data == null) {
-                  return const SizedBox();
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (index == 0)
-                      HtmlTitle(
-                        subTitle: provider.subTitle,
-                      ),
-                    IndicesItem(data: data, index: index),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) {
-                if (provider.data == null) {
-                  return const SizedBox();
-                }
-                return const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 16,
-                );
-              },
-              itemCount: provider.typeDowThirty || provider.typeSpFifty
-                  ? provider.dataDowThirtyStocks?.length ?? 0
-                  : provider.data?.length ?? 0,
+          Expanded(
+            child: RefreshControl(
+              onRefresh: () async => provider.getIndicesData(),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async => provider.getIndicesData(loadMore: true),
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                itemBuilder: (context, index) {
+                  IndicesRes? data = provider.data?[index];
+                  if (data == null) {
+                    return const SizedBox();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // if (index == 0)
+                      //   HtmlTitle(
+                      //     subTitle: provider.subTitle,
+                      //   ),
+                      IndicesItem(data: data, index: index),
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  if (provider.data == null) {
+                    return const SizedBox();
+                  }
+                  return const Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 16,
+                  );
+                },
+                itemCount: provider.typeDowThirty || provider.typeSpFifty
+                    ? provider.dataDowThirtyStocks?.length ?? 0
+                    : provider.data?.length ?? 0,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

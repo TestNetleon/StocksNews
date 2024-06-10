@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/high_beta_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/low_beta_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/negative_beta_stocks.dart';
@@ -15,13 +14,13 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: const AppBarHome(
+    return const BaseContainer(
+      appBar: AppBarHome(
         isPopback: true,
         canSearch: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: EdgeInsets.fromLTRB(
           Dimen.padding,
           Dimen.padding,
           Dimen.padding,
@@ -29,13 +28,9 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
         ),
         child: CustomTabContainerNEW(
           scrollable: true,
-          tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: const [
-            "High Beta Stocks",
-            "Low Beta Stocks",
-            "Negative Beta Stocks"
-          ],
-          widgets: const [
+          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+          tabs: ["High Beta Stocks", "Low Beta Stocks", "Negative Beta Stocks"],
+          widgets: [
             HighBetaStocks(),
             LowsBetaStocks(),
             NegativeBetaStocks(),

@@ -297,6 +297,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _error = Const.errSomethingWrong;
       topLoading = false;
       _statusTrending = Status.loaded;
+      Utils().showLog(e);
       notifyListeners();
     }
   }

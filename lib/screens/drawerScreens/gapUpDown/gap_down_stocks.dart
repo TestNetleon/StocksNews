@@ -65,6 +65,7 @@ class _GapDownStocksState extends State<GapDownStocks> {
         HtmlTitle(
           subTitle: provider.extra?.subTitle ?? "",
           onFilterClick: _onFilterClick,
+          hasFilter: provider.filterParams != null,
         ),
         if (provider.filterParams != null)
           FilterUiValues(
@@ -86,9 +87,9 @@ class _GapDownStocksState extends State<GapDownStocks> {
               canLoadMore: provider.canLoadMore,
               onLoadMore: () async => provider.getGapDownStocks(loadMore: true),
               child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
-                  top: Dimen.padding.sp,
+                padding: const EdgeInsets.only(
+                  bottom: Dimen.padding,
+                  top: Dimen.padding,
                 ),
                 itemBuilder: (context, index) {
                   return UpDownStocksItem(

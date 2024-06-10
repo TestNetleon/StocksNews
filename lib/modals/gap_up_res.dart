@@ -13,11 +13,13 @@ class GapUpRes {
   final dynamic open;
   final dynamic previousClose;
   final dynamic price;
+  final dynamic change;
+  final dynamic changePercentage;
   final dynamic priceChangeSinceOpen;
   final dynamic volume;
   final dynamic image;
   final dynamic changesPercentage;
-  final dynamic change;
+  // final dynamic change;
 
   GapUpRes({
     required this.symbol,
@@ -26,11 +28,13 @@ class GapUpRes {
     required this.open,
     required this.previousClose,
     required this.price,
+    this.change,
+    this.changePercentage,
     required this.priceChangeSinceOpen,
     required this.volume,
     required this.image,
     required this.changesPercentage,
-    required this.change,
+    // required this.change,
   });
 
   factory GapUpRes.fromJson(Map<String, dynamic> json) => GapUpRes(

@@ -1,14 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/plaid.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import '../widgets/get_started.dart';
 
 class PortfolioUserNotLoggedIn extends StatelessWidget {
   final Function() onTap;
@@ -19,21 +13,23 @@ class PortfolioUserNotLoggedIn extends StatelessWidget {
     return Center(
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.fromLTRB(
+              Dimen.padding, Dimen.padding, Dimen.padding, 0),
           child: Column(
             children: [
               Text(
                 textAlign: TextAlign.center,
-                "Log in to continue using your portfolio account.",
+                "Connect your account",
                 style: stylePTSansRegular(fontSize: 18),
               ),
-              const SpacerVertical(height: 10),
-              ThemeButtonSmall(
-                onPressed: onTap,
-                text: "Log in",
-                showArrow: false,
-                // fullWidth: false,
-              ),
+              const SpacerVertical(height: 30),
+              // ThemeButtonSmall(
+              //   onPressed: onTap,
+              //   text: "Log in",
+              //   showArrow: false,
+              //   // fullWidth: false,
+              // ),
+              const PlaidHomeGetStarted(fromDrawer: true),
             ],
           ),
         ),

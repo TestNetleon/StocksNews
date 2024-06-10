@@ -15,6 +15,7 @@ class ScreenTitle extends StatelessWidget {
   final bool canPopBack;
   final String? subTitle;
   final bool divider;
+  final bool htmlTitle;
   final EdgeInsets? dividerPadding;
   final bool subTitleHtml;
 
@@ -29,6 +30,7 @@ class ScreenTitle extends StatelessWidget {
     this.divider = true,
     this.subTitleHtml = false,
     this.optionalWidget,
+    this.htmlTitle = false,
   });
 //
   @override
@@ -46,10 +48,16 @@ class ScreenTitle extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Expanded(
-                      child: Text(
-                        title ?? "",
-                        style: style ?? styleGeorgiaBold(fontSize: 17),
-                      ),
+                      child: htmlTitle
+                          ? HtmlWidget(
+                              title ?? "",
+                              textStyle:
+                                  style ?? styleGeorgiaBold(fontSize: 17),
+                            )
+                          : Text(
+                              title ?? "",
+                              style: style ?? styleGeorgiaBold(fontSize: 17),
+                            ),
                     ),
                     Visibility(
                       visible: optionalText != null,
@@ -92,10 +100,15 @@ class ScreenTitle extends StatelessWidget {
                     ],
                   );
                 },
-                child: Text(
-                  title ?? "",
-                  style: style ?? styleGeorgiaBold(fontSize: 17),
-                ),
+                child: htmlTitle
+                    ? HtmlWidget(
+                        title ?? "",
+                        textStyle: style ?? styleGeorgiaBold(fontSize: 17),
+                      )
+                    : Text(
+                        title ?? "",
+                        style: style ?? styleGeorgiaBold(fontSize: 17),
+                      ),
               ),
             ),
           subTitleHtml

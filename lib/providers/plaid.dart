@@ -169,12 +169,15 @@ class PlaidProvider extends ChangeNotifier {
     }
   }
 
-  Future sendPlaidPortfolio(
-      {showProgress = true,
-      List<dynamic>? data,
-      List<dynamic>? dataAccounts}) async {
+  Future sendPlaidPortfolio({
+    showProgress = true,
+    List<dynamic>? data,
+    List<dynamic>? dataAccounts,
+    List<dynamic>? holdings,
+  }) async {
     List<dynamic>? jsonArray = data;
     List<dynamic>? jsonArrayAccounts = dataAccounts;
+    List<dynamic>? jsonArrayHoldings = holdings;
 
     setStatus(Status.loading);
     try {
@@ -183,6 +186,7 @@ class PlaidProvider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "securities": jsonArray ?? [],
         "accounts": jsonArrayAccounts ?? [],
+        "holdings": jsonArrayHoldings,
       });
       ApiResponse response = await apiRequest(
         url: Apis.savePlaidPortfolio,
