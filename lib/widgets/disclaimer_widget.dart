@@ -40,6 +40,7 @@ class DisclaimerWidget extends StatelessWidget {
         //   height: 1.5,
         //   color: ThemeColors.greyText,
         // ),
+        textStyle: TextStyle(fontFamily: Fonts.ptSans),
       ),
     );
   }
