@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:readmore/readmore.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -121,11 +122,34 @@ class ScreenTitle extends StatelessWidget {
                   visible: subTitle != null,
                   child: Container(
                     margin: EdgeInsets.only(top: 3.sp),
-                    child: Text(
-                      subTitle ?? "",
-                      style: stylePTSansRegular(
-                          fontSize: 14, color: ThemeColors.greyText),
+                    child: AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: ReadMoreText(
+                        textAlign: TextAlign.start,
+                        subTitle ?? "",
+                        trimLines: 2,
+                        colorClickableText: ThemeColors.accent,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: ' Read more',
+                        trimExpandedText: ' Read less',
+                        moreStyle: stylePTSansRegular(
+                          color: ThemeColors.accent,
+                          fontSize: 12,
+                          height: 1.3,
+                        ),
+                        style: stylePTSansRegular(
+                          height: 1.3,
+                          fontSize: 13,
+                          color: ThemeColors.greyText,
+                        ),
+                      ),
                     ),
+                    // Text(
+                    //   subTitle ?? "",
+                    //   style: stylePTSansRegular(
+                    //       fontSize: 14, color: ThemeColors.greyText),
+                    // ),
                   ),
                 ),
           Visibility(

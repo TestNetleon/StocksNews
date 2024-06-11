@@ -40,7 +40,7 @@ class _Snp500StocksState extends State<Snp500Stocks> {
       await filterProvider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter S&P 500 Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: provider.filterParams,

@@ -238,6 +238,12 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
           Const.loadingMessage = _extra?.messageObject?.loading ?? "";
+
+          if (_extra?.user != null) {
+            navigatorKey.currentContext!
+                .read<UserProvider>()
+                .setUser(_extra!.user!);
+          }
         }
 
         if (_extra != null) {

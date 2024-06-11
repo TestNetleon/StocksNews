@@ -43,7 +43,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter Gap Up Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapUpProvider.filterParams,

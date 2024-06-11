@@ -154,7 +154,7 @@ class Extra {
         messageObject: json["message"] == null
             ? null
             : MessageRes.fromJson(json["message"]),
-        user: json["text"] == null ? null : UserRes.fromJson(json["user"]),
+        user: json["user"] == null ? null : UserRes.fromJson(json["user"]),
         referral: json["referral"] == null
             ? null
             : ReferralRes.fromJson(json["referral"]),

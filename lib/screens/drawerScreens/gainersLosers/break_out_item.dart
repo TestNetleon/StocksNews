@@ -68,14 +68,11 @@ class BreakOutStocksItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        onTap: () => _onTap(context),
-                        child: Text(
-                          data.symbol,
-                          style: stylePTSansBold(fontSize: 14),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        data.symbol,
+                        style: stylePTSansBold(fontSize: 14),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(

@@ -39,7 +39,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter DOW 30 Stocks",
       child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
     );
   }

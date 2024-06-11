@@ -38,18 +38,17 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
   // }
 
   void _onFilterClick() async {
-    FilterProvider provider = context.read<FilterProvider>();
-    LowPriceStocksProvider gapUpProvider =
-        context.read<LowPriceStocksProvider>();
+    FilterProvider filterProvider = context.read<FilterProvider>();
+    LowPriceStocksProvider provider = context.read<LowPriceStocksProvider>();
 
-    if (provider.data == null) {
+    if (filterProvider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter ${provider.tabs?[provider.selectedIndex].key}",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
-        filterParam: gapUpProvider.filterParams,
+        filterParam: provider.filterParams,
       ),
     );
   }

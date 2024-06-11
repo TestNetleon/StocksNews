@@ -49,7 +49,7 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
     }
 
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter High PE Growth Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: filterParams,

@@ -318,11 +318,13 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             borderRadius: BorderRadius.circular(4.sp),
                             child: Ink(
                               decoration: BoxDecoration(
-                                  color:
-                                      ThemeColors.greyBorder.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(4.sp)),
+                                color: ThemeColors.greyBorder.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(4.sp),
+                              ),
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
                               child: Row(
                                 children: [
                                   Image.asset(

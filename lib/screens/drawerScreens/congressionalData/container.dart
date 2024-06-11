@@ -46,7 +46,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
       await provider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Most Active Penny Stock",
+      title: "Filter Congressional Trades",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: congressionalProvider.filterParams,
