@@ -37,22 +37,19 @@ class CongressionalItem extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () => _onTap(context),
-                        child: Text(
+                  child: InkWell(
+                    onTap: () => _onTap(context),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           "${data?.name}",
                           style: stylePTSansBold(fontSize: 14),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      const SpacerVertical(height: 3),
-                      InkWell(
-                        onTap: () => _onTap(context),
-                        child: Text(
+                        const SpacerVertical(height: 3),
+                        Text(
                           "${data?.symbol}",
                           style: stylePTSansBold(
                             fontSize: 13,
@@ -61,17 +58,17 @@ class CongressionalItem extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      const SpacerVertical(height: 3),
-                      Text(
-                        "${data?.company}",
-                        style: stylePTSansBold(
-                            fontSize: 14, color: ThemeColors.greyText),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SpacerVertical(height: 3),
-                    ],
+                        const SpacerVertical(height: 3),
+                        Text(
+                          "${data?.company}",
+                          style: stylePTSansBold(
+                              fontSize: 14, color: ThemeColors.greyText),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SpacerVertical(height: 3),
+                      ],
+                    ),
                   ),
                 ),
                 const SpacerHorizontal(width: 10),

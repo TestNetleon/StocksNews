@@ -18,13 +18,16 @@ class LowPriceStocksProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
   Status _tabStatus = Status.ideal;
-  int selectedIndex = 0;
+  // int _selectedIndex = 0;
   int _typeIndex = 0;
   int get typeIndex => _typeIndex;
 
   List<LowPriceStocksTabRes>? _tabs;
-
   List<LowPriceStocksTabRes>? get tabs => _tabs;
+
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
+  set selectedIndex(index) => _selectedIndex = index;
 
   List<LowPriceStocksRes>? _data;
   List<LowPriceStocksRes>? get data => _data;
@@ -62,15 +65,15 @@ class LowPriceStocksProvider extends ChangeNotifier {
     _filterParams = null;
     _extra = null;
     if (tabs?[index].key == "Stocks On Sale") {
-      if (selectedIndex != index) {
-        selectedIndex = index;
+      if (_selectedIndex != index) {
+        _selectedIndex = index;
         notifyListeners();
         getLowPriceData(type: 1);
       }
       return;
     } else {
-      if (selectedIndex != index) {
-        selectedIndex = index;
+      if (_selectedIndex != index) {
+        _selectedIndex = index;
         notifyListeners();
         getLowPriceData(type: 0);
       }

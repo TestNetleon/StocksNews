@@ -53,7 +53,7 @@ class _LowsBetaStocksState extends State<LowsBetaStocks> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter Low Beta Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapProvider.filterParams,

@@ -47,7 +47,7 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
       await provider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Most Active Penny Stock",
+      title: "Filter Today's Top Penny Stock",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: todayTopProvider.filterParams,

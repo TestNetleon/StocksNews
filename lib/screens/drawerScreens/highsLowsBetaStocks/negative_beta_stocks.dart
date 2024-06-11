@@ -54,7 +54,7 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter Negative Beta Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapProvider.filterParams,

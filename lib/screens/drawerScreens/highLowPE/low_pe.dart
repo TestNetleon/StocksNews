@@ -45,7 +45,7 @@ class _LowPEStocksState extends State<LowPEStocks> {
     }
 
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Stock Screener",
+      title: "Filter Low PE Ratio Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: filterParams,

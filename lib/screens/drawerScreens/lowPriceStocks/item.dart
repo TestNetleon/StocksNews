@@ -192,29 +192,32 @@ class LowPriceStocksItem extends StatelessWidget {
           ),
           const SpacerHorizontal(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () => _onTap(context),
-                  child: Text(
-                    data.symbol ?? "",
-                    style: stylePTSansBold(fontSize: 14),
-                    maxLines: 1,
+            child: InkWell(
+              onTap: () => _onTap(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () => _onTap(context),
+                    child: Text(
+                      data.symbol ?? "",
+                      style: stylePTSansBold(fontSize: 14),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SpacerVertical(height: 5),
+                  Text(
+                    data.name ?? "",
+                    style: stylePTSansRegular(
+                      color: ThemeColors.greyText,
+                      fontSize: 12,
+                    ),
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                const SpacerVertical(height: 5),
-                Text(
-                  data.name ?? "",
-                  style: stylePTSansRegular(
-                    color: ThemeColors.greyText,
-                    fontSize: 12,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           const SpacerHorizontal(width: 10),

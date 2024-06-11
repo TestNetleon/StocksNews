@@ -64,15 +64,16 @@ class HtmlTitle extends StatelessWidget {
                         moreStyle: stylePTSansRegular(
                           color: ThemeColors.accent,
                           fontSize: 12,
-                          height: 1.0,
+                          height: 1.3,
                         ),
                         style: stylePTSansRegular(
-                          height: 1.1,
+                          height: 1.3,
                           fontSize: 13,
                           color: ThemeColors.greyText,
                         ),
                       ),
-                      // child: ReadMoreText(
+                      // child:
+                      // ReadMoreText(
                       //   textAlign: TextAlign.start,
                       //   subTitle ?? "",
                       //   trimLines: 2,

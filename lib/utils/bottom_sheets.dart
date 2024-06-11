@@ -25,7 +25,7 @@ class BaseBottomSheets {
       context: navigatorKey.currentContext!,
       builder: (context) {
         return Container(
-          padding: padding ?? const EdgeInsets.fromLTRB(15, 0, 15, 0),
+          padding: padding ?? const EdgeInsets.fromLTRB(15, 0, 15, 15),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
