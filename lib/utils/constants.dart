@@ -67,6 +67,7 @@ class Images {
   static const String dotsMenu = "assets/images/dots-menu.png";
   static const String info = "assets/images/info.png";
   static const String graphHolder = "assets/images/graph_placeholder.png";
+  static const String portfolioCard = "assets/images/portfolio.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
@@ -82,6 +83,7 @@ class Images {
   static const String serverErrorGIF = "assets/images/server_error.json";
   static const String connectionGIF = "assets/images/connection.gif";
   static const String noDataGIF = "assets/images/nodata_GIF.gif";
+  static const String syncGIF = "assets/images/syncGIF.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

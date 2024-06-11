@@ -116,13 +116,28 @@ class FirebaseApi {
             return const ReviewAppPopUp();
           },
         );
-      } else {
+      } else if (slug != '' && type == NotificationType.stockDetail.name) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetails.path,
           arguments: {"slug": type, "notificationId": notificationId},
         );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+          arguments: {"notificationId": notificationId},
+        );
       }
+
+      //  else {
+      //   Navigator.pushNamed(
+      //     navigatorKey.currentContext!,
+      //     StockDetails.path,
+      //     arguments: {"slug": type, "notificationId": notificationId},
+      //   );
+      // }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.pushNamedAndRemoveUntil(

@@ -11,6 +11,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../../auth/bottomSheets/login_sheet.dart';
 import '../../../../../auth/bottomSheets/login_sheet_tablet.dart';
@@ -259,79 +260,96 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
-    return InkWell(
-      borderRadius: const BorderRadius.all(Radius.circular(8)),
-      onTap: provider.user == null
-          ? () {
-              _onTap(provider, homeProvider);
-            }
-          : () {
-              _plaidLinkHandler?.plaidAPi();
-            },
-      child: Ink(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromARGB(255, 23, 23, 23),
-              Color.fromARGB(255, 48, 48, 48),
-            ],
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            Images.portfolioCard,
+            color: ThemeColors.greyBorder.withOpacity(0.3),
+            fit: BoxFit.cover,
           ),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: Row(
-          children: [
-            Container(
-              height: 40,
-              width: 40,
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(Images.stockIcon)),
-            ),
-            const SpacerHorizontal(width: 10),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    homeProvider.homePortfolio?.top?.title ?? "",
-                    style: stylePTSansBold(),
-                  ),
-                  HtmlWidget(
-                    homeProvider.homePortfolio?.top?.subTitle ?? "",
-                    textStyle: stylePTSansRegular(
-                      fontSize: 12,
-                      color: ThemeColors.greyText,
-                    ),
-                  ),
+        InkWell(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          onTap: provider.user == null
+              ? () {
+                  _onTap(provider, homeProvider);
+                }
+              : () {
+                  _plaidLinkHandler?.plaidAPi();
+                },
+          child: Ink(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 23, 23, 23),
+                  Color.fromARGB(255, 48, 48, 48),
                 ],
               ),
+              // color: Colors.black,
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ThemeColors.accent,
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    "Connect",
-                    style: stylePTSansRegular(fontSize: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.asset(Images.stockIcon)),
+                ),
+                const SpacerHorizontal(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        homeProvider.homePortfolio?.top?.title
+                                ?.capitalizeWords() ??
+                            "",
+                        style: stylePTSansBold(fontSize: 18),
+                      ),
+                      const SpacerVertical(height: 3),
+                      HtmlWidget(
+                        homeProvider.homePortfolio?.top?.subTitle ?? "",
+                        textStyle: stylePTSansRegular(
+                          fontSize: 12,
+                          color: ThemeColors.greyText,
+                        ),
+                      ),
+                    ],
                   ),
-                  const Icon(
-                    Icons.sync,
-                    size: 18,
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(11, 4, 11, 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ThemeColors.accent,
                   ),
-                ],
-              ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Connect",
+                        style: stylePTSansBold(fontSize: 15),
+                      ),
+                      const SpacerHorizontal(width: 5),
+                      Image.asset(
+                        Images.syncGIF,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

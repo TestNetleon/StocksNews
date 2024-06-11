@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
 import 'package:stocks_news_new/screens/tabs/trending/menuButton/popup_menu.dart';
@@ -43,9 +44,16 @@ class MostBullishItem extends StatelessWidget {
     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints ctrt) {
       return InkWell(
         onTap: () {
+          // Navigator.pushNamed(
+          //   context,
+          //   StockDetails.path,
+          //   // arguments: data.symbol,
+          //   arguments: {"slug": data.symbol},
+          // );
+
           Navigator.pushNamed(
             context,
-            StockDetails.path,
+            StockDetail.path,
             // arguments: data.symbol,
             arguments: {"slug": data.symbol},
           );

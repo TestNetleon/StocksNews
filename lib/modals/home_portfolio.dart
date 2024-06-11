@@ -39,23 +39,31 @@ class HomePortfolioRes {
 }
 
 class PortfolioBottom {
+  final String? title;
+  final String? subTitle;
   final String? currentBalance;
   final String? closePrice;
 
   PortfolioBottom({
     this.currentBalance,
     this.closePrice,
+    this.title,
+    this.subTitle,
   });
 
   factory PortfolioBottom.fromJson(Map<String, dynamic> json) =>
       PortfolioBottom(
         currentBalance: json["current_balance"],
         closePrice: json["close_price"],
+        title: json["title"],
+        subTitle: json["sub_title"],
       );
 
   Map<String, dynamic> toJson() => {
         "current_balance": currentBalance,
         "close_price": closePrice,
+        "title": title,
+        "sub_title": subTitle,
       };
 }
 

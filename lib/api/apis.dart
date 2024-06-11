@@ -128,6 +128,11 @@ class Apis {
 
   static const blogCategory = "/blog-category-list";
   static const sendAppleOtp = "/signup-apple-email";
+
+//Stock Detail New
+  static const stockDetailTab = "/stock-detail-topbar";
+  static const detailEarning = "/stock-detail-earning";
+  static const detailDividends = "/stock-detail-dividend";
 }
 
 //

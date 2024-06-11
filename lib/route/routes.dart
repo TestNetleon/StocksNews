@@ -31,6 +31,7 @@ import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/providers/snp_500_provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
@@ -439,6 +440,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TodayBreakoutStockProvider()),
       ChangeNotifierProvider(create: (_) => Dow30Provider()),
       ChangeNotifierProvider(create: (_) => SnP500Provider()),
+      ChangeNotifierProvider(create: (_) => StockDetailProviderNew()),
     ];
   }
 }

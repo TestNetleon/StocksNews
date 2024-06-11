@@ -19,6 +19,7 @@ import '../../widgets/theme_image_view.dart';
 import '../auth/bottomSheets/signup_sheet.dart';
 import '../auth/bottomSheets/signup_sheet_tablet.dart';
 import '../blogDetail/index.dart';
+import '../stockDetails/stock_details.dart';
 
 class NotificationsItem extends StatelessWidget {
   final NotificationData data;
@@ -93,17 +94,19 @@ class NotificationsItem extends StatelessWidget {
         }
         Navigator.pop(context);
         isPhone ? signupSheet() : signupSheetTablet();
+      } else if (slug != '' && type == NotificationType.stockDetail.name) {
+        Navigator.pushNamed(
+          navigatorKey.currentContext!,
+          StockDetails.path,
+          arguments: {"slug": type},
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!,
+          Tabs.path,
+          (route) => false,
+        );
       }
-      // else {
-      //   Utils().showLog("--navigate to stock detail---");
-
-      //   Navigator.pushNamed(
-      //     navigatorKey.currentContext!,
-      //     StockDetails.path,
-      //     // arguments: type,
-      //     arguments: {"slug": type},
-      //   );
-      // }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
       Navigator.pushNamedAndRemoveUntil(
