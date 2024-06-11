@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/api/image_service.dart';
@@ -19,6 +20,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 //
@@ -281,9 +283,53 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         //   ],
         // ),
         const SpacerVertical(height: 20),
-        ThemeButton(
-          onPressed: _onTap,
-          text: "Save Changes",
+        ThemeButton(onPressed: _onTap, text: "Save Changes"),
+        const SpacerVertical(height: 20),
+        const Divider(
+          color: ThemeColors.divider,
+          thickness: 1,
+        ),
+        const SpacerVertical(height: 16),
+        Column(
+          children: [
+            Text(
+              "Refer and Earn",
+              style: styleGeorgiaBold(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+            const SpacerVertical(height: 3),
+            Text(
+              "Invite your friend and earn reward point for each registration.",
+              style: styleGeorgiaRegular(),
+              textAlign: TextAlign.center,
+            ),
+            const SpacerVertical(height: 10),
+            GestureDetector(
+              onTap: () {
+                Share.share(
+                  "Hey, Stay updated on the stock market with this excellent app. Daily updates and market news at your fingertips.\n\nhttps://app.stocks.news/refer/abc123",
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: ThemeColors.gradientLight,
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("Refer Now", style: styleGeorgiaBold()),
+                    const SpacerHorizontal(width: 5),
+                    const Icon(Icons.share, size: 20),
+                  ],
+                ),
+              ),
+            ),
+          ],
         )
       ],
     );

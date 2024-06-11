@@ -68,6 +68,8 @@ class Images {
   static const String info = "assets/images/info.png";
   static const String graphHolder = "assets/images/graph_placeholder.png";
   static const String portfolioCard = "assets/images/portfolio.png";
+  static const String stockIcon3d = "assets/images/stock_icon_3d.png";
+  static const String referBack = "assets/images/bg.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";

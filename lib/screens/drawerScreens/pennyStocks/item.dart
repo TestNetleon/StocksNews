@@ -142,6 +142,13 @@ class PennyStocksItem extends StatelessWidget {
                   ),
                 ),
                 Visibility(
+                  visible: data.watchlistandalertlistCount != null,
+                  child: InnerRowItem(
+                    lable: "Stock News Most Watchlist Or Alert",
+                    value: "${data.watchlistandalertlistCount}",
+                  ),
+                ),
+                Visibility(
                   visible: data.mktCap != null,
                   child: InnerRowItem(
                     lable: "Market Cap",

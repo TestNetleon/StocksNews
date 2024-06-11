@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
+import 'package:stocks_news_new/modals/penny_stocks.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/break_out_item.dart';
+import 'package:stocks_news_new/providers/most_popular_penny_provider.dart';
+import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -14,55 +14,54 @@ import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
 import '../../../widgets/refresh_controll.dart';
 
-class TodaysBreakoutStocks extends StatefulWidget {
-  const TodaysBreakoutStocks({super.key});
+class MostPopularPennyStocks extends StatefulWidget {
+  const MostPopularPennyStocks({super.key});
 
   @override
-  State<TodaysBreakoutStocks> createState() => _TodaysBreakoutStocksState();
+  State<MostPopularPennyStocks> createState() => _MostPopularPennyStocksState();
 }
 
-class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
+class _MostPopularPennyStocksState extends State<MostPopularPennyStocks> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      TodayBreakoutStockProvider provider =
-          context.read<TodayBreakoutStockProvider>();
+      MostPopularPennyStocksProviders provider =
+          context.read<MostPopularPennyStocksProviders>();
       if (provider.data != null) {
         return;
       }
       provider.resetFilter();
-      provider.getData(showProgress: true);
+      provider.getMostPopularPennyStocks();
     });
   }
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
-    FilteredParams? filterParams =
-        context.read<TodayBreakoutStockProvider>().filterParams;
+    MostPopularPennyStocksProviders mostActProvider =
+        context.read<MostPopularPennyStocksProviders>();
 
     if (provider.data == null) {
       await provider.getFilterData();
     }
-
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Today's Top Breakout Stocks",
+      title: "Most Active Penny Stock",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
-        filterParam: filterParams,
+        filterParam: mostActProvider.filterParams,
       ),
     );
   }
 
   void _onFiltered(FilteredParams? params) {
-    context.read<TodayBreakoutStockProvider>().applyFilter(params);
+    context.read<MostPopularPennyStocksProviders>().applyFilter(params);
   }
 
   @override
   Widget build(BuildContext context) {
-    TodayBreakoutStockProvider provider =
-        context.watch<TodayBreakoutStockProvider>();
-    List<BreakoutStocksRes>? gainers = provider.data;
+    MostPopularPennyStocksProviders provider =
+        context.watch<MostPopularPennyStocksProviders>();
+    List<PennyStocksRes>? data = provider.data;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,9 +72,9 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
           onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
         // HtmlTitle(
-        //   subTitle: provider.extra?.subTitle ?? "",
+        //   subTitle: provider.extraUp?.subTitle ?? "",
         //   onFilterClick: _onFilterClick,
-        //   hasFilter: provider.filterParams != null,
+        //   margin: const EdgeInsets.only(top: 10, bottom: 10),
         // ),
         // if (provider.filterParams != null)
         //   FilterUiValues(
@@ -87,34 +86,44 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
         Expanded(
           child: BaseUiContainer(
             error: provider.error,
-            hasData: gainers != null && gainers.isNotEmpty,
+            hasData: data != null && data.isNotEmpty,
             isLoading: provider.isLoading,
             errorDispCommon: true,
             showPreparingText: true,
-            onRefresh: () => provider.getData(showProgress: true),
+            onRefresh: () => provider.getMostPopularPennyStocks(type: 1),
             child: RefreshControl(
-              onRefresh: () async => provider.getData(showProgress: true),
+              onRefresh: () async =>
+                  provider.getMostPopularPennyStocks(type: 1),
               canLoadMore: provider.canLoadMore,
-              onLoadMore: () async => provider.getData(loadMore: true),
+              onLoadMore: () async =>
+                  provider.getMostPopularPennyStocks(loadMore: true, type: 1),
               child: ListView.separated(
-                padding: const EdgeInsets.only(
-                  bottom: Dimen.padding,
-                  top: Dimen.padding,
+                padding: EdgeInsets.only(
+                  bottom: Dimen.padding.sp,
+                  top: Dimen.padding.sp,
                 ),
                 itemBuilder: (context, index) {
-                  return BreakOutStocksItem(
-                    data: gainers![index],
-                    index: index,
-                    // marketData: true,
+                  if (data == null || data.isEmpty) {
+                    return const SizedBox();
+                  }
+
+                  return PennyStocksItem(
+                    data: data[index],
+                    isOpen: provider.openIndex == index,
+                    onTap: () {
+                      provider.setOpenIndex(
+                        provider.openIndex == index ? -1 : index,
+                      );
+                    },
                   );
                 },
-                separatorBuilder: (context, index) {
+                separatorBuilder: (BuildContext context, int index) {
                   return Divider(
                     color: ThemeColors.greyBorder,
-                    height: 12.sp,
+                    height: 20.sp,
                   );
                 },
-                itemCount: gainers?.length ?? 0,
+                itemCount: data?.length ?? 0,
               ),
             ),
           ),

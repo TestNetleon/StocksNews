@@ -52,9 +52,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getAppLinks();
-      Timer(const Duration(milliseconds: 7500), () {
-        _checkForConnection();
-      });
+      // Timer(const Duration(milliseconds: 7500), () {
+      //   _checkForConnection();
+      // });
       setState(() {});
     });
   }
@@ -76,7 +76,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         Uri? initialLink = await _appLinks.getInitialLink();
         if (initialLink != null) {
           String? referralCode = initialLink.queryParameters['referrer'] ??
-              initialLink.queryParameters['ref'];
+              initialLink.queryParameters['ref'] ??
+              initialLink.queryParameters['referral_code'];
           if (referralCode != null && referralCode != "") {
             Preference.saveReferral(referralCode);
           }

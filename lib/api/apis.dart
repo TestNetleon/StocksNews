@@ -47,6 +47,8 @@ class Apis {
   static const newsAlertGraphData = "/stock-historical-chart";
   static const featuredTicker = "/featured-tickers";
   static const mostActivePenny = "/most-active-penny-stocks";
+  static const mostPopularPenny = "/most-popular-penny-stocks";
+
   static const topPennyStocksToday = "/top-penny-stocks-today";
 
   static const search = "/search";
@@ -106,8 +108,8 @@ class Apis {
   static const newsTab = "/category-list";
   static const marketTickers = "/market-tickers";
 
-  static const gapUpStocks = "/get-up-stocks";
-  static const gapDownStocks = "/get-down-stocks";
+  static const gapUpStocks = "/gap-up-stocks";
+  static const gapDownStocks = "/gap-down-stocks";
   static const highPEGrowth = "/high-pe-growth-stocks";
   static const lowPEGrowth = "/low-pe-growth-stocks";
   static const weekHighs = "/week-highs";

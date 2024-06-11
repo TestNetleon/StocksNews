@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/most_active_penny_stocks.dart';
+import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/most_popular_penny_stocks.dart';
 import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/top_today-penny_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -33,12 +34,10 @@ class PennyStocks extends StatelessWidget {
         child: CustomTabContainerNEW(
           scrollable: false,
           tabsPadding: EdgeInsets.zero,
-          tabs: ["Most Active", "Top Today"],
-
-          // tabs: ["Most Active", "Most Popular", "Top Today"],
+          tabs: ["Most Active", "Most Popular", "Top Today"],
           widgets: [
             MostActivePennyStocks(),
-            // MostActivePennyStocks(),
+            MostPopularPennyStocks(),
             TopTodayPennyStocks(),
           ],
         ),

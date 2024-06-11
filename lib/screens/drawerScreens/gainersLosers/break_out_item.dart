@@ -180,6 +180,10 @@ class BreakOutStocksItem extends StatelessWidget {
                         color: data.percentageMovingAverage > 0
                             ? Colors.green
                             : Colors.red),
+                    iconDataValue: Icons.arrow_upward,
+                    colorValueIcon: data.percentageMovingAverage > 0
+                        ? Colors.green
+                        : Colors.red,
                   ),
                   InnerRowItem(
                     lable: "Volume",

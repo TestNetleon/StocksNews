@@ -310,10 +310,10 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           // const SpacerVertical(height: 20),
                           InkWell(
                             onTap: () {
-                              easeOutBuilder(context,
-                                  child: AboutStocksNews(
-                                    version: version ?? "",
-                                  ));
+                              easeOutBuilder(
+                                context,
+                                child: AboutStocksNews(version: version ?? ""),
+                              );
                             },
                             borderRadius: BorderRadius.circular(4.sp),
                             child: Ink(

@@ -94,6 +94,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
 
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
+      String? referralCode = await Preference.getReferral();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
@@ -109,6 +110,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
+        "referral_code": "$referralCode",
       };
 
       provider.verifySignupOtp(request);

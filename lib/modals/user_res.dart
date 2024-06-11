@@ -19,7 +19,9 @@ class UserRes {
   String? name;
   String? signUpSuccessful;
   String? yourAccountHasBeenCreated;
-//
+  String? referralCode;
+  String? referralUrl;
+
   UserRes({
     required this.email,
     required this.phone,
@@ -35,6 +37,8 @@ class UserRes {
     this.name,
     this.signUpSuccessful,
     this.yourAccountHasBeenCreated,
+    this.referralCode,
+    this.referralUrl,
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
@@ -51,6 +55,8 @@ class UserRes {
         name: json["name"],
         signUpSuccessful: json["sign_up_successful"],
         yourAccountHasBeenCreated: json["your_account_has_been_created"],
+        referralCode: json["referral_code"],
+        referralUrl: json["referral_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +73,7 @@ class UserRes {
         "name": name,
         "sign_up_successful": signUpSuccessful,
         "your_account_has_been_created": yourAccountHasBeenCreated,
+        "referral_code": referralCode,
+        "referral_url": referralUrl,
       };
 }
