@@ -301,7 +301,7 @@ class PeerStockItem extends StatelessWidget {
                   children: [
                     TextSpan(
                       text:
-                          "${data?.change} (${data?.changesPercentage.toCurrency()})%",
+                          "${data?.change} (${data?.changesPercentage.toCurrency()}%)",
                       style: stylePTSansRegular(
                         fontSize: 12,
                         color: (data?.changesPercentage ?? 0) > 0

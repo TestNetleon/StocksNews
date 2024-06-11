@@ -53,6 +53,7 @@ class GainersLosersDataRes {
   final String? image;
   final String displayChange;
   final num displayPercentage;
+  final dynamic open;
 
   GainersLosersDataRes({
     required this.symbol,
@@ -64,6 +65,7 @@ class GainersLosersDataRes {
     this.previousClose,
     this.image,
     this.range,
+    this.open,
     required this.displayChange,
     required this.displayPercentage,
   });
@@ -80,7 +82,8 @@ class GainersLosersDataRes {
           displayPercentage: json["changesPercentage"],
           previousClose: json["previousClose"],
           image: json["image"],
-          range: json["range"]);
+          range: json["range"],
+          open: json["open"]);
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
@@ -94,5 +97,6 @@ class GainersLosersDataRes {
         "previousClose": previousClose,
         "image": image,
         "range": range,
+        "open": open,
       };
 }

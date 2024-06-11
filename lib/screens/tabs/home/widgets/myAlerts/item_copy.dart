@@ -159,7 +159,7 @@ class HomeMyAlertItem extends StatelessWidget {
                                   : ThemeColors.sos),
                     ),
                     Text(
-                      "  (${data.changesPercentage.toCurrency()})%",
+                      "  (${data.changesPercentage.toCurrency()}%)",
                       style: stylePTSansBold(
                           fontSize: 13,
                           color: data.changesPercentage > 0

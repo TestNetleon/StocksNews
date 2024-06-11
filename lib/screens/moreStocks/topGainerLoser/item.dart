@@ -203,12 +203,19 @@ class GainerLoserItem extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  Visibility(
+                    visible: marketData && data.open != null,
+                    child: InnerRowItem(
+                      lable: "Open",
+                      value: data.open,
+                    ),
+                  ),
                   InnerRowItem(
                     lable: "Previous Close",
                     value: data.previousClose,
                   ),
                   InnerRowItem(
-                    lable: "Range",
+                    lable: marketData ? "Intraday Range" : "Range",
                     value: data.range,
                   ),
                   InnerRowItem(
