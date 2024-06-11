@@ -214,7 +214,7 @@ class _MarketDataFilterBottomSheetState
               // context.read<StockScreenerProvider>().getStockScreenerStocks();
               widget.onFiltered(filterParams);
             },
-            text: "FILTER",
+            text: "APPLY FILTER",
             textColor: Colors.white,
           ),
           SpacerVertical(height: ScreenUtil().bottomBarHeight),

@@ -51,9 +51,7 @@ class MyAccount extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        // SpacerVertical(height: 30),
                         ScreenTitle(title: "My Profile"),
-
                         MyAccountContainer(),
                       ],
                     ),

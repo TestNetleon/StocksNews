@@ -109,8 +109,10 @@ class _SignUpBottomState extends State<SignUpBottom> {
       GoogleSignInAccount? account = await _googleSignIn.signIn();
       print(account.toString());
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String? referralCode = await Preference.getReferral();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
+
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         bool granted = await Permission.notification.isGranted;
@@ -126,6 +128,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "build_version": versionName,
           "build_code": buildNumber,
           "fcm_permission": "$granted",
+          "referral_code": "$referralCode",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, dontPop: 'true', state: widget.state);
@@ -146,6 +149,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
+      String? referralCode = await Preference.getReferral();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
@@ -162,6 +166,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
+        "referral_code": "$referralCode",
       };
       provider.appleLogin(
         request,

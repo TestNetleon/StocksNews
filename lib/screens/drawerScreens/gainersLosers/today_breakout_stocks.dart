@@ -46,7 +46,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
     }
 
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Today's Top Losers",
+      title: "Filter Today's Top Breakout Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: filterParams,

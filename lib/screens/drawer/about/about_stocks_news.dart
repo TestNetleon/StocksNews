@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/drawer/about/refer_dialog.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_lists.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
@@ -31,26 +31,29 @@ class AboutStocksNews extends StatefulWidget {
 }
 
 class _AboutStocksNewsState extends State<AboutStocksNews> {
-  // bool userPresent = false;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     _getData();
-  //   });
-  // }
-
-  // void _getData() async {
-  //   UserProvider provider = context.read<UserProvider>();
-  //   if (await provider.checkForUser()) {
-  //     userPresent = true;
-  //     setState(() {});
-  //   }
-  // }
+  void _onShareAppClick() {
+    showModalBottomSheet(
+        useSafeArea: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.sp),
+            topRight: Radius.circular(10.sp),
+          ),
+          // side: const BorderSide(color: ThemeColors.greyBorder),
+        ),
+        context: context,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        enableDrag: true,
+        barrierColor: Colors.transparent,
+        builder: (BuildContext ctx) {
+          return const SingleChildScrollView(child: ReferDialog());
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.watch<HomeProvider>();
+    // HomeProvider provider = context.watch<HomeProvider>();
     UserRes? user = context.watch<UserProvider>().user;
 
     return Scaffold(
@@ -235,17 +238,19 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              commonShare(
-                                title: provider.homeSliderRes?.shareText ?? "",
-                                url: provider.homeSliderRes?.shareUrl,
-                              );
-                            },
+                            onTap: _onShareAppClick,
+                            // onTap: () {
+                            //   commonShare(
+                            //     title: provider.homeSliderRes?.shareText ?? "",
+                            //     url: provider.homeSliderRes?.shareUrl,
+                            //   );
+                            // },
                             child: Container(
                               padding: EdgeInsets.all(15.sp),
                               decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 36, 36, 36),
-                                  shape: BoxShape.circle),
+                                color: Color.fromARGB(255, 36, 36, 36),
+                                shape: BoxShape.circle,
+                              ),
                               child: const Icon(
                                 Icons.ios_share_outlined,
                                 size: 24,

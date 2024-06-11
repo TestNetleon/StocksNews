@@ -143,11 +143,6 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  // void setStatus(status) {
-  //   _status = status;
-  //   notifyListeners();
-  // }
-
   setNotification(value) {
     notificationSeen = value;
     notifyListeners();
@@ -239,15 +234,17 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
         Preference.saveLocalDataBase(response.extra.messageObject);
+
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
           Const.loadingMessage = _extra?.messageObject?.loading ?? "";
         }
 
-        if (response.extra != null && response.extra is Extra) {
+        if (_extra != null) {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
           _checkForNewVersion(response.extra as Extra);
         }
+
         notifyListeners();
       } else {
         _homeSliderRes = null;

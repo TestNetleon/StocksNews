@@ -48,47 +48,50 @@ class HtmlTitle extends StatelessWidget {
                 ),
                 Visibility(
                   visible: subTitle != null && subTitle != "",
-                  child: HtmlWidget(
-                    subTitle ?? "",
-
-                    customWidgetBuilder: (element) => ReadMoreText(
-                      textAlign: TextAlign.start,
-                      element.text,
-                      trimLines: 2,
-                      colorClickableText: ThemeColors.accent,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText: ' Read more',
-                      trimExpandedText: ' Read less',
-                      moreStyle: stylePTSansRegular(
-                        color: ThemeColors.accent,
-                        fontSize: 12,
-                        height: 1.0,
+                  child: AnimatedSize(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    child: HtmlWidget(
+                      subTitle ?? "",
+                      customWidgetBuilder: (element) => ReadMoreText(
+                        textAlign: TextAlign.start,
+                        element.text,
+                        trimLines: 2,
+                        colorClickableText: ThemeColors.accent,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: ' Read more',
+                        trimExpandedText: ' Read less',
+                        moreStyle: stylePTSansRegular(
+                          color: ThemeColors.accent,
+                          fontSize: 12,
+                          height: 1.0,
+                        ),
+                        style: stylePTSansRegular(
+                          height: 1.1,
+                          fontSize: 13,
+                          color: ThemeColors.greyText,
+                        ),
                       ),
-                      style: stylePTSansRegular(
-                        height: 1.1,
-                        fontSize: 13,
-                        color: ThemeColors.greyText,
-                      ),
+                      // child: ReadMoreText(
+                      //   textAlign: TextAlign.start,
+                      //   subTitle ?? "",
+                      //   trimLines: 2,
+                      //   colorClickableText: ThemeColors.accent,
+                      //   trimMode: TrimMode.Line,
+                      //   trimCollapsedText: ' Read more',
+                      //   trimExpandedText: ' Read less',
+                      //   moreStyle: stylePTSansRegular(
+                      //     color: ThemeColors.accent,
+                      //     fontSize: 12,
+                      //     height: 1.0,
+                      //   ),
+                      // style: stylePTSansRegular(
+                      //   height: 1.1,
+                      //   fontSize: 13,
+                      //   color: ThemeColors.greyText,
+                      // ),
+                      // ),
                     ),
-                    // child: ReadMoreText(
-                    //   textAlign: TextAlign.start,
-                    //   subTitle ?? "",
-                    //   trimLines: 2,
-                    //   colorClickableText: ThemeColors.accent,
-                    //   trimMode: TrimMode.Line,
-                    //   trimCollapsedText: ' Read more',
-                    //   trimExpandedText: ' Read less',
-                    //   moreStyle: stylePTSansRegular(
-                    //     color: ThemeColors.accent,
-                    //     fontSize: 12,
-                    //     height: 1.0,
-                    //   ),
-                    // style: stylePTSansRegular(
-                    //   height: 1.1,
-                    //   fontSize: 13,
-                    //   color: ThemeColors.greyText,
-                    // ),
-                    // ),
                   ),
                 ),
               ],

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
+import 'package:stocks_news_new/modals/referral_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 
 ApiResponse apiResponseFromJson(String str) =>
     ApiResponse.fromJson(json.decode(str));
@@ -65,6 +67,8 @@ class Extra {
   final String? disclaimer;
   final String? currentBalance;
   final MessageRes? messageObject;
+  final UserRes? user;
+  final ReferralRes? referral;
 
   Extra({
     this.search,
@@ -94,6 +98,8 @@ class Extra {
     this.apiKeyFMP,
     this.disclaimer,
     this.messageObject,
+    this.user,
+    this.referral,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -148,6 +154,10 @@ class Extra {
         messageObject: json["message"] == null
             ? null
             : MessageRes.fromJson(json["message"]),
+        user: json["text"] == null ? null : UserRes.fromJson(json["user"]),
+        referral: json["referral"] == null
+            ? null
+            : ReferralRes.fromJson(json["referral"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -189,6 +199,8 @@ class Extra {
         "api_key": apiKeyFMP,
         "footer_disclaimer": disclaimer,
         "message": messageObject?.toJson(),
+        "user": user?.toJson(),
+        "referral": referral?.toJson(),
       };
 }
 
