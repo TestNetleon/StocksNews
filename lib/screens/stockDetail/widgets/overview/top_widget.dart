@@ -17,23 +17,18 @@ class SdTopWidgetDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
-    // CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
+    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
     return Row(
       children: [
         Visibility(
           visible: true,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(0.sp),
+            borderRadius: BorderRadius.circular(0),
             child: Container(
               padding: const EdgeInsets.all(5),
               width: 43,
               height: 43,
-              child: const ThemeImageView(url: ""),
-
-              //  Image.asset(
-              //   Images.userPlaceholder,
-              //   fit: BoxFit.cover,
-              // ),
+              child: ThemeImageView(url: companyInfo?.image ?? ""),
             ),
           ),
         ),

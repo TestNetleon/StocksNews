@@ -9,6 +9,7 @@ class BaseUiContainer extends StatelessWidget {
   const BaseUiContainer({
     required this.child,
     required this.hasData,
+    this.isFull = false,
     this.error,
     required this.isLoading,
     this.errorDispCommon = false,
@@ -22,6 +23,7 @@ class BaseUiContainer extends StatelessWidget {
 //
   final Widget child;
   final bool hasData;
+  final bool isFull;
   final String? error;
   final bool isLoading;
   final bool showPreparingText;
@@ -41,7 +43,13 @@ class BaseUiContainer extends StatelessWidget {
               : const SizedBox()
           // const Loading()
           : hasData
-              ? child
+              ? isFull
+                  ? Column(
+                      children: [
+                        Expanded(child: child),
+                      ],
+                    )
+                  : child
               : OptionalParent(
                   addParent: errorDispCommon,
                   parentBuilder: (child) {

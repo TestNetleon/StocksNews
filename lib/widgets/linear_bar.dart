@@ -6,12 +6,19 @@ import 'package:stocks_news_new/utils/theme.dart';
 
 class LinearBarCommon extends StatelessWidget {
   final num value;
-  const LinearBarCommon({super.key, this.value = 0});
+  final bool showText;
+  final bool showAnimation;
+  const LinearBarCommon({
+    super.key,
+    this.value = 0,
+    this.showText = true,
+    this.showAnimation = true,
+  });
 //
   @override
   Widget build(BuildContext context) {
     return LinearPercentIndicator(
-      animation: true,
+      animation: showAnimation,
       animationDuration: 1000,
       percent: value / 100,
       lineHeight: !isPhone ? 14 : 20,
@@ -19,10 +26,13 @@ class LinearBarCommon extends StatelessWidget {
       padding: const EdgeInsets.only(right: 5),
       // padding: EdgeInsets.only(right: 20.sp, top: 1.sp),
       backgroundColor: ThemeColors.greyBorder,
-      center: Text(
-        "$value%",
-        style: stylePTSansBold(
-          fontSize: 11,
+      center: Visibility(
+        visible: showText,
+        child: Text(
+          "$value%",
+          style: stylePTSansBold(
+            fontSize: 11,
+          ),
         ),
       ),
       progressColor: value >= 0 && value < 25

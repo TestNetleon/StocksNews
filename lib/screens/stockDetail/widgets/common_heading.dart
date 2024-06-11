@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
 import '../../../../utils/colors.dart';
@@ -16,7 +15,7 @@ class SdCommonHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    // CompanyInfo? companyInfo = provider.data?.companyInfo;
+    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
     KeyStats? keyStats = provider.tabRes?.keyStats;
 
     return Padding(
@@ -24,18 +23,15 @@ class SdCommonHeading extends StatelessWidget {
       child: Row(
         children: [
           Visibility(
-            // visible: companyInfo?.image != null,
-
-            visible: true,
+            visible: companyInfo?.image != null,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(0),
               child: Container(
                 padding: const EdgeInsets.all(5),
                 width: 43,
                 height: 43,
-                child: const CachedNetworkImagesWidget(
-                  "",
-                  placeHolder: Images.placeholder,
+                child: CachedNetworkImagesWidget(
+                  companyInfo?.image ?? "",
                 ),
               ),
             ),

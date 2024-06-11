@@ -18,6 +18,7 @@ class SdTopDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     KeyStats? keyStats = provider.tabRes?.keyStats;
+
     if (keyStats?.exchange == null || keyStats?.marketStatus == null) {
       return const SizedBox();
     }
@@ -104,7 +105,7 @@ class SdTopDisclaimer extends StatelessWidget {
               commonShare(
                 title:
                     "${provider.tabRes?.keyStats?.name} (${provider.tabRes?.keyStats?.symbol})",
-                url: "",
+                url: provider.tabRes?.shareUrl ?? "",
               );
             },
             child: const Icon(Icons.ios_share),

@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 import 'widgets/dividends/dividends.dart';
 import 'widgets/earnings/earnings.dart';
+import 'widgets/stockAnalysis/analysis.dart';
 
 class StockDetail extends StatefulWidget {
   final String symbol;
@@ -34,8 +35,12 @@ class _StockDetailState extends State<StockDetail> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
+      _callApi();
     });
+  }
+
+  _callApi() {
+    context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
   }
 
   @override
@@ -43,7 +48,6 @@ class _StockDetailState extends State<StockDetail> {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
 
     return BaseContainer(
-      // moreGradient: true,
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
       body: BaseUiContainer(
@@ -51,6 +55,7 @@ class _StockDetailState extends State<StockDetail> {
         isLoading: provider.isLoadingTab,
         error: provider.errorTab,
         showPreparingText: true,
+        onRefresh: _callApi,
         child: CustomTabContainerNEW(
           physics: const NeverScrollableScrollPhysics(),
           scrollable: true,
@@ -59,17 +64,13 @@ class _StockDetailState extends State<StockDetail> {
           widgets: [
             const SdOverview(),
             const SdKeyStats(),
+            SdAnalysis(symbol: widget.symbol),
             Container(),
             Container(),
             Container(),
             Container(),
-            Container(),
-            SdEarnings(
-              symbol: widget.symbol,
-            ),
-            SdDividends(
-              symbol: widget.symbol,
-            ),
+            SdEarnings(symbol: widget.symbol),
+            SdDividends(symbol: widget.symbol),
             Container(),
             Container(),
             Container(),

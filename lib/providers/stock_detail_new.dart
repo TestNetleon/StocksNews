@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/apis.dart';
+import '../modals/analysis_res.dart';
 import '../modals/stockDetailRes/earnings.dart';
 import '../route/my_app.dart';
 import '../utils/constants.dart';
@@ -54,7 +55,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "symbol": symbol,
+        "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
         url: Apis.stockDetailTab,
@@ -106,7 +107,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "symbol": symbol,
+        "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
         url: Apis.detailEarning,
@@ -159,7 +160,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "symbol": symbol,
+        "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
         url: Apis.detailDividends,
@@ -182,6 +183,57 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       Utils().showLog(e.toString());
       setStatusDividends(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  //Analysis DATA
+  String? _errorAnalysis;
+  String? get errorAnalysis => _errorAnalysis ?? Const.errSomethingWrong;
+
+  Status _statusAnalysis = Status.ideal;
+  Status get statusAnalysis => _statusAnalysis;
+
+  bool get isLoadingAnalysis => _statusAnalysis == Status.loading;
+
+  Extra? _extraAnalysis;
+  Extra? get extraAnalysis => _extraAnalysis;
+
+  AnalysisRes? _analysis;
+  AnalysisRes? get analysis => _analysis;
+
+  void setStatusAnalysis(status) {
+    _statusAnalysis = status;
+    notifyListeners();
+  }
+
+  Future getAnalysisData({String? symbol}) async {
+    setStatusAnalysis(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockAnalysis,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _analysis = analysisResFromJson(jsonEncode(response.data));
+      } else {
+        _analysis = null;
+        _errorAnalysis = response.message;
+      }
+      setStatusAnalysis(Status.loaded);
+    } catch (e) {
+      _analysis = null;
+      Utils().showLog(e.toString());
+      _errorAnalysis = Const.errSomethingWrong;
+      setStatusAnalysis(Status.loaded);
     }
   }
 }
