@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -17,6 +18,7 @@ class ReferDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.read<HomeProvider>();
+    UserProvider userProvider = context.read<UserProvider>();
 
     return Container(
       // padding: const EdgeInsets.all(16),
@@ -70,16 +72,16 @@ class ReferDialog extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 10),
                 Text(
-                  provider.extra?.referral?.message ??
-                      "Invite your friend and earn reward point for each registration.",
+                  provider.extra?.referral?.message ?? "",
                   style: styleGeorgiaRegular(),
                   textAlign: TextAlign.center,
                 ),
                 const SpacerVertical(height: 15),
                 GestureDetector(
                   onTap: () {
+                    Navigator.pop(context);
                     Share.share(
-                      "${provider.extra?.referral?.shareText ?? "Hey, Stay updated on the stock market with Stocks.News app. Daily updates and market news at your fingertips.\n\n"}\n${provider.extra?.user?.referralUrl}",
+                      "${provider.extra?.referral?.shareText}${"\n\n"}${userProvider.user?.referralUrl}",
                     );
                   },
                   child: Container(
