@@ -317,7 +317,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "${startTiming}S",
+                                text: "${startTiming}Sec",
                                 style: stylePTSansBold(
                                   fontSize: 15,
                                   color: ThemeColors.accent,

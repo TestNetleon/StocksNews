@@ -72,10 +72,14 @@ class Preference {
 
   static Future<MessageRes?> getLocalDataBase() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    final localDataBaseString = preferences.getString("@localDataBase");
-    return localDataBaseString == null
-        ? null
-        : MessageRes.fromJson(jsonDecode(localDataBaseString));
+    if (preferences.containsKey("@localDataBase")) {
+      final localDataBaseString = preferences.getString("@localDataBase");
+      return localDataBaseString == null || localDataBaseString == "null"
+          ? null
+          : MessageRes.fromJson(jsonDecode(localDataBaseString));
+    } else {
+      return null;
+    }
   }
 
   static Future<String?> getReferral() async {

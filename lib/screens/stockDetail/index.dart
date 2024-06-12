@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/keystats/key_states.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/sec/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -79,7 +80,7 @@ class _StockDetailState extends State<StockDetail> {
             Container(),
             SdCharts(symbol: widget.symbol),
             Container(),
-            Container(),
+            SdSecFilings(symbol: widget.symbol),
             Container(),
           ],
         ),

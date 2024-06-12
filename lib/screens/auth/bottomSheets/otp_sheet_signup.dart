@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -110,7 +111,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
-        "referral_code": "$referralCode",
+        "referral_code": kDebugMode ? "38K6PP" : "$referralCode",
       };
 
       provider.verifySignupOtp(request);
@@ -277,7 +278,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "${startTiming}S",
+                                text: "${startTiming}Sec",
                                 style: stylePTSansBold(
                                   fontSize: 15,
                                   color: ThemeColors.accent,

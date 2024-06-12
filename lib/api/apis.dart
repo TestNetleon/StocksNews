@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Apis {
   static const baseUrl = "https://app.stocks.news/api/v1"; // live server
   // static const baseUrl = kDebugMode
@@ -136,6 +138,7 @@ class Apis {
   static const detailEarning = "/stock-detail-earning";
   static const detailDividends = "/stock-detail-dividend";
   static const detailChart = "/stock-detail-chart";
+  static const detailSec = "/stock-detail-secFiling";
   static const detailForecast = "/stock-detail-forecast";
 }
 

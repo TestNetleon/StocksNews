@@ -229,11 +229,14 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        loginTxt = response.extra.loginText;
-        signUpTxt = response.extra?.signUpText;
+        loginTxt = _extra?.loginText;
+        signUpTxt = _extra?.signUpText;
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
-        Preference.saveLocalDataBase(response.extra.messageObject);
+
+        if (_extra?.messageObject != null) {
+          Preference.saveLocalDataBase(_extra?.messageObject);
+        }
 
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
@@ -618,7 +621,10 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       _statusSlider = Status.loaded;
       notifyListeners();
       if (response.status) {
-        Preference.saveLocalDataBase(response.extra.message);
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        if (_extra?.messageObject != null) {
+          Preference.saveLocalDataBase(_extra?.messageObject);
+        }
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
           Const.loadingMessage = _extra?.messageObject?.loading ?? "";

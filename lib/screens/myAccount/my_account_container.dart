@@ -76,6 +76,9 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     if (user?.email?.isNotEmpty == true) {
       emailController.text = user?.email ?? "";
     }
+    if (user?.displayName?.isNotEmpty == true) {
+      displayController.text = user?.displayName ?? "";
+    }
   }
 
   void _onTap() async {
