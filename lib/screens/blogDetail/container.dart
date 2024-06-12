@@ -68,9 +68,9 @@ class BlogDetailContainer extends StatelessWidget {
                     const SpacerVertical(height: 10),
                     SizedBox(
                       width: double.infinity,
-                      height: isPhone
-                          ? ScreenUtil().screenHeight * 0.3
-                          : ScreenUtil().screenHeight * 0.4,
+                      // height: isPhone
+                      //     ? ScreenUtil().screenHeight * 0.3
+                      //     : ScreenUtil().screenHeight * 0.4,
                       child: ThemeImageView(
                         url: provider.blogsDetail?.image ?? "",
                         // fit: BoxFit.contain,

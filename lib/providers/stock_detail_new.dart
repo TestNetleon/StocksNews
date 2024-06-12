@@ -293,7 +293,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
 //---------------------------------------------------------------
-  //Chart DATA
+  //Sec Filing DATA
   String? _errorSec;
   String? get errorSec => _errorSec ?? Const.errSomethingWrong;
 

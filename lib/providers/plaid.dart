@@ -36,8 +36,8 @@ class PlaidProvider extends ChangeNotifier {
   Status get statusG => _statusG;
   bool get isLoadingG => _statusG == Status.loading;
 
-  // List<PlaidDataRes>? _data;
-  // List<PlaidDataRes>? get data => _data;
+  List<PlaidDataRes>? _data;
+  List<PlaidDataRes>? get data => _data;
 
   //Get Tab PortFolio
   String? _errorT;
@@ -67,118 +67,123 @@ class PlaidProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStatusT(status) {
-    _statusT = status;
-    notifyListeners();
-  }
+  // void setStatusT(status) {
+  //   _statusT = status;
+  //   notifyListeners();
+  // }
 
-  void tabChange(index, String? name) {
-    if (selectedTab != index) {
-      selectedTab = index;
-      notifyListeners();
-      log("----Name $name-----");
-      if (name == null) return;
-      if (_tabsData[name]?.data != null || _tabsData[name]?.error != null) {
-        log("--returned");
-        return;
-      }
-      getPlaidPortfolioData(name: name);
-    }
-  }
+  // void tabChange(index, String? name) {
+  //   if (selectedTab != index) {
+  //     selectedTab = index;
+  //     notifyListeners();
+  //     log("----Name $name-----");
+  //     if (name == null) return;
+  //     if (_tabsData[name]?.data != null || _tabsData[name]?.error != null) {
+  //       log("--returned");
+  //       return;
+  //     }
+  //     getPlaidPortfolioData(name: name);
+  //   }
+  // }
 
-  Future getTabData() async {
-    _tabs = [];
-    selectedTab = 0;
-    setStatusT(Status.loading);
-    try {
-      FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      });
-      ApiResponse response = await apiRequest(
-        url: Apis.plaidPortfolio,
-        formData: request,
-        showProgress: false,
-      );
-      if (response.status) {
-        _tabs = homePortfolioTabResFromJson(jsonEncode(response.data));
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
+  // Future getTabData() async {
+  //   fromDrawer = false;
+  //   _tabs = [];
+  //   selectedTab = 0;
+  //   setStatusT(Status.loading);
+  //   try {
+  //     FormData request = FormData.fromMap({
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //     });
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.plaidPortfolio,
+  //       formData: request,
+  //       showProgress: false,
+  //     );
+  //     if (response.status) {
+  //       _tabs = homePortfolioTabResFromJson(jsonEncode(response.data));
+  //       _extra = (response.extra is Extra ? response.extra as Extra : null);
 
-        if (_tabs.isNotEmpty) {
-          getPlaidPortfolioData(name: _tabs[selectedTab]);
-        }
-      } else {
-        _errorT = response.message;
-      }
-      setStatusT(Status.loaded);
-    } catch (e) {
-      Utils().showLog(e.toString());
-      setStatusT(Status.loaded);
-    }
-  }
+  //       if (_tabs.isNotEmpty) {
+  //         getPlaidPortfolioData(name: _tabs[selectedTab]);
+  //       }
+  //     } else {
+  //       _errorT = response.message;
+  //     }
+  //     setStatusT(Status.loaded);
+  //   } catch (e) {
+  //     Utils().showLog(e.toString());
+  //     setStatusT(Status.loaded);
+  //   }
+  // }
+
+  // Future onRefresh() async {
+  //   await getPlaidPortfolioData(name: _tabs[selectedTab], refreshing: true);
+  // }
 
   Future onRefresh() async {
-    await getPlaidPortfolioData(name: _tabs[selectedTab], refreshing: true);
+    await getPlaidPortfolioDataNew();
   }
 
-  Future getPlaidPortfolioData({
-    refreshing = false,
-    required String name,
-  }) async {
-    Utils().showLog("=====NAME $name======");
-    // setStatusG(Status.loading);
-    if (_tabsData[name]?.data == null || refreshing) {
-      _tabsData[name] = PlaidTabHolder(
-        data: null,
-        error: null,
-        loading: true,
-      );
-    }
-    try {
-      FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "type": name,
-      });
-      ApiResponse response = await apiRequest(
-        url: Apis.plaidPortfolio,
-        formData: request,
-        showProgress: false,
-      );
-      if (response.status) {
-        // _data = plaidDataResFromJson(jsonEncode(response.data));
-        _tabsData[name] = PlaidTabHolder(
-          data: plaidDataResFromJson(jsonEncode(response.data)),
-          error: null,
-          loading: false,
-        );
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
-      } else {
-        // _data = null;
-        _errorG = response.message;
-        _tabsData[name] = PlaidTabHolder(
-          data: null,
-          error: response.message,
-          loading: false,
-        );
-      }
-      setStatusG(Status.loaded);
-    } catch (e) {
-      // _data = null;
-      // _errorG = Const.errSomethingWrong;
-      Utils().showLog(e.toString());
-      setStatusG(Status.loaded);
-    }
-  }
+  // Future getPlaidPortfolioData({
+  //   refreshing = false,
+  //   required String name,
+  // }) async {
+  //   Utils().showLog("=====NAME $name======");
+  //   // setStatusG(Status.loading);
+  //   if (_tabsData[name]?.data == null || refreshing) {
+  //     _tabsData[name] = PlaidTabHolder(
+  //       data: null,
+  //       error: null,
+  //       loading: true,
+  //     );
+  //   }
+  //   try {
+  //     FormData request = FormData.fromMap({
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //       "type": name,
+  //     });
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.plaidPortfolio,
+  //       formData: request,
+  //       showProgress: false,
+  //     );
+  //     if (response.status) {
+  //       // _data = plaidDataResFromJson(jsonEncode(response.data));
+  //       _tabsData[name] = PlaidTabHolder(
+  //         data: plaidDataResFromJson(jsonEncode(response.data)),
+  //         error: null,
+  //         loading: false,
+  //       );
+  //       _extra = (response.extra is Extra ? response.extra as Extra : null);
+  //     } else {
+  //       // _data = null;
+  //       _errorG = response.message;
+  //       _tabsData[name] = PlaidTabHolder(
+  //         data: null,
+  //         error: response.message,
+  //         loading: false,
+  //       );
+  //     }
+  //     // setStatusG(Status.loaded);
+  //   } catch (e) {
+  //     // _data = null;
+  //     // _errorG = Const.errSomethingWrong;
+  //     Utils().showLog(e.toString());
+  //     // setStatusG(Status.loaded);
+  //   }
+  // }
 
   Future sendPlaidPortfolio({
     showProgress = true,
-    fromDrawer = false,
     // List<dynamic>? data,
     // List<dynamic>? dataAccounts,
     // List<dynamic>? holdings,
     required String? accessToken,
   }) async {
+    Utils().showLog('-----FROM DRAWER API $fromDrawer------------');
     // List<dynamic>? jsonArray = data;
     // List<dynamic>? jsonArrayAccounts = dataAccounts;
     // List<dynamic>? jsonArrayHoldings = holdings;
@@ -205,6 +210,9 @@ class PlaidProvider extends ChangeNotifier {
         if (!fromDrawer) {
           Navigator.pushNamed(
               navigatorKey.currentContext!, HomePlaidAdded.path);
+        } else {
+          // getTabData();
+          getPlaidPortfolioDataNew();
         }
         // popUpAlert(
         //   message: response.message ?? "Data fetched successfully.",
@@ -219,6 +227,36 @@ class PlaidProvider extends ChangeNotifier {
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
+    }
+  }
+
+  Future getPlaidPortfolioDataNew() async {
+    setStatusG(Status.loading);
+
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.plaidPortfolio,
+        formData: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _data = plaidDataResFromJson(jsonEncode(response.data));
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _data = null;
+        _errorG = response.message;
+      }
+      setStatusG(Status.loaded);
+    } catch (e) {
+      _data = null;
+      _errorG = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusG(Status.loaded);
     }
   }
 }

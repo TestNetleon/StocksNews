@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../../../utils/utils.dart';
 import '../../../../../auth/bottomSheets/login_sheet.dart';
 import '../../../../../auth/bottomSheets/login_sheet_tablet.dart';
 import '../handle/plaid_handler.dart';
@@ -33,7 +34,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   @override
   void initState() {
     super.initState();
-    _plaidLinkHandler = PlaidLinkHandler(fromDrawer: widget.fromDrawer);
+
+    _plaidLinkHandler = PlaidLinkHandler();
     _plaidLinkHandler?.init();
   }
 
@@ -234,8 +236,8 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
   // }
 
   Future _onTap(UserProvider provider, HomeProvider homeProvider) async {
+    Utils().showLog("---------FROM DRAWER ON TAP  $fromDrawer");
     PlaidProvider plaidProvider = context.read<PlaidProvider>();
-
     isPhone ? await loginSheet() : await loginSheetTablet();
     if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
       return;
@@ -248,9 +250,11 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
           await _plaidLinkHandler?.plaidAPi();
         });
       } else {
-        if (widget.fromDrawer) {
+        if (fromDrawer) {
           log("we are calling tab API");
-          await plaidProvider.getTabData();
+          // await plaidProvider.getTabData();
+
+          await plaidProvider.getPlaidPortfolioDataNew();
         }
         // log("${res.status}, ${res.data['bottom'] == null}");
       }
@@ -276,9 +280,14 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           onTap: provider.user == null
               ? () {
+                  fromDrawer = widget.fromDrawer;
                   _onTap(provider, homeProvider);
                 }
               : () {
+                  fromDrawer = widget.fromDrawer;
+                  Utils()
+                      .showLog("---------FROM DRAWER ELSE ON TAP  $fromDrawer");
+
                   _plaidLinkHandler?.plaidAPi();
                 },
           child: Ink(

@@ -14,9 +14,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class PlaidLinkHandler {
-  final bool fromDrawer;
-
-  PlaidLinkHandler({this.fromDrawer = false});
+  PlaidLinkHandler();
   StreamSubscription<LinkEvent>? _streamEvent;
   StreamSubscription<LinkExit>? _streamExit;
   StreamSubscription<LinkSuccess>? _streamSuccess;
@@ -45,13 +43,13 @@ class PlaidLinkHandler {
     Utils().showLog(
         "onSuccess: $token, institution name: ${metadata.institution?.name}");
 
-    popUpAlert(
-      message: "Please wait while we are fetching your data...",
-      title: "Fetching data",
-      icon: Images.updateGIF,
-      canPop: false,
-      showButton: false,
-    );
+    // popUpAlert(
+    //   message: "Please wait while we are fetching your data...",
+    //   title: "Fetching data",
+    //   icon: Images.updateGIF,
+    //   canPop: false,
+    //   showButton: false,
+    // );
     _exchangeToken(publicToken: token);
   }
 
@@ -61,7 +59,7 @@ class PlaidLinkHandler {
     Utils().showLog("onExit metadata: $metadata, error: $error");
   }
 
-  void _exchangeToken({String? publicToken}) async {
+  Future _exchangeToken({String? publicToken}) async {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
     final Map<String, dynamic> request = {
       "client_id": provider.homePortfolio?.keys?.plaidClient ?? "",
@@ -89,9 +87,9 @@ class PlaidLinkHandler {
         Utils().showLog("ACCESS TOKEN ${responseData['access_token']}");
         Utils().showLog("Exchange Token Data: $responseData");
         String accessToken = '${responseData['access_token']}';
+        // Navigator.pop(navigatorKey.currentContext!);
         navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
               accessToken: accessToken,
-              fromDrawer: fromDrawer,
             );
         // _getHoldings(accessToken: accessToken);
       } else {
@@ -146,7 +144,7 @@ class PlaidLinkHandler {
   //   }
   // }
 
-  Future<void> plaidAPi() async {
+  Future plaidAPi() async {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
 
     UserRes? userRes = navigatorKey.currentContext!.read<UserProvider>().user;

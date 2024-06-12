@@ -36,11 +36,21 @@ class HomePlaidItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "${data?.tickerSymbol}",
-                          style: stylePTSansBold(fontSize: 14),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: [
+                            Text(
+                              "${data?.tickerSymbol}",
+                              style: stylePTSansBold(fontSize: 14),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: ThemeColors.accent,
+                              ),
+                            ),
+                          ],
                         ),
                         const SpacerVertical(height: 5),
                         Visibility(
@@ -90,6 +100,23 @@ class HomePlaidItem extends StatelessWidget {
           color: ThemeColors.greyBorder,
           height: 15,
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Investment type",
+              style: stylePTSansRegular(fontSize: 13),
+            ),
+            Flexible(
+              child: Text(
+                "${data?.type}",
+                style:
+                    styleGeorgiaBold(fontSize: 13, color: ThemeColors.accent),
+              ),
+            ),
+          ],
+        ),
+        const SpacerVertical(height: 5),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,96 +149,6 @@ class HomePlaidItem extends StatelessWidget {
             ),
           ],
         ),
-
-        // Visibility(
-        //   visible: (data?.type != '' && data?.type != null) ||
-        //       (data?.closePriceAsOf != "" && data?.closePriceAsOf != null),
-        //   child: const SpacerVertical(height: 20),
-        // ),
-
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 5),
-        //   child: Row(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       Expanded(
-        //         child: Align(
-        //           alignment: Alignment.centerLeft,
-        //           child: Visibility(
-        //             visible: data?.closePrice != '' && data?.closePrice != null,
-        //             child: Column(
-        //               children: [
-        //                 Text(
-        //                   "Close Price",
-        //                   style: stylePTSansRegular(fontSize: 13),
-        //                 ),
-        //                 Text(
-        //                   data?.closePrice ?? "",
-        //                   style: stylePTSansRegular(
-        //                     color: ThemeColors.greyText,
-        //                     fontSize: 14,
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //       Expanded(
-        //         child: Align(
-        //           alignment: Alignment.centerRight,
-        //           child: Visibility(
-        //             visible: data?.closePriceAsOf != "" &&
-        //                 data?.closePriceAsOf != null,
-        //             child: Column(
-        //               children: [
-        //                 Text(
-        //                   "Close price as of",
-        //                   style: stylePTSansRegular(fontSize: 13),
-        //                 ),
-        //                 Text(
-        //                   data?.closePriceAsOf ?? "N/A",
-        //                   style: stylePTSansRegular(
-        //                     color: ThemeColors.greyText,
-        //                     fontSize: 14,
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 5),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Visibility(
-        //         visible: data?.closePrice != '' && data?.closePrice != null,
-        //         child: Text(
-        //           data?.closePrice ?? "",
-        //           style: stylePTSansRegular(),
-        //         ),
-        //       ),
-        //       Visibility(
-        //         visible:
-        //             data?.closePriceAsOf != "" && data?.closePriceAsOf != null,
-        //         child: Text(
-        //           "Close price as of: ${data?.closePriceAsOf ?? "N/A"}",
-        //           style: stylePTSansRegular(
-        //             color: ThemeColors.greyText,
-        //             fontSize: 14,
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }

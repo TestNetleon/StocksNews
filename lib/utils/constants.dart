@@ -41,7 +41,7 @@ bool isShowingError = false;
 String apiKeyFMP = "";
 bool popHome = false;
 Uri? deepLinkData;
-
+bool fromDrawer = false;
 // String? clientId;
 // String? secret;
 // String? createAPI;
