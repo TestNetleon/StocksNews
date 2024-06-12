@@ -57,6 +57,9 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
 
   void exchangeFilter(String item) {
     _filterParams!.exchange_name!.remove(item);
+    if (_filterParams!.exchange_name!.isEmpty) {
+      _filterParams!.exchange_name = null;
+    }
     _pageUp = 1;
     notifyListeners();
     getData();
@@ -115,7 +118,6 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _error = null;
         canLoadMore = _pageUp < (response.extra.totalPages ?? 1);
-
         if (_pageUp == 1) {
           title = response.extra?.title;
           subTitle = response.extra?.subTitle;
@@ -123,7 +125,8 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
           _extra = (response.extra is Extra ? response.extra as Extra : null);
         } else {
           List<CongressionalRes> parsedData = List<CongressionalRes>.from(
-              (response.data as List).map((x) => CongressionalRes.fromJson(x)));
+            (response.data as List).map((x) => CongressionalRes.fromJson(x)),
+          );
           _data?.addAll(parsedData);
         }
       } else {

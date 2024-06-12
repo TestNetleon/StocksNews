@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/congressional_res.dart';
+import 'package:stocks_news_new/modals/congress_member_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
-import 'package:stocks_news_new/screens/drawerScreens/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -14,24 +13,16 @@ import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
 
-class CongressionalItem extends StatelessWidget {
-  final CongressionalRes? data;
+class CongressTradeItem extends StatelessWidget {
+  final TradeList? data;
   final int index;
-  const CongressionalItem({super.key, this.data, required this.index});
+  const CongressTradeItem({super.key, this.data, required this.index});
 
   void _onTap(context) {
     Navigator.pushNamed(
       context,
       StockDetails.path,
       arguments: {"slug": data?.symbol},
-    );
-  }
-
-  void _onPersonTap(context) {
-    Navigator.pushNamed(
-      context,
-      CongressionalDetail.path,
-      arguments: {"slug": data?.slug},
     );
   }
 
@@ -47,93 +38,45 @@ class CongressionalItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InkWell(
-                  onTap: () => _onPersonTap(context),
+                  onTap: () => _onTap(context),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(0.sp),
                     child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: ThemeColors.greyBorder,
-                          width: 1,
-                        ),
-                      ),
-                      width: 60,
-                      height: 70,
+                      padding: const EdgeInsets.all(5),
+                      width: 43,
+                      height: 43,
                       child: ThemeImageView(
-                        url: data?.userImage ?? "",
-                        // fit: BoxFit.contain,
+                        url: data?.image ?? "",
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),
                 ),
-                const SpacerHorizontal(width: 8),
+                const SpacerHorizontal(width: 12),
                 Expanded(
                   flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () => _onPersonTap(context),
-                        child: Text(
-                          "${data?.name}",
+                  child: InkWell(
+                    onTap: () => _onTap(context),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${data?.symbol}",
                           style: stylePTSansBold(fontSize: 14),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      const SpacerVertical(height: 3),
-                      InkWell(
-                        onTap: () => _onTap(context),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(0.sp),
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                width: 43,
-                                height: 43,
-                                child: ThemeImageView(url: data?.image ?? ""),
-                              ),
-                            ),
-                            const SpacerHorizontal(width: 4),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${data?.symbol}",
-                                    style: stylePTSansBold(
-                                      fontSize: 13,
-                                      color: ThemeColors.accent,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SpacerVertical(height: 3),
-                                  Text(
-                                    "${data?.company}",
-                                    style: stylePTSansBold(
-                                        fontSize: 14,
-                                        color: ThemeColors.greyText),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        const SpacerVertical(height: 3),
+                        Text(
+                          "${data?.company}",
+                          style: stylePTSansBold(
+                              fontSize: 14, color: ThemeColors.greyText),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      // const SpacerVertical(height: 3),
-                      // Text(
-                      //   "${data?.company}",
-                      //   style: stylePTSansBold(
-                      //       fontSize: 14, color: ThemeColors.greyText),
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      const SpacerVertical(height: 3),
-                    ],
+                        const SpacerVertical(height: 3),
+                      ],
+                    ),
                   ),
                 ),
                 const SpacerHorizontal(width: 10),
@@ -156,14 +99,7 @@ class CongressionalItem extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        // ignore: prefer_const_constructors
-                        decoration: BoxDecoration(
-                          // color: data?.transactionType == "Buy"
-                          //     ? ThemeColors.accent
-                          //     : data?.transactionType == "Sell"
-                          //         ? ThemeColors.sos
-                          //         : ThemeColors.white,
-
+                        decoration: const BoxDecoration(
                           color: ThemeColors.white,
                         ),
                         margin: EdgeInsets.only(left: 8.sp),

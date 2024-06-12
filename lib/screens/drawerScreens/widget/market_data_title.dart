@@ -109,7 +109,7 @@ class MarketDataTitle extends StatelessWidget {
                   (provider.filterParams != null
                       ? const EdgeInsets.only(
                           top: Dimen.itemSpacing, bottom: Dimen.itemSpacing / 3)
-                      : const EdgeInsets.only(top: Dimen.itemSpacing / 2)),
+                      : const EdgeInsets.only(top: Dimen.itemSpacing)),
               child: const Divider(
                 color: ThemeColors.accent,
                 height: 2,

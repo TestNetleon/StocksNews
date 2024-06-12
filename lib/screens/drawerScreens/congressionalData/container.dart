@@ -6,15 +6,12 @@ import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/congressionalData/item.dart';
 import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-
-import '../../../widgets/html_title.dart';
-import '../widget/filter_ui_values.dart';
 
 class CongressionalContainer extends StatefulWidget {
   const CongressionalContainer({super.key});
@@ -63,38 +60,53 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
     CongressionalProvider provider = context.watch<CongressionalProvider>();
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          Dimen.padding, Dimen.padding, Dimen.padding, 0),
+        Dimen.padding,
+        Dimen.padding,
+        Dimen.padding,
+        0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (!(provider.data == null &&
-              provider.filterParams == null &&
-              provider.isLoading))
-            HtmlTitle(
-              title: provider.title ?? "",
-              style: stylePTSansBold(fontSize: 17),
-              subTitle: provider.subTitle ?? "",
+          if (provider.data != null || provider.filterParams != null)
+            MarketDataTitle(
+              htmlTitle: true,
+              title: provider.extra?.title,
+              subTitleHtml: true,
+              subTitle: provider.extra?.subTitle,
+              provider: provider,
+              onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               onFilterClick: _onFilterClick,
-              hasFilter: provider.filterParams != null,
             ),
-          if (!(provider.data == null &&
-              provider.filterParams == null &&
-              provider.isLoading))
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Divider(
-                color: ThemeColors.accent,
-                height: 2,
-                thickness: 2,
-              ),
-            ),
-          if (provider.filterParams != null)
-            FilterUiValues(
-              params: provider.filterParams,
-              onDeleteExchange: (exchange) {
-                provider.exchangeFilter(exchange);
-              },
-            ),
+          // if (!(provider.data == null &&
+          //     provider.filterParams == null &&
+          //     provider.isLoading))
+          //   HtmlTitle(
+          //     title: provider.title ?? "",
+          //     style: stylePTSansBold(fontSize: 17),
+          //     subTitle: provider.subTitle ?? "",
+          //     onFilterClick: _onFilterClick,
+          //     hasFilter: provider.filterParams != null,
+          //   ),
+          // if (!(provider.data == null &&
+          //     provider.filterParams == null &&
+          //     provider.isLoading))
+          //   const Padding(
+          //     padding: EdgeInsets.symmetric(vertical: 10),
+          //     child: Divider(
+          //       color: ThemeColors.accent,
+          //       height: 2,
+          //       thickness: 2,
+          //     ),
+          //   ),
+          // if (provider.filterParams != null)
+          //   FilterUiValues(
+          //     params: provider.filterParams,
+          //     onDeleteExchange: (exchange) {
+          //       provider.exchangeFilter(exchange);
+          //     },
+          //   ),
+
           Expanded(
             child: BaseUiContainer(
               onRefresh: provider.getData,
@@ -108,7 +120,9 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
                 onRefresh: () async => provider.getData(),
                 canLoadMore: provider.canLoadMore,
                 child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Dimen.padding,
+                    ),
                     itemBuilder: (context, index) {
                       CongressionalRes? data = provider.data?[index];
                       return CongressionalItem(
