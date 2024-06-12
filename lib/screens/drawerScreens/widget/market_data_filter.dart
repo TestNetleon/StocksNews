@@ -65,18 +65,160 @@ class _MarketDataFilterBottomSheetState
         selectedData: filterParams?.exchange_name,
         onSelected: (List<FiltersDataItem> selected) {
           String selectedValues = selected.map((item) => item.value).join(',');
+
           if (filterParams == null) {
             filterParams = FilteredParams(
-              exchange_name: selectedValues.split(","),
+              exchange_name:
+                  selectedValues.isEmpty ? null : selectedValues.split(","),
             );
           } else {
-            filterParams?.exchange_name = selectedValues.split(",");
+            filterParams?.exchange_name =
+                selectedValues.isEmpty ? null : selectedValues.split(",");
           }
           setState(() {});
         },
       ),
     );
   }
+
+  // void _showSectorPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Sector",
+  //       items: provider.dataFilterBottomSheet.sectors,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeSector(
+  //               provider.dataFilterBottomSheet.sectors[index].key.toString(),
+  //               provider.dataFilterBottomSheet.sectors[index].value.toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showIndustryPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Industry",
+  //       items: provider.dataFilterBottomSheet.industries,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeIndustries(
+  //               provider.dataFilterBottomSheet.industries[index].key.toString(),
+  //               provider.dataFilterBottomSheet.industries[index].value
+  //                   .toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showMarketCapPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Market Cap",
+  //       items: provider.dataFilterBottomSheet.marketCap,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeMarketcap(
+  //               provider.dataFilterBottomSheet.marketCap[index].key.toString(),
+  //               provider.dataFilterBottomSheet.marketCap[index].value
+  //                   .toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showPricePicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Price",
+  //       items: provider.dataFilterBottomSheet.price,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangePrice(
+  //               provider.dataFilterBottomSheet.price[index].key.toString(),
+  //               provider.dataFilterBottomSheet.price[index].value.toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showBetaPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Beta",
+  //       items: provider.dataFilterBottomSheet.beta,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeBeta(
+  //               provider.dataFilterBottomSheet.beta[index].key.toString(),
+  //               provider.dataFilterBottomSheet.beta[index].value.toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showDividendPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Dividend",
+  //       items: provider.dataFilterBottomSheet.dividend,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeDividend(
+  //               provider.dataFilterBottomSheet.dividend[index].key.toString(),
+  //               provider.dataFilterBottomSheet.dividend[index].value.toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showETFPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All ETF",
+  //       items: provider.dataFilterBottomSheet.isEtf,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeIsEtf(
+  //               provider.dataFilterBottomSheet.isEtf[index].key.toString(),
+  //               provider.dataFilterBottomSheet.isEtf[index].value.toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showFundPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All Fund",
+  //       items: provider.dataFilterBottomSheet.isFund,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeIsFund(
+  //               provider.dataFilterBottomSheet.isFund[index].key.toString(),
+  //               provider.dataFilterBottomSheet.isFund[index].value.toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  // void _showActivelyTradingPicker(BuildContext context) {
+  //   BaseBottomSheets().gradientBottomSheet(
+  //     child: MarketDataFilterListing(
+  //       label: "All ActivelyTrading",
+  //       items: provider.dataFilterBottomSheet.isActivelyTrading,
+  //       onSelected: (index) {
+  //         context.read<StockScreenerProvider>().onChangeIsActivelyTrading(
+  //               provider.dataFilterBottomSheet.isActivelyTrading[index].key
+  //                   .toString(),
+  //               provider.dataFilterBottomSheet.isActivelyTrading[index].value
+  //                   .toString(),
+  //             );
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

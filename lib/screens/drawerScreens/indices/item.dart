@@ -189,28 +189,28 @@ class _IndicesItemState extends State<IndicesItem> {
                 Visibility(
                   visible: widget.data.sector != null,
                   child: InnerRowItem(
-                    lable: "Sector",
+                    label: "Sector",
                     value: "${widget.data.sector}",
                   ),
                 ),
                 Visibility(
                   visible: widget.data.peRatio != null,
                   child: InnerRowItem(
-                    lable: "P/E Ratio",
+                    label: "P/E Ratio",
                     value: "${widget.data.peRatio}",
                   ),
                 ),
                 Visibility(
                   visible: widget.data.mktCap != null,
                   child: InnerRowItem(
-                    lable: "Market Cap",
+                    label: "Market Cap",
                     value: "${widget.data.mktCap}",
                   ),
                 ),
                 // Visibility(
                 //   visible: widget.data.consensusAnalystRating != null,
                 //   child: InnerRowItem(
-                //     lable: "Consensus Analyst Rating",
+                //     label: "Consensus Analyst Rating",
                 //     value: "${widget.data.consensusAnalystRating}",
                 //   ),
                 // ),
@@ -218,21 +218,21 @@ class _IndicesItemState extends State<IndicesItem> {
                 //   visible:
                 //       widget.data.analystRatingConsensusPriceTarget != null,
                 //   child: InnerRowItem(
-                //     lable: "Analyst Rating Consensus Price Target",
+                //     label: "Analyst Rating Consensus Price Target",
                 //     value: "${widget.data.analystRatingConsensusPriceTarget}",
                 //   ),
                 // ),
                 Visibility(
                   visible: provider.typeDowThirty || provider.typeSpFifty,
                   child: InnerRowItem(
-                    lable: "Volume",
+                    label: "Volume",
                     value: "${widget.data.volume}",
                   ),
                 ),
                 Visibility(
                   visible: provider.typeDowThirty || provider.typeSpFifty,
                   child: InnerRowItem(
-                    lable: "Average Volume",
+                    label: "Average Volume",
                     value: "${widget.data.avgVolume}",
                   ),
                 ),

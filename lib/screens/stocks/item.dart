@@ -205,23 +205,23 @@ class StocksItemAll extends StatelessWidget {
             child: Column(
               children: [
                 InnerRowItem(
-                  lable: "Exchange",
+                  label: "Exchange",
                   value: data?.exchangeShortName,
                 ),
                 InnerRowItem(
-                  lable: "Last Close",
+                  label: "Last Close",
                   value: data?.previousClose,
                 ),
                 InnerRowItem(
-                  lable: "Open",
+                  label: "Open",
                   value: data?.open,
                 ),
                 InnerRowItem(
-                  lable: "Day High",
+                  label: "Day High",
                   value: data?.dayHigh,
                 ),
                 InnerRowItem(
-                  lable: "Day Low",
+                  label: "Day Low",
                   value: data?.dayLow,
                 ),
               ],

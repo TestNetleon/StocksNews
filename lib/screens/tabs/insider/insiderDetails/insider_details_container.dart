@@ -140,23 +140,23 @@ class InsiderCompanyContainer extends StatelessWidget {
                             provider.indexCompany == index ? -1 : index, true),
                         children: [
                           InnerRowItem(
-                            lable: "Shares Bought/Sold",
+                            label: "Shares Bought/Sold",
                             value: "${data?.securitiesTransacted}",
                           ),
                           InnerRowItem(
-                            lable: "Total Transaction",
+                            label: "Total Transaction",
                             value: data?.totalTransaction,
                           ),
                           InnerRowItem(
-                            lable: "Shares Held After Transaction",
+                            label: "Shares Held After Transaction",
                             value: data?.securitiesOwned,
                           ),
                           InnerRowItem(
-                            lable: "Transaction Date",
+                            label: "Transaction Date",
                             value: data?.transactionDateNew,
                           ),
                           const InnerRowItem(
-                            lable: "Details",
+                            label: "Details",
                             link: true,
                           ),
                         ],
@@ -186,23 +186,23 @@ class InsiderCompanyContainer extends StatelessWidget {
                       provider.indexCompany == index ? -1 : index, true),
                   children: [
                     InnerRowItem(
-                      lable: "Shares Bought/Sold",
+                      label: "Shares Bought/Sold",
                       value: "${data?.securitiesTransacted}",
                     ),
                     InnerRowItem(
-                      lable: "Total Transaction",
+                      label: "Total Transaction",
                       value: data?.totalTransaction,
                     ),
                     InnerRowItem(
-                      lable: "Shares Held After Transaction",
+                      label: "Shares Held After Transaction",
                       value: data?.securitiesOwned,
                     ),
                     InnerRowItem(
-                      lable: "Transaction Date",
+                      label: "Transaction Date",
                       value: data?.transactionDateNew,
                     ),
                     InnerRowItem(
-                      lable: "Details",
+                      label: "Details",
                       link: true,
                       value: data?.link,
                     ),
@@ -368,23 +368,23 @@ class InsiderReportingContainer extends StatelessWidget {
                             false),
                         children: [
                           // InnerRowItem(
-                          //   lable: "Shares Bought/Sold",
+                          //   label: "Shares Bought/Sold",
                           //   value: "${data?.securitiesTransacted}",
                           // ),
                           // InnerRowItem(
-                          //   lable: "Total Transaction",
+                          //   label: "Total Transaction",
                           //   value: data?.totalTransaction,
                           // ),
                           InnerRowItem(
-                            lable: "Shares Held After Transaction",
+                            label: "Shares Held After Transaction",
                             value: data?.securitiesOwned,
                           ),
                           InnerRowItem(
-                            lable: "Transaction Date",
+                            label: "Transaction Date",
                             value: data?.transactionDateNew,
                           ),
                           InnerRowItem(
-                            lable: "Details",
+                            label: "Details",
                             link: true,
                             value: data?.link,
                           ),
@@ -411,23 +411,23 @@ class InsiderReportingContainer extends StatelessWidget {
                       provider.indexReporting == index ? -1 : index, false),
                   children: [
                     // InnerRowItem(
-                    //   lable: "Shares Bought/Sold",
+                    //   label: "Shares Bought/Sold",
                     //   value: "${data?.securitiesTransacted}",
                     // ),
                     // InnerRowItem(
-                    //   lable: "Total Transaction",
+                    //   label: "Total Transaction",
                     //   value: data?.totalTransaction,
                     // ),
                     InnerRowItem(
-                      lable: "Shares Held After Transaction",
+                      label: "Shares Held After Transaction",
                       value: data?.securitiesOwned,
                     ),
                     InnerRowItem(
-                      lable: "Transaction Date",
+                      label: "Transaction Date",
                       value: data?.transactionDateNew,
                     ),
                     const InnerRowItem(
-                      lable: "Details",
+                      label: "Details",
                       link: true,
                     ),
                   ],

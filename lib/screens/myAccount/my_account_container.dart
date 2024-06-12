@@ -45,11 +45,15 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   File? _image;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
+  TextEditingController displayController = TextEditingController();
+  // TextEditingController mobileController = TextEditingController();
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    nameController.dispose();
+    emailController.dispose();
+    displayController.dispose();
     super.dispose();
   }
 
@@ -78,37 +82,44 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     closeKeyboard();
     UserProvider provider = context.read<UserProvider>();
     if (isEmpty(nameController.text)) {
-      // showErrorMessage(message: "Please enter valid name");
       popUpAlert(
           message: "Please enter valid name.",
           title: "Alert",
           icon: Images.alertPopGIF);
-
       return;
-    } else if (!isEmail(emailController.text)) {
-      // showErrorMessage(message: "Please enter valid email address");
+    }
+    if (isEmpty(displayController.text)) {
+      popUpAlert(
+          message: "Please enter display name.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+      return;
+    }
+    if (!isEmail(emailController.text)) {
       popUpAlert(
           message: "Please enter valid email address.",
           title: "Alert",
           icon: Images.alertPopGIF);
       return;
-    } else {
+    }
+    {
       try {
         ApiResponse res = await context.read<UserProvider>().updateProfile(
               token: context.read<UserProvider>().user?.token ?? "",
               name: nameController.text,
+              displayName: displayController.text,
               email: emailController.text.toLowerCase(),
             );
 
         if (res.status) {
           if (emailController.text != provider.user?.email) {
-            Utils().showLog("IF");
             _sendOTP(otp: res.data["otp"].toString());
           } else {
-            Utils().showLog("ELSE");
             provider.updateUser(
-                name: nameController.text,
-                email: emailController.text.toLowerCase());
+              name: nameController.text,
+              email: emailController.text.toLowerCase(),
+              displayName: displayController.text,
+            );
           }
         }
       } catch (e) {
@@ -257,6 +268,21 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 13),
         Text(
+          "Display Name",
+          style: stylePTSansRegular(fontSize: 14),
+        ),
+        const SpacerVertical(height: 5),
+        ThemeInputField(
+          controller: displayController,
+          placeholder: "Enter your display name",
+          keyboardType: TextInputType.text,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
+          ],
+          textCapitalization: TextCapitalization.words,
+        ),
+        const SpacerVertical(height: 13),
+        Text(
           "Email",
           style: stylePTSansRegular(fontSize: 14),
         ),
@@ -286,10 +312,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         const SpacerVertical(height: 20),
         ThemeButton(onPressed: _onTap, text: "Save Changes"),
         const SpacerVertical(height: 20),
-        const Divider(
-          color: ThemeColors.divider,
-          thickness: 1,
-        ),
+        const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),
         Column(
           children: [

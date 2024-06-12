@@ -35,24 +35,27 @@ class _DividendsListState extends State<DividendsList> {
     DividendsProvider provider = context.watch<DividendsProvider>();
     List<DividendsRes>? data = provider.data;
 
-    return BaseUiContainer(
-      error: provider.error,
-      hasData: data != null && data.isNotEmpty,
-      isLoading: provider.isLoading,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getDividendsStocks(),
-      child: RefreshControl(
-        onRefresh: () async => provider.getDividendsStocks(),
-        canLoadMore: provider.canLoadMore,
-        onLoadMore: () async => provider.getDividendsStocks(loadMore: true),
-        child: Column(
-          children: [
-            ScreenTitle(
-              htmlTitle: true,
-              title: provider.extraUp?.subTitle,
-            ),
-            Expanded(
+    return Column(
+      children: [
+        ScreenTitle(
+          htmlTitle: true,
+          title: provider.extraUp?.title ?? "Dividend Announcements",
+          subTitleHtml: true,
+          subTitle: provider.extraUp?.subTitle,
+        ),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: data != null && data.isNotEmpty,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getDividendsStocks(),
+            child: RefreshControl(
+              onRefresh: () async => provider.getDividendsStocks(),
+              canLoadMore: provider.canLoadMore,
+              onLoadMore: () async =>
+                  provider.getDividendsStocks(loadMore: true),
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(
                   vertical: Dimen.padding,
@@ -61,17 +64,7 @@ class _DividendsListState extends State<DividendsList> {
                   if (data == null || data.isEmpty) {
                     return const SizedBox();
                   }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // if (index == 0)
-                      //   HtmlTitle(subTitle: provider.extraUp?.subTitle),
-                      DividendsItem(
-                        data: data[index],
-                        index: index,
-                      ),
-                    ],
-                  );
+                  return DividendsItem(data: data[index], index: index);
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
@@ -83,9 +76,9 @@ class _DividendsListState extends State<DividendsList> {
                 itemCount: data?.length ?? 0,
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

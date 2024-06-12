@@ -104,10 +104,7 @@ class HtmlTitle extends StatelessWidget {
               onTap: onFilterClick,
               child: const Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 5, left: 5),
-                child: Icon(
-                  Icons.filter_alt,
-                  color: ThemeColors.accent,
-                ),
+                child: Icon(Icons.filter_alt, color: ThemeColors.accent),
               ),
             ),
           )

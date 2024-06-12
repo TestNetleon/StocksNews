@@ -75,6 +75,13 @@ class DividendsItem extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    const SpacerVertical(height: 5),
+                    Text(
+                      "${data.price}",
+                      style: stylePTSansBold(fontSize: 14),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
                 ),
               ),
@@ -84,57 +91,57 @@ class DividendsItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "${data.price}",
+                  "${data.date}",
                   style: stylePTSansBold(fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerVertical(height: 5),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    data.percentageChange > 0
-                        ? Icon(
-                            Icons.arrow_upward,
-                            size: 14,
-                            color: data.percentageChange > 0
-                                ? Colors.green
-                                : Colors.red,
-                          )
-                        : Icon(
-                            Icons.arrow_downward_rounded,
-                            size: 14,
-                            color: data.percentageChange > 0
-                                ? Colors.green
-                                : Colors.red,
-                          ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                "${data.priceChange} (${data.percentageChange}%)",
-                            style: stylePTSansRegular(
-                              fontSize: 11,
-                              color: data.percentageChange > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                // Text(
-                //   data.change.toString(),
-                //   style: stylePTSansRegular(
-                //     fontSize: 12,
-                //     color: (data.change ?? 0) > 0
-                //         ? ThemeColors.accent
-                //         : Colors.red,
-                //   ),
+                // const SpacerVertical(height: 5),
+                // Row(
+                //   mainAxisSize: MainAxisSize.min,
+                //   children: [
+                //     data.percentageChange > 0
+                //         ? Icon(
+                //             Icons.arrow_upward,
+                //             size: 14,
+                //             color: data.percentageChange > 0
+                //                 ? Colors.green
+                //                 : Colors.red,
+                //           )
+                //         : Icon(
+                //             Icons.arrow_downward_rounded,
+                //             size: 14,
+                //             color: data.percentageChange > 0
+                //                 ? Colors.green
+                //                 : Colors.red,
+                //           ),
+                //     RichText(
+                //       text: TextSpan(
+                //         children: [
+                //           TextSpan(
+                //             text:
+                //                 "${data.priceChange} (${data.percentageChange}%)",
+                //             style: stylePTSansRegular(
+                //               fontSize: 11,
+                //               color: data.percentageChange > 0
+                //                   ? Colors.green
+                //                   : Colors.red,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
                 // ),
+                // // Text(
+                // //   data.change.toString(),
+                // //   style: stylePTSansRegular(
+                // //     fontSize: 12,
+                // //     color: (data.change ?? 0) > 0
+                // //         ? ThemeColors.accent
+                // //         : Colors.red,
+                // //   ),
+                // // ),
               ],
             ),
             const SpacerHorizontal(width: 10),
@@ -198,13 +205,13 @@ class DividendsItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Visibility(
-                  visible: data.date != null,
-                  child: InnerRowItem(
-                    lable: "Date",
-                    value: "${data.date}",
-                  ),
-                ),
+                // Visibility(
+                //   visible: data.date != null,
+                //   child: InnerRowItem(
+                //     lable: "Date",
+                //     value: "${data.date}",
+                //   ),
+                // ),
                 Visibility(
                   visible: data.exchangeShortName != null,
                   child: InnerRowItem(

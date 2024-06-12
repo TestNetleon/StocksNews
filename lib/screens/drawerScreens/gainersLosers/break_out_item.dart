@@ -166,11 +166,11 @@ class BreakOutStocksItem extends StatelessWidget {
               child: Column(
                 children: [
                   InnerRowItem(
-                    lable: "50-Day",
+                    label: "50-Day",
                     value: data.the50Day,
                   ),
                   InnerRowItem(
-                    lable: "Percent Moving Average",
+                    label: "Percent Moving Average",
                     value: "${data.percentageMovingAverage}%",
                     style: stylePTSansBold(
                         fontSize: 14,
@@ -183,11 +183,11 @@ class BreakOutStocksItem extends StatelessWidget {
                         : Colors.red,
                   ),
                   InnerRowItem(
-                    lable: "Volume",
+                    label: "Volume",
                     value: "${data.volume}",
                   ),
                   InnerRowItem(
-                    lable: "Average Volume",
+                    label: "Average Volume",
                     value: "${data.avgVolume}",
                   ),
                 ],

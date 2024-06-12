@@ -23,7 +23,6 @@ import '../../utils/utils.dart';
 import '../../widgets/custom_gridview.dart';
 import '../../widgets/theme_button_small.dart';
 import '../alerts/alerts.dart';
-import '../myAccount/my_account.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
 import 'widgets/profile_image.dart';
@@ -104,47 +103,69 @@ class _BaseDrawerState extends State<BaseDrawer> {
 
                           Visibility(
                             visible: userProvider.user != null,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, MyAccount.path);
-                              },
-                              child: Row(
-                                children: [
-                                  ProfileImage(
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () {
+                                    easeOutBuilder(
+                                      context,
+                                      child: AboutStocksNews(
+                                          version: version ?? ""),
+                                    );
+                                  },
+                                  child: ProfileImage(
                                     url: userProvider.user?.image,
                                     cameraSize: 12,
+                                    showCameraIcon: false,
                                   ),
-                                  const SpacerHorizontal(width: 10),
-                                  Expanded(
-                                      child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        userProvider.user?.name?.isNotEmpty ==
-                                                true
-                                            ? "${userProvider.user?.name}"
-                                            : "Update your account",
-                                        style: stylePTSansBold(),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Text(
-                                        userProvider.user?.email?.isNotEmpty ==
-                                                true
-                                            ? "${userProvider.user?.email}"
-                                            : "Update your account",
-                                        style: stylePTSansRegular(
-                                            color: ThemeColors.greyText,
-                                            fontSize: 12),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  )),
-                                ],
-                              ),
+                                ),
+                                const SpacerHorizontal(width: 10),
+                                Expanded(
+                                  child: GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    onTap: () {
+                                      easeOutBuilder(
+                                        context,
+                                        child: AboutStocksNews(
+                                          version: version ?? "",
+                                        ),
+                                      );
+
+                                      // Navigator.pop(context);
+                                      // Navigator.pushNamed(
+                                      //     context, MyAccount.path);
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userProvider.user?.name?.isNotEmpty ==
+                                                  true
+                                              ? "${userProvider.user?.name}"
+                                              : "Update your account",
+                                          style: stylePTSansBold(),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          userProvider.user?.email
+                                                      ?.isNotEmpty ==
+                                                  true
+                                              ? "${userProvider.user?.email}"
+                                              : "Update your account",
+                                          style: stylePTSansRegular(
+                                              color: ThemeColors.greyText,
+                                              fontSize: 12),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Visibility(

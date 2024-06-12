@@ -175,7 +175,7 @@ class InsidersDetailsItem extends StatelessWidget {
 }
 
 class InnerRowItem extends StatelessWidget {
-  final String lable;
+  final String label;
   final String? value;
   final bool link;
   final TextStyle? style;
@@ -184,7 +184,7 @@ class InnerRowItem extends StatelessWidget {
   final IconData? iconDataValue;
 
   const InnerRowItem({
-    required this.lable,
+    required this.label,
     this.value,
     this.link = false,
     this.iconDataValue,
@@ -205,7 +205,7 @@ class InnerRowItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(lable, style: stylePTSansBold(fontSize: 14)),
+              Text(label, style: stylePTSansBold(fontSize: 14)),
               const SpacerHorizontal(width: 2),
               Flexible(
                 child: !link
