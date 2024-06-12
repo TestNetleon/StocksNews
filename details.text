@@ -9,7 +9,6 @@ Apple Account (Access)
 
 netleonweb@gmail.com
 Lucky1989!@#$%^
-
 ======================================
 
 echo "# StocksNews" >> README.md
@@ -275,3 +274,22 @@ https://app.stocks.news/dividend
 =>Earnings
 https://app.stocks.news/earning
 
+------------------------------------------------------------
+
+
+
+Today's Target - Stocks.news
+
+5. Notification click redirection - UTKARSH
+6. Stock Individual pages - UTKARSH
+7. Author section integration below news - UTKARSH
+
+1. Market Data page integration 
+2. Privacy Policy Popup like Motley Fool and do what is required for basic name, email, location and analytics 
+3. Affiliate integration
+4. Rating popup in Android 
+8. Open about section when we click on profile image 
+9. SMS (OTP) verification
+10. Congressional data we should be able to click on persons name and see what they have been buying and selling - Or at least have filter to do that
+11. On Portfolio should be able to click on stock and open up stock details page -  also give option to disconnect account 
+12. Print when last price updated 
