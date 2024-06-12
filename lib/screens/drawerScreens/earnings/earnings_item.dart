@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/earnings_res.dart';
-import 'package:stocks_news_new/providers/earnings_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -14,13 +11,13 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 class EarningsItem extends StatelessWidget {
   final EarningsRes data;
-  final int index;
-  final bool earnings;
-//
+  final bool isOpen;
+  final Function() onTap;
+
   const EarningsItem({
     required this.data,
-    required this.index,
-    this.earnings = false,
+    required this.isOpen,
+    required this.onTap,
     super.key,
   });
 
@@ -34,9 +31,6 @@ class EarningsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EarningsProvider provider =
-        navigatorKey.currentContext!.watch<EarningsProvider>();
-
     return Column(
       children: [
         Row(
@@ -95,17 +89,7 @@ class EarningsItem extends StatelessWidget {
             ),
             const SpacerHorizontal(width: 10),
             InkWell(
-              onTap: () {
-                if (earnings) {
-                  provider.setOpenIndexEarningsStocks(
-                    provider.openIndexEarningsStocks == index ? -1 : index,
-                  );
-                } else {
-                  provider.setOpenIndex(
-                    provider.openIndex == index ? -1 : index,
-                  );
-                }
-              },
+              onTap: onTap,
               child: Container(
                 decoration: const BoxDecoration(
                   color: ThemeColors.accent,
@@ -113,13 +97,9 @@ class EarningsItem extends StatelessWidget {
                 margin: EdgeInsets.only(left: 8.sp),
                 padding: const EdgeInsets.all(3),
                 child: Icon(
-                  earnings
-                      ? provider.openIndexEarningsStocks == index
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded
-                      : provider.openIndex == index
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded,
+                  isOpen
+                      ? Icons.arrow_upward_rounded
+                      : Icons.arrow_downward_rounded,
                   size: 16,
                 ),
               ),
@@ -129,61 +109,43 @@ class EarningsItem extends StatelessWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 150),
           child: Container(
-            height: earnings
-                ? provider.openIndexEarningsStocks == index
-                    ? null
-                    : 0
-                : provider.openIndex == index
-                    ? null
-                    : 0,
+            height: isOpen ? null : 0,
             margin: EdgeInsets.only(
-              top: earnings
-                  ? provider.openIndexEarningsStocks == index
-                      ? 10.sp
-                      : 0
-                  : provider.openIndex == index
-                      ? 10.sp
-                      : 0,
-              bottom: earnings
-                  ? provider.openIndexEarningsStocks == index
-                      ? 10.sp
-                      : 0
-                  : provider.openIndex == index
-                      ? 10.sp
-                      : 0,
+              top: isOpen ? 10.sp : 0,
+              bottom: isOpen ? 10.sp : 0,
             ),
             child: Column(
               children: [
                 InnerRowItem(
-                  lable: "Date",
+                  label: "Date",
                   value: "${data.date ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "Exchange",
+                  label: "Exchange",
                   value: "${data.exchangeShortName ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "EPS",
+                  label: "EPS",
                   value: "${data.eps ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "EPS Estimated",
+                  label: "EPS Estimated",
                   value: "${data.epsEstimated ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "Revenue",
+                  label: "Revenue",
                   value: "${data.revenue ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "Revenue Estimated",
+                  label: "Revenue Estimated",
                   value: "${data.revenueEstimated ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "Fiscal Date Ending",
+                  label: "Fiscal Date Ending",
                   value: "${data.fiscalDateEnding ?? "N/A"}",
                 ),
                 InnerRowItem(
-                  lable: "Updated From Date",
+                  label: "Updated From Date",
                   value: "${data.updatedFromDate ?? "N/A"}",
                 ),
               ],

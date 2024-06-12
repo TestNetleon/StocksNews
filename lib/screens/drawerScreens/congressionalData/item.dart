@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/high_low_pe.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -35,6 +36,19 @@ class CongressionalItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                InkWell(
+                  onTap: () => _onTap(context),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(0.sp),
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      width: 43,
+                      height: 43,
+                      child: ThemeImageView(url: data?.image ?? ""),
+                    ),
+                  ),
+                ),
+                const SpacerHorizontal(width: 12),
                 Expanded(
                   flex: 2,
                   child: InkWell(
@@ -142,19 +156,19 @@ class CongressionalItem extends StatelessWidget {
             child: Column(
               children: [
                 InnerRowItem(
-                  lable: "Current Price ",
+                  label: "Current Price ",
                   value: "${data!.currentPrice}",
                 ),
                 InnerRowItem(
-                  lable: "Trade Data",
+                  label: "Trade Data",
                   value: "${data?.amount}",
                 ),
                 InnerRowItem(
-                  lable: "Date Filed",
+                  label: "Date Filed",
                   value: "${data!.dateFiled}",
                 ),
                 InnerRowItem(
-                  lable: "Date Traded",
+                  label: "Date Traded",
                   value: "${data?.dateTraded}",
                 ),
               ],

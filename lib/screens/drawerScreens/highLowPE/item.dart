@@ -143,26 +143,26 @@ class HighLowPEItem extends StatelessWidget {
             child: Column(
               children: [
                 InnerRowItem(
-                  lable: "PE Ratio",
+                  label: "PE Ratio",
                   value: "${data?.pe ?? "N/A"}",
                 ),
                 Visibility(
                   visible: data?.pegRatio != null,
                   child: InnerRowItem(
-                    lable: "PEG Ratio",
+                    label: "PEG Ratio",
                     value: "${data?.pegRatio ?? "N/A"}",
                   ),
                 ),
                 InnerRowItem(
-                  lable: "Market Cap",
+                  label: "Market Cap",
                   value: data?.marketCap ?? "N/A",
                 ),
                 InnerRowItem(
-                  lable: "Volume",
+                  label: "Volume",
                   value: data?.volume ?? "N/A",
                 ),
                 InnerRowItem(
-                  lable: "Average Volume",
+                  label: "Average Volume",
                   value: data?.avgVolume ?? "N/A",
                 ),
               ],

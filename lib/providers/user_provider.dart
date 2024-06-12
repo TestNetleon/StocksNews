@@ -70,10 +70,16 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  void updateUser({String? image, String? name, String? email}) {
+  void updateUser({
+    String? image,
+    String? name,
+    String? email,
+    String? displayName,
+  }) {
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
     if (name != null) _user?.name = name;
+    if (displayName != null) _user?.displayName = displayName;
     Preference.saveUser(_user);
     notifyListeners();
   }
@@ -674,6 +680,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     required String name,
     required String email,
     String? otp,
+    String? displayName,
     bool verifyOTP = false,
   }) async {
     Map request = verifyOTP
@@ -685,6 +692,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         : {
             "token": token,
             "name": name,
+            "display_name": displayName,
             "email": email,
           };
     try {
