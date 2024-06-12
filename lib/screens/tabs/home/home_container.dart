@@ -55,7 +55,24 @@ class HomeContainer extends StatelessWidget {
               const HomeTopNewsSlider(),
               HomePartialLoading(
                   loading: provider.isLoadingPortfolio,
-                  loadingWidget: const Loading(),
+                  loadingWidget: Container(
+                    height: 110,
+                    margin: const EdgeInsets.fromLTRB(
+                        Dimen.padding, 20, Dimen.padding, Dimen.padding),
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(255, 23, 23, 23),
+                          Color.fromARGB(255, 48, 48, 48),
+                        ],
+                      ),
+                      // color: Colors.black,
+                    ),
+                  ),
                   onRefresh: () {
                     provider.getHomePortfolio();
                   },
