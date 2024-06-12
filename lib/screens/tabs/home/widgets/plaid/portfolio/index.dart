@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
@@ -5,8 +7,6 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/usernot_present.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -63,7 +63,8 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
     HomeProvider homeProvider = context.read<HomeProvider>();
 
     UserRes? user = context.read<UserProvider>().user;
-    if (user != null || homeProvider.homePortfolio?.bottom == null) {
+    if (user != null || homeProvider.homePortfolio?.bottom != null) {
+      log("${homeProvider.homePortfolio?.bottom}");
       provider.getTabData();
     }
   }
@@ -77,13 +78,7 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
       return const ProgressDialog();
     }
     if (user == null || homeProvider.homePortfolio?.bottom == null) {
-      return PortfolioUserNotLoggedIn(
-        onTap: () async {
-          isPhone ? await loginSheet() : await loginSheetTablet();
-
-          await provider.getTabData();
-        },
-      );
+      return PortfolioUserNotLoggedIn();
     }
 
     if (!provider.isLoadingT && provider.tabs.isEmpty) {

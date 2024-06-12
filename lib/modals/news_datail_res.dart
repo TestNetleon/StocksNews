@@ -155,19 +155,39 @@ class PostDetail {
 class DetailListType {
   final String? id;
   final String? name;
+  final String? designation;
+  final String? text;
+  final String? image;
+  final String? slug;
+  final bool? show;
 
   DetailListType({
     this.id,
     this.name,
+    this.show,
+    this.designation,
+    this.text,
+    this.image,
+    this.slug,
   });
 
   factory DetailListType.fromJson(Map<String, dynamic> json) => DetailListType(
         id: json["_id"],
         name: json["name"],
+        designation: json['designation'],
+        show: json['show_bio'],
+        image: json['image'],
+        slug: json['slug'],
+        text: json['text'],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
+        'show_bio': show,
+        "designation": designation,
+        "image": image,
+        "slug": slug,
+        "text": text,
       };
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'dart:async';
@@ -247,6 +249,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
         });
       } else {
         if (widget.fromDrawer) {
+          log("we are calling tab API");
           await plaidProvider.getTabData();
         }
         // log("${res.status}, ${res.data['bottom'] == null}");

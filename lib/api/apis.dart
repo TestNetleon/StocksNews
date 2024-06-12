@@ -135,6 +135,7 @@ class Apis {
   static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";
   static const detailDividends = "/stock-detail-dividend";
+  static const detailChart = "/stock-detail-chart";
 }
 
 //

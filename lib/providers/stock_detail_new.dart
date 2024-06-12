@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -234,6 +235,57 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorAnalysis = Const.errSomethingWrong;
       setStatusAnalysis(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  //Chart DATA
+  String? _errorChart;
+  String? get errorChart => _errorChart ?? Const.errSomethingWrong;
+
+  Status _statusChart = Status.ideal;
+  Status get statusChart => _statusChart;
+
+  bool get isLoadingChart => _statusChart == Status.loading;
+
+  Extra? _extraChart;
+  Extra? get extraChart => _extraChart;
+
+  SdChartRes? _chartRes;
+  SdChartRes? get chartRes => _chartRes;
+
+  void setStatusChart(status) {
+    _statusChart = status;
+    notifyListeners();
+  }
+
+  Future getChartData({String? symbol}) async {
+    setStatusChart(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailChart,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _chartRes = sdChartResFromJson(jsonEncode(response.data));
+      } else {
+        _chartRes = null;
+        _errorChart = response.message;
+      }
+      setStatusChart(Status.loaded);
+    } catch (e) {
+      _chartRes = null;
+      Utils().showLog(e.toString());
+      _errorChart = Const.errSomethingWrong;
+      setStatusChart(Status.loaded);
     }
   }
 }

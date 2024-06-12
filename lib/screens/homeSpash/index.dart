@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -11,6 +12,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
+import '../../utils/preference.dart';
+import '../../widgets/custom/alert_popup.dart';
 import '../auth/bottomSheets/signup_sheet.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
@@ -44,7 +47,7 @@ class _HomeSplashState extends State<HomeSplash> {
     });
   }
 
-  _navigateToRequiredScreen(payload) {
+  _navigateToRequiredScreen(payload) async {
     popHome = true;
     String? type = payload["type"];
     String? slug = payload['slug'];
@@ -92,13 +95,16 @@ class _HomeSplashState extends State<HomeSplash> {
         // );
       } else if (slug != '' && type == NotificationType.register.name) {
         Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
-        );
-        Timer(const Duration(seconds: 1), () {
-          signupSheet();
-        });
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        if (await Preference.isLoggedIn()) {
+          popUpAlert(
+              message: "Welcome to the Home Screen!",
+              title: "Alert",
+              icon: Images.alertPopGIF);
+
+          return;
+        }
+        isPhone ? signupSheet() : signupSheetTablet();
       } else if (slug != '' && type == NotificationType.review.name) {
         //review pop up
         Navigator.pushNamedAndRemoveUntil(
@@ -120,7 +126,7 @@ class _HomeSplashState extends State<HomeSplash> {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetails.path,
-          arguments: {"slug": type, "notificationId": notificationId},
+          arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else {
         Navigator.pushNamedAndRemoveUntil(

@@ -125,7 +125,9 @@ class PlaidLinkHandler {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         Utils().showLog("Get Holdings Securities Data: $responseData");
         Navigator.pop(navigatorKey.currentContext!);
+        Utils().showLog("data");
         navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
+              accessToken: accessToken,
               fromDrawer: fromDrawer,
               data: responseData["securities"],
               dataAccounts: responseData["accounts"],

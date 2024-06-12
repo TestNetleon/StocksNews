@@ -19,7 +19,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-import '../../blogs/index.dart';
+import '../../blogNew/blogsNew/index.dart';
 import '../../contactUs/contact_us.dart';
 import '../../faq/index.dart';
 import '../../t&cAndPolicy/tc_policy.dart';
@@ -183,7 +183,7 @@ List<DrawerRes> marketData = [
       Navigator.pushNamed(
         navigatorKey.currentContext!,
         // IndexBlog.path,
-        Blog.path,
+        BlogIndexNew.path,
       );
     },
   ),

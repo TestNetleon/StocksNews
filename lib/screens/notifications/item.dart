@@ -37,20 +37,15 @@ class NotificationsItem extends StatelessWidget {
       // );
 
       if (type == NotificationType.dashboard.name) {
-        Utils().showLog("--navigate to dashboard---");
         Navigator.pushNamedAndRemoveUntil(
             navigatorKey.currentContext!, Tabs.path, (route) => false);
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Utils().showLog("--navigate to news detail---");
-
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           NewsDetails.path,
           arguments: {"slug": slug},
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
-        Utils().showLog("--navigate to landing page---");
-
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -60,8 +55,6 @@ class NotificationsItem extends StatelessWidget {
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Utils().showLog("--navigate to blog detail---");
-
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -81,7 +74,6 @@ class NotificationsItem extends StatelessWidget {
           },
         );
       } else if (slug != '' && type == NotificationType.register.name) {
-        Utils().showLog("--navigate to blog detail---");
         if (await Preference.isLoggedIn()) {
           Navigator.pushNamedAndRemoveUntil(
               navigatorKey.currentContext!, Tabs.path, (route) => false);
@@ -98,7 +90,7 @@ class NotificationsItem extends StatelessWidget {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetails.path,
-          arguments: {"slug": type},
+          arguments: {"slug": slug},
         );
       } else {
         Navigator.pushNamedAndRemoveUntil(

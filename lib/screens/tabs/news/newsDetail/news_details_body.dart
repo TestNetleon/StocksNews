@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -269,11 +271,12 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               child: Container(
                                 margin: EdgeInsets.only(top: 20.sp),
                                 child: Wrap(
+                                  alignment: WrapAlignment.start,
                                   children: [
                                     Text(
                                       "Posted under - ",
                                       style: stylePTSansRegular(
-                                          fontSize: 13,
+                                          fontSize: 16,
                                           color: ThemeColors.greyText),
                                     ),
                                     const ListAlignment().buildList(
@@ -286,18 +289,128 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 ),
                               ),
                             ),
-                            const SpacerVertical(height: 20),
+
                             Visibility(
                               visible:
                                   provider.data?.postDetail?.tags?.isNotEmpty ==
                                       true,
-                              child: NewsDetailAuthor(
-                                type: BlogsType.tag,
-                                title: "Tags: ",
-                                data: provider.data?.postDetail?.tags,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: NewsDetailAuthor(
+                                  type: BlogsType.tag,
+                                  title: "Tags: ",
+                                  data: provider.data?.postDetail?.tags,
+                                ),
                               ),
                             ),
+
+                            Visibility(
+                              visible: provider.data?.postDetail?.authors
+                                          ?.isNotEmpty ==
+                                      true &&
+                                  provider.data?.postDetail?.authors != null,
+                              child: ListView.separated(
+                                itemCount: provider
+                                        .data?.postDetail?.authors?.length ??
+                                    0,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  DetailListType? data = provider
+                                      .data?.postDetail?.authors?[index];
+                                  if (data?.show == false) {
+                                    return const SizedBox();
+                                  }
+                                  return Container(
+                                    margin: const EdgeInsets.only(top: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: ThemeColors.greyBorder
+                                            .withOpacity(0.2)),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Visibility(
+                                          visible: data?.image != null &&
+                                              data?.image != '',
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(0.sp),
+                                            child: Container(
+                                              width: 80,
+                                              height: 80,
+                                              padding: EdgeInsets.all(5.sp),
+                                              child: CachedNetworkImagesWidget(
+                                                data?.image,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SpacerHorizontal(width: 10),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Visibility(
+                                                visible: data?.name != null &&
+                                                    data?.name != '',
+                                                child: Text(
+                                                  "${data?.name}",
+                                                  style: stylePTSansBold(
+                                                      fontSize: 18),
+                                                ),
+                                              ),
+                                              Visibility(
+                                                visible:
+                                                    data?.designation != null &&
+                                                        data?.designation != '',
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 4),
+                                                  child: Text(
+                                                    "${data?.designation}",
+                                                    style: stylePTSansBold(
+                                                        fontSize: 15),
+                                                  ),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                color: ThemeColors.greyBorder,
+                                              ),
+                                              Visibility(
+                                                visible: data?.text != null &&
+                                                    data?.text != '',
+                                                child: HtmlWidget(
+                                                  '${data?.text}',
+                                                  // textStyle: const TextStyle(
+                                                  //   fontFamily: Fonts.ptSans,
+                                                  // ),
+                                                  textStyle: stylePTSansRegular(
+                                                      color:
+                                                          ThemeColors.greyText),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return const SpacerVertical(height: 16);
+                                },
+                              ),
+                            ),
+
                             const SpacerVertical(height: 25),
+
                             const ScreenTitle(title: "More News to Read"),
                             ListView.separated(
                               itemCount: provider.data?.otherPost?.length ?? 0,

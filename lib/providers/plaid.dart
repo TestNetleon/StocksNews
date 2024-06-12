@@ -108,7 +108,6 @@ class PlaidProvider extends ChangeNotifier {
           getPlaidPortfolioData(name: _tabs[selectedTab]);
         }
       } else {
-        //
         _errorT = response.message;
       }
       setStatusT(Status.loaded);
@@ -174,10 +173,11 @@ class PlaidProvider extends ChangeNotifier {
 
   Future sendPlaidPortfolio({
     showProgress = true,
-    fromDrawer = true,
+    fromDrawer = false,
     List<dynamic>? data,
     List<dynamic>? dataAccounts,
     List<dynamic>? holdings,
+    required String? accessToken,
   }) async {
     List<dynamic>? jsonArray = data;
     List<dynamic>? jsonArrayAccounts = dataAccounts;
@@ -191,6 +191,7 @@ class PlaidProvider extends ChangeNotifier {
         "securities": jsonArray ?? [],
         "accounts": jsonArrayAccounts ?? [],
         "holdings": jsonArrayHoldings,
+        "access_token": accessToken ?? "",
       });
       ApiResponse response = await apiRequest(
         url: Apis.savePlaidPortfolio,

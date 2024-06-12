@@ -3,8 +3,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import '../widgets/get_started.dart';
 
 class PortfolioUserNotLoggedIn extends StatelessWidget {
-  final Function() onTap;
-  const PortfolioUserNotLoggedIn({super.key, required this.onTap});
+  const PortfolioUserNotLoggedIn({super.key});
 
   @override
   Widget build(BuildContext context) {

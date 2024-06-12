@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
+import 'widgets/chart/chart.dart';
 import 'widgets/dividends/dividends.dart';
 import 'widgets/earnings/earnings.dart';
 import 'widgets/stockAnalysis/analysis.dart';
@@ -74,7 +75,7 @@ class _StockDetailState extends State<StockDetail> {
             Container(),
             Container(),
             Container(),
-            Container(),
+            SdCharts(symbol: widget.symbol),
             Container(),
             Container(),
             Container(),

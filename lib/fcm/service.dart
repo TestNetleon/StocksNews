@@ -20,6 +20,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
@@ -29,6 +30,7 @@ import 'package:stocks_news_new/utils/preference.dart';
 import '../screens/drawer/widgets/review_app_pop_up.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
+import '../widgets/custom/alert_popup.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -63,7 +65,7 @@ class FirebaseApi {
     });
   }
 
-  _navigateToRequiredScreen(payload, {whenAppKilled = false}) {
+  Future _navigateToRequiredScreen(payload, {whenAppKilled = false}) async {
     String? type = payload["type"];
     String? slug = payload['slug'];
     String? notificationId = payload['notification_id'];
@@ -106,7 +108,16 @@ class FirebaseApi {
         //   ),
         // );
       } else if (slug != '' && type == NotificationType.register.name) {
-        signupSheet();
+        if (await Preference.isLoggedIn()) {
+          popUpAlert(
+            message: "Welcome to the Home Screen!",
+            title: "Alert",
+            icon: Images.alertPopGIF,
+          );
+
+          return;
+        }
+        isPhone ? signupSheet() : signupSheetTablet();
       } else if (slug != '' && type == NotificationType.review.name) {
         //review pop up
         showDialog(
@@ -120,7 +131,7 @@ class FirebaseApi {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetails.path,
-          arguments: {"slug": type, "notificationId": notificationId},
+          arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else {
         Navigator.pushNamedAndRemoveUntil(
