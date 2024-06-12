@@ -13,7 +13,9 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/apis.dart';
 import '../modals/analysis_res.dart';
+import '../modals/stockDetailRes/analyst_forecast.dart';
 import '../modals/stockDetailRes/earnings.dart';
+import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
 import '../utils/constants.dart';
 import 'user_provider.dart';
@@ -286,6 +288,112 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorChart = Const.errSomethingWrong;
       setStatusChart(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  //Analyst Forecast DATA
+  String? _errorForecast;
+  String? get errorForecast => _errorForecast ?? Const.errSomethingWrong;
+
+  Status _statusForecast = Status.ideal;
+  Status get statusForecast => _statusForecast;
+
+  bool get isLoadingForecast => _statusForecast == Status.loading;
+
+  Extra? _extraForecast;
+  Extra? get extraForecast => _extraForecast;
+
+  SdAnalystForecastRes? _forecastRes;
+  SdAnalystForecastRes? get forecastRes => _forecastRes;
+
+  void setStatusForecast(status) {
+    _statusForecast = status;
+    notifyListeners();
+  }
+
+  Future getForecastData({String? symbol}) async {
+    setStatusForecast(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailForecast,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _forecastRes = sdAnalystForecastResFromJson(jsonEncode(response.data));
+      } else {
+        _forecastRes = null;
+        _errorForecast = response.message;
+      }
+      setStatusForecast(Status.loaded);
+    } catch (e) {
+      _forecastRes = null;
+      Utils().showLog(e.toString());
+      _errorForecast = Const.errSomethingWrong;
+      setStatusForecast(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  //Technical Analysis DATA
+  String? _errorTech;
+  String? get errorTech => _errorTech ?? Const.errSomethingWrong;
+
+  Status _statusTech = Status.ideal;
+  Status get statusTech => _statusTech;
+
+  bool get isLoadingTech => _statusTech == Status.loading;
+
+  Extra? _extraTech;
+  Extra? get extraTech => _extraTech;
+
+  TechnicalAnalysisRes? _techRes;
+  TechnicalAnalysisRes? get techRes => _techRes;
+
+  void setStatusTechnical(status) {
+    _statusTech = status;
+    notifyListeners();
+  }
+
+  Future getTechnicalAnalysisData({
+    String? symbol,
+    String interval = "5min",
+  }) async {
+    setStatusTechnical(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+        "interval": interval,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.technicalAnalysis,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _techRes = technicalAnalysisResFromJson(jsonEncode(response.data));
+      } else {
+        _techRes = null;
+        _errorForecast = response.message;
+      }
+      setStatusTechnical(Status.loaded);
+    } catch (e) {
+      _techRes = null;
+      Utils().showLog(e.toString());
+      _errorTech = Const.errSomethingWrong;
+      setStatusTechnical(Status.loaded);
     }
   }
 }

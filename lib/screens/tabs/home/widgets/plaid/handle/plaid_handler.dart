@@ -89,50 +89,11 @@ class PlaidLinkHandler {
         Utils().showLog("ACCESS TOKEN ${responseData['access_token']}");
         Utils().showLog("Exchange Token Data: $responseData");
         String accessToken = '${responseData['access_token']}';
-        _getHoldings(accessToken: accessToken);
-      } else {
-        debugPrint("Failed to load data: ${response.statusCode}");
-        debugPrint("Response body: ${response.body}");
-      }
-    } catch (e) {
-      debugPrint("Error: $e");
-    }
-  }
-
-  void _getHoldings({String? accessToken}) async {
-    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
-    final Map<String, dynamic> request = {
-      "client_id": provider.homePortfolio?.keys?.plaidClient ?? "",
-      "secret": provider.homePortfolio?.keys?.plaidSecret ?? "",
-      "access_token": accessToken ?? "",
-    };
-
-    String url =
-        "https://${provider.homePortfolio?.keys?.plaidEnv ?? "sandbox"}.plaid.com/investments/holdings/get";
-    final Map<String, String> headers = {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    };
-
-    try {
-      final http.Response response = await http.post(
-        Uri.parse(url),
-        headers: headers,
-        body: jsonEncode(request),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
-        Utils().showLog("Get Holdings Securities Data: $responseData");
-        Navigator.pop(navigatorKey.currentContext!);
-        Utils().showLog("data");
         navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
               accessToken: accessToken,
               fromDrawer: fromDrawer,
-              data: responseData["securities"],
-              dataAccounts: responseData["accounts"],
-              holdings: responseData['holdings'],
             );
+        // _getHoldings(accessToken: accessToken);
       } else {
         debugPrint("Failed to load data: ${response.statusCode}");
         debugPrint("Response body: ${response.body}");
@@ -141,6 +102,49 @@ class PlaidLinkHandler {
       debugPrint("Error: $e");
     }
   }
+
+  // void _getHoldings({String? accessToken}) async {
+  //   HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+  //   final Map<String, dynamic> request = {
+  //     "client_id": provider.homePortfolio?.keys?.plaidClient ?? "",
+  //     "secret": provider.homePortfolio?.keys?.plaidSecret ?? "",
+  //     "access_token": accessToken ?? "",
+  //   };
+
+  //   String url =
+  //       "https://${provider.homePortfolio?.keys?.plaidEnv ?? "sandbox"}.plaid.com/investments/holdings/get";
+  //   final Map<String, String> headers = {
+  //     "Content-Type": "application/json",
+  //     "Accept": "application/json",
+  //   };
+
+  //   try {
+  //     final http.Response response = await http.post(
+  //       Uri.parse(url),
+  //       headers: headers,
+  //       body: jsonEncode(request),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final Map<String, dynamic> responseData = jsonDecode(response.body);
+  //       Utils().showLog("Get Holdings Securities Data: $responseData");
+  //       Navigator.pop(navigatorKey.currentContext!);
+  //       Utils().showLog("data");
+  //       navigatorKey.currentContext!.read<PlaidProvider>().sendPlaidPortfolio(
+  //             accessToken: accessToken,
+  //             fromDrawer: fromDrawer,
+  //             data: responseData["securities"],
+  //             dataAccounts: responseData["accounts"],
+  //             holdings: responseData['holdings'],
+  //           );
+  //     } else {
+  //       debugPrint("Failed to load data: ${response.statusCode}");
+  //       debugPrint("Response body: ${response.body}");
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error: $e");
+  //   }
+  // }
 
   Future<void> plaidAPi() async {
     HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();

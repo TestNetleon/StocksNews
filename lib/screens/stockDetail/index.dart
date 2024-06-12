@@ -12,7 +12,9 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'widgets/chart/chart.dart';
 import 'widgets/dividends/dividends.dart';
 import 'widgets/earnings/earnings.dart';
+import 'widgets/forecast/forecast.dart';
 import 'widgets/stockAnalysis/analysis.dart';
+import 'widgets/technicalAnalysis/technical_analysis.dart';
 
 class StockDetail extends StatefulWidget {
   final String symbol;
@@ -66,8 +68,8 @@ class _StockDetailState extends State<StockDetail> {
             const SdOverview(),
             const SdKeyStats(),
             SdAnalysis(symbol: widget.symbol),
-            Container(),
-            Container(),
+            SdTechnical(symbol: widget.symbol),
+            SdForecast(symbol: widget.symbol),
             Container(),
             Container(),
             SdEarnings(symbol: widget.symbol),

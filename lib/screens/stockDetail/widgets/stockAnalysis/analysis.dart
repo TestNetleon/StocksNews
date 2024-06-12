@@ -44,7 +44,9 @@ class _SdAnalysisState extends State<SdAnalysis> {
       error: provider.errorAnalysis,
       onRefresh: _callApi,
       child: CommonRefreshIndicator(
-        onRefresh: () async => _callApi(),
+        onRefresh: () async {
+          _callApi();
+        },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Padding(

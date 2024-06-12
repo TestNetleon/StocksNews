@@ -174,23 +174,23 @@ class PlaidProvider extends ChangeNotifier {
   Future sendPlaidPortfolio({
     showProgress = true,
     fromDrawer = false,
-    List<dynamic>? data,
-    List<dynamic>? dataAccounts,
-    List<dynamic>? holdings,
+    // List<dynamic>? data,
+    // List<dynamic>? dataAccounts,
+    // List<dynamic>? holdings,
     required String? accessToken,
   }) async {
-    List<dynamic>? jsonArray = data;
-    List<dynamic>? jsonArrayAccounts = dataAccounts;
-    List<dynamic>? jsonArrayHoldings = holdings;
+    // List<dynamic>? jsonArray = data;
+    // List<dynamic>? jsonArrayAccounts = dataAccounts;
+    // List<dynamic>? jsonArrayHoldings = holdings;
 
     setStatus(Status.loading);
     try {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "securities": jsonArray ?? [],
-        "accounts": jsonArrayAccounts ?? [],
-        "holdings": jsonArrayHoldings,
+        // "securities": jsonArray ?? [],
+        // "accounts": jsonArrayAccounts ?? [],
+        // "holdings": jsonArrayHoldings,
         "access_token": accessToken ?? "",
       });
       ApiResponse response = await apiRequest(
