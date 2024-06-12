@@ -59,7 +59,7 @@ class UserRes {
         yourAccountHasBeenCreated: json["your_account_has_been_created"],
         referralCode: json["referral_code"],
         referralUrl: json["referral_url"],
-        displayName: json["displayName"],
+        displayName: json["display_name"],
       );
 
   Map<String, dynamic> toJson() => {

@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -286,6 +287,57 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorChart = Const.errSomethingWrong;
       setStatusChart(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  //Chart DATA
+  String? _errorSec;
+  String? get errorSec => _errorSec ?? Const.errSomethingWrong;
+
+  Status _statusSec = Status.ideal;
+  Status get statusSec => _statusSec;
+
+  bool get isLoadingSec => _statusSec == Status.loading;
+
+  Extra? _extraSec;
+  Extra? get extraSec => _extraSec;
+
+  SecFilingRes? _secRes;
+  SecFilingRes? get secRes => _secRes;
+
+  void setStatusSec(status) {
+    _statusSec = status;
+    notifyListeners();
+  }
+
+  Future getSecFilingData({String? symbol}) async {
+    setStatusSec(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailSec,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _secRes = secFilingResFromJson(jsonEncode(response.data));
+      } else {
+        _secRes = null;
+        _errorSec = response.message;
+      }
+      setStatusSec(Status.loaded);
+    } catch (e) {
+      _secRes = null;
+      Utils().showLog(e.toString());
+      _errorSec = Const.errSomethingWrong;
+      setStatusSec(Status.loaded);
     }
   }
 }
