@@ -60,8 +60,10 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
 
   _getData() {
     PlaidProvider provider = context.read<PlaidProvider>();
+    HomeProvider homeProvider = context.read<HomeProvider>();
+
     UserRes? user = context.read<UserProvider>().user;
-    if (user != null) {
+    if (user != null || homeProvider.homePortfolio?.bottom == null) {
       provider.getTabData();
     }
   }
@@ -74,7 +76,7 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
     if (provider.isLoadingT || homeProvider.isLoadingPortfolio) {
       return const ProgressDialog();
     }
-    if (user == null) {
+    if (user == null || homeProvider.homePortfolio?.bottom == null) {
       return PortfolioUserNotLoggedIn(
         onTap: () async {
           isPhone ? await loginSheet() : await loginSheetTablet();
@@ -163,55 +165,12 @@ class HomePlaidBase extends StatelessWidget {
       onRefresh: provider.onRefresh,
       child: ListView.separated(
         padding: const EdgeInsets.only(bottom: Dimen.padding),
-        // scrollDirection: Axis.horizontal,
-        // physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           PlaidDataRes? data = plaidTabHolder?.data?[index];
 
           return Stack(
             children: [
-              // Positioned(
-              //   left: 6,
-              //   right: 6,
-              //   child: Container(
-              //     decoration: const BoxDecoration(
-              //         borderRadius: BorderRadius.only(
-              //             topLeft: Radius.circular(5),
-              //             topRight: Radius.circular(5)),
-              //         color: ThemeColors.greyBorder),
-              //     height: 30,
-              //     padding:
-              //         const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-              //     child: Row(
-              //       children: [
-              //         const CircleAvatar(
-              //           child: Icon(
-              //             Icons.trending_up_rounded,
-              //             size: 10,
-              //           ),
-              //         ),
-              //         Flexible(
-              //           child: RichText(
-              //             maxLines: 1,
-              //             overflow: TextOverflow.ellipsis,
-              //             text: TextSpan(
-              //                 text: "2K ",
-              //                 style: stylePTSansBold(fontSize: 12),
-              //                 children: [
-              //                   TextSpan(
-              //                       text: "users bought this in last 30 days.",
-              //                       style: stylePTSansRegular(fontSize: 12))
-              //                 ]),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
               Container(
-                // margin: const EdgeInsets.only(top: 30),
-                // width: constraints.maxWidth / 1.2,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -220,7 +179,6 @@ class HomePlaidBase extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Color.fromARGB(255, 23, 23, 23),
-                      // ThemeColors.greyBorder,
                       Color.fromARGB(255, 48, 48, 48),
                     ],
                   ),
@@ -231,10 +189,6 @@ class HomePlaidBase extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          // return const Divider(
-          //   height: 20,
-          //   color: ThemeColors.greyBorder,
-          // );
           return const SpacerVertical(height: 15);
         },
         itemCount: plaidTabHolder?.data?.length ?? 0,
