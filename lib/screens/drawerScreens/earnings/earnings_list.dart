@@ -72,15 +72,16 @@ class _EarningsListState extends State<EarningsList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        MarketDataTitle(
-          htmlTitle: true,
-          title: provider.extra?.title,
-          subTitleHtml: true,
-          subTitle: provider.extra?.subTitle,
-          provider: provider,
-          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-          onFilterClick: _onFilterClick,
-        ),
+        if (provider.data != null || provider.filterParams != null)
+          MarketDataTitle(
+            htmlTitle: true,
+            title: provider.extra?.title,
+            subTitleHtml: true,
+            subTitle: provider.extra?.subTitle,
+            provider: provider,
+            onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+            onFilterClick: _onFilterClick,
+          ),
         Expanded(
           child: BaseUiContainer(
             error: provider.error,

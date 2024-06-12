@@ -8,6 +8,7 @@ import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider_new.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
@@ -68,6 +69,7 @@ import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/drawerScreens/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings.dart';
 import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
@@ -210,7 +212,6 @@ class Routes {
             // );
           },
         );
-
       case StockDetails.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
@@ -345,7 +346,6 @@ class Routes {
             );
           },
         );
-
       case BlogIndexNew.path:
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? inAppMsgId = arguments?['inAppMsgId'] as String?;
@@ -356,6 +356,14 @@ class Routes {
               inAppMsgId: inAppMsgId,
               notificationId: notificationId,
             );
+          },
+        );
+      case CongressionalDetail.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String slug = arguments?['slug'] as String;
+        return MaterialWithModalsPageRoute(
+          builder: (context) {
+            return CongressionalDetail(slug: slug);
           },
         );
     }
@@ -443,6 +451,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => SnP500Provider()),
       ChangeNotifierProvider(create: (_) => StockDetailProviderNew()),
       ChangeNotifierProvider(create: (_) => MostPopularPennyStocksProviders()),
+      ChangeNotifierProvider(create: (_) => CongressionalDetailProvider()),
     ];
   }
 }
