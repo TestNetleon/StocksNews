@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
@@ -554,6 +556,103 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorOverview = Const.errSomethingWrong;
       setStatusOverview(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  // Ownership
+
+  String? _errorOwnership;
+  String? get errorOwnership => _errorOwnership ?? Const.errSomethingWrong;
+
+  Status _statusOwnership = Status.ideal;
+  Status get statusOwnership => _statusOwnership;
+
+  bool get isLoadingOwnership => _statusOwnership == Status.loading;
+
+  Extra? _extraOwnership;
+  Extra? get extraOwnership => _extraOwnership;
+
+  SdOwnershipRes? _ownershipRes;
+  SdOwnershipRes? get ownershipRes => _ownershipRes;
+
+  void setStatusOwnership(status) {
+    _statusOwnership = status;
+    notifyListeners();
+  }
+
+  Future getOwnershipData({String? symbol}) async {
+    setStatusOwnership(Status.loading);
+    try {
+      Map request = {"symbol": symbol ?? ""};
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailOwnership,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _ownershipRes = sdOwnershipResFromJson(jsonEncode(response.data));
+        _extraOwnership =
+            (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _ownershipRes = null;
+        _errorOwnership = response.message;
+      }
+      setStatusOwnership(Status.loaded);
+    } catch (e) {
+      // _ownershipRes = null;
+      Utils().showLog(e.toString());
+      _errorOwnership = Const.errSomethingWrong;
+      setStatusOwnership(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  // Competitor
+
+  String? _errorCompetitor;
+  String? get errorCompetitor => _errorCompetitor ?? Const.errSomethingWrong;
+
+  Status _statusCompetitor = Status.ideal;
+  Status get statusCompetitor => _statusCompetitor;
+
+  bool get isLoadingCompetitor => _statusCompetitor == Status.loading;
+
+  Extra? _extraCompetitor;
+  Extra? get extraCompetitor => _extraCompetitor;
+
+  SdCompetitorRes? _competitorRes;
+  SdCompetitorRes? get competitorRes => _competitorRes;
+
+  void setStatusCompetitor(status) {
+    _statusCompetitor = status;
+    notifyListeners();
+  }
+
+  Future getCompetitorData({String? symbol}) async {
+    setStatusCompetitor(Status.loading);
+    try {
+      Map request = {"symbol": symbol ?? ""};
+      ApiResponse response = await apiRequest(
+        url: Apis.detailCompetitor,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _competitorRes = sdCompetitorResFromJson(jsonEncode(response.data));
+        _extraCompetitor =
+            (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _competitorRes = null;
+        _errorCompetitor = response.message;
+      }
+      setStatusCompetitor(Status.loaded);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      _errorCompetitor = Const.errSomethingWrong;
+      setStatusCompetitor(Status.loaded);
     }
   }
 }

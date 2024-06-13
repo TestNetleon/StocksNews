@@ -87,8 +87,11 @@ class CongressionalItem extends StatelessWidget {
                               Container(
                                 margin: const EdgeInsets.only(top: 3),
                                 child: Text(
-                                  "${data?.office}",
-                                  style: stylePTSansRegular(fontSize: 14),
+                                  "House - ${data?.office}",
+                                  style: stylePTSansBold(
+                                    fontSize: 14,
+                                    color: ThemeColors.greyText,
+                                  ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),

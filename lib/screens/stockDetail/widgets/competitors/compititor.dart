@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/sec/sd_sec_filing_item.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compatitor_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class SdSecFilings extends StatefulWidget {
+class SdCompetitor extends StatefulWidget {
   final String symbol;
-  const SdSecFilings({super.key, required this.symbol});
+  const SdCompetitor({super.key, required this.symbol});
 
   @override
-  State<SdSecFilings> createState() => _SdSecFilingsState();
+  State<SdCompetitor> createState() => _SdCompetitorState();
 }
 
-class _SdSecFilingsState extends State<SdSecFilings> {
-  // int openIndex = -1;
-
-  // void changeOpenIndex(int index) {
-  //   setState(() {
-  //     openIndex = openIndex == index ? -1 : index;
-  //   });
-  // }
+class _SdCompetitorState extends State<SdCompetitor> {
+  int openIndex = -1;
+  void changeOpenIndex(int index) {
+    setState(() {
+      openIndex = openIndex == index ? -1 : index;
+    });
+  }
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _SdSecFilingsState extends State<SdSecFilings> {
   _callApi() {
     context
         .read<StockDetailProviderNew>()
-        .getSecFilingData(symbol: widget.symbol);
+        .getCompetitorData(symbol: widget.symbol);
   }
 
   @override
@@ -46,10 +46,10 @@ class _SdSecFilingsState extends State<SdSecFilings> {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     return BaseUiContainer(
       isFull: true,
-      hasData: !provider.isLoadingSec && provider.secRes != null,
-      isLoading: provider.isLoadingSec,
+      hasData: !provider.isLoadingCompetitor && provider.competitorRes != null,
+      isLoading: provider.isLoadingCompetitor,
       showPreparingText: true,
-      error: provider.errorSec,
+      error: provider.errorCompetitor,
       onRefresh: _callApi,
       child: CommonRefreshIndicator(
         onRefresh: () async {
@@ -67,6 +67,7 @@ class _SdSecFilingsState extends State<SdSecFilings> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
+                const SpacerVertical(height: 10),
                 // ScreenTitle(
                 //   title: "${provider.tabRes?.keyStats?.name} Earnings - FAQs",
                 // ),
@@ -75,18 +76,26 @@ class _SdSecFilingsState extends State<SdSecFilings> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    SecFiling? data = provider.secRes?.secFilings[index];
-                    return SdSecFilingItem(
+                    TickerList? data =
+                        provider.competitorRes?.tickerList[index];
+                    return SdCompetitorItem(
                       data: data,
-                      index: index,
-                      onCardTapped: () {},
+                      isOpen: openIndex == index,
+                      onTap: () => changeOpenIndex(index),
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const SpacerVertical(height: 10);
+                    return const Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 20,
+                    );
                   },
-                  itemCount: provider.secRes?.secFilings.length ?? 0,
-                )
+                  itemCount: provider.competitorRes?.tickerList.length ?? 0,
+                ),
+                const SpacerVertical(height: 10),
+                if (provider.extraCompetitor?.disclaimer != null)
+                  DisclaimerWidget(data: provider.extraCompetitor!.disclaimer!),
+                const SpacerVertical(height: 20),
               ],
             ),
           ),
