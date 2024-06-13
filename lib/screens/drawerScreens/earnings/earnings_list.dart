@@ -53,7 +53,7 @@ class _EarningsListState extends State<EarningsList> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Gap Up Stocks",
+      title: "Filter Earning Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapUpProvider.filterParams,
