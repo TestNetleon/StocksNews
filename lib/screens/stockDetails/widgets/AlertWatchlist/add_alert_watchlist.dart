@@ -52,7 +52,7 @@ class AddToAlertWatchlist extends StatelessWidget {
     UserProvider userProvider = context.watch<UserProvider>();
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 15.sp),
+      padding: EdgeInsets.symmetric(vertical: 10.sp),
       child: Row(
         children: [
           AlertWatchlistButton(
@@ -62,13 +62,8 @@ class AddToAlertWatchlist extends StatelessWidget {
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
             onTap: userProvider.user == null
                 ? () async {
-                    // await Navigator.push(
-                    //   context,
-                    //   createRoute(const Login()),
-                    // );
                     _vibrate();
                     isPhone ? await loginSheet() : await loginSheetTablet();
-
                     if (context.read<UserProvider>().user == null) {
                       return;
                     }
@@ -90,7 +85,6 @@ class AddToAlertWatchlist extends StatelessWidget {
                 : alertOn == 0
                     ? () {
                         _vibrate();
-
                         _showAlertPopup(navigatorKey.currentContext!, symbol);
                       }
                     : () {
@@ -106,12 +100,6 @@ class AddToAlertWatchlist extends StatelessWidget {
             onTap: userProvider.user == null
                 ? () async {
                     _vibrate();
-
-                    // await Navigator.push(
-                    //   context,
-                    //   createRoute(const Login()),
-                    // );
-
                     isPhone ? await loginSheet() : await loginSheetTablet();
                     if (context.read<UserProvider>().user == null) {
                       return;
@@ -119,7 +107,6 @@ class AddToAlertWatchlist extends StatelessWidget {
                     await context
                         .read<StockDetailProvider>()
                         .getStockDetails(symbol: symbol, loadOther: false);
-
                     num wlistOn = context
                             .read<StockDetailProvider>()
                             .data

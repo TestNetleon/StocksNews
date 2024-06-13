@@ -14,6 +14,8 @@ import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/sd_news.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -864,6 +866,112 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorCompetitor = Const.errSomethingWrong;
       setStatusCompetitor(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+//News DATA
+  String? _errorNews;
+  String? get errorNews => _errorNews ?? Const.errSomethingWrong;
+
+  Status _statusNews = Status.ideal;
+  Status get statusNews => _statusNews;
+
+  bool get isLoadingNews => _statusNews == Status.loading;
+
+  Extra? _extraNews;
+  Extra? get extraNews => _extraNews;
+
+  SdNewsRes? _newsRes;
+  SdNewsRes? get newsRes => _newsRes;
+
+  void setStatusNews(status) {
+    _statusNews = status;
+    notifyListeners();
+  }
+
+  Future getNewsData({
+    String? symbol,
+  }) async {
+    setStatusNews(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailNews,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _newsRes = sdNewsResFromJson(jsonEncode(response.data));
+      } else {
+        _newsRes = null;
+        _errorNews = response.message;
+      }
+      setStatusNews(Status.loaded);
+    } catch (e) {
+      _newsRes = null;
+      Utils().showLog(e.toString());
+      _errorNews = Const.errSomethingWrong;
+      setStatusNews(Status.loaded);
+    }
+  }
+
+  //---------------------------------------------------------------
+//Social Activities DATA
+  String? _errorSocial;
+  String? get errorSocial => _errorSocial ?? Const.errSomethingWrong;
+
+  Status _statusSocial = Status.ideal;
+  Status get statusSocial => _statusSocial;
+
+  bool get isLoadingSocial => _statusSocial == Status.loading;
+
+  Extra? _extraSocial;
+  Extra? get extraSocial => _extraSocial;
+
+  SdSocialRes? _socialRes;
+  SdSocialRes? get socialRes => _socialRes;
+
+  void setStatusSocial(status) {
+    _statusSocial = status;
+    notifyListeners();
+  }
+
+  Future getSocialData({
+    String? symbol,
+  }) async {
+    setStatusSocial(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailSocial,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _socialRes = sdSocialResFromJson(jsonEncode(response.data));
+      } else {
+        _socialRes = null;
+        _errorSocial = response.message;
+      }
+      setStatusSocial(Status.loaded);
+    } catch (e) {
+      _socialRes = null;
+      Utils().showLog(e.toString());
+      _errorSocial = Const.errSomethingWrong;
+      setStatusSocial(Status.loaded);
     }
   }
 }

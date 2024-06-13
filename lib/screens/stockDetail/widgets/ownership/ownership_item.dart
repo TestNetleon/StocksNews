@@ -110,6 +110,15 @@ class SdOwnershipItem extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      Text(
+                        "(Shares Held)",
+                        style: stylePTSansRegular(
+                          fontSize: 14,
+                          color: ThemeColors.greyText,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       const SpacerVertical(height: 5),
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -126,7 +135,7 @@ class SdOwnershipItem extends StatelessWidget {
                                   color: Colors.red,
                                 ),
                           Text(
-                            "${data?.changePercent}%",
+                            "${data?.changePercent}",
                             style: stylePTSansRegular(
                               fontSize: 12,
                               color:
@@ -136,6 +145,15 @@ class SdOwnershipItem extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                      Text(
+                        "(Change in Shares)",
+                        style: stylePTSansRegular(
+                          fontSize: 14,
+                          color: ThemeColors.greyText,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

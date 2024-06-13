@@ -186,7 +186,7 @@ class SdCompetitorItem extends StatelessWidget {
                   value: "${data?.mktCap}",
                 ),
                 InnerRowItem(
-                  lable: "P/E Ratio",
+                  lable: "PE Ratio",
                   value: "${data?.pe}",
                 ),
                 InnerRowItem(
