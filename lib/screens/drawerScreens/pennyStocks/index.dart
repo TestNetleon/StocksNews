@@ -32,9 +32,13 @@ class PennyStocks extends StatelessWidget {
           0,
         ),
         child: CustomTabContainerNEW(
-          scrollable: false,
+          scrollable: true,
           tabsPadding: EdgeInsets.zero,
-          tabs: ["Most Active", "Most Popular", "Top Today"],
+          tabs: [
+            "Most Active Penny Stocks",
+            "Most Popular Penny Stocks",
+            "Top Today's Penny Stocks"
+          ],
           widgets: [
             MostActivePennyStocks(),
             MostPopularPennyStocks(),
