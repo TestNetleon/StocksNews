@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compititor.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_insider_trade.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/keystats/key_states.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/news/news.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
@@ -85,7 +86,7 @@ class _StockDetailState extends State<StockDetail> {
                   SdNews(symbol: widget.symbol),
                   SdEarnings(symbol: widget.symbol),
                   SdDividends(symbol: widget.symbol),
-                  Container(),
+                  SdInsiderTrade(symbol: widget.symbol),
                   SdCompetitor(symbol: widget.symbol),
                   SdOwnership(symbol: widget.symbol),
                   SdCharts(symbol: widget.symbol),

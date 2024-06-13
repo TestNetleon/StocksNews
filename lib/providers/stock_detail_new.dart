@@ -14,6 +14,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/sd_insider_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_news.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
@@ -972,6 +973,61 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorSocial = Const.errSomethingWrong;
       setStatusSocial(Status.loaded);
+    }
+  }
+
+  //---------------------------------------------------------------
+//Insider Trade
+  String? _errorInsiderTrade;
+  String? get errorInsiderTrade =>
+      _errorInsiderTrade ?? Const.errSomethingWrong;
+
+  Status _statusInsiderTrade = Status.ideal;
+  Status get statusInsiderTrade => _statusInsiderTrade;
+
+  bool get isLoadingInsiderTrade => _statusInsiderTrade == Status.loading;
+
+  Extra? _extraInsiderTrade;
+  Extra? get extraInsiderTrade => _extraInsiderTrade;
+
+  SdInsiderTradeRes? _sdInsiderTradeRes;
+  SdInsiderTradeRes? get sdInsiderTradeRes => _sdInsiderTradeRes;
+
+  void setStatusInsiderTrade(status) {
+    _statusInsiderTrade = status;
+    notifyListeners();
+  }
+
+  Future getInsiderTradeData({
+    String? symbol,
+  }) async {
+    setStatusInsiderTrade(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailInsider,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _sdInsiderTradeRes =
+            sdInsiderTradeResFromJson(jsonEncode(response.data));
+      } else {
+        _sdInsiderTradeRes = null;
+        _errorInsiderTrade = response.message;
+      }
+      setStatusInsiderTrade(Status.loaded);
+    } catch (e) {
+      _sdInsiderTradeRes = null;
+      Utils().showLog(e.toString());
+      _errorInsiderTrade = Const.errSomethingWrong;
+      setStatusInsiderTrade(Status.loaded);
     }
   }
 }
