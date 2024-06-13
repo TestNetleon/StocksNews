@@ -336,8 +336,9 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
                     ],
                   ),
                 ),
+                const SpacerHorizontal(width: 10),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(11, 4, 11, 5),
+                  padding: const EdgeInsets.fromLTRB(14, 4, 14, 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: ThemeColors.accent,
@@ -345,7 +346,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
                   child: Row(
                     children: [
                       Text(
-                        "Connect",
+                        "Sync",
                         style: stylePTSansBold(fontSize: 15),
                       ),
                       const SpacerHorizontal(width: 5),

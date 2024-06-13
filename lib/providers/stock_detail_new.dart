@@ -8,6 +8,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -16,6 +17,7 @@ import '../api/apis.dart';
 import '../modals/analysis_res.dart';
 import '../modals/stockDetailRes/analyst_forecast.dart';
 import '../modals/stockDetailRes/earnings.dart';
+import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
 import '../utils/constants.dart';
@@ -440,12 +442,118 @@ class StockDetailProviderNew extends ChangeNotifier {
         _techRes = null;
         _errorForecast = response.message;
       }
-      setStatusTechnical(Status.loaded);
+      setStatusOverview(Status.loaded);
     } catch (e) {
       _techRes = null;
       Utils().showLog(e.toString());
       _errorTech = Const.errSomethingWrong;
-      setStatusTechnical(Status.loaded);
+      setStatusOverview(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+//Overview DATA
+  String? _errorOverview;
+  String? get errorOverview => _errorOverview ?? Const.errSomethingWrong;
+
+  Status _statusOverview = Status.ideal;
+  Status get statusOverview => _statusOverview;
+
+  bool get isLoadingOverview => _statusOverview == Status.loading;
+
+  Extra? _extraOverview;
+  Extra? get extraOverview => _extraOverview;
+
+  SdOverviewRes? _overviewRes;
+  SdOverviewRes? get overviewRes => _overviewRes;
+
+  void setStatusOverview(status) {
+    _statusOverview = status;
+    notifyListeners();
+  }
+
+  Future getOverviewData({
+    String? symbol,
+  }) async {
+    setStatusOverview(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailOverview,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _overviewRes = sdOverviewResFromJson(jsonEncode(response.data));
+      } else {
+        _overviewRes = null;
+        _errorOverview = response.message;
+      }
+      setStatusOverview(Status.loaded);
+    } catch (e) {
+      _overviewRes = null;
+      Utils().showLog(e.toString());
+      _errorOverview = Const.errSomethingWrong;
+      setStatusOverview(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+//Overview Graph DATA
+  String? _errorGraph;
+  String? get errorGraph => _errorGraph ?? Const.errSomethingWrong;
+
+  Status _statusGraph = Status.ideal;
+  Status get statusGraph => _statusGraph;
+
+  bool get isLoadingGraph => _statusGraph == Status.loading;
+
+  Extra? _extraGraph;
+  Extra? get extraGraph => _extraGraph;
+
+  List<SdOverviewGraphRes>? _graphChart;
+  List<SdOverviewGraphRes>? get graphChart => _graphChart;
+
+  void setStatusOverviewG(status) {
+    _statusOverview = status;
+    notifyListeners();
+  }
+
+  Future getOverviewGraphData({
+    String? symbol,
+  }) async {
+    setStatusOverview(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailOverview,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _graphChart = sdOverviewGraphResFromJson(jsonEncode(response.data));
+      } else {
+        _overviewRes = null;
+        _errorOverview = response.message;
+      }
+      setStatusOverview(Status.loaded);
+    } catch (e) {
+      _overviewRes = null;
+      Utils().showLog(e.toString());
+      _errorOverview = Const.errSomethingWrong;
+      setStatusOverview(Status.loaded);
     }
   }
 }

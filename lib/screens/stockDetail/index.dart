@@ -66,7 +66,7 @@ class _StockDetailState extends State<StockDetail> {
           tabs: List.generate(provider.tabRes?.tabs?.length ?? 0,
               (index) => provider.tabRes?.tabs?[index].name ?? ""),
           widgets: [
-            const SdOverview(),
+            SdOverview(symbol: widget.symbol),
             const SdKeyStats(),
             SdAnalysis(symbol: widget.symbol),
             SdTechnical(symbol: widget.symbol),

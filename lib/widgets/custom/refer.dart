@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../modals/referral_res.dart';
+import '../../providers/user_provider.dart';
+import '../../screens/auth/bottomSheets/login_sheet.dart';
+import '../../screens/drawer/about/refer_dialog.dart';
+import '../../utils/constants.dart';
+
+class ReferApp extends StatelessWidget {
+  const ReferApp({super.key});
+  void _onShareAppClick() async {
+    if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+      isPhone ? await loginSheet() : await loginSheetTablet();
+    }
+
+    showModalBottomSheet(
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+        // side: const BorderSide(color: ThemeColors.greyBorder),
+      ),
+      context: navigatorKey.currentContext!,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
+      barrierColor: Colors.transparent,
+      builder: (BuildContext ctx) {
+        return const SingleChildScrollView(child: ReferDialog());
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // UserProvider provider = context.read<UserProvider>();
+    ReferralRes? referral = context.watch<HomeProvider>().extra?.referral;
+    return InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: () {
+        _onShareAppClick();
+        // Share.share(
+        //   "${referral?.shareText}${"\n\n"}${provider.user?.referralUrl}",
+        // );
+      },
+      child: Ink(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: ThemeColors.accent,
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: ThemeColors.white),
+              child: const Icon(
+                Icons.share,
+                color: ThemeColors.accent,
+              ),
+            ),
+            const SpacerHorizontal(width: 15),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   referral?.title ?? "Refer and Earn",
+                  //   style: stylePTSansBold(fontSize: 18),
+                  // ),
+                  Text(
+                    "Share Stocks News App",
+                    style: stylePTSansBold(fontSize: 18),
+                  ),
+                  const SpacerVertical(height: 3),
+                  Text(
+                    referral?.message ??
+                        "Invite your friend and earn reward point for each registration.",
+                    style: stylePTSansRegular(),
+                  ),
+                ],
+              ),
+            ),
+            const SpacerHorizontal(width: 10),
+            const Icon(Icons.arrow_forward_ios_rounded),
+          ],
+        ),
+      ),
+    );
+  }
+}

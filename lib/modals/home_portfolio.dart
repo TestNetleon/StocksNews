@@ -94,20 +94,32 @@ class PortfolioKeys {
 class PortfolioTop {
   final String? title;
   final String? subTitle;
+  final String? p1;
+  final String? p2;
+  final String? p3;
 
   PortfolioTop({
     this.title,
     this.subTitle,
+    this.p1,
+    this.p2,
+    this.p3,
   });
 
   factory PortfolioTop.fromJson(Map<String, dynamic> json) => PortfolioTop(
         title: json["title"],
         subTitle: json["sub_title"],
+        p1: json['p1'],
+        p2: json['p2'],
+        p3: json['p3'],
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "sub_title": subTitle,
+        'p1': p1,
+        'p2': p2,
+        'p3': p3,
       };
 }
 

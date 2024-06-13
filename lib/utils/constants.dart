@@ -86,6 +86,7 @@ class Images {
   static const String connectionGIF = "assets/images/connection.gif";
   static const String noDataGIF = "assets/images/nodata_GIF.gif";
   static const String syncGIF = "assets/images/syncGIF.gif";
+  static const String portfolioGIF = "assets/images/portfolio.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

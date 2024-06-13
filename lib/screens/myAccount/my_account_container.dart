@@ -21,6 +21,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
@@ -317,52 +318,54 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         const SpacerVertical(height: 20),
         const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),
-        Column(
-          children: [
-            Text(
-              "Refer and Earn",
-              style: styleGeorgiaBold(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
-            const SpacerVertical(height: 3),
-            Text(
-              "Invite your friend and earn reward point for each registration.",
-              style: styleGeorgiaRegular(),
-              textAlign: TextAlign.center,
-            ),
-            const SpacerVertical(height: 10),
-            GestureDetector(
-              onTap: () {
-                HomeProvider provider = context.read<HomeProvider>();
-                UserProvider userProvider = context.read<UserProvider>();
-                Share.share(
-                  "${provider.extra?.referral?.shareText}${"\n\n"}${userProvider.user?.referralUrl}",
-                );
-                // Share.share(
-                //   "Hey, Stay updated on the stock market with this excellent app. Daily updates and market news at your fingertips.\n\nhttps://app.stocks.news/refer/abc123",
-                // );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: ThemeColors.gradientLight,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Refer Now", style: styleGeorgiaBold()),
-                    const SpacerHorizontal(width: 5),
-                    const Icon(Icons.share, size: 20),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        )
+        ReferApp(),
+        // Column(
+        //   children: [
+        //     Text(
+        //       "Refer and Earn",
+        //       style: styleGeorgiaBold(fontSize: 20),
+        //       textAlign: TextAlign.center,
+        //     ),
+        //     const SpacerVertical(height: 3),
+        //     Text(
+        //       "Invite your friend and earn reward point for each registration.",
+        //       style: styleGeorgiaRegular(),
+        //       textAlign: TextAlign.center,
+        //     ),
+        //     const SpacerVertical(height: 10),
+        //     GestureDetector(
+        //       onTap: () {
+        //         HomeProvider provider = context.read<HomeProvider>();
+        //         UserProvider userProvider = context.read<UserProvider>();
+        //         Share.share(
+        //           "${provider.extra?.referral?.shareText}${"\n\n"}${userProvider.user?.referralUrl}",
+        //         );
+        //         // Share.share(
+        //         //   "Hey, Stay updated on the stock market with this excellent app. Daily updates and market news at your fingertips.\n\nhttps://app.stocks.news/refer/abc123",
+        //         // );
+        //       },
+        //       child: Container(
+        //         decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(4),
+        //           color: ThemeColors.gradientLight,
+        //         ),
+        //         padding: const EdgeInsets.symmetric(
+        //           horizontal: 20,
+        //           vertical: 10,
+        //         ),
+        //         child: Row(
+        //           mainAxisSize: MainAxisSize.min,
+        //           children: [
+        //             Text("Refer Now", style: styleGeorgiaBold()),
+        //             const SpacerHorizontal(width: 5),
+        //             const Icon(Icons.share, size: 20),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //     // const SpacerVertical(height: 100),
+        //   ],
+        // )
       ],
     );
   }

@@ -37,7 +37,7 @@ class MyAccount extends StatelessWidget {
             child: provider.user == null
                 ? Column(
                     children: [
-                      const ScreenTitle(title: "My Profile"),
+                      // const ScreenTitle(title: "My Profile"),
                       Expanded(child: LoginError(
                         onClick: () async {
                           isPhone
@@ -51,7 +51,7 @@ class MyAccount extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        ScreenTitle(title: "My Profile"),
+                        // ScreenTitle(title: "My Profile"),
                         MyAccountContainer(),
                       ],
                     ),

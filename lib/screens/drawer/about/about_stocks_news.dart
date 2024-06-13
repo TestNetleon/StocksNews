@@ -16,6 +16,7 @@ import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/logout.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
@@ -102,18 +103,15 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   ),
                 ),
               ),
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5.sp),
-                child: const Column(
-                  children: [],
-                ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: ReferApp(),
               ),
               ListView.separated(
-                padding: EdgeInsets.only(
-                  left: 10.sp,
-                  right: 10.sp,
-                  top: 30.sp,
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  top: 0,
                 ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
