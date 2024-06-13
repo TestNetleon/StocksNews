@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compititor.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/keystats/key_states.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/sec/sd_sec_filing.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/secFiling/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -76,8 +78,8 @@ class _StockDetailState extends State<StockDetail> {
             SdEarnings(symbol: widget.symbol),
             SdDividends(symbol: widget.symbol),
             Container(),
-            Container(),
-            Container(),
+            SdCompetitor(symbol: widget.symbol),
+            SdOwnership(symbol: widget.symbol),
             SdCharts(symbol: widget.symbol),
             Container(),
             SdSecFilings(symbol: widget.symbol),

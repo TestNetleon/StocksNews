@@ -7,13 +7,10 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/congress_member_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
-import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
-import '../modals/congressional_res.dart';
 
 class CongressionalDetailProvider extends ChangeNotifier with AuthProviderBase {
   CongressMemberRes? _data;

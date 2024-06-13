@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -44,10 +42,6 @@ class _CongressionalDetailContainerState
   Widget build(BuildContext context) {
     CongressionalDetailProvider provider =
         context.watch<CongressionalDetailProvider>();
-
-    log("  data =  ${provider.data != null} ");
-    log("  error = ${provider.error != null}");
-    log("  extra = ${provider.extra != null}");
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -102,8 +96,18 @@ class _CongressionalDetailContainerState
                         children: [
                           Text(
                             provider.data?.profile.name ?? "",
-                            style: styleGeorgiaBold(),
+                            style: stylePTSansBold(),
                           ),
+                          if (provider.data?.profile.memberType == "house")
+                            Container(
+                              margin: const EdgeInsets.only(top: 3),
+                              child: Text(
+                                "House - ${provider.data?.profile.office}",
+                                style: stylePTSansBold(
+                                  color: ThemeColors.greyText,
+                                ),
+                              ),
+                            ),
                           Visibility(
                             visible: provider.data?.profile.description != null,
                             child: Text(
