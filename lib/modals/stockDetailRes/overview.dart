@@ -10,16 +10,10 @@ String sdOverviewResToJson(SdOverviewRes data) => json.encode(data.toJson());
 class SdOverviewRes {
   final CompanyInfo? companyInfo;
   final StockScore? stockScore;
-  final CompanyCalendar? companyCalendar;
-  final PriceTargetRating? priceTargetRating;
-  final Profitability? profitability;
 
   SdOverviewRes({
     this.companyInfo,
     this.stockScore,
-    this.companyCalendar,
-    this.priceTargetRating,
-    this.profitability,
   });
 
   factory SdOverviewRes.fromJson(Map<String, dynamic> json) => SdOverviewRes(
@@ -29,23 +23,11 @@ class SdOverviewRes {
         stockScore: json["stock_score"] == null
             ? null
             : StockScore.fromJson(json["stock_score"]),
-        companyCalendar: json["company_calendar"] == null
-            ? null
-            : CompanyCalendar.fromJson(json["company_calendar"]),
-        priceTargetRating: json["price_target_rating"] == null
-            ? null
-            : PriceTargetRating.fromJson(json["price_target_rating"]),
-        profitability: json["profitability"] == null
-            ? null
-            : Profitability.fromJson(json["profitability"]),
       );
 
   Map<String, dynamic> toJson() => {
         "company_info": companyInfo?.toJson(),
         "stock_score": stockScore?.toJson(),
-        "company_calendar": companyCalendar?.toJson(),
-        "price_target_rating": priceTargetRating?.toJson(),
-        "profitability": profitability?.toJson(),
       };
 }
 

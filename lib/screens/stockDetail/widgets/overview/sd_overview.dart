@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/range.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/overview/stock_score.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../stockDetails/widgets/analyst_data.dart';
 import 'chart.dart';
+import 'company_brief.dart';
 import 'desclaimer.dart';
 import 'top_widget.dart';
 
@@ -74,6 +76,10 @@ class _SdOverviewState extends State<SdOverview> {
                 ),
                 child: StockDetailAnalystData(),
               ),
+              const SpacerVertical(height: 4),
+              const SdStockScore(),
+              const SpacerVertical(height: 4),
+              const SdCompanyBrief(),
             ],
           ),
         ),
