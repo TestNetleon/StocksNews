@@ -39,7 +39,7 @@ class SdAnalysisItem extends StatelessWidget {
           const SpacerVertical(height: 10),
           LinearBarCommon(
             showText: false,
-            showAnimation: false,
+            showAnimation: true,
             value: value ?? 0,
           ),
         ],

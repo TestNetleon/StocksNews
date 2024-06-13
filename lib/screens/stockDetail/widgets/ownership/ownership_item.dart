@@ -21,188 +21,139 @@ class SdOwnershipItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Column(
+        Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              // flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(
+                  //   widget.data!.companyName.capitalizeWords(),
+                  //   style: stylePTSansRegular(
+                  //     color: ThemeColors.greyText,
+                  //     fontSize: 12,
+                  //   ),
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                  Text(
+                    "${data?.investorName}",
+                    style: stylePTSansBold(fontSize: 14),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SpacerVertical(height: 3),
+                  // Text(
+                  //   "${widget.data?.exchangeShortName}:${widget.data?.symbol}",
+                  //   style: stylePTSansBold(
+                  //     fontSize: 14,
+                  //     color: ThemeColors.accent,
+                  //   ),
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                  Text(
+                    "${data?.reprtingDate}",
+                    style: stylePTSansBold(
+                      fontSize: 13,
+                      color: ThemeColors.greyText,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  // const SpacerVertical(height: 15),
+                  // InkWell(
+                  //   onTap: () {
+                  //     // Navigator.pushNamed(context, InsiderDetailsType.path,
+                  //     //     arguments: {
+                  //     //       "companySlug": data?.companySlug,
+                  //     //       "reportingSlug": data?.reportingSlug,
+                  //     //       "companyName": data?.companyName,
+                  //     //       "reportingName": data?.reportingName,
+                  //     //     });
+                  //   },
+                  //   child: Text(
+                  //     "${data?.reportingName}",
+                  //     style: stylePTSansBold(
+                  //         fontSize: 14, color: ThemeColors.greyText),
+                  //     maxLines: 1,
+                  //     overflow: TextOverflow.ellipsis,
+                  //   ),
+                  // ),
+                  // const SpacerVertical(height: 3),
+                  // Text(
+                  //   "${data?.typeOfOwner.capitalizeWords()}",
+                  //   style: stylePTSansRegular(
+                  //     color: ThemeColors.greyText,
+                  //     fontSize: 12,
+                  //   ),
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                ],
+              ),
+            ),
+            const SpacerHorizontal(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   widget.data!.companyName.capitalizeWords(),
-                      //   style: stylePTSansRegular(
-                      //     color: ThemeColors.greyText,
-                      //     fontSize: 12,
-                      //   ),
-                      //   maxLines: 2,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      Text(
-                        "${data?.investorName}",
-                        style: stylePTSansBold(fontSize: 14),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SpacerVertical(height: 3),
-                      // Text(
-                      //   "${widget.data?.exchangeShortName}:${widget.data?.symbol}",
-                      //   style: stylePTSansBold(
-                      //     fontSize: 14,
-                      //     color: ThemeColors.accent,
-                      //   ),
-                      //   maxLines: 2,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                      Text(
-                        "${data?.reprtingDate}",
-                        style: stylePTSansBold(
-                          fontSize: 13,
-                          color: ThemeColors.greyText,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      // const SpacerVertical(height: 15),
-                      // InkWell(
-                      //   onTap: () {
-                      //     // Navigator.pushNamed(context, InsiderDetailsType.path,
-                      //     //     arguments: {
-                      //     //       "companySlug": data?.companySlug,
-                      //     //       "reportingSlug": data?.reportingSlug,
-                      //     //       "companyName": data?.companyName,
-                      //     //       "reportingName": data?.reportingName,
-                      //     //     });
-                      //   },
-                      //   child: Text(
-                      //     "${data?.reportingName}",
-                      //     style: stylePTSansBold(
-                      //         fontSize: 14, color: ThemeColors.greyText),
-                      //     maxLines: 1,
-                      //     overflow: TextOverflow.ellipsis,
-                      //   ),
-                      // ),
-                      // const SpacerVertical(height: 3),
-                      // Text(
-                      //   "${data?.typeOfOwner.capitalizeWords()}",
-                      //   style: stylePTSansRegular(
-                      //     color: ThemeColors.greyText,
-                      //     fontSize: 12,
-                      //   ),
-                      //   maxLines: 2,
-                      //   overflow: TextOverflow.ellipsis,
-                      // ),
-                    ],
-                  ),
+                Text(
+                  data!.sharesNumber,
+                  style: stylePTSansBold(fontSize: 14),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SpacerHorizontal(width: 10),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        data!.sharesNumber,
-                        style: stylePTSansBold(fontSize: 14),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        "(Shares Held)",
-                        style: stylePTSansRegular(
-                          fontSize: 14,
-                          color: ThemeColors.greyText,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SpacerVertical(height: 5),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          !(data?.changePercent as String).contains('-')
-                              ? const Icon(
-                                  Icons.arrow_upward,
-                                  size: 14,
-                                  color: Colors.green,
-                                )
-                              : const Icon(
-                                  Icons.arrow_downward_rounded,
-                                  size: 14,
-                                  color: Colors.red,
-                                ),
-                          Text(
-                            "${data?.changePercent}",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color:
-                                  !(data?.changePercent as String).contains('-')
-                                      ? ThemeColors.accent
-                                      : Colors.red,
-                            ),
+                const SpacerVertical(height: 5),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    !(data?.changePercent as String).contains('-')
+                        ? const Icon(
+                            Icons.arrow_upward,
+                            size: 14,
+                            color: Colors.green,
+                          )
+                        : const Icon(
+                            Icons.arrow_downward_rounded,
+                            size: 14,
+                            color: Colors.red,
                           ),
-                        ],
+                    Text(
+                      "${data?.changePercent}",
+                      style: stylePTSansRegular(
+                        fontSize: 12,
+                        color: !(data?.changePercent as String).contains('-')
+                            ? ThemeColors.accent
+                            : Colors.red,
                       ),
-                      Text(
-                        "(Change in Shares)",
-                        style: stylePTSansRegular(
-                          fontSize: 14,
-                          color: ThemeColors.greyText,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                // const SpacerHorizontal(width: 10),
-                GestureDetector(
-                  onTap: onTap,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: ThemeColors.white,
                     ),
-                    // margin: const EdgeInsets.only(left: 3),
-                    padding: const EdgeInsets.all(3),
-                    child: Icon(
-                      isOpen
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded,
-                      color: ThemeColors.background,
-                      size: 16.sp,
-                    ),
-                  ),
+                  ],
                 ),
               ],
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Expanded(
-            //       child: Text(
-            //         "${data?.typeOfOwner}",
-            //         style: stylePTSansRegular(
-            //           color: ThemeColors.greyText,
-            //           fontSize: 12,
-            //         ),
-            //         maxLines: 2,
-            //         overflow: TextOverflow.ellipsis,
-            //       ),
-            //     ),
-            //     Text(
-            //       "${data?.securitiesTransacted} Shares @ ${data?.price}",
-            //       style: stylePTSansRegular(
-            //         color: ThemeColors.greyText,
-            //         fontSize: 12,
-            //       ),
-            //       maxLines: 2,
-            //       overflow: TextOverflow.ellipsis,
-            //     ),
-            //   ],
-            // ),
+            const SpacerHorizontal(width: 10),
+            InkWell(
+              onTap: onTap,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: ThemeColors.accent,
+                ),
+                margin: EdgeInsets.only(left: 0.sp),
+                padding: const EdgeInsets.all(3),
+                child: Icon(
+                  isOpen
+                      ? Icons.arrow_upward_rounded
+                      : Icons.arrow_downward_rounded,
+                  size: 16,
+                ),
+              ),
+            ),
           ],
         ),
         AnimatedSize(

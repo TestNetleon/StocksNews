@@ -452,12 +452,12 @@ class StockDetailProviderNew extends ChangeNotifier {
         _techRes = null;
         _errorForecast = response.message;
       }
-      setStatusOverview(Status.loaded);
+      setStatusTechnical(Status.loaded);
     } catch (e) {
       _techRes = null;
       Utils().showLog(e.toString());
       _errorTech = Const.errSomethingWrong;
-      setStatusOverview(Status.loaded);
+      setStatusTechnical(Status.loaded);
     }
   }
 

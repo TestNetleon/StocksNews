@@ -23,7 +23,10 @@ class _SdChartsState extends State<SdCharts> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.chartRes == null) {
+        _callApi();
+      }
     });
   }
 

@@ -206,7 +206,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
                         text: "Next",
                         onPressed: _onPressed,
                       ),
-                      SpacerVertical(height: ScreenUtil().bottomBarHeight),
+                      const SpacerVertical(),
                     ],
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -9,7 +10,6 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview
 import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/secFiling/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/socialActivities/social_activities.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -46,6 +46,10 @@ class _StockDetailState extends State<StockDetail> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
+      FirebaseAnalytics.instance.logEvent(
+        name: 'ScreensVisit',
+        parameters: {'screen_name': "Stock Detail"},
+      );
     });
   }
 
@@ -96,16 +100,16 @@ class _StockDetailState extends State<StockDetail> {
                 ],
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: const Border(
-                  top: BorderSide(color: ThemeColors.greyBorder),
-                ),
-                color: ThemeColors.background.withOpacity(0.8),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: const AddToAlertWatchlist(),
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     border: const Border(
+            //       top: BorderSide(color: ThemeColors.greyBorder),
+            //     ),
+            //     color: ThemeColors.background.withOpacity(0.8),
+            //   ),
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+            //   child: const AddToAlertWatchlist(),
+            // ),
           ],
         ),
       ),

@@ -35,7 +35,10 @@ class _SdDividendsState extends State<SdDividends> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.dividends == null) {
+        _callApi();
+      }
     });
   }
 

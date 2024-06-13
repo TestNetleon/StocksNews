@@ -434,6 +434,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+          otpSignupSheet();
           // showErrorMessage(message: response.message, snackbar: false);
           // popUpAlert(
           //     message: "${response.message}",

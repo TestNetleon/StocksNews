@@ -31,7 +31,10 @@ class _SdCompetitorState extends State<SdCompetitor> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.competitorRes == null) {
+        _callApi();
+      }
     });
   }
 
