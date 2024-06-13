@@ -44,10 +44,17 @@ class HomePlaidItem extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
+                            const SpacerHorizontal(width: 10),
                             Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
                                 color: ThemeColors.accent,
+                              ),
+                              child: Text(
+                                "${data?.type}",
+                                style: styleGeorgiaBold(fontSize: 10),
                               ),
                             ),
                           ],
@@ -100,22 +107,22 @@ class HomePlaidItem extends StatelessWidget {
           color: ThemeColors.greyBorder,
           height: 15,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Investment type",
-              style: stylePTSansRegular(fontSize: 13),
-            ),
-            Flexible(
-              child: Text(
-                "${data?.type}",
-                style:
-                    styleGeorgiaBold(fontSize: 13, color: ThemeColors.accent),
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Text(
+        //       "Investment type",
+        //       style: stylePTSansRegular(fontSize: 13),
+        //     ),
+        //     Flexible(
+        //       child: Text(
+        //         "${data?.type}",
+        //         style:
+        //             styleGeorgiaBold(fontSize: 13, color: ThemeColors.accent),
+        //       ),
+        //     ),
+        //   ],
+        // ),
         const SpacerVertical(height: 5),
 
         Row(

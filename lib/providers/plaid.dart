@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,13 +10,13 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/home_portfolio.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 import 'user_provider.dart';
 
@@ -205,9 +204,10 @@ class PlaidProvider extends ChangeNotifier {
       );
       if (response.status) {
         // getPlaidPortfolioData();
-        navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
 
         if (!fromDrawer) {
+          navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
+
           Navigator.pushNamed(
               navigatorKey.currentContext!, HomePlaidAdded.path);
         } else {
@@ -227,6 +227,43 @@ class PlaidProvider extends ChangeNotifier {
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
+    }
+  }
+
+  Future disconnectPlaidAccount() async {
+    _data = null;
+    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.disconnectPlaid,
+        formData: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        //
+        popUpAlert(
+          showOk: false,
+          message: response.message ?? "",
+          title: "Account Disconnected",
+          icon: Images.alertPopGIF,
+          canPop: false,
+        );
+        ApiResponse res = await provider.getHomePortfolio();
+        if (res.status) {
+          Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+        }
+      } else {
+        //
+      }
+    } catch (e) {
+      _data = null;
+      _errorG = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
     }
   }
 
@@ -250,10 +287,13 @@ class PlaidProvider extends ChangeNotifier {
       } else {
         _data = null;
         _errorG = response.message;
+        _extra = null;
       }
       setStatusG(Status.loaded);
     } catch (e) {
       _data = null;
+      _extra = null;
+
       _errorG = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatusG(Status.loaded);

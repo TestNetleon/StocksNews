@@ -131,6 +131,7 @@ class Apis {
 
   static const blogCategory = "/blog-category-list";
   static const sendAppleOtp = "/signup-apple-email";
+  static const disconnectPlaid = "/remove-plaid-portfolio";
 
 //Stock Detail New
   static const stockDetailTab = "/stock-detail-topbar";

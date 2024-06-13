@@ -14,6 +14,9 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
+import '../../providers/search_provider.dart';
+import '../../route/my_app.dart';
+
 class StockDetails extends StatefulWidget {
   final String symbol;
   final String? inAppMsgId;
@@ -116,6 +119,9 @@ class _StockDetailsState extends State<StockDetails> {
                     context, Tabs.path, (route) => false);
                 popHome = false;
               });
+            } else {
+              navigatorKey.currentContext!.read<SearchProvider>().clearSearch();
+              Navigator.pop(navigatorKey.currentContext!);
             }
           } catch (e) {
             //

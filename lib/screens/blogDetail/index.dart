@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../../providers/search_provider.dart';
 import 'container.dart';
 
 class BlogDetail extends StatefulWidget {
@@ -63,6 +65,9 @@ class _BlogDetailState extends State<BlogDetail> {
                   context, Tabs.path, (route) => false);
               popHome = false;
             });
+          } else {
+            navigatorKey.currentContext!.read<SearchProvider>().clearSearch();
+            Navigator.pop(navigatorKey.currentContext!);
           }
         } catch (e) {
           //

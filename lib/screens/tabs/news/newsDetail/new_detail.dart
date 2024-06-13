@@ -50,6 +50,9 @@ class NewsDetails extends StatelessWidget {
                   context, Tabs.path, (route) => false);
               popHome = false;
             });
+          } else {
+            navigatorKey.currentContext!.read<SearchProvider>().clearSearch();
+            Navigator.pop(navigatorKey.currentContext!);
           }
         } catch (e) {
           //

@@ -16,6 +16,7 @@ class PlaidDataRes {
   final dynamic tickerSymbol;
   // final dynamic validTicker;
   final dynamic image;
+  final int? validTicker;
   final dynamic closePrice;
   final dynamic investmentValue;
   final dynamic qty;
@@ -40,6 +41,7 @@ class PlaidDataRes {
     this.change,
     this.changesPercentage,
     this.investmentValue,
+    this.validTicker,
     this.qty,
 
     // this.validTicker,
@@ -72,6 +74,7 @@ class PlaidDataRes {
         // institutionSecurityId: json["institution_security_id"],
         // isCashEquivalent: json["is_cash_equivalent"],
         name: json["name"],
+        validTicker: json['valid_ticker'],
         // securityId: json["security_id"],
         type: json["type"],
         // updateDatetime: json["update_datetime"],
@@ -95,6 +98,7 @@ class PlaidDataRes {
         'changesPercentage': changesPercentage,
         "change": change,
         "quantity": qty,
+        "valid_ticker": validTicker,
         // "institution_id": institutionId,
         // "institution_security_id": institutionSecurityId,
         // "is_cash_equivalent": isCashEquivalent,

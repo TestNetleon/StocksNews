@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -6,6 +8,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../providers/search_provider.dart';
 import '../../utils/constants.dart';
 import '../tabs/tabs.dart';
 
@@ -87,6 +90,9 @@ class _AnalysisForecastState extends State<WebviewLink> {
                   context, Tabs.path, (route) => false);
               popHome = false;
             });
+          } else {
+            navigatorKey.currentContext!.read<SearchProvider>().clearSearch();
+            Navigator.pop(navigatorKey.currentContext!);
           }
         } catch (e) {
           //

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -14,6 +15,7 @@ void popUpAlert({
   String? okText,
   bool canPop = true,
   bool showButton = true,
+  bool showOk = true,
 }) {
   showDialog(
     context: navigatorKey.currentContext!,
@@ -28,6 +30,7 @@ void popUpAlert({
         okText: okText,
         canPop: canPop,
         showButton: showButton,
+        showOk: showOk,
       );
     },
   );
@@ -40,10 +43,12 @@ class AlertPopupCustom extends StatelessWidget {
   final bool cancel;
   final bool showButton;
   final bool canPop;
+  final bool showOk;
   const AlertPopupCustom({
     super.key,
     required this.message,
     required this.title,
+    this.showOk = true,
     required this.icon,
     this.showButton = true,
     this.cancel = false,
@@ -114,15 +119,18 @@ class AlertPopupCustom extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            TextButton(
-                              onPressed: onTap ??
-                                  () {
-                                    Navigator.of(context).pop();
-                                  },
-                              child: Text(
-                                okText ?? "OK",
-                                style: stylePTSansBold(
-                                    color: ThemeColors.background),
+                            Visibility(
+                              visible: showOk,
+                              child: TextButton(
+                                onPressed: onTap ??
+                                    () {
+                                      Navigator.of(context).pop();
+                                    },
+                                child: Text(
+                                  okText ?? "OK",
+                                  style: stylePTSansBold(
+                                      color: ThemeColors.background),
+                                ),
                               ),
                             ),
                           ],
