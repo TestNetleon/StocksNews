@@ -3,9 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends_item.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_title.dart';
+import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -19,15 +22,47 @@ class DividendsList extends StatefulWidget {
 }
 
 class _DividendsListState extends State<DividendsList> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     if (context.read<DividendsProvider>().data != null) {
+  //       return;
+  //     }
+  //     context.read<DividendsProvider>().getDividendsStocks();
+  //   });
+  // }
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<DividendsProvider>().data != null) {
+      DividendsProvider provider = context.read<DividendsProvider>();
+      if (provider.data != null) {
         return;
       }
-      context.read<DividendsProvider>().getDividendsStocks();
+      provider.resetFilter();
+      provider.getDividendsStocks();
     });
+  }
+
+  void _onFilterClick() async {
+    FilterProvider provider = context.read<FilterProvider>();
+    DividendsProvider gapUpProvider = context.read<DividendsProvider>();
+
+    if (provider.data == null) {
+      await context.read<FilterProvider>().getFilterData();
+    }
+    BaseBottomSheets().gradientBottomSheet(
+      title: "Filter Dividend Stocks",
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: gapUpProvider.filterParams,
+      ),
+    );
+  }
+
+  void _onFiltered(FilteredParams? params) {
+    context.read<DividendsProvider>().applyFilter(params);
   }
 
   @override
@@ -36,13 +71,24 @@ class _DividendsListState extends State<DividendsList> {
     List<DividendsRes>? data = provider.data;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ScreenTitle(
-          htmlTitle: true,
-          title: provider.extraUp?.title ?? "Dividend Announcements",
-          subTitleHtml: true,
-          subTitle: provider.extraUp?.subTitle,
-        ),
+        if (provider.data != null || provider.filterParams != null)
+          MarketDataTitle(
+            htmlTitle: true,
+            title: provider.extra?.title,
+            subTitleHtml: true,
+            subTitle: provider.extra?.subTitle,
+            provider: provider,
+            onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+            onFilterClick: _onFilterClick,
+          ),
+        // ScreenTitle(
+        //   htmlTitle: true,
+        //   title: provider.extraUp?.title ?? "Dividend Announcements",
+        //   subTitleHtml: true,
+        //   subTitle: provider.extraUp?.subTitle,
+        // ),
         Expanded(
           child: BaseUiContainer(
             error: provider.error,
