@@ -140,6 +140,8 @@ class Apis {
   static const detailChart = "/stock-detail-chart";
   static const detailSec = "/stock-detail-secFiling";
   static const detailForecast = "/stock-detail-forecast";
+  static const stockDetailNews = "/stock-detail-news";
+  static const stockDetailSocial = "/stock-detail-social";
 }
 
 //

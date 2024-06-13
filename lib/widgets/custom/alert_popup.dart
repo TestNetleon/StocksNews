@@ -9,7 +9,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 void popUpAlert({
   required String message,
   required String title,
-  required String icon,
+  String? icon,
   Function()? onTap,
   bool cancel = false,
   String? okText,
@@ -37,7 +37,9 @@ void popUpAlert({
 }
 
 class AlertPopupCustom extends StatelessWidget {
-  final String message, title, icon;
+  final String message, title;
+  final String? icon;
+
   final String? okText;
   final Function()? onTap;
   final bool cancel;
@@ -49,7 +51,7 @@ class AlertPopupCustom extends StatelessWidget {
     required this.message,
     required this.title,
     this.showOk = true,
-    required this.icon,
+    this.icon,
     this.showButton = true,
     this.cancel = false,
     this.onTap,
@@ -80,10 +82,13 @@ class AlertPopupCustom extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        icon,
-                        height: 80.sp,
-                        width: 80.sp,
+                      Visibility(
+                        visible: icon != null,
+                        child: Image.asset(
+                          icon ?? "",
+                          height: 80.sp,
+                          width: 80.sp,
+                        ),
                       ),
                       // const SpacerVertical(height: 5),
                       Text(
