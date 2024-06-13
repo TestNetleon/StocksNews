@@ -74,11 +74,26 @@ class CongressionalItem extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () => _onPersonTap(context),
-                        child: Text(
-                          "${data?.name}",
-                          style: stylePTSansBold(fontSize: 14),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${data?.name}",
+                              style: stylePTSansBold(fontSize: 14),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (data?.memberType == 'house')
+                              Container(
+                                margin: const EdgeInsets.only(top: 3),
+                                child: Text(
+                                  "${data?.office}",
+                                  style: stylePTSansRegular(fontSize: 14),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                       const SpacerVertical(height: 3),

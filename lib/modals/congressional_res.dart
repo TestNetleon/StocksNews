@@ -19,6 +19,8 @@ class CongressionalRes {
   final dynamic dateTraded;
   final dynamic image;
   final dynamic userImage;
+  final dynamic memberType;
+  final dynamic office;
 
   CongressionalRes({
     this.name,
@@ -32,6 +34,8 @@ class CongressionalRes {
     this.dateTraded,
     this.image,
     this.userImage,
+    this.memberType,
+    this.office,
   });
 
   factory CongressionalRes.fromJson(Map<String, dynamic> json) =>
@@ -47,6 +51,8 @@ class CongressionalRes {
         dateTraded: json["date_traded"],
         image: json["image"],
         userImage: json["user_image"],
+        memberType: json["member_type"],
+        office: json["office"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +67,7 @@ class CongressionalRes {
         "date_traded": dateTraded,
         "image": image,
         "user_image": userImage,
+        "member_type": memberType,
+        "office": office,
       };
 }
