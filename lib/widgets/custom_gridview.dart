@@ -21,20 +21,22 @@ class CustomGridView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(vertical: paddingVerticle),
       itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(child: getChild(index * 2)),
-              length > (index * 2 + 1)
-                  ? SizedBox(width: paddingHorizontal.sp)
-                  : const SizedBox(),
-              length > (index * 2 + 1)
-                  ? Expanded(child: getChild(index * 2 + 1))
-                  : const SizedBox(),
-            ],
+        return IntrinsicHeight(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(child: getChild(index * 2)),
+                length > (index * 2 + 1)
+                    ? SizedBox(width: paddingHorizontal.sp)
+                    : const SizedBox(),
+                length > (index * 2 + 1)
+                    ? Expanded(child: getChild(index * 2 + 1))
+                    : const SizedBox(),
+              ],
+            ),
           ),
         );
       },

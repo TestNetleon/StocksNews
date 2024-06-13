@@ -15,8 +15,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../widgets/cache_network_image.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 
 //
@@ -66,15 +66,22 @@ class BlogDetailContainer extends StatelessWidget {
                     //   ),
                     // ),
                     const SpacerVertical(height: 10),
-                    SizedBox(
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   // height: isPhone
+                    //   //     ? ScreenUtil().screenHeight * 0.3
+                    //   //     : ScreenUtil().screenHeight * 0.4,
+                    //   child: ThemeImageView(
+                    //     url: provider.blogsDetail?.image ?? "",
+                    //     // fit: BoxFit.contain,
+                    //   ),
+                    // ),
+                    CachedNetworkImagesWidget(
+                      provider.blogsDetail?.image ?? "",
+                      height: ScreenUtil().screenHeight * 0.27,
                       width: double.infinity,
-                      // height: isPhone
-                      //     ? ScreenUtil().screenHeight * 0.3
-                      //     : ScreenUtil().screenHeight * 0.4,
-                      child: ThemeImageView(
-                        url: provider.blogsDetail?.image ?? "",
-                        // fit: BoxFit.contain,
-                      ),
+                      fit: BoxFit.contain,
+                      // fit: BoxFit.contain,
                     ),
                     const SpacerVertical(height: 10),
                     Padding(

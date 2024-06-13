@@ -212,6 +212,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -283,8 +284,10 @@ class _HomePlaidAddedContainerState extends State<HomePlaidAddedContainer> {
   Widget build(BuildContext context) {
     PlaidProvider provider = context.watch<PlaidProvider>();
     UserRes? user = context.watch<UserProvider>().user;
-    // HomeProvider homeProvider = context.watch<HomeProvider>();
-    log("${provider.extra?.currentBalance}");
+    if (provider.isLoadingG) {
+      return const Loading();
+    }
+
     if ((user == null || provider.extra?.currentBalance == null) &&
         !provider.isLoadingG) {
       return const PortfolioUserNotLoggedIn();
@@ -354,7 +357,6 @@ class HomePlaidBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlaidProvider provider = context.watch<PlaidProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
 
     List<PlaidDataRes>? plaidData = provider.data;
     return BaseUiContainer(

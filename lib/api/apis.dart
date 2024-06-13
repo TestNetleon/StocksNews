@@ -142,6 +142,9 @@ class Apis {
   static const detailForecast = "/stock-detail-forecast";
   static const stockDetailNews = "/stock-detail-news";
   static const stockDetailSocial = "/stock-detail-social";
+  static const detailOwnership = "/stock-detail-ownership";
+  static const detailCompetitor = "/stock-detail-competitior";
+  static const detailOverview = "/stock-detail-overview";
 }
 
 //

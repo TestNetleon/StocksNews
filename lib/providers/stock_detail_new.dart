@@ -7,7 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_news.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
@@ -18,6 +21,7 @@ import '../api/apis.dart';
 import '../modals/analysis_res.dart';
 import '../modals/stockDetailRes/analyst_forecast.dart';
 import '../modals/stockDetailRes/earnings.dart';
+import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
 import '../utils/constants.dart';
@@ -442,7 +446,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         _techRes = null;
         _errorForecast = response.message;
       }
-      setStatusTechnical(Status.loaded);
+      setStatusOverview(Status.loaded);
     } catch (e) {
       _techRes = null;
       Utils().showLog(e.toString());

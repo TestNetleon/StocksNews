@@ -203,18 +203,18 @@ class StockDetailProvider with ChangeNotifier {
     }
   }
 
-  double calculateInterval(List<StockDetailGraph> data) {
-    // Get the range of close prices
-    double maxClose = data
-        .map((e) => e.close)
-        .reduce((max, value) => max > value ? max : value);
-    double minClose = data
-        .map((e) => e.close)
-        .reduce((min, value) => min < value ? min : value);
-    double closeRange = maxClose - minClose;
+  // double calculateInterval(List<StockDetailGraph> data) {
+  //   // Get the range of close prices
+  //   double maxClose = data
+  //       .map((e) => e.close)
+  //       .reduce((max, value) => max > value ? max : value);
+  //   double minClose = data
+  //       .map((e) => e.close)
+  //       .reduce((min, value) => min < value ? min : value);
+  //   double closeRange = maxClose - minClose;
 
-    return closeRange / 4.5;
-  }
+  //   return closeRange / 4.5;
+  // }
 
   LineChartData avgData({bool showDate = true}) {
     List<StockDetailGraph> reversedData = _graphChart?.reversed.toList() ?? [];

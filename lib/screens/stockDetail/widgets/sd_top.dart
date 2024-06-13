@@ -22,6 +22,7 @@ class SdTopCard extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Visibility(
                 visible: top?.key != null,
