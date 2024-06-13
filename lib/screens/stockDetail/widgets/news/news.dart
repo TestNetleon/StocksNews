@@ -26,7 +26,10 @@ class _SdNewsState extends State<SdNews> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.newsRes == null) {
+        _callApi();
+      }
     });
   }
 

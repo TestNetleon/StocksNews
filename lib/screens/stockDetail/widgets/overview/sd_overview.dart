@@ -5,12 +5,14 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/overview/range.dart'
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/stock_score.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../stockDetails/widgets/analyst_data.dart';
 import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
+import 'price_tag.dart';
 import 'top_widget.dart';
 
 class SdOverview extends StatefulWidget {
@@ -49,38 +51,57 @@ class _SdOverviewState extends State<SdOverview> {
       showPreparingText: true,
       error: provider.errorOverview,
       onRefresh: _callApi,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            Dimen.padding,
-            Dimen.padding,
-            Dimen.padding,
-            0,
-          ),
-          child: Column(
-            children: [
-              const SdTopWidgetDetail(),
-              const SpacerVertical(height: 4),
-              const SdTopDisclaimer(),
-              const SpacerVertical(height: 4),
-              const SdTopWidgetRange(),
-              const SpacerVertical(height: 4),
-              SdOverviewChart(
-                symbol: widget.symbol ?? "",
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: Dimen.padding,
-                  right: Dimen.padding,
-                  bottom: Dimen.padding,
+      child: CommonRefreshIndicator(
+        onRefresh: () async {
+          _callApi();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              Dimen.padding,
+              Dimen.padding,
+              Dimen.padding,
+              0,
+            ),
+            child: Column(
+              children: [
+                const SdTopWidgetDetail(),
+                const SpacerVertical(height: 4),
+                const SdTopDisclaimer(),
+                const SpacerVertical(height: 4),
+                const SdTopWidgetRange(),
+                const SpacerVertical(height: 4),
+                SdOverviewChart(
+                  symbol: widget.symbol ?? "",
                 ),
-                child: StockDetailAnalystData(),
-              ),
-              const SpacerVertical(height: 4),
-              const SdStockScore(),
-              const SpacerVertical(height: 4),
-              const SdCompanyBrief(),
-            ],
+                const Padding(
+                  padding: EdgeInsets.only(
+                    bottom: Dimen.padding,
+                  ),
+                  child: StockDetailAnalystData(),
+                ),
+                const SpacerVertical(height: 4),
+                const SdStockScore(),
+                const SpacerVertical(height: 4),
+                const SdCompanyBrief(),
+                const SpacerVertical(height: 4),
+                SdOverviewLists(
+                  dataOver: provider.overviewRes?.calendar,
+                  title: "Company Calendar",
+                ),
+                const SpacerVertical(height: 4),
+                SdOverviewLists(
+                  dataOver: provider.overviewRes?.priceTarget,
+                  title: "Price Target and Rating",
+                ),
+                const SpacerVertical(height: 4),
+                SdOverviewLists(
+                  dataOver: provider.overviewRes?.profit,
+                  title: "Profitability",
+                )
+              ],
+            ),
           ),
         ),
       ),

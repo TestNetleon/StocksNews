@@ -31,7 +31,11 @@ class _SdSecFilingsState extends State<SdSecFilings> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      // _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.secRes == null) {
+        _callApi();
+      }
     });
   }
 

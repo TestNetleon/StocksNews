@@ -48,7 +48,10 @@ class _SdOwnershipState extends State<SdOwnership> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.ownershipRes == null) {
+        _callApi();
+      }
     });
   }
 

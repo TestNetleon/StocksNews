@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../stock_details_res.dart';
+import 'earnings.dart';
 
 SdOverviewRes sdOverviewResFromJson(String str) =>
     SdOverviewRes.fromJson(json.decode(str));
@@ -10,16 +11,34 @@ String sdOverviewResToJson(SdOverviewRes data) => json.encode(data.toJson());
 class SdOverviewRes {
   final CompanyInfo? companyInfo;
   final StockScore? stockScore;
+  final List<SdTopRes>? calendar;
+  final List<SdTopRes>? priceTarget;
+  final List<SdTopRes>? profit;
 
   SdOverviewRes({
     this.companyInfo,
     this.stockScore,
+    this.calendar,
+    this.priceTarget,
+    this.profit,
   });
 
   factory SdOverviewRes.fromJson(Map<String, dynamic> json) => SdOverviewRes(
         companyInfo: json["company_info"] == null
             ? null
             : CompanyInfo.fromJson(json["company_info"]),
+        calendar: json["company_calendar"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["company_calendar"]!.map((x) => SdTopRes.fromJson(x))),
+        priceTarget: json["price_target_rating"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["price_target_rating"]!.map((x) => SdTopRes.fromJson(x))),
+        profit: json["profitability"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["profitability"]!.map((x) => SdTopRes.fromJson(x))),
         stockScore: json["stock_score"] == null
             ? null
             : StockScore.fromJson(json["stock_score"]),
@@ -28,6 +47,15 @@ class SdOverviewRes {
   Map<String, dynamic> toJson() => {
         "company_info": companyInfo?.toJson(),
         "stock_score": stockScore?.toJson(),
+        "company_calendar": calendar == null
+            ? []
+            : List<dynamic>.from(calendar!.map((x) => x.toJson())),
+        "price_target_rating": priceTarget == null
+            ? []
+            : List<dynamic>.from(priceTarget!.map((x) => x.toJson())),
+        "profitability": profit == null
+            ? []
+            : List<dynamic>.from(profit!.map((x) => x.toJson())),
       };
 }
 

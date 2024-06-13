@@ -23,7 +23,13 @@ class _SdAnalysisState extends State<SdAnalysis> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+
+      if (provider.analysis == null) {
+        context
+            .read<StockDetailProviderNew>()
+            .getAnalysisData(symbol: widget.symbol);
+      }
     });
   }
 

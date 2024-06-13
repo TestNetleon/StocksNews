@@ -32,7 +32,10 @@ class _SdForecastState extends State<SdForecast> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.forecastRes == null) {
+        _callApi();
+      }
     });
   }
 
