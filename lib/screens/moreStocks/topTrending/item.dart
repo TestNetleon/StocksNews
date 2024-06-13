@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 import '../../../utils/dialogs.dart';
+import '../../stockDetail/index.dart';
 
 //
 class TopTrendingItem extends StatelessWidget {
@@ -48,8 +49,7 @@ class TopTrendingItem extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    StockDetails.path,
-                    // arguments: data.symbol,
+                    StockDetail.path, // arguments: data.symbol,
                     arguments: {"slug": data.symbol},
                   );
                 },

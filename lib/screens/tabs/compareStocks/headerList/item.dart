@@ -8,6 +8,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../../stockDetail/index.dart';
+
 class HeaderItem extends StatelessWidget {
   final CompareStockRes? company;
   final void Function()? onTap;
@@ -24,8 +26,7 @@ class HeaderItem extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            StockDetails.path,
-            // arguments: company?.symbol,
+            StockDetail.path, // arguments: company?.symbol,
             arguments: {"slug": company?.symbol},
           );
         },

@@ -12,7 +12,6 @@ import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../../utils/constants.dart';
-import '../../widgets/screen_title.dart';
 
 class MyAccount extends StatelessWidget {
   static const String path = "MyAccount";

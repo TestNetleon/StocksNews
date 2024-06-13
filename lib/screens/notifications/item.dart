@@ -19,6 +19,7 @@ import '../../widgets/theme_image_view.dart';
 import '../auth/bottomSheets/signup_sheet.dart';
 import '../auth/bottomSheets/signup_sheet_tablet.dart';
 import '../blogDetail/index.dart';
+import '../stockDetail/index.dart';
 import '../stockDetails/stock_details.dart';
 
 class NotificationsItem extends StatelessWidget {
@@ -89,7 +90,7 @@ class NotificationsItem extends StatelessWidget {
       } else if (slug != '' && type == NotificationType.stockDetail.name) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
-          StockDetails.path,
+          StockDetail.path,
           arguments: {"slug": slug},
         );
       } else {

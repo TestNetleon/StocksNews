@@ -28,6 +28,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import '../screens/drawer/widgets/review_app_pop_up.dart';
+import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../utils/utils.dart';
 import '../widgets/custom/alert_popup.dart';
@@ -130,7 +131,7 @@ class FirebaseApi {
       } else if (slug != '' && type == NotificationType.stockDetail.name) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
-          StockDetails.path,
+          StockDetail.path,
           arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else {

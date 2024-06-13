@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../stockDetail/index.dart';
+
 class StockInBuzz extends StatelessWidget {
   const StockInBuzz({super.key});
 
@@ -139,8 +141,7 @@ class StockBuzzItem extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  StockDetails.path,
-                  // arguments: symbol,
+                  StockDetail.path, // arguments: symbol,
                   arguments: {"slug": symbol},
                 );
               },

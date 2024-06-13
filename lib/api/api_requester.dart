@@ -24,6 +24,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
+import '../screens/stockDetail/index.dart';
+
 String? validAuthToken;
 
 Map<String, String> getHeaders() {
@@ -278,7 +280,7 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
     Navigator.pop(navigatorKey.currentContext!);
     Navigator.pushNamed(
       navigatorKey.currentContext!,
-      StockDetails.path,
+      StockDetail.path,
       arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'news') {

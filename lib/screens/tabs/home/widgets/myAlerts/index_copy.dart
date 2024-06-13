@@ -15,6 +15,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../stockDetail/index.dart';
+
 class HomeMyAlerts extends StatelessWidget {
   const HomeMyAlerts({super.key});
 
@@ -116,7 +118,7 @@ class HomeMyAlerts extends StatelessWidget {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      StockDetails.path,
+                                      StockDetail.path,
                                       arguments: {"slug": data.symbol},
                                     );
                                   },
@@ -159,7 +161,7 @@ class AddAlert extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(
                 context,
-                StockDetails.path,
+                StockDetail.path,
                 arguments: {"slug": data?.symbol},
               );
             },

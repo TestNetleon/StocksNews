@@ -12,6 +12,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../stockDetail/index.dart';
+
 //
 class MoreStocksListItem extends StatelessWidget {
   final MoreStocksRes data;
@@ -26,8 +28,7 @@ class MoreStocksListItem extends StatelessWidget {
   void _onTap(context) {
     Navigator.pushNamed(
       context,
-      StockDetails.path,
-      // arguments: data.symbol,
+      StockDetail.path, // arguments: data.symbol,
       arguments: {"slug": data.symbol},
     );
   }
@@ -40,8 +41,7 @@ class MoreStocksListItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          StockDetails.path,
-          // arguments: data.symbol,
+          StockDetail.path, // arguments: data.symbol,
           arguments: {"slug": data.symbol},
         );
       },

@@ -18,6 +18,7 @@ import '../auth/bottomSheets/signup_sheet.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
+import '../stockDetail/index.dart';
 
 class HomeSplash extends StatefulWidget {
   static const path = "HomeSplash";
@@ -125,7 +126,7 @@ class _HomeSplashState extends State<HomeSplash> {
       } else if (slug != '' && type == NotificationType.stockDetail.name) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
-          StockDetails.path,
+          StockDetail.path,
           arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else {

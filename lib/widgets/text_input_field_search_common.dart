@@ -17,6 +17,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
+import '../screens/stockDetail/index.dart';
 import 'spacer_horizontal.dart';
 
 //
@@ -228,7 +229,7 @@ class _TextInputFieldSearchCommonState
                               provider.clearSearch();
                               Navigator.pushNamed(
                                 context,
-                                StockDetails.path,
+                                StockDetail.path,
                                 // arguments: data?.symbol,
                                 arguments: {"slug": data?.symbol},
                               );

@@ -116,11 +116,11 @@ class _PortfolioUserNotLoggedInState extends State<PortfolioUserNotLoggedIn> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          Images.portfolioGIF,
-                          height: 70,
-                        ),
-                        const SpacerVertical(height: 15),
+                        // Image.asset(
+                        //   Images.portfolioGIF,
+                        //   height: 70,
+                        // ),
+                        // const SpacerVertical(height: 15),
                         provider.user != null
                             ? Text(
                                 provider.user?.name == null ||

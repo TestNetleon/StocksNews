@@ -11,6 +11,8 @@ import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../index.dart';
+
 class SdCompetitorItem extends StatelessWidget {
   final TickerList? data;
   final bool isOpen;
@@ -26,8 +28,7 @@ class SdCompetitorItem extends StatelessWidget {
   void _onTap(context) {
     Navigator.pushNamed(
       context,
-      StockDetails.path,
-      // arguments: data.symbol,
+      StockDetail.path, // arguments: data.symbol,
       arguments: {"slug": data?.symbol},
     );
   }

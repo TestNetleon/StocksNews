@@ -9,6 +9,8 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../stockDetail/index.dart';
+
 class SectorIndustryItem extends StatelessWidget {
   final int index;
   final SectorIndustryData? data;
@@ -20,8 +22,7 @@ class SectorIndustryItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          StockDetails.path,
-          // arguments: data?.symbol,
+          StockDetail.path, // arguments: data?.symbol,
           arguments: {"slug": data?.symbol},
         );
       },

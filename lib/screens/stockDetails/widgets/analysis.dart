@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../widgets/disclaimer_widget.dart';
 import '../../../widgets/theme_image_view.dart';
+import '../../stockDetail/index.dart';
 import 'stockTopWidgets/common_heading.dart';
 
 //
@@ -250,8 +251,7 @@ class PeerStockItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          StockDetails.path,
-          // arguments: data?.symbol,
+          StockDetail.path, // arguments: data?.symbol,
           arguments: {"slug": data?.symbol},
         );
       },

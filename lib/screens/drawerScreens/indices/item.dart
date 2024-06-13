@@ -10,6 +10,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../stockDetail/index.dart';
+
 class IndicesItem extends StatefulWidget {
   final dynamic data;
   final int index;
@@ -30,7 +32,7 @@ class _IndicesItemState extends State<IndicesItem> {
   void _onTap(context) {
     Navigator.pushNamed(
       context,
-      StockDetails.path,
+      StockDetail.path,
       arguments: {"slug": widget.data.symbol},
     );
   }

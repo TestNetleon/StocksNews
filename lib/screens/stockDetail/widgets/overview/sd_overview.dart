@@ -6,6 +6,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../stockDetails/widgets/analyst_data.dart';
+import 'chart.dart';
 import 'desclaimer.dart';
 import 'top_widget.dart';
 
@@ -29,6 +31,9 @@ class _SdOverviewState extends State<SdOverview> {
   _callApi() {
     context
         .read<StockDetailProviderNew>()
+        .getOverviewGraphData(symbol: widget.symbol);
+    context
+        .read<StockDetailProviderNew>()
         .getOverviewData(symbol: widget.symbol);
   }
 
@@ -37,15 +42,14 @@ class _SdOverviewState extends State<SdOverview> {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     return BaseUiContainer(
       isFull: true,
-      hasData: !provider.isLoadingOverview &&
-          (!provider.isLoadingOverview && provider.overviewRes != null),
+      hasData: !provider.isLoadingOverview && provider.overviewRes != null,
       isLoading: provider.isLoadingOverview,
       showPreparingText: true,
       error: provider.errorOverview,
       onRefresh: _callApi,
-      child: const SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(
+          padding: const EdgeInsets.fromLTRB(
             Dimen.padding,
             Dimen.padding,
             Dimen.padding,
@@ -53,11 +57,23 @@ class _SdOverviewState extends State<SdOverview> {
           ),
           child: Column(
             children: [
-              SdTopWidgetDetail(),
-              SpacerVertical(height: 4),
-              SdTopDisclaimer(),
-              SpacerVertical(height: 4),
-              SdTopWidgetRange(),
+              const SdTopWidgetDetail(),
+              const SpacerVertical(height: 4),
+              const SdTopDisclaimer(),
+              const SpacerVertical(height: 4),
+              const SdTopWidgetRange(),
+              const SpacerVertical(height: 4),
+              SdOverviewChart(
+                symbol: widget.symbol ?? "",
+              ),
+              const Padding(
+                padding: EdgeInsets.only(
+                  left: Dimen.padding,
+                  right: Dimen.padding,
+                  bottom: Dimen.padding,
+                ),
+                child: StockDetailAnalystData(),
+              ),
             ],
           ),
         ),

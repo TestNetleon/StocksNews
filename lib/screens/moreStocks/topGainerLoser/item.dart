@@ -12,6 +12,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../stockDetail/index.dart';
+
 class GainerLoserItem extends StatelessWidget {
   final GainersLosersDataRes data;
   final int index;
@@ -30,8 +32,7 @@ class GainerLoserItem extends StatelessWidget {
   void _onTap(context) {
     Navigator.pushNamed(
       context,
-      StockDetails.path,
-      // arguments: data.symbol,
+      StockDetail.path, // arguments: data.symbol,
       arguments: {"slug": data.symbol},
     );
   }
@@ -46,8 +47,7 @@ class GainerLoserItem extends StatelessWidget {
           : () {
               Navigator.pushNamed(
                 context,
-                StockDetails.path,
-                // arguments: data.symbol,
+                StockDetail.path, // arguments: data.symbol,
                 arguments: {"slug": data.symbol},
               );
             },

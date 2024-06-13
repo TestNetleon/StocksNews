@@ -10,6 +10,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../stockDetail/index.dart';
+
 class StockScreenerItem extends StatelessWidget {
   final List<Result>? data;
   final int index;
@@ -25,7 +27,7 @@ class StockScreenerItem extends StatelessWidget {
   void _onTap(context) {
     Navigator.pushNamed(
       context,
-      StockDetails.path,
+      StockDetail.path,
       arguments: {"slug": data?[index].symbol},
     );
   }

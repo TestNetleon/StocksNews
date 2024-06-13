@@ -239,8 +239,6 @@ class StockDetailProvider with ChangeNotifier {
     // }
     // Utils().showLog("Length => ${reversedData.length}");
     // Utils().showLog("interval => $interval");
-    Utils().showLog("previous Close => ${_data?.keyStats?.previousCloseNUM}");
-    Utils().showLog("Newest Close => ${reversedData.last.close}");
 
     return LineChartData(
       lineTouchData: LineTouchData(

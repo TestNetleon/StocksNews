@@ -217,6 +217,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../../stockDetail/index.dart';
 import 'item.dart';
 import 'usernot_present.dart';
 
@@ -379,7 +380,7 @@ class HomePlaidBase extends StatelessWidget {
                   if (data?.validTicker == 1) {
                     Navigator.pushNamed(
                       context,
-                      StockDetails.path,
+                      StockDetail.path,
                       arguments: {"slug": data?.tickerSymbol},
                     );
                   } else {

@@ -7,6 +7,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../../../stockDetail/index.dart';
+
 class RecentMentionsItem extends StatelessWidget {
   final BoxConstraints constraints;
   final Function()? onJumpNext;
@@ -31,8 +33,7 @@ class RecentMentionsItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.sp),
           onTap: () => Navigator.pushNamed(
             context,
-            StockDetails.path,
-            // arguments: data.symbol,
+            StockDetail.path, // arguments: data.symbol,
             arguments: {"slug": data.symbol},
           ),
           child: Ink(

@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../widgets/cache_network_image.dart';
 import '../../widgets/custom/alert_popup.dart';
+import '../stockDetail/index.dart';
 
 class WatchlistItem extends StatelessWidget {
   final int index;
@@ -101,7 +102,7 @@ class WatchlistItem extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            StockDetails.path,
+            StockDetail.path,
             // arguments: data.symbol,
             arguments: {"slug": data.symbol},
           );

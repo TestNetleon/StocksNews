@@ -11,6 +11,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../screens/stockDetail/index.dart';
+
 //
 class TextInputFieldSearch extends StatefulWidget {
   const TextInputFieldSearch({
@@ -186,7 +188,7 @@ class _TextInputFieldSearchState extends State<TextInputFieldSearch> {
                         provider.clearSearch();
                         Navigator.pushNamed(
                           context,
-                          StockDetails.path,
+                          StockDetail.path,
                           // arguments: data?.symbol,
                           arguments: {"slug": data?.symbol},
                         );

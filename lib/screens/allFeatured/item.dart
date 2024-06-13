@@ -9,6 +9,7 @@ import '../../utils/theme.dart';
 import '../../widgets/spacer_horizontal.dart';
 import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_image_view.dart';
+import '../stockDetail/index.dart';
 
 class AllFeaturedItem extends StatelessWidget {
   final HomeAlertsRes data;
@@ -20,7 +21,7 @@ class AllFeaturedItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          StockDetails.path,
+          StockDetail.path,
           // arguments: data.symbol,
           arguments: {"slug": data.symbol},
         );

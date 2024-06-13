@@ -9,6 +9,7 @@ import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/spacer_vertical.dart';
+import '../../../stockDetail/index.dart';
 
 class SocialSentimentMentions extends StatelessWidget {
   final RecentMention data;
@@ -19,7 +20,7 @@ class SocialSentimentMentions extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.pushNamed(
         context,
-        StockDetails.path,
+        StockDetail.path,
         // arguments: data.symbol,
         arguments: {"slug": data.symbol},
       ),

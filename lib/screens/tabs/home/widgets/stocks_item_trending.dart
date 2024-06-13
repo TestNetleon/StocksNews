@@ -9,6 +9,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
+import '../../../stockDetail/index.dart';
+
 class StocksItemTrending extends StatelessWidget {
   final HomeTrendingData trending;
 
@@ -23,8 +25,7 @@ class StocksItemTrending extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          StockDetails.path,
-          // arguments: trending.symbol,
+          StockDetail.path, // arguments: trending.symbol,
           arguments: {"slug": trending.symbol},
         );
       },

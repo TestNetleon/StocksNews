@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
 import '../../../widgets/screen_title.dart';
+import '../../stockDetail/index.dart';
 import 'stockTopWidgets/common_heading.dart';
 
 class StockMentionWith extends StatelessWidget {
@@ -68,8 +69,7 @@ class StockMentionWithItem extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.pushReplacementNamed(
         context,
-        StockDetails.path,
-        // arguments: item.symbol,
+        StockDetail.path, // arguments: item.symbol,
         arguments: {"slug": item.symbol},
       ),
       child: Row(

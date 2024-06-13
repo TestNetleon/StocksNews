@@ -18,7 +18,7 @@ class SdTopCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: ThemeColors.greyBorder.withOpacity(0.1),
+            color: ThemeColors.greyBorder.withOpacity(0.3),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
