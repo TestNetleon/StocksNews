@@ -451,7 +451,210 @@ class StockDetailProviderNew extends ChangeNotifier {
       _techRes = null;
       Utils().showLog(e.toString());
       _errorTech = Const.errSomethingWrong;
-      setStatusTechnical(Status.loaded);
+      setStatusOverview(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+//Overview DATA
+  String? _errorOverview;
+  String? get errorOverview => _errorOverview ?? Const.errSomethingWrong;
+
+  Status _statusOverview = Status.ideal;
+  Status get statusOverview => _statusOverview;
+
+  bool get isLoadingOverview => _statusOverview == Status.loading;
+
+  Extra? _extraOverview;
+  Extra? get extraOverview => _extraOverview;
+
+  SdOverviewRes? _overviewRes;
+  SdOverviewRes? get overviewRes => _overviewRes;
+
+  void setStatusOverview(status) {
+    _statusOverview = status;
+    notifyListeners();
+  }
+
+  Future getOverviewData({
+    String? symbol,
+  }) async {
+    setStatusOverview(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailOverview,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _overviewRes = sdOverviewResFromJson(jsonEncode(response.data));
+      } else {
+        _overviewRes = null;
+        _errorOverview = response.message;
+      }
+      setStatusOverview(Status.loaded);
+    } catch (e) {
+      _overviewRes = null;
+      Utils().showLog(e.toString());
+      _errorOverview = Const.errSomethingWrong;
+      setStatusOverview(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+//Overview Graph DATA
+  String? _errorGraph;
+  String? get errorGraph => _errorGraph ?? Const.errSomethingWrong;
+
+  Status _statusGraph = Status.ideal;
+  Status get statusGraph => _statusGraph;
+
+  bool get isLoadingGraph => _statusGraph == Status.loading;
+
+  Extra? _extraGraph;
+  Extra? get extraGraph => _extraGraph;
+
+  List<SdOverviewGraphRes>? _graphChart;
+  List<SdOverviewGraphRes>? get graphChart => _graphChart;
+
+  void setStatusOverviewG(status) {
+    _statusOverview = status;
+    notifyListeners();
+  }
+
+  Future getOverviewGraphData({
+    String? symbol,
+  }) async {
+    setStatusOverview(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailOverview,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _graphChart = sdOverviewGraphResFromJson(jsonEncode(response.data));
+      } else {
+        _overviewRes = null;
+        _errorOverview = response.message;
+      }
+      setStatusOverview(Status.loaded);
+    } catch (e) {
+      _overviewRes = null;
+      Utils().showLog(e.toString());
+      _errorOverview = Const.errSomethingWrong;
+      setStatusOverview(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  // Ownership
+
+  String? _errorOwnership;
+  String? get errorOwnership => _errorOwnership ?? Const.errSomethingWrong;
+
+  Status _statusOwnership = Status.ideal;
+  Status get statusOwnership => _statusOwnership;
+
+  bool get isLoadingOwnership => _statusOwnership == Status.loading;
+
+  Extra? _extraOwnership;
+  Extra? get extraOwnership => _extraOwnership;
+
+  SdOwnershipRes? _ownershipRes;
+  SdOwnershipRes? get ownershipRes => _ownershipRes;
+
+  void setStatusOwnership(status) {
+    _statusOwnership = status;
+    notifyListeners();
+  }
+
+  Future getOwnershipData({String? symbol}) async {
+    setStatusOwnership(Status.loading);
+    try {
+      Map request = {"symbol": symbol ?? ""};
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailOwnership,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _ownershipRes = sdOwnershipResFromJson(jsonEncode(response.data));
+        _extraOwnership =
+            (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _ownershipRes = null;
+        _errorOwnership = response.message;
+      }
+      setStatusOwnership(Status.loaded);
+    } catch (e) {
+      // _ownershipRes = null;
+      Utils().showLog(e.toString());
+      _errorOwnership = Const.errSomethingWrong;
+      setStatusOwnership(Status.loaded);
+    }
+  }
+
+//---------------------------------------------------------------
+  // Competitor
+
+  String? _errorCompetitor;
+  String? get errorCompetitor => _errorCompetitor ?? Const.errSomethingWrong;
+
+  Status _statusCompetitor = Status.ideal;
+  Status get statusCompetitor => _statusCompetitor;
+
+  bool get isLoadingCompetitor => _statusCompetitor == Status.loading;
+
+  Extra? _extraCompetitor;
+  Extra? get extraCompetitor => _extraCompetitor;
+
+  SdCompetitorRes? _competitorRes;
+  SdCompetitorRes? get competitorRes => _competitorRes;
+
+  void setStatusCompetitor(status) {
+    _statusCompetitor = status;
+    notifyListeners();
+  }
+
+  Future getCompetitorData({String? symbol}) async {
+    setStatusCompetitor(Status.loading);
+    try {
+      Map request = {"symbol": symbol ?? ""};
+      ApiResponse response = await apiRequest(
+        url: Apis.detailCompetitor,
+        request: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _competitorRes = sdCompetitorResFromJson(jsonEncode(response.data));
+        _extraCompetitor =
+            (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _competitorRes = null;
+        _errorCompetitor = response.message;
+      }
+      setStatusCompetitor(Status.loaded);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      _errorCompetitor = Const.errSomethingWrong;
+      setStatusCompetitor(Status.loaded);
     }
   }
 
