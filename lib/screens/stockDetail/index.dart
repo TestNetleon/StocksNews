@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/keystats/key_states.
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/secFiling/sd_sec_filing.dart';
+import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -62,28 +63,46 @@ class _StockDetailState extends State<StockDetail> {
         error: provider.errorTab,
         showPreparingText: true,
         onRefresh: _callApi,
-        child: CustomTabContainerNEW(
-          physics: const NeverScrollableScrollPhysics(),
-          scrollable: true,
-          tabs: List.generate(provider.tabRes?.tabs?.length ?? 0,
-              (index) => provider.tabRes?.tabs?[index].name ?? ""),
-          widgets: [
-            SdOverview(symbol: widget.symbol),
-            const SdKeyStats(),
-            SdAnalysis(symbol: widget.symbol),
-            SdTechnical(symbol: widget.symbol),
-            SdForecast(symbol: widget.symbol),
-            Container(),
-            Container(),
-            SdEarnings(symbol: widget.symbol),
-            SdDividends(symbol: widget.symbol),
-            Container(),
-            SdCompetitor(symbol: widget.symbol),
-            SdOwnership(symbol: widget.symbol),
-            SdCharts(symbol: widget.symbol),
-            Container(),
-            SdSecFilings(symbol: widget.symbol),
-            Container(),
+        child: Column(
+          children: [
+            Expanded(
+              child: CustomTabContainerNEW(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollable: true,
+                tabs: List.generate(
+                  provider.tabRes?.tabs?.length ?? 0,
+                  (index) => provider.tabRes?.tabs?[index].name ?? "",
+                ),
+                widgets: [
+                  SdOverview(symbol: widget.symbol),
+                  const SdKeyStats(),
+                  SdAnalysis(symbol: widget.symbol),
+                  SdTechnical(symbol: widget.symbol),
+                  SdForecast(symbol: widget.symbol),
+                  Container(),
+                  Container(),
+                  SdEarnings(symbol: widget.symbol),
+                  SdDividends(symbol: widget.symbol),
+                  Container(),
+                  SdCompetitor(symbol: widget.symbol),
+                  SdOwnership(symbol: widget.symbol),
+                  SdCharts(symbol: widget.symbol),
+                  Container(),
+                  SdSecFilings(symbol: widget.symbol),
+                  Container(),
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: const Border(
+                  top: BorderSide(color: ThemeColors.greyBorder),
+                ),
+                color: ThemeColors.background.withOpacity(0.8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: const AddToAlertWatchlist(),
+            ),
           ],
         ),
       ),

@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
@@ -10,10 +12,12 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class SdOwnership extends StatefulWidget {
@@ -103,11 +107,88 @@ class _SdOwnershipState extends State<SdOwnership> {
                   itemBuilder: (context, index) {
                     OwnershipList? data =
                         provider.ownershipRes?.ownershipList?[index];
-                    // return Text("Hello");
+
+                    if (index == 0) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15.sp,
+                            thickness: 1,
+                          ),
+                          Row(
+                            children: [
+                              const SpacerHorizontal(width: 5),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      maxLines: 1,
+                                      "Share Holder Name",
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.greyText,
+                                      ),
+                                    ),
+                                    const SpacerVertical(height: 5),
+                                    Text(
+                                      maxLines: 1,
+                                      "Reporting Date",
+                                      style: stylePTSansRegular(
+                                        fontSize: 12,
+                                        color: ThemeColors.greyText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // const SpacerHorizontal(width: 24),
+                              const SpacerHorizontal(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "Shared Held",
+                                    textAlign: TextAlign.end,
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                  AutoSizeText(
+                                    maxLines: 1,
+                                    "Change in Shares",
+                                    textAlign: TextAlign.end,
+                                    style: stylePTSansRegular(
+                                      fontSize: 12,
+                                      color: ThemeColors.greyText,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SpacerHorizontal(width: 10),
+                            ],
+                          ),
+                          Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15.sp,
+                            thickness: 1,
+                          ),
+                          SdOwnershipItem(
+                            data: data,
+                            isOpen: openIndexItem == index,
+                            onTap: () => changeOpenIndexItem(index),
+                          )
+                        ],
+                      );
+                    }
+
                     return SdOwnershipItem(
                       data: data,
                       isOpen: openIndexItem == index,
-                      // index: index,
                       onTap: () => changeOpenIndexItem(index),
                     );
                   },
