@@ -7,7 +7,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 
