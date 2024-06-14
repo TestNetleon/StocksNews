@@ -7,7 +7,9 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/stocks_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class HomeTopLoser extends StatefulWidget {
   const HomeTopLoser({super.key});
@@ -38,29 +40,40 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
         smallHeight: true,
       );
     } //
-    return BaseUiContainer(
-      hasData: (provider.homeTopLosersRes != null &&
-              provider.homeTopLosersRes?.losers?.isNotEmpty == true) &&
-          !provider.isLoadingLosers &&
-          provider.statusLosers != Status.ideal,
-      isLoading: provider.isLoadingLosers,
-      showPreparingText: true,
-      child: ListView.separated(
-        itemCount: provider.homeTopLosersRes?.losers?.length ?? 0,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        padding: EdgeInsets.only(top: 12.sp),
-        itemBuilder: (context, index) {
-          Top top = provider.homeTopLosersRes!.losers![index];
-          return StocksItem(top: top, gainer: false);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(
-            color: ThemeColors.greyBorder,
-            height: 20.sp,
-          );
-        },
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SpacerVertical(
+          height: 10.sp,
+        ),
+        CustomReadMoreText(
+          text: provider.homeTrendingRes?.text?.losers ?? "",
+        ),
+        BaseUiContainer(
+          hasData: (provider.homeTopLosersRes != null &&
+                  provider.homeTopLosersRes?.losers?.isNotEmpty == true) &&
+              !provider.isLoadingLosers &&
+              provider.statusLosers != Status.ideal,
+          isLoading: provider.isLoadingLosers,
+          showPreparingText: true,
+          child: ListView.separated(
+            itemCount: provider.homeTopLosersRes?.losers?.length ?? 0,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 12.sp),
+            itemBuilder: (context, index) {
+              Top top = provider.homeTopLosersRes!.losers![index];
+              return StocksItem(top: top, gainer: false);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 20.sp,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

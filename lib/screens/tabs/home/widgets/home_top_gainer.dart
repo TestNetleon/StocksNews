@@ -7,7 +7,9 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/stocks_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class HomeTopGainer extends StatefulWidget {
   const HomeTopGainer({super.key});
@@ -46,21 +48,30 @@ class _HomeTopGainerState extends State<HomeTopGainer> {
           provider.statusGainers != Status.ideal,
       isLoading: provider.isLoadingGainers,
       showPreparingText: true,
-      child: ListView.separated(
-        itemCount: provider.homeTopGainerRes?.gainers?.length ?? 0,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        padding: EdgeInsets.only(top: 12.sp),
-        itemBuilder: (context, index) {
-          Top top = provider.homeTopGainerRes!.gainers![index];
-          return StocksItem(top: top, gainer: true);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(
-            color: ThemeColors.greyBorder,
-            height: 20.sp,
-          );
-        },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SpacerVertical(height: 10.sp),
+          CustomReadMoreText(
+            text: provider.homeTrendingRes?.text?.gainers ?? "",
+          ),
+          ListView.separated(
+            itemCount: provider.homeTopGainerRes?.gainers?.length ?? 0,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 12.sp),
+            itemBuilder: (context, index) {
+              Top top = provider.homeTopGainerRes!.gainers![index];
+              return StocksItem(top: top, gainer: true);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return Divider(
+                color: ThemeColors.greyBorder,
+                height: 20.sp,
+              );
+            },
+          ),
+        ],
       ),
     );
   }
