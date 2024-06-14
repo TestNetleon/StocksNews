@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../faqs_res.dart';
+import 'earnings.dart';
 
 SdAnalystForecastRes sdAnalystForecastResFromJson(String str) =>
     SdAnalystForecastRes.fromJson(json.decode(str));
@@ -11,10 +12,12 @@ String sdAnalystForecastResToJson(SdAnalystForecastRes data) =>
 class SdAnalystForecastRes {
   final List<AnalystForecast>? analystForecasts;
   final List<FaQsRes>? faq;
+  final List<SdTopRes>? top;
 
   SdAnalystForecastRes({
     this.analystForecasts,
     this.faq,
+    this.top,
   });
 
   factory SdAnalystForecastRes.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +29,10 @@ class SdAnalystForecastRes {
         faq: json["faq"] == null
             ? []
             : List<FaQsRes>.from(json["faq"]!.map((x) => FaQsRes.fromJson(x))),
+        top: json["top"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["top"]!.map((x) => SdTopRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +41,8 @@ class SdAnalystForecastRes {
             : List<dynamic>.from(analystForecasts!.map((x) => x.toJson())),
         "faq":
             faq == null ? [] : List<dynamic>.from(faq!.map((x) => x.toJson())),
+        "top":
+            top == null ? [] : List<dynamic>.from(top!.map((x) => x.toJson())),
       };
 }
 

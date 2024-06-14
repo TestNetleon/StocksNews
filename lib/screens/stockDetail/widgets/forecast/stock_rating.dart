@@ -166,7 +166,7 @@ class SdStocksRating extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Details", style: stylePTSansRegular(fontSize: 14)),
+                    Text("Details", style: stylePTSansBold(fontSize: 14)),
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
