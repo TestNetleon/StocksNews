@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_sectors_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -50,13 +51,16 @@ class TrendingSectors extends StatelessWidget {
         Visibility(
           visible: provider.mostBullish?.text?.sectors != '',
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.sp),
-            child: Text(
-              provider.mostBullish?.text?.sectors ?? "",
-              style:
-                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
-            ),
-          ),
+              padding: EdgeInsets.only(bottom: 20.sp),
+              child: CustomReadMoreText(
+                text: provider.mostBullish?.text?.sectors ?? "",
+              )
+              // Text(
+              //   provider.mostBullish?.text?.sectors ?? "",
+              //   style:
+              //       stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+              // ),
+              ),
         ),
         ListView.separated(
           itemCount: data?.sectors?.length ?? 0,

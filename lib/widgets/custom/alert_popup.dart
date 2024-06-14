@@ -16,6 +16,7 @@ void popUpAlert({
   bool canPop = true,
   bool showButton = true,
   bool showOk = true,
+  TextAlign? messageTextAlign = TextAlign.center,
 }) {
   showDialog(
     context: navigatorKey.currentContext!,
@@ -31,6 +32,7 @@ void popUpAlert({
         canPop: canPop,
         showButton: showButton,
         showOk: showOk,
+        messageTextAlign: messageTextAlign,
       );
     },
   );
@@ -39,6 +41,7 @@ void popUpAlert({
 class AlertPopupCustom extends StatelessWidget {
   final String message, title;
   final String? icon;
+  final TextAlign? messageTextAlign;
 
   final String? okText;
   final Function()? onTap;
@@ -46,18 +49,18 @@ class AlertPopupCustom extends StatelessWidget {
   final bool showButton;
   final bool canPop;
   final bool showOk;
-  const AlertPopupCustom({
-    super.key,
-    required this.message,
-    required this.title,
-    this.showOk = true,
-    this.icon,
-    this.showButton = true,
-    this.cancel = false,
-    this.onTap,
-    this.okText,
-    this.canPop = true,
-  });
+  const AlertPopupCustom(
+      {super.key,
+      required this.message,
+      required this.title,
+      this.showOk = true,
+      this.icon,
+      this.showButton = true,
+      this.cancel = false,
+      this.onTap,
+      this.okText,
+      this.canPop = true,
+      this.messageTextAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -67,96 +70,98 @@ class AlertPopupCustom extends StatelessWidget {
         backgroundColor: ThemeColors.transparent,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp)),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 5.sp),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: ThemeColors.white,
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Visibility(
-                        visible: icon != null,
-                        child: Image.asset(
-                          icon ?? "",
-                          height: 80.sp,
-                          width: 80.sp,
+        child: SingleChildScrollView(
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                padding: EdgeInsets.only(bottom: 5.sp),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeColors.white,
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Visibility(
+                          visible: icon != null,
+                          child: Image.asset(
+                            icon ?? "",
+                            height: 80.sp,
+                            width: 80.sp,
+                          ),
                         ),
-                      ),
-                      // const SpacerVertical(height: 5),
-                      Text(
-                        title,
-                        style: stylePTSansBold(
-                          color: ThemeColors.background,
-                          fontSize: 20,
+                        // const SpacerVertical(height: 5),
+                        Text(
+                          title,
+                          style: stylePTSansBold(
+                            color: ThemeColors.background,
+                            fontSize: 20,
+                          ),
                         ),
-                      ),
-                      const SpacerVertical(height: 8),
-                      Text(
-                        message,
-                        textAlign: TextAlign.center,
-                        style:
-                            stylePTSansRegular(color: ThemeColors.background),
-                      ),
-                      const SpacerVertical(height: 5),
-                      Visibility(
-                        visible: showButton,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Visibility(
-                              visible: cancel,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  "Cancel",
-                                  style: stylePTSansBold(
-                                      color: ThemeColors.background),
+                        const SpacerVertical(height: 8),
+                        Text(
+                          message,
+                          textAlign: messageTextAlign ?? TextAlign.center,
+                          style: stylePTSansRegular(
+                              color: ThemeColors.background, height: 1.4),
+                        ),
+                        const SpacerVertical(height: 5),
+                        Visibility(
+                          visible: showButton,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Visibility(
+                                visible: cancel,
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    "Cancel",
+                                    style: stylePTSansBold(
+                                        color: ThemeColors.background),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Visibility(
-                              visible: showOk,
-                              child: TextButton(
-                                onPressed: onTap ??
-                                    () {
-                                      Navigator.of(context).pop();
-                                    },
-                                child: Text(
-                                  okText ?? "OK",
-                                  style: stylePTSansBold(
-                                      color: ThemeColors.background),
+                              Visibility(
+                                visible: showOk,
+                                child: TextButton(
+                                  onPressed: onTap ??
+                                      () {
+                                        Navigator.of(context).pop();
+                                      },
+                                  child: Text(
+                                    okText ?? "OK",
+                                    style: stylePTSansBold(
+                                        color: ThemeColors.background),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              width: ScreenUtil().screenWidth / 1.35,
-              height: 5.sp,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10.sp),
-                    bottomRight: Radius.circular(10.sp)),
-                color: ThemeColors.accent,
+              Container(
+                width: ScreenUtil().screenWidth / 1.35,
+                height: 5.sp,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.sp),
+                      bottomRight: Radius.circular(10.sp)),
+                  color: ThemeColors.accent,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

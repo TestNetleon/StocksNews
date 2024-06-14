@@ -8,6 +8,7 @@ import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -34,15 +35,18 @@ class MostBullish extends StatelessWidget {
         Visibility(
           visible: data?.text?.mostBullish != '',
           child: Padding(
-            padding: EdgeInsets.only(bottom: isPhone ? 20.sp : 5.sp),
-            child: Text(
-              data?.text?.mostBullish ?? "",
-              style: stylePTSansRegular(
-                fontSize: 13,
-                color: ThemeColors.greyText,
+              padding: EdgeInsets.only(bottom: isPhone ? 20.sp : 5.sp),
+              child: CustomReadMoreText(
+                text: data?.text?.mostBullish ?? "",
+              )
+              //  Text(
+              //   data?.text?.mostBullish ?? "",
+              //   style: stylePTSansRegular(
+              //     fontSize: 13,
+              //     color: ThemeColors.greyText,
+              //   ),
+              // ),
               ),
-            ),
-          ),
         ),
         ListView.separated(
           itemCount: data?.mostBullish?.length ?? 0,

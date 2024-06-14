@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:readmore/readmore.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -107,27 +105,30 @@ class CompanyBrief extends StatelessWidget {
               child: StateItem(label: "ISIN", value: res?.companyInfo?.isin)),
           const SpacerVertical(height: 5),
           Visibility(
-            visible: res?.companyInfo?.description != null,
-            // child: Text(
-            //   res?.companyInfo?.description ?? "",
-            //   style: stylePTSansRegular(
-            //     fontSize: 14,
-            //     height: 1.3,
-            //     color: ThemeColors.white,
-            //   ),
-            // ),
-            child: ReadMoreText(
-              textAlign: TextAlign.start,
-              res?.companyInfo?.description ?? "",
-              trimLines: 5,
-              colorClickableText: ThemeColors.accent,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: 'Read more',
-              trimExpandedText: 'Read less',
-              moreStyle: stylePTSansRegular(color: ThemeColors.accent),
-              style: stylePTSansRegular(height: 1.4),
-            ),
-          ),
+              visible: res?.companyInfo?.description != null,
+              // child: Text(
+              //   res?.companyInfo?.description ?? "",
+              //   style: stylePTSansRegular(
+              //     fontSize: 14,
+              //     height: 1.3,
+              //     color: ThemeColors.white,
+              //   ),
+              // ),
+              child: CustomReadMoreText(
+                text: res?.companyInfo?.description ?? "",
+              )
+              //  ReadMoreText(
+              //   textAlign: TextAlign.start,
+              //   res?.companyInfo?.description ?? "",
+              //   trimLines: 5,
+              //   colorClickableText: ThemeColors.accent,
+              //   trimMode: TrimMode.Line,
+              //   trimCollapsedText: 'Read more',
+              //   trimExpandedText: 'Read less',
+              //   moreStyle: stylePTSansRegular(color: ThemeColors.accent),
+              //   style: stylePTSansRegular(height: 1.4),
+              // ),
+              ),
         ],
       ),
     );

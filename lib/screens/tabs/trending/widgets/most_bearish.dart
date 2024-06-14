@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -52,13 +53,16 @@ class MostBearish extends StatelessWidget {
         Visibility(
           visible: provider.mostBullish?.text?.mostBullish != '',
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.sp),
-            child: Text(
-              provider.mostBullish?.text?.mostBullish ?? "",
-              style:
-                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
-            ),
-          ),
+              padding: EdgeInsets.only(bottom: 20.sp),
+              child: CustomReadMoreText(
+                text: provider.mostBullish?.text?.mostBullish ?? "",
+              )
+              // Text(
+              //   provider.mostBullish?.text?.mostBullish ?? "",
+              //   style:
+              //       stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+              // ),
+              ),
         ),
         ListView.separated(
           itemCount: data?.mostBearish?.length ?? 0,

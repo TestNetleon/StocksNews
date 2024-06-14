@@ -64,7 +64,9 @@ class MarketDataTitle extends StatelessWidget {
                         curve: Curves.easeInOut,
                         child: HtmlWidget(subTitle ?? "",
                             customWidgetBuilder: (element) =>
-                                CustomReadMoreText(text: element.text)
+                                CustomReadMoreText(
+                                  text: element.text,
+                                )
                             // ReadMoreText(
                             //   textAlign: TextAlign.start,
                             //   element.text,

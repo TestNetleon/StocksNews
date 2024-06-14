@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/trending_stories_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -42,13 +42,16 @@ class TrendingStories extends StatelessWidget {
         Visibility(
           visible: provider.mostBullish?.text?.generalNews != '',
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.sp),
-            child: Text(
-              provider.mostBullish?.text?.generalNews ?? "",
-              style:
-                  stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
-            ),
-          ),
+              padding: EdgeInsets.only(bottom: 20.sp),
+              child: CustomReadMoreText(
+                text: provider.mostBullish?.text?.generalNews ?? "",
+              )
+              //  Text(
+              //   provider.mostBullish?.text?.generalNews ?? "",
+              //   style:
+              //       stylePTSansRegular(fontSize: 13, color: ThemeColors.greyText),
+              // ),
+              ),
         ),
 
         ListView.separated(

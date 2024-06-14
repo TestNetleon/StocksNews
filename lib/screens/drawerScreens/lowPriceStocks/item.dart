@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 
-import 'package:readmore/readmore.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/dialogs.dart';
 import '../../../utils/theme.dart';
@@ -139,17 +138,20 @@ class LowPriceStocksItem extends StatelessWidget {
               color: ThemeColors.greyBorder,
               height: 15,
             ),
-            ReadMoreText(
-              textAlign: TextAlign.start,
-              data.description ?? "",
-              trimLines: 5,
-              colorClickableText: ThemeColors.accent,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: 'Read more',
-              trimExpandedText: 'Read less',
-              moreStyle: stylePTSansRegular(color: ThemeColors.accent),
-              style: stylePTSansRegular(height: 1.4),
-            ),
+            CustomReadMoreText(
+              text: data.description ?? "",
+            )
+            // ReadMoreText(
+            //   textAlign: TextAlign.start,
+            //   data.description ?? "",
+            //   trimLines: 5,
+            //   colorClickableText: ThemeColors.accent,
+            //   trimMode: TrimMode.Line,
+            //   trimCollapsedText: 'Read more',
+            //   trimExpandedText: 'Read less',
+            //   moreStyle: stylePTSansRegular(color: ThemeColors.accent),
+            //   style: stylePTSansRegular(height: 1.4),
+            // ),
           ],
         ),
       ),

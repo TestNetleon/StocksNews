@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:readmore/readmore.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 
 class DrawerScreenTitle extends StatelessWidget {
   final String? title;
@@ -36,32 +35,35 @@ class DrawerScreenTitle extends StatelessWidget {
         Visibility(
           visible: subTitle != null && subTitle != "",
           child: Container(
-            margin: EdgeInsets.only(bottom: 10.sp),
-            // child: Text(
-            //   subTitle ?? "",
-            //   style: style ??
-            //       stylePTSansRegular(fontSize: 14, color: ThemeColors.greyText),
-            // ),
-            child: ReadMoreText(
-              textAlign: TextAlign.start,
-              subTitle ?? "",
-              trimLines: 2,
-              colorClickableText: ThemeColors.accent,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: ' Read more',
-              trimExpandedText: ' Read less',
-              moreStyle: stylePTSansRegular(
-                color: ThemeColors.accent,
-                fontSize: 12,
-                height: 1.0,
+              margin: EdgeInsets.only(bottom: 10.sp),
+              // child: Text(
+              //   subTitle ?? "",
+              //   style: style ??
+              //       stylePTSansRegular(fontSize: 14, color: ThemeColors.greyText),
+              // ),
+              child: CustomReadMoreText(
+                text: subTitle ?? "",
+              )
+              //  ReadMoreText(
+              //   textAlign: TextAlign.start,
+              //   subTitle ?? "",
+              //   trimLines: 2,
+              //   colorClickableText: ThemeColors.accent,
+              //   trimMode: TrimMode.Line,
+              //   trimCollapsedText: ' Read more',
+              //   trimExpandedText: ' Read less',
+              //   moreStyle: stylePTSansRegular(
+              //     color: ThemeColors.accent,
+              //     fontSize: 12,
+              //     height: 1.0,
+              //   ),
+              //   style: stylePTSansRegular(
+              //     height: 1.1,
+              //     fontSize: 13,
+              //     color: ThemeColors.greyText,
+              //   ),
+              // ),
               ),
-              style: stylePTSansRegular(
-                height: 1.1,
-                fontSize: 13,
-                color: ThemeColors.greyText,
-              ),
-            ),
-          ),
         ),
       ],
     );

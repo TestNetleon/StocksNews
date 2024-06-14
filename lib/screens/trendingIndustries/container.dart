@@ -9,11 +9,11 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 
-import '../../utils/theme.dart';
 import '../../widgets/disclaimer_widget.dart';
 
 class TrendingIndustriesContainer extends StatefulWidget {
@@ -72,13 +72,16 @@ class _TrendingIndustriesContainerState
                           Visibility(
                             visible: provider.textRes?.subTitle != '',
                             child: Padding(
-                              padding: EdgeInsets.only(bottom: 20.sp),
-                              child: Text(
-                                provider.textRes?.subTitle ?? "",
-                                style: stylePTSansRegular(
-                                    fontSize: 13, color: ThemeColors.greyText),
-                              ),
-                            ),
+                                padding: EdgeInsets.only(bottom: 20.sp),
+                                child: CustomReadMoreText(
+                                  text: provider.textRes?.subTitle ?? "",
+                                )
+                                //  Text(
+                                //   provider.textRes?.subTitle ?? "",
+                                //   style: stylePTSansRegular(
+                                //       fontSize: 13, color: ThemeColors.greyText),
+                                // ),
+                                ),
                           ),
                           provider.data != null &&
                                   provider.data?.isNotEmpty == true
