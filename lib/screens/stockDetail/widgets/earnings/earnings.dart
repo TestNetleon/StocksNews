@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,11 +13,13 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class SdEarnings extends StatefulWidget {
@@ -108,17 +112,58 @@ class _SdEarningsState extends State<SdEarnings> {
                           EpsEstimate? data =
                               provider.earnings?.epsEstimates?[index];
 
-                          return EpsEstimatesItem(
-                            data: data,
-                            isOpen: provider.openIndex == index,
-                            onTap: () {
-                              provider.setOpenIndex(
-                                provider.openIndex == index ? -1 : index,
-                              );
-                              provider.setOpenIndexEarningHistory(
-                                -1,
-                              );
-                            },
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (index == 0)
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AutoSizeText(
+                                          maxLines: 1,
+                                          "Quarter",
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                        const SpacerHorizontal(width: 10),
+                                        AutoSizeText(
+                                          maxLines: 1,
+                                          "Number of Estimates",
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      color: ThemeColors.greyBorder,
+                                      height: 20.sp,
+                                      thickness: 1,
+                                    )
+                                  ],
+                                ),
+                              EpsEstimatesItem(
+                                data: data,
+                                isOpen: provider.openIndex == index,
+                                onTap: () {
+                                  provider.setOpenIndex(
+                                    provider.openIndex == index ? -1 : index,
+                                  );
+                                  provider.setOpenIndexEarningHistory(
+                                    -1,
+                                  );
+                                },
+                              ),
+                            ],
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
@@ -141,7 +186,7 @@ class _SdEarningsState extends State<SdEarnings> {
                     children: [
                       ScreenTitle(
                         title:
-                            "${provider.tabRes?.keyStats?.name} Analyst EPS Estimates",
+                            "${provider.tabRes?.keyStats?.name} Earnings History by Quarter",
                       ),
                       ListView.separated(
                           padding: const EdgeInsets.only(top: 0, bottom: 20),
@@ -151,19 +196,61 @@ class _SdEarningsState extends State<SdEarnings> {
                             EarningHistory? data =
                                 provider.earnings?.earningHistory?[index];
 
-                            return EarningHistoryItem(
-                              data: data,
-                              isOpen: provider.openIndexEarningHistory == index,
-                              onTap: () {
-                                provider.setOpenIndexEarningHistory(
-                                  provider.openIndexEarningHistory == index
-                                      ? -1
-                                      : index,
-                                );
-                                provider.setOpenIndex(
-                                  -1,
-                                );
-                              },
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (index == 0)
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Quarter",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                          const SpacerHorizontal(width: 10),
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Reported EPS",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: ThemeColors.greyBorder,
+                                        height: 20.sp,
+                                        thickness: 1,
+                                      )
+                                    ],
+                                  ),
+                                EarningHistoryItem(
+                                  data: data,
+                                  isOpen:
+                                      provider.openIndexEarningHistory == index,
+                                  onTap: () {
+                                    provider.setOpenIndexEarningHistory(
+                                      provider.openIndexEarningHistory == index
+                                          ? -1
+                                          : index,
+                                    );
+                                    provider.setOpenIndex(
+                                      -1,
+                                    );
+                                  },
+                                ),
+                              ],
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
