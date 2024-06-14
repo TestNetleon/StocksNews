@@ -119,9 +119,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Visibility(
-                                visible:
-                                    provider.homeTrendingRes?.text?.trending !=
-                                        '',
+                                visible: false,
                                 child: Padding(
                                   padding: EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
                                   child: Text(
@@ -141,9 +139,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Visibility(
-                                    visible: provider
-                                            .homeTrendingRes?.text?.gainers !=
-                                        '',
+                                    visible: false,
                                     child: Padding(
                                       padding:
                                           EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
@@ -164,9 +160,7 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Visibility(
-                                    visible: provider
-                                            .homeTrendingRes?.text?.losers !=
-                                        '',
+                                    visible: false,
                                     child: Padding(
                                       padding:
                                           EdgeInsets.fromLTRB(0, 10.sp, 0, 0),
