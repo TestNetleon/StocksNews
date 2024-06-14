@@ -5,6 +5,7 @@ import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compititor.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_insider_trade.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/keystats/key_states.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/mergers/mergers.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/news/news.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.dart';
@@ -103,7 +104,7 @@ class _StockDetailState extends State<StockDetail> {
                   SdCharts(symbol: widget.symbol),
                   SdFinancial(symbol: widget.symbol),
                   SdSecFilings(symbol: widget.symbol),
-                  Container(),
+                  SdMergers(symbol: widget.symbol),
                 ],
               ),
             ),

@@ -12,6 +12,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/mergers_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_insider_res.dart';
@@ -1394,6 +1395,60 @@ class StockDetailProviderNew extends ChangeNotifier {
       } else {
         setStatusFinancial(Status.loaded);
       }
+    }
+  }
+
+  //Mergers DATA
+  String? _errorMergers;
+  String? get errorMergers => _errorMergers ?? Const.errSomethingWrong;
+
+  Status _statusMergers = Status.ideal;
+  Status get statusMergers => _statusMergers;
+
+  bool get isLoadingMergers => _statusMergers == Status.loading;
+
+  Extra? _extraMergers;
+  Extra? get extraMergers => _extraMergers;
+
+  SdMergersRes? _sdMergersRes;
+  SdMergersRes? get sdMergersRes => _sdMergersRes;
+
+  void setStatusMergers(status) {
+    _statusMergers = status;
+    notifyListeners();
+  }
+
+  Future getMergersData({
+    String? symbol,
+  }) async {
+    setStatusMergers(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailMergers,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _sdMergersRes = sdMergersResFromJson(jsonEncode(response.data));
+        _extraMergers =
+            (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _sdMergersRes = null;
+        _errorMergers = response.message;
+      }
+      setStatusMergers(Status.loaded);
+    } catch (e) {
+      _sdMergersRes = null;
+      Utils().showLog(e.toString());
+      _errorMergers = Const.errSomethingWrong;
+      setStatusMergers(Status.loaded);
     }
   }
 }
