@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
@@ -73,6 +75,11 @@ class _SdEarningsState extends State<SdEarnings> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SdCommonHeading(),
+                const Divider(
+                  color: ThemeColors.white,
+                  thickness: 2,
+                  height: 20,
+                ),
                 CustomGridView(
                   length: provider.earnings?.top?.length ?? 0,
                   paddingVerticle: 8,
@@ -81,103 +88,127 @@ class _SdEarningsState extends State<SdEarnings> {
                     return SdTopCard(top: top);
                   },
                 ),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
-                const ScreenTitle(
-                  title: "Apple Inc. Analyst EPS Estimates",
-                ),
-                ListView.separated(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      EpsEstimate? data =
-                          provider.earnings?.epsEstimates?[index];
+                const SpacerVertical(height: 20),
+                Visibility(
+                  visible:
+                      provider.earnings?.epsEstimates?.isNotEmpty == true &&
+                          provider.earnings?.epsEstimates != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title:
+                            "${provider.tabRes?.keyStats?.name} Analyst EPS Estimates",
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.only(top: 0, bottom: 20),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          EpsEstimate? data =
+                              provider.earnings?.epsEstimates?[index];
 
-                      return EpsEstimatesItem(
-                        data: data,
-                        isOpen: provider.openIndex == index,
-                        onTap: () {
-                          provider.setOpenIndex(
-                            provider.openIndex == index ? -1 : index,
-                          );
-                          provider.setOpenIndexEarningHistory(
-                            -1,
+                          return EpsEstimatesItem(
+                            data: data,
+                            isOpen: provider.openIndex == index,
+                            onTap: () {
+                              provider.setOpenIndex(
+                                provider.openIndex == index ? -1 : index,
+                              );
+                              provider.setOpenIndexEarningHistory(
+                                -1,
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 20.sp,
-                      );
-                    },
-                    itemCount: provider.earnings?.epsEstimates?.length ?? 0),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
-                const ScreenTitle(
-                  title: "Apple Inc. Earnings History by Quarter",
-                ),
-                ListView.separated(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      EarningHistory? data =
-                          provider.earnings?.earningHistory?[index];
-
-                      return EarningHistoryItem(
-                        data: data,
-                        isOpen: provider.openIndexEarningHistory == index,
-                        onTap: () {
-                          provider.setOpenIndexEarningHistory(
-                            provider.openIndexEarningHistory == index
-                                ? -1
-                                : index,
-                          );
-                          provider.setOpenIndex(
-                            -1,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 20.sp,
                           );
                         },
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 20.sp,
-                      );
-                    },
-                    itemCount: provider.earnings?.earningHistory?.length ?? 0),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
+                        itemCount: provider.earnings?.epsEstimates?.length ?? 0,
+                      ),
+                    ],
+                  ),
                 ),
-                ScreenTitle(
-                  title: "${provider.tabRes?.keyStats?.name} Earnings - FAQs",
-                ),
-                ListView.separated(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      FaQsRes? data = provider.earnings?.faq?[index];
+                Visibility(
+                  visible:
+                      provider.earnings?.earningHistory?.isNotEmpty == true &&
+                          provider.earnings?.earningHistory != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title:
+                            "${provider.tabRes?.keyStats?.name} Analyst EPS Estimates",
+                      ),
+                      ListView.separated(
+                          padding: const EdgeInsets.only(top: 0, bottom: 20),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            EarningHistory? data =
+                                provider.earnings?.earningHistory?[index];
 
-                      return SdFaqCard(
-                        data: data,
-                        index: index,
-                        openIndex: openIndex,
-                        onCardTapped: changeOpenIndex,
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 10);
-                    },
-                    itemCount: provider.earnings?.faq?.length ?? 0)
+                            return EarningHistoryItem(
+                              data: data,
+                              isOpen: provider.openIndexEarningHistory == index,
+                              onTap: () {
+                                provider.setOpenIndexEarningHistory(
+                                  provider.openIndexEarningHistory == index
+                                      ? -1
+                                      : index,
+                                );
+                                provider.setOpenIndex(
+                                  -1,
+                                );
+                              },
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Divider(
+                              color: ThemeColors.greyBorder,
+                              height: 20.sp,
+                            );
+                          },
+                          itemCount:
+                              provider.earnings?.earningHistory?.length ?? 0),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: provider.earnings?.faq?.isNotEmpty == true &&
+                      provider.earnings?.faq != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title:
+                            "${provider.tabRes?.keyStats?.name} Earnings - FAQs",
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.only(top: 0, bottom: 20),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          FaQsRes? data = provider.earnings?.faq?[index];
+
+                          return SdFaqCard(
+                            data: data,
+                            index: index,
+                            openIndex: openIndex,
+                            onCardTapped: changeOpenIndex,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SpacerVertical(height: 10);
+                        },
+                        itemCount: provider.earnings?.faq?.length ?? 0,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

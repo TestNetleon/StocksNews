@@ -6,7 +6,6 @@ import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
@@ -65,12 +64,12 @@ class _SdSocialActivitiesState extends State<SdSocialActivities> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SdCommonHeading(),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
+                // const Divider(
+                //   color: ThemeColors.greyBorder,
+                //   height: 20,
+                // ),
                 ScreenTitle(
-                  title: "${provider.socialRes?.mentionText} - FAQs",
+                  subTitle: "${provider.socialRes?.mentionText}",
                 ),
                 SizedBox(
                   height: 130.sp,

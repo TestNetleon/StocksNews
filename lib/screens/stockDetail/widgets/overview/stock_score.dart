@@ -21,9 +21,11 @@ class SdStockScore extends StatelessWidget {
           title: 'Stock Score/grades',
           subTitle: provider.overviewRes?.stockScore?.text,
         ),
-        StateItem(label: "Altman Z Score ", value: score?.altmanZScore),
-        StateItem(label: "Piotroski Score", value: score?.piotroskiScore),
-        StateItem(label: "Grade", value: score?.mostRepeatedGrade),
+        StateItem(
+            label: "Altman Z Score ", value: score?.altmanZScore ?? "N/A"),
+        StateItem(
+            label: "Piotroski Score", value: score?.piotroskiScore ?? "N/A"),
+        StateItem(label: "Grade", value: score?.mostRepeatedGrade ?? "N/A"),
         const SpacerVertical(height: 20),
       ],
     );

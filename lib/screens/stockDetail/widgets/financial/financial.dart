@@ -8,7 +8,6 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../../modals/stockDetailRes/financial.dart';
 import 'item.dart';
 import 'tab.dart';
 
@@ -34,7 +33,10 @@ class _SdFinancialState extends State<SdFinancial> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-      if (provider.sdFinancialRes == null) {
+      // if (provider.sdFinancialRes == null) {
+      //   _callApi();
+      // }
+      if (provider.sdFinancialArray == null) {
         _callApi();
       }
     });
@@ -51,7 +53,8 @@ class _SdFinancialState extends State<SdFinancial> {
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     return BaseUiContainer(
-      hasData: !provider.isLoadingFinancial && provider.sdFinancialRes != null,
+      hasData:
+          !provider.isLoadingFinancial && provider.sdFinancialArray != null,
       isLoading: provider.isLoadingFinancial,
       showPreparingText: true,
       error: provider.errorFinancial,
@@ -68,9 +71,11 @@ class _SdFinancialState extends State<SdFinancial> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
+                  thickness: 2,
                   height: 20,
                 ),
+                const SpacerVertical(height: 15),
                 Visibility(
                   visible: provider.extraFinancial?.type != null,
                   child: SdFinancialTabs(
@@ -94,8 +99,11 @@ class _SdFinancialState extends State<SdFinancial> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      FinanceStatement? data =
-                          provider.sdFinancialRes?.financeStatement?[index];
+                      // FinanceStatement? data =
+                      //     provider.sdFinancsialRes?.financeStatement?[index];
+                      Map<String, dynamic>? data =
+                          provider.sdFinancialArray?[index];
+
                       return Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
@@ -111,8 +119,7 @@ class _SdFinancialState extends State<SdFinancial> {
                     separatorBuilder: (context, index) {
                       return const SpacerVertical(height: 15);
                     },
-                    itemCount:
-                        provider.sdFinancialRes?.financeStatement?.length ?? 0),
+                    itemCount: provider.sdFinancialArray?.length ?? 0),
               ],
             ),
           ),

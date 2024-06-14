@@ -15,19 +15,22 @@ class SdOverviewLists extends StatelessWidget {
     if (dataOver?.isEmpty == true || dataOver == null) {
       return const SizedBox();
     }
-    return Column(
-      children: [
-        ScreenTitle(title: title),
-        CustomGridView(
-            length: dataOver?.length ?? 0,
-            getChild: (index) {
-              SdTopRes? data = dataOver?[index];
-              return StateItemNEW(
-                label: data?.key ?? "",
-                value: data?.value ?? "",
-              );
-            }),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 0, bottom: 20),
+      child: Column(
+        children: [
+          ScreenTitle(title: title),
+          CustomGridView(
+              length: dataOver?.length ?? 0,
+              getChild: (index) {
+                SdTopRes? data = dataOver?[index];
+                return StateItemNEW(
+                  label: data?.key ?? "",
+                  value: data?.value ?? "",
+                );
+              }),
+        ],
+      ),
     );
   }
 }

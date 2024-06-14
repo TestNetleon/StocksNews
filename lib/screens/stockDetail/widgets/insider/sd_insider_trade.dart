@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_congressional_item.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_insider_item.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -83,7 +82,8 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
+                  thickness: 2,
                   height: 20,
                 ),
                 CustomGridView(
@@ -94,153 +94,87 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     return SdTopCard(top: top);
                   },
                 ),
-                const SpacerVertical(height: 10),
-                ScreenTitle(
-                  title: "${provider.sdInsiderTradeRes?.title?.insiderTrade}",
+                SpacerVertical(height: 20),
+                Visibility(
+                  visible: provider.sdInsiderTradeRes?.congressionalData
+                              ?.isNotEmpty ==
+                          true &&
+                      provider.sdInsiderTradeRes?.congressionalData != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title:
+                            "${provider.sdInsiderTradeRes?.title?.congressTrade}",
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.only(top: 0, bottom: 20),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          CongressionalDatum? data = provider
+                              .sdInsiderTradeRes?.congressionalData?[index];
+                          if (data == null) {
+                            return const SizedBox();
+                          }
+                          return SdCongressionalItem(
+                            isOpen: provider.openIndex == index,
+                            onTap: () {
+                              provider.setOpenIndex(
+                                provider.openIndex == index ? -1 : index,
+                              );
+                              provider.setOpenIndexInsider(
+                                -1,
+                              );
+                            },
+                            data: data,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 20.sp,
+                          );
+                        },
+                        itemCount: provider
+                                .sdInsiderTradeRes?.congressionalData?.length ??
+                            0,
+                      ),
+                    ],
+                  ),
                 ),
-                ListView.separated(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    InsiderDatum? data =
-                        provider.sdInsiderTradeRes?.insiderData?[index];
-                    if (data == null) {
-                      return const SizedBox();
-                    }
-                    return SdInsiderItem(
-                      isOpen: provider.openIndexInsider == index,
-                      onTap: () {
-                        provider.setOpenIndexInsider(
-                          provider.openIndexInsider == index ? -1 : index,
-                        );
-                        provider.setOpenIndex(
-                          -1,
-                        );
-                      },
-                      data: data,
-                    );
+                Visibility(
+                  visible: provider.sdInsiderTradeRes?.faq.isNotEmpty == true &&
+                      provider.sdInsiderTradeRes?.faq != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title: "${provider.sdInsiderTradeRes?.title?.faq}",
+                      ),
+                      ListView.separated(
+                          padding: const EdgeInsets.only(top: 0, bottom: 20),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            FaQsRes? data =
+                                provider.sdInsiderTradeRes?.faq[index];
 
-                    // if (index == 0) {
-                    //   return SdInsiderTradeItemSeparated(
-                    //     news: data,
-                    //   );
-                    // }
-                    // return SdInsiderTradeItem(
-                    //   news: data,
-                    // );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 20.sp,
-                    );
-                  },
-                  itemCount:
-                      provider.sdInsiderTradeRes?.insiderData?.length ?? 0,
+                            return SdFaqCard(
+                              data: data,
+                              index: index,
+                              openIndex: openIndex,
+                              onCardTapped: changeOpenIndex,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SpacerVertical(height: 10);
+                          },
+                          itemCount:
+                              provider.sdInsiderTradeRes?.faq.length ?? 0),
+                    ],
+                  ),
                 ),
-                const SpacerVertical(height: 10),
-                ScreenTitle(
-                  title: "${provider.sdInsiderTradeRes?.title?.congressTrade}",
-                ),
-                ListView.separated(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    CongressionalDatum? data =
-                        provider.sdInsiderTradeRes?.congressionalData?[index];
-                    if (data == null) {
-                      return const SizedBox();
-                    }
-                    return SdCongressionalItem(
-                      isOpen: provider.openIndex == index,
-                      onTap: () {
-                        provider.setOpenIndex(
-                          provider.openIndex == index ? -1 : index,
-                        );
-                        provider.setOpenIndexInsider(
-                          -1,
-                        );
-                      },
-                      data: data,
-                    );
-
-                    // if (index == 0) {
-                    //   return SdInsiderTradeItemSeparated(
-                    //     news: data,
-                    //   );
-                    // }
-                    // return SdInsiderTradeItem(
-                    //   news: data,
-                    // );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 20.sp,
-                    );
-                  },
-                  itemCount:
-                      provider.sdInsiderTradeRes?.congressionalData?.length ??
-                          0,
-                ),
-                const SpacerVertical(height: 10),
-                ScreenTitle(
-                  title: "${provider.sdInsiderTradeRes?.title?.faq}",
-                ),
-                ListView.separated(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      FaQsRes? data = provider.sdInsiderTradeRes?.faq[index];
-
-                      return SdFaqCard(
-                        data: data,
-                        index: index,
-                        openIndex: openIndex,
-                        onCardTapped: changeOpenIndex,
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 10);
-                    },
-                    itemCount: provider.sdInsiderTradeRes?.faq.length ?? 0)
-                // GridView.builder(
-                //   padding: EdgeInsets.zero,
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //     crossAxisCount: 2,
-                //     crossAxisSpacing: 10.0,
-                //     mainAxisSpacing: 10.0,
-                //   ),
-                //   itemBuilder: (context, index) {
-                //     return Container(
-                //       color: ThemeColors.gradientLight,
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.center,
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: [
-                //           Text(
-                //             textAlign: TextAlign.center,
-                //             "${provider.sdInsiderTradeRes?.top[index].key}",
-                //             style: stylePTSansRegular(fontSize: 12),
-                //           ),
-                //           Text(
-                //             textAlign: TextAlign.center,
-                //             "${provider.sdInsiderTradeRes?.top[index].value}",
-                //             style: stylePTSansRegular(fontSize: 20),
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                //   itemCount: provider.sdInsiderTradeRes?.top.length ?? 0,
-                // ),
-
-                ,
                 if (provider.extra?.disclaimer != null)
                   DisclaimerWidget(
                     data: provider.extra!.disclaimer!,

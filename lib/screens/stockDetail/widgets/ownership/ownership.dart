@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
@@ -84,7 +86,8 @@ class _SdOwnershipState extends State<SdOwnership> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
+                  thickness: 2,
                   height: 20,
                 ),
                 CustomGridView(
@@ -95,139 +98,149 @@ class _SdOwnershipState extends State<SdOwnership> {
                     return SdTopCard(top: top);
                   },
                 ),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
-                const SpacerVertical(height: 10),
-                const ScreenTitle(
-                  title: "Major Shareholders & Ownership History",
-                ),
-                ListView.separated(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    OwnershipList? data =
-                        provider.ownershipRes?.ownershipList?[index];
-                    if (index == 0) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 15.sp,
-                            thickness: 1,
-                          ),
-                          Row(
-                            children: [
-                              const SpacerHorizontal(width: 5),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SpacerVertical(height: 20),
+                Visibility(
+                  visible: provider.ownershipRes?.ownershipList?.isNotEmpty ==
+                          true &&
+                      provider.ownershipRes?.ownershipList != null,
+                  child: Column(
+                    children: [
+                      const ScreenTitle(
+                        title: "Major Shareholders & Ownership History",
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.only(top: 0, bottom: 20),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          OwnershipList? data =
+                              provider.ownershipRes?.ownershipList?[index];
+                          if (index == 0) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 15.sp,
+                                  thickness: 1,
+                                ),
+                                Row(
                                   children: [
-                                    Text(
-                                      maxLines: 1,
-                                      "Share Holder Name",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
+                                    const SpacerHorizontal(width: 5),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            maxLines: 1,
+                                            "Share Holder Name",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                          const SpacerVertical(height: 5),
+                                          Text(
+                                            maxLines: 1,
+                                            "Reporting Date",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SpacerVertical(height: 5),
-                                    Text(
-                                      maxLines: 1,
-                                      "Reporting Date",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
+                                    const SpacerHorizontal(width: 10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        AutoSizeText(
+                                          maxLines: 1,
+                                          "Shares Held",
+                                          textAlign: TextAlign.end,
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                        const SpacerVertical(height: 5),
+                                        AutoSizeText(
+                                          maxLines: 1,
+                                          "Change in Shares %",
+                                          textAlign: TextAlign.end,
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    const SpacerHorizontal(width: 30),
                                   ],
                                 ),
-                              ),
-                              const SpacerHorizontal(width: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    maxLines: 1,
-                                    "Shares Held",
-                                    textAlign: TextAlign.end,
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
-                                  ),
-                                  const SpacerVertical(height: 5),
-                                  AutoSizeText(
-                                    maxLines: 1,
-                                    "Change in Shares %",
-                                    textAlign: TextAlign.end,
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SpacerHorizontal(width: 30),
-                            ],
-                          ),
-                          Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 15.sp,
-                            thickness: 1,
-                          ),
-                          SdOwnershipItem(
+                                Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 15.sp,
+                                  thickness: 1,
+                                ),
+                                SdOwnershipItem(
+                                  data: data,
+                                  isOpen: openIndexItem == index,
+                                  onTap: () => changeOpenIndexItem(index),
+                                )
+                              ],
+                            );
+                          }
+                          return SdOwnershipItem(
                             data: data,
                             isOpen: openIndexItem == index,
                             onTap: () => changeOpenIndexItem(index),
-                          )
-                        ],
-                      );
-                    }
-                    return SdOwnershipItem(
-                      data: data,
-                      isOpen: openIndexItem == index,
-                      onTap: () => changeOpenIndexItem(index),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 20,
-                    );
-                  },
-                  itemCount: provider.ownershipRes?.ownershipList?.length ?? 0,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 20,
+                          );
+                        },
+                        itemCount:
+                            provider.ownershipRes?.ownershipList?.length ?? 0,
+                      ),
+                    ],
+                  ),
                 ),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
+                Visibility(
+                  visible: provider.ownershipRes?.faq?.isNotEmpty == true &&
+                      provider.ownershipRes?.faq != null,
+                  child: Column(
+                    children: [
+                      const ScreenTitle(
+                        title: "Institutional Ownership - FAQs",
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.only(top: 0, bottom: 20),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          FaQsRes? data = provider.ownershipRes?.faq?[index];
+                          return SdFaqCard(
+                            data: data,
+                            index: index,
+                            openIndex: openIndex,
+                            onCardTapped: changeOpenIndex,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SpacerVertical(height: 10);
+                        },
+                        itemCount: provider.ownershipRes?.faq?.length ?? 0,
+                      ),
+                    ],
+                  ),
                 ),
-                const SpacerVertical(height: 10),
-                const ScreenTitle(
-                  title: "Institutional Ownership - FAQs",
-                ),
-                ListView.separated(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    FaQsRes? data = provider.ownershipRes?.faq?[index];
-                    return SdFaqCard(
-                      data: data,
-                      index: index,
-                      openIndex: openIndex,
-                      onCardTapped: changeOpenIndex,
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SpacerVertical(height: 10);
-                  },
-                  itemCount: provider.ownershipRes?.faq?.length ?? 0,
-                ),
-                const SpacerVertical(height: 10),
                 if (provider.extraOwnership?.disclaimer != null)
                   DisclaimerWidget(data: provider.extraOwnership!.disclaimer!),
                 const SpacerVertical(height: 20),

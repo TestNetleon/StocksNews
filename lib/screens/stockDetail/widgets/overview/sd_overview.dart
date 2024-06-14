@@ -88,21 +88,18 @@ class _SdOverviewState extends State<SdOverview> {
                 const SdStockScore(),
                 const SpacerVertical(height: 4),
                 const SdCompanyBrief(),
-                const SpacerVertical(height: 4),
                 SdOverviewLists(
                   dataOver: provider.overviewRes?.calendar,
                   title: "Company Calendar",
                 ),
-                const SpacerVertical(height: 4),
                 SdOverviewLists(
                   dataOver: provider.overviewRes?.priceTarget,
                   title: "Price Target and Rating",
                 ),
-                const SpacerVertical(height: 4),
                 SdOverviewLists(
                   dataOver: provider.overviewRes?.profit,
                   title: "Profitability",
-                )
+                ),
               ],
             ),
           ),

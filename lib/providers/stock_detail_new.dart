@@ -26,7 +26,6 @@ import '../api/apis.dart';
 import '../modals/analysis_res.dart';
 import '../modals/stockDetailRes/analyst_forecast.dart';
 import '../modals/stockDetailRes/earnings.dart';
-import '../modals/stockDetailRes/financial.dart';
 import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
@@ -118,7 +117,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     //Financial clear
     _errorFinancial = null;
     _extraFinancial = null;
-    _sdFinancialRes = null;
+    _sdFinancialArray = null;
     _types = null;
     _periods = null;
     typeIndex = 0;
@@ -1259,8 +1258,15 @@ class StockDetailProviderNew extends ChangeNotifier {
   Extra? _extraFinancial;
   Extra? get extraFinancial => _extraFinancial;
 
-  SdFinancialRes? _sdFinancialRes;
-  SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
+  List<dynamic>? _sdFinancialArray;
+  List<dynamic>? get sdFinancialArray => _sdFinancialArray;
+
+  // SdFinancialRes? _sdFinancialRes;
+  // SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
+
+  // Map<String, dynamic>? _sdFinancialMap;
+  // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
+
   int _openIndexInsider = -1;
   int get openIndexInsider => _openIndexInsider;
 
@@ -1347,11 +1353,27 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
 
       if (response.status) {
-        _sdFinancialRes = sdFinancialResFromJson(jsonEncode(response.data));
+        // _sdFinancialRes = sdFinancialResFromJson(jsonEncode(response.data));
+
+        // List<dynamic> financeStatementData = response.data['finance_statement'];
+
+        // for (var item in financeStatementData) {
+        //   if (item is Map<String, dynamic>) {
+        //     _sdFinancialMap?.addAll(item);
+        //   }
+        // }
+
+        List<dynamic> financeStatementData = response.data['finance_statement'];
+
+        // Save the array directly for later processing
+        _sdFinancialArray = financeStatementData;
+
         _extraFinancial =
             (response.extra is Extra ? response.extra as Extra : null);
       } else {
-        _sdFinancialRes = null;
+        // _sdFinancialRes = null;
+        _sdFinancialArray = null;
+
         _errorFinancial = response.message;
       }
 
@@ -1364,7 +1386,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         setStatusFinancial(Status.loaded);
       }
     } catch (e) {
-      _sdFinancialRes = null;
+      _sdFinancialArray = null;
       Utils().showLog(e.toString());
       _errorFinancial = Const.errSomethingWrong;
       if (tabProgress) {

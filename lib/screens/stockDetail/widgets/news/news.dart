@@ -60,12 +60,8 @@ class _SdNewsState extends State<SdNews> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SdCommonHeading(),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
                 ScreenTitle(
-                  title: "${provider.newsRes?.newsText} - FAQs",
+                  subTitle: "${provider.newsRes?.newsText}",
                 ),
                 ListView.separated(
                   padding: EdgeInsets.zero,

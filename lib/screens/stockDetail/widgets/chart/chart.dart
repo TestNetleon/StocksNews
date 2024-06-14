@@ -54,6 +54,11 @@ class _SdChartsState extends State<SdCharts> {
             child: Column(
               children: [
                 const SdCommonHeading(),
+                const Divider(
+                  color: ThemeColors.white,
+                  thickness: 2,
+                  height: 20,
+                ),
                 CustomGridView(
                   length: provider.chartRes?.top?.length ?? 0,
                   paddingVerticle: 8,
@@ -61,10 +66,6 @@ class _SdChartsState extends State<SdCharts> {
                     SdTopRes? top = provider.chartRes?.top?[index];
                     return SdTopCard(top: top);
                   },
-                ),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
                 ),
               ],
             ),

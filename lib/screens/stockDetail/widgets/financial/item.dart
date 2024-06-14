@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-import '../../../../modals/stockDetailRes/financial.dart';
-
 class SdFinancialItem extends StatelessWidget {
-  final FinanceStatement? data;
+  final Map<String, dynamic>? data;
   final int index;
   final int openIndex;
   final Function(int) onCardTapped;
-  const SdFinancialItem(
-      {super.key,
-      this.data,
-      required this.index,
-      required this.openIndex,
-      required this.onCardTapped});
+  final String? dataKey;
+  final String? dataValue;
+
+  const SdFinancialItem({
+    super.key,
+    this.data,
+    required this.index,
+    required this.openIndex,
+    required this.onCardTapped,
+    this.dataKey,
+    this.dataValue,
+  });
 
   @override
   Widget build(BuildContext context) {
     bool isOpen = openIndex == index;
+
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       onTap: () {
@@ -36,7 +40,7 @@ class SdFinancialItem extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    "${data?.period}",
+                    "${data?.entries.first.value}",
                     style: stylePTSansBold(),
                   ),
                 ),
@@ -65,7 +69,7 @@ class SdFinancialItem extends StatelessWidget {
             ),
             if (isOpen) ...[
               const SizedBox(height: 10),
-              ...data?.toMap().entries.map((entry) {
+              ...data?.entries.map((entry) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

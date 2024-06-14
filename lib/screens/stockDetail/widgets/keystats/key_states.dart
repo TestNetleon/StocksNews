@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../utils/colors.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import 'item.dart';
 
@@ -32,6 +33,11 @@ class _SdKeyStatsState extends State<SdKeyStats> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SdCommonHeading(),
+            const Divider(
+              color: ThemeColors.white,
+              thickness: 2,
+              height: 20,
+            ),
             CustomGridView(
               paddingVerticle: 8,
               paddingHorizontal: 0,

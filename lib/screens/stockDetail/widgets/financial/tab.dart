@@ -25,37 +25,31 @@ class SdFinancialTabs extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(tabs?.length ?? 0, (index) {
-                    final isSelected = index == selectedIndex;
-                    return GestureDetector(
-                      onTap: () {
-                        onChange(index);
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                            color: isSelected
-                                ? ThemeColors.accent
-                                : ThemeColors.greyBorder.withOpacity(0.4),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10))),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
-                        child: Text(
-                          tabs?[index].key ?? "N/A",
-                          style: styleGeorgiaBold(),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-                // Adding a SizedBox to force the Row to start from the left
-                SizedBox(width: MediaQuery.of(context).size.width),
-              ],
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(tabs?.length ?? 0, (index) {
+                final isSelected = index == selectedIndex;
+                return GestureDetector(
+                  onTap: () {
+                    onChange(index);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                        color: isSelected
+                            ? ThemeColors.accent
+                            : ThemeColors.greyBorder.withOpacity(0.4),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10))),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    child: Text(
+                      tabs?[index].key ?? "N/A",
+                      style: styleGeorgiaBold(),
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
           Container(

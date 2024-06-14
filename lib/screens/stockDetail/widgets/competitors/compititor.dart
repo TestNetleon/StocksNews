@@ -67,15 +67,16 @@ class _SdCompetitorState extends State<SdCompetitor> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
+                  thickness: 2,
                   height: 20,
                 ),
-                const SpacerVertical(height: 10),
+
                 // ScreenTitle(
                 //   title: "${provider.tabRes?.keyStats?.name} Earnings - FAQs",
                 // ),
                 ListView.separated(
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.only(top: 10),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {

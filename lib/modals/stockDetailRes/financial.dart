@@ -44,7 +44,7 @@ class FinanceStatement {
   final String? interestExpense;
   final String? depreciationAmortization;
   final String? ebitda;
-  final double? ebitdaRatio;
+  final num? ebitdaRatio;
   final String? operatingIncome;
   final num? operatingIncomeRatio;
   final String? totalOtherIncomeExpensesNet;

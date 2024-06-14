@@ -74,8 +74,9 @@ class _SdTechnicalState extends State<SdTechnical> {
           children: [
             const SdCommonHeading(),
             const Divider(
-              color: ThemeColors.greyBorder,
+              color: ThemeColors.white,
               height: 20,
+              thickness: 2,
             ),
             Expanded(
               child: CustomTabContainerNEW(

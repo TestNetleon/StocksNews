@@ -68,14 +68,15 @@ class _SdSecFilingsState extends State<SdSecFilings> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
+                  thickness: 2,
                   height: 20,
                 ),
                 // ScreenTitle(
                 //   title: "${provider.tabRes?.keyStats?.name} Earnings - FAQs",
                 // ),
                 ListView.separated(
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.only(top: 10, bottom: 20),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
@@ -90,7 +91,7 @@ class _SdSecFilingsState extends State<SdSecFilings> {
                     return const SpacerVertical(height: 10);
                   },
                   itemCount: provider.secRes?.secFilings.length ?? 0,
-                )
+                ),
               ],
             ),
           ),
