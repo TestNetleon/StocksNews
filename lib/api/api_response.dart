@@ -5,6 +5,8 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/modals/referral_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 
+import '../modals/stockDetailRes/earnings.dart';
+
 ApiResponse apiResponseFromJson(String str) =>
     ApiResponse.fromJson(json.decode(str));
 
@@ -49,6 +51,8 @@ class Extra {
   final List<KeyValueElement>? cap;
   final List<KeyValueElement>? sector;
   final List<KeyValueElement>? txnSize;
+  final List<SdTopRes>? period;
+  final List<SdTopRes>? type;
   final TextRes? text;
   final int? userAlert;
   final InAppNotification? inAppMsg;
@@ -75,6 +79,8 @@ class Extra {
     this.exchangeShortName,
     this.priceRange,
     this.transactionType,
+    this.period,
+    this.type,
     this.cap,
     this.sector,
     this.currentBalance,
@@ -112,6 +118,14 @@ class Extra {
         loginText: json["login_text"],
         signUpText: json["signup_text"],
         totalPages: json["total_pages"],
+        period: json["period"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["period"]!.map((x) => SdTopRes.fromJson(x))),
+        type: json["type"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["type"]!.map((x) => SdTopRes.fromJson(x))),
         exchangeShortName: json["exchange_short_name"] == null
             ? []
             : List<KeyValueElement>.from(json["exchange_short_name"]!
@@ -189,6 +203,9 @@ class Extra {
         "in_app_notification": inAppMsg?.toJson(),
         "maintenance": maintenance?.toJson(),
         "android_build_version": androidBuildVersion,
+        "period":
+            period == null ? [] : List<dynamic>.from(period!.map((x) => x)),
+        "type": type == null ? [] : List<dynamic>.from(type!.map((x) => x)),
         "android_build_code": androidBuildCode,
         "login_text": loginText,
         "signup_text": signUpText,

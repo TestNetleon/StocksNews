@@ -46,7 +46,7 @@ class ReferApp extends StatelessWidget {
     // UserProvider provider = context.read<UserProvider>();
     ReferralRes? referral = context.watch<HomeProvider>().extra?.referral;
     return InkWell(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(8),
       onTap: () {
         _onShareAppClick();
         // Share.share(
@@ -56,8 +56,16 @@ class ReferApp extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: ThemeColors.accent,
+          borderRadius: BorderRadius.circular(8),
+          // color: ThemeColors.accent,
+          gradient: const LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              Color.fromARGB(255, 2, 76, 12),
+              ThemeColors.accent,
+            ],
+          ),
         ),
         child: Row(
           children: [
@@ -80,14 +88,13 @@ class ReferApp extends StatelessWidget {
                   //   style: stylePTSansBold(fontSize: 18),
                   // ),
                   Text(
-                    "Share Stocks News App",
+                    referral?.title ?? "",
                     style: stylePTSansBold(fontSize: 18),
                   ),
                   const SpacerVertical(height: 3),
                   Text(
-                    referral?.message ??
-                        "Invite your friend and earn reward point for each registration.",
-                    style: stylePTSansRegular(),
+                    referral?.message ?? "",
+                    style: stylePTSansRegular(fontSize: 12),
                   ),
                 ],
               ),

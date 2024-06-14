@@ -1,11 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -45,10 +47,11 @@ class AddToAlertWatchlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? symbol =
-        context.watch<StockDetailProvider>().data?.keyStats?.symbol ?? "";
-    num alertOn = context.watch<StockDetailProvider>().data?.isAlertAdded ?? 0;
+        context.watch<StockDetailProviderNew>().tabRes?.keyStats?.symbol ?? "";
+    num alertOn =
+        context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
     num watchlistOn =
-        context.watch<StockDetailProvider>().data?.isWatchlistAdded ?? 0;
+        context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
     UserProvider userProvider = context.watch<UserProvider>();
 
     return Padding(
@@ -67,12 +70,13 @@ class AddToAlertWatchlist extends StatelessWidget {
                     if (context.read<UserProvider>().user == null) {
                       return;
                     }
+                    log("-----GET TAB CALLING");
                     await context
-                        .read<StockDetailProvider>()
-                        .getStockDetails(symbol: symbol, loadOther: false);
+                        .read<StockDetailProviderNew>()
+                        .getTabData(symbol: symbol);
                     num alrtOn = context
-                            .read<StockDetailProvider>()
-                            .data
+                            .read<StockDetailProviderNew>()
+                            .tabRes
                             ?.isAlertAdded ??
                         0;
                     if (alrtOn == 0) {
@@ -105,15 +109,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                       return;
                     }
                     await context
-                        .read<StockDetailProvider>()
-                        .getStockDetails(symbol: symbol, loadOther: false);
+                        .read<StockDetailProviderNew>()
+                        .getTabData(symbol: symbol);
                     num wlistOn = context
-                            .read<StockDetailProvider>()
-                            .data
-                            ?.isWatchlistAdded ??
+                            .read<StockDetailProviderNew>()
+                            .tabRes
+                            ?.isWatchListAdded ??
                         0;
                     if (wlistOn == 0) {
-                      await context.read<StockDetailProvider>().addToWishList();
+                      log("-----GET TAB CALLING");
+
+                      await context
+                          .read<StockDetailProviderNew>()
+                          .addToWishList();
                     } else {
                       Navigator.pushNamed(context, WatchList.path);
                     }
@@ -123,7 +131,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                         _vibrate();
 
                         await context
-                            .read<StockDetailProvider>()
+                            .read<StockDetailProviderNew>()
                             .addToWishList();
                       }
                     : () {

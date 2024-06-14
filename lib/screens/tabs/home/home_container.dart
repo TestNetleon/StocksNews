@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:upgrader/upgrader.dart';
+import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -53,30 +54,12 @@ class HomeContainer extends StatelessWidget {
           child: Column(
             children: [
               const HomeTopNewsSlider(),
-              HomePartialLoading(
-                  loading: provider.isLoadingPortfolio,
-                  loadingWidget: Container(
-                    height: 110,
-                    margin: const EdgeInsets.fromLTRB(
-                        Dimen.padding, 20, Dimen.padding, Dimen.padding),
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color.fromARGB(255, 23, 23, 23),
-                          Color.fromARGB(255, 48, 48, 48),
-                        ],
-                      ),
-                      // color: Colors.black,
-                    ),
-                  ),
-                  onRefresh: () {
-                    provider.getHomePortfolio();
-                  },
-                  child: const PlaidHome()),
+
+              const Padding(
+                padding: EdgeInsets.fromLTRB(
+                    Dimen.padding, 20, Dimen.padding, Dimen.padding),
+                child: ReferApp(),
+              ),
               // const Padding(
               //   padding: EdgeInsets.only(top: Dimen.padding),
               //   child: PlaidHome(),
@@ -93,6 +76,31 @@ class HomeContainer extends StatelessWidget {
                         provider.statusTrending != Status.loading))
                       const StockInBuzz(),
                     const HomeMyAlerts(),
+                    HomePartialLoading(
+                        loading: provider.isLoadingPortfolio,
+                        loadingWidget: Container(
+                          height: 110,
+                          margin: const EdgeInsets.fromLTRB(
+                              Dimen.padding, 20, Dimen.padding, Dimen.padding),
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color.fromARGB(255, 23, 23, 23),
+                                Color.fromARGB(255, 48, 48, 48),
+                              ],
+                            ),
+                            // color: Colors.black,
+                          ),
+                        ),
+                        onRefresh: () {
+                          provider.getHomePortfolio();
+                        },
+                        child: const PlaidHome()),
+
                     HomePartialLoading(
                       loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
@@ -164,6 +172,7 @@ class HomeContainer extends StatelessWidget {
                   ],
                 ),
               ),
+
               if (provider.extra?.disclaimer != null)
                 DisclaimerWidget(
                   data: provider.extra!.disclaimer!,

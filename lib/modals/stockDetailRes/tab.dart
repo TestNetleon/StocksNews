@@ -17,8 +17,8 @@ class StockDetailTabRes {
   final List<DetailTab>? tabs;
   final CompanyInfo? companyInfo;
   String? shareUrl;
-  final int? isAlertAdded;
-  final int? isWatchListAdded;
+  int? isAlertAdded;
+  int? isWatchListAdded;
 
   StockDetailTabRes({
     this.keyStats,

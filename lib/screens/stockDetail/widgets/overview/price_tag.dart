@@ -3,7 +3,7 @@ import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../../../modals/stockDetailRes/earnings.dart';
-import '../../../stockDetails/widgets/states.dart';
+import '../keystats/item.dart';
 
 class SdOverviewLists extends StatelessWidget {
   final List<SdTopRes>? dataOver;
