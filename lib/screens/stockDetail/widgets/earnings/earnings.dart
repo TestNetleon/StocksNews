@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/earnings/earning_history_item.dart';
@@ -17,6 +14,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -57,7 +55,6 @@ class _SdEarningsState extends State<SdEarnings> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    KeyStats? keyStats = provider.tabRes?.keyStats;
 
     return BaseUiContainer(
       isFull: true,
@@ -211,7 +208,11 @@ class _SdEarningsState extends State<SdEarnings> {
                       ),
                     ],
                   ),
-                )
+                ),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),

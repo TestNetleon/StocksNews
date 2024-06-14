@@ -7,6 +7,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import '../../../../widgets/disclaimer_widget.dart';
 import 'item.dart';
 import 'peers.dart';
 
@@ -88,6 +89,10 @@ class _SdAnalysisState extends State<SdAnalysis> {
                   value: provider.analysis?.valuationPercent,
                 ),
                 const SdStockPeers(),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),

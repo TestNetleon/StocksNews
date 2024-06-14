@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
 import 'item.dart';
 import 'tab.dart';
 
@@ -120,6 +121,10 @@ class _SdFinancialState extends State<SdFinancial> {
                       return const SpacerVertical(height: 15);
                     },
                     itemCount: provider.sdFinancialArray?.length ?? 0),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),

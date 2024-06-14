@@ -10,6 +10,8 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
+
 class SdSecFilings extends StatefulWidget {
   final String symbol;
   const SdSecFilings({super.key, required this.symbol});
@@ -92,6 +94,10 @@ class _SdSecFilingsState extends State<SdSecFilings> {
                   },
                   itemCount: provider.secRes?.secFilings.length ?? 0,
                 ),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),

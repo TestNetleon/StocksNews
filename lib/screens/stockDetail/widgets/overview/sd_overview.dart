@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
 import '../../../stockDetails/widgets/analyst_data.dart';
 import 'chart.dart';
 import 'company_brief.dart';
@@ -100,6 +101,10 @@ class _SdOverviewState extends State<SdOverview> {
                   dataOver: provider.overviewRes?.profit,
                   title: "Profitability",
                 ),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),

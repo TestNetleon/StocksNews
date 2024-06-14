@@ -17,6 +17,8 @@ import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
+
 class SdDividends extends StatefulWidget {
   final String? symbol;
   const SdDividends({super.key, this.symbol});
@@ -154,7 +156,11 @@ class _SdDividendsState extends State<SdDividends> {
                           itemCount: provider.dividends?.faq?.length ?? 0)
                     ],
                   ),
-                )
+                ),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),

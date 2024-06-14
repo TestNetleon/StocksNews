@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
+import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../stockDetails/widgets/technicalAnalysis/base.dart';
@@ -122,6 +123,10 @@ class _SdTechnicalState extends State<SdTechnical> {
                               ),
                               const SdTechnicalAnalysisBrief(),
                               const SpacerVertical(height: 10),
+                              if (provider.extra?.disclaimer != null)
+                                DisclaimerWidget(
+                                  data: provider.extra!.disclaimer!,
+                                ),
                             ],
                           ),
                         );

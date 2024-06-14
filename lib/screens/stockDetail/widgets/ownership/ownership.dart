@@ -153,32 +153,33 @@ class _SdOwnershipState extends State<SdOwnership> {
                                       ),
                                     ),
                                     const SpacerHorizontal(width: 10),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
-                                          maxLines: 1,
-                                          "Shares Held",
-                                          textAlign: TextAlign.end,
-                                          style: stylePTSansRegular(
-                                            fontSize: 12,
-                                            color: ThemeColors.greyText,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Shares Held",
+                                            textAlign: TextAlign.end,
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
                                           ),
-                                        ),
-                                        const SpacerVertical(height: 5),
-                                        AutoSizeText(
-                                          maxLines: 1,
-                                          "Change in Shares %",
-                                          textAlign: TextAlign.end,
-                                          style: stylePTSansRegular(
-                                            fontSize: 12,
-                                            color: ThemeColors.greyText,
+                                          const SpacerVertical(height: 5),
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Change in Shares %",
+                                            textAlign: TextAlign.end,
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                    const SpacerHorizontal(width: 30),
                                   ],
                                 ),
                                 Divider(

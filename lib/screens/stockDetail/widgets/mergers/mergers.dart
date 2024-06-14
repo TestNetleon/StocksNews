@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class SdMergers extends StatefulWidget {
   final String? symbol;
@@ -66,39 +68,52 @@ class _SdMergersState extends State<SdMergers> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
                   height: 20,
+                  thickness: 2,
                 ),
-                ScreenTitle(
-                  title: "Recent ${keyStats?.symbol} Mergers",
-                ),
-                ListView.separated(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    MergersList? data =
-                        provider.sdMergersRes?.mergersList?[index];
-                    if (data == null) {
-                      return const SizedBox();
-                    }
-                    return SdMergersItem(
-                      data: data,
-                      isOpen: provider.openIndex == index,
-                      onTap: () {
-                        provider.setOpenIndex(
-                          provider.openIndex == index ? -1 : index,
-                        );
-                      },
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 20.sp,
-                    );
-                  },
-                  itemCount: provider.sdMergersRes?.mergersList?.length ?? 0,
+                const SpacerVertical(height: 20),
+                Visibility(
+                  visible:
+                      provider.sdMergersRes?.mergersList?.isNotEmpty == true &&
+                          provider.sdMergersRes?.mergersList != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title: "Recent ${keyStats?.symbol} Mergers",
+                      ),
+                      ListView.separated(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          MergersList? data =
+                              provider.sdMergersRes?.mergersList?[index];
+                          if (data == null) {
+                            return const SizedBox();
+                          }
+                          return SdMergersItem(
+                            data: data,
+                            isOpen: provider.openIndex == index,
+                            onTap: () {
+                              provider.setOpenIndex(
+                                provider.openIndex == index ? -1 : index,
+                              );
+                            },
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 20.sp,
+                          );
+                        },
+                        itemCount:
+                            provider.sdMergersRes?.mergersList?.length ?? 0,
+                      ),
+                    ],
+                  ),
                 ),
                 if (provider.extra?.disclaimer != null)
                   DisclaimerWidget(

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,9 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../../widgets/disclaimer_widget.dart';
 
 class SdCharts extends StatefulWidget {
   final String? symbol;
@@ -62,91 +66,6 @@ class _SdChartsState extends State<SdCharts> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
-                ScreenTitle(
-                  title: "${widget.symbol} Share Price History",
-                ),
-                ListView.separated(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      PriceHistory? data =
-                          provider.chartRes?.priceHistory?[index];
-
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (index == 0)
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AutoSizeText(
-                                      maxLines: 1,
-                                      "Date",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                    const SpacerHorizontal(width: 10),
-                                    AutoSizeText(
-                                      maxLines: 1,
-                                      "Opening Price",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                    const SpacerHorizontal(width: 10),
-                                    AutoSizeText(
-                                      maxLines: 1,
-                                      "Closing Price",
-                                      style: stylePTSansRegular(
-                                        fontSize: 12,
-                                        color: ThemeColors.greyText,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  color: ThemeColors.greyBorder,
-                                  height: 20.sp,
-                                  thickness: 1,
-                                )
-                              ],
-                            ),
-                          SdChartHistory(
-                            data: data,
-                            isOpen: provider.openIndex == index,
-                            onTap: () {
-                              provider.setOpenIndex(
-                                provider.openIndex == index ? -1 : index,
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 20.sp,
-                      );
-                    },
-                    itemCount: provider.chartRes?.priceHistory?.length ?? 0),
-                const Divider(
-                  color: ThemeColors.greyBorder,
-                  height: 20,
-                ),
-                const Divider(
                   color: ThemeColors.white,
                   thickness: 2,
                   height: 20,
@@ -159,6 +78,100 @@ class _SdChartsState extends State<SdCharts> {
                     return SdTopCard(top: top);
                   },
                 ),
+                const SpacerVertical(height: 20),
+                Visibility(
+                  visible:
+                      provider.chartRes?.priceHistory?.isNotEmpty == true &&
+                          provider.chartRes?.priceHistory != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title: "${widget.symbol} Share Price History",
+                      ),
+                      ListView.separated(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            PriceHistory? data =
+                                provider.chartRes?.priceHistory?[index];
+
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (index == 0)
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Date",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                          const SpacerHorizontal(width: 10),
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Opening Price",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                          const SpacerHorizontal(width: 10),
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Closing Price",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: ThemeColors.greyBorder,
+                                        height: 20.sp,
+                                        thickness: 1,
+                                      )
+                                    ],
+                                  ),
+                                SdChartHistory(
+                                  data: data,
+                                  isOpen: provider.openIndex == index,
+                                  onTap: () {
+                                    provider.setOpenIndex(
+                                      provider.openIndex == index ? -1 : index,
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Divider(
+                              color: ThemeColors.greyBorder,
+                              height: 20.sp,
+                            );
+                          },
+                          itemCount:
+                              provider.chartRes?.priceHistory?.length ?? 0),
+                    ],
+                  ),
+                ),
+                if (provider.extra?.disclaimer != null)
+                  DisclaimerWidget(
+                    data: provider.extra!.disclaimer!,
+                  ),
               ],
             ),
           ),
