@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/sd_dividends_history.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -80,6 +83,35 @@ class _SdDividendsState extends State<SdDividends> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
+                ScreenTitle(
+                  title: "${widget.symbol} Dividend History by Quarter",
+                ),
+                ListView.separated(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      DividendHistory? data =
+                          provider.dividends?.dividendHistory?[index];
+
+                      return SdDividendsHistory(
+                        data: data,
+                        isOpen: provider.openIndex == index,
+                        onTap: () {
+                          provider.setOpenIndex(
+                            provider.openIndex == index ? -1 : index,
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 20.sp,
+                      );
+                    },
+                    itemCount:
+                        provider.dividends?.dividendHistory?.length ?? 0),
                 ScreenTitle(
                   title: "${provider.tabRes?.keyStats?.name} Dividend - FAQs",
                 ),

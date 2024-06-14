@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/analyst_forecast.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/forecast/stock_rating.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -72,25 +75,36 @@ class _SdForecastState extends State<SdForecast> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
-                // const ScreenTitle(
-                //   title: "Recent Analyst Forecasts and Stock Ratings",
-                // ),
-                // ListView.separated(
-                //   padding: EdgeInsets.zero,
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   itemBuilder: (context, index) {
-                //     AnalystForecast? analystForecast =
-                //         provider.forecastRes?.analystForecasts?[index];
+                const ScreenTitle(
+                  title: "Recent Analyst Forecasts and Stock Ratings",
+                ),
+                ListView.separated(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    AnalystForecast? data =
+                        provider.forecastRes?.analystForecasts?[index];
 
-                //     return Container();
-                //   },
-                //   separatorBuilder: (context, index) {
-                //     return const SpacerVertical(height: 10);
-                //   },
-                //   itemCount:
-                //       provider.forecastRes?.analystForecasts?.length ?? 0,
-                // ),
+                    return SdStocksRating(
+                      isOpen: provider.openIndex == index,
+                      onTap: () {
+                        provider.setOpenIndex(
+                          provider.openIndex == index ? -1 : index,
+                        );
+                      },
+                      data: data,
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 20.sp,
+                    );
+                  },
+                  itemCount:
+                      provider.forecastRes?.analystForecasts?.length ?? 0,
+                ),
                 ScreenTitle(
                   title: "${provider.tabRes?.keyStats?.name} - FAQs",
                 ),

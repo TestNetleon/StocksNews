@@ -50,6 +50,12 @@ class StockDetailProviderNew extends ChangeNotifier {
   StockDetailTabRes? get tabRes => _tabRes;
 
   int selectedTab = 0;
+  int _openIndex = -1;
+  int get openIndex => _openIndex;
+  void setOpenIndex(index) {
+    _openIndex = index;
+    notifyListeners();
+  }
 
   void setStatusTab(status) {
     _statusTab = status;
@@ -57,6 +63,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
   onTabChange(index) {
+    notifyListeners();
     if (selectedTab != index) {
       selectedTab = index;
       notifyListeners();
@@ -111,6 +118,13 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   SdEarningsRes? _earnings;
   SdEarningsRes? get earnings => _earnings;
+
+  int _openIndexEarningHistory = -1;
+  int get openIndexEarningHistory => _openIndexEarningHistory;
+  void setOpenIndexEarningHistory(index) {
+    _openIndexEarningHistory = index;
+    notifyListeners();
+  }
 
   void setStatusEarning(status) {
     _statusEarning = status;
@@ -171,6 +185,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
   Future getDividendsData({String? symbol}) async {
+    _openIndex = -1;
     setStatusDividends(Status.loading);
     try {
       FormData request = FormData.fromMap({
@@ -377,6 +392,8 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
   Future getForecastData({String? symbol}) async {
+    _openIndex = -1;
+
     setStatusForecast(Status.loading);
     try {
       Map request = {
@@ -1046,6 +1063,13 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   SdFinancialRes? _sdFinancialRes;
   SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
+  int _openIndexInsider = -1;
+  int get openIndexInsider => _openIndexInsider;
+
+  void setOpenIndexInsider(index) {
+    _openIndexInsider = index;
+    notifyListeners();
+  }
 
   void setStatusFinancial(status) {
     _statusFinancial = status;

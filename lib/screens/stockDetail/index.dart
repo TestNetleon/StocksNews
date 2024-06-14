@@ -75,6 +75,9 @@ class _StockDetailState extends State<StockDetail> {
           children: [
             Expanded(
               child: CustomTabContainerNEW(
+                onChange: (index) {
+                  provider.setOpenIndex(-1);
+                },
                 physics: const NeverScrollableScrollPhysics(),
                 scrollable: true,
                 tabs: List.generate(

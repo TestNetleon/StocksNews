@@ -15,16 +15,16 @@ String sdInsiderTradeResToJson(SdInsiderTradeRes data) =>
     json.encode(data.toJson());
 
 class SdInsiderTradeRes {
-  final List<InsiderDatum> insiderData;
-  final List<CongressionalDatum> congressionalData;
-  final List<SdTopRes> top;
+  final List<InsiderDatum>? insiderData;
+  final List<CongressionalDatum>? congressionalData;
+  final List<SdTopRes>? top;
   final List<FaQsRes> faq;
   final Title? title;
 
   SdInsiderTradeRes({
-    required this.insiderData,
-    required this.congressionalData,
-    required this.top,
+    this.insiderData,
+    this.congressionalData,
+    this.top,
     this.title,
     required this.faq,
   });
@@ -32,21 +32,31 @@ class SdInsiderTradeRes {
   factory SdInsiderTradeRes.fromJson(Map<String, dynamic> json) =>
       SdInsiderTradeRes(
         title: json["title"] == null ? null : Title.fromJson(json["title"]),
-        insiderData: List<InsiderDatum>.from(
-            json["insider_data"].map((x) => InsiderDatum.fromJson(x))),
-        congressionalData: List<CongressionalDatum>.from(
-            json["congressional_data"]
+        insiderData: json["insider_data"] == null
+            ? null
+            : List<InsiderDatum>.from(
+                json["insider_data"].map((x) => InsiderDatum.fromJson(x))),
+        congressionalData: json["congressional_data"] == null
+            ? null
+            : List<CongressionalDatum>.from(json["congressional_data"]
                 .map((x) => CongressionalDatum.fromJson(x))),
-        top: List<SdTopRes>.from(json["top"].map((x) => SdTopRes.fromJson(x))),
+        top: json["top"] == null
+            ? null
+            : List<SdTopRes>.from(json["top"].map((x) => SdTopRes.fromJson(x))),
         faq: List<FaQsRes>.from(json["faq"].map((x) => FaQsRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "title": title?.toJson(),
-        "insider_data": List<dynamic>.from(insiderData.map((x) => x.toJson())),
-        "congressional_data":
-            List<dynamic>.from(congressionalData.map((x) => x.toJson())),
-        "top": List<dynamic>.from(top.map((x) => x.toJson())),
+        "insider_data": insiderData == null
+            ? null
+            : List<dynamic>.from(insiderData!.map((x) => x.toJson())),
+        "congressional_data": congressionalData == null
+            ? null
+            : List<dynamic>.from(congressionalData!.map((x) => x.toJson())),
+        "top": top == null
+            ? null
+            : List<dynamic>.from(top!.map((x) => x.toJson())),
         "faq": List<dynamic>.from(faq.map((x) => x.toJson())),
       };
 }

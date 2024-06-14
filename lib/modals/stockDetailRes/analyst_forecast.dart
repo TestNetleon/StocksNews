@@ -43,7 +43,7 @@ class AnalystForecast {
   final String? analystName;
   final String? priceTarget;
   final String? priceWhenPosted;
-  final double? upDown;
+  final dynamic upDown;
   final String? newsUrl;
 
   AnalystForecast({

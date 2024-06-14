@@ -87,10 +87,10 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                   height: 20,
                 ),
                 CustomGridView(
-                  length: provider.sdInsiderTradeRes?.top.length ?? 0,
+                  length: provider.sdInsiderTradeRes?.top?.length ?? 0,
                   paddingVerticle: 8,
                   getChild: (index) {
-                    SdTopRes? top = provider.sdInsiderTradeRes?.top[index];
+                    SdTopRes? top = provider.sdInsiderTradeRes?.top?[index];
                     return SdTopCard(top: top);
                   },
                 ),
@@ -104,12 +104,20 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     InsiderDatum? data =
-                        provider.sdInsiderTradeRes?.insiderData[index];
+                        provider.sdInsiderTradeRes?.insiderData?[index];
                     if (data == null) {
                       return const SizedBox();
                     }
                     return SdInsiderItem(
-                      index: index,
+                      isOpen: provider.openIndexInsider == index,
+                      onTap: () {
+                        provider.setOpenIndexInsider(
+                          provider.openIndexInsider == index ? -1 : index,
+                        );
+                        provider.setOpenIndex(
+                          -1,
+                        );
+                      },
                       data: data,
                     );
 
@@ -129,7 +137,7 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     );
                   },
                   itemCount:
-                      provider.sdInsiderTradeRes?.insiderData.length ?? 0,
+                      provider.sdInsiderTradeRes?.insiderData?.length ?? 0,
                 ),
                 const SpacerVertical(height: 10),
                 ScreenTitle(
@@ -141,12 +149,20 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     CongressionalDatum? data =
-                        provider.sdInsiderTradeRes?.congressionalData[index];
+                        provider.sdInsiderTradeRes?.congressionalData?[index];
                     if (data == null) {
                       return const SizedBox();
                     }
                     return SdCongressionalItem(
-                      index: index,
+                      isOpen: provider.openIndex == index,
+                      onTap: () {
+                        provider.setOpenIndex(
+                          provider.openIndex == index ? -1 : index,
+                        );
+                        provider.setOpenIndexInsider(
+                          -1,
+                        );
+                      },
                       data: data,
                     );
 
@@ -166,7 +182,8 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     );
                   },
                   itemCount:
-                      provider.sdInsiderTradeRes?.congressionalData.length ?? 0,
+                      provider.sdInsiderTradeRes?.congressionalData?.length ??
+                          0,
                 ),
                 const SpacerVertical(height: 10),
                 ScreenTitle(

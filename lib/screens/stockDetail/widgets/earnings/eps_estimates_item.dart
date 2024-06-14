@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/modals/stockDetailRes/sd_insider_res.dart';
-import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class SdCongressionalItem extends StatelessWidget {
-  final CongressionalDatum? data;
+class EpsEstimatesItem extends StatelessWidget {
+  final EpsEstimate? data;
   final bool isOpen;
   final Function() onTap;
 //
-  const SdCongressionalItem({
+  const EpsEstimatesItem({
     required this.data,
     required this.isOpen,
     required this.onTap,
@@ -33,23 +33,21 @@ class SdCongressionalItem extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    "${data?.name}",
+                    "${data?.quarter}",
                     style: stylePTSansBold(fontSize: 14),
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 const SpacerHorizontal(width: 10),
-                Column(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      data?.type ?? "",
+                      "${data?.numberOfEstimates ?? ""}",
                       style: stylePTSansBold(
-                          fontSize: 14,
-                          color: data?.type == "Purchase"
-                              ? ThemeColors.accent
-                              : ThemeColors.sos),
+                        fontSize: 14,
+                      ),
                     ),
                     const SpacerVertical(height: 5),
                     InkWell(
@@ -91,16 +89,16 @@ class SdCongressionalItem extends StatelessWidget {
             child: Column(
               children: [
                 InnerRowItem(
-                  label: 'Trade Data',
-                  value: "${data!.amount}",
+                  lable: "Low Estimate",
+                  value: "${data?.estimatedEpsLow}",
                 ),
                 InnerRowItem(
-                  label: "Date Filed",
-                  value: "${data?.dateFiled}",
+                  lable: "High Estimate",
+                  value: "${data?.estimatedEpsHigh}",
                 ),
                 InnerRowItem(
-                  label: "Date Traded",
-                  value: "${data!.dateTraded}",
+                  lable: "Average Estimate",
+                  value: "${data?.estimatedEpsAvg}",
                 ),
               ],
             ),
