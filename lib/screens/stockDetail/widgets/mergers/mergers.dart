@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/mergers/mergers_item
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
@@ -92,14 +94,46 @@ class _SdMergersState extends State<SdMergers> {
                           if (data == null) {
                             return const SizedBox();
                           }
-                          return SdMergersItem(
-                            data: data,
-                            isOpen: provider.openIndex == index,
-                            onTap: () {
-                              provider.setOpenIndex(
-                                provider.openIndex == index ? -1 : index,
-                              );
-                            },
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (index == 0)
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AutoSizeText(
+                                          maxLines: 1,
+                                          "Symbol",
+                                          style: stylePTSansRegular(
+                                            fontSize: 12,
+                                            color: ThemeColors.greyText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      color: ThemeColors.greyBorder,
+                                      height: 20.sp,
+                                      thickness: 1,
+                                    )
+                                  ],
+                                ),
+                              SdMergersItem(
+                                data: data,
+                                isOpen: provider.openIndex == index,
+                                onTap: () {
+                                  provider.setOpenIndex(
+                                    provider.openIndex == index ? -1 : index,
+                                  );
+                                },
+                              ),
+                            ],
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,12 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../widgets/disclaimer_widget.dart';
@@ -105,14 +108,55 @@ class _SdDividendsState extends State<SdDividends> {
                             DividendHistory? data =
                                 provider.dividends?.dividendHistory?[index];
 
-                            return SdDividendsHistory(
-                              data: data,
-                              isOpen: provider.openIndex == index,
-                              onTap: () {
-                                provider.setOpenIndex(
-                                  provider.openIndex == index ? -1 : index,
-                                );
-                              },
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (index == 0)
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Announced",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                          const SpacerHorizontal(width: 10),
+                                          AutoSizeText(
+                                            maxLines: 1,
+                                            "Amount",
+                                            style: stylePTSansRegular(
+                                              fontSize: 12,
+                                              color: ThemeColors.greyText,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: ThemeColors.greyBorder,
+                                        height: 20.sp,
+                                        thickness: 1,
+                                      )
+                                    ],
+                                  ),
+                                SdDividendsHistory(
+                                  data: data,
+                                  isOpen: provider.openIndex == index,
+                                  onTap: () {
+                                    provider.setOpenIndex(
+                                      provider.openIndex == index ? -1 : index,
+                                    );
+                                  },
+                                ),
+                              ],
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
