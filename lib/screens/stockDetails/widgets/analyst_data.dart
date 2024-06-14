@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../modals/stockDetailRes/overview.dart';
 
 class StockDetailAnalystData extends StatelessWidget {
   const StockDetailAnalystData({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AnalystRecom? anaRes =
+        context.watch<StockDetailProviderNew>().overviewRes?.analystRecom;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
@@ -28,15 +34,15 @@ class StockDetailAnalystData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "64% analysts say Buy",
+                      "${anaRes?.buyPercent ?? 'N/A'}% analysts say buy",
                       style: stylePTSansBold(
                           color: ThemeColors.accent, fontSize: 18),
                     ),
-                    const SpacerVertical(height: 5),
-                    Text(
-                      "Expected target price: 585.00 - \$800.00",
-                      style: stylePTSansRegular(color: ThemeColors.greyText),
-                    ),
+                    // const SpacerVertical(height: 5),
+                    // Text(
+                    //   "Expected target price: 585.00 - \$800.00",
+                    //   style: stylePTSansRegular(color: ThemeColors.greyText),
+                    // ),
                   ],
                 ),
               ),
@@ -44,7 +50,7 @@ class StockDetailAnalystData extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
-                    flex: 6,
+                    flex: anaRes?.buyPercent ?? 1,
                     child: Container(
                       height: 30,
                       decoration: const BoxDecoration(
@@ -58,7 +64,7 @@ class StockDetailAnalystData extends StatelessWidget {
                   ),
                   const SpacerHorizontal(width: 2),
                   Flexible(
-                    flex: 3,
+                    flex: anaRes?.holdPercent ?? 1,
                     child: Container(
                       height: 30,
                       decoration: const BoxDecoration(
@@ -68,6 +74,7 @@ class StockDetailAnalystData extends StatelessWidget {
                   ),
                   const SpacerHorizontal(width: 2),
                   Flexible(
+                    flex: anaRes?.sellPercent ?? 1,
                     child: Container(
                       height: 30,
                       decoration: const BoxDecoration(
@@ -88,7 +95,7 @@ class StockDetailAnalystData extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Buy 64%",
+                        "Buy ${anaRes?.buyPercent ?? "N/A"}%",
                         style: stylePTSansRegular(
                           color: ThemeColors.accent,
                         ),
@@ -99,7 +106,7 @@ class StockDetailAnalystData extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Hold 27%",
+                        "Hold ${anaRes?.holdPercent ?? "N/A"}%",
                         style: stylePTSansRegular(
                           color: const Color.fromARGB(255, 255, 191, 52),
                         ),
@@ -110,7 +117,7 @@ class StockDetailAnalystData extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        "Sell 9%",
+                        "Sell ${anaRes?.sellPercent ?? "N/A"}%",
                         style: stylePTSansRegular(
                           color: Colors.orange,
                         ),
@@ -135,7 +142,7 @@ class StockDetailAnalystData extends StatelessWidget {
                         const SpacerHorizontal(width: 5),
                         Flexible(
                           child: Text(
-                            "11 analysts",
+                            "${anaRes?.totalAnalysis ?? "N/A"} analysts",
                             style: stylePTSansRegular(fontSize: 12),
                           ),
                         ),
@@ -154,7 +161,7 @@ class StockDetailAnalystData extends StatelessWidget {
                         const SpacerHorizontal(width: 5),
                         Flexible(
                           child: Text(
-                            "Updated on 03 Jun 2024",
+                            "Updated on ${anaRes?.lastUpdate ?? "N/A"}",
                             style: stylePTSansRegular(fontSize: 12),
                           ),
                         ),
@@ -165,7 +172,7 @@ class StockDetailAnalystData extends StatelessWidget {
               ),
               const SpacerVertical(height: 20),
               Text(
-                "Source: EveningStar",
+                "Source: ${anaRes?.source ?? "N/A"}",
                 style: stylePTSansRegular(
                     fontSize: 12, color: ThemeColors.greyText),
               )

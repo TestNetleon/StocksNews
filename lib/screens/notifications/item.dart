@@ -20,7 +20,6 @@ import '../auth/bottomSheets/signup_sheet.dart';
 import '../auth/bottomSheets/signup_sheet_tablet.dart';
 import '../blogDetail/index.dart';
 import '../stockDetail/index.dart';
-import '../stockDetails/stock_details.dart';
 
 class NotificationsItem extends StatelessWidget {
   final NotificationData data;

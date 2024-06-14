@@ -42,7 +42,13 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        StockDetailProviderNew provider =
+            context.read<StockDetailProviderNew>();
+        if (provider.sdInsiderTradeRes == null) {
+          _callApi();
+        }
+      });
     });
   }
 

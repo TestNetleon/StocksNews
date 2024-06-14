@@ -14,12 +14,14 @@ class SdOverviewRes {
   final List<SdTopRes>? calendar;
   final List<SdTopRes>? priceTarget;
   final List<SdTopRes>? profit;
+  final AnalystRecom? analystRecom;
 
   SdOverviewRes({
     this.companyInfo,
     this.stockScore,
     this.calendar,
     this.priceTarget,
+    this.analystRecom,
     this.profit,
   });
 
@@ -31,6 +33,9 @@ class SdOverviewRes {
             ? []
             : List<SdTopRes>.from(
                 json["company_calendar"]!.map((x) => SdTopRes.fromJson(x))),
+        analystRecom: json["analyst_recom"] == null
+            ? null
+            : AnalystRecom.fromJson(json["analyst_recom"]),
         priceTarget: json["price_target_rating"] == null
             ? []
             : List<SdTopRes>.from(
@@ -47,6 +52,7 @@ class SdOverviewRes {
   Map<String, dynamic> toJson() => {
         "company_info": companyInfo?.toJson(),
         "stock_score": stockScore?.toJson(),
+        "analyst_recom": analystRecom?.toJson(),
         "company_calendar": calendar == null
             ? []
             : List<dynamic>.from(calendar!.map((x) => x.toJson())),
@@ -56,6 +62,42 @@ class SdOverviewRes {
         "profitability": profit == null
             ? []
             : List<dynamic>.from(profit!.map((x) => x.toJson())),
+      };
+}
+
+class AnalystRecom {
+  final String? lastUpdate;
+  final int? totalAnalysis;
+  final int? buyPercent;
+  final int? holdPercent;
+  final int? sellPercent;
+  final String? source;
+
+  AnalystRecom({
+    this.lastUpdate,
+    this.totalAnalysis,
+    this.buyPercent,
+    this.holdPercent,
+    this.sellPercent,
+    this.source,
+  });
+
+  factory AnalystRecom.fromJson(Map<String, dynamic> json) => AnalystRecom(
+        lastUpdate: json["lastUpdate"],
+        totalAnalysis: json["totalAnalysis"],
+        buyPercent: json["buyPercent"],
+        holdPercent: json["holdPercent"],
+        sellPercent: json["sellPercent"],
+        source: json["source"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "lastUpdate": lastUpdate,
+        "totalAnalysis": totalAnalysis,
+        "buyPercent": buyPercent,
+        "holdPercent": holdPercent,
+        "sellPercent": sellPercent,
+        "source": source,
       };
 }
 

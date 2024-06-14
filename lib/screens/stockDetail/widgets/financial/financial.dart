@@ -14,15 +14,18 @@ import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class SdDividends extends StatefulWidget {
+import '../../../../modals/stockDetailRes/financial.dart';
+import 'item.dart';
+
+class SdFinancial extends StatefulWidget {
   final String? symbol;
-  const SdDividends({super.key, this.symbol});
+  const SdFinancial({super.key, this.symbol});
 
   @override
-  State<SdDividends> createState() => _SdDividendsState();
+  State<SdFinancial> createState() => _SdFinancialState();
 }
 
-class _SdDividendsState extends State<SdDividends> {
+class _SdFinancialState extends State<SdFinancial> {
   int openIndex = -1;
 
   void changeOpenIndex(int index) {
@@ -36,7 +39,7 @@ class _SdDividendsState extends State<SdDividends> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-      if (provider.dividends == null) {
+      if (provider.sdFinancialRes == null) {
         _callApi();
       }
     });
@@ -45,17 +48,17 @@ class _SdDividendsState extends State<SdDividends> {
   _callApi() {
     context
         .read<StockDetailProviderNew>()
-        .getDividendsData(symbol: widget.symbol);
+        .getFinancialData(symbol: widget.symbol);
   }
 
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     return BaseUiContainer(
-      hasData: !provider.isLoadingDividends && provider.dividends != null,
-      isLoading: provider.isLoadingDividends,
+      hasData: !provider.isLoadingFinancial && provider.sdFinancialRes != null,
+      isLoading: provider.isLoadingFinancial,
       showPreparingText: true,
-      error: provider.errorDividends,
+      error: provider.errorFinancial,
       isFull: true,
       onRefresh: _callApi,
       child: CommonRefreshIndicator(
@@ -68,29 +71,18 @@ class _SdDividendsState extends State<SdDividends> {
             child: Column(
               children: [
                 const SdCommonHeading(),
-                CustomGridView(
-                  length: provider.dividends?.top?.length ?? 0,
-                  paddingVerticle: 8,
-                  getChild: (index) {
-                    SdTopRes? top = provider.dividends?.top?[index];
-                    return SdTopCard(top: top);
-                  },
-                ),
                 const Divider(
                   color: ThemeColors.greyBorder,
                   height: 20,
-                ),
-                ScreenTitle(
-                  title: "${provider.tabRes?.keyStats?.name} Dividend - FAQs",
                 ),
                 ListView.separated(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      FaQsRes? data = provider.dividends?.faq?[index];
-
-                      return SdFaqCard(
+                      FinanceStatement? data =
+                          provider.sdFinancialRes?.financeStatement?[index];
+                      return SdFinancialItem(
                         data: data,
                         index: index,
                         openIndex: openIndex,
@@ -98,9 +90,10 @@ class _SdDividendsState extends State<SdDividends> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 10);
+                      return const SpacerVertical(height: 15);
                     },
-                    itemCount: provider.dividends?.faq?.length ?? 0)
+                    itemCount:
+                        provider.sdFinancialRes?.financeStatement?.length ?? 0),
               ],
             ),
           ),

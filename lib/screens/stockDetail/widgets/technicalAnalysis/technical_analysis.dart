@@ -120,7 +120,7 @@ class _SdTechnicalState extends State<SdTechnical> {
                                 ],
                               ),
                               const SdTechnicalAnalysisBrief(),
-                              SpacerVertical(height: 10),
+                              const SpacerVertical(height: 10),
                             ],
                           ),
                         );

@@ -66,7 +66,7 @@ class MostBullishItem extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => StockDetails(symbol: data.symbol),
+                    builder: (_) => StockDetail(symbol: data.symbol),
                   ),
                 );
               },
@@ -89,7 +89,7 @@ class MostBullishItem extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => StockDetails(symbol: data.symbol),
+                      builder: (_) => StockDetail(symbol: data.symbol),
                     ),
                   );
                 },

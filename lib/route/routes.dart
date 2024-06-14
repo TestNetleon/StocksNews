@@ -212,18 +212,18 @@ class Routes {
             // );
           },
         );
-      case StockDetails.path:
-        return MaterialWithModalsPageRoute(
-          builder: (context) {
-            final arguments = settings.arguments as Map<String, dynamic>?;
-            return StockDetails(
-              symbol: arguments!['slug'],
-              inAppMsgId: arguments['inAppMsgId'],
-              notificationId: arguments['notificationId'],
-            );
-            // return StockDetails(symbol: settings.arguments as String);
-          },
-        );
+      // case StockDetails.path:
+      //   return MaterialWithModalsPageRoute(
+      //     builder: (context) {
+      //       final arguments = settings.arguments as Map<String, dynamic>?;
+      //       return StockDetails(
+      //         symbol: arguments!['slug'],
+      //         inAppMsgId: arguments['inAppMsgId'],
+      //         notificationId: arguments['notificationId'],
+      //       );
+      //       // return StockDetails(symbol: settings.arguments as String);
+      //     },
+      //   );
       case StockDetail.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {

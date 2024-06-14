@@ -19,6 +19,7 @@ import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'widgets/chart/chart.dart';
 import 'widgets/dividends/dividends.dart';
 import 'widgets/earnings/earnings.dart';
+import 'widgets/financial/financial.dart';
 import 'widgets/forecast/forecast.dart';
 import 'widgets/stockAnalysis/analysis.dart';
 import 'widgets/technicalAnalysis/technical_analysis.dart';
@@ -94,7 +95,7 @@ class _StockDetailState extends State<StockDetail> {
                   SdCompetitor(symbol: widget.symbol),
                   SdOwnership(symbol: widget.symbol),
                   SdCharts(symbol: widget.symbol),
-                  Container(),
+                  SdFinancial(symbol: widget.symbol),
                   SdSecFilings(symbol: widget.symbol),
                   Container(),
                 ],
