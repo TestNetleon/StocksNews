@@ -12,6 +12,9 @@ class SdOverviewLists extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (dataOver?.isEmpty == true || dataOver == null) {
+      return const SizedBox();
+    }
     return Column(
       children: [
         ScreenTitle(title: title),

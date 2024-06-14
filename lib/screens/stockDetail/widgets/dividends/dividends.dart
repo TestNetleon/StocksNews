@@ -69,7 +69,7 @@ class _SdDividendsState extends State<SdDividends> {
               children: [
                 const SdCommonHeading(),
                 CustomGridView(
-                  length: provider.earnings?.top?.length ?? 0,
+                  length: provider.dividends?.top?.length ?? 0,
                   paddingVerticle: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.dividends?.top?[index];
