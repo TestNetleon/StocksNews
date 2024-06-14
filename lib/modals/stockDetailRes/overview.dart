@@ -12,6 +12,8 @@ class SdOverviewRes {
   final CompanyInfo? companyInfo;
   final StockScore? stockScore;
   final List<SdTopRes>? calendar;
+  final List<SdTopRes>? top;
+
   final List<SdTopRes>? priceTarget;
   final List<SdTopRes>? profit;
   final AnalystRecom? analystRecom;
@@ -21,6 +23,7 @@ class SdOverviewRes {
     this.stockScore,
     this.calendar,
     this.priceTarget,
+    this.top,
     this.analystRecom,
     this.profit,
   });
@@ -36,6 +39,10 @@ class SdOverviewRes {
         analystRecom: json["analyst_recom"] == null
             ? null
             : AnalystRecom.fromJson(json["analyst_recom"]),
+        top: json["top"] == null
+            ? []
+            : List<SdTopRes>.from(
+                json["top"]!.map((x) => SdTopRes.fromJson(x))),
         priceTarget: json["price_target_rating"] == null
             ? []
             : List<SdTopRes>.from(
@@ -51,6 +58,8 @@ class SdOverviewRes {
 
   Map<String, dynamic> toJson() => {
         "company_info": companyInfo?.toJson(),
+        "top":
+            top == null ? [] : List<dynamic>.from(top!.map((x) => x.toJson())),
         "stock_score": stockScore?.toJson(),
         "analyst_recom": analystRecom?.toJson(),
         "company_calendar": calendar == null
