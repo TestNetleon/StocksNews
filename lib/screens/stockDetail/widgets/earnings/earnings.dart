@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
+import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/earnings/earning_history_item.dart';
@@ -54,6 +55,8 @@ class _SdEarningsState extends State<SdEarnings> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    KeyStats? keyStats = provider.tabRes?.keyStats;
+
     return BaseUiContainer(
       isFull: true,
       hasData: !provider.isLoadingEarning && provider.earnings != null,
@@ -85,8 +88,8 @@ class _SdEarningsState extends State<SdEarnings> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
-                const ScreenTitle(
-                  title: "Apple Inc. Analyst EPS Estimates",
+                ScreenTitle(
+                  title: "${keyStats?.name} Analyst EPS Estimates",
                 ),
                 ListView.separated(
                     padding: EdgeInsets.zero,
@@ -120,8 +123,8 @@ class _SdEarningsState extends State<SdEarnings> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
-                const ScreenTitle(
-                  title: "Apple Inc. Earnings History by Quarter",
+                ScreenTitle(
+                  title: "${keyStats?.name} Earnings History by Quarter",
                 ),
                 ListView.separated(
                     padding: EdgeInsets.zero,

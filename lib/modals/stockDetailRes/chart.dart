@@ -40,7 +40,7 @@ class PriceHistory {
   final String? date;
   final String? openingPrice;
   final String? closingPrice;
-  final double? changePercent;
+  final dynamic changePercent;
   final String? high;
   final String? low;
   final String? volume;
