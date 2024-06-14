@@ -5,6 +5,7 @@ import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_congressional_item.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_insider_item.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -94,7 +95,56 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     return SdTopCard(top: top);
                   },
                 ),
-                SpacerVertical(height: 20),
+                const SpacerVertical(height: 20),
+                Visibility(
+                  visible:
+                      provider.sdInsiderTradeRes?.insiderData?.isNotEmpty ==
+                              true &&
+                          provider.sdInsiderTradeRes?.insiderData != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ScreenTitle(
+                        title:
+                            "${provider.sdInsiderTradeRes?.title?.insiderTrade}",
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.only(top: 0, bottom: 20),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          InsiderDatum? data =
+                              provider.sdInsiderTradeRes?.insiderData?[index];
+                          if (data == null) {
+                            return const SizedBox();
+                          }
+                          return SdInsiderItem(
+                            isOpen: provider.openIndex == index,
+                            onTap: () {
+                              provider.setOpenIndex(
+                                provider.openIndex == index ? -1 : index,
+                              );
+                              provider.setOpenIndexInsider(
+                                -1,
+                              );
+                            },
+                            data: data,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 20.sp,
+                          );
+                        },
+                        itemCount: provider
+                                .sdInsiderTradeRes?.congressionalData?.length ??
+                            0,
+                      ),
+                    ],
+                  ),
+                ),
+                const SpacerVertical(height: 20),
                 Visibility(
                   visible: provider.sdInsiderTradeRes?.congressionalData
                               ?.isNotEmpty ==
