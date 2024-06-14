@@ -26,9 +26,7 @@ class _SdAnalysisState extends State<SdAnalysis> {
       StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
 
       if (provider.analysis == null) {
-        context
-            .read<StockDetailProviderNew>()
-            .getAnalysisData(symbol: widget.symbol);
+        _callApi();
       }
     });
   }

@@ -47,7 +47,6 @@ import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
-import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
@@ -89,8 +88,6 @@ import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
-import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/redditComments/i_frame_item.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
@@ -236,13 +233,13 @@ class Routes {
             // return StockDetails(symbol: settings.arguments as String);
           },
         );
-      case StockDetailiFrameItem.path:
-        return MaterialWithModalsPageRoute(
-          builder: (context) {
-            return StockDetailiFrameItem(
-                type: settings.arguments as CommentType);
-          },
-        );
+      // case StockDetailiFrameItem.path:
+      //   return MaterialWithModalsPageRoute(
+      //     builder: (context) {
+      //       return StockDetailiFrameItem(
+      //           type: settings.arguments as CommentType);
+      //     },
+      //   );
       case Blog.path:
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? id = arguments?['id'] as String?;
@@ -391,7 +388,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TrendingProvider()),
       ChangeNotifierProvider(create: (_) => InsiderTradingProvider()),
       ChangeNotifierProvider(create: (_) => WatchlistProvider()),
-      ChangeNotifierProvider(create: (_) => StockDetailProvider()),
+      // ChangeNotifierProvider(create: (_) => StockDetailProvider()),
       ChangeNotifierProvider(create: (_) => InsiderTradingDetailsProvider()),
       ChangeNotifierProvider(create: (_) => RedditTwitterProvider()),
       ChangeNotifierProvider(create: (_) => CompareStocksProvider()),

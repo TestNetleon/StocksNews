@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 import '../../../../modals/stockDetailRes/financial.dart';
 
@@ -21,17 +22,17 @@ class SdFinancialItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isOpen = openIndex == index;
     return InkWell(
+      borderRadius: BorderRadius.circular(5),
       onTap: () {
         onCardTapped(index);
       },
-      child: Ink(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: ThemeColors.greyBorder.withOpacity(0.4)),
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   child: Text(
@@ -54,6 +55,66 @@ class SdFinancialItem extends StatelessWidget {
                 ),
               ],
             ),
+            Visibility(
+              visible: isOpen,
+              child: const Divider(
+                color: ThemeColors.white,
+                height: 20,
+                thickness: 2,
+              ),
+            ),
+            if (isOpen) ...[
+              const SizedBox(height: 10),
+              ...data?.toMap().entries.map((entry) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Text(
+                        //   "${entry.key}: ${entry.value ?? 'N/A'}",
+                        //   style: stylePTSansRegular(height: 1.7),
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                entry.key,
+                                style: stylePTSansRegular(fontSize: 14),
+                              ),
+                            ),
+                            entry.key == "Link"
+                                ? InkWell(
+                                    borderRadius: BorderRadius.circular(50),
+                                    onTap: () {
+                                      openUrl(entry.value);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Icon(
+                                        Icons.info_rounded,
+                                        color: ThemeColors.accent,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  )
+                                : Flexible(
+                                    child: Text(
+                                      "${entry.value ?? 'N/A'}",
+                                      style: stylePTSansRegular(fontSize: 14),
+                                    ),
+                                  ),
+                          ],
+                        ),
+
+                        const Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 20,
+                        ),
+                      ],
+                    );
+                  }).toList() ??
+                  [],
+            ],
           ],
         ),
       ),

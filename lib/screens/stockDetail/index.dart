@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
+import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/chart/chart.dart';
 import 'widgets/dividends/dividends.dart';
 import 'widgets/earnings/earnings.dart';
@@ -45,6 +46,7 @@ class _StockDetailState extends State<StockDetail> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
       FirebaseAnalytics.instance.logEvent(
@@ -75,6 +77,7 @@ class _StockDetailState extends State<StockDetail> {
           children: [
             Expanded(
               child: CustomTabContainerNEW(
+                tabsPadding: const EdgeInsets.only(bottom: 10),
                 physics: const NeverScrollableScrollPhysics(),
                 scrollable: true,
                 tabs: List.generate(
@@ -101,16 +104,16 @@ class _StockDetailState extends State<StockDetail> {
                 ],
               ),
             ),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     border: const Border(
-            //       top: BorderSide(color: ThemeColors.greyBorder),
-            //     ),
-            //     color: ThemeColors.background.withOpacity(0.8),
-            //   ),
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   child: const AddToAlertWatchlist(),
-            // ),
+            Container(
+              decoration: BoxDecoration(
+                border: const Border(
+                  top: BorderSide(color: ThemeColors.greyBorder),
+                ),
+                color: ThemeColors.background.withOpacity(0.8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: const AddToAlertWatchlist(),
+            ),
           ],
         ),
       ),

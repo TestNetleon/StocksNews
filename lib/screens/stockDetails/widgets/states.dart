@@ -1,13 +1,13 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:stocks_news_new/utils/colors.dart';
-// import 'package:stocks_news_new/utils/constants.dart';
-// import 'package:stocks_news_new/utils/theme.dart';
-// import 'package:stocks_news_new/widgets/screen_title.dart';
-// import 'package:provider/provider.dart';
-// import 'package:stocks_news_new/modals/stock_details_res.dart';
-// import 'package:stocks_news_new/providers/stock_detail_provider.dart';
-// import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/stock_details_res.dart';
+import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 // //
 // class States extends StatelessWidget {
@@ -96,209 +96,6 @@
 //   }
 // }
 
-// class StateItem extends StatelessWidget {
-//   final String label;
-//   final String? value;
-//   final bool clickable;
-//   final bool divider;
-//   final void Function()? onTap;
-//   const StateItem({
-//     required this.label,
-//     this.value,
-//     this.clickable = false,
-//     this.divider = true,
-//     this.onTap,
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (value == null || value == "") {
-//       return const SizedBox();
-//     }
-//     return Column(
-//       children: [
-//         Padding(
-//           padding: EdgeInsets.symmetric(vertical: 5.sp),
-//           child: Row(
-//             children: [
-//               Text(
-//                 label,
-//                 style: stylePTSansRegular(
-//                   fontSize: 14,
-//                   color: ThemeColors.greyText,
-//                 ),
-//               ),
-//               const SpacerHorizontal(width: 10),
-//               Expanded(
-//                 child: InkWell(
-//                   onTap: onTap,
-//                   child: Text(
-//                     textAlign: TextAlign.end,
-//                     value ?? "",
-//                     style: stylePTSansRegular(
-//                         fontSize: 14,
-//                         color: clickable ? ThemeColors.accent : Colors.white),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         Visibility(
-//           visible: divider,
-//           child: const Divider(
-//               height: .5, thickness: .5, color: ThemeColors.greyBorder),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/custom_gridview.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/stock_detail_provider.dart';
-import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-import 'stockTopWidgets/common_heading.dart';
-
-//
-class States extends StatefulWidget {
-  const States({super.key});
-
-  @override
-  State<States> createState() => _StatesState();
-}
-
-class _StatesState extends State<States> {
-  @override
-  Widget build(BuildContext context) {
-    StockDetailProvider provider = context.watch<StockDetailProvider>();
-    KeyStats? keyStats = provider.data?.keyStats;
-
-    return Column(
-      children: [
-        const CommonHeadingStockDetail(),
-        CustomGridView(
-          paddingVerticle: 8,
-          paddingHorizontal: 0,
-          length: 25,
-          getChild: (index) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (index == 0)
-                StateItemNEW(label: "Symbol", value: keyStats?.symbol),
-              if (index == 1)
-                StateItemNEW(label: "Name", value: keyStats?.name),
-
-              if (index == 2)
-                StateItemNEW(label: "Price", value: keyStats?.price),
-              if (index == 3)
-                Visibility(
-                  visible: keyStats?.change != null,
-                  child: StateItemNEW(
-                      label: "Change", value: "\$${keyStats?.change ?? ""}"),
-                ),
-              if (index == 4)
-                Visibility(
-                  visible: keyStats?.changesPercentage != null,
-                  child: StateItemNEW(
-                    label: "Change Per.",
-                    value: "${keyStats?.changesPercentage?.toCurrency()}%",
-                  ),
-                ),
-              if (index == 5)
-                StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
-              if (index == 6)
-                StateItemNEW(label: "Day High", value: keyStats?.dayHigh),
-              if (index == 7)
-                StateItemNEW(label: "Year Low", value: keyStats?.yearLow),
-              if (index == 8)
-                StateItemNEW(label: "Year High", value: keyStats?.yearHigh),
-              if (index == 9)
-                StateItemNEW(label: "Volume", value: keyStats?.volume),
-              if (index == 10)
-                StateItemNEW(
-                    label: "Avg. Volume (3m)", value: keyStats?.avgVolume),
-
-              if (index == 11)
-                StateItemNEW(
-                    label: "Previous Close", value: keyStats?.previousClose),
-
-              if (index == 12)
-                StateItemNEW(label: "Open", value: keyStats?.open),
-              if (index == 13)
-                StateItemNEW(label: "EPS", value: "${keyStats?.eps ?? ""}"),
-              if (index == 14)
-                StateItemNEW(
-                    label: "P/E ratio", value: "${keyStats?.pe ?? ""}"),
-
-              if (index == 15)
-                StateItemNEW(
-                    label: "Avg 50 EMA (D)", value: keyStats?.priceAvg50),
-              if (index == 16)
-                StateItemNEW(
-                    label: "Avg 200 EMA (D)", value: keyStats?.priceAvg200),
-              // if (index == 10)
-              //   StateItemNEW(label: "Exchange", value: keyStats?.exchange),
-              if (index == 17)
-                StateItemNEW(label: "Revenue", value: keyStats?.revenue),
-              if (index == 18)
-                StateItemNEW(
-                    label: "Book value/Share",
-                    value: keyStats?.bookValuePerShare),
-              if (index == 19)
-                StateItemNEW(
-                    label: "Dividend (yield)", value: keyStats?.dividendYield),
-              if (index == 20)
-                StateItemNEW(
-                    label: "EV/Ebitda",
-                    value: keyStats?.enterpriseValueOverEbitda),
-              if (index == 21)
-                Visibility(
-                  visible: (keyStats?.bid != null && keyStats?.bid != '') ||
-                      keyStats?.ask != null && keyStats?.ask != '',
-                  child: StateItemNEW(
-                      label: "Bid/Ask",
-                      value:
-                          "${keyStats?.bid ?? "N/A"}/${keyStats?.ask ?? "N/A"}"),
-                ),
-              // if (index == 22) StateItemNEW(label: "Fair Value", value: "-"),
-              // if (index == 23)
-              //   StateItemNEW(label: "Analyst target price", value: "-"),
-
-              if (index == 22)
-                StateItemNEW(label: "Market Cap.", value: keyStats?.marketCap),
-              if (index == 23)
-                StateItemNEW(
-                    label: "Shares Outstanding",
-                    value: keyStats?.sharesOutstanding),
-              if (index == 24)
-                StateItemNEW(
-                    label: "Earnings Announcement",
-                    value: keyStats?.earningsAnnouncement),
-              const SpacerVertical(height: Dimen.itemSpacing),
-            ],
-          ),
-        ),
-        if (provider.extra?.disclaimer != null &&
-            (!provider.isLoading && keyStats != null))
-          DisclaimerWidget(
-            data: provider.extra!.disclaimer!,
-          ),
-      ],
-    );
-  }
-}
-
 class StateItem extends StatelessWidget {
   final String label;
   final String? value;
@@ -358,48 +155,251 @@ class StateItem extends StatelessWidget {
   }
 }
 
-class StateItemNEW extends StatelessWidget {
-  final String label;
-  final String? value;
-  final bool clickable;
-  final bool divider;
-  final void Function()? onTap;
-  const StateItemNEW({
-    required this.label,
-    this.value,
-    this.clickable = false,
-    this.divider = true,
-    this.onTap,
-    super.key,
-  });
+// import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:stocks_news_new/utils/colors.dart';
+// import 'package:stocks_news_new/utils/constants.dart';
+// import 'package:stocks_news_new/utils/theme.dart';
+// import 'package:stocks_news_new/widgets/custom_gridview.dart';
+// import 'package:provider/provider.dart';
+// import 'package:stocks_news_new/modals/stock_details_res.dart';
+// import 'package:stocks_news_new/providers/stock_detail_provider.dart';
+// import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
+// import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+// import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    if (value == null || value == "") {
-      return const SizedBox();
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: stylePTSansRegular(
-            fontSize: 12,
-            color: ThemeColors.greyText,
-          ),
-        ),
-        const SpacerVertical(height: 5),
-        InkWell(
-          onTap: onTap,
-          child: Text(
-            textAlign: TextAlign.start,
-            value ?? "",
-            style: stylePTSansRegular(
-                fontSize: 13,
-                color: clickable ? ThemeColors.accent : Colors.white),
-          ),
-        ),
-      ],
-    );
-  }
-}
+// import 'stockTopWidgets/common_heading.dart';
+
+// //
+// class States extends StatefulWidget {
+//   const States({super.key});
+
+//   @override
+//   State<States> createState() => _StatesState();
+// }
+
+// class _StatesState extends State<States> {
+//   @override
+//   Widget build(BuildContext context) {
+//     StockDetailProvider provider = context.watch<StockDetailProvider>();
+//     KeyStats? keyStats = provider.data?.keyStats;
+
+//     return Column(
+//       children: [
+//         const CommonHeadingStockDetail(),
+//         CustomGridView(
+//           paddingVerticle: 8,
+//           paddingHorizontal: 0,
+//           length: 25,
+//           getChild: (index) => Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               if (index == 0)
+//                 StateItemNEW(label: "Symbol", value: keyStats?.symbol),
+//               if (index == 1)
+//                 StateItemNEW(label: "Name", value: keyStats?.name),
+
+//               if (index == 2)
+//                 StateItemNEW(label: "Price", value: keyStats?.price),
+//               if (index == 3)
+//                 Visibility(
+//                   visible: keyStats?.change != null,
+//                   child: StateItemNEW(
+//                       label: "Change", value: "\$${keyStats?.change ?? ""}"),
+//                 ),
+//               if (index == 4)
+//                 Visibility(
+//                   visible: keyStats?.changesPercentage != null,
+//                   child: StateItemNEW(
+//                     label: "Change Per.",
+//                     value: "${keyStats?.changesPercentage?.toCurrency()}%",
+//                   ),
+//                 ),
+//               if (index == 5)
+//                 StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
+//               if (index == 6)
+//                 StateItemNEW(label: "Day High", value: keyStats?.dayHigh),
+//               if (index == 7)
+//                 StateItemNEW(label: "Year Low", value: keyStats?.yearLow),
+//               if (index == 8)
+//                 StateItemNEW(label: "Year High", value: keyStats?.yearHigh),
+//               if (index == 9)
+//                 StateItemNEW(label: "Volume", value: keyStats?.volume),
+//               if (index == 10)
+//                 StateItemNEW(
+//                     label: "Avg. Volume (3m)", value: keyStats?.avgVolume),
+
+//               if (index == 11)
+//                 StateItemNEW(
+//                     label: "Previous Close", value: keyStats?.previousClose),
+
+//               if (index == 12)
+//                 StateItemNEW(label: "Open", value: keyStats?.open),
+//               if (index == 13)
+//                 StateItemNEW(label: "EPS", value: "${keyStats?.eps ?? ""}"),
+//               if (index == 14)
+//                 StateItemNEW(
+//                     label: "P/E ratio", value: "${keyStats?.pe ?? ""}"),
+
+//               if (index == 15)
+//                 StateItemNEW(
+//                     label: "Avg 50 EMA (D)", value: keyStats?.priceAvg50),
+//               if (index == 16)
+//                 StateItemNEW(
+//                     label: "Avg 200 EMA (D)", value: keyStats?.priceAvg200),
+//               // if (index == 10)
+//               //   StateItemNEW(label: "Exchange", value: keyStats?.exchange),
+//               if (index == 17)
+//                 StateItemNEW(label: "Revenue", value: keyStats?.revenue),
+//               if (index == 18)
+//                 StateItemNEW(
+//                     label: "Book value/Share",
+//                     value: keyStats?.bookValuePerShare),
+//               if (index == 19)
+//                 StateItemNEW(
+//                     label: "Dividend (yield)", value: keyStats?.dividendYield),
+//               if (index == 20)
+//                 StateItemNEW(
+//                     label: "EV/Ebitda",
+//                     value: keyStats?.enterpriseValueOverEbitda),
+//               if (index == 21)
+//                 Visibility(
+//                   visible: (keyStats?.bid != null && keyStats?.bid != '') ||
+//                       keyStats?.ask != null && keyStats?.ask != '',
+//                   child: StateItemNEW(
+//                       label: "Bid/Ask",
+//                       value:
+//                           "${keyStats?.bid ?? "N/A"}/${keyStats?.ask ?? "N/A"}"),
+//                 ),
+//               // if (index == 22) StateItemNEW(label: "Fair Value", value: "-"),
+//               // if (index == 23)
+//               //   StateItemNEW(label: "Analyst target price", value: "-"),
+
+//               if (index == 22)
+//                 StateItemNEW(label: "Market Cap.", value: keyStats?.marketCap),
+//               if (index == 23)
+//                 StateItemNEW(
+//                     label: "Shares Outstanding",
+//                     value: keyStats?.sharesOutstanding),
+//               if (index == 24)
+//                 StateItemNEW(
+//                     label: "Earnings Announcement",
+//                     value: keyStats?.earningsAnnouncement),
+//               const SpacerVertical(height: Dimen.itemSpacing),
+//             ],
+//           ),
+//         ),
+//         if (provider.extra?.disclaimer != null &&
+//             (!provider.isLoading && keyStats != null))
+//           DisclaimerWidget(
+//             data: provider.extra!.disclaimer!,
+//           ),
+//       ],
+//     );
+//   }
+// }
+
+// class StateItem extends StatelessWidget {
+//   final String label;
+//   final String? value;
+//   final bool clickable;
+//   final bool divider;
+//   final void Function()? onTap;
+//   const StateItem({
+//     required this.label,
+//     this.value,
+//     this.clickable = false,
+//     this.divider = true,
+//     this.onTap,
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (value == null || value == "") {
+//       return const SizedBox();
+//     }
+//     return Column(
+//       children: [
+//         Padding(
+//           padding: EdgeInsets.symmetric(vertical: 5.sp),
+//           child: Row(
+//             children: [
+//               Text(
+//                 label,
+//                 style: stylePTSansRegular(
+//                   fontSize: 14,
+//                   color: ThemeColors.greyText,
+//                 ),
+//               ),
+//               const SpacerHorizontal(width: 10),
+//               Expanded(
+//                 child: InkWell(
+//                   onTap: onTap,
+//                   child: Text(
+//                     textAlign: TextAlign.end,
+//                     value ?? "",
+//                     style: stylePTSansRegular(
+//                         fontSize: 14,
+//                         color: clickable ? ThemeColors.accent : Colors.white),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         Visibility(
+//           visible: divider,
+//           child: const Divider(
+//               height: .5, thickness: .5, color: ThemeColors.greyBorder),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+// class StateItemNEW extends StatelessWidget {
+//   final String label;
+//   final String? value;
+//   final bool clickable;
+//   final bool divider;
+//   final void Function()? onTap;
+//   const StateItemNEW({
+//     required this.label,
+//     this.value,
+//     this.clickable = false,
+//     this.divider = true,
+//     this.onTap,
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (value == null || value == "") {
+//       return const SizedBox();
+//     }
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(
+//           label,
+//           style: stylePTSansRegular(
+//             fontSize: 12,
+//             color: ThemeColors.greyText,
+//           ),
+//         ),
+//         const SpacerVertical(height: 5),
+//         InkWell(
+//           onTap: onTap,
+//           child: Text(
+//             textAlign: TextAlign.start,
+//             value ?? "",
+//             style: stylePTSansRegular(
+//                 fontSize: 13,
+//                 color: clickable ? ThemeColors.accent : Colors.white),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

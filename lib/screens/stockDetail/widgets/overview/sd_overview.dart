@@ -28,7 +28,10 @@ class _SdOverviewState extends State<SdOverview> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _callApi();
+      StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+      if (provider.overviewRes == null) {
+        _callApi();
+      }
     });
   }
 

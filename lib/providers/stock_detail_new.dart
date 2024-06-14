@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/widgets.dart';
@@ -18,6 +19,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/sd_news.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/apis.dart';
@@ -34,6 +36,95 @@ import '../utils/theme.dart';
 import 'user_provider.dart';
 
 class StockDetailProviderNew extends ChangeNotifier {
+  final AudioPlayer _player = AudioPlayer();
+
+  void clearAll() {
+    //Tab clear
+    selectedTab = 0;
+    _errorTab = null;
+    _extra = null;
+    _tabRes = null;
+
+    //Earning clear
+    _errorEarning = null;
+    _extraEarning = null;
+    _earnings = null;
+
+    //Dividends clear
+    _errorDividends = null;
+    _extraDividends = null;
+    _dividends = null;
+
+    //Analysis clear
+    _errorAnalysis = null;
+    _extraAnalysis = null;
+    _analysis = null;
+
+    //Chart clear
+    _errorChart = null;
+    _extraChart = null;
+    _chartRes = null;
+
+    //Sec Filing clear
+    _errorSec = null;
+    _extraSec = null;
+    _secRes = null;
+
+    //Analyst Forecast clear
+    _errorForecast = null;
+    _extraForecast = null;
+    _forecastRes = null;
+
+    //Technical Analysis clear
+    _errorTech = null;
+    _extraTech = null;
+    _techRes = null;
+
+    //Overview clear
+    _errorOverview = null;
+    _extraOverview = null;
+    _overviewRes = null;
+
+    //Graph clear
+    _errorGraph = null;
+    _extraGraph = null;
+    _graphChart = null;
+
+    //Ownership clear
+    _errorOwnership = null;
+    _extraOwnership = null;
+    _ownershipRes = null;
+
+    //Competitor clear
+    _errorCompetitor = null;
+    _extraCompetitor = null;
+    _competitorRes = null;
+
+    //News clear
+    _errorNews = null;
+    _extraNews = null;
+    _newsRes = null;
+
+    //Social clear
+    _errorSocial = null;
+    _extraSocial = null;
+    _socialRes = null;
+
+    //Insider Trades clear
+    _errorInsiderTrade = null;
+    _extraInsiderTrade = null;
+    _sdInsiderTradeRes = null;
+
+    //Financial clear
+    _errorFinancial = null;
+    _extraFinancial = null;
+    _sdFinancialRes = null;
+    _types = null;
+    _periods = null;
+    typeIndex = 0;
+    periodIndex = 0;
+  }
+
   //TAB DATA
   String? _errorTab;
   String? get errorTab => _errorTab ?? Const.errSomethingWrong;
@@ -51,6 +142,16 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   int selectedTab = 0;
 
+  void changeAlert(value) {
+    _tabRes?.isAlertAdded = value;
+    notifyListeners();
+  }
+
+  void changeWatchList(value) {
+    _tabRes?.isWatchListAdded = value;
+    notifyListeners();
+  }
+
   void setStatusTab(status) {
     _statusTab = status;
     notifyListeners();
@@ -63,9 +164,84 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  Future createAlertSend({
+    required String alertName,
+    bool selectedOne = false,
+    bool selectedTwo = false,
+  }) async {
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": _tabRes?.keyStats?.symbol ?? "",
+      "alert_name": alertName,
+      "sentiment_spike": selectedOne ? "yes" : "no",
+      "mention_spike": selectedTwo ? "yes" : "no",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.createAlert,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _tabRes?.isAlertAdded = 1;
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        // notifyListeners();
+      }
+      Navigator.pop(navigatorKey.currentContext!);
+      Navigator.pop(navigatorKey.currentContext!);
+      notifyListeners();
+
+      return ApiResponse(status: response.status, data: response.data);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      notifyListeners();
+    }
+  }
+
+  Future addToWishList() async {
+    notifyListeners();
+
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": _tabRes?.keyStats?.symbol ?? "",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.addWatchlist,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _tabRes?.isWatchListAdded = 1;
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
+      }
+      // showErrorMessage(
+      //     message: response.message,
+      //     type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      notifyListeners();
+
+      return ApiResponse(status: response.status, data: response.data);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      notifyListeners();
+
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
+  }
+
   Future getTabData({String? symbol}) async {
-    _tabRes = null;
-    selectedTab = 0;
+    clearAll();
     setStatusTab(Status.loading);
     try {
       FormData request = FormData.fromMap({
@@ -240,6 +416,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _analysis = analysisResFromJson(jsonEncode(response.data));
+        _extraAnalysis =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _analysis = null;
         _errorAnalysis = response.message;
@@ -291,6 +469,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _chartRes = sdChartResFromJson(jsonEncode(response.data));
+        _extraChart =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _chartRes = null;
         _errorChart = response.message;
@@ -342,6 +522,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _secRes = secFilingResFromJson(jsonEncode(response.data));
+        _extraSec = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _secRes = null;
         _errorSec = response.message;
@@ -393,6 +574,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _forecastRes = sdAnalystForecastResFromJson(jsonEncode(response.data));
+        _extraForecast =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _forecastRes = null;
         _errorForecast = response.message;
@@ -448,6 +631,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _techRes = technicalAnalysisResFromJson(jsonEncode(response.data));
+        _extraTech = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _techRes = null;
         _errorForecast = response.message;
@@ -501,6 +685,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _overviewRes = sdOverviewResFromJson(jsonEncode(response.data));
+        _extraOverview =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _overviewRes = null;
         _errorOverview = response.message;
@@ -759,6 +945,9 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _graphChart = sdOverviewGraphResFromJson(jsonEncode(response.data));
+        _extraGraph =
+            (response.extra is Extra ? response.extra as Extra : null);
+
         avgData(showDate: newRange != "1Y");
       } else {
         _graphChart = null;
@@ -963,6 +1152,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _socialRes = sdSocialResFromJson(jsonEncode(response.data));
+        _extraSocial =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _socialRes = null;
         _errorSocial = response.message;
@@ -1018,6 +1209,8 @@ class StockDetailProviderNew extends ChangeNotifier {
       if (response.status) {
         _sdInsiderTradeRes =
             sdInsiderTradeResFromJson(jsonEncode(response.data));
+        _extraInsiderTrade =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _sdInsiderTradeRes = null;
         _errorInsiderTrade = response.message;
@@ -1032,7 +1225,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
   //---------------------------------------------------------------
-//Insider Trade
+//Financial data
   String? _errorFinancial;
   String? get errorFinancial => _errorFinancial ?? Const.errSomethingWrong;
 
@@ -1041,14 +1234,59 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   bool get isLoadingFinancial => _statusFinancial == Status.loading;
 
+  Status _statusFinancialTab = Status.ideal;
+  Status get statusFinancialTab => _statusFinancialTab;
+
+  bool get isLoadingFinancialTab => _statusFinancialTab == Status.loading;
+
   Extra? _extraFinancial;
   Extra? get extraFinancial => _extraFinancial;
 
   SdFinancialRes? _sdFinancialRes;
   SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
 
+  List<SdTopRes>? _types;
+  List<SdTopRes>? get types => _types;
+
+  List<SdTopRes>? _periods;
+  List<SdTopRes>? get periods => _periods;
+
+  int typeIndex = 0;
+  int periodIndex = 0;
+
+  void changeTabType(index, {String? symbol}) {
+    if (typeIndex != index) {
+      typeIndex = index;
+      notifyListeners();
+      getFinancialData(
+        symbol: symbol,
+        period: _periods?[periodIndex].value,
+        type: _types?[typeIndex].value,
+        tabProgress: true,
+      );
+    }
+  }
+
+  void changePeriodType(index, {String? symbol}) {
+    if (periodIndex != index) {
+      periodIndex = index;
+      notifyListeners();
+      getFinancialData(
+        symbol: symbol,
+        period: _periods?[periodIndex].value,
+        type: _types?[typeIndex].value,
+        tabProgress: true,
+      );
+    }
+  }
+
   void setStatusFinancial(status) {
     _statusFinancial = status;
+    notifyListeners();
+  }
+
+  void setStatusFinancialTab(status) {
+    _statusFinancialTab = status;
     notifyListeners();
   }
 
@@ -1056,8 +1294,19 @@ class StockDetailProviderNew extends ChangeNotifier {
     String? symbol,
     String period = "annual",
     String type = "income-statement",
+    bool reset = false,
+    bool showProgress = false,
+    bool tabProgress = false,
   }) async {
-    setStatusFinancial(Status.loading);
+    if (reset) {
+      typeIndex = 0;
+      periodIndex = 0;
+    }
+    if (tabProgress) {
+      setStatusFinancialTab(Status.loading);
+    } else {
+      setStatusFinancial(Status.loading);
+    }
     try {
       Map request = {
         "token":
@@ -1070,21 +1319,35 @@ class StockDetailProviderNew extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.detailFinancial,
         request: request,
-        showProgress: false,
+        showProgress: tabProgress,
       );
 
       if (response.status) {
         _sdFinancialRes = sdFinancialResFromJson(jsonEncode(response.data));
+        _extraFinancial =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _sdFinancialRes = null;
         _errorFinancial = response.message;
       }
-      setStatusFinancial(Status.loaded);
+
+      _types = _extraFinancial?.type;
+      _periods = _extraFinancial?.period;
+
+      if (tabProgress) {
+        setStatusFinancialTab(Status.loaded);
+      } else {
+        setStatusFinancial(Status.loaded);
+      }
     } catch (e) {
       _sdFinancialRes = null;
       Utils().showLog(e.toString());
       _errorFinancial = Const.errSomethingWrong;
-      setStatusFinancial(Status.loaded);
+      if (tabProgress) {
+        setStatusFinancialTab(Status.loaded);
+      } else {
+        setStatusFinancial(Status.loaded);
+      }
     }
   }
 }
