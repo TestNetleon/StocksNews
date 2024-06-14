@@ -119,13 +119,13 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                             return const SizedBox();
                           }
                           return SdInsiderItem(
-                            isOpen: provider.openIndex == index,
+                            isOpen: provider.openIndexInsider == index,
                             onTap: () {
                               provider.setOpenIndex(
-                                provider.openIndex == index ? -1 : index,
+                                -1,
                               );
                               provider.setOpenIndexInsider(
-                                -1,
+                                provider.openIndexInsider == index ? -1 : index,
                               );
                             },
                             data: data,
@@ -137,9 +137,9 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                             height: 20.sp,
                           );
                         },
-                        itemCount: provider
-                                .sdInsiderTradeRes?.congressionalData?.length ??
-                            0,
+                        itemCount:
+                            provider.sdInsiderTradeRes?.insiderData?.length ??
+                                0,
                       ),
                     ],
                   ),
