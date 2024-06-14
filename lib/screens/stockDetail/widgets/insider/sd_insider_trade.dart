@@ -144,7 +144,6 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     ],
                   ),
                 ),
-                const SpacerVertical(height: 20),
                 Visibility(
                   visible: provider.sdInsiderTradeRes?.congressionalData
                               ?.isNotEmpty ==
