@@ -24,6 +24,7 @@ import '../api/apis.dart';
 import '../modals/analysis_res.dart';
 import '../modals/stockDetailRes/analyst_forecast.dart';
 import '../modals/stockDetailRes/earnings.dart';
+import '../modals/stockDetailRes/financial.dart';
 import '../modals/stockDetailRes/overview.dart';
 import '../modals/technical_analysis_res.dart';
 import '../route/my_app.dart';
@@ -1027,6 +1028,63 @@ class StockDetailProviderNew extends ChangeNotifier {
       Utils().showLog(e.toString());
       _errorInsiderTrade = Const.errSomethingWrong;
       setStatusInsiderTrade(Status.loaded);
+    }
+  }
+
+  //---------------------------------------------------------------
+//Insider Trade
+  String? _errorFinancial;
+  String? get errorFinancial => _errorFinancial ?? Const.errSomethingWrong;
+
+  Status _statusFinancial = Status.ideal;
+  Status get statusFinancial => _statusFinancial;
+
+  bool get isLoadingFinancial => _statusFinancial == Status.loading;
+
+  Extra? _extraFinancial;
+  Extra? get extraFinancial => _extraFinancial;
+
+  SdFinancialRes? _sdFinancialRes;
+  SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
+
+  void setStatusFinancial(status) {
+    _statusFinancial = status;
+    notifyListeners();
+  }
+
+  Future getFinancialData({
+    String? symbol,
+    String period = "annual",
+    String type = "income-statement",
+  }) async {
+    setStatusFinancial(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+        "period": period,
+        "type": type,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.detailFinancial,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _sdFinancialRes = sdFinancialResFromJson(jsonEncode(response.data));
+      } else {
+        _sdFinancialRes = null;
+        _errorFinancial = response.message;
+      }
+      setStatusFinancial(Status.loaded);
+    } catch (e) {
+      _sdFinancialRes = null;
+      Utils().showLog(e.toString());
+      _errorFinancial = Const.errSomethingWrong;
+      setStatusFinancial(Status.loaded);
     }
   }
 }

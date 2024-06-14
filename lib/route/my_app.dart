@@ -14,6 +14,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -150,7 +151,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-              builder: (context) => StockDetails(symbol: slugForTicker)));
+              builder: (context) => StockDetail(symbol: slugForTicker)));
     } else if (type == "login") {
       if (userPresent) {
         if (_appLifecycleState == null) {

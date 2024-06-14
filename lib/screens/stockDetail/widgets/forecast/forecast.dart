@@ -72,6 +72,25 @@ class _SdForecastState extends State<SdForecast> {
                   color: ThemeColors.greyBorder,
                   height: 20,
                 ),
+                // const ScreenTitle(
+                //   title: "Recent Analyst Forecasts and Stock Ratings",
+                // ),
+                // ListView.separated(
+                //   padding: EdgeInsets.zero,
+                //   shrinkWrap: true,
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   itemBuilder: (context, index) {
+                //     AnalystForecast? analystForecast =
+                //         provider.forecastRes?.analystForecasts?[index];
+
+                //     return Container();
+                //   },
+                //   separatorBuilder: (context, index) {
+                //     return const SpacerVertical(height: 10);
+                //   },
+                //   itemCount:
+                //       provider.forecastRes?.analystForecasts?.length ?? 0,
+                // ),
                 ScreenTitle(
                   title: "${provider.tabRes?.keyStats?.name} - FAQs",
                 ),
@@ -93,7 +112,7 @@ class _SdForecastState extends State<SdForecast> {
                     return const SpacerVertical(height: 10);
                   },
                   itemCount: provider.forecastRes?.faq?.length ?? 0,
-                )
+                ),
               ],
             ),
           ),

@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../stockDetails/widgets/analyst_data.dart';
 import 'chart.dart';
 import 'company_brief.dart';
 import 'desclaimer.dart';
@@ -74,12 +75,12 @@ class _SdOverviewState extends State<SdOverview> {
                 SdOverviewChart(
                   symbol: widget.symbol ?? "",
                 ),
-                // const Padding(
-                //   padding: EdgeInsets.only(
-                //     bottom: Dimen.padding,
-                //   ),
-                //   child: StockDetailAnalystData(),
-                // ),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    bottom: Dimen.padding,
+                  ),
+                  child: StockDetailAnalystData(),
+                ),
                 const SpacerVertical(height: 4),
                 const SdStockScore(),
                 const SpacerVertical(height: 4),
