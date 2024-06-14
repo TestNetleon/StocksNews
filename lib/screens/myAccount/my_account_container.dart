@@ -315,7 +315,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         const SpacerVertical(height: 20),
         const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),
-        ReferApp(),
+        const ReferApp(),
         // Column(
         //   children: [
         //     Text(

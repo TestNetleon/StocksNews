@@ -273,9 +273,11 @@ class StockDetailProviderNew extends ChangeNotifier {
         _errorTab = response.message;
       }
       setStatusTab(Status.loaded);
+      return ApiResponse(status: response.session);
     } catch (e) {
       Utils().showLog(e.toString());
       setStatusTab(Status.loaded);
+      return ApiResponse(status: false);
     }
   }
 

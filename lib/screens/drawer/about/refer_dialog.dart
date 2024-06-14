@@ -47,7 +47,7 @@ class ReferDialog extends StatelessWidget {
             alignment: Alignment.center,
             child: Padding(
               padding: EdgeInsets.only(top: 7),
-              child: const BottomSheetTick(),
+              child: BottomSheetTick(),
             ),
           ),
           Padding(

@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
-import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
 import 'package:stocks_news_new/screens/tabs/trending/menuButton/popup_menu.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';

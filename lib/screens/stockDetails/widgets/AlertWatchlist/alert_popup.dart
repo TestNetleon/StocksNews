@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';

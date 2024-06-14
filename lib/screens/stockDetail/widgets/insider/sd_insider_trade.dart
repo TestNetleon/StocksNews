@@ -94,7 +94,7 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     return SdTopCard(top: top);
                   },
                 ),
-                SpacerVertical(height: 20),
+                const SpacerVertical(height: 20),
                 Visibility(
                   visible: provider.sdInsiderTradeRes?.congressionalData
                               ?.isNotEmpty ==

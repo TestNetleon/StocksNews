@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/providers/stock_detail_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
@@ -71,19 +71,26 @@ class AddToAlertWatchlist extends StatelessWidget {
                       return;
                     }
                     log("-----GET TAB CALLING");
-                    await context
+                    ApiResponse res = await context
                         .read<StockDetailProviderNew>()
                         .getTabData(symbol: symbol);
-                    num alrtOn = context
-                            .read<StockDetailProviderNew>()
-                            .tabRes
-                            ?.isAlertAdded ??
-                        0;
-                    if (alrtOn == 0) {
-                      await Future.delayed(const Duration(milliseconds: 200));
-                      _showAlertPopup(navigatorKey.currentContext!, symbol);
-                    } else {
-                      Navigator.pushNamed(context, Alerts.path);
+                    try {
+                      if (res.status) {
+                        num alrtOn = navigatorKey.currentContext!
+                                .read<StockDetailProviderNew>()
+                                .tabRes
+                                ?.isAlertAdded ??
+                            0;
+                        if (alrtOn == 0) {
+                          await Future.delayed(
+                              const Duration(milliseconds: 200));
+                          _showAlertPopup(navigatorKey.currentContext!, symbol);
+                        } else {
+                          Navigator.pushNamed(context, Alerts.path);
+                        }
+                      }
+                    } catch (e) {
+                      Utils().showLog("----$e-----");
                     }
                   }
                 : alertOn == 0
@@ -108,22 +115,28 @@ class AddToAlertWatchlist extends StatelessWidget {
                     if (context.read<UserProvider>().user == null) {
                       return;
                     }
-                    await context
+                    ApiResponse res = await context
                         .read<StockDetailProviderNew>()
                         .getTabData(symbol: symbol);
-                    num wlistOn = context
-                            .read<StockDetailProviderNew>()
-                            .tabRes
-                            ?.isWatchListAdded ??
-                        0;
-                    if (wlistOn == 0) {
-                      log("-----GET TAB CALLING");
+                    try {
+                      if (res.status) {
+                        num wlistOn = navigatorKey.currentContext!
+                                .read<StockDetailProviderNew>()
+                                .tabRes
+                                ?.isWatchListAdded ??
+                            0;
+                        if (wlistOn == 0) {
+                          log("-----GET TAB CALLING");
 
-                      await context
-                          .read<StockDetailProviderNew>()
-                          .addToWishList();
-                    } else {
-                      Navigator.pushNamed(context, WatchList.path);
+                          await context
+                              .read<StockDetailProviderNew>()
+                              .addToWishList();
+                        } else {
+                          Navigator.pushNamed(context, WatchList.path);
+                        }
+                      }
+                    } catch (e) {
+                      Utils().showLog("----$e-----");
                     }
                   }
                 : watchlistOn == 0
