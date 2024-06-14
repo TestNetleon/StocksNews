@@ -73,8 +73,9 @@ class _SdForecastState extends State<SdForecast> {
               children: [
                 const SdCommonHeading(),
                 const Divider(
-                  color: ThemeColors.greyBorder,
+                  color: ThemeColors.white,
                   height: 20,
+                  thickness: 2,
                 ),
                 Visibility(
                   visible: provider.forecastRes?.analystForecasts?.isNotEmpty ==

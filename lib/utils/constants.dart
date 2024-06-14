@@ -70,6 +70,9 @@ class Images {
   static const String portfolioCard = "assets/images/portfolio.png";
   static const String stockIcon3d = "assets/images/stock_icon_3d.png";
   static const String referBack = "assets/images/bg.png";
+  static const String coin = "assets/images/coin.png";
+  static const String flames = "assets/images/flames.png";
+  static const String reward = "assets/images/reward.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
