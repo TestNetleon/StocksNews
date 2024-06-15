@@ -309,6 +309,6 @@ bool isValidUrl(String? url) {
   if (url == null) return false;
 
   Uri? uri = Uri.tryParse(url);
-  // return uri != null && uri.hasScheme && uri.hasAuthority;
-  return uri != null;
+  return uri != null && uri.hasScheme && uri.hasAuthority;
+  // return uri != null;
 }

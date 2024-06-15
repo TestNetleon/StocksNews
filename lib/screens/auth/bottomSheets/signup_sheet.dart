@@ -242,7 +242,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
               children: [
                 // const SpacerVertical(height: 16),
                 Text(
-                  "Welcome to stocks.news",
+                  "Welcome to Stocks.News",
                   style: stylePTSansBold(fontSize: 24),
                 ),
                 const SpacerVertical(height: 30),

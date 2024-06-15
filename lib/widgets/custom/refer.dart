@@ -23,6 +23,7 @@ class ReferApp extends StatelessWidget {
     if (provider.user == null) {
       isPhone ? await loginSheet() : await loginSheetTablet();
     }
+    
     if (provider.user == null) {
       return;
     }
@@ -30,8 +31,8 @@ class ReferApp extends StatelessWidget {
     if (provider.user?.phone == null || provider.user?.phone == '') {
       await referLogin();
     } else {
-      // await _bottomSheet();
-      await referLogin();
+      await _bottomSheet();
+      // await referLogin();
     }
   }
 

@@ -80,6 +80,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       String? phone,
       String? referralCode,
       String? referralUrl}) {
+        
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
     if (name != null) _user?.name = name;

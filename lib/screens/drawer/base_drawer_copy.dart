@@ -82,7 +82,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Welcome to stocks.news",
+                                  "Welcome to Stocks.News",
                                   style: stylePTSansBold(fontSize: 20),
                                 ),
                                 Padding(
@@ -357,7 +357,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                   ),
                                   const SpacerHorizontal(width: 8),
                                   Text(
-                                    "About stocks.news",
+                                    "About Stocks.News",
                                     style: stylePTSansRegular(fontSize: 13),
                                   ),
                                 ],

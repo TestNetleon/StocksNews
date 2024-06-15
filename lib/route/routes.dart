@@ -180,6 +180,7 @@ class Routes {
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
     log("GENERATED ROUT ***=> $settings");
+    log("GENERATED ROUT ***=> ${isValidUrl(routingData)}}");
 
     if (routingData != null && isValidUrl(routingData)) {
       Uri? uri = Uri.tryParse(routingData);

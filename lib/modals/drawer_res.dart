@@ -63,8 +63,8 @@ List<DrawerRes> drawerItems = [
 
   DrawerRes(iconData: Icons.newspaper_rounded, text: "Blogs"),
 
-  DrawerRes(iconData: Icons.list_alt_rounded, text: "About Stocks.news"),
-  DrawerRes(iconData: Icons.featured_play_list_outlined, text: "What we do"),
+  DrawerRes(iconData: Icons.list_alt_rounded, text: "About Stocks.News"),
+  DrawerRes(iconData: Icons.featured_play_list_outlined, text: "What We Do"),
 
   DrawerRes(iconData: Icons.mail_outline_sharp, text: "Contact Us"),
   DrawerRes(iconData: Icons.help_outline_rounded, text: "FAQs"),

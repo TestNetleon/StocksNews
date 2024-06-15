@@ -365,7 +365,7 @@ List<DrawerRes> aboutTiles = [
   ),
   DrawerRes(
     iconData: Icons.list_alt_rounded,
-    text: "About Stocks.news",
+    text: "About Stocks.News",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, TCandPolicy.path,
           arguments: PolicyType.aboutUs);
@@ -373,7 +373,7 @@ List<DrawerRes> aboutTiles = [
   ),
   DrawerRes(
     iconData: Icons.featured_play_list_outlined,
-    text: "What we do",
+    text: "What We Do",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, WhatWeDoIndex.path);
     },

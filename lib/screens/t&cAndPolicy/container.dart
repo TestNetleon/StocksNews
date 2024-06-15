@@ -97,7 +97,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
               onTap: _triggerEvents,
               child: ScreenTitle(
                 title: widget.policyType == PolicyType.aboutUs
-                    ? "About Stocks.news"
+                    ? "About Stocks.News"
                     : widget.policyType == PolicyType.tC
                         ? "Terms of Service"
                         : widget.policyType == PolicyType.privacy

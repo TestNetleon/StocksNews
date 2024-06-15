@@ -75,7 +75,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           child: Column(
             children: [
               const DrawerTopNew(
-                text: "About stocks.news",
+                text: "About Stocks.News",
               ),
               const SpacerVertical(height: 30),
               Container(
@@ -259,12 +259,12 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Review Stock.News App",
+                              "Review Stocks.News App",
                               style: stylePTSansBold(fontSize: 15),
                             ),
                             const SpacerVertical(height: 3),
                             Text(
-                              "If you like our recommend to others.",
+                              "If you like our app recommend to others.",
                               style: stylePTSansRegular(
                                   fontSize: 13, color: ThemeColors.greyText),
                             ),
