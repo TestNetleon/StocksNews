@@ -111,7 +111,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
-        "referral_code": kDebugMode ? "38K6PP" : "$referralCode",
+        "referral_code": "$referralCode",
       };
 
       provider.verifySignupOtp(request);

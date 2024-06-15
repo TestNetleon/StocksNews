@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -10,6 +12,17 @@ import 'package:intl/intl.dart';
 
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../providers/user_provider.dart';
+import '../route/my_app.dart';
+import '../screens/auth/bottomSheets/login_sheet.dart';
+import '../screens/auth/bottomSheets/signup_sheet.dart';
+import '../screens/blogDetail/index.dart';
+import '../screens/deepLinkScreen/webscreen.dart';
+import '../screens/stockDetail/index.dart';
+import '../screens/tabs/news/newsDetail/new_detail.dart';
+import '../screens/tabs/tabs.dart';
+import 'preference.dart';
 
 // import 'package:whatsapp_share/whatsapp_share.dart';
 
@@ -181,5 +194,112 @@ commonShare({String? url, String? title}) {
     // showErrorMessage(message: "No url found.");
   } else {
     Share.share("$title $url", subject: title);
+  }
+}
+
+void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
+  String type = containsSpecificPath(uri);
+  String slug = extractLastPathComponent(uri);
+
+  if (slug == 'install') {
+    String? referralCode = uri.queryParameters['code'];
+    if (referralCode == null || referralCode == '') {
+      referralCode = uri.queryParameters['referrer'];
+    }
+    if (referralCode == null || referralCode == '') {
+      referralCode = uri.queryParameters['ref'];
+    }
+    if (referralCode == null || referralCode == '') {
+      referralCode = uri.queryParameters['referral_code'];
+    }
+
+    if (referralCode != null && referralCode != "") {
+      Preference.saveReferral(referralCode);
+    }
+  }
+
+  if (fromBackground) {
+    Timer(const Duration(seconds: 5), () {
+      _navigation(uri: uri, slug: slug, type: type, fromBackground: true);
+    });
+  } else {
+    Timer(const Duration(seconds: 1), () {
+      _navigation(uri: uri, slug: slug, type: type);
+    });
+  }
+}
+
+void _navigation({
+  String? type,
+  required Uri uri,
+  String? slug,
+  fromBackground = false,
+}) async {
+  Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+  String slugForTicker = extractSymbolValue(uri);
+  Utils().showLog("slug for ticker $slugForTicker");
+  bool userPresent = false;
+
+  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  if (await provider.checkForUser()) {
+    userPresent = true;
+  }
+  Utils().showLog("----$userPresent---");
+  if (type == "blog") {
+    Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) => BlogDetail(
+                  // id: "",
+                  slug: slug,
+                )));
+  } else if (type == "news") {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => NewsDetails(
+          slug: slug,
+        ),
+      ),
+    );
+  } else if (type == "stock_detail") {
+    Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+            builder: (context) => StockDetail(symbol: slugForTicker)));
+  } else if (type == "login") {
+    if (userPresent) {
+      if (fromBackground) {
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+      }
+    } else {
+      loginSheet();
+    }
+  } else if (type == "signUp") {
+    if (userPresent) {
+      if (fromBackground) {
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+      }
+    } else {
+      signupSheet();
+    }
+  } else if (type == "dashboard") {
+    if (fromBackground) {
+      Navigator.pushNamedAndRemoveUntil(
+        navigatorKey.currentContext!,
+        Tabs.path,
+        (route) => false,
+      );
+    }
+    Utils().showLog("--goto dashboard---");
+  } else {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => WebviewLink(url: uri),
+      ),
+    );
   }
 }

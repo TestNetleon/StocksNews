@@ -28,7 +28,13 @@ final _appLinks = AppLinks();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final String? initialPath;
+  final String? slug;
+  const MyApp({
+    required this.initialPath,
+    required this.slug,
+    super.key,
+  });
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -50,7 +56,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _getAppLinks();
+      // _getAppLinks();
       // Timer(const Duration(milliseconds: 7500), () {
       //   _checkForConnection();
       // });
@@ -250,7 +256,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             debugShowCheckedModeBanner: false,
             title: Const.appName,
             theme: lightTheme,
-            home: child,
+            home: widget.initialPath == null
+                ? child
+                : widget.initialPath == 'news'
+                    ? NewsDetails(slug: widget.slug)
+                    : child,
             routes: Routes.routes,
             onGenerateRoute: Routes.getRouteGenerate,
           ),

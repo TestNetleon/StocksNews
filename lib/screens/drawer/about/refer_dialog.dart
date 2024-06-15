@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/bottom_sheet_tick.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../fcm/dynamic_links.service.dart';
+
 class ReferDialog extends StatelessWidget {
   const ReferDialog({super.key});
 
@@ -79,8 +81,11 @@ class ReferDialog extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
-                    Share.share(
-                      "${provider.extra?.referral?.shareText}${"\n\n"}${userProvider.user?.referralUrl}",
+                    // Share.share(
+                    //   "${provider.extra?.referral?.shareText}${"\n\n"}${userProvider.user?.referralUrl}",
+                    // );
+                    DynamicLinkService.instance.createDynamicLink(
+                      userProvider.user?.referralCode,
                     );
                   },
                   child: Container(

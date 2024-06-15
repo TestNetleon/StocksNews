@@ -179,6 +179,17 @@ class Routes {
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
 
+    bool isReferral = routingData?.contains("page.link") ??
+        routingData?.contains("/install") ??
+        false;
+    if (isReferral) {
+      return MaterialWithModalsPageRoute(
+        builder: (context) {
+          return const Splash();
+        },
+      );
+    }
+
     Utils().showLog(
         "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
 
@@ -364,20 +375,25 @@ class Routes {
           },
         );
     }
-    return _errorRoute();
+    // return _errorRoute();
+    return MaterialWithModalsPageRoute(
+      builder: (context) {
+        return const Splash();
+      },
+    );
   }
 
-  static Route _errorRoute() {
-    return MaterialWithModalsPageRoute(
-        builder: (context) => BaseContainer(
-              body: Center(
-                child: Text(
-                  "ERROR PAGE....",
-                  style: stylePTSansBold(),
-                ),
-              ),
-            ));
-  }
+  // static Route _errorRoute() {
+  //   return MaterialWithModalsPageRoute(
+  //       builder: (context) => BaseContainer(
+  //             body: Center(
+  //               child: Text(
+  //                 "ERROR PAGE....",
+  //                 style: stylePTSansBold(),
+  //               ),
+  //             ),
+  //           ));
+  // }
 
   static List<SingleChildWidget> get providers {
     return [
