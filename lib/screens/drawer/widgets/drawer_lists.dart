@@ -44,6 +44,7 @@ List<DrawerRes> marketData = [
   // ),
   DrawerRes(
     iconData: Icons.precision_manufacturing_outlined,
+    icon: Images.gainerLoser,
     text: "Gainers & Losers",
     onTap: () {
       Navigator.pushNamed(
@@ -55,12 +56,14 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.precision_manufacturing_outlined,
+    icon: Images.feedback,
     text: "Gap Up/Down Stocks",
     onTap: () =>
         Navigator.pushNamed(navigatorKey.currentContext!, GapUpDownStocks.path),
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
+    icon: Images.insider,
     text: "Insider Trades",
     onTap: () {
       Navigator.pushNamed(
@@ -72,6 +75,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
+    icon: Images.performance,
     text: "Market Sentiment",
     onTap: () {
       Navigator.pushNamed(
@@ -84,12 +88,14 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
     text: "High & Low PE",
+    icon: Images.exchange,
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, HighLowPEIndex.path);
     },
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
+    icon: Images.week,
     text: "52 Weeks",
     onTap: () {
       Navigator.pushNamed(
@@ -98,6 +104,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
+    icon: Images.exchange,
     text: "Highs & Lows Beta Stocks",
     onTap: () {
       Navigator.pushNamed(
@@ -106,6 +113,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.graphic_eq_outlined,
+    icon: Images.indices,
     text: "Indices",
     onTap: () {
       Navigator.pushNamed(
@@ -116,6 +124,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.price_change_outlined,
+    icon: Images.discount,
     text: "Low Prices Stocks",
     onTap: () {
       Navigator.pushNamed(
@@ -126,6 +135,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.mode_standby_sharp,
+    icon: Images.activities,
     text: "Most Active",
     onTap: () {
       Navigator.pushNamed(
@@ -140,6 +150,7 @@ List<DrawerRes> marketData = [
   // ),
   DrawerRes(
     iconData: Icons.stacked_line_chart_outlined,
+    icon: Images.penny,
     text: "Penny Stocks",
     onTap: () => Navigator.pushNamed(
       navigatorKey.currentContext!,
@@ -156,6 +167,7 @@ List<DrawerRes> marketData = [
   // ),
   DrawerRes(
     iconData: Icons.content_paste_go_rounded,
+    icon: Images.advisor,
     text: "Congressional Data",
     onTap: () {
       Navigator.pushNamed(
@@ -164,6 +176,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.safety_divider_rounded,
+    icon: Images.dividends,
     text: "Dividends",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, DividendsScreen.path);
@@ -171,6 +184,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.money,
+    icon: Images.earnings,
     text: "Earnings",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, EarningsScreen.path);
@@ -178,6 +192,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.newspaper_rounded,
+    icon: Images.blogging,
     text: "Blogs",
     onTap: () {
       Navigator.pushNamed(
@@ -189,6 +204,7 @@ List<DrawerRes> marketData = [
   ),
   DrawerRes(
     iconData: Icons.stacked_line_chart_outlined,
+    icon: Images.technical,
     text: "Stocks",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);

@@ -81,7 +81,7 @@ class HomeContainer extends StatelessWidget {
                         loadingWidget: Container(
                           height: 110,
                           margin: const EdgeInsets.fromLTRB(
-                              Dimen.padding, 20, Dimen.padding, Dimen.padding),
+                              0, 20, 0, Dimen.padding),
                           width: double.infinity,
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -177,7 +177,7 @@ class HomeContainer extends StatelessWidget {
                 DisclaimerWidget(
                   data: provider.extra!.disclaimer!,
                   padding: const EdgeInsets.all(16),
-                )
+                ),
             ],
           ),
         ),

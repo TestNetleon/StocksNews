@@ -296,6 +296,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               return InkWell(
                                 onTap: marketData[index].onTap,
                                 child: DrawerNewWidget(
+                                  image: marketData[index].icon,
                                   icon: marketData[index].iconData,
                                   text: marketData[index].text,
                                 ),

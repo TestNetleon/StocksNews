@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class DrawerRes {
   bool isSelected, showBadge;
   IconData iconData;
+  String? icon;
   String text;
   int? badgeCount;
   Function()? onTap;
@@ -10,6 +11,7 @@ class DrawerRes {
     required this.iconData,
     this.isSelected = false,
     required this.text,
+    this.icon,
     this.showBadge = false,
     this.badgeCount,
     this.onTap,

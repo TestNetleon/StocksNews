@@ -116,6 +116,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           if (emailController.text != provider.user?.email) {
             _sendOTP(otp: res.data["otp"].toString());
           } else {
+            popUpAlert(
+              message: res.message ?? "",
+              title: "",
+            );
+
             provider.updateUser(
               name: nameController.text,
               email: emailController.text.toLowerCase(),

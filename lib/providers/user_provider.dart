@@ -10,6 +10,8 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/drawer_data_res.dart';
+import 'package:stocks_news_new/modals/refer.dart';
+import 'package:stocks_news_new/modals/referral_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
@@ -70,17 +72,24 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  void updateUser({
-    String? image,
-    String? name,
-    String? email,
-    String? displayName,
-  }) {
+  void updateUser(
+      {String? image,
+      String? name,
+      String? email,
+      String? displayName,
+      String? phone,
+      String? referralCode,
+      String? referralUrl}) {
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
     if (name != null) _user?.name = name;
     if (displayName != null) _user?.displayName = displayName;
+    if (phone != null) _user?.phone = phone;
+    if (referralCode != null) _user?.referralCode = referralCode;
+    if (referralUrl != null) _user?.referralUrl = referralUrl;
+
     Preference.saveUser(_user);
+    Utils().showLog("Updating user..");
     notifyListeners();
   }
 
@@ -708,7 +717,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // showErrorMessage(message: res.message, type: SnackbarType.info);
         if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
-        return ApiResponse(status: true, data: res.data);
+        return ApiResponse(status: true, data: res.data, message: res.message);
       } else {
         setStatus(Status.loaded);
         // showErrorMessage(
@@ -716,7 +725,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // );
         if (verifyOTP) Navigator.pop(navigatorKey.currentContext!);
 
-        return ApiResponse(status: false, message: res.message);
+        return ApiResponse(
+          status: false,
+          message: res.message,
+        );
       }
     } catch (e) {
       setStatus(Status.loaded);
@@ -755,26 +767,64 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  // Future verifyEmailOTP(request) async {
-  //   setStatus(Status.loading);
+//-------------------------------------------------
 
-  //   Map request={
-  //     "token":,
-  //   }
-  //   try {
-  //     ApiResponse response = await apiRequest(
-  //       url: Apis.updateProfileEmail,
-  //       request: request,
-  //     );
-  //     setStatus(Status.loaded);
-  //     if (response.status) {
-  //       showErrorMessage(message: response.message, type: SnackbarType.info);
-  //     } else {
-  //       showErrorMessage(message: response.message);
-  //     }
-  //   } catch (e) {
-  //      Utils().showLog(e.toString());
-  //     setStatus(Status.loaded);
-  //   }
-  // }
+  Future referLogin(request) async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.referLogin,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+        //
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  ReferSuccessRes? _refer;
+  ReferSuccessRes? get refer => _refer;
+
+  Future verifyReferLogin(request) async {
+    notifyListeners();
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.checkPhone,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _refer = referSuccessResFromJson(jsonEncode(response.data));
+        updateUser(
+          referralCode: _refer?.referralCode,
+          referralUrl: _refer?.referralUrl,
+        );
+      } else {
+        //
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+      notifyListeners();
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      notifyListeners();
+
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
 }

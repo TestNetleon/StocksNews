@@ -193,7 +193,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
               color: ThemeColors.greyBorder,
             ),
           ),
-          const SpacerVertical(height: 16),
+          const SpacerVertical(height: 70),
 
           Container(
             width: MediaQuery.of(context).size.width * .45,

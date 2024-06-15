@@ -257,6 +257,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         );
       },
       child: const Splash(),
+      // child: ReferSuccess(),
       // child: const DemoWeb(),
       // child: const InternetErrorWidget(),
     );

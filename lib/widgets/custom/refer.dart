@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -16,12 +17,26 @@ import '../../utils/constants.dart';
 
 class ReferApp extends StatelessWidget {
   const ReferApp({super.key});
-  void _onShareAppClick() async {
-    if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+  Future _onShareAppClick() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user == null) {
       isPhone ? await loginSheet() : await loginSheetTablet();
     }
+    if (provider.user == null) {
+      return;
+    }
 
-    showModalBottomSheet(
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await referLogin();
+    } else {
+      // await _bottomSheet();
+      await referLogin();
+    }
+  }
+
+  Future _bottomSheet() async {
+    await showModalBottomSheet(
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

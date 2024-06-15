@@ -174,7 +174,8 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
               color: ThemeColors.greyBorder,
             ),
           ),
-          const SpacerVertical(height: 16),
+          const SpacerVertical(height: 70),
+
           Container(
             width: MediaQuery.of(context).size.width * .45,
             constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),

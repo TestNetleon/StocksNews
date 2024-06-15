@@ -8,14 +8,21 @@ import '../../../utils/theme.dart';
 
 class CommonPinput extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final void Function(String)? onCompleted;
-  const CommonPinput({super.key, required this.controller, this.onCompleted});
+  const CommonPinput({
+    super.key,
+    required this.controller,
+    this.onCompleted,
+    this.focusNode,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: Pinput(
+        focusNode: focusNode,
         length: 4,
         controller: controller,
         closeKeyboardWhenCompleted: true,

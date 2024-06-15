@@ -102,6 +102,7 @@ dependencies:
   in_app_update: ^4.2.3
   in_app_review: ^2.0.9
   flutter_rating_bar: ^4.0.1
+  sms_autofill: ^2.4.0
 
 dev_dependencies:
   flutter_test:
