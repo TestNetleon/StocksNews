@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/reffer_success.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -125,6 +126,11 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         navigatorKey.currentContext!,
         HomeSplash.path,
       );
+      // Navigator.push(
+      //     navigatorKey.currentContext!,
+      //     MaterialPageRoute(
+      //       builder: (context) => const ReferSuccess(),
+      //     ));
     }
 
     // Navigator.pushNamedAndRemoveUntil(

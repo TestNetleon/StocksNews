@@ -55,10 +55,13 @@ class HomeContainer extends StatelessWidget {
             children: [
               const HomeTopNewsSlider(),
 
-              const Padding(
-                padding: EdgeInsets.fromLTRB(
-                    Dimen.padding, 20, Dimen.padding, Dimen.padding),
-                child: ReferApp(),
+              Visibility(
+                visible: provider.extra?.referral?.shwReferral ?? false,
+                child: const Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      Dimen.padding, 20, Dimen.padding, Dimen.padding),
+                  child: ReferApp(),
+                ),
               ),
               // const Padding(
               //   padding: EdgeInsets.only(top: Dimen.padding),
@@ -76,7 +79,9 @@ class HomeContainer extends StatelessWidget {
                         provider.statusTrending != Status.loading))
                       const StockInBuzz(),
                     const HomeMyAlerts(),
-                    HomePartialLoading(
+                    Visibility(
+                      visible: provider.extra?.showPortfolio ?? false,
+                      child: HomePartialLoading(
                         loading: provider.isLoadingPortfolio,
                         loadingWidget: Container(
                           height: 110,
@@ -99,7 +104,9 @@ class HomeContainer extends StatelessWidget {
                         onRefresh: () {
                           provider.getHomePortfolio();
                         },
-                        child: const PlaidHome()),
+                        child: const PlaidHome(),
+                      ),
+                    ),
 
                     HomePartialLoading(
                       loadingWidget: const Loading(),

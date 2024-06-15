@@ -1,8 +1,15 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/fcm/dynamic_links.service.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -12,11 +19,31 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 import '../../../../modals/refer.dart';
+import '../../../../providers/home_provider.dart';
+import '../../../../route/my_app.dart';
 
-class ReferSuccess extends StatelessWidget {
+class ReferSuccess extends StatefulWidget {
   const ReferSuccess({super.key});
+
+  @override
+  State<ReferSuccess> createState() => _ReferSuccessState();
+}
+
+class _ReferSuccessState extends State<ReferSuccess> {
+  Uri? shareUri;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      ReferSuccessRes? referData = context.read<UserProvider>().refer;
+      shareUri = await DynamicLinkService.instance
+          .getDynamicLink(referData?.referralCode);
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +68,25 @@ class ReferSuccess extends StatelessWidget {
                   width: 300,
                 ),
               ),
-              Text(
+              HtmlWidget(
                 referData?.successTitle ??
                     "Your account has been\nverified successfully",
-                textAlign: TextAlign.center,
-                style: stylePTSansBold(fontSize: 30),
+                // textAlign: TextAlign.center,
+
+                textStyle: stylePTSansBold(fontSize: 30),
               ),
-              const SpacerVertical(height: 20),
-              Text(
+              const SpacerVertical(height: 10),
+              HtmlWidget(
                 referData?.successSubTitle ??
                     "Thank you for your trust now \nyou can refer and earn reward points.",
-                textAlign: TextAlign.center,
-                style:
+                // textAlign: TextAlign.center,
+                textStyle:
                     stylePTSansBold(fontSize: 17, color: ThemeColors.greyText),
               ),
               const SpacerVertical(height: 20),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: ThemeColors.greyBorder.withOpacity(0.4)),
@@ -79,50 +107,57 @@ class ReferSuccess extends StatelessWidget {
                         ),
                         const SpacerVertical(height: 15),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             const SpacerVertical(height: 4),
-                            Stack(
+                            Row(
                               children: [
-                                Ink(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 10, 70, 10),
-                                  decoration: const BoxDecoration(
-                                    color: ThemeColors.greyBorder,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4)),
-                                  ),
-                                  child: Text(
-                                    referData?.referralUrl ?? "",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: stylePTSansRegular(),
+                                Expanded(
+                                  child: Ink(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        10, 10, 10, 10),
+                                    decoration: const BoxDecoration(
+                                        color: ThemeColors.greyBorder,
+                                        // borderRadius: BorderRadius.all(
+                                        //     Radius.circular(4)),
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(4),
+                                            topLeft: Radius.circular(4))),
+                                    child: Text(
+                                      "${shareUri ?? ""}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: stylePTSansRegular(),
+                                    ),
                                   ),
                                 ),
-                                Positioned(
-                                  right: 0,
-                                  child: InkWell(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(4)),
-                                    onTap: () {},
-                                    child: Ink(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 8.9),
-                                      decoration: const BoxDecoration(
-                                        color: Color.fromARGB(255, 69, 69, 69),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)),
-                                      ),
-                                      // child: Text(
-                                      //   "Copy",
-                                      //   maxLines: 1,
-                                      //   overflow: TextOverflow.ellipsis,
-                                      //   style: stylePTSansBold(),
-                                      // ),
-                                      child: const Icon(
-                                        Icons.copy,
-                                        size: 20,
-                                      ),
+                                InkWell(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(4)),
+                                  onTap: () {
+                                    Clipboard.setData(ClipboardData(
+                                        text: shareUri.toString()));
+                                  },
+                                  child: Ink(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 8.9),
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 69, 69, 69),
+                                      // borderRadius: BorderRadius.all(
+                                      //     Radius.circular(4)),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(4),
+                                          topRight: Radius.circular(4)),
+                                    ),
+                                    // child: Text(
+                                    //   "Copy",
+                                    //   maxLines: 1,
+                                    //   overflow: TextOverflow.ellipsis,
+                                    //   style: stylePTSansBold(),
+                                    // ),
+                                    child: const Icon(
+                                      Icons.copy,
+                                      size: 20,
                                     ),
                                   ),
                                 ),
@@ -133,43 +168,54 @@ class ReferSuccess extends StatelessWidget {
                       ],
                     ),
                     const SpacerVertical(height: 20),
-                    Row(
-                      children: [
-                        _widgetIcon(
-                          image: Images.referW,
-                          onTap: () {
-                            String baseUrl =
-                                "https://api.whatsapp.com/send?text=Text www.google.com";
-                            String url = Platform.isAndroid
-                                ? baseUrl
-                                : 'whatsapp://send?text=Text www.google.com';
+                    if (shareUri != null)
+                      ThemeButtonSmall(
+                        onPressed: () {
+                          Share.share(
+                            "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                          );
+                        },
+                        text: "Share with friends",
+                        icon: Icons.share,
+                      ),
 
-                            openUrl(url, extraUrl: baseUrl);
-                          },
-                        ),
-                        _widgetIcon(
-                          image: Images.referT,
-                        ),
-                        _widgetIcon(
-                          image: Images.referF,
-                          onTap: () async {
-                            String encodedUrl =
-                                Uri.encodeFull("www.google.com");
+                    // Row(
+                    //   children: [
+                    //     _widgetIcon(
+                    //       image: Images.referW,
+                    //       onTap: () {
+                    //         String baseUrl =
+                    //             "https://api.whatsapp.com/send?text=Text www.google.com";
+                    //         String url = Platform.isAndroid
+                    //             ? baseUrl
+                    //             : 'whatsapp://send?text=Text www.google.com';
 
-                            String baseUrl =
-                                "https://www.facebook.com/sharer/sharer.php?u=www.google.com&quote=Text";
+                    //         openUrl(url, extraUrl: baseUrl);
+                    //       },
+                    //     ),
+                    //     _widgetIcon(
+                    //       image: Images.referT,
+                    //     ),
+                    //     _widgetIcon(
+                    //       image: Images.referF,
+                    //       onTap: () async {
+                    //         String encodedUrl =
+                    //             Uri.encodeFull("www.google.com");
 
-                            String url = Platform.isAndroid
-                                ? baseUrl
-                                : "fb://share/?url=$encodedUrl";
+                    //         String baseUrl =
+                    //             "https://www.facebook.com/sharer/sharer.php?u=www.google.com&quote=Text";
 
-                            await openUrl(url, extraUrl: baseUrl);
-                          },
-                        ),
-                        _widgetIcon(image: Images.referE),
-                        _widgetIcon(image: Images.referS),
-                      ],
-                    ),
+                    //         String url = Platform.isAndroid
+                    //             ? baseUrl
+                    //             : "fb://share/?url=$encodedUrl";
+
+                    //         await openUrl(url, extraUrl: baseUrl);
+                    //       },
+                    //     ),
+                    //     _widgetIcon(image: Images.referE),
+                    //     _widgetIcon(image: Images.referS),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

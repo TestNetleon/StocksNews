@@ -72,6 +72,7 @@ class Extra {
   final String? currentBalance;
   final MessageRes? messageObject;
   final UserRes? user;
+  final bool? showPortfolio;
   final ReferralRes? referral;
 
   Extra({
@@ -89,6 +90,7 @@ class Extra {
     this.title,
     this.loginText,
     this.signUpText,
+    this.showPortfolio,
     this.txnSize,
     this.totalPages,
     this.userAlert,
@@ -116,6 +118,7 @@ class Extra {
         currentBalance: json['current_balance'],
         subTitle: json["sub_title"],
         loginText: json["login_text"],
+        showPortfolio: json['show_portfolio'],
         signUpText: json["signup_text"],
         totalPages: json["total_pages"],
         period: json["period"] == null
@@ -180,6 +183,7 @@ class Extra {
         "title": title,
         "sub_title": subTitle,
         "current_balance": currentBalance,
+        "show_portfolio": showPortfolio,
         "total_pages": totalPages,
         "exchange_short_name": exchangeShortName == null
             ? []

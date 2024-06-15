@@ -44,4 +44,33 @@ class DynamicLinkService {
 
     Utils().showLog("DYNAMIC LINKS ***** %%%%%%  ${dynamicLink.shortUrl}");
   }
+
+  Future<Uri> getDynamicLink(code) async {
+    final dynamicLinkParams = DynamicLinkParameters(
+      link: Uri.parse("https://app.stocks.news/install?code=${code}"),
+      // link: Uri.parse(
+      //     "https://app.stocks.news/news/nasdaq-mints-record-breaking-week-wall-streets-new-fast-food-darling-jumps-300"),
+      uriPrefix: "https://stocksnews.page.link",
+      androidParameters: const AndroidParameters(
+        packageName: "com.stocks.news",
+        minimumVersion: 0,
+      ),
+      iosParameters: const IOSParameters(
+        bundleId: "app.stocks.news",
+      ),
+    );
+
+    final dynamicLink =
+        await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+
+    debugPrint("${dynamicLink.shortUrl}");
+
+    return dynamicLink.shortUrl;
+
+    // Share.share(
+    //   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${dynamicLink.shortUrl}",
+    // );
+
+    // Utils().showLog("DYNAMIC LINKS ***** %%%%%%  ${dynamicLink.shortUrl}");
+  }
 }
