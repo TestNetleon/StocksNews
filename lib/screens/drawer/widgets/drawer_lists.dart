@@ -88,7 +88,7 @@ List<DrawerRes> marketData = [
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
     text: "High & Low PE",
-    icon: Images.exchange,
+    icon: Images.highPE,
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, HighLowPEIndex.path);
     },
