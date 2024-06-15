@@ -85,8 +85,8 @@ void main() async {
         final Uri deepLink = pendingDynamicLinkData.link;
         // Example of using the dynamic link to push the user to a different screen
         // Navigator.pushNamed(context, deepLink.path);
-        Utils().showLog(
-          "Link Received onListen ** => ${"\n\n\n\n\n\n\n"}${deepLink.path}${"\n\n\n\n\n\n\n"}$deepLink${"\n\n\n\n\n\n\n"}",
+        log(
+          "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n\nn"}$deepLink${"\n\n"}",
         );
         navigateDeepLinks(uri: deepLink);
       }
