@@ -93,7 +93,7 @@ class ReferSuccess extends StatelessWidget {
                                         BorderRadius.all(Radius.circular(4)),
                                   ),
                                   child: Text(
-                                    "refer1refer1refer1refer1refer1refer1refer1refer1refer1",
+                                    referData?.referralUrl ?? "",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: stylePTSansRegular(),
