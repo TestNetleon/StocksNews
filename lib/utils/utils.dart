@@ -34,7 +34,7 @@ class Utils {
   void showLog(data) {
     if (kDebugMode) {
       print("==================");
-      log("$data");
+      debugPrint("$data");
       print("==================");
     }
   }
@@ -298,8 +298,17 @@ void _navigation({
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (context) => WebviewLink(url: uri),
+        // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
+        builder: (context) => const Tabs(),
       ),
     );
   }
+}
+
+bool isValidUrl(String? url) {
+  if (url == null) return false;
+
+  Uri? uri = Uri.tryParse(url);
+  // return uri != null && uri.hasScheme && uri.hasAuthority;
+  return uri != null;
 }

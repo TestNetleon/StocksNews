@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -59,15 +60,22 @@ class _BlogDetailState extends State<BlogDetail> {
           //     deepLinkData = null;
           //   });
           // }
-          if (popHome) {
-            Future.delayed(const Duration(milliseconds: 50), () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, Tabs.path, (route) => false);
-              popHome = false;
-            });
+          if (navigatorKey.currentState!.canPop()) {
+            if (popHome) {
+              Future.delayed(const Duration(milliseconds: 50), () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Tabs.path, (route) => false);
+                popHome = false;
+              });
+            } else {
+              navigatorKey.currentContext!.read<SearchProvider>().clearSearch();
+              Navigator.pop(navigatorKey.currentContext!);
+            }
           } else {
-            navigatorKey.currentContext!.read<SearchProvider>().clearSearch();
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const Splash()),
+            );
           }
         } catch (e) {
           //
