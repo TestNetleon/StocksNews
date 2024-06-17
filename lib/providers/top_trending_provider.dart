@@ -49,7 +49,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
   int _openIndex = -1;
 
   Status get status => _status;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get canLoadMore => _page < (_res?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   int get openIndex => _openIndex;

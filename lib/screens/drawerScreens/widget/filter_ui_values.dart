@@ -7,11 +7,15 @@ class FilterUiValues extends StatelessWidget {
   const FilterUiValues({
     required this.params,
     required this.onDeleteExchange,
+    required this.onDeleteSector,
+    required this.onDeleteIndustry,
     super.key,
   });
 
   final FilteredParams? params;
   final Function(String) onDeleteExchange;
+  final Function(String) onDeleteSector;
+  final Function(String) onDeleteIndustry;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +24,36 @@ class FilterUiValues extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         child: Wrap(
-          children: params?.exchange_name?.map((exchange) {
+          // children: params?.exchange_name?.map((exchange) {
+          //       return FilterUiItem(
+          //         label: exchange,
+          //         onTap: onDeleteExchange,
+          //       );
+          //     }).toList() ??
+          //     [],
+          children: [
+            if (params?.exchange_name != null)
+              ...(params?.exchange_name?.map((exchange) {
                 return FilterUiItem(
                   label: exchange,
                   onTap: onDeleteExchange,
                 );
-              }).toList() ??
-              [],
+              }))!,
+            if (params?.sector != null)
+              ...(params?.sector?.map((sector) {
+                return FilterUiItem(
+                  label: sector,
+                  onTap: onDeleteSector,
+                );
+              }))!,
+            if (params?.industry != null)
+              ...(params?.industry?.map((industry) {
+                return FilterUiItem(
+                  label: industry,
+                  onTap: onDeleteIndustry,
+                );
+              }))!
+          ],
         ),
       ),
     );

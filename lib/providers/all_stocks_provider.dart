@@ -49,7 +49,7 @@ class AllStocksProvider extends ChangeNotifier with AuthProviderBase {
   TextRes? get textRes => _textRes;
 
   // int? get page => _page;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get isSearching => _status == Status.searching;
 
   @override

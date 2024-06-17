@@ -28,7 +28,7 @@ class MarketDataTitle extends StatelessWidget {
     this.subTitleHtml = false,
     this.htmlTitle = false,
     this.provider,
-    required this.onDeleteExchange,
+    this.onDeleteExchange,
     required this.onFilterClick,
   });
 
@@ -96,9 +96,24 @@ class MarketDataTitle extends StatelessWidget {
                 visible: onFilterClick != null,
                 child: GestureDetector(
                   onTap: onFilterClick,
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Icon(Icons.filter_alt, color: ThemeColors.accent),
+                  child: Stack(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child:
+                            Icon(Icons.filter_alt, color: ThemeColors.accent),
+                      ),
+                      if (provider.filterParams != null)
+                        const Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.red,
+                            size: 10,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               )
@@ -108,11 +123,11 @@ class MarketDataTitle extends StatelessWidget {
             visible: divider,
             child: Padding(
               padding: dividerPadding ??
-                  // const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-                  (provider.filterParams != null
-                      ? const EdgeInsets.only(
-                          top: Dimen.itemSpacing, bottom: Dimen.itemSpacing / 3)
-                      : const EdgeInsets.only(top: Dimen.itemSpacing)),
+                  const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+              // (provider.filterParams != null
+              //     ? const EdgeInsets.only(
+              //         top: Dimen.itemSpacing, bottom: Dimen.itemSpacing / 3)
+              //     : const EdgeInsets.only(top: Dimen.itemSpacing)),
               child: const Divider(
                 color: ThemeColors.accent,
                 height: 2,
@@ -120,11 +135,14 @@ class MarketDataTitle extends StatelessWidget {
               ),
             ),
           ),
-          if (provider.filterParams != null)
-            FilterUiValues(
-              params: provider.filterParams,
-              onDeleteExchange: onDeleteExchange!,
-            ),
+          // if (provider.filterParams != null)
+          //   FilterUiValues(
+          //     params: provider.filterParams,
+          //     // onDeleteExchange: onDeleteExchange!,
+          //     onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+          //     onDeleteSector: (exchange) => provider.sectorFilter(exchange),
+          //     onDeleteIndustry: (exchange) => provider.industryFilter(exchange),
+          //   ),
         ],
       ),
     );

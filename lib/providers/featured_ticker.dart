@@ -23,7 +23,7 @@ class FeaturedTickerProvider extends ChangeNotifier {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   // int? get page => _page;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   Extra? _extra;
   Extra? get extra => _extra;

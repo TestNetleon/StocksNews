@@ -1,5 +1,7 @@
 class Apis {
   static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl =
+  //     "https://notification.stocks.news/api/v1"; // live server
   // static const baseUrl = kDebugMode
   //     ? "https://notification.stocks.news/api/v1"
   //     : "https://app.stocks.news/api/v1"; // live server
@@ -31,7 +33,6 @@ class Apis {
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const indices = "/indices";
   static const spFifty = "/sp-500-stocks";
-
   static const dowThirty = "/dow-30-stocks";
 
   static const saleOnStocks = "/stocks-on-sale";
@@ -50,7 +51,6 @@ class Apis {
   static const featuredTicker = "/featured-tickers";
   static const mostActivePenny = "/most-active-penny-stocks";
   static const mostPopularPenny = "/most-popular-penny-stocks";
-
   static const topPennyStocksToday = "/top-penny-stocks-today";
 
   static const search = "/search";

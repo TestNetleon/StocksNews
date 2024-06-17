@@ -400,6 +400,13 @@ String containsSpecificPath(Uri uri) {
 
 String extractLastPathComponent(Uri uri) {
   List<String> parts = uri.pathSegments;
+
+  if (parts.last.contains("stock-detail") ||
+      uri.queryParameters['symbol'] != null) {
+    return uri.queryParameters['symbol'] ??
+        (parts.isNotEmpty ? parts.last : '');
+  }
+
   return parts.isNotEmpty ? parts.last : '';
 }
 

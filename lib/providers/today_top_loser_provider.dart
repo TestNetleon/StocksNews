@@ -23,7 +23,7 @@ class TodayTopLoserProvider extends ChangeNotifier with AuthProviderBase {
   int _page = 1;
   int _openIndex = -1;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
 
   String? _error;

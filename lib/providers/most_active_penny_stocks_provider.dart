@@ -30,7 +30,7 @@
 //   List<PennyStocksRes>? get dataTopTodays => _dataTopTodays;
 //   bool get canLoadMore => _page < (extra?.totalPages ?? 0);
 //   String? get error => _error ?? Const.errSomethingWrong;
-//   bool get isLoading => _status == Status.loading;
+//   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 //   Extra? _extraData;
 //   Extra? get extra => _extraData;
 
@@ -201,7 +201,7 @@ class MostActivePennyStocksProviders extends ChangeNotifier
   Extra? get extra => _extra;
   bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   int get openIndex => _openIndex;
   int _openIndex = -1;

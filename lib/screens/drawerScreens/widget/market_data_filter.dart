@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
@@ -65,7 +66,6 @@ class _MarketDataFilterBottomSheetState
         selectedData: filterParams?.exchange_name,
         onSelected: (List<FiltersDataItem> selected) {
           String selectedValues = selected.map((item) => item.value).join(',');
-
           if (filterParams == null) {
             filterParams = FilteredParams(
               exchange_name:
@@ -81,36 +81,73 @@ class _MarketDataFilterBottomSheetState
     );
   }
 
-  // void _showSectorPicker(BuildContext context) {
-  //   BaseBottomSheets().gradientBottomSheet(
-  //     child: MarketDataFilterListing(
-  //       label: "All Sector",
-  //       items: provider.dataFilterBottomSheet.sectors,
-  //       onSelected: (index) {
-  //         context.read<StockScreenerProvider>().onChangeSector(
-  //               provider.dataFilterBottomSheet.sectors[index].key.toString(),
-  //               provider.dataFilterBottomSheet.sectors[index].value.toString(),
-  //             );
-  //       },
-  //     ),
-  //   );
-  // }
+  void _showSectorPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.sectors == null) {
+      popUpAlert(
+        message: "Sectors data not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
 
-  // void _showIndustryPicker(BuildContext context) {
-  //   BaseBottomSheets().gradientBottomSheet(
-  //     child: MarketDataFilterListing(
-  //       label: "All Industry",
-  //       items: provider.dataFilterBottomSheet.industries,
-  //       onSelected: (index) {
-  //         context.read<StockScreenerProvider>().onChangeIndustries(
-  //               provider.dataFilterBottomSheet.industries[index].key.toString(),
-  //               provider.dataFilterBottomSheet.industries[index].value
-  //                   .toString(),
-  //             );
-  //       },
-  //     ),
-  //   );
-  // }
+    BaseBottomSheets().gradientBottomSheet(
+      // isScrollable: false,
+      child: FilterMultiSelectListing(
+        label: "Select Sector",
+        items: provider.data!.sectors!,
+        selectedData: filterParams?.sector,
+        onSelected: (List<FiltersDataItem> selected) {
+          String selectedValues = selected.map((item) => item.value).join(',');
+
+          if (filterParams == null) {
+            filterParams = FilteredParams(
+              sector: selectedValues.isEmpty ? null : selectedValues.split(","),
+            );
+          } else {
+            filterParams?.sector =
+                selectedValues.isEmpty ? null : selectedValues.split(",");
+          }
+          setState(() {});
+        },
+      ),
+    );
+  }
+
+  void _showIndustryPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.industries == null) {
+      popUpAlert(
+        message: "Industry data not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheet(
+      // isScrollable: false,
+      child: FilterMultiSelectListing(
+        label: "Select Industry",
+        items: provider.data!.industries!,
+        selectedData: filterParams?.industry,
+        onSelected: (List<FiltersDataItem> selected) {
+          String selectedValues = selected.map((item) => item.value).join(',');
+
+          if (filterParams == null) {
+            filterParams = FilteredParams(
+              industry:
+                  selectedValues.isEmpty ? null : selectedValues.split(","),
+            );
+          } else {
+            filterParams?.industry =
+                selectedValues.isEmpty ? null : selectedValues.split(",");
+          }
+          setState(() {});
+        },
+      ),
+    );
+  }
 
   // void _showMarketCapPicker(BuildContext context) {
   //   BaseBottomSheets().gradientBottomSheet(
@@ -229,6 +266,7 @@ class _MarketDataFilterBottomSheetState
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SpacerVertical(height: 10),
           IntrinsicHeight(
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -245,37 +283,45 @@ class _MarketDataFilterBottomSheetState
                     controller: TextEditingController(),
                   ),
                 ),
-                // const SpacerHorizontal(width: 10),
+                // const SpacerHorizontal(width: 12),
                 // Expanded(
                 //   child: MarketDataTextFiledClickable(
-                //       hintText: "All Sector",
-                //       label: "Sector",
-                //       onTap: () => _showSectorPicker(context),
-                //       controller: provider.sectorController),
+                //     hintText: filterParams?.sector != null
+                //         ? filterParams?.sector?.join(", ") ?? ""
+                //         : "All Sectors",
+                //     label: "Sector",
+                //     onTap: () => _showSectorPicker(context),
+                //     // controller: provider.sectorController,
+                //     controller: TextEditingController(),
+                //   ),
                 // ),
               ],
             ),
           ),
-          // const SpacerVertical(height: 20),
+          // const SpacerVertical(height: 12),
           // IntrinsicHeight(
           //   child: Row(
           //     mainAxisSize: MainAxisSize.min,
           //     children: [
           //       Expanded(
           //         child: MarketDataTextFiledClickable(
-          //             hintText: "All Industry",
-          //             label: "Industry",
-          //             onTap: () => _showIndustryPicker(context),
-          //             controller: provider.industryController),
+          //           hintText: filterParams?.industry != null
+          //               ? filterParams?.industry?.join(", ") ?? ""
+          //               : "All Industry",
+          //           label: "Industry",
+          //           onTap: () => _showIndustryPicker(context),
+          //           // controller: provider.industryController,
+          //           controller: TextEditingController(),
+          //         ),
           //       ),
-          //       const SpacerHorizontal(width: 10),
-          //       Expanded(
-          //         child: MarketDataTextFiledClickable(
-          //             hintText: "All Market Cap",
-          //             label: "Market Cap",
-          //             onTap: () => _showMarketCapPicker(context),
-          //             controller: provider.marketCapController),
-          //       ),
+          //       // const SpacerHorizontal(width: 10),
+          //       // Expanded(
+          //       //   child: MarketDataTextFiledClickable(
+          //       //       hintText: "All Market Cap",
+          //       //       label: "Market Cap",
+          //       //       onTap: () => _showMarketCapPicker(context),
+          //       //       controller: provider.marketCapController),
+          //       // ),
           //     ],
           //   ),
           // ),
@@ -349,15 +395,36 @@ class _MarketDataFilterBottomSheetState
           //   ),
           // ),
           const SpacerVertical(height: 20),
-          ThemeButton(
-            color: ThemeColors.accent,
-            onPressed: () {
-              Navigator.pop(context);
-              // context.read<StockScreenerProvider>().getStockScreenerStocks();
-              widget.onFiltered(filterParams);
-            },
-            text: "APPLY FILTER",
-            textColor: Colors.white,
+          Row(
+            children: [
+              // Expanded(
+              //   child: ThemeButton(
+              //     color: filterParams != null
+              //         ? ThemeColors.accent
+              //         : ThemeColors.greyText,
+              //     onPressed: () {
+              //       if (filterParams == null) return;
+              //       Navigator.pop(context);
+              //       filterParams = null;
+              //       widget.onFiltered(filterParams);
+              //     },
+              //     text: "RESET FILTER",
+              //     textColor: Colors.white,
+              //   ),
+              // ),
+              // const SpacerHorizontal(width: 12),
+              Expanded(
+                child: ThemeButton(
+                  color: ThemeColors.accent,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    widget.onFiltered(filterParams);
+                  },
+                  text: "APPLY FILTER",
+                  textColor: Colors.white,
+                ),
+              ),
+            ],
           ),
           SpacerVertical(height: ScreenUtil().bottomBarHeight),
         ],

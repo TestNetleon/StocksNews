@@ -30,7 +30,7 @@ class MoreStocksProvider extends ChangeNotifier with AuthProviderBase {
   List<BreakoutStocksRes>? _dataBreakoutStocks;
   List<BreakoutStocksRes>? get dataBreakoutStocks => _dataBreakoutStocks;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get canLoadMore => _page < (_gainersLosers?.lastPage ?? 1);
 
   String? _error;

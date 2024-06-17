@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -41,9 +42,12 @@ class BaseBottomSheets {
               ],
             ),
           ),
+          constraints: BoxConstraints(
+            maxHeight: ScreenUtil().screenHeight * .9,
+          ),
           // height: 100,
           child: SingleChildScrollView(
-            child: Padding(
+            child: Container(
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
@@ -60,10 +64,7 @@ class BaseBottomSheets {
                     visible: title != null && title != '',
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: ScreenTitle(
-                        title: title,
-                        subTitle: subTitle,
-                      ),
+                      child: ScreenTitle(title: title, subTitle: subTitle),
                     ),
                   ),
                   child,

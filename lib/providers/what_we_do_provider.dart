@@ -24,14 +24,13 @@ class WhatWeDoProvider extends ChangeNotifier with AuthProviderBase {
   Status _statusData = Status.ideal;
   Status get statusData => _statusData;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get isLoadingData => _statusData == Status.loading;
 
   String? get error => _error ?? Const.errSomethingWrong;
   int selectedIndex = 0;
   // TermsPolicyRes? _data;
   // TermsPolicyRes? get data => _data;
-//
 
   List<WhatWeDoTabDataRes>? _data;
   List<WhatWeDoTabDataRes>? get data => _data;

@@ -43,8 +43,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   Extra? _extra;
   Extra? get extra => _extra;
 
-  bool get isLoading => _status == Status.loading;
-  bool get isLoadingDetail => _statusDetail == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
+  bool get isLoadingDetail =>
+      _statusDetail == Status.loading || _statusDetail == Status.ideal;
 
   void setStatus(status) {
     _status = status;

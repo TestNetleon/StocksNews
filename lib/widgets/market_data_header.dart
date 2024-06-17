@@ -32,7 +32,10 @@ class MarketDataHeader extends StatelessWidget {
         if (provider.filterParams != null)
           FilterUiValues(
             params: provider.filterParams,
-            onDeleteExchange: onDeleteExchange,
+            // onDeleteExchange: onDeleteExchange,
+            onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+            onDeleteSector: (exchange) => provider.sectorFilter(exchange),
+            onDeleteIndustry: (exchange) => provider.industryFilter(exchange),
           ),
       ],
     );
