@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -60,7 +61,9 @@ class _BlogDetailState extends State<BlogDetail> {
           //     deepLinkData = null;
           //   });
           // }
+          log("-==================== 0 ");
           if (navigatorKey.currentState!.canPop()) {
+            log("-==================== 1 ");
             if (popHome) {
               Future.delayed(const Duration(milliseconds: 50), () {
                 Navigator.pushNamedAndRemoveUntil(
@@ -72,10 +75,14 @@ class _BlogDetailState extends State<BlogDetail> {
               Navigator.pop(navigatorKey.currentContext!);
             }
           } else {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const Splash()),
-            );
+            log("-==================== 2 ");
+
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(builder: (_) => const Splash()),
+            // );
+            // Navigator.pushNamedAndRemoveUntil(
+            //     context, Tabs.path, (route) => false);
           }
         } catch (e) {
           //

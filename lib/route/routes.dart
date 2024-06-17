@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -62,7 +62,10 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -102,9 +105,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
@@ -179,10 +180,16 @@ class Routes {
 
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
-    log("GENERATED ROUT ***=> $settings");
-    log("GENERATED ROUT ***=> ${isValidUrl(routingData)}}");
+    Utils().showLog("GENERATED ROUT 1 ***=> $settings ,  ");
+    Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}}");
 
-    if (routingData != null && isValidUrl(routingData)) {
+    if (routingData != null &&
+        (isValidUrl(routingData) ||
+            routingData.contains("stock-detail") ||
+            routingData.contains("login") ||
+            routingData.contains("sign-up") ||
+            routingData.contains("blog") ||
+            routingData.contains("news"))) {
       Uri? uri = Uri.tryParse(routingData);
       if (uri != null) {
         return handleDeepLink(uri);
@@ -398,6 +405,8 @@ class Routes {
     String type = containsSpecificPath(uri);
     String slug = extractLastPathComponent(uri);
 
+    Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
+
     switch (type) {
       case "blog":
         return MaterialWithModalsPageRoute(
@@ -413,10 +422,30 @@ class Routes {
         );
       case "dashboard":
         return MaterialWithModalsPageRoute(builder: (context) => const Tabs());
+      case "login":
+        Timer(const Duration(seconds: 1), () async {
+          bool userPresent = false;
+          UserProvider provider =
+              navigatorKey.currentContext!.read<UserProvider>();
+          if (await provider.checkForUser()) {
+            userPresent = true;
+          }
+          if (!userPresent) loginSheet();
+        });
+        return MaterialPageRoute(builder: (context) => const Tabs());
+      case "signUp":
+        Timer(const Duration(seconds: 1), () async {
+          bool userPresent = false;
+          UserProvider provider =
+              navigatorKey.currentContext!.read<UserProvider>();
+          if (await provider.checkForUser()) {
+            userPresent = true;
+          }
+          if (!userPresent) signupSheet();
+        });
+        return MaterialPageRoute(builder: (context) => const Tabs());
       default:
-        return MaterialPageRoute(
-          builder: (context) => const Tabs(),
-        );
+        return MaterialPageRoute(builder: (context) => const Tabs());
     }
   }
 

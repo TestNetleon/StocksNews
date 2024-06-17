@@ -35,7 +35,7 @@ class InsiderTradingProvider extends ChangeNotifier with AuthProviderBase {
   List<KeyValueElement>? get txnSize => _txnSize;
 
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get isSearching => _status == Status.searching;
   String? get error => _error ?? Const.errSomethingWrong;
   TextRes? _textRes;

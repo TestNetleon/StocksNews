@@ -32,7 +32,7 @@ class BlogProviderNew extends ChangeNotifier {
   bool get canLoadMore => _page < (_data?.data.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get tabLoading => _tabStatus == Status.loading;
 
   final Map<String, BlogTabHolder?> _blogData = {};

@@ -33,6 +33,7 @@ class ThemeColors {
       900: Color(0xFF000000), // Black
     },
   );
+
   static const LinearGradient greyWhiteGradient = LinearGradient(
     colors: [Colors.grey, Colors.white],
     begin: Alignment.topLeft,

@@ -28,7 +28,7 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   // int? get page => _page;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -135,7 +135,7 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   // int? get page => _page;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -232,7 +232,7 @@ class HeaderNewsProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
   Status get status => _status;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
   List<StockHeaderNewsRes>? _data;
   List<StockHeaderNewsRes>? get data => _data;
@@ -296,7 +296,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get tabLoading => _tabStatus == Status.loading;
 
   Map<String, TabsNewsHolder?> _newsData = {};
@@ -544,7 +544,7 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   // int? get page => _page;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   void setStatus(status) {
     _status = status;
     notifyListeners();

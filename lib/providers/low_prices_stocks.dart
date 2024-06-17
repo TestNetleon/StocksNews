@@ -33,7 +33,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
   List<LowPriceStocksRes>? get data => _data;
 
   String? get error => _error ?? Const.errSomethingWrong;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get tabLoading => _tabStatus == Status.loading;
 
   String? title;

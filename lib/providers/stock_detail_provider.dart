@@ -35,7 +35,7 @@
 
 //   Status _status = Status.ideal;
 //   Status get status => _status;
-//   bool get isLoading => _status == Status.loading;
+//   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 //   AnalysisRes? _analysisRes;
 //   AnalysisRes? get analysisRes => _analysisRes;
 

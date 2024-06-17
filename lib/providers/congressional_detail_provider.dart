@@ -22,7 +22,7 @@ class CongressionalDetailProvider extends ChangeNotifier with AuthProviderBase {
   int _page = 1;
   int _openIndex = -1;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   String? _error;
   String? get error => _error ?? Const.errSomethingWrong;

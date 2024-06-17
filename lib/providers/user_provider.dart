@@ -11,7 +11,6 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/drawer_data_res.dart';
 import 'package:stocks_news_new/modals/refer.dart';
-import 'package:stocks_news_new/modals/referral_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
@@ -80,7 +79,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       String? phone,
       String? referralCode,
       String? referralUrl}) {
-        
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
     if (name != null) _user?.name = name;

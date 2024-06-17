@@ -17,7 +17,7 @@ class FilterProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
 
   Status get status => _status;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
 
   FiltersData? _data;
@@ -58,26 +58,27 @@ class FilterProvider extends ChangeNotifier with AuthProviderBase {
 
 class FilteredParams {
   List<String>? exchange_name;
+  List<String>? sector;
+  List<String>? industry;
   String price;
-  String industry;
   String market_cap;
   String beta;
   String dividend;
   String isEtf;
   String isFund;
   String isActivelyTrading;
-  String sector;
+  // String sector;
 
   FilteredParams({
     this.exchange_name,
     this.price = "",
-    this.industry = "",
+    this.industry,
     this.market_cap = "",
     this.beta = "",
     this.dividend = "",
     this.isEtf = "",
     this.isFund = "",
     this.isActivelyTrading = "",
-    this.sector = "",
+    this.sector,
   });
 }
