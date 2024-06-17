@@ -24,7 +24,7 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
   int _pageUp = 1;
   int _openIndex = -1;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   bool canLoadMore = true;
 
@@ -65,6 +65,26 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
     getData();
   }
 
+  void sectorFilter(String item) {
+    _filterParams!.sector!.remove(item);
+    if (_filterParams!.sector!.isEmpty) {
+      _filterParams!.sector = null;
+    }
+    _pageUp = 1;
+    notifyListeners();
+    getData();
+  }
+
+  void industryFilter(String item) {
+    _filterParams!.sector!.remove(item);
+    if (_filterParams!.sector!.isEmpty) {
+      _filterParams!.sector = null;
+    }
+    _pageUp = 1;
+    notifyListeners();
+    getData();
+  }
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -99,14 +119,14 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
         "page": "$_pageUp",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry ?? "",
+        "industry": _filterParams?.industry?.join(",") ?? "",
         "market_cap": _filterParams?.market_cap ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector ?? "",
+        "sector": _filterParams?.sector?.join(",") ?? "",
       };
 
       ApiResponse response = await apiRequest(

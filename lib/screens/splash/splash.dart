@@ -11,11 +11,11 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer/reffer_success.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
@@ -163,12 +163,31 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // return BaseContainer(
+    //   body: Center(
+    //     child: SizedBox(
+    //       width: MediaQuery.of(context).size.width * .6,
+    //       height: MediaQuery.of(context).size.width * .6,
+    //       child: Image.asset(Images.logo),
+    //     ),
+    //   ),
+    // );
     return BaseContainer(
       body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .6,
-          height: MediaQuery.of(context).size.width * .6,
-          child: Image.asset(Images.logo),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .6,
+              height: MediaQuery.of(context).size.width * .6,
+              child: Image.asset(Images.logo),
+            ),
+            Text(
+              "Version - 51",
+              style: stylePTSansBold(),
+            ),
+          ],
         ),
       ),
     );

@@ -74,6 +74,12 @@ class _StockScreenerListState extends State<StockScreenerList> {
             onDeleteExchange: (exchange) {
               provider.exchangeFilter(exchange);
             },
+            onDeleteSector: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
+            onDeleteIndustry: (exchange) {
+              provider.exchangeFilter(exchange);
+            },
           ),
         Expanded(
           child: BaseUiContainer(

@@ -75,7 +75,7 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
               subTitleHtml: true,
               subTitle: provider.extra?.subTitle,
               provider: provider,
-              onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+              // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               onFilterClick: _onFilterClick,
             ),
           // if (!(provider.data == null &&

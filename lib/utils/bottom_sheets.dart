@@ -11,9 +11,10 @@ class BaseBottomSheets {
     String? title,
     String? subTitle,
     EdgeInsets? padding,
+    bool isScrollable = true,
   }) {
     showModalBottomSheet(
-      isScrollControlled: true,
+      isScrollControlled: isScrollable,
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -28,7 +29,9 @@ class BaseBottomSheets {
           padding: padding ?? const EdgeInsets.fromLTRB(15, 0, 15, 15),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
             border: Border(
               top: BorderSide(color: ThemeColors.greyBorder.withOpacity(0.4)),
             ),
@@ -42,37 +45,138 @@ class BaseBottomSheets {
             ),
           ),
           // height: 100,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 6),
-                      child: BottomSheetTick(),
+          child: isScrollable
+              ? SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 6),
+                            child: BottomSheetTick(),
+                          ),
+                        ),
+                        Visibility(
+                          visible: title != null && title != '',
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: ScreenTitle(
+                              title: title,
+                              subTitle: subTitle,
+                            ),
+                          ),
+                        ),
+                        child,
+                      ],
                     ),
                   ),
-                  Visibility(
-                    visible: title != null && title != '',
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: ScreenTitle(
-                        title: title,
-                        subTitle: subTitle,
+                )
+              : Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 6),
+                          child: BottomSheetTick(),
+                        ),
                       ),
-                    ),
+                      Visibility(
+                        visible: title != null && title != '',
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: ScreenTitle(
+                            title: title,
+                            subTitle: subTitle,
+                          ),
+                        ),
+                      ),
+                      child,
+                    ],
                   ),
-                  child,
-                ],
-              ),
-            ),
-          ),
+                ),
         );
       },
     );
   }
 }
+// class BaseBottomSheets {
+//   gradientBottomSheet({
+//     required Widget child,
+//     String? title,
+//     String? subTitle,
+//     EdgeInsets? padding,
+//   }) {
+//     showModalBottomSheet(
+//       isScrollControlled: true,
+//       useSafeArea: true,
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.only(
+//           topLeft: Radius.circular(10),
+//           topRight: Radius.circular(10),
+//         ),
+//       ),
+//       enableDrag: true,
+//       context: navigatorKey.currentContext!,
+//       builder: (context) {
+//         return Container(
+//           padding: padding ?? const EdgeInsets.fromLTRB(15, 0, 15, 15),
+//           decoration: BoxDecoration(
+//             borderRadius: const BorderRadius.only(
+//               topLeft: Radius.circular(10),
+//               topRight: Radius.circular(10),
+//             ),
+//             border: Border(
+//               top: BorderSide(color: ThemeColors.greyBorder.withOpacity(0.4)),
+//             ),
+//             gradient: const LinearGradient(
+//               begin: Alignment.topCenter,
+//               end: Alignment.bottomCenter,
+//               colors: [
+//                 Color.fromARGB(255, 23, 23, 23),
+//                 Color.fromARGB(255, 48, 48, 48),
+//               ],
+//             ),
+//           ),
+//           // height: 100,
+//           child: SingleChildScrollView(
+//             child: Padding(
+//               padding: EdgeInsets.only(
+//                   bottom: MediaQuery.of(context).viewInsets.bottom),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   const Align(
+//                     alignment: Alignment.center,
+//                     child: Padding(
+//                       padding: EdgeInsets.only(top: 6),
+//                       child: BottomSheetTick(),
+//                     ),
+//                   ),
+//                   Visibility(
+//                     visible: title != null && title != '',
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(top: 20),
+//                       child: ScreenTitle(
+//                         title: title,
+//                         subTitle: subTitle,
+//                       ),
+//                     ),
+//                   ),
+//                   child,
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

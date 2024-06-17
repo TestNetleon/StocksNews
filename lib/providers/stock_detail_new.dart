@@ -132,7 +132,8 @@ class StockDetailProviderNew extends ChangeNotifier {
   Status _statusTab = Status.ideal;
   Status get statusTab => _statusTab;
 
-  bool get isLoadingTab => _statusTab == Status.loading;
+  bool get isLoadingTab =>
+      _statusTab == Status.loading || _statusTab == Status.ideal;
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -143,6 +144,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   int selectedTab = 0;
   int _openIndex = -1;
   int get openIndex => _openIndex;
+
   void setOpenIndex(index) {
     _openIndex = index;
     notifyListeners();

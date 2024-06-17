@@ -18,7 +18,7 @@ class FaqProvide extends ChangeNotifier with AuthProviderBase {
   int _openIndex = -1;
   int get openIndex => _openIndex;
   Status get status => _status;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
 //
   List<FaQsRes>? _data;

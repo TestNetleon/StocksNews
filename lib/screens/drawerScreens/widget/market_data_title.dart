@@ -28,7 +28,7 @@ class MarketDataTitle extends StatelessWidget {
     this.subTitleHtml = false,
     this.htmlTitle = false,
     this.provider,
-    required this.onDeleteExchange,
+    this.onDeleteExchange,
     required this.onFilterClick,
   });
 
@@ -123,7 +123,10 @@ class MarketDataTitle extends StatelessWidget {
           if (provider.filterParams != null)
             FilterUiValues(
               params: provider.filterParams,
-              onDeleteExchange: onDeleteExchange!,
+              // onDeleteExchange: onDeleteExchange!,
+              onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+              onDeleteSector: (exchange) => provider.sectorFilter(exchange),
+              onDeleteIndustry: (exchange) => provider.industryFilter(exchange),
             ),
         ],
       ),

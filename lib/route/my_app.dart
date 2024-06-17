@@ -1,8 +1,11 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +63,72 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // Timer(const Duration(milliseconds: 7500), () {
       //   _checkForConnection();
       // });
+      checkFirebaseDeepLinks();
       setState(() {});
+    });
+  }
+
+  String? initialRoute;
+  String? slug;
+
+  void checkFirebaseDeepLinks() async {
+    // Check if you received the link via getInitialLink first
+    final PendingDynamicLinkData? initialLink =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+
+    if (initialLink != null) {
+      final Uri deepLink = initialLink.link;
+      initialRoute = containsSpecificPath(deepLink);
+      slug = extractLastPathComponent(deepLink);
+      log(
+        "Initial link Received ** => ${"\n\n"}${deepLink.path}${"\n\n"}$deepLink${"\n\n"}${deepLink.path.contains("/install")}${"\n\n"}${deepLink.hasQuery}${"\n\n"}${deepLink.origin}${"\n\n"}${"\n\n"}",
+      );
+      if (deepLink.path.contains("page.link") ||
+          deepLink.path.contains("/install") ||
+          deepLink.path.contains("?code=") ||
+          deepLink.path.contains("?referrer=") ||
+          deepLink.path.contains("?ref=") ||
+          deepLink.path.contains("?referral_code=")) {
+        String? referralCode = deepLink.queryParameters['code'];
+        if (referralCode == null || referralCode == '') {
+          referralCode = deepLink.queryParameters['referrer'];
+        }
+        if (referralCode == null || referralCode == '') {
+          referralCode = deepLink.queryParameters['ref'];
+        }
+        if (referralCode == null || referralCode == '') {
+          referralCode = deepLink.queryParameters['referral_code'];
+        }
+        if (referralCode != null && referralCode != "") {
+          log("CODE HERE @@@++++=========>  $referralCode");
+          Preference.saveReferral(referralCode);
+          FirebaseAnalytics.instance.logEvent(
+            name: 'referrals',
+            parameters: {'referral_code': referralCode},
+          );
+        }
+      }
+
+      // navigateDeepLinks(uri: deepLink);
+    }
+
+    FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) {
+      // Set up the onLink event listener next as it may be received here
+      final Uri deepLink = pendingDynamicLinkData.link;
+      // Example of using the dynamic link to push the user to a different screen
+      // Navigator.pushNamed(context, deepLink.path);
+      log(
+        "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n\nn"}$deepLink${"\n\n"}",
+      );
+      navigateDeepLinks(uri: deepLink);
+    }, onDone: () {
+      Utils().showLog(
+        "onDone ** => ${"\n\n"}",
+      );
+    }, onError: (error) {
+      Utils().showLog(
+        "onError ** => ${"\n\n"}$error${"\n\n"}",
+      );
     });
   }
 
@@ -256,11 +324,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             debugShowCheckedModeBanner: false,
             title: Const.appName,
             theme: lightTheme,
-            home: widget.initialPath == null
-                ? child
-                : widget.initialPath == 'news'
-                    ? NewsDetails(slug: widget.slug)
-                    : child,
+            home: child,
+            // home: widget.initialPath == null
+            //     ? child
+            //     : widget.initialPath == 'news'
+            //         ? NewsDetails(slug: widget.slug)
+            //         : child,
             routes: Routes.routes,
             onGenerateRoute: Routes.getRouteGenerate,
           ),

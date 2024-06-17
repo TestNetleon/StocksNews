@@ -23,7 +23,7 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
   Extra? get extraUp => _extraUp;
   bool get canLoadMore => _page < (_extraUp?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   Status _statusStockScreenerStocks = Status.ideal;
 
   Status get statusStockScreenerStocks => _statusStockScreenerStocks;

@@ -26,7 +26,7 @@ class LowPeGrowthProvider extends ChangeNotifier with AuthProviderBase {
   int _openIndex = -1;
   int get openIndex => _openIndex;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
   bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
 

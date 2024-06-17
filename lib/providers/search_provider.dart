@@ -24,7 +24,7 @@ class SearchProvider extends ChangeNotifier with AuthProviderBase {
   Status get status => _status;
   List<SearchRes>? get data => _data;
   List<TopSearch>? get topSearch => _topSearch;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
   final FocusNode searchFocusNode = FocusNode();
 

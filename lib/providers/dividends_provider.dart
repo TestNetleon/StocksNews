@@ -26,7 +26,7 @@ class DividendsProvider extends ChangeNotifier with AuthProviderBase {
   Extra? get extra => _extra;
   bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   Status _statusDividendsStocks = Status.ideal;
   Status get statusDividendsStocks => _statusDividendsStocks;
   bool get isLoadingDividendsStocks => _statusDividendsStocks == Status.loading;

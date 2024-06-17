@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ import '../route/my_app.dart';
 import '../screens/auth/bottomSheets/login_sheet.dart';
 import '../screens/auth/bottomSheets/signup_sheet.dart';
 import '../screens/blogDetail/index.dart';
-import '../screens/deepLinkScreen/webscreen.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../screens/tabs/tabs.dart';

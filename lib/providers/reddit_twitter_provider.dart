@@ -23,7 +23,7 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
   String selectedDays = "1";
   String selectedMedia = "FinnHub";
   String? get error => _error ?? Const.errSomethingWrong;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool get isSearching => _status == Status.searching;
 
   bool get daysLoading => _status == Status.loading;

@@ -33,7 +33,7 @@
 //   Extra? get extra => _extra;
 
 //   // int? get page => _page;
-//   bool get isLoading => _status == Status.loading;
+//   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 //   void setStatus(status) {
 //     _status = status;
 //     notifyListeners();
@@ -206,7 +206,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
   Extra? get extra => _extra;
 
   // int? get page => _page;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   void setStatus(status) {
     _status = status;
     notifyListeners();

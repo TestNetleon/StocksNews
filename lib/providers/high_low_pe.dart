@@ -35,7 +35,7 @@ class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
   // List<MoreStocksRes>? _dataList;
   // List<MoreStocksRes>? get dataList => _dataList;
 
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   bool canLoadMore = true;
 
   String? _error;

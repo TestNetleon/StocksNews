@@ -13,7 +13,7 @@ class QRcodePRovider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
   Status get status => _status;
-  bool get isLoading => _status == Status.loading;
+  bool get isLoading => _status == Status.loading || _status == Status.ideal;
   String? get error => _error ?? Const.errSomethingWrong;
   final FocusNode searchFocusNode = FocusNode();
 
