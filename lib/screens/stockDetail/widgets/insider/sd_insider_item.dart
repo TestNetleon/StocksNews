@@ -46,6 +46,8 @@ class SdInsiderItem extends StatelessWidget {
                                   arguments: {
                                     "companySlug": data?.companySlug,
                                     "reportingSlug": data?.reportingSlug,
+                                    "companyName": data?.companyName,
+                                    "reportingName": data?.reportingName,
                                   });
                             },
                             child: Text(
@@ -58,7 +60,7 @@ class SdInsiderItem extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.only(top: 3),
                             child: Text(
-                              "${data?.companySlug}",
+                              "${data?.designation}",
                               style: stylePTSansBold(
                                 fontSize: 14,
                                 color: ThemeColors.greyText,
@@ -164,7 +166,7 @@ class SdInsiderItem extends StatelessWidget {
               children: [
                 InnerRowItem(
                   label: 'Shares Bought/Sold "@" Price',
-                  value: "${data!.shares}",
+                  value: "${data!.shares} @ ${data?.price}",
                 ),
                 InnerRowItem(
                   label: "Total Transaction",

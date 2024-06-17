@@ -135,6 +135,8 @@ class InsiderDatum {
   final String? transactionDate;
   final String? filingDate;
   final String? detail;
+  final String? companyName;
+  final String? reportingName;
 
   InsiderDatum({
     this.name,
@@ -149,22 +151,25 @@ class InsiderDatum {
     this.transactionDate,
     this.filingDate,
     this.detail,
+    this.companyName,
+    this.reportingName,
   });
 
   factory InsiderDatum.fromJson(Map<String, dynamic> json) => InsiderDatum(
-        name: json["name"],
-        companySlug: json["companySlug"],
-        reportingSlug: json["reportingSlug"],
-        designation: json["designation"],
-        transactionType: json["transactionType"],
-        shares: json["shares"],
-        price: json["price"],
-        totalTxn: json["total_txn"],
-        shareAfterTxn: json["share_after_txn"],
-        transactionDate: json["transactionDate"],
-        filingDate: json["filingDate"],
-        detail: json["detail"],
-      );
+      name: json["name"],
+      companySlug: json["companySlug"],
+      reportingSlug: json["reportingSlug"],
+      designation: json["designation"],
+      transactionType: json["transactionType"],
+      shares: json["shares"],
+      price: json["price"],
+      totalTxn: json["total_txn"],
+      shareAfterTxn: json["share_after_txn"],
+      transactionDate: json["transactionDate"],
+      filingDate: json["filingDate"],
+      detail: json["detail"],
+      companyName: json["companyName"],
+      reportingName: json["reportingName"]);
 
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -179,5 +184,7 @@ class InsiderDatum {
         "transactionDate": transactionDate,
         "filingDate": filingDate,
         "detail": detail,
+        "companyName": companyName,
+        "reportingName": reportingName
       };
 }

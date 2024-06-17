@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -10,7 +11,8 @@ import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/spacer_vertical.dart';
 
 class SdCommonHeading extends StatelessWidget {
-  const SdCommonHeading({super.key});
+  const SdCommonHeading({this.showRating = false, super.key});
+  final bool showRating;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,31 @@ class SdCommonHeading extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
+                  if (keyStats?.rating != null &&
+                      keyStats?.rating != 0 &&
+                      showRating)
+                    Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: RatingBar.builder(
+                        initialRating: keyStats?.rating / 1,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        ignoreGestures: true,
+                        itemSize: 16,
+                        unratedColor: ThemeColors.greyBorder,
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 0.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: ThemeColors.accent,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+                    ),
                 ],
               ),
             ),

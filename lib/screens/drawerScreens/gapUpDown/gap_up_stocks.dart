@@ -100,6 +100,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
                 ),
                 itemBuilder: (context, index) {
                   return UpDownStocksItem(
+                    gapUp: true,
                     data: data![index],
                     isOpen: provider.openIndex == index,
                     onTap: () {

@@ -97,6 +97,7 @@ class _GapDownStocksState extends State<GapDownStocks> {
                 ),
                 itemBuilder: (context, index) {
                   return UpDownStocksItem(
+                    gapUp: false,
                     data: data![index],
                     isOpen: provider.openIndex == index,
                     onTap: () {

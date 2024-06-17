@@ -74,7 +74,14 @@ class _SdChartsState extends State<SdCharts> {
                   paddingVerticle: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.chartRes?.top?[index];
-                    return SdTopCard(top: top);
+                    return SdTopCard(
+                      top: top,
+                      colorValue: top?.value == null
+                          ? null
+                          : "${top!.value}".contains('-')
+                              ? Colors.red
+                              : Colors.green,
+                    );
                   },
                 ),
                 const SpacerVertical(height: 20),

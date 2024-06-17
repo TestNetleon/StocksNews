@@ -65,7 +65,7 @@ class _SdCompetitorState extends State<SdCompetitor> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SdCommonHeading(),
+                const SdCommonHeading(showRating: true),
                 const Divider(
                   color: ThemeColors.white,
                   thickness: 2,

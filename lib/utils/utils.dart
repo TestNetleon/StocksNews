@@ -34,7 +34,7 @@ class Utils {
   void showLog(data) {
     if (kDebugMode) {
       print("==================");
-      debugPrint("$data");
+      log("$data");
       print("==================");
     }
   }
