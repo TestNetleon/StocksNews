@@ -1,11 +1,5 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -15,7 +9,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -24,6 +17,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../../modals/refer.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../../route/my_app.dart';
+import '../../../../widgets/custom/toast.dart';
 
 class ReferSuccess extends StatefulWidget {
   const ReferSuccess({super.key});
@@ -135,8 +129,13 @@ class _ReferSuccessState extends State<ReferSuccess> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(4)),
                                   onTap: () {
-                                    Clipboard.setData(ClipboardData(
-                                        text: shareUri.toString()));
+                                    try {
+                                      Clipboard.setData(ClipboardData(
+                                          text: shareUri.toString()));
+                                      CommonToast.show(message: "Copied");
+                                    } catch (e) {
+                                      CommonToast.show(message: "$e");
+                                    }
                                   },
                                   child: Ink(
                                     padding: const EdgeInsets.symmetric(

@@ -27,6 +27,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/low_pe_growth_provider.dart';
 import 'package:stocks_news_new/providers/low_pe_provider.dart';
 import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
@@ -62,6 +63,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
@@ -102,10 +104,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
-
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
@@ -154,6 +153,7 @@ class Routes {
     EarningsScreen.path: (_) => const EarningsScreen(),
     StockScreenerScreen.path: (_) => const StockScreenerScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
+    ReferAFriend.path: (_) => const ReferAFriend(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -502,6 +502,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => StockDetailProviderNew()),
       ChangeNotifierProvider(create: (_) => MostPopularPennyStocksProviders()),
       ChangeNotifierProvider(create: (_) => CongressionalDetailProvider()),
+      ChangeNotifierProvider(create: (_) => LeaderBoardProvider()),
     ];
   }
 }

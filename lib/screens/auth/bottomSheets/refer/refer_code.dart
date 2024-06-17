@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -46,6 +47,9 @@ class ReferLogin extends StatefulWidget {
 
 class _ReferLoginState extends State<ReferLogin> {
   TextEditingController mobile = TextEditingController(text: "");
+  TextEditingController name = TextEditingController(text: "");
+  TextEditingController displayName = TextEditingController(text: "");
+
   String appSignature = "";
   TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
 
@@ -53,6 +57,18 @@ class _ReferLoginState extends State<ReferLogin> {
   void initState() {
     super.initState();
     if (Platform.isAndroid) _getAppSignature();
+    _checkProfile();
+  }
+
+  _checkProfile() {
+    UserProvider provider = context.read<UserProvider>();
+    if (provider.user?.name != null && provider.user?.name != '') {
+      name.text = provider.user?.name ?? "";
+    }
+    if (provider.user?.displayName != null &&
+        provider.user?.displayName != '') {
+      displayName.text = provider.user?.displayName ?? "";
+    }
   }
 
   void _getAppSignature() {
@@ -69,7 +85,19 @@ class _ReferLoginState extends State<ReferLogin> {
   }
 
   Future _referLogin() async {
-    if (mobile.text.isEmpty || mobile.text.length < 10) {
+    if (name.text.isEmpty) {
+      popUpAlert(
+        message: "Please enter a valid name.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+    } else if (displayName.text.isEmpty) {
+      popUpAlert(
+        message: "Please enter a valid display name.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+    } else if (mobile.text.isEmpty || mobile.text.length < 10) {
       popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",
@@ -80,6 +108,8 @@ class _ReferLoginState extends State<ReferLogin> {
       Map request = {
         "token": provider.user?.token ?? "",
         "phone": mobile.text,
+        "name": name.text,
+        "display_name": displayName.text,
         "phone_hash": appSignature,
         "platform": Platform.operatingSystem,
       };
@@ -87,6 +117,7 @@ class _ReferLoginState extends State<ReferLogin> {
       try {
         ApiResponse response = await provider.referLogin(request);
         if (response.status) {
+          provider.updateUser(name: name.text, displayName: displayName.text);
           Navigator.pop(navigatorKey.currentContext!);
           referOTP(
             phone: mobile.text,
@@ -101,6 +132,7 @@ class _ReferLoginState extends State<ReferLogin> {
 
   @override
   Widget build(BuildContext context) {
+    UserRes? user = context.watch<UserProvider>().user;
     return GestureDetector(
       onTap: () {
         closeKeyboard();
@@ -156,20 +188,68 @@ class _ReferLoginState extends State<ReferLogin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Enter mobile number",
+                    "Verify Identity",
                     style: stylePTSansBold(fontSize: 24),
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'We will send a confirmation code',
+                    'In order to join affiliate program, please enter following details.',
                     style: stylePTSansRegular(color: Colors.grey),
                   ),
                   const SpacerVertical(height: 30),
-                  // Text(
-                  //   "Email Address",
-                  //   style: stylePTSansRegular(fontSize: 14),
-                  // ),
-                  // const SpacerVertical(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      "Real Name",
+                      style: stylePTSansRegular(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: ThemeInputField(
+                      style: stylePTSansBold(color: Colors.black, fontSize: 18),
+                      controller: name,
+                      fillColor: user?.name == '' || user?.name == null
+                          ? ThemeColors.white
+                          : const Color.fromARGB(255, 133, 133, 133),
+                      editable: user?.name == '' || user?.name == null,
+                      placeholder: "Enter your name",
+                      keyboardType: TextInputType.name,
+                      inputFormatters: [LengthLimitingTextInputFormatter(60)],
+                      textCapitalization: TextCapitalization.words,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      "Display Name",
+                      style: stylePTSansRegular(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: ThemeInputField(
+                      style: stylePTSansBold(color: Colors.black, fontSize: 18),
+                      editable:
+                          user?.displayName == '' || user?.displayName == null,
+                      controller: displayName,
+                      fillColor:
+                          user?.displayName == '' || user?.displayName == null
+                              ? ThemeColors.white
+                              : const Color.fromARGB(255, 133, 133, 133),
+                      placeholder: "Enter your display name",
+                      keyboardType: TextInputType.name,
+                      inputFormatters: [LengthLimitingTextInputFormatter(60)],
+                      textCapitalization: TextCapitalization.words,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      "Phone Number",
+                      style: stylePTSansRegular(),
+                    ),
+                  ),
                   IntrinsicHeight(
                     child: Row(
                       children: [
@@ -213,12 +293,11 @@ class _ReferLoginState extends State<ReferLogin> {
                   ),
                   const SpacerVertical(height: Dimen.itemSpacing),
                   Text(
-                    'Note: Please enter USA phone number only. '
+                    'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
                     'Do not include +1 or an special character.',
                     style: stylePTSansRegular(color: Colors.grey),
                   ),
                   const SpacerVertical(height: Dimen.itemSpacing),
-
                   ThemeButton(
                     text: "Send OTP",
                     onPressed: _referLogin,

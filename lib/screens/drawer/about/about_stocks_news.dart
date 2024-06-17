@@ -137,6 +137,13 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           index: index, onTap: aboutTiles[index].onTap),
                     );
                   }
+                  if (index == 2) {
+                    return Visibility(
+                      visible: context.watch<UserProvider>().user != null,
+                      child: AboutTile(
+                          index: index, onTap: aboutTiles[index].onTap),
+                    );
+                  }
 
                   return AboutTile(
                       index: index, onTap: aboutTiles[index].onTap);

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/terms_policy_res.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us_item.dart';
 import 'package:stocks_news_new/screens/contactUs/widgets/bullet_point.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/custom/refresh_indicator.dart';
 
@@ -72,6 +76,32 @@ class ContactUsContainer extends StatelessWidget {
               // ),
               const SpacerVertical(height: 30),
               const ContactUsItem(),
+              Padding(
+                padding: const EdgeInsets.only(top: 30, bottom: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      "Write us on",
+                      textAlign: TextAlign.center,
+                      style: stylePTSansRegular(
+                          color: ThemeColors.white, fontSize: 25),
+                    ),
+                    const SpacerVertical(height: 5),
+                    GestureDetector(
+                      onTap: () {
+                        _launchEmail();
+                      },
+                      child: Text(
+                        "support@stocks.news",
+                        textAlign: TextAlign.center,
+                        style: stylePTSansBold(
+                            color: ThemeColors.white, fontSize: 25),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
               if (context.read<TermsAndPolicyProvider>().extra?.disclaimer !=
                   null)
                 DisclaimerWidget(
@@ -82,5 +112,19 @@ class ContactUsContainer extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  void _launchEmail() async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: 'support@stocks.news',
+      query: 'subject=Support Request&body=',
+    );
+
+    if (await canLaunchUrl(params)) {
+      await launchUrl(params);
+    } else {
+      print('Could not launch $params');
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings.dart';
@@ -361,6 +362,13 @@ List<DrawerRes> aboutTiles = [
     text: "Portfolio",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, HomePlaidAdded.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.leaderboard_outlined,
+    text: "Refer And Earn",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, ReferAFriend.path);
     },
   ),
   DrawerRes(

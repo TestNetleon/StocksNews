@@ -13,15 +13,13 @@ class CustomTabContainer extends StatefulWidget {
     this.header,
     this.onChange,
     this.showDivider = false,
-    this.isTabWidget,
     super.key,
   });
 //
   final Widget rightWidget;
   final Widget? header;
-  final List<String> tabs;
+  final List<Widget> tabs;
   final List<Widget> widgets;
-  final List<Widget>? isTabWidget;
   final bool showDivider;
   final Function(int index)? onChange;
 
@@ -65,31 +63,21 @@ class _CustomState extends State<CustomTabContainer>
         mainAxisSize: MainAxisSize.min,
         children: [
           TabBar(
-            tabAlignment: TabAlignment.center,
+            tabAlignment: TabAlignment.start,
             physics: const BouncingScrollPhysics(),
             isScrollable: true,
-            labelPadding: EdgeInsets.all(6.sp),
+            labelPadding:
+                const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             controller: _controller,
             indicatorColor: Colors.transparent,
             automaticIndicatorColorAdjustment: false,
             enableFeedback: false,
             onTap: (index) {
-              setState(
-                () {
-                  _selectedIndex = index;
-                },
-              );
+              setState(() {
+                _selectedIndex = index;
+              });
             },
-            tabs: widget.isTabWidget ??
-                [
-                  ...widget.tabs.asMap().entries.map(
-                        (entry) => CustomTab(
-                          index: entry.key,
-                          lable: entry.value,
-                          selectedIndex: _selectedIndex,
-                        ),
-                      ),
-                ],
+            tabs: widget.tabs,
           ),
           Visibility(
               visible: widget.showDivider,

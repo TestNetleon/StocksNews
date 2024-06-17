@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../modals/referral_res.dart';
 import '../../providers/user_provider.dart';
+import '../../screens/affiliate/index.dart';
 import '../../screens/auth/bottomSheets/login_sheet.dart';
 import '../../screens/drawer/about/refer_dialog.dart';
 import '../../utils/constants.dart';
@@ -23,15 +24,26 @@ class ReferApp extends StatelessWidget {
     if (provider.user == null) {
       isPhone ? await loginSheet() : await loginSheetTablet();
     }
-    
+
     if (provider.user == null) {
       return;
     }
 
     if (provider.user?.phone == null || provider.user?.phone == '') {
       await referLogin();
+      // await Navigator.pushNamed(
+      //     navigatorKey.currentContext!, ReferAFriend.path);
     } else {
-      await _bottomSheet();
+      // await _bottomSheet();
+      await Navigator.pushNamed(
+          navigatorKey.currentContext!, ReferAFriend.path);
+
+      // Navigator.push(
+      //   navigatorKey.currentContext!,
+      //   createRoute(
+      //     const ReferAFriend(),
+      //   ),
+      // );
       // await referLogin();
     }
   }

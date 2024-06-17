@@ -10,11 +10,11 @@ TermsPolicyRes termsPolicyResFromJson(String str) =>
 String termsPolicyResToJson(TermsPolicyRes data) => json.encode(data.toJson());
 
 class TermsPolicyRes {
-  final String description;
+  final String? description;
   final List<ContactDetail>? contactDetail;
 //
   TermsPolicyRes({
-    required this.description,
+    this.description,
     this.contactDetail,
   });
 

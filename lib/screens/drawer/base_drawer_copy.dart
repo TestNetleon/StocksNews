@@ -144,7 +144,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                           userProvider.user?.name?.isNotEmpty ==
                                                   true
                                               ? "${userProvider.user?.name}"
-                                              : "Update your account",
+                                              : "Hello",
                                           style: stylePTSansBold(),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -154,7 +154,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                                       ?.isNotEmpty ==
                                                   true
                                               ? "${userProvider.user?.email}"
-                                              : "Update your account",
+                                              : "",
                                           style: stylePTSansRegular(
                                               color: ThemeColors.greyText,
                                               fontSize: 12),
