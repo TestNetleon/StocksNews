@@ -58,7 +58,11 @@ class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
               children: [
                 if (index == 0)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.only(
+                      bottom: 20,
+                      top: 20,
+                      left: 0,
+                    ),
                     child: Text(
                       widget.label ?? "",
                       style: index == 0
@@ -69,8 +73,6 @@ class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    // widget.onSelected(index);
-                    // Navigator.pop(context);
                     setState(() {
                       if (_selected.contains(item)) {
                         _selected.remove(item);
@@ -80,8 +82,7 @@ class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
                     });
                   },
                   child: Container(
-                    // color: Colors.grey,
-                    padding: const EdgeInsets.only(left: 20, top: 5, bottom: 5),
+                    padding: const EdgeInsets.only(left: 0, top: 5, bottom: 5),
                     child: Row(
                       children: [
                         Checkbox(

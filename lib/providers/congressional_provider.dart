@@ -76,9 +76,9 @@ class CongressionalProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   void industryFilter(String item) {
-    _filterParams!.sector!.remove(item);
-    if (_filterParams!.sector!.isEmpty) {
-      _filterParams!.sector = null;
+    _filterParams!.industry!.remove(item);
+    if (_filterParams!.industry!.isEmpty) {
+      _filterParams!.industry = null;
     }
     _pageUp = 1;
     notifyListeners();

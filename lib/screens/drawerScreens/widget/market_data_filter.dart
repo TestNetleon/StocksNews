@@ -66,7 +66,6 @@ class _MarketDataFilterBottomSheetState
         selectedData: filterParams?.exchange_name,
         onSelected: (List<FiltersDataItem> selected) {
           String selectedValues = selected.map((item) => item.value).join(',');
-
           if (filterParams == null) {
             filterParams = FilteredParams(
               exchange_name:
@@ -126,7 +125,6 @@ class _MarketDataFilterBottomSheetState
       );
       return;
     }
-
     BaseBottomSheets().gradientBottomSheet(
       // isScrollable: false,
       child: FilterMultiSelectListing(
@@ -268,6 +266,7 @@ class _MarketDataFilterBottomSheetState
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SpacerVertical(height: 10),
           IntrinsicHeight(
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -284,48 +283,48 @@ class _MarketDataFilterBottomSheetState
                     controller: TextEditingController(),
                   ),
                 ),
-                const SpacerHorizontal(width: 10),
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                    hintText: filterParams?.sector != null
-                        ? filterParams?.sector?.join(", ") ?? ""
-                        : "All Sectors",
-                    label: "Sector",
-                    onTap: () => _showSectorPicker(context),
-                    // controller: provider.sectorController,
-                    controller: TextEditingController(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SpacerVertical(height: 20),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                    hintText: filterParams?.industry != null
-                        ? filterParams?.industry?.join(", ") ?? ""
-                        : "All Industry",
-                    label: "Industry",
-                    onTap: () => _showIndustryPicker(context),
-                    // controller: provider.industryController,
-                    controller: TextEditingController(),
-                  ),
-                ),
-                // const SpacerHorizontal(width: 10),
+                // const SpacerHorizontal(width: 12),
                 // Expanded(
                 //   child: MarketDataTextFiledClickable(
-                //       hintText: "All Market Cap",
-                //       label: "Market Cap",
-                //       onTap: () => _showMarketCapPicker(context),
-                //       controller: provider.marketCapController),
+                //     hintText: filterParams?.sector != null
+                //         ? filterParams?.sector?.join(", ") ?? ""
+                //         : "All Sectors",
+                //     label: "Sector",
+                //     onTap: () => _showSectorPicker(context),
+                //     // controller: provider.sectorController,
+                //     controller: TextEditingController(),
+                //   ),
                 // ),
               ],
             ),
           ),
+          // const SpacerVertical(height: 12),
+          // IntrinsicHeight(
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Expanded(
+          //         child: MarketDataTextFiledClickable(
+          //           hintText: filterParams?.industry != null
+          //               ? filterParams?.industry?.join(", ") ?? ""
+          //               : "All Industry",
+          //           label: "Industry",
+          //           onTap: () => _showIndustryPicker(context),
+          //           // controller: provider.industryController,
+          //           controller: TextEditingController(),
+          //         ),
+          //       ),
+          //       // const SpacerHorizontal(width: 10),
+          //       // Expanded(
+          //       //   child: MarketDataTextFiledClickable(
+          //       //       hintText: "All Market Cap",
+          //       //       label: "Market Cap",
+          //       //       onTap: () => _showMarketCapPicker(context),
+          //       //       controller: provider.marketCapController),
+          //       // ),
+          //     ],
+          //   ),
+          // ),
           // const SpacerVertical(height: 20),
           // IntrinsicHeight(
           //   child: Row(
@@ -396,15 +395,36 @@ class _MarketDataFilterBottomSheetState
           //   ),
           // ),
           const SpacerVertical(height: 20),
-          ThemeButton(
-            color: ThemeColors.accent,
-            onPressed: () {
-              Navigator.pop(context);
-              // context.read<StockScreenerProvider>().getStockScreenerStocks();
-              widget.onFiltered(filterParams);
-            },
-            text: "APPLY FILTER",
-            textColor: Colors.white,
+          Row(
+            children: [
+              // Expanded(
+              //   child: ThemeButton(
+              //     color: filterParams != null
+              //         ? ThemeColors.accent
+              //         : ThemeColors.greyText,
+              //     onPressed: () {
+              //       if (filterParams == null) return;
+              //       Navigator.pop(context);
+              //       filterParams = null;
+              //       widget.onFiltered(filterParams);
+              //     },
+              //     text: "RESET FILTER",
+              //     textColor: Colors.white,
+              //   ),
+              // ),
+              // const SpacerHorizontal(width: 12),
+              Expanded(
+                child: ThemeButton(
+                  color: ThemeColors.accent,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    widget.onFiltered(filterParams);
+                  },
+                  text: "APPLY FILTER",
+                  textColor: Colors.white,
+                ),
+              ),
+            ],
           ),
           SpacerVertical(height: ScreenUtil().bottomBarHeight),
         ],

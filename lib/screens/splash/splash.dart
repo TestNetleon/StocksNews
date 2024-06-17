@@ -184,7 +184,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
               child: Image.asset(Images.logo),
             ),
             Text(
-              "Version - 51",
+              "Version - 52",
               style: stylePTSansBold(),
             ),
           ],
