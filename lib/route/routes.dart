@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -178,9 +179,30 @@ class Routes {
 
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
+    log("GENERATED ROUT ***=> $settings");
+    log("GENERATED ROUT ***=> ${isValidUrl(routingData)}}");
+
+    if (routingData != null && isValidUrl(routingData)) {
+      Uri? uri = Uri.tryParse(routingData);
+      if (uri != null) {
+        return handleDeepLink(uri);
+      }
+    }
+    bool isReferral = routingData?.contains("page.link") ??
+        routingData?.contains("/install") ??
+        false;
+
+    if (isReferral) {
+      return MaterialWithModalsPageRoute(
+        builder: (context) {
+          return const Splash();
+        },
+      );
+    }
 
     Utils().showLog(
-        "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}");
+      "=> ${settings.arguments}, \n${jsonEncode(settings.arguments.toString())}",
+    );
 
     switch (routingData) {
       case TCandPolicy.path:
@@ -364,20 +386,51 @@ class Routes {
           },
         );
     }
-    return _errorRoute();
+    // return _errorRoute();
+    return MaterialWithModalsPageRoute(
+      builder: (context) {
+        return const Splash();
+      },
+    );
   }
 
-  static Route _errorRoute() {
-    return MaterialWithModalsPageRoute(
-        builder: (context) => BaseContainer(
-              body: Center(
-                child: Text(
-                  "ERROR PAGE....",
-                  style: stylePTSansBold(),
-                ),
-              ),
-            ));
+  static Route<dynamic> handleDeepLink(Uri uri) {
+    String type = containsSpecificPath(uri);
+    String slug = extractLastPathComponent(uri);
+
+    switch (type) {
+      case "blog":
+        return MaterialWithModalsPageRoute(
+          builder: (context) => BlogDetail(slug: slug),
+        );
+      case "news":
+        return MaterialWithModalsPageRoute(
+          builder: (context) => NewsDetails(slug: slug),
+        );
+      case "stock_detail":
+        return MaterialPageRoute(
+          builder: (context) => StockDetail(symbol: slug),
+        );
+      case "dashboard":
+        return MaterialWithModalsPageRoute(builder: (context) => const Tabs());
+      default:
+        return MaterialPageRoute(
+          builder: (context) => const Tabs(),
+        );
+    }
   }
+
+  // static Route _errorRoute() {
+  //   return MaterialWithModalsPageRoute(
+  //       builder: (context) => BaseContainer(
+  //             body: Center(
+  //               child: Text(
+  //                 "ERROR PAGE....",
+  //                 style: stylePTSansBold(),
+  //               ),
+  //             ),
+  //           ));
+  // }
 
   static List<SingleChildWidget> get providers {
     return [

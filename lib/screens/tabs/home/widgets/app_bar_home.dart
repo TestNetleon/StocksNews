@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
+import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -63,15 +64,23 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //   popHome = false;
                 //   deepLinkData = null;
                 // }
-                if (popHome) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, Tabs.path, (route) => false);
-                  popHome = false;
+
+                if (navigatorKey.currentState!.canPop()) {
+                  if (popHome) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, Tabs.path, (route) => false);
+                    popHome = false;
+                  } else {
+                    navigatorKey.currentContext!
+                        .read<SearchProvider>()
+                        .clearSearch();
+                    Navigator.pop(navigatorKey.currentContext!);
+                  }
                 } else {
-                  navigatorKey.currentContext!
-                      .read<SearchProvider>()
-                      .clearSearch();
-                  Navigator.pop(navigatorKey.currentContext!);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const Splash()),
+                  );
                 }
               },
               icon: const Icon(

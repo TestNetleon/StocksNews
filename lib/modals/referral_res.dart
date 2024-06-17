@@ -9,22 +9,25 @@ class ReferralRes {
   final String? title;
   final String? message;
   final String? shareText;
+  final bool? shwReferral;
 
   ReferralRes({
-    required this.title,
-    required this.message,
-    required this.shareText,
+    this.title,
+    this.message,
+    this.shareText,
+    this.shwReferral,
   });
 
   factory ReferralRes.fromJson(Map<String, dynamic> json) => ReferralRes(
-        title: json["title"],
-        message: json["message"],
-        shareText: json["share_text"],
-      );
+      title: json["title"],
+      message: json["message"],
+      shareText: json["share_text"],
+      shwReferral: json['show_referral']);
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "message": message,
         "share_text": shareText,
+        "show_referral": shwReferral,
       };
 }

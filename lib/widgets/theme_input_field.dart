@@ -13,6 +13,7 @@ class ThemeInputField extends StatelessWidget {
     this.keyboardType = TextInputType.name,
     this.maxLength = 40,
     this.borderRadius = 4,
+    this.borderRadiusOnly,
     this.minLines = 1,
     this.editable = true,
     this.shadow = true,
@@ -39,6 +40,7 @@ class ThemeInputField extends StatelessWidget {
   final bool shadow;
   final bool filled;
   final bool isUnderline;
+  final BorderRadius? borderRadiusOnly;
   final TextStyle? style;
   final Color? borderColor;
   final double borderRadius;
@@ -55,7 +57,8 @@ class ThemeInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     var outlineInputBorder = isUnderline
         ? UnderlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius:
+                borderRadiusOnly ?? BorderRadius.circular(borderRadius),
             borderSide: BorderSide(
               color: borderColor ?? Colors.grey[300]!,
               width: 1,

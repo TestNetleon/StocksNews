@@ -11,6 +11,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/api/image_service.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
@@ -116,6 +117,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           if (emailController.text != provider.user?.email) {
             _sendOTP(otp: res.data["otp"].toString());
           } else {
+            popUpAlert(
+              message: res.message ?? "",
+              title: "",
+            );
+
             provider.updateUser(
               name: nameController.text,
               email: emailController.text.toLowerCase(),
@@ -315,7 +321,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         const SpacerVertical(height: 20),
         const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),
-        const ReferApp(),
+        Visibility(
+            visible:
+                context.watch<HomeProvider>().extra?.referral?.shwReferral ??
+                    false,
+            child: const ReferApp()),
         // Column(
         //   children: [
         //     Text(

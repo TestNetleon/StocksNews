@@ -218,7 +218,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
               color: ThemeColors.greyBorder,
             ),
           ),
-          const SpacerVertical(height: 16),
+          const SpacerVertical(height: 70),
+
           Container(
             width: MediaQuery.of(context).size.width * .45,
             constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
@@ -241,7 +242,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
               children: [
                 // const SpacerVertical(height: 16),
                 Text(
-                  "Welcome to stocks.news",
+                  "Welcome to Stocks.News",
                   style: stylePTSansBold(fontSize: 24),
                 ),
                 const SpacerVertical(height: 30),

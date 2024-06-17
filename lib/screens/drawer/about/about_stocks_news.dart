@@ -4,9 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
@@ -73,7 +75,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           child: Column(
             children: [
               const DrawerTopNew(
-                text: "About stocks.news",
+                text: "About Stocks.News",
               ),
               const SpacerVertical(height: 30),
               Container(
@@ -105,9 +107,17 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                child: ReferApp(),
+              Visibility(
+                visible: context
+                        .watch<HomeProvider>()
+                        .extra
+                        ?.referral
+                        ?.shwReferral ??
+                    false,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  child: ReferApp(),
+                ),
               ),
               ListView.separated(
                 padding: const EdgeInsets.only(
@@ -118,6 +128,16 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
+                  if (index == 1) {
+                    return Visibility(
+                      visible:
+                          context.watch<HomeProvider>().extra?.showPortfolio ??
+                              false,
+                      child: AboutTile(
+                          index: index, onTap: aboutTiles[index].onTap),
+                    );
+                  }
+
                   return AboutTile(
                       index: index, onTap: aboutTiles[index].onTap);
                 },
@@ -184,99 +204,170 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.sp),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              if (context.read<UserProvider>().drawerData !=
-                                  null) {
-                                showDialog(
-                                  context: navigatorKey.currentContext!,
-                                  barrierColor: Colors.black.withOpacity(0.5),
-                                  builder: (context) {
-                                    return const ReviewAppPopUp();
-                                  },
-                                );
 
-                                return;
-                              }
-                              Map request = {
-                                "device_type":
-                                    Platform.isAndroid ? "android" : "ios",
-                              };
-                              context
-                                  .read<UserProvider>()
-                                  .getReviewTextDetail(request);
+                child: InkWell(
+                  onTap: () {
+                    if (context.read<UserProvider>().drawerData != null) {
+                      showDialog(
+                        context: navigatorKey.currentContext!,
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        builder: (context) {
+                          return const ReviewAppPopUp();
+                        },
+                      );
 
-                              // showDialog(
-                              //   context: navigatorKey.currentContext!,
-                              //   barrierColor: Colors.black.withOpacity(0.5),
-                              //   builder: (context) {
-                              //     return const ReviewAppPopUp();
-                              //   },
-                              // );
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(15.sp),
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 36, 36, 36),
-                                  shape: BoxShape.circle),
-                              child: const Icon(
-                                Icons.reviews_outlined,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                          const SpacerVertical(height: 5),
-                          Text(
-                            "Review app",
-                            style: stylePTSansRegular(
-                              color: ThemeColors.greyText,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
+                      return;
+                    }
+                    Map request = {
+                      "device_type": Platform.isAndroid ? "android" : "ios",
+                    };
+                    context.read<UserProvider>().getReviewTextDetail(request);
+
+                    // showDialog(
+                    //   context: navigatorKey.currentContext!,
+                    //   barrierColor: Colors.black.withOpacity(0.5),
+                    //   builder: (context) {
+                    //     return const ReviewAppPopUp();
+                    //   },
+                    // );
+                  },
+                  borderRadius: BorderRadius.circular(4.sp),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      color: ThemeColors.greyBorder.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(4.sp),
                     ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: _onShareAppClick,
-                            // onTap: () {
-                            //   commonShare(
-                            //     title: provider.homeSliderRes?.shareText ?? "",
-                            //     url: provider.homeSliderRes?.shareUrl,
-                            //   );
-                            // },
-                            child: Container(
-                              padding: EdgeInsets.all(15.sp),
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 36, 36, 36),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.ios_share_outlined,
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                          const SpacerVertical(height: 5),
-                          Text(
-                            "Share app",
-                            style: stylePTSansRegular(
-                              color: ThemeColors.greyText,
-                              fontSize: 13,
-                            ),
-                          )
-                        ],
-                      ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
                     ),
-                  ],
+                    child: Row(
+                      children: [
+                        // Image.asset(
+                        //   Images.reviews_outlined,
+                        //   height: 20,
+                        //   width: 20,
+                        //   color: ThemeColors.white,
+                        // ),
+                        const Icon(
+                          Icons.reviews_outlined,
+                          size: 25,
+                          color: ThemeColors.white,
+                        ),
+                        const SpacerHorizontal(width: 8),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Review Stocks.News App",
+                              style: stylePTSansBold(fontSize: 15),
+                            ),
+                            const SpacerVertical(height: 3),
+                            Text(
+                              "If you like our app recommend to others.",
+                              style: stylePTSansRegular(
+                                  fontSize: 13, color: ThemeColors.greyText),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+
+                // child: Row(
+                //   children: [
+                //     Expanded(
+                //       child: Column(
+                //         children: [
+                //           GestureDetector(
+                //             onTap: () {
+                //               if (context.read<UserProvider>().drawerData !=
+                //                   null) {
+                //                 showDialog(
+                //                   context: navigatorKey.currentContext!,
+                //                   barrierColor: Colors.black.withOpacity(0.5),
+                //                   builder: (context) {
+                //                     return const ReviewAppPopUp();
+                //                   },
+                //                 );
+
+                //                 return;
+                //               }
+                //               Map request = {
+                //                 "device_type":
+                //                     Platform.isAndroid ? "android" : "ios",
+                //               };
+                //               context
+                //                   .read<UserProvider>()
+                //                   .getReviewTextDetail(request);
+
+                //               // showDialog(
+                //               //   context: navigatorKey.currentContext!,
+                //               //   barrierColor: Colors.black.withOpacity(0.5),
+                //               //   builder: (context) {
+                //               //     return const ReviewAppPopUp();
+                //               //   },
+                //               // );
+                //             },
+                //             child: Container(
+                //               padding: EdgeInsets.all(15.sp),
+                //               decoration: const BoxDecoration(
+                //                   color: Color.fromARGB(255, 36, 36, 36),
+                //                   shape: BoxShape.circle),
+                //               child: const Icon(
+                //                 Icons.reviews_outlined,
+                //                 size: 24,
+                //               ),
+                //             ),
+                //           ),
+                //           const SpacerVertical(height: 5),
+                //           Text(
+                //             "Review app",
+                //             style: stylePTSansRegular(
+                //               color: ThemeColors.greyText,
+                //               fontSize: 13,
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Expanded(
+                //       child: Column(
+                //         children: [
+                //           GestureDetector(
+                //             onTap: _onShareAppClick,
+                //             // onTap: () {
+                //             //   commonShare(
+                //             //     title: provider.homeSliderRes?.shareText ?? "",
+                //             //     url: provider.homeSliderRes?.shareUrl,
+                //             //   );
+                //             // },
+                //             child: Container(
+                //               padding: EdgeInsets.all(15.sp),
+                //               decoration: const BoxDecoration(
+                //                 color: Color.fromARGB(255, 36, 36, 36),
+                //                 shape: BoxShape.circle,
+                //               ),
+                //               child: const Icon(
+                //                 Icons.ios_share_outlined,
+                //                 size: 24,
+                //               ),
+                //             ),
+                //           ),
+                //           const SpacerVertical(height: 5),
+                //           Text(
+                //             "Share app",
+                //             style: stylePTSansRegular(
+                //               color: ThemeColors.greyText,
+                //               fontSize: 13,
+                //             ),
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ),
               SpacerVertical(height: 26.sp),
               Align(

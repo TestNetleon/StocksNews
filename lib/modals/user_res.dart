@@ -6,7 +6,7 @@ String userResToJson(UserRes data) => json.encode(data.toJson());
 
 class UserRes {
   String? email;
-  final String? phone;
+  String? phone;
   final String? roleId;
   final int? emailOtp;
   final int? phoneOtp;

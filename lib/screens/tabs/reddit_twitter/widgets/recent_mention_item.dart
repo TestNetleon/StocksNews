@@ -68,7 +68,7 @@ class SocialSentimentMentions extends StatelessWidget {
                   children: [
                     Text(
                       maxLines: 2,
-                      "${data.price}",
+                      data.price ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: stylePTSansRegular(
                           fontSize: 14, color: ThemeColors.white),
@@ -89,7 +89,7 @@ class SocialSentimentMentions extends StatelessWidget {
                         Flexible(
                           child: Text(
                             maxLines: 2,
-                            "${data.change?.toCurrency()} (${data.changesPercentage?.toCurrency()}%)",
+                            "${data.change?.toCurrency() ?? ""} (${data.changesPercentage?.toCurrency() ?? ""}%)",
                             style: stylePTSansRegular(
                               fontSize: 12,
                               color: (data.change ?? 0) > 0
@@ -107,8 +107,8 @@ class SocialSentimentMentions extends StatelessWidget {
                         Text(
                           maxLines: 1,
                           (data.mentionCount ?? 1) == 1
-                              ? "Mention: ${data.mentionCount}"
-                              : "Mentions: ${data.mentionCount}",
+                              ? "Mention: ${data.mentionCount ?? ""}"
+                              : "Mentions: ${data.mentionCount ?? ""}",
                           overflow: TextOverflow.ellipsis,
                           style: stylePTSansRegular(
                               fontSize: 12, color: ThemeColors.white),

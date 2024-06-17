@@ -12,6 +12,7 @@
 	<array>
 		<string>applinks:app.stocks.news</string>
 		<string>app.stocks.news</string>
+		<string>applinks:stocksnews.page.link</string>
 	</array>
 </dict>
 </plist>

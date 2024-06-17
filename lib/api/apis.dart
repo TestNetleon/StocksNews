@@ -25,6 +25,8 @@ class Apis {
   static const exchanageTab = "/exchanage";
   static const savePlaidPortfolio = "/save-plaid-portfolio";
   static const plaidPortfolio = "/plaid-portfolio";
+  static const referLogin = "/send-phone-otp";
+  static const checkPhone = "/check-phone-otp";
 
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const indices = "/indices";

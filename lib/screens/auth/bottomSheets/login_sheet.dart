@@ -223,7 +223,7 @@ class _LoginBottomState extends State<LoginBottom> {
               color: ThemeColors.greyBorder,
             ),
           ),
-          const SpacerVertical(height: 16),
+          const SpacerVertical(height: 70),
           Container(
             width: MediaQuery.of(context).size.width * .45,
             constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),

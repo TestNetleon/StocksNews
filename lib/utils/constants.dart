@@ -74,6 +74,32 @@ class Images {
   static const String flames = "assets/images/flames.png";
   static const String reward = "assets/images/reward.png";
 
+  //Market Data icons
+  static const String gainerLoser = "assets/images/gain_lose.png";
+  static const String penny = "assets/images/penny.png";
+  static const String blogging = "assets/images/blogging.png";
+  static const String earnings = "assets/images/earnings.png";
+  static const String activities = "assets/images/activities.png";
+  static const String advisor = "assets/images/advisor.png";
+  static const String dividends = "assets/images/dividends.png";
+  static const String technical = "assets/images/stocks.png";
+  static const String discount = "assets/images/discount.png";
+  static const String performance = "assets/images/performance.png";
+  static const String exchange = "assets/images/exchange.png";
+  static const String gapUpDown = "assets/images/exchange.png";
+  static const String feedback = "assets/images/feedback.png";
+  static const String highLow = "assets/images/highLow.png";
+  static const String week = "assets/images/calendar.png";
+  static const String indices = "assets/images/bank_ind.png";
+  static const String insider = "assets/images/insider.png";
+  static const String highPE = "assets/images/finance.png";
+
+  static const String referT = "assets/images/refer_t.png";
+  static const String referW = "assets/images/refer_w.png";
+  static const String referE = "assets/images/refer_e.png";
+  static const String referS = "assets/images/refer_s.png";
+  static const String referF = "assets/images/refer_f.png";
+
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
   static const String discussedGIF = "assets/images/most_discussed.gif";
@@ -90,6 +116,8 @@ class Images {
   static const String noDataGIF = "assets/images/nodata_GIF.gif";
   static const String syncGIF = "assets/images/syncGIF.gif";
   static const String portfolioGIF = "assets/images/portfolio.gif";
+  static const String otpVerify = "assets/images/otp1.gif";
+  static const String referSuccess = "assets/images/success.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
