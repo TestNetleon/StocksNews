@@ -160,6 +160,8 @@ class CompanyInfo {
 
 class KeyStats {
   final String symbol;
+  final dynamic rating;
+
   final String name;
   String? price;
   final num? priceWithoutCur;
@@ -242,50 +244,51 @@ class KeyStats {
     this.bookValuePerShare,
     this.revenue,
     this.revenueDate,
+    this.rating,
   });
 
   factory KeyStats.fromJson(Map<String, dynamic> json) => KeyStats(
-        symbol: json["symbol"],
-        name: json["name"],
-        price: json["price"],
-        priceWithoutCur: json["price_without_cur"],
-        changeWithCur: json["change_with_cur"],
-        changesPercentage: json["changesPercentage"],
-        change: json["change"],
-        dayLow: json["dayLow"],
-        dayHigh: json["dayHigh"],
-        yearHigh: json["yearHigh"],
-        yearLow: json["yearLow"],
-        previousCloseNUM: json['previousClose_without_cur'],
-        marketCap: json["marketCap"],
-        priceAvg50: json["priceAvg50"],
-        priceAvg200: json["priceAvg200"],
-        exchange: json["exchange"],
-        volume: json["volume"],
-        avgVolume: json["avgVolume"],
-        marketStatus: json["market_status"],
-        open: json["open"],
-        previousClose: json["previousClose"],
-        eps: json["eps"],
-        pe: json["pe"],
-        earningsAnnouncement: json["earningsAnnouncement"],
-        sharesOutstanding: json["sharesOutstanding"],
-        timestamp: json["timestamp"],
-        dayHighValue: json["dayHigh_value"],
-        dayLowValue: json["dayLow_value"],
-        yearHighValue: json["yearHigh_value"],
-        yearLowValue: json["yearLow_value"],
-        priceValue: json["price_value"],
-        text: json["text"],
-        forecastText: json["forecast_text"],
-        ask: json["ask"],
-        bid: json["bid"],
-        enterpriseValueOverEbitda: json["enterpriseValueOverEBITDA"],
-        dividendYield: json["dividendYield"],
-        bookValuePerShare: json["bookValuePerShare"],
-        revenue: json["revenue"],
-        revenueDate: json["revenue_date"],
-      );
+      symbol: json["symbol"],
+      name: json["name"],
+      price: json["price"],
+      priceWithoutCur: json["price_without_cur"],
+      changeWithCur: json["change_with_cur"],
+      changesPercentage: json["changesPercentage"],
+      change: json["change"],
+      dayLow: json["dayLow"],
+      dayHigh: json["dayHigh"],
+      yearHigh: json["yearHigh"],
+      yearLow: json["yearLow"],
+      previousCloseNUM: json['previousClose_without_cur'],
+      marketCap: json["marketCap"],
+      priceAvg50: json["priceAvg50"],
+      priceAvg200: json["priceAvg200"],
+      exchange: json["exchange"],
+      volume: json["volume"],
+      avgVolume: json["avgVolume"],
+      marketStatus: json["market_status"],
+      open: json["open"],
+      previousClose: json["previousClose"],
+      eps: json["eps"],
+      pe: json["pe"],
+      earningsAnnouncement: json["earningsAnnouncement"],
+      sharesOutstanding: json["sharesOutstanding"],
+      timestamp: json["timestamp"],
+      dayHighValue: json["dayHigh_value"],
+      dayLowValue: json["dayLow_value"],
+      yearHighValue: json["yearHigh_value"],
+      yearLowValue: json["yearLow_value"],
+      priceValue: json["price_value"],
+      text: json["text"],
+      forecastText: json["forecast_text"],
+      ask: json["ask"],
+      bid: json["bid"],
+      enterpriseValueOverEbitda: json["enterpriseValueOverEBITDA"],
+      dividendYield: json["dividendYield"],
+      bookValuePerShare: json["bookValuePerShare"],
+      revenue: json["revenue"],
+      revenueDate: json["revenue_date"],
+      rating: json["rating"]);
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
@@ -328,5 +331,6 @@ class KeyStats {
         "bookValuePerShare": bookValuePerShare,
         "revenue": revenue,
         "revenue_date": revenueDate,
+        "rating": rating
       };
 }

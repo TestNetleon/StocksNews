@@ -352,7 +352,7 @@ class InsiderReportingContainer extends StatelessWidget {
                       ),
                       InsidersDetailsItem(
                         price: data?.price ?? "",
-                        transacted: "${data?.securitiesTransacted ?? 0}",
+                        transacted: "${data?.securitiesTransactedNew ?? 0}",
                         isInsider: true,
                         symbol: data?.symbol ?? '',
                         // leading: "${data?.securitiesTransacted}",
@@ -395,7 +395,7 @@ class InsiderReportingContainer extends StatelessWidget {
                 }
                 return InsidersDetailsItem(
                   price: data?.price ?? "",
-                  transacted: "${data?.securitiesTransacted ?? 0}",
+                  transacted: "${data?.securitiesTransactedNew ?? 0}",
                   isInsider: true,
 
                   symbol: data?.symbol ?? '',

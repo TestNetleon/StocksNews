@@ -6,7 +6,9 @@ import '../../../utils/theme.dart';
 
 class SdTopCard extends StatelessWidget {
   final SdTopRes? top;
-  const SdTopCard({super.key, this.top});
+  final dynamic colorValue;
+
+  const SdTopCard({super.key, this.top, this.colorValue = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class SdTopCard extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 6),
                   child: Text(
                     "${top?.value}",
-                    style: styleGeorgiaBold(fontSize: 20),
+                    style: styleGeorgiaBold(fontSize: 20, color: colorValue),
                   ),
                 ),
               ),

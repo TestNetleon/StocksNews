@@ -14,6 +14,8 @@ class UpDownStocksItem extends StatelessWidget {
   final GapUpRes data;
   // final int index;
   final bool isOpen;
+  final bool gapUp;
+
   final Function() onTap;
 //
   const UpDownStocksItem({
@@ -21,6 +23,7 @@ class UpDownStocksItem extends StatelessWidget {
     // required this.index,
     required this.isOpen,
     required this.onTap,
+    this.gapUp = false,
     super.key,
   });
 
@@ -176,7 +179,7 @@ class UpDownStocksItem extends StatelessWidget {
             child: Column(
               children: [
                 InnerRowItem(
-                  lable: "Gap Up%",
+                  lable: gapUp ? "Gap Up%" : "Gap Down ",
                   value: "${data.gapPer}%",
                   valueColor: "${data.gapPer}".contains("-")
                       ? Colors.red

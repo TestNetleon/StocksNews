@@ -46,6 +46,8 @@ class InsiderTradingData {
   // final DateTime transactionDate;
   // final String reportingCik;
   final num securitiesTransacted;
+  final String securitiesTransactedNew;
+
   // final DateTime filingDate;
   final String transactionType;
   final String securitiesOwned;
@@ -76,6 +78,8 @@ class InsiderTradingData {
     // required this.transactionDate,
     // required this.reportingCik,
     required this.securitiesTransacted,
+    required this.securitiesTransactedNew,
+
     // required this.filingDate,
     required this.transactionType,
     required this.securitiesOwned,
@@ -108,6 +112,8 @@ class InsiderTradingData {
         // transactionDate: DateTime.parse(json["transactionDate"]),
         // reportingCik: json["reportingCik"],
         securitiesTransacted: json["securitiesTransacted"],
+        securitiesTransactedNew: json["securitiesTransactedNew"],
+
         // filingDate: DateTime.parse(json["filingDate"]),
         transactionType: json["transactionType"],
         securitiesOwned: json["securitiesOwned"],
@@ -138,6 +144,8 @@ class InsiderTradingData {
         // "transactionDate": transactionDate.toIso8601String(),
         // "reportingCik": reportingCik,
         "securitiesTransacted": securitiesTransacted,
+        "securitiesTransactedNew": securitiesTransactedNew,
+
         // "filingDate": filingDate.toIso8601String(),
         "transactionType": transactionType,
         "securitiesOwned": securitiesOwned,
