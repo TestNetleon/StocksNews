@@ -125,27 +125,41 @@ class _MarketDataFilterBottomSheetState
       );
       return;
     }
-    BaseBottomSheets().gradientBottomSheet(
-      // isScrollable: false,
-      child: FilterMultiSelectListing(
-        label: "Select Industry",
-        items: provider.data!.industries!,
-        selectedData: filterParams?.industry,
-        onSelected: (List<FiltersDataItem> selected) {
-          String selectedValues = selected.map((item) => item.value).join(',');
 
-          if (filterParams == null) {
-            filterParams = FilteredParams(
-              industry:
-                  selectedValues.isEmpty ? null : selectedValues.split(","),
-            );
-          } else {
-            filterParams?.industry =
-                selectedValues.isEmpty ? null : selectedValues.split(",");
-          }
-          setState(() {});
-        },
+    // BaseBottomSheets().gradientBottomSheet(
+    //   // isScrollable: false,
+    //   child: FilterMultiSelectListing(
+    //     label: "Select Industry",
+    //     items: provider.data!.industries!,
+    //     selectedData: filterParams?.industry,
+    //     onSelected: (List<FiltersDataItem> selected) {
+    //       String selectedValues = selected.map((item) => item.value).join(',');
+    //       if (filterParams == null) {
+    //         filterParams = FilteredParams(
+    //           industry:
+    //               selectedValues.isEmpty ? null : selectedValues.split(","),
+    //         );
+    //       } else {
+    //         filterParams?.industry =
+    //             selectedValues.isEmpty ? null : selectedValues.split(",");
+    //       }
+    //       setState(() {});
+    //     },
+    //   ),
+    // );
+
+    showModalBottomSheet(
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
       ),
+      enableDrag: true,
+      context: context,
+      builder: (context) => BottomSheetContent(),
     );
   }
 
@@ -283,48 +297,48 @@ class _MarketDataFilterBottomSheetState
                     controller: TextEditingController(),
                   ),
                 ),
-                // const SpacerHorizontal(width: 12),
+                const SpacerHorizontal(width: 12),
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText: filterParams?.sector != null
+                        ? filterParams?.sector?.join(", ") ?? ""
+                        : "All Sectors",
+                    label: "Sector",
+                    onTap: () => _showSectorPicker(context),
+                    // controller: provider.sectorController,
+                    controller: TextEditingController(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SpacerVertical(height: 12),
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText: filterParams?.industry != null
+                        ? filterParams?.industry?.join(", ") ?? ""
+                        : "All Industry",
+                    label: "Industry",
+                    onTap: () => _showIndustryPicker(context),
+                    // controller: provider.industryController,
+                    controller: TextEditingController(),
+                  ),
+                ),
+                // const SpacerHorizontal(width: 10),
                 // Expanded(
                 //   child: MarketDataTextFiledClickable(
-                //     hintText: filterParams?.sector != null
-                //         ? filterParams?.sector?.join(", ") ?? ""
-                //         : "All Sectors",
-                //     label: "Sector",
-                //     onTap: () => _showSectorPicker(context),
-                //     // controller: provider.sectorController,
-                //     controller: TextEditingController(),
-                //   ),
+                //       hintText: "All Market Cap",
+                //       label: "Market Cap",
+                //       onTap: () => _showMarketCapPicker(context),
+                //       controller: provider.marketCapController),
                 // ),
               ],
             ),
           ),
-          // const SpacerVertical(height: 12),
-          // IntrinsicHeight(
-          //   child: Row(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Expanded(
-          //         child: MarketDataTextFiledClickable(
-          //           hintText: filterParams?.industry != null
-          //               ? filterParams?.industry?.join(", ") ?? ""
-          //               : "All Industry",
-          //           label: "Industry",
-          //           onTap: () => _showIndustryPicker(context),
-          //           // controller: provider.industryController,
-          //           controller: TextEditingController(),
-          //         ),
-          //       ),
-          //       // const SpacerHorizontal(width: 10),
-          //       // Expanded(
-          //       //   child: MarketDataTextFiledClickable(
-          //       //       hintText: "All Market Cap",
-          //       //       label: "Market Cap",
-          //       //       onTap: () => _showMarketCapPicker(context),
-          //       //       controller: provider.marketCapController),
-          //       // ),
-          //     ],
-          //   ),
-          // ),
           // const SpacerVertical(height: 20),
           // IntrinsicHeight(
           //   child: Row(
@@ -428,6 +442,83 @@ class _MarketDataFilterBottomSheetState
           ),
           SpacerVertical(height: ScreenUtil().bottomBarHeight),
         ],
+      ),
+    );
+  }
+}
+
+class BottomSheetContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      expand: false,
+      shouldCloseOnMinExtent: false,
+      maxChildSize: .8,
+      builder: (context, scrollController) {
+        return Container(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+            border: Border(
+              top: BorderSide(color: ThemeColors.greyBorder.withOpacity(0.4)),
+            ),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 23, 23, 23),
+                Color.fromARGB(255, 48, 48, 48),
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Header(),
+              Flexible(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: 50,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('Item $index'),
+                    );
+                  },
+                ),
+              ),
+              Footer(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      padding: EdgeInsets.all(16.0),
+      child: Text(
+        'Header',
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
+    );
+  }
+}
+
+class Footer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      padding: EdgeInsets.all(16.0),
+      child: Text(
+        'Footer',
+        style: TextStyle(color: Colors.white, fontSize: 24),
       ),
     );
   }
