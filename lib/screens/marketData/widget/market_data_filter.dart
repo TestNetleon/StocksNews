@@ -59,26 +59,46 @@ class _MarketDataFilterBottomSheetState
       return;
     }
 
-    BaseBottomSheets().gradientBottomSheet(
-      child: FilterMultiSelectListing(
-        label: "Select Exchange",
-        items: provider.data!.exchange!,
-        selectedData: filterParams?.exchange_name,
-        onSelected: (List<FiltersDataItem> selected) {
-          String selectedValues = selected.map((item) => item.value).join(',');
-          if (filterParams == null) {
-            filterParams = FilteredParams(
-              exchange_name:
-                  selectedValues.isEmpty ? null : selectedValues.split(","),
-            );
-          } else {
-            filterParams?.exchange_name =
-                selectedValues.isEmpty ? null : selectedValues.split(",");
-          }
-          setState(() {});
-        },
-      ),
+    BaseBottomSheets().gradientBottomSheetDraggable(
+      title: "Select Exchange",
+      items: provider.data!.exchange!,
+      selected: filterParams?.exchange_name,
+      onSelected: (List<FiltersDataItem> selected) {
+        String selectedValues = selected.map((item) => item.value).join(',');
+
+        if (filterParams == null) {
+          filterParams = FilteredParams(
+            exchange_name:
+                selectedValues.isEmpty ? null : selectedValues.split(","),
+          );
+        } else {
+          filterParams?.exchange_name =
+              selectedValues.isEmpty ? null : selectedValues.split(",");
+        }
+        setState(() {});
+      },
     );
+
+    // BaseBottomSheets().gradientBottomSheet(
+    //   child: FilterMultiSelectListing(
+    //     label: "Select Exchange",
+    //     items: provider.data!.exchange!,
+    //     selectedData: filterParams?.exchange_name,
+    //     onSelected: (List<FiltersDataItem> selected) {
+    //       String selectedValues = selected.map((item) => item.value).join(',');
+    //       if (filterParams == null) {
+    //         filterParams = FilteredParams(
+    //           exchange_name:
+    //               selectedValues.isEmpty ? null : selectedValues.split(","),
+    //         );
+    //       } else {
+    //         filterParams?.exchange_name =
+    //             selectedValues.isEmpty ? null : selectedValues.split(",");
+    //       }
+    //       setState(() {});
+    //     },
+    //   ),
+    // );
   }
 
   void _showSectorPicker(BuildContext context) {
