@@ -15,7 +15,8 @@ class LeaderBoardTopItem extends StatelessWidget {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
 
     return Container(
-      color: ThemeColors.sos,
+      // color: ThemeColors.sos,
+
       child: Column(
         children: [
           // if (index == 1 || index == 2)
