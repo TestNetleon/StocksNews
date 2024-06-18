@@ -13,12 +13,14 @@ class CustomTabContainer extends StatefulWidget {
     this.header,
     this.onChange,
     this.showDivider = false,
+    this.isScrollable = false,
     super.key,
   });
 //
   final Widget rightWidget;
   final Widget? header;
   final List<Widget> tabs;
+  final bool isScrollable;
   final List<Widget> widgets;
   final bool showDivider;
   final Function(int index)? onChange;
@@ -62,23 +64,44 @@ class _CustomState extends State<CustomTabContainer>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TabBar(
-            tabAlignment: TabAlignment.start,
-            physics: const BouncingScrollPhysics(),
-            isScrollable: true,
-            labelPadding:
-                const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            controller: _controller,
-            indicatorColor: Colors.transparent,
-            automaticIndicatorColorAdjustment: false,
-            enableFeedback: false,
-            onTap: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            tabs: widget.tabs,
+          Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 21, 21, 21),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TabBar(
+                controller: _controller,
+                onTap: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+                indicator: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 82, 4),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                isScrollable: widget.isScrollable,
+                tabs: widget.tabs),
           ),
+          const SpacerVertical(height: 10),
+          // TabBar(
+          //   tabAlignment: TabAlignment.start,
+          //   physics: const BouncingScrollPhysics(),
+          //   isScrollable: true,
+          //   labelPadding:
+          //       const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          //   controller: _controller,
+          //   indicatorColor: Colors.transparent,
+          //   automaticIndicatorColorAdjustment: false,
+          //   enableFeedback: false,
+          //   onTap: (index) {
+          //     setState(() {
+          //       _selectedIndex = index;
+          //     });
+          //   },
+          //   tabs: widget.tabs,
+          // ),
           Visibility(
               visible: widget.showDivider,
               child: Divider(color: ThemeColors.border, height: 10.sp)),

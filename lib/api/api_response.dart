@@ -77,9 +77,11 @@ class Extra {
   final num? received;
   final num? pending;
   final String? affiliateReferText;
+  final HowItWorkRes? howItWork;
 
   Extra({
     this.search,
+    this.howItWork,
     this.exchangeShortName,
     this.priceRange,
     this.transactionType,
@@ -127,6 +129,9 @@ class Extra {
         currentBalance: json['current_balance'],
         subTitle: json["sub_title"],
         loginText: json["login_text"],
+        howItWork: json["how_it_work"] == null
+            ? null
+            : HowItWorkRes.fromJson(json["how_it_work"]),
         showPortfolio: json['show_portfolio'],
         signUpText: json["signup_text"],
         totalPages: json["total_pages"],
@@ -193,6 +198,7 @@ class Extra {
         "total_points_pending": pending,
         "heading": affiliateReferText,
         "title": title,
+        "how_it_work": howItWork?.toJson(),
         "sub_title": subTitle,
         "current_balance": currentBalance,
         "show_portfolio": showPortfolio,
@@ -234,6 +240,55 @@ class Extra {
         "message": messageObject?.toJson(),
         "user": user?.toJson(),
         "referral": referral?.toJson(),
+      };
+}
+
+class HowItWorkRes {
+  final String? title;
+  final List<StepRes>? steps;
+
+  HowItWorkRes({
+    this.title,
+    this.steps,
+  });
+
+  factory HowItWorkRes.fromJson(Map<String, dynamic> json) => HowItWorkRes(
+        title: json["title"],
+        steps: json["steps"] == null
+            ? []
+            : List<StepRes>.from(
+                json["steps"]!.map((x) => StepRes.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "steps": steps == null
+            ? []
+            : List<dynamic>.from(steps!.map((x) => x.toJson())),
+      };
+}
+
+class StepRes {
+  final String? key;
+  final String? title;
+  final String? subTitle;
+
+  StepRes({
+    this.key,
+    this.title,
+    this.subTitle,
+  });
+
+  factory StepRes.fromJson(Map<String, dynamic> json) => StepRes(
+        key: json["key"],
+        title: json["title"],
+        subTitle: json["sub_title"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "key": key,
+        "title": title,
+        "sub_title": subTitle,
       };
 }
 
