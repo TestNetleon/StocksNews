@@ -15,7 +15,7 @@ class MarketDataTitle extends StatelessWidget {
   final EdgeInsets? dividerPadding;
   final bool subTitleHtml;
   final dynamic provider;
-  final Function(String)? onDeleteExchange;
+  // final Function(String)? onDeleteExchange;
   final Function()? onFilterClick;
 
   const MarketDataTitle({
@@ -28,7 +28,7 @@ class MarketDataTitle extends StatelessWidget {
     this.subTitleHtml = false,
     this.htmlTitle = false,
     this.provider,
-    this.onDeleteExchange,
+    // this.onDeleteExchange,
     required this.onFilterClick,
   });
 

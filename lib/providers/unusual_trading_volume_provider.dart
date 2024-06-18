@@ -57,6 +57,27 @@ class UnusualTradingVolumeProvider extends ChangeNotifier
     getData();
   }
 
+  void sectorFilter(String item) {
+    _filterParams!.sector!.remove(item);
+    if (_filterParams!.sector!.isEmpty) {
+      _filterParams!.sector = null;
+    }
+    _page = 1;
+
+    notifyListeners();
+    getData();
+  }
+
+  void industryFilter(String item) {
+    _filterParams!.industry!.remove(item);
+    if (_filterParams!.industry!.isEmpty) {
+      _filterParams!.industry = null;
+    }
+    _page = 1;
+    notifyListeners();
+    getData();
+  }
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -85,6 +106,8 @@ class UnusualTradingVolumeProvider extends ChangeNotifier
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "sector": _filterParams?.sector?.join(",") ?? "",
+        "industry": _filterParams?.industry?.join(",") ?? "",
       };
 
       ApiResponse response = await apiRequest(

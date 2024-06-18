@@ -18,7 +18,7 @@ class SdPeerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
+        Navigator.pushReplacementNamed(
           context,
           StockDetail.path,
           arguments: {"slug": data?.symbol},

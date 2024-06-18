@@ -68,7 +68,7 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
         MarketDataHeader(
           provider: provider,
           onFilterClick: _onFilterClick,
-          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
         // HtmlTitle(
         //   subTitle: provider.subTitle ?? "",

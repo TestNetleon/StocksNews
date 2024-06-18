@@ -199,7 +199,7 @@ class MostActivePennyStocksProviders extends ChangeNotifier
   List<PennyStocksRes>? get data => _data;
 
   Extra? get extra => _extra;
-  bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
+  bool get canLoadMore => _page <= (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
 
@@ -226,6 +226,27 @@ class MostActivePennyStocksProviders extends ChangeNotifier
     _filterParams!.exchange_name!.remove(item);
     if (_filterParams!.exchange_name!.isEmpty) {
       _filterParams!.exchange_name = null;
+    }
+    _page = 1;
+    notifyListeners();
+    getMostActivePennyStocks();
+  }
+
+  void sectorFilter(String item) {
+    _filterParams!.sector!.remove(item);
+    if (_filterParams!.sector!.isEmpty) {
+      _filterParams!.sector = null;
+    }
+    _page = 1;
+
+    notifyListeners();
+    getMostActivePennyStocks();
+  }
+
+  void industryFilter(String item) {
+    _filterParams!.industry!.remove(item);
+    if (_filterParams!.industry!.isEmpty) {
+      _filterParams!.industry = null;
     }
     _page = 1;
     notifyListeners();
@@ -261,14 +282,14 @@ class MostActivePennyStocksProviders extends ChangeNotifier
         "page": "$_page",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry ?? "",
+        "industry": _filterParams?.industry?.join(",") ?? "",
         "market_cap": _filterParams?.market_cap ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector ?? "",
+        "sector": _filterParams?.sector?.join(",") ?? "",
       };
 
       ApiResponse response = await apiRequest(

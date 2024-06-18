@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/fcm/dynamic_links.service.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -27,17 +26,17 @@ class ReferSuccess extends StatefulWidget {
 }
 
 class _ReferSuccessState extends State<ReferSuccess> {
-  Uri? shareUri;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      ReferSuccessRes? referData = context.read<UserProvider>().refer;
-      shareUri = await DynamicLinkService.instance
-          .getDynamicLink(referData?.referralCode);
-      setState(() {});
-    });
-  }
+  // Uri? shareUri;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  //     ReferSuccessRes? referData = context.read<UserProvider>().refer;
+  //     shareUri = await DynamicLinkService.instance
+  //         .getDynamicLink(referData?.referralCode);
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -118,6 +118,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
       );
     } else {
       UserProvider provider = context.read<UserProvider>();
+      HomeProvider homeProvider = context.read<HomeProvider>();
 
       Map request = {
         'token': provider.user?.token,
@@ -130,7 +131,10 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         if (response.status) {
           closeKeyboard();
           provider.updateUser(phone: widget.phone);
-          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          Extra extra = response.extra;
+
+          homeProvider.updateReferShare(extra.referral?.shareText);
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
           // Navigator.pushNamed(
           //   navigatorKey.currentContext!,

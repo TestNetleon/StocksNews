@@ -5,13 +5,13 @@ import 'package:stocks_news_new/widgets/html_title.dart';
 class MarketDataHeader extends StatelessWidget {
   const MarketDataHeader({
     required this.onFilterClick,
-    required this.onDeleteExchange,
+    this.onDeleteExchange,
     required this.provider,
     super.key,
   });
 
   final Function() onFilterClick;
-  final Function(String) onDeleteExchange;
+  final Function(String)? onDeleteExchange;
   final dynamic provider;
 
   @override

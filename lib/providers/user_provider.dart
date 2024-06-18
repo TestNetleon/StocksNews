@@ -824,6 +824,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           referralCode: _refer?.referralCode,
           referralUrl: _refer?.referralUrl,
         );
+
+        shareUri = await DynamicLinkService.instance
+            .getDynamicLink(_user?.referralCode);
       } else {
         //
         popUpAlert(
@@ -833,7 +836,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       }
       notifyListeners();
 
-      return ApiResponse(status: response.status, message: response.message);
+      return ApiResponse(
+        status: response.status,
+        message: response.message,
+        extra: response.extra,
+      );
     } catch (e) {
       Utils().showLog("$e");
       notifyListeners();
