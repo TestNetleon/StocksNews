@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
+import 'package:stocks_news_new/screens/affiliate/referFriend/howit_work.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -44,6 +46,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
   @override
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     return BaseUiContainer(
       hasData: true,
       isLoading: provider.isLoading,
@@ -54,148 +58,150 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
         onRefresh: () async {
           provider.getReferData();
         },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: ThemeColors.greyBorder.withOpacity(0.5),
-                  ),
-                  // color: ThemeColors.greyBorder.withOpacity(0.4),
-                  gradient: const LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color.fromARGB(255, 23, 23, 23),
-                      // ThemeColors.greyBorder,
-                      Color.fromARGB(255, 48, 48, 48),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      provider.extra?.affiliateReferText ?? "",
-                      textAlign: TextAlign.center,
-                      style: stylePTSansRegular(color: ThemeColors.greyText),
+        child: Container(
+          height: double.infinity,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: ThemeColors.greyBorder.withOpacity(0.5),
                     ),
-                    const SpacerVertical(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                            decoration: const BoxDecoration(
-                                color: ThemeColors.greyBorder,
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(4),
-                                    topLeft: Radius.circular(4))),
-                            child: Text(
-                              "${shareUri ?? ""}",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: stylePTSansRegular(),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
-                          onTap: () {
-                            try {
-                              Clipboard.setData(
-                                  ClipboardData(text: shareUri.toString()));
-                              CommonToast.show(message: "Copied");
-                            } catch (e) {
-                              CommonToast.show(message: "$e");
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 8.9),
-                            decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 69, 69, 69),
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(4),
-                                  topRight: Radius.circular(4)),
-                            ),
-                            child: const Icon(
-                              Icons.copy,
-                              size: 20,
-                            ),
-                          ),
-                        ),
+                    // color: ThemeColors.greyBorder.withOpacity(0.4),
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color.fromARGB(255, 23, 23, 23),
+                        // ThemeColors.greyBorder,
+                        Color.fromARGB(255, 48, 48, 48),
                       ],
                     ),
-                    const SpacerVertical(height: 15),
-                    ThemeButton(
-                      text: "Share with friends",
-                      onPressed: () {
-                        Share.share(
-                          "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                margin: const EdgeInsets.symmetric(vertical: 15),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: ThemeColors.greyBorder.withOpacity(0.5),
                   ),
-                  // color: ThemeColors.greyBorder.withOpacity(0.4),
-                  gradient: const LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color.fromARGB(255, 23, 23, 23),
-                      // ThemeColors.greyBorder,
-                      Color.fromARGB(255, 48, 48, 48),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Friends Joined",
-                          style: stylePTSansBold(fontSize: 17),
-                        ),
-                        const SpacerVertical(height: 10),
-                        Text(
-                          "${provider.data?.length ?? 0}",
-                          style: stylePTSansBold(fontSize: 17),
-                        ),
-                      ],
-                    ),
-                    // const Divider(
-                    //   color: ThemeColors.greyBorder,
-                    //   height: 10,
-                    // ),
-                    const SpacerVertical(height: 10),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    children: [
+                      Text(
+                        provider.extra?.affiliateReferText ?? "",
+                        textAlign: TextAlign.center,
+                        style: stylePTSansRegular(color: ThemeColors.greyText),
+                      ),
+                      const SpacerVertical(height: 15),
+                      Row(
                         children: [
-                          Visibility(
-                            visible: provider.verified != 0,
+                          Expanded(
                             child: Container(
-                              margin: const EdgeInsets.only(right: 5),
-                              child: Flexible(
+                              padding:
+                                  const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              decoration: const BoxDecoration(
+                                  color: ThemeColors.greyBorder,
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(4),
+                                      topLeft: Radius.circular(4))),
+                              child: Text(
+                                "${shareUri ?? ""}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: stylePTSansRegular(),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(4)),
+                            onTap: () {
+                              try {
+                                Clipboard.setData(
+                                    ClipboardData(text: shareUri.toString()));
+                                CommonToast.show(message: "Copied");
+                              } catch (e) {
+                                CommonToast.show(message: "$e");
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 8.9),
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 69, 69, 69),
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(4),
+                                    topRight: Radius.circular(4)),
+                              ),
+                              child: const Icon(
+                                Icons.copy,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SpacerVertical(height: 15),
+                      ThemeButton(
+                        text: "Share with friends",
+                        onPressed: () {
+                          Share.share(
+                            "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: ThemeColors.greyBorder.withOpacity(0.5),
+                    ),
+                    // color: ThemeColors.greyBorder.withOpacity(0.4),
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color.fromARGB(255, 23, 23, 23),
+                        // ThemeColors.greyBorder,
+                        Color.fromARGB(255, 48, 48, 48),
+                      ],
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Friends Joined",
+                            style: stylePTSansBold(fontSize: 17),
+                          ),
+                          const SpacerVertical(height: 10),
+                          Text(
+                            "${provider.data?.length ?? 0}",
+                            style: stylePTSansBold(fontSize: 17),
+                          ),
+                        ],
+                      ),
+                      // const Divider(
+                      //   color: ThemeColors.greyBorder,
+                      //   height: 10,
+                      // ),
+                      const SpacerVertical(height: 10),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Visibility(
+                              visible: provider.verified != 0,
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 5),
                                 child: Text(
                                   "Verified: ${provider.verified}${provider.unVerified != 0 ? "," : ""}",
                                   style: stylePTSansRegular(
@@ -203,75 +209,128 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                                 ),
                               ),
                             ),
-                          ),
-                          // const SpacerHorizontal(width: 5),
-                          Visibility(
-                            visible: provider.unVerified != 0,
-                            child: Flexible(
+                            // const SpacerHorizontal(width: 5),
+                            Visibility(
+                              visible: provider.unVerified != 0,
                               child: Text(
                                 "Unverified: ${provider.unVerified}",
                                 style:
                                     stylePTSansRegular(color: ThemeColors.sos),
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Coins Earned",
+                            style: stylePTSansBold(fontSize: 17),
+                          ),
+                          const SpacerVertical(height: 10),
+                          Text(
+                            "${provider.extra?.received ?? 0}",
+                            style: stylePTSansBold(fontSize: 17),
                           ),
                         ],
                       ),
+                      // const SpacerVertical(height: 10),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: provider.data?.isNotEmpty == true &&
+                      provider.data != null,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ScreenTitle(
+                        title: "Friends joined with your referral link",
+                      ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 10),
+                        itemBuilder: (context, index) {
+                          AffiliateReferRes? data = provider.data?[index];
+                          return AffiliateReferItem(
+                            index: index,
+                            data: data,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 16,
+                          );
+                        },
+                        itemCount: provider.data?.length ?? 0,
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible:
+                      provider.data?.isEmpty == true || provider.data == null,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: ThemeColors.greyBorder.withOpacity(0.5),
+                      ),
+                      // color: ThemeColors.greyBorder.withOpacity(0.4),
+                      gradient: const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color.fromARGB(255, 23, 23, 23),
+                          // ThemeColors.greyBorder,
+                          Color.fromARGB(255, 48, 48, 48),
+                        ],
+                      ),
                     ),
-                    const Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Coins Earned",
-                          style: stylePTSansBold(fontSize: 17),
+                        ScreenTitle(
+                          title: homeProvider.extra?.howItWork?.title ?? "",
                         ),
-                        const SpacerVertical(height: 10),
-                        Text(
-                          "${provider.extra?.received ?? 0}",
-                          style: stylePTSansBold(fontSize: 17),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.only(bottom: 10),
+                          itemBuilder: (context, index) {
+                            StepRes? data =
+                                homeProvider.extra?.howItWork?.steps?[index];
+                            return HowItWorkItem(
+                              colorKey: const Color.fromARGB(255, 77, 77, 77),
+                              index: index,
+                              data: data,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              color: ThemeColors.greyBorder,
+                              height: 25,
+                            );
+                          },
+                          itemCount:
+                              homeProvider.extra?.howItWork?.steps?.length ?? 0,
                         ),
                       ],
                     ),
-                    // const SpacerVertical(height: 10),
-                  ],
+                  ),
                 ),
-              ),
-              Visibility(
-                visible:
-                    provider.data?.isNotEmpty == true && provider.data != null,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const ScreenTitle(
-                      title: "Friends joined with your referral link",
-                    ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.only(bottom: 10),
-                      itemBuilder: (context, index) {
-                        AffiliateReferRes? data = provider.data?[index];
-                        return AffiliateReferItem(
-                          index: index,
-                          data: data,
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 16,
-                        );
-                      },
-                      itemCount: provider.data?.length ?? 0,
-                    ),
-                  ],
-                ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

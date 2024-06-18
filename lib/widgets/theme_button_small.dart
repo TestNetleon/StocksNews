@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -20,6 +21,7 @@ class ThemeButtonSmall extends StatelessWidget {
     this.margin,
     this.textAlign = TextAlign.center,
     super.key,
+    this.iconFront = false,
   });
 
   final String text;
@@ -31,6 +33,7 @@ class ThemeButtonSmall extends StatelessWidget {
   final IconData? icon;
   final bool fontBold;
   final bool showArrow;
+  final bool iconFront;
   final double elevation;
   final EdgeInsets? padding, margin;
   final TextAlign? textAlign;
@@ -51,21 +54,34 @@ class ThemeButtonSmall extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            textAlign: textAlign,
-            text,
-            style: fontBold
-                ? stylePTSansBold(
-                    fontSize: textSize,
-                    color: textColor,
-                  )
-                : stylePTSansRegular(
-                    fontSize: textSize,
-                    color: textColor,
-                  ),
+          Visibility(
+            visible: showArrow && iconFront,
+            child: Container(
+              margin: EdgeInsets.only(right: 8.sp),
+              child: Icon(
+                icon ?? Icons.arrow_forward,
+                size: 20,
+                color: textColor,
+              ),
+            ),
+          ),
+          Flexible(
+            child: Text(
+              textAlign: textAlign,
+              text,
+              style: fontBold
+                  ? stylePTSansBold(
+                      fontSize: textSize,
+                      color: textColor,
+                    )
+                  : stylePTSansRegular(
+                      fontSize: textSize,
+                      color: textColor,
+                    ),
+            ),
           ),
           Visibility(
-            visible: showArrow,
+            visible: showArrow && !iconFront,
             child: Container(
               margin: EdgeInsets.only(left: 8.sp),
               child: Icon(
@@ -74,7 +90,7 @@ class ThemeButtonSmall extends StatelessWidget {
                 color: textColor,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

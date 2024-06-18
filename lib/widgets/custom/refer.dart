@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -30,7 +32,9 @@ class ReferApp extends StatelessWidget {
     }
 
     if (provider.user?.phone == null || provider.user?.phone == '') {
-      await referLogin();
+      // await referLogin();
+
+      _bottomSheet();
       // await Navigator.pushNamed(
       //     navigatorKey.currentContext!, ReferAFriend.path);
     } else {
@@ -64,7 +68,31 @@ class ReferApp extends StatelessWidget {
       enableDrag: true,
       barrierColor: Colors.transparent,
       builder: (BuildContext ctx) {
-        return const SingleChildScrollView(child: ReferDialog());
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 45),
+              child: SingleChildScrollView(child: ReferDialog()),
+            ),
+            // Container(
+            //   width: 50,
+            //   height: 50,
+            //   color: Colors.amber,
+            // ),
+            // Image.asset(
+            //   Images.apple,
+            //   height: 60,
+            //   width: 60,
+            // ),
+            Image.asset(
+              Images.kingGIF,
+              height: 100,
+              width: 100,
+              fit: BoxFit.cover,
+            ),
+          ],
+        );
       },
     );
   }

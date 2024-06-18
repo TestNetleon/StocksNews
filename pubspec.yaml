@@ -105,6 +105,7 @@ dependencies:
   sms_autofill: ^2.4.0
   firebase_dynamic_links: ^5.4.17
   fluttertoast: ^8.2.5
+  firebase_auth: ^4.17.8
 
 dev_dependencies:
   flutter_test:
