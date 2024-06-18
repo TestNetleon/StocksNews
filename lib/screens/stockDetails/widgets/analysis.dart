@@ -487,11 +487,11 @@
 //               Column(
 //                 crossAxisAlignment: CrossAxisAlignment.end,
 //                 children: [
-//                   Image.asset(
-//                     Images.graphBull,
-//                     height: 40,
-//                     width: 40,
-//                   ),
+                  // Image.asset(
+                  //   Images.graphBull,
+                  //   height: 40,
+                  //   width: 40,
+                  // ),
 //                   Text("Bullish", style: stylePTSansRegular(fontSize: 12)),
 //                 ],
 //               ),
