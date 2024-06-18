@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -133,6 +135,7 @@ class _ReferLoginState extends State<ReferLogin> {
   @override
   Widget build(BuildContext context) {
     UserRes? user = context.watch<UserProvider>().user;
+    HomeProvider provider = context.watch<HomeProvider>();
     return GestureDetector(
       onTap: () {
         closeKeyboard();
@@ -188,12 +191,13 @@ class _ReferLoginState extends State<ReferLogin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Verify Identity",
+                    provider.extra?.referLogin?.title ?? "Verify Identity",
                     style: stylePTSansBold(fontSize: 24),
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'In order to join affiliate program, please enter following details.',
+                    provider.extra?.referLogin?.subTitle ??
+                        'In order to Join our Affiliate Program, please enter the following details.',
                     style: stylePTSansRegular(color: Colors.grey),
                   ),
                   const SpacerVertical(height: 30),
@@ -292,10 +296,11 @@ class _ReferLoginState extends State<ReferLogin> {
                     ),
                   ),
                   const SpacerVertical(height: Dimen.itemSpacing),
-                  Text(
-                    'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                    'Do not include +1 or an special character.',
-                    style: stylePTSansRegular(color: Colors.grey),
+                  HtmlWidget(
+                    provider.extra?.referLogin?.note ??
+                        'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
+                            'Do not include +1 or an special character.',
+                    textStyle: stylePTSansRegular(color: Colors.grey),
                   ),
                   const SpacerVertical(height: Dimen.itemSpacing),
                   ThemeButton(

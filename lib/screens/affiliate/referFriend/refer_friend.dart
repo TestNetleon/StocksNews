@@ -46,6 +46,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
   @override
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     return BaseUiContainer(
       hasData: true,
       isLoading: provider.isLoading,
@@ -64,7 +66,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
               children: [
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
@@ -151,8 +153,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                 ),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  margin: const EdgeInsets.symmetric(vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -277,7 +279,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       provider.data?.isEmpty == true || provider.data == null,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
+                        horizontal: 20, vertical: 20),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -299,7 +301,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ScreenTitle(
-                          title: provider.extra?.howItWork?.title ?? "",
+                          title: homeProvider.extra?.howItWork?.title ?? "",
                         ),
                         ListView.separated(
                           shrinkWrap: true,
@@ -307,8 +309,9 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                           padding: const EdgeInsets.only(bottom: 10),
                           itemBuilder: (context, index) {
                             StepRes? data =
-                                provider.extra?.howItWork?.steps?[index];
+                                homeProvider.extra?.howItWork?.steps?[index];
                             return HowItWorkItem(
+                              colorKey: const Color.fromARGB(255, 77, 77, 77),
                               index: index,
                               data: data,
                             );
@@ -316,11 +319,11 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                           separatorBuilder: (context, index) {
                             return const Divider(
                               color: ThemeColors.greyBorder,
-                              height: 20,
+                              height: 25,
                             );
                           },
                           itemCount:
-                              provider.extra?.howItWork?.steps?.length ?? 0,
+                              homeProvider.extra?.howItWork?.steps?.length ?? 0,
                         ),
                       ],
                     ),

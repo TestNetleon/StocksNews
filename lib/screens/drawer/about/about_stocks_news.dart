@@ -37,30 +37,30 @@ class AboutStocksNews extends StatefulWidget {
 }
 
 class _AboutStocksNewsState extends State<AboutStocksNews> {
-  void _onShareAppClick() async {
-    if (context.read<UserProvider>().user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
-    }
+  // void _onShareAppClick() async {
+  //   if (context.read<UserProvider>().user == null) {
+  //     isPhone ? await loginSheet() : await loginSheetTablet();
+  //   }
 
-    showModalBottomSheet(
-      useSafeArea: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10.sp),
-          topRight: Radius.circular(10.sp),
-        ),
-        // side: const BorderSide(color: ThemeColors.greyBorder),
-      ),
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      enableDrag: true,
-      barrierColor: Colors.transparent,
-      builder: (BuildContext ctx) {
-        return const SingleChildScrollView(child: ReferDialog());
-      },
-    );
-  }
+  //   showModalBottomSheet(
+  //     useSafeArea: true,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(10.sp),
+  //         topRight: Radius.circular(10.sp),
+  //       ),
+  //       // side: const BorderSide(color: ThemeColors.greyBorder),
+  //     ),
+  //     context: context,
+  //     backgroundColor: Colors.transparent,
+  //     isScrollControlled: true,
+  //     enableDrag: true,
+  //     barrierColor: Colors.transparent,
+  //     builder: (BuildContext ctx) {
+  //       return const SingleChildScrollView(child: ReferDialog());
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,13 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   }
                   if (index == 2) {
                     return Visibility(
-                      visible: context.watch<UserProvider>().user != null,
+                      visible: context.watch<UserProvider>().user != null &&
+                          context
+                                  .watch<HomeProvider>()
+                                  .extra
+                                  ?.referral
+                                  ?.shwReferral ==
+                              true,
                       child: AboutTile(
                           index: index, onTap: aboutTiles[index].onTap),
                     );

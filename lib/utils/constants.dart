@@ -77,6 +77,7 @@ class Images {
   static const String reward = "assets/images/reward.png";
   static const String temp = "assets/images/temp.png";
   static const String sorting = "assets/images/sorting.png";
+  static const String leaderBoard = "assets/images/leaderboard.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -124,6 +125,7 @@ class Images {
   static const String portfolioGIF = "assets/images/portfolio.gif";
   static const String otpVerify = "assets/images/otp1.gif";
   static const String referSuccess = "assets/images/success.gif";
+  static const String kingGIF = "assets/images/king.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";

@@ -78,6 +78,7 @@ class Extra {
   final num? pending;
   final String? affiliateReferText;
   final HowItWorkRes? howItWork;
+  final ReferLoginRes? referLogin;
 
   Extra({
     this.search,
@@ -85,6 +86,7 @@ class Extra {
     this.exchangeShortName,
     this.priceRange,
     this.transactionType,
+    this.referLogin,
     this.period,
     this.affiliateReferText,
     this.type,
@@ -121,6 +123,9 @@ class Extra {
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
         received: json['total_points_received'],
+        referLogin: json["refer_login"] == null
+            ? null
+            : ReferLoginRes.fromJson(json["refer_login"]),
         pending: json['total_points_pending'],
         affiliateReferText: json['heading'],
         userAlert: json["user_alerts"],
@@ -197,6 +202,7 @@ class Extra {
         'total_points_received': received,
         "total_points_pending": pending,
         "heading": affiliateReferText,
+        "refer_login": referLogin?.toJson(),
         "title": title,
         "how_it_work": howItWork?.toJson(),
         "sub_title": subTitle,
@@ -240,6 +246,30 @@ class Extra {
         "message": messageObject?.toJson(),
         "user": user?.toJson(),
         "referral": referral?.toJson(),
+      };
+}
+
+class ReferLoginRes {
+  final String? title;
+  final String? subTitle;
+  final String? note;
+
+  ReferLoginRes({
+    this.title,
+    this.subTitle,
+    this.note,
+  });
+
+  factory ReferLoginRes.fromJson(Map<String, dynamic> json) => ReferLoginRes(
+        title: json["title"],
+        subTitle: json["sub_title"],
+        note: json["note"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "sub_title": subTitle,
+        "note": note,
       };
 }
 

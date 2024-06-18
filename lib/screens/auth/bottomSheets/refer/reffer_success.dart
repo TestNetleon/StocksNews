@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -167,14 +170,33 @@ class _ReferSuccessState extends State<ReferSuccess> {
                     ),
                     const SpacerVertical(height: 20),
                     if (shareUri != null)
-                      ThemeButtonSmall(
-                        onPressed: () {
-                          Share.share(
-                            "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                          );
-                        },
-                        text: "Share with friends",
-                        icon: Icons.share,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ThemeButtonSmall(
+                            iconFront: true,
+                            color: const Color.fromARGB(255, 3, 94, 15),
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                  context, ReferAFriend.path);
+                            },
+                            text: "Affiliate Dashboard",
+                            icon: Icons.dashboard,
+                          ),
+                          const SpacerHorizontal(width: 10),
+                          Expanded(
+                            child: ThemeButtonSmall(
+                              iconFront: true,
+                              onPressed: () {
+                                Share.share(
+                                  "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                                );
+                              },
+                              text: "Share Link",
+                              icon: Icons.share,
+                            ),
+                          ),
+                        ],
                       ),
 
                     // Row(
