@@ -26,28 +26,16 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
         isPopback: true,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainerNEW(
-          scrollable: true,
-          tabsPadding: EdgeInsets.zero,
-          tabs: [
-            "Today's Gainers",
-            "Today's Losers",
-            "Today's Breakout Stocks"
-          ],
-          // onChange: (index) => onChange(index),
-          widgets: [
-            TodaysTopGainer(),
-            TodaysTopLoser(),
-            TodaysBreakoutStocks(),
-          ],
-        ),
+      body: CustomTabContainerNEW(
+        scrollable: true,
+        tabsPadding: EdgeInsets.zero,
+        tabs: ["Today's Gainers", "Today's Losers", "Today's Breakout Stocks"],
+        // onChange: (index) => onChange(index),
+        widgets: [
+          TodaysTopGainer(),
+          TodaysTopLoser(),
+          TodaysBreakoutStocks(),
+        ],
       ),
     );
   }

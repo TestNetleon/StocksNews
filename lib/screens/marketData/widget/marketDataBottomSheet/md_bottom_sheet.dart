@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class MdBottomSheet extends StatelessWidget {
-  const MdBottomSheet({super.key});
+  const MdBottomSheet(
+      {required this.onTapSorting, required this.onTapFilter, super.key});
+  final void Function()? onTapSorting;
+  final void Function()? onTapFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -14,24 +19,73 @@ class MdBottomSheet extends StatelessWidget {
         Divider(
           color: ThemeColors.greyBorder,
           height: 0.sp,
-          thickness: 1.sp,
+          thickness: 1,
         ),
         Container(
           width: double.infinity,
-          color: Colors.white,
+          color: ThemeColors.background,
           padding: EdgeInsets.symmetric(vertical: 10.sp),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                child: Text(
-                  "data",
-                  style: stylePTSansBold(color: Colors.black),
+              Flexible(
+                flex: 1,
+                child: InkWell(
+                  onTap: onTapSorting,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            Images.sorting,
+                            height: 18,
+                            width: 18,
+                            color: Colors.white,
+                          ),
+                          const SpacerHorizontal(width: 10),
+                          Text(
+                            "SORT",
+                            style: stylePTSansBold(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              Text(
-                "data",
-                style: stylePTSansBold(color: Colors.black),
+              Flexible(
+                flex: 1,
+                child: InkWell(
+                  onTap: onTapFilter,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        Images.line,
+                        height: 18,
+                        width: 18,
+                        color: Colors.white,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.filter_alt,
+                                color: Colors.white, size: 16),
+                            const SpacerHorizontal(width: 10),
+                            Text(
+                              "FILTER",
+                              style: stylePTSansBold(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               )
             ],
           ),

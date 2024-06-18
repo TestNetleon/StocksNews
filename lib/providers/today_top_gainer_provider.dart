@@ -37,6 +37,9 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
   FilteredParams? _filterParams;
   FilteredParams? get filterParams => _filterParams;
 
+  String? _sortingKey;
+  String? get sortingKey => _sortingKey;
+
   void resetFilter() {
     _filterParams = null;
     _page = 1;
@@ -47,6 +50,18 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
     _filterParams = params;
     _page = 1;
     notifyListeners();
+    getData();
+  }
+
+  void applySorting(sortingKey) {
+    // _filterParams?.sorting = null;
+
+    _filterParams?.sorting = sortingKey;
+
+    _page = 1;
+    notifyListeners();
+    Utils()
+        .showLog("Sorting Data ===   $sortingKey   ${_filterParams?.sorting}");
     getData();
   }
 
@@ -117,6 +132,7 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.join(",") ?? "",
+        "sortBy": _filterParams?.sorting ?? "",
       };
 
       ApiResponse response = await apiRequest(

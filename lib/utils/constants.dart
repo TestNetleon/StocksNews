@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:stocks_news_new/modals/filters_res.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -75,6 +76,7 @@ class Images {
   static const String flames = "assets/images/flames.png";
   static const String reward = "assets/images/reward.png";
   static const String temp = "assets/images/temp.png";
+  static const String sorting = "assets/images/sorting.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -101,6 +103,8 @@ class Images {
   static const String referE = "assets/images/refer_e.png";
   static const String referS = "assets/images/refer_s.png";
   static const String referF = "assets/images/refer_f.png";
+
+  static const String line = "assets/images/line.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
@@ -398,6 +402,13 @@ String containsSpecificPath(Uri uri) {
     return '';
   }
 }
+
+List<FiltersDataItem> sortingArrayList = [
+  FiltersDataItem(key: "price_asc", value: "Price - low to high"),
+  FiltersDataItem(key: "price_desc", value: "Price - high to low"),
+  FiltersDataItem(key: "per_gain", value: "Percentage Gain"),
+  FiltersDataItem(key: "per_loose", value: "Percentage Loose"),
+];
 
 String extractLastPathComponent(Uri uri) {
   List<String> parts = uri.pathSegments;

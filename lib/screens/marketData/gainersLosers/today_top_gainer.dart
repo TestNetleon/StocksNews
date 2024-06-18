@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 
 import '../../../modals/gainers_losers_res.dart';
@@ -65,67 +67,84 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
 
     return Stack(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            MarketDataHeader(
-              provider: provider,
-              onFilterClick: _onFilterClick,
-              // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-            ),
-            // if (!(provider.data == null &&
-            //     provider.filterParams == null &&
-            //     provider.isLoading))
-            //   HtmlTitle(
-            //     subTitle: provider.extra?.subTitle ?? "",
-            //     onFilterClick: _onFilterClick,
-            //     hasFilter: provider.filterParams != null,
-            //   ),
-            // if (provider.filterParams != null)
-            //   FilterUiValues(
-            //     params: provider.filterParams,
-            //     onDeleteExchange: (exchange) {
-            //       provider.exchangeFilter(exchange);
-            //     },
-            //   ),
-            Expanded(
-              child: BaseUiContainer(
-                error: provider.error,
-                hasData: gainers != null && gainers.isNotEmpty,
-                isLoading: provider.isLoading,
-                errorDispCommon: true,
-                showPreparingText: true,
-                onRefresh: () => provider.getData(showProgress: true),
-                child: RefreshControl(
-                  onRefresh: () async => provider.getData(showProgress: true),
-                  canLoadMore: provider.canLoadMore,
-                  onLoadMore: () async => provider.getData(loadMore: true),
-                  child: ListView.separated(
-                    padding: const EdgeInsets.only(
-                      bottom: Dimen.padding,
-                      top: Dimen.padding,
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.padding,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketDataHeader(
+                provider: provider,
+                onFilterClick: _onFilterClick,
+                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+              ),
+              // if (!(provider.data == null &&
+              //     provider.filterParams == null &&
+              //     provider.isLoading))
+              //   HtmlTitle(
+              //     subTitle: provider.extra?.subTitle ?? "",
+              //     onFilterClick: _onFilterClick,
+              //     hasFilter: provider.filterParams != null,
+              //   ),
+              // if (provider.filterParams != null)
+              //   FilterUiValues(
+              //     params: provider.filterParams,
+              //     onDeleteExchange: (exchange) {
+              //       provider.exchangeFilter(exchange);
+              //     },
+              //   ),
+              Expanded(
+                child: BaseUiContainer(
+                  error: provider.error,
+                  hasData: gainers != null && gainers.isNotEmpty,
+                  isLoading: provider.isLoading,
+                  errorDispCommon: true,
+                  showPreparingText: true,
+                  onRefresh: () => provider.getData(showProgress: true),
+                  child: RefreshControl(
+                    onRefresh: () async => provider.getData(showProgress: true),
+                    canLoadMore: provider.canLoadMore,
+                    onLoadMore: () async => provider.getData(loadMore: true),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(
+                        bottom: Dimen.padding,
+                        top: Dimen.padding,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GainerLoserItem(
+                          data: gainers![index],
+                          index: index,
+                          marketData: true,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 12.sp,
+                        );
+                      },
+                      itemCount: gainers?.length ?? 0,
                     ),
-                    itemBuilder: (context, index) {
-                      return GainerLoserItem(
-                        data: gainers![index],
-                        index: index,
-                        marketData: true,
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 12.sp,
-                      );
-                    },
-                    itemCount: gainers?.length ?? 0,
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        const Align(alignment: Alignment.bottomCenter, child: MdBottomSheet())
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: MdBottomSheet(
+              onTapFilter: _onFilterClick,
+              onTapSorting: () => onSortingClick(
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
+                      .read<TodayTopGainerProvider>()
+                      .applySorting(sortingKey);
+                },
+              ),
+            ))
       ],
     );
   }
