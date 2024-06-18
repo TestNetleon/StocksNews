@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:stocks_news_new/screens/drawerScreens/congressionDetail/container.dart';
+import 'package:stocks_news_new/screens/marketData/congressionDetail/container.dart';
 
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';

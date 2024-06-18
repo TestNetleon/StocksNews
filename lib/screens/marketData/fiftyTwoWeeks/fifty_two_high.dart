@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/item.dart';
+import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 

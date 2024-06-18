@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/drawerScreens/drawerMarketDataScSimmer/tab_bar_sc_simmer.dart';
+import 'package:stocks_news_new/screens/marketData/drawerMarketDataScSimmer/tab_bar_sc_simmer.dart';
 import 'package:stocks_news_new/widgets/screen_title_simmer.dart';
 
 class WhatWeDoTabScreenSimmer extends StatelessWidget {

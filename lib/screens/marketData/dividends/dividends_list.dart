@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends_item.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_title.dart';
+import 'package:stocks_news_new/screens/marketData/dividends/dividends_item.dart';
+import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
+import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 

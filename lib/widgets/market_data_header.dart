@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/filter_ui_values.dart';
+import 'package:stocks_news_new/screens/marketData/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
 class MarketDataHeader extends StatelessWidget {
