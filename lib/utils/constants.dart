@@ -74,6 +74,7 @@ class Images {
   static const String coin = "assets/images/coin.png";
   static const String flames = "assets/images/flames.png";
   static const String reward = "assets/images/reward.png";
+  static const String temp = "assets/images/temp.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";

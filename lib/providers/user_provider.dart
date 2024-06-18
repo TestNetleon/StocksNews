@@ -16,6 +16,7 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -160,6 +161,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   void clearUser() async {
     _user = null;
+    navigatorKey.currentContext!.read<LeaderBoardProvider>().clearData();
     notifyListeners();
   }
 

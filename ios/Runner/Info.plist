@@ -40,7 +40,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FlutterDeepLinkingEnabled</key>
-	<false/>
+	<true/>
 	<key>GIDClientID</key>
 	<string>1002137160130-nv5ivhj78mj381datskquc70f3a2eek8.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -102,6 +102,18 @@
     <string>0</string>
 	<key>FirebaseDeepLinkPasteboardRetrievalEnabled</key>
 	<false/>
+	<!-- <key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:stocksnews.page.link</string>
+		<string>applinks:app.stocks.news</string>
+	</array> -->
+
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://app.stocks.news</string>
+		<string>https://stocksnews.page.link</string>
+	</array>
+
 
 </dict>
 </plist>

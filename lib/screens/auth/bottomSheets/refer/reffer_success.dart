@@ -90,12 +90,12 @@ class _ReferSuccessState extends State<ReferSuccess> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Invite your friend",
+                          "Invite your friends",
                           style: stylePTSansBold(fontSize: 24),
                         ),
                         const SpacerVertical(height: 3),
                         Text(
-                          "Share your link with your friend and earn reward points",
+                          "Share your link with your friends and earn reward points",
                           style: stylePTSansRegular(
                               fontSize: 14, color: ThemeColors.greyText),
                         ),

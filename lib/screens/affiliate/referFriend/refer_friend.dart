@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
@@ -11,7 +9,6 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom/toast.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../modals/affiliate/refer_friend_res.dart';
@@ -48,8 +45,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
     return BaseUiContainer(
-      hasData: !provider.isLoading &&
-          (provider.data?.isNotEmpty == true && provider.data != null),
+      hasData: true,
       isLoading: provider.isLoading,
       error: provider.error,
       showPreparingText: true,
@@ -175,7 +171,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Friends Invited",
+                          "Friends Joined",
                           style: stylePTSansBold(fontSize: 17),
                         ),
                         const SpacerVertical(height: 10),
@@ -195,18 +191,28 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                            child: Text(
-                              "Verified: ${provider.verified},",
-                              style:
-                                  stylePTSansRegular(color: ThemeColors.accent),
+                          Visibility(
+                            visible: provider.verified != 0,
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              child: Flexible(
+                                child: Text(
+                                  "Verified: ${provider.verified}${provider.unVerified != 0 ? "," : ""}",
+                                  style: stylePTSansRegular(
+                                      color: ThemeColors.accent),
+                                ),
+                              ),
                             ),
                           ),
-                          const SpacerHorizontal(width: 5),
-                          Flexible(
-                            child: Text(
-                              "Unverified: ${provider.unVerified}",
-                              style: stylePTSansRegular(color: ThemeColors.sos),
+                          // const SpacerHorizontal(width: 5),
+                          Visibility(
+                            visible: provider.unVerified != 0,
+                            child: Flexible(
+                              child: Text(
+                                "Unverified: ${provider.unVerified}",
+                                style:
+                                    stylePTSansRegular(color: ThemeColors.sos),
+                              ),
                             ),
                           ),
                         ],
@@ -230,32 +236,41 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                         ),
                       ],
                     ),
-                    const SpacerVertical(height: 10),
+                    // const SpacerVertical(height: 10),
                   ],
                 ),
               ),
-              const ScreenTitle(
-                title: "Referred to",
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.only(bottom: 10),
-                itemBuilder: (context, index) {
-                  AffiliateReferRes? data = provider.data?[index];
-                  return AffiliateReferItem(
-                    index: index,
-                    data: data,
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 16,
-                  );
-                },
-                itemCount: provider.data?.length ?? 0,
-              ),
+              Visibility(
+                visible:
+                    provider.data?.isNotEmpty == true && provider.data != null,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const ScreenTitle(
+                      title: "Friends joined with your referral link",
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(bottom: 10),
+                      itemBuilder: (context, index) {
+                        AffiliateReferRes? data = provider.data?[index];
+                        return AffiliateReferItem(
+                          index: index,
+                          data: data,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 16,
+                        );
+                      },
+                      itemCount: provider.data?.length ?? 0,
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

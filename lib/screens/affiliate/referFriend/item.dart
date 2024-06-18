@@ -67,7 +67,7 @@ class AffiliateReferItem extends StatelessWidget {
           ),
         ),
         Text(
-          "${data?.points ?? 0}",
+          data?.status == 0 ? "0" : "${data?.points ?? 0}",
           style: stylePTSansRegular(),
         ),
       ],

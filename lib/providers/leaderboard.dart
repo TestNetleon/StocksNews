@@ -58,6 +58,12 @@ class LeaderBoardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearData() {
+    _leaderBoard = null;
+    _data = null;
+    notifyListeners();
+  }
+
   getUserType() {
     if (_data != null) {
       for (var user in _data!) {
@@ -89,11 +95,12 @@ class LeaderBoardProvider extends ChangeNotifier {
       if (response.status) {
         _data = affiliateReferResFromJson(jsonEncode(response.data));
         getUserType();
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _data = null;
         _error = response.message;
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;

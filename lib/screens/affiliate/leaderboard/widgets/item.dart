@@ -14,47 +14,45 @@ class AffiliateLeaderBoardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: const BoxDecoration(
-                color: ThemeColors.accent, shape: BoxShape.circle),
-            alignment: Alignment.center,
-            child: Text(
-              "$index",
-              style: stylePTSansBold(fontSize: 10),
-            ),
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(5),
+          decoration: const BoxDecoration(
+              color: ThemeColors.accent, shape: BoxShape.circle),
+          alignment: Alignment.center,
+          child: Text(
+            "${index + 1}",
+            style: stylePTSansBold(fontSize: 10),
           ),
-          SpacerHorizontal(width: index < 10 ? 10 : 5),
-          Container(
-            width: 43,
-            height: 43,
-            padding: const EdgeInsets.all(5),
-            child: CachedNetworkImagesWidget(
-              data?.image,
-            ),
+        ),
+        SpacerHorizontal(width: index < 10 ? 10 : 5),
+        Container(
+          width: 43,
+          height: 43,
+          padding: const EdgeInsets.all(5),
+          child: CachedNetworkImagesWidget(
+            data?.image,
           ),
-          const SpacerHorizontal(width: 5),
-          Expanded(
-            child: Text(
-              (data?.displayName == '' || data?.displayName == null) &&
-                      (data?.name == '' || data?.name == null)
-                  ? "N/A"
-                  : data?.displayName != '' || data?.displayName != null
-                      ? "${data?.displayName}"
-                      : "${data?.name}",
-              style: stylePTSansRegular(),
-            ),
-          ),
-          const SpacerHorizontal(width: 5),
-          Text(
-            "${data?.points}",
+        ),
+        const SpacerHorizontal(width: 5),
+        Expanded(
+          child: Text(
+            (data?.displayName == '' || data?.displayName == null) &&
+                    (data?.name == '' || data?.name == null)
+                ? "N/A"
+                : data?.displayName != '' || data?.displayName != null
+                    ? "${data?.displayName}"
+                    : "${data?.name}",
             style: stylePTSansRegular(),
           ),
-        ],
-      ),
+        ),
+        const SpacerHorizontal(width: 5),
+        Text(
+          "${data?.points}",
+          style: stylePTSansRegular(),
+        ),
+      ],
     );
   }
 }
