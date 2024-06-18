@@ -20,22 +20,14 @@ class GapUpDownStocks extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainerNEW(
-          scrollable: false,
-          tabsPadding: EdgeInsets.zero,
-          tabs: ["Gap Up Stocks", "Gap Down Stocks"],
-          widgets: [
-            GapUpStocks(),
-            GapDownStocks(),
-          ],
-        ),
+      body: CustomTabContainerNEW(
+        scrollable: false,
+        tabsPadding: EdgeInsets.zero,
+        tabs: ["Gap Up Stocks", "Gap Down Stocks"],
+        widgets: [
+          GapUpStocks(),
+          GapDownStocks(),
+        ],
       ),
     );
   }

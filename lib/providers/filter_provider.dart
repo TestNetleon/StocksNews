@@ -67,7 +67,7 @@ class FilteredParams {
   String isEtf;
   String isFund;
   String isActivelyTrading;
-  String? sorting;
+  String sorting;
 
   FilteredParams({
     this.exchange_name,
@@ -80,6 +80,6 @@ class FilteredParams {
     this.isFund = "",
     this.isActivelyTrading = "",
     this.sector,
-    this.sorting,
+    this.sorting = "",
   });
 }

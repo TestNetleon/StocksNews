@@ -46,6 +46,15 @@ class MostVolatileStocksProvider extends ChangeNotifier with AuthProviderBase {
     getData();
   }
 
+  void applySorting(String sortingKey) {
+    _filterParams?.sorting = sortingKey;
+    _page = 1;
+    notifyListeners();
+    Utils()
+        .showLog("Sorting Data ===   $sortingKey   ${_filterParams?.sorting}");
+    getData();
+  }
+
   void exchangeFilter(String item) {
     _filterParams!.exchange_name!.remove(item);
     if (_filterParams!.exchange_name!.isEmpty) {
@@ -107,6 +116,7 @@ class MostVolatileStocksProvider extends ChangeNotifier with AuthProviderBase {
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
         "sector": _filterParams?.sector?.join(",") ?? "",
         "industry": _filterParams?.industry?.join(",") ?? "",
+        "sortBy": _filterParams?.sorting ?? "",
       };
 
       ApiResponse response = await apiRequest(

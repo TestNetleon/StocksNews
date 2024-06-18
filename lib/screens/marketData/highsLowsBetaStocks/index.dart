@@ -5,7 +5,6 @@ import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/negative_
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../../../utils/constants.dart';
 import '../../../widgets/custom_tab_container.dart';
 
 class HighLowsBetaStocksIndex extends StatelessWidget {
@@ -19,23 +18,15 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainerNEW(
-          scrollable: true,
-          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: ["High Beta Stocks", "Low Beta Stocks", "Negative Beta Stocks"],
-          widgets: [
-            HighBetaStocks(),
-            LowsBetaStocks(),
-            NegativeBetaStocks(),
-          ],
-        ),
+      body: CustomTabContainerNEW(
+        scrollable: true,
+        // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+        tabs: ["High Beta Stocks", "Low Beta Stocks", "Negative Beta Stocks"],
+        widgets: [
+          HighBetaStocks(),
+          LowsBetaStocks(),
+          NegativeBetaStocks(),
+        ],
       ),
     );
   }

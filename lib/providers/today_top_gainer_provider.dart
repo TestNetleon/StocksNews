@@ -37,9 +37,6 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
   FilteredParams? _filterParams;
   FilteredParams? get filterParams => _filterParams;
 
-  String? _sortingKey;
-  String? get sortingKey => _sortingKey;
-
   void resetFilter() {
     _filterParams = null;
     _page = 1;
@@ -53,11 +50,8 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
     getData();
   }
 
-  void applySorting(sortingKey) {
-    // _filterParams?.sorting = null;
-
+  void applySorting(String sortingKey) {
     _filterParams?.sorting = sortingKey;
-
     _page = 1;
     notifyListeners();
     Utils()

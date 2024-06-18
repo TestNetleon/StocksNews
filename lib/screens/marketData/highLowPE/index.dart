@@ -6,7 +6,6 @@ import 'package:stocks_news_new/screens/marketData/highLowPE/low_pe_growth.dart'
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../../../utils/constants.dart';
 import '../../../widgets/custom_tab_container.dart';
 
 class HighLowPEIndex extends StatelessWidget {
@@ -20,29 +19,21 @@ class HighLowPEIndex extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainerNEW(
-          scrollable: true,
-          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: [
-            "High PE Ratio",
-            "Low PE Ratio",
-            "High PE Growth",
-            "Low PE Growth"
-          ],
-          widgets: [
-            HighPeStocks(),
-            LowPEStocks(),
-            HighPeGrowthStocks(),
-            LowPEGrowthStocks(),
-          ],
-        ),
+      body: CustomTabContainerNEW(
+        scrollable: true,
+        // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+        tabs: [
+          "High PE Ratio",
+          "Low PE Ratio",
+          "High PE Growth",
+          "Low PE Growth"
+        ],
+        widgets: [
+          HighPeStocks(),
+          LowPEStocks(),
+          HighPeGrowthStocks(),
+          LowPEGrowthStocks(),
+        ],
       ),
     );
   }

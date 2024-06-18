@@ -4,9 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/high_pe_growth_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 
 import '../../../utils/constants.dart';
@@ -65,59 +68,78 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
   Widget build(BuildContext context) {
     HighPeGrowthProvider provider = context.watch<HighPeGrowthProvider>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
       children: [
-        MarketDataHeader(
-          provider: provider,
-          onFilterClick: _onFilterClick,
-          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-        ),
-        // HtmlTitle(
-        //   subTitle: provider.extra?.subTitle ?? "",
-        //   onFilterClick: _onFilterClick,
-        //   hasFilter: provider.filterParams != null,
-        // ),
-        // if (provider.filterParams != null)
-        //   FilterUiValues(
-        //     params: provider.filterParams,
-        //     onDeleteExchange: (exchange) {
-        //       provider.exchangeFilter(exchange);
-        //     },
-        //   ),
-        Expanded(
-          child: BaseUiContainer(
-            error: provider.error,
-            // hasData: up != null && up.isNotEmpty,
-            hasData: !provider.isLoading &&
-                provider.data != null &&
-                provider.data?.isNotEmpty == true,
-            isLoading: provider.isLoading,
-            errorDispCommon: true,
-            showPreparingText: true,
-            onRefresh: () => provider.getData(showProgress: true),
-            child: RefreshControl(
-              onRefresh: () async => provider.getData(showProgress: true),
-              canLoadMore: provider.canLoadMore,
-              onLoadMore: () async =>
-                  provider.getData(showProgress: false, loadMore: true),
-              child: ListView.separated(
-                padding: const EdgeInsets.only(
-                  bottom: Dimen.padding,
-                  top: Dimen.padding,
-                ),
-                itemBuilder: (context, index) {
-                  HIghLowPeRes? high = provider.data?[index];
-                  return HighLowPEItem(index: index, data: high);
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: ThemeColors.greyBorder, height: 20.sp);
-                },
-                itemCount: provider.data?.length ?? 0,
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.padding,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketDataHeader(
+                provider: provider,
+                onFilterClick: _onFilterClick,
+                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               ),
-            ),
+              // HtmlTitle(
+              //   subTitle: provider.extra?.subTitle ?? "",
+              //   onFilterClick: _onFilterClick,
+              //   hasFilter: provider.filterParams != null,
+              // ),
+              // if (provider.filterParams != null)
+              //   FilterUiValues(
+              //     params: provider.filterParams,
+              //     onDeleteExchange: (exchange) {
+              //       provider.exchangeFilter(exchange);
+              //     },
+              //   ),
+              Expanded(
+                child: BaseUiContainer(
+                  error: provider.error,
+                  // hasData: up != null && up.isNotEmpty,
+                  hasData: !provider.isLoading &&
+                      provider.data != null &&
+                      provider.data?.isNotEmpty == true,
+                  isLoading: provider.isLoading,
+                  errorDispCommon: true,
+                  showPreparingText: true,
+                  onRefresh: () => provider.getData(showProgress: true),
+                  child: RefreshControl(
+                    onRefresh: () async => provider.getData(showProgress: true),
+                    canLoadMore: provider.canLoadMore,
+                    onLoadMore: () async =>
+                        provider.getData(showProgress: false, loadMore: true),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(
+                        bottom: Dimen.padding,
+                        top: Dimen.padding,
+                      ),
+                      itemBuilder: (context, index) {
+                        HIghLowPeRes? high = provider.data?[index];
+                        return HighLowPEItem(index: index, data: high);
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                            color: ThemeColors.greyBorder, height: 20.sp);
+                      },
+                      itemCount: provider.data?.length ?? 0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+        // Align( 6/18/2024
+        //     alignment: Alignment.bottomCenter,
+        //     child: MdBottomSheet(
+        //       onTapFilter: _onFilterClick,
+        //       onTapSorting: () => onSortingClick(onTap: (sortingKey) {
+        //         Navigator.pop(navigatorKey.currentContext!);
+        //         context.read<HighPeGrowthProvider>().applySorting(sortingKey);
+        //       }),
+        //     ))
       ],
     );
   }

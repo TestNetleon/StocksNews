@@ -4,10 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/item_sale_on_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
@@ -62,78 +66,97 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
     LowPriceStocksProvider provider = context.watch<LowPriceStocksProvider>();
     // List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
       children: [
-        MarketDataHeader(
-          provider: provider,
-          onFilterClick: _onFilterClick,
-          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-        ),
-        // HtmlTitle(
-        //   subTitle: provider.subTitle ?? "",
-        //   onFilterClick: _onFilterClick,
-        //   // margin: const EdgeInsets.only(top: 10, bottom: 10),
-        //   hasFilter: provider.filterParams != null,
-        // ),
-        // if (provider.filterParams != null)
-        //   FilterUiValues(
-        //     params: provider.filterParams,
-        //     onDeleteExchange: (exchange) {
-        //       provider.exchangeFilter(exchange);
-        //     },
-        //   ),
-        Expanded(
-          child: BaseUiContainer(
-            error: provider.error,
-            hasData: !provider.isLoading && provider.data != null,
-            isLoading: provider.isLoading,
-            showPreparingText: true,
-            onRefresh: () {
-              provider.getLowPriceData();
-            },
-            child: RefreshControl(
-              onRefresh: () async => provider.getLowPriceData(),
-              canLoadMore: provider.canLoadMore,
-              onLoadMore: () async => provider.getLowPriceData(loadMore: true),
-              child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 10.sp),
-                itemBuilder: (context, index) {
-                  LowPriceStocksRes? data = provider.data?[index];
-                  if (data == null) {
-                    return const SizedBox();
-                  }
-                  return provider.typeIndex == 1
-                      ? SaleOnStocksItem(data: data)
-                      : LowPriceStocksItem(data: data);
-
-                  // return Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     index == 0
-                  //         ? HtmlTitle(
-                  //             subTitle: provider.subTitle,
-                  //           )
-                  //         : const SizedBox(),
-                  //     provider.typeIndex == 1
-                  //         ? SaleOnStocksItem(
-                  //             data: data,
-                  //           )
-                  //         : LowPriceStocksItem(data: data),
-                  //   ],
-                  // );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 16,
-                  );
-                },
-                itemCount: provider.data?.length ?? 0,
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.padding,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MarketDataHeader(
+                provider: provider,
+                onFilterClick: _onFilterClick,
+                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               ),
-            ),
+              // HtmlTitle(
+              //   subTitle: provider.subTitle ?? "",
+              //   onFilterClick: _onFilterClick,
+              //   // margin: const EdgeInsets.only(top: 10, bottom: 10),
+              //   hasFilter: provider.filterParams != null,
+              // ),
+              // if (provider.filterParams != null)
+              //   FilterUiValues(
+              //     params: provider.filterParams,
+              //     onDeleteExchange: (exchange) {
+              //       provider.exchangeFilter(exchange);
+              //     },
+              //   ),
+              Expanded(
+                child: BaseUiContainer(
+                  error: provider.error,
+                  hasData: !provider.isLoading && provider.data != null,
+                  isLoading: provider.isLoading,
+                  showPreparingText: true,
+                  onRefresh: () {
+                    provider.getLowPriceData();
+                  },
+                  child: RefreshControl(
+                    onRefresh: () async => provider.getLowPriceData(),
+                    canLoadMore: provider.canLoadMore,
+                    onLoadMore: () async =>
+                        provider.getLowPriceData(loadMore: true),
+                    child: ListView.separated(
+                      padding: EdgeInsets.symmetric(vertical: 10.sp),
+                      itemBuilder: (context, index) {
+                        LowPriceStocksRes? data = provider.data?[index];
+                        if (data == null) {
+                          return const SizedBox();
+                        }
+                        return provider.typeIndex == 1
+                            ? SaleOnStocksItem(data: data)
+                            : LowPriceStocksItem(data: data);
+
+                        // return Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     index == 0
+                        //         ? HtmlTitle(
+                        //             subTitle: provider.subTitle,
+                        //           )
+                        //         : const SizedBox(),
+                        //     provider.typeIndex == 1
+                        //         ? SaleOnStocksItem(
+                        //             data: data,
+                        //           )
+                        //         : LowPriceStocksItem(data: data),
+                        //   ],
+                        // );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 16,
+                        );
+                      },
+                      itemCount: provider.data?.length ?? 0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+        // Align( 6/18/2024
+        //     alignment: Alignment.bottomCenter,
+        //     child: MdBottomSheet(
+        //       onTapFilter: _onFilterClick,
+        //       onTapSorting: () => onSortingClick(onTap: (sortingKey) {
+        //         Navigator.pop(navigatorKey.currentContext!);
+        //         context.read<LowPriceStocksProvider>().applySorting(sortingKey);
+        //       }),
+        //     ))
       ],
     );
   }
