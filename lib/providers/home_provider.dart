@@ -192,6 +192,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // }
   }
 
+  updateReferShare(text) {
+    _extra?.referral?.shareText = text;
+    notifyListeners();
+  }
+
   Future getHomeSlider() async {
     // showGlobalProgressDialog();
 
