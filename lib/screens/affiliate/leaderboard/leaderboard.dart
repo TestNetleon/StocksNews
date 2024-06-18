@@ -23,60 +23,60 @@ class AffiliateLeaderBoard extends StatefulWidget {
 }
 
 class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
-  List<AffiliateReferRes> listData = [
-    AffiliateReferRes(
-      points: 10,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 3,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 4,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 5,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 4,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 5,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 4,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 5,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 4,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 5,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 6,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 7,
-      displayName: "HavocToThisWorld",
-    ),
-    AffiliateReferRes(
-      points: 8,
-      displayName: "HavocToThisWorld",
-    ),
-  ];
+  // List<AffiliateReferRes> listData = [
+  //   AffiliateReferRes(
+  //     points: 10,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 3,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 4,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 5,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 4,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 5,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 4,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 5,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 4,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 5,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 6,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 7,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  //   AffiliateReferRes(
+  //     points: 8,
+  //     displayName: "HavocToThisWorld",
+  //   ),
+  // ];
 
   @override
   void initState() {
@@ -112,9 +112,9 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
         child: ListView.separated(
           padding: const EdgeInsets.symmetric(vertical: 10),
           itemBuilder: (context, listIndex) {
-            // AffiliateReferRes? data = provider.leaderBoard?[listIndex];
+            AffiliateReferRes? data = provider.leaderBoard?[listIndex];
 
-            AffiliateReferRes? data = listData[listIndex];
+            // AffiliateReferRes? data = listData[listIndex];
 
             if (listIndex == 0) {
               // return const SizedBox(
@@ -175,8 +175,8 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
                     ),
                   ),
                   Visibility(
-                    // visible: (provider.leaderBoard?.length ?? 0) > 3,
-                    visible: listData.length > 3,
+                    visible: (provider.leaderBoard?.length ?? 0) > 3,
+                    // visible: listData.length > 3,
 
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,8 +224,8 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
                 ? const SizedBox()
                 : const SpacerVertical(height: 10);
           },
-          // itemCount: provider.leaderBoard?.length ?? 0,
-          itemCount: listData.length,
+          itemCount: provider.leaderBoard?.length ?? 0,
+          // itemCount: listData.length,
         ),
       ),
     );
