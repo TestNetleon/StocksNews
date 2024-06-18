@@ -4,12 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/earnings_res.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings_item.dart';
+import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
@@ -69,62 +72,81 @@ class _EarningsListState extends State<EarningsList> {
   Widget build(BuildContext context) {
     EarningsProvider provider = context.watch<EarningsProvider>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
       children: [
-        if (provider.data != null || provider.filterParams != null)
-          MarketDataTitle(
-            htmlTitle: true,
-            title: provider.extra?.title,
-            subTitleHtml: true,
-            subTitle: provider.extra?.subTitle,
-            provider: provider,
-            // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-            onFilterClick: _onFilterClick,
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.padding,
           ),
-        Expanded(
-          child: BaseUiContainer(
-            error: provider.error,
-            hasData: provider.data != null && provider.data!.isNotEmpty,
-            isLoading: provider.isLoading,
-            errorDispCommon: true,
-            showPreparingText: true,
-            onRefresh: () => provider.getEarningsStocks(),
-            child: RefreshControl(
-              onRefresh: () async => provider.getEarningsStocks(),
-              canLoadMore: provider.canLoadMore,
-              onLoadMore: () async =>
-                  provider.getEarningsStocks(loadMore: true),
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  vertical: Dimen.padding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (provider.data != null || provider.filterParams != null)
+                MarketDataTitle(
+                  htmlTitle: true,
+                  title: provider.extra?.title,
+                  subTitleHtml: true,
+                  subTitle: provider.extra?.subTitle,
+                  provider: provider,
+                  // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+                  onFilterClick: _onFilterClick,
                 ),
-                itemBuilder: (context, index) {
-                  if (provider.data == null || provider.data!.isEmpty) {
-                    return const SizedBox();
-                  }
-                  EarningsRes dataItem = provider.data![index];
-                  return EarningsItem(
-                    data: dataItem,
-                    isOpen: provider.openIndex == index,
-                    onTap: () {
-                      provider.setOpenIndex(
-                        provider.openIndex == index ? -1 : index,
-                      );
-                    },
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 20.sp,
-                  );
-                },
-                itemCount: provider.data?.length ?? 0,
+              Expanded(
+                child: BaseUiContainer(
+                  error: provider.error,
+                  hasData: provider.data != null && provider.data!.isNotEmpty,
+                  isLoading: provider.isLoading,
+                  errorDispCommon: true,
+                  showPreparingText: true,
+                  onRefresh: () => provider.getEarningsStocks(),
+                  child: RefreshControl(
+                    onRefresh: () async => provider.getEarningsStocks(),
+                    canLoadMore: provider.canLoadMore,
+                    onLoadMore: () async =>
+                        provider.getEarningsStocks(loadMore: true),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Dimen.padding,
+                      ),
+                      itemBuilder: (context, index) {
+                        if (provider.data == null || provider.data!.isEmpty) {
+                          return const SizedBox();
+                        }
+                        EarningsRes dataItem = provider.data![index];
+                        return EarningsItem(
+                          data: dataItem,
+                          isOpen: provider.openIndex == index,
+                          onTap: () {
+                            provider.setOpenIndex(
+                              provider.openIndex == index ? -1 : index,
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 20.sp,
+                        );
+                      },
+                      itemCount: provider.data?.length ?? 0,
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
+        // Align( 6/18/2024
+        //   alignment: Alignment.bottomCenter,
+        //   child: MdBottomSheet(
+        //     onTapFilter: _onFilterClick,
+        //     onTapSorting: () => onSortingClick(onTap: (sortingKey) {
+        //       Navigator.pop(navigatorKey.currentContext!);
+        //       context.read<EarningsProvider>().applySorting(sortingKey);
+        //     }),
+        //   ),
+        // )
       ],
     );
   }

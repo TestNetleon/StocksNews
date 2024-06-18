@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/gainersLosers/break_out_item.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
@@ -130,12 +131,17 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
             ],
           ),
         ),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: MdBottomSheet(
-              onTapFilter: _onFilterClick,
-              onTapSorting: () => onSortingClick(onTap: (sortingName) {}),
-            ))
+        // Align( 6/18/2024
+        //     alignment: Alignment.bottomCenter,
+        //     child: MdBottomSheet(
+        //       onTapFilter: _onFilterClick,
+        //       onTapSorting: () => onSortingClick(onTap: (sortingKey) {
+        //         Navigator.pop(navigatorKey.currentContext!);
+        //         context
+        //             .read<TodayBreakoutStockProvider>()
+        //             .applySorting(sortingKey);
+        //       }),
+        //     ))
       ],
     );
   }

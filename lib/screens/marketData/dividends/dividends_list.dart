@@ -4,11 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends_item.dart';
+import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -70,60 +73,79 @@ class _DividendsListState extends State<DividendsList> {
     DividendsProvider provider = context.watch<DividendsProvider>();
     List<DividendsRes>? data = provider.data;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
       children: [
-        if (provider.data != null || provider.filterParams != null)
-          MarketDataTitle(
-            htmlTitle: true,
-            title: provider.extra?.title,
-            subTitleHtml: true,
-            subTitle: provider.extra?.subTitle,
-            provider: provider,
-            // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-            onFilterClick: _onFilterClick,
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.padding,
           ),
-        // ScreenTitle(
-        //   htmlTitle: true,
-        //   title: provider.extraUp?.title ?? "Dividend Announcements",
-        //   subTitleHtml: true,
-        //   subTitle: provider.extraUp?.subTitle,
-        // ),
-        Expanded(
-          child: BaseUiContainer(
-            error: provider.error,
-            hasData: data != null && data.isNotEmpty,
-            isLoading: provider.isLoading,
-            errorDispCommon: true,
-            showPreparingText: true,
-            onRefresh: () => provider.getDividendsStocks(),
-            child: RefreshControl(
-              onRefresh: () async => provider.getDividendsStocks(),
-              canLoadMore: provider.canLoadMore,
-              onLoadMore: () async =>
-                  provider.getDividendsStocks(loadMore: true),
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  vertical: Dimen.padding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (provider.data != null || provider.filterParams != null)
+                MarketDataTitle(
+                  htmlTitle: true,
+                  title: provider.extra?.title,
+                  subTitleHtml: true,
+                  subTitle: provider.extra?.subTitle,
+                  provider: provider,
+                  // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+                  onFilterClick: _onFilterClick,
                 ),
-                itemBuilder: (context, index) {
-                  if (data == null || data.isEmpty) {
-                    return const SizedBox();
-                  }
-                  return DividendsItem(data: data[index], index: index);
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 20.sp,
-                  );
-                },
-                // itemCount: up?.length ?? 0,
-                itemCount: data?.length ?? 0,
+              // ScreenTitle(
+              //   htmlTitle: true,
+              //   title: provider.extraUp?.title ?? "Dividend Announcements",
+              //   subTitleHtml: true,
+              //   subTitle: provider.extraUp?.subTitle,
+              // ),
+              Expanded(
+                child: BaseUiContainer(
+                  error: provider.error,
+                  hasData: data != null && data.isNotEmpty,
+                  isLoading: provider.isLoading,
+                  errorDispCommon: true,
+                  showPreparingText: true,
+                  onRefresh: () => provider.getDividendsStocks(),
+                  child: RefreshControl(
+                    onRefresh: () async => provider.getDividendsStocks(),
+                    canLoadMore: provider.canLoadMore,
+                    onLoadMore: () async =>
+                        provider.getDividendsStocks(loadMore: true),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: Dimen.padding,
+                      ),
+                      itemBuilder: (context, index) {
+                        if (data == null || data.isEmpty) {
+                          return const SizedBox();
+                        }
+                        return DividendsItem(data: data[index], index: index);
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 20.sp,
+                        );
+                      },
+                      // itemCount: up?.length ?? 0,
+                      itemCount: data?.length ?? 0,
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
+        // Align( 6/18/2024
+        //   alignment: Alignment.bottomCenter,
+        //   child: MdBottomSheet(
+        //     onTapFilter: _onFilterClick,
+        //     onTapSorting: () => onSortingClick(onTap: (sortingKey) {
+        //       Navigator.pop(navigatorKey.currentContext!);
+        //       context.read<DividendsProvider>().applySorting(sortingKey);
+        //     }),
+        //   ),
+        // )
       ],
     );
   }

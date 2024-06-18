@@ -45,6 +45,14 @@ class EarningsProvider extends ChangeNotifier with AuthProviderBase {
     getEarningsStocks();
   }
 
+  void applySorting(String sortingKey) {
+    _filterParams?.sorting = sortingKey;
+    _page = 1;
+    notifyListeners();
+
+    getEarningsStocks();
+  }
+
   void exchangeFilter(String item) {
     _filterParams!.exchange_name!.remove(item);
     if (_filterParams!.exchange_name!.isEmpty) {
@@ -109,6 +117,7 @@ class EarningsProvider extends ChangeNotifier with AuthProviderBase {
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.join(",") ?? "",
+        "sortBy": _filterParams?.sorting ?? "",
       };
 
       ApiResponse response = await apiRequest(

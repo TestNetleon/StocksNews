@@ -10,12 +10,14 @@ class FiltersData {
   final List<FiltersDataItem>? sectors;
   final List<FiltersDataItem>? exchange;
   final List<FiltersDataItem>? marketCap;
+  final List<FiltersDataItem>? sorting;
 
   FiltersData({
     required this.industries,
     required this.sectors,
     required this.exchange,
     required this.marketCap,
+    required this.sorting,
   });
 
   factory FiltersData.fromJson(Map<String, dynamic> json) => FiltersData(
@@ -35,6 +37,10 @@ class FiltersData {
             ? null
             : List<FiltersDataItem>.from(
                 json["MarketCap"].map((x) => FiltersDataItem.fromJson(x))),
+        sorting: json["sorting"] == null
+            ? null
+            : List<FiltersDataItem>.from(
+                json["sorting"].map((x) => FiltersDataItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +56,9 @@ class FiltersData {
         "MarketCap": marketCap == null
             ? null
             : List<dynamic>.from(marketCap!.map((x) => x.toJson())),
+        "sorting": sorting == null
+            ? null
+            : List<dynamic>.from(sorting!.map((x) => x.toJson())),
       };
 }
 

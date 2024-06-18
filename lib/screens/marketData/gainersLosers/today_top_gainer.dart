@@ -132,19 +132,17 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
             ],
           ),
         ),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: MdBottomSheet(
-              onTapFilter: _onFilterClick,
-              onTapSorting: () => onSortingClick(
-                onTap: (sortingKey) {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  context
-                      .read<TodayTopGainerProvider>()
-                      .applySorting(sortingKey);
-                },
-              ),
-            ))
+        // Align( 6/18/2024
+        //   alignment: Alignment.bottomCenter,
+        //   child: MdBottomSheet(
+        //     onTapFilter: _onFilterClick,
+        //     onTapSorting: () => onSortingClick(onTap: (sortingKey) {
+        //       Navigator.pop(navigatorKey.currentContext!);
+
+        //       context.read<TodayTopGainerProvider>().applySorting(sortingKey);
+        //     }),
+        //   ),
+        // )
       ],
     );
   }

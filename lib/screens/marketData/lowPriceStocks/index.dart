@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/low_price_stock_list.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
@@ -37,22 +36,14 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
         canSearch: true,
         isPopback: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: provider.tabLoading
-            ? const Loading()
-            : !provider.tabLoading && provider.tabs == null
-                ? ErrorDisplayWidget(
-                    error: provider.error,
-                    onRefresh: () => provider.getTabsData(showProgress: false),
-                  )
-                : const LowPriceStocksData(),
-      ),
+      body: provider.tabLoading
+          ? const Loading()
+          : !provider.tabLoading && provider.tabs == null
+              ? ErrorDisplayWidget(
+                  error: provider.error,
+                  onRefresh: () => provider.getTabsData(showProgress: false),
+                )
+              : const LowPriceStocksData(),
     );
   }
 }

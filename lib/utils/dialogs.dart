@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/modals/filters_res.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/errorScreens/app_maintenance.dart';
@@ -44,41 +46,56 @@ void closeGlobalProgressDialog() {
 
 void onSortingClick({
   required void Function(String)? onTap,
-}) {
-  BaseBottomSheets().gradientBottomSheet(
-    title: "SORT BY",
-    child: ListView.separated(
-      shrinkWrap: true,
-      itemCount: sortingArrayList.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            if (onTap == null) {
-              return;
-            }
-            onTap(sortingArrayList[index].key);
-          },
-          child: Padding(
-            padding: EdgeInsets.only(left: 10.sp),
-            child:
-                context.read<TodayTopGainerProvider>().filterParams?.sorting ==
-                        sortingArrayList[index].key
-                    ? Text(
-                        sortingArrayList[index].value,
-                        style: stylePTSansBold(color: ThemeColors.blue),
-                      )
-                    : Text(
-                        sortingArrayList[index].value,
-                        style: stylePTSansBold(),
-                      ),
-          ),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const Divider();
-      },
-    ),
-  );
+}) async {
+  FilterProvider provider = navigatorKey.currentContext!.read<FilterProvider>();
+  if (provider.data == null) {
+    await provider.getFilterData();
+  }
+  if (provider.data != null) {
+    BaseBottomSheets().gradientBottomSheet(
+      title: "SORT BY",
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: sortingArrayList.length,
+        itemBuilder: (context, index) {
+          FiltersData? data = context.watch<FilterProvider>().data;
+          if (data == null) {
+            return const SizedBox();
+          }
+
+          return GestureDetector(
+            onTap: () {
+              if (onTap == null) {
+                return;
+              }
+
+              onTap(sortingArrayList[index].key);
+            },
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.sp),
+              child: context
+                          .read<TodayTopGainerProvider>()
+                          .filterParams
+                          ?.sorting ==
+                      sortingArrayList[index].key
+                  ? Text(
+                      data.sorting![index].value,
+                      // sortingArrayList[index].value,
+                      style: stylePTSansBold(color: ThemeColors.blue),
+                    )
+                  : Text(
+                      data.sorting![index].value,
+                      style: stylePTSansBold(),
+                    ),
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const Divider();
+        },
+      ),
+    );
+  }
 }
 
 void showErrorMessage(

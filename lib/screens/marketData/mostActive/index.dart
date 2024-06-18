@@ -6,7 +6,6 @@ import 'package:stocks_news_new/screens/marketData/mostActive/unusual_trading_vo
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../../../utils/constants.dart';
 import '../../../widgets/custom_tab_container.dart';
 
 class MostActiveIndex extends StatelessWidget {
@@ -20,27 +19,19 @@ class MostActiveIndex extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainerNEW(
-          scrollable: true,
-          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: [
-            "Most Active Stocks",
-            "Most Volatile Stocks",
-            "Unusual Trading Volume",
-          ],
-          widgets: [
-            MostActiveStocks(),
-            MostVolatileStocks(),
-            UnusualTradingVolume(),
-          ],
-        ),
+      body: CustomTabContainerNEW(
+        scrollable: true,
+        // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+        tabs: [
+          "Most Active Stocks",
+          "Most Volatile Stocks",
+          "Unusual Trading Volume",
+        ],
+        widgets: [
+          MostActiveStocks(),
+          MostVolatileStocks(),
+          UnusualTradingVolume(),
+        ],
       ),
     );
   }

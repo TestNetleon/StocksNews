@@ -40,15 +40,7 @@ class _IndicesIndexState extends State<IndicesIndex> {
     IndicesProvider provider = context.watch<IndicesProvider>();
     return BaseContainer(
       appBar: const AppBarHome(canSearch: true, isPopback: true),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: provider.tabLoading ? const Loading() : _getWidget(provider),
-      ),
+      body: provider.tabLoading ? const Loading() : _getWidget(provider),
     );
   }
 }
@@ -100,12 +92,32 @@ class IndicesData extends StatelessWidget {
                   ],
             widgets: tabs == null
                 ? const [
-                    Dow30Stocks(),
-                    Snp500Stocks(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimen.padding,
+                      ),
+                      child: Dow30Stocks(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimen.padding,
+                      ),
+                      child: Snp500Stocks(),
+                    ),
                   ]
                 : [
-                    const Dow30Stocks(),
-                    const Snp500Stocks(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimen.padding,
+                      ),
+                      child: Dow30Stocks(),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimen.padding,
+                      ),
+                      child: Snp500Stocks(),
+                    ),
                     ...(provider.tabs!
                         .map((tab) => _getWidgets(provider))
                         .toList()),
@@ -122,54 +134,59 @@ class IndicesData extends StatelessWidget {
       onRefresh: () {
         provider.getIndicesData(showProgress: false);
       },
-      child: Column(
-        children: [
-          HtmlTitle(
-            subTitle: provider.extra?.subTitle ?? "",
-            hasFilter: false,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Dimen.padding,
+        ),
+        child: Column(
+          children: [
+            HtmlTitle(
+              subTitle: provider.extra?.subTitle ?? "",
+              hasFilter: false,
 
-            // onFilterClick: _onFilterClick,
-            // margin: const EdgeInsets.only(top: 10, bottom: 10),
-          ),
-          Expanded(
-            child: RefreshControl(
-              onRefresh: () async => provider.getIndicesData(),
-              canLoadMore: provider.canLoadMore,
-              onLoadMore: () async => provider.getIndicesData(loadMore: true),
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                itemBuilder: (context, index) {
-                  IndicesRes? data = provider.data?[index];
-                  if (data == null) {
-                    return const SizedBox();
-                  }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // if (index == 0)
-                      //   HtmlTitle(
-                      //     subTitle: provider.subTitle,
-                      //   ),
-                      IndicesItem(data: data, index: index),
-                    ],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  if (provider.data == null) {
-                    return const SizedBox();
-                  }
-                  return const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 16,
-                  );
-                },
-                itemCount: provider.typeDowThirty || provider.typeSpFifty
-                    ? provider.dataDowThirtyStocks?.length ?? 0
-                    : provider.data?.length ?? 0,
+              // onFilterClick: _onFilterClick,
+              // margin: const EdgeInsets.only(top: 10, bottom: 10),
+            ),
+            Expanded(
+              child: RefreshControl(
+                onRefresh: () async => provider.getIndicesData(),
+                canLoadMore: provider.canLoadMore,
+                onLoadMore: () async => provider.getIndicesData(loadMore: true),
+                child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  itemBuilder: (context, index) {
+                    IndicesRes? data = provider.data?[index];
+                    if (data == null) {
+                      return const SizedBox();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // if (index == 0)
+                        //   HtmlTitle(
+                        //     subTitle: provider.subTitle,
+                        //   ),
+                        IndicesItem(data: data, index: index),
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    if (provider.data == null) {
+                      return const SizedBox();
+                    }
+                    return const Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 16,
+                    );
+                  },
+                  itemCount: provider.typeDowThirty || provider.typeSpFifty
+                      ? provider.dataDowThirtyStocks?.length ?? 0
+                      : provider.data?.length ?? 0,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
