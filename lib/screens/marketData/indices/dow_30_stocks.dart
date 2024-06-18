@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dow_thirty_res.dart';
 import 'package:stocks_news_new/providers/dow_30_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/widget/market_data_filter.dart';
+import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/fifty_two_high.dart';
-import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/fifty_two_lows.dart';
+import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/fifty_two_high.dart';
+import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/fifty_two_lows.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 

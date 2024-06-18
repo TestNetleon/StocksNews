@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:stocks_news_new/screens/drawerScreens/mostActive/most_active_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/mostActive/most_volatile_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/mostActive/unusual_trading_volume.dart';
+import 'package:stocks_news_new/screens/marketData/mostActive/most_active_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/mostActive/most_volatile_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/mostActive/unusual_trading_volume.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 

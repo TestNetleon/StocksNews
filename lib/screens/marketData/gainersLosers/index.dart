@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_breakout_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_top_gainer.dart';
-import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/today_top_losers.dart';
+import 'package:stocks_news_new/screens/marketData/gainersLosers/today_breakout_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/gainersLosers/today_top_gainer.dart';
+import 'package:stocks_news_new/screens/marketData/gainersLosers/today_top_losers.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings_list.dart';
+import 'package:stocks_news_new/screens/marketData/earnings/earnings_list.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';

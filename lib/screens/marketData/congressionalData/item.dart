@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
-import 'package:stocks_news_new/screens/drawerScreens/congressionDetail/index.dart';
+import 'package:stocks_news_new/screens/marketData/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';

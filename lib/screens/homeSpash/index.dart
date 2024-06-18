@@ -182,18 +182,18 @@ class _HomeSplashState extends State<HomeSplash> {
 // import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 // import 'package:provider/provider.dart';
 // import '../drawer/widgets/review_app_pop_up.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/congressionalData/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/dividends/dividends.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/earnings/earnings.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/fiftyTwoWeeks/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/gainersLosers/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/gapUpDown/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/highLowPE/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/indices/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/mostActive/index.dart';
-// // import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
+// // import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
+// // import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/gainersLosers/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/gapUpDown/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/indices/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
+// // import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 // // import 'package:stocks_news_new/screens/stocks/index.dart';
 
 // class HomeSplash extends StatefulWidget {

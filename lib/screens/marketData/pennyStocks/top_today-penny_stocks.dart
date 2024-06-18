@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/penny_stocks.dart';
 import 'package:stocks_news_new/providers/top_today_penny_stocks_provider.dart';
-import 'package:stocks_news_new/screens/drawerScreens/pennyStocks/item.dart';
+import 'package:stocks_news_new/screens/marketData/pennyStocks/item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 

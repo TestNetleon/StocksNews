@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/high_beta_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/low_beta_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/highsLowsBetaStocks/negative_beta_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/high_beta_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/low_beta_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/negative_beta_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
-import 'package:stocks_news_new/screens/drawerScreens/lowPriceStocks/low_price_stock_list.dart';
+import 'package:stocks_news_new/screens/marketData/lowPriceStocks/low_price_stock_list.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
