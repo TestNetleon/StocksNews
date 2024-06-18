@@ -112,7 +112,7 @@ class _TodaysTopLoserState extends State<TodaysTopLoser> {
                         return GainerLoserItem(
                           data: gainers![index],
                           index: index,
-                          marketData: true,
+                          // marketData: true,
                         );
                       },
                       separatorBuilder: (context, index) {

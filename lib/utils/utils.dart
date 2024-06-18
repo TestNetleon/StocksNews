@@ -54,6 +54,14 @@ DateTime parseDate(String dateString) {
   return date;
 }
 
+bool isValidTickerSymbol(String value) {
+  // Define the regular expression
+  final RegExp tickerRegExp = RegExp(r'^[A-Z]+$');
+
+  // Check if the value matches the regular expression
+  return tickerRegExp.hasMatch(value);
+}
+
 String formatDateTimeAgo(DateTime dateTime) {
   final now = DateTime.now();
   final difference = dateTime.difference(now);

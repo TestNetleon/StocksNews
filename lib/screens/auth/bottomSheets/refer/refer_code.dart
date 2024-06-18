@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ import 'refer_otp.dart';
 referLogin() async {
   await showModalBottomSheet(
     useSafeArea: true,
+    enableDrag: false,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(5),
@@ -35,13 +37,21 @@ referLogin() async {
     isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return const ReferLogin();
+      return DraggableScrollableSheet(
+        maxChildSize: 1,
+        initialChildSize: 1,
+        builder: (context, scrollController) => ReferLogin(
+          scrollController: scrollController,
+        ),
+      );
     },
   );
 }
 
 class ReferLogin extends StatefulWidget {
-  const ReferLogin({super.key});
+  final ScrollController scrollController;
+
+  const ReferLogin({super.key, required this.scrollController});
 
   @override
   State<ReferLogin> createState() => _ReferLoginState();
@@ -162,154 +172,169 @@ class _ReferLoginState extends State<ReferLogin> {
             top: BorderSide(color: ThemeColors.greyBorder),
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+        child: ListView(
+          controller: widget.scrollController,
+          // physics: const NeverScrollableScrollPhysics(),
           children: [
-            Container(
-              height: 6.sp,
-              width: 50.sp,
-              margin: EdgeInsets.only(top: 8.sp),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.sp),
-                color: ThemeColors.greyBorder,
-              ),
-            ),
-            const SpacerVertical(height: 70),
-            Container(
-              width: MediaQuery.of(context).size.width * .45,
-              constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-              child: Image.asset(
-                Images.logo,
-                fit: BoxFit.contain,
-              ),
-            ),
-            const SpacerVertical(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(Dimen.authScreenPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    provider.extra?.referLogin?.title ?? "Verify Identity",
-                    style: stylePTSansBold(fontSize: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  height: 6.sp,
+                  width: 50.sp,
+                  margin: EdgeInsets.only(top: 8.sp),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.sp),
+                    color: ThemeColors.greyBorder,
                   ),
-                  const SpacerVertical(height: 4),
-                  Text(
-                    provider.extra?.referLogin?.subTitle ??
-                        'In order to Join our Affiliate Program, please enter the following details.',
-                    style: stylePTSansRegular(color: Colors.grey),
+                ),
+                const SpacerVertical(height: 70),
+                Container(
+                  width: MediaQuery.of(context).size.width * .45,
+                  constraints:
+                      BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+                  child: Image.asset(
+                    Images.logo,
+                    fit: BoxFit.contain,
                   ),
-                  const SpacerVertical(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      "Real Name",
-                      style: stylePTSansRegular(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: ThemeInputField(
-                      style: stylePTSansBold(color: Colors.black, fontSize: 18),
-                      controller: name,
-                      fillColor: user?.name == '' || user?.name == null
-                          ? ThemeColors.white
-                          : const Color.fromARGB(255, 133, 133, 133),
-                      editable: user?.name == '' || user?.name == null,
-                      placeholder: "Enter your name",
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [LengthLimitingTextInputFormatter(60)],
-                      textCapitalization: TextCapitalization.words,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      "Display Name",
-                      style: stylePTSansRegular(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: ThemeInputField(
-                      style: stylePTSansBold(color: Colors.black, fontSize: 18),
-                      editable:
-                          user?.displayName == '' || user?.displayName == null,
-                      controller: displayName,
-                      fillColor:
-                          user?.displayName == '' || user?.displayName == null
+                ),
+                const SpacerVertical(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(Dimen.authScreenPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        provider.extra?.referLogin?.title ?? "Verify Identity",
+                        style: stylePTSansBold(fontSize: 24),
+                      ),
+                      const SpacerVertical(height: 4),
+                      Text(
+                        provider.extra?.referLogin?.subTitle ??
+                            'In order to Join our Affiliate Program, please enter the following details.',
+                        style: stylePTSansRegular(color: Colors.grey),
+                      ),
+                      const SpacerVertical(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          "Real Name",
+                          style: stylePTSansRegular(),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: ThemeInputField(
+                          style: stylePTSansBold(
+                              color: Colors.black, fontSize: 18),
+                          controller: name,
+                          fillColor: user?.name == '' || user?.name == null
                               ? ThemeColors.white
                               : const Color.fromARGB(255, 133, 133, 133),
-                      placeholder: "Enter your display name",
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [LengthLimitingTextInputFormatter(60)],
-                      textCapitalization: TextCapitalization.words,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      "Phone Number",
-                      style: stylePTSansRegular(),
-                    ),
-                  ),
-                  IntrinsicHeight(
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 12.7),
-                          decoration: const BoxDecoration(
-                            color: ThemeColors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              bottomLeft: Radius.circular(4),
-                            ),
-                          ),
-                          child: Text(
-                            "+1",
-                            style: stylePTSansBold(
-                                color: ThemeColors.greyText, fontSize: 18),
-                          ),
+                          editable: user?.name == '' || user?.name == null,
+                          placeholder: "Enter your name",
+                          keyboardType: TextInputType.name,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(60)
+                          ],
+                          textCapitalization: TextCapitalization.words,
                         ),
-                        // const SpacerHorizontal(width: 2),
-                        Expanded(
-                          child: ThemeInputField(
-                            style: stylePTSansBold(
-                                color: Colors.black, fontSize: 18),
-                            borderRadiusOnly: const BorderRadius.only(
-                              topRight: Radius.circular(4),
-                              bottomRight: Radius.circular(4),
-                            ),
-                            controller: mobile,
-                            placeholder: "Enter your phone number",
-                            keyboardType: TextInputType.phone,
-                            inputFormatters: [
-                              _formatter,
-                              LengthLimitingTextInputFormatter(10)
-                            ],
-                            textCapitalization: TextCapitalization.none,
-                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          "Display Name",
+                          style: stylePTSansRegular(),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: ThemeInputField(
+                          style: stylePTSansBold(
+                              color: Colors.black, fontSize: 18),
+                          editable: user?.displayName == '' ||
+                              user?.displayName == null,
+                          controller: displayName,
+                          fillColor: user?.displayName == '' ||
+                                  user?.displayName == null
+                              ? ThemeColors.white
+                              : const Color.fromARGB(255, 133, 133, 133),
+                          placeholder: "Enter your display name",
+                          keyboardType: TextInputType.name,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(60)
+                          ],
+                          textCapitalization: TextCapitalization.words,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          "Phone Number",
+                          style: stylePTSansRegular(),
+                        ),
+                      ),
+                      IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 12.7),
+                              decoration: const BoxDecoration(
+                                color: ThemeColors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4),
+                                  bottomLeft: Radius.circular(4),
+                                ),
+                              ),
+                              child: Text(
+                                "+1",
+                                style: stylePTSansBold(
+                                    color: ThemeColors.greyText, fontSize: 18),
+                              ),
+                            ),
+                            // const SpacerHorizontal(width: 2),
+                            Expanded(
+                              child: ThemeInputField(
+                                style: stylePTSansBold(
+                                    color: Colors.black, fontSize: 18),
+                                borderRadiusOnly: const BorderRadius.only(
+                                  topRight: Radius.circular(4),
+                                  bottomRight: Radius.circular(4),
+                                ),
+                                controller: mobile,
+                                placeholder: "Enter your phone number",
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: [
+                                  _formatter,
+                                  LengthLimitingTextInputFormatter(10)
+                                ],
+                                textCapitalization: TextCapitalization.none,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SpacerVertical(height: Dimen.itemSpacing),
+                      HtmlWidget(
+                        provider.extra?.referLogin?.note ??
+                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
+                                'Do not include +1 or an special character.',
+                        textStyle: stylePTSansRegular(color: Colors.grey),
+                      ),
+                      const SpacerVertical(height: Dimen.itemSpacing),
+                      ThemeButton(
+                        text: "Send OTP",
+                        onPressed: _referLogin,
+                      ),
+                      const SpacerVertical(
+                        height: 200,
+                      ),
+                    ],
                   ),
-                  const SpacerVertical(height: Dimen.itemSpacing),
-                  HtmlWidget(
-                    provider.extra?.referLogin?.note ??
-                        'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                            'Do not include +1 or an special character.',
-                    textStyle: stylePTSansRegular(color: Colors.grey),
-                  ),
-                  const SpacerVertical(height: Dimen.itemSpacing),
-                  ThemeButton(
-                    text: "Send OTP",
-                    onPressed: _referLogin,
-                  ),
-                  const SpacerVertical(),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

@@ -86,7 +86,8 @@ class NotificationsItem extends StatelessWidget {
         }
         Navigator.pop(context);
         isPhone ? signupSheet() : signupSheetTablet();
-      } else if (slug != '' && type == NotificationType.stockDetail.name) {
+      } else if (slug != '' && type == NotificationType.stockDetail.name ||
+          isValidTickerSymbol(type)) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetail.path,

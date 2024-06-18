@@ -127,7 +127,8 @@ class FirebaseApi {
             return const ReviewAppPopUp();
           },
         );
-      } else if (slug != '' && type == NotificationType.stockDetail.name) {
+      } else if (slug != '' && type == NotificationType.stockDetail.name ||
+          isValidTickerSymbol(type ?? "")) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetail.path,

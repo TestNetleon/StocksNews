@@ -122,7 +122,8 @@ class _HomeSplashState extends State<HomeSplash> {
             },
           );
         });
-      } else if (slug != '' && type == NotificationType.stockDetail.name) {
+      } else if (slug != '' && type == NotificationType.stockDetail.name ||
+          isValidTickerSymbol(type ?? "")) {
         Navigator.pushNamed(
           navigatorKey.currentContext!,
           StockDetail.path,
