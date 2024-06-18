@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -133,6 +132,13 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                       visible:
                           context.watch<HomeProvider>().extra?.showPortfolio ??
                               false,
+                      child: AboutTile(
+                          index: index, onTap: aboutTiles[index].onTap),
+                    );
+                  }
+                  if (index == 2) {
+                    return Visibility(
+                      visible: context.watch<UserProvider>().user != null,
                       child: AboutTile(
                           index: index, onTap: aboutTiles[index].onTap),
                     );

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // _getAppLinks();
+      if (Platform.isIOS) _getAppLinks();
       // Timer(const Duration(milliseconds: 7500), () {
       //   _checkForConnection();
       // });

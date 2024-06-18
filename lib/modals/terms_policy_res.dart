@@ -10,27 +10,31 @@ TermsPolicyRes termsPolicyResFromJson(String str) =>
 String termsPolicyResToJson(TermsPolicyRes data) => json.encode(data.toJson());
 
 class TermsPolicyRes {
-  final String description;
-  final List<ContactDetail>? contactDetail;
+  final String? description;
+  final String? subTitle;
+  // final List<ContactDetail>? contactDetail;
 //
   TermsPolicyRes({
-    required this.description,
-    this.contactDetail,
+    this.description,
+    this.subTitle,
+    // this.contactDetail,
   });
 
   factory TermsPolicyRes.fromJson(Map<String, dynamic> json) => TermsPolicyRes(
         description: json["description"],
-        contactDetail: json["contact_detail"] == null
-            ? []
-            : List<ContactDetail>.from(
-                json["contact_detail"]!.map((x) => ContactDetail.fromJson(x))),
+        subTitle: json['sub_title'],
+        // contactDetail: json["contact_detail"] == null
+        //     ? []
+        //     : List<ContactDetail>.from(
+        //         json["contact_detail"]!.map((x) => ContactDetail.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "description": description,
-        "contact_detail": contactDetail == null
-            ? []
-            : List<dynamic>.from(contactDetail!.map((x) => x.toJson())),
+        "sub_title": subTitle,
+        // "contact_detail": contactDetail == null
+        //     ? []
+        //     : List<dynamic>.from(contactDetail!.map((x) => x.toJson())),
       };
 }
 

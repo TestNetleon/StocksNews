@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/fcm/dynamic_links.service.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -19,6 +16,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../../modals/refer.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../../route/my_app.dart';
+import '../../../../widgets/custom/toast.dart';
 
 class ReferSuccess extends StatefulWidget {
   const ReferSuccess({super.key});
@@ -28,17 +26,17 @@ class ReferSuccess extends StatefulWidget {
 }
 
 class _ReferSuccessState extends State<ReferSuccess> {
-  Uri? shareUri;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      ReferSuccessRes? referData = context.read<UserProvider>().refer;
-      shareUri = await DynamicLinkService.instance
-          .getDynamicLink(referData?.referralCode);
-      setState(() {});
-    });
-  }
+  // Uri? shareUri;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+  //     ReferSuccessRes? referData = context.read<UserProvider>().refer;
+  //     shareUri = await DynamicLinkService.instance
+  //         .getDynamicLink(referData?.referralCode);
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +89,12 @@ class _ReferSuccessState extends State<ReferSuccess> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Invite your friend",
+                          "Invite your friends",
                           style: stylePTSansBold(fontSize: 24),
                         ),
                         const SpacerVertical(height: 3),
                         Text(
-                          "Share your link with your friend and earn reward points",
+                          "Share your link with your friends and earn reward points",
                           style: stylePTSansRegular(
                               fontSize: 14, color: ThemeColors.greyText),
                         ),
@@ -130,8 +128,13 @@ class _ReferSuccessState extends State<ReferSuccess> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(4)),
                                   onTap: () {
-                                    Clipboard.setData(ClipboardData(
-                                        text: shareUri.toString()));
+                                    try {
+                                      Clipboard.setData(ClipboardData(
+                                          text: shareUri.toString()));
+                                      CommonToast.show(message: "Copied");
+                                    } catch (e) {
+                                      CommonToast.show(message: "$e");
+                                    }
                                   },
                                   child: Ink(
                                     padding: const EdgeInsets.symmetric(

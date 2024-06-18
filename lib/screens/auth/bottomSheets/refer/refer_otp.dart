@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer/reffer_success.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -20,6 +21,7 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../api/api_response.dart';
+import 'reffer_success.dart';
 
 referOTP({required String phone, String appSignature = ''}) async {
   await showModalBottomSheet(
@@ -116,6 +118,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
       );
     } else {
       UserProvider provider = context.read<UserProvider>();
+      HomeProvider homeProvider = context.read<HomeProvider>();
 
       Map request = {
         'token': provider.user?.token,
@@ -128,12 +131,21 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         if (response.status) {
           closeKeyboard();
           provider.updateUser(phone: widget.phone);
+          Extra extra = response.extra;
+
+          homeProvider.updateReferShare(extra.referral?.shareText);
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
+          // Navigator.pushNamed(
+          //   navigatorKey.currentContext!,
+          //   ReferAFriend.path,
+          // );
           Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (context) => const ReferSuccess(),
-              ));
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const ReferSuccess(),
+            ),
+          );
         }
       } catch (e) {
         //

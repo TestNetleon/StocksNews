@@ -8,7 +8,7 @@ String referralResToJson(ReferralRes data) => json.encode(data.toJson());
 class ReferralRes {
   final String? title;
   final String? message;
-  final String? shareText;
+  String? shareText;
   final bool? shwReferral;
 
   ReferralRes({

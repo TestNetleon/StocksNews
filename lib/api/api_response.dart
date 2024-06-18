@@ -74,6 +74,9 @@ class Extra {
   final UserRes? user;
   final bool? showPortfolio;
   final ReferralRes? referral;
+  final num? received;
+  final num? pending;
+  final String? affiliateReferText;
 
   Extra({
     this.search,
@@ -81,7 +84,10 @@ class Extra {
     this.priceRange,
     this.transactionType,
     this.period,
+    this.affiliateReferText,
     this.type,
+    this.received,
+    this.pending,
     this.cap,
     this.sector,
     this.currentBalance,
@@ -112,6 +118,9 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        received: json['total_points_received'],
+        pending: json['total_points_pending'],
+        affiliateReferText: json['heading'],
         userAlert: json["user_alerts"],
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         title: json["title"],
@@ -180,6 +189,9 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "search": search,
         "user_alerts": userAlert,
+        'total_points_received': received,
+        "total_points_pending": pending,
+        "heading": affiliateReferText,
         "title": title,
         "sub_title": subTitle,
         "current_balance": currentBalance,

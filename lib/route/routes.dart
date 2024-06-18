@@ -27,6 +27,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/low_pe_growth_provider.dart';
 import 'package:stocks_news_new/providers/low_pe_provider.dart';
 import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
@@ -63,6 +64,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
@@ -155,6 +157,7 @@ class Routes {
     EarningsScreen.path: (_) => const EarningsScreen(),
     StockScreenerScreen.path: (_) => const StockScreenerScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
+    ReferAFriend.path: (_) => const ReferAFriend(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -531,6 +534,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => StockDetailProviderNew()),
       ChangeNotifierProvider(create: (_) => MostPopularPennyStocksProviders()),
       ChangeNotifierProvider(create: (_) => CongressionalDetailProvider()),
+      ChangeNotifierProvider(create: (_) => LeaderBoardProvider()),
     ];
   }
 }

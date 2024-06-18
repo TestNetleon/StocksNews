@@ -16,6 +16,7 @@ import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -31,6 +32,7 @@ import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
+import '../fcm/dynamic_links.service.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
@@ -64,10 +66,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   //   notifyListeners();
   // }
 
-  void setUser(UserRes user) {
+  Future setUser(UserRes user) async {
     _user = user;
     _status = Status.loaded;
     Preference.saveUser(_user);
+    shareUri =
+        await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
     notifyListeners();
   }
 
@@ -78,7 +82,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       String? displayName,
       String? phone,
       String? referralCode,
-      String? referralUrl}) {
+      String? referralUrl}) async {
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
     if (name != null) _user?.name = name;
@@ -88,6 +92,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     if (referralUrl != null) _user?.referralUrl = referralUrl;
 
     Preference.saveUser(_user);
+    shareUri =
+        await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
     Utils().showLog("Updating user..");
     notifyListeners();
   }
@@ -155,6 +161,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   void clearUser() async {
     _user = null;
+    navigatorKey.currentContext!.read<LeaderBoardProvider>().clearData();
     notifyListeners();
   }
 
@@ -305,6 +312,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+
+        shareUri = await DynamicLinkService.instance
+            .getDynamicLink(_user?.referralCode);
+
         // Navigator.popUntil(
         //     navigatorKey.currentContext!, (route) => route.isFirst);
         // Navigator.pushNamedAndRemoveUntil(
@@ -380,6 +391,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        shareUri = await DynamicLinkService.instance
+            .getDynamicLink(_user?.referralCode);
         // Navigator.pushNamedAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
         if (dontPop == null) {
@@ -533,7 +546,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
         // kDebugMode ? Preference.setFirstTime(true) : null;
         Preference.setFirstTime(false);
-
+        shareUri = await DynamicLinkService.instance
+            .getDynamicLink(_user?.referralCode);
         Navigator.pushNamed(navigatorKey.currentContext!, SignUpSuccess.path);
         notifyListeners();
       } else {
@@ -582,7 +596,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
-
+        shareUri = await DynamicLinkService.instance
+            .getDynamicLink(_user?.referralCode);
         if (dontPop == null) {
           if (state == "compare") {
             await compareProvider.getCompareStock();
@@ -809,6 +824,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           referralCode: _refer?.referralCode,
           referralUrl: _refer?.referralUrl,
         );
+
+        shareUri = await DynamicLinkService.instance
+            .getDynamicLink(_user?.referralCode);
       } else {
         //
         popUpAlert(
@@ -818,7 +836,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       }
       notifyListeners();
 
-      return ApiResponse(status: response.status, message: response.message);
+      return ApiResponse(
+        status: response.status,
+        message: response.message,
+        extra: response.extra,
+      );
     } catch (e) {
       Utils().showLog("$e");
       notifyListeners();

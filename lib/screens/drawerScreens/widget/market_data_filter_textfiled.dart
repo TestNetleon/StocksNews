@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field.dart';
 
 class MarketDataTextFiledClickable extends StatelessWidget {
@@ -24,8 +23,8 @@ class MarketDataTextFiledClickable extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: stylePTSansRegular()),
-          const SpacerVertical(height: 5),
+          // Text(label, style: stylePTSansRegular()),
+          // const SpacerVertical(height: 5),
           TextInputField(
             hintText: hintText,
             suffix: const Icon(

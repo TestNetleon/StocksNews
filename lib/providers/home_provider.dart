@@ -192,6 +192,11 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
     // }
   }
 
+  updateReferShare(text) {
+    _extra?.referral?.shareText = text;
+    notifyListeners();
+  }
+
   Future getHomeSlider() async {
     // showGlobalProgressDialog();
 
@@ -405,16 +410,16 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _homePortfolio = homePortfolioResFromJson(jsonEncode(response.data));
 
-        // if (kDebugMode) {
-        //   _homePortfolio = HomePortfolioRes(
-        //       top: _homePortfolio?.top,
-        //       bottom: _homePortfolio?.bottom,
-        //       keys: PortfolioKeys(
-        //         plaidSecret: "7181521c1dd4c3353ea995024697ef",
-        //         plaidClient: "665336b8bff5c6001ce3aafc",
-        //         plaidEnv: "sandbox",
-        //       ));
-        // }
+        if (kDebugMode) {
+          _homePortfolio = HomePortfolioRes(
+              top: _homePortfolio?.top,
+              bottom: _homePortfolio?.bottom,
+              keys: PortfolioKeys(
+                plaidSecret: "7181521c1dd4c3353ea995024697ef",
+                plaidClient: "665336b8bff5c6001ce3aafc",
+                plaidEnv: "sandbox",
+              ));
+        }
       } else {
         _homePortfolio = null;
         //
