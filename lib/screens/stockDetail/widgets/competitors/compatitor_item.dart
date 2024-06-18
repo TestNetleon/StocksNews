@@ -25,7 +25,7 @@ class SdCompetitorItem extends StatelessWidget {
   });
 
   void _onTap(context) {
-    Navigator.pushNamed(
+    Navigator.pushReplacementNamed(
       context,
       StockDetail.path, // arguments: data.symbol,
       arguments: {"slug": data?.symbol},

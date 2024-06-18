@@ -71,7 +71,7 @@ class _HighPeStocksState extends State<HighPeStocks> {
         MarketDataHeader(
           provider: provider,
           onFilterClick: _onFilterClick,
-          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
         // HtmlTitle(
         //   subTitle: provider.extra?.subTitle ?? "",

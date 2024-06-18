@@ -70,7 +70,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
         MarketDataHeader(
           provider: provider,
           onFilterClick: _onFilterClick,
-          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
         // HtmlTitle(
         //   subTitle: provider.extra?.subTitle ?? "",

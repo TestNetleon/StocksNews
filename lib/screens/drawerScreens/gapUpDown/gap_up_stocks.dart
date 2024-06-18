@@ -66,7 +66,7 @@ class _GapUpStocksState extends State<GapUpStocks> {
         MarketDataHeader(
           provider: provider,
           onFilterClick: _onFilterClick,
-          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
         // HtmlTitle(
         //   subTitle: provider.extra?.subTitle ?? "",

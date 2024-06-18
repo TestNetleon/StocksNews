@@ -69,7 +69,7 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
         MarketDataHeader(
           provider: provider,
           onFilterClick: _onFilterClick,
-          onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+          // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
         ),
         // HtmlTitle(
         //   subTitle: provider.extraUp?.subTitle ?? "",

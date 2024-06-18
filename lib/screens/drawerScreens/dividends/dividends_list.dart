@@ -80,7 +80,7 @@ class _DividendsListState extends State<DividendsList> {
             subTitleHtml: true,
             subTitle: provider.extra?.subTitle,
             provider: provider,
-            onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+            // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
             onFilterClick: _onFilterClick,
           ),
         // ScreenTitle(

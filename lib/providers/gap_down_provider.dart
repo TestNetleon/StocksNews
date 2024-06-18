@@ -58,6 +58,27 @@ class GapDownProvider extends ChangeNotifier with AuthProviderBase {
     getGapDownStocks();
   }
 
+  void sectorFilter(String item) {
+    _filterParams!.sector!.remove(item);
+    if (_filterParams!.sector!.isEmpty) {
+      _filterParams!.sector = null;
+    }
+    _page = 1;
+
+    notifyListeners();
+    getGapDownStocks();
+  }
+
+  void industryFilter(String item) {
+    _filterParams!.industry!.remove(item);
+    if (_filterParams!.industry!.isEmpty) {
+      _filterParams!.industry = null;
+    }
+    _page = 1;
+    notifyListeners();
+    getGapDownStocks();
+  }
+
   void setStatusDown(status) {
     _status = status;
     notifyListeners();
@@ -90,14 +111,14 @@ class GapDownProvider extends ChangeNotifier with AuthProviderBase {
         "page": "$_page",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry ?? "",
+        "industry": _filterParams?.industry?.join(",") ?? "",
         "market_cap": _filterParams?.market_cap ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector ?? "",
+        "sector": _filterParams?.sector?.join(",") ?? "",
       };
 
       ApiResponse response = await apiRequest(
