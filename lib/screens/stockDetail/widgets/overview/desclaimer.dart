@@ -65,6 +65,7 @@ class SdTopDisclaimer extends StatelessWidget {
                                 createRoute(
                                   const TCandPolicy(
                                     policyType: PolicyType.disclaimer,
+                                    slug: "disclaimer",
                                   ),
                                 ),
                               );

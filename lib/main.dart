@@ -7,7 +7,6 @@ import 'package:stocks_news_new/firebase_options.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   try {

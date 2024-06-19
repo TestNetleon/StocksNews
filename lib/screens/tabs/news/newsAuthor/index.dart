@@ -109,11 +109,11 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
                   news: News(
                       slug: newsItemData.slug,
                       // publishedDate: newsItemData.publishedDate,
-                      title: newsItemData.title,
-                      image: newsItemData.image,
+                      title: newsItemData.title ?? "",
+                      image: newsItemData.image ?? "",
                       site: newsItemData.site ?? '',
                       postDate: DateFormat("MMMM dd, yyyy")
-                          .format(newsItemData.publishedDate),
+                          .format(newsItemData.publishedDate ?? DateTime.now()),
                       postDateString: newsItemData.postDateString,
                       url: newsItemData.url,
                       authors: newsItemData.authors
@@ -128,11 +128,11 @@ class _NewsAuthorContainerState extends State<NewsAuthorContainer> {
                 news: News(
                     slug: newsItemData.slug,
                     // publishedDate: newsItemData.publishedDate,
-                    title: newsItemData.title,
-                    image: newsItemData.image,
+                    title: newsItemData.title ?? "",
+                    image: newsItemData.image ?? "",
                     site: newsItemData.site ?? '',
                     postDate: DateFormat("MMMM dd, yyyy")
-                        .format(newsItemData.publishedDate),
+                        .format(newsItemData.publishedDate ?? DateTime.now()),
                     url: newsItemData.url,
                     postDateString: newsItemData.postDateString,
                     authors: newsItemData.authors

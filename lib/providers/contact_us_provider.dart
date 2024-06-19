@@ -8,6 +8,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
@@ -41,19 +42,31 @@ class ContactUsProvider extends ChangeNotifier with AuthProviderBase {
         showProgress: true,
         onRefresh: () {},
       );
+
       // showErrorMessage(
       //   message: response.message,
       //   type: response.status ? SnackbarType.info : SnackbarType.error,
       // );
-      if (response.status) {
-        name.clear();
-        email.clear();
-        message.clear();
-      }
 
+      if (response.status) {
+        // name.clear();
+        // email.clear();
+        message.clear();
+        popUpAlert(
+          message: response.message ?? "",
+          title: "",
+          onTap: () {
+            Navigator.pop(navigatorKey.currentContext!);
+            // Navigator.pop(navigatorKey.currentContext!);
+          },
+        );
+      } else {
+        popUpAlert(message: response.message ?? "", title: "Alert");
+      }
       setStatus(Status.loaded);
       // return ApiResponse(status: response.status);
     } catch (e) {
+      popUpAlert(message: Const.errSomethingWrong, title: "Alert");
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

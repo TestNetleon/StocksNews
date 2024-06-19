@@ -229,7 +229,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Coins Earned",
+                            "Points Earned",
                             style: stylePTSansBold(fontSize: 17),
                           ),
                           const SpacerVertical(height: 10),

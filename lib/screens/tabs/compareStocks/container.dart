@@ -72,34 +72,32 @@ class CompareStocksContainer extends StatelessWidget {
         Dimen.padding.sp,
         0,
       ),
-      child: BaseUiContainer(
-        isLoading: provider.isLoading && provider.company.isEmpty,
-        hasData: true,
-        error: provider.error,
-        errorDispCommon: true,
-        showPreparingText: true,
-        child: CommonRefreshIndicator(
-          onRefresh: () => provider.getCompareStock(),
-          child: userProvider.user == null
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const ScreenTitle(title: "Compare Stocks"),
-                    Expanded(
-                      child: LoginError(
-                        state: "compare",
-                        onClick: () async {
-                          isPhone
-                              ? await loginSheet()
-                              : await loginSheetTablet();
+      child: userProvider.user == null
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ScreenTitle(title: "Compare Stocks"),
+                Expanded(
+                  child: LoginError(
+                    state: "compare",
+                    onClick: () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
 
-                          await provider.getCompareStock(showProgress: false);
-                        },
-                      ),
-                    ),
-                  ],
-                )
-              : SingleChildScrollView(
+                      await provider.getCompareStock(showProgress: false);
+                    },
+                  ),
+                ),
+              ],
+            )
+          : BaseUiContainer(
+              isLoading: provider.isLoading && provider.company.isEmpty,
+              hasData: true,
+              error: provider.error,
+              errorDispCommon: true,
+              showPreparingText: true,
+              child: CommonRefreshIndicator(
+                onRefresh: () => provider.getCompareStock(),
+                child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -138,8 +136,8 @@ class CompareStocksContainer extends StatelessWidget {
                     ],
                   ),
                 ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

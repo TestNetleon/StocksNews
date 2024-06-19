@@ -76,11 +76,11 @@ class NewsData {
   // final String id;
   // final String? api;
   // final String symbol;
-  final DateTime publishedDate;
+  final DateTime? publishedDate;
   final String? postDateString;
-  final String title;
-  final String slug;
-  final String image;
+  final String? title;
+  final String? slug;
+  final String? image;
   final String? site;
   final String? postDate;
   final String? text;
@@ -146,7 +146,7 @@ class NewsData {
         // "_id": id,
         // "api": api,
         // "symbol": symbol,
-        "published_date": publishedDate.toIso8601String(),
+        "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
         "published_date_string": publishedDate,

@@ -79,9 +79,11 @@ class Extra {
   final String? affiliateReferText;
   final HowItWorkRes? howItWork;
   final ReferLoginRes? referLogin;
+  final String? verifyIdentity;
 
   Extra({
     this.search,
+    this.verifyIdentity,
     this.howItWork,
     this.exchangeShortName,
     this.priceRange,
@@ -122,6 +124,7 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        verifyIdentity: json['verify_identity_text'],
         received: json['total_points_received'],
         referLogin: json["refer_login"] == null
             ? null
@@ -199,6 +202,7 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "search": search,
         "user_alerts": userAlert,
+        "verify_identity_text": verifyIdentity,
         'total_points_received': received,
         "total_points_pending": pending,
         "heading": affiliateReferText,

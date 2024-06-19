@@ -3,6 +3,9 @@
 //     final HomeTrendingRes = HomeTrendingResFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:stocks_news_new/modals/home_insider_res.dart';
+import 'package:stocks_news_new/modals/news_res.dart';
+
 import 'home_res.dart';
 
 HomeTrendingRes homeTrendingResFromJson(String str) =>
@@ -16,6 +19,7 @@ class HomeTrendingRes {
   final List<Top> popular;
   final List<Top>? gainers;
   final List<Top>? losers;
+  final List<News>? trendingNews;
 
   final TextRes? text;
 
@@ -25,11 +29,16 @@ class HomeTrendingRes {
     required this.losers,
     required this.popular,
     this.text,
+    this.trendingNews,
   });
 
   factory HomeTrendingRes.fromJson(Map<String, dynamic> json) =>
       HomeTrendingRes(
         popular: List<Top>.from(json["actives"].map((x) => Top.fromJson(x))),
+        trendingNews: json["trending_news"] == null
+            ? []
+            : List<News>.from(
+                json["trending_news"]!.map((x) => News.fromJson(x))),
         text: json["text"] == null ? null : TextRes.fromJson(json["text"]),
         trending: List<HomeTrendingData>.from(
             json["trending"].map((x) => HomeTrendingData.fromJson(x))),
@@ -43,6 +52,9 @@ class HomeTrendingRes {
 
   Map<String, dynamic> toJson() => {
         "trending": List<dynamic>.from(trending.map((x) => x.toJson())),
+        "trending_news": trendingNews == null
+            ? []
+            : List<dynamic>.from(trendingNews!.map((x) => x.toJson())),
         "actives": List<dynamic>.from(popular.map((x) => x.toJson())),
         "text": text?.toJson(),
         "gainers": gainers == null
@@ -72,6 +84,7 @@ class TextRes {
   final String? note;
   final String? other;
   final String? sentimentText;
+  final String? news;
 
   TextRes({
     this.trending,
@@ -91,6 +104,7 @@ class TextRes {
     this.mentionText,
     this.note,
     this.other,
+    this.news,
   });
 
   factory TextRes.fromJson(Map<String, dynamic> json) => TextRes(
@@ -98,6 +112,7 @@ class TextRes {
         gainers: json["gainers"],
         losers: json["losers"],
         subTitle: json["sub_title"],
+        news: json['news'],
         mentionText: json["mentions_text"],
         recentMentions: json["recent_mentions"],
         hotStocks: json["hot_stocks"],
@@ -127,6 +142,7 @@ class TextRes {
         "sectors": sectors,
         "general_news": generalNews,
         "note": note,
+        'news': news,
         "other": other,
         "now": now,
         "recently": recently,

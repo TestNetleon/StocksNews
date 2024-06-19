@@ -16,11 +16,13 @@ class SdDividendsRes {
   final List<SdTopRes>? top;
   final List<DividendHistory>? dividendHistory;
   final List<FaQsRes>? faq;
+  final String? dividendMessage;
 
   SdDividendsRes({
     this.top,
     this.dividendHistory,
     this.faq,
+    this.dividendMessage,
   });
 
   factory SdDividendsRes.fromJson(Map<String, dynamic> json) => SdDividendsRes(
@@ -35,6 +37,7 @@ class SdDividendsRes {
         faq: json["faq"] == null
             ? []
             : List<FaQsRes>.from(json["faq"]!.map((x) => FaQsRes.fromJson(x))),
+        dividendMessage: json["dividend_message"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +48,7 @@ class SdDividendsRes {
             : List<dynamic>.from(dividendHistory!.map((x) => x.toJson())),
         "faq":
             faq == null ? [] : List<dynamic>.from(faq!.map((x) => x.toJson())),
+        "dividend_message": dividendMessage,
       };
 }
 
