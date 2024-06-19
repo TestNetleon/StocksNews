@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/indices_res.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
 import 'package:stocks_news_new/screens/marketData/indices/dow_30_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/indices/indices_dynamic_list.dart';
 import 'package:stocks_news_new/screens/marketData/indices/snp_500_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'item.dart';
 
 class IndicesIndex extends StatefulWidget {
   static const path = "IndicesIndex";
@@ -120,74 +116,74 @@ class IndicesData extends StatelessWidget {
                       child: Snp500Stocks(),
                     ),
                     ...(provider.tabs!
-                        .map((tab) => _getWidgets(provider))
+                        .map((tab) => const IndicesDynamicStocks())
                         .toList()),
                   ],
           );
   }
 
-  Widget _getWidgets(IndicesProvider provider) {
-    return BaseUiContainer(
-      error: provider.error,
-      hasData: !provider.isLoading && provider.data != null,
-      isLoading: provider.isLoading,
-      showPreparingText: true,
-      onRefresh: () {
-        provider.getIndicesData(showProgress: false);
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(
-            left: Dimen.padding, right: Dimen.padding, bottom: 40),
-        child: Column(
-          children: [
-            HtmlTitle(
-              subTitle: provider.extra?.subTitle ?? "",
-              hasFilter: false,
+  // Widget _getWidgets(IndicesProvider provider) {
+  //   return BaseUiContainer(
+  //     error: provider.error,
+  //     hasData: !provider.isLoading && provider.data != null,
+  //     isLoading: provider.isLoading,
+  //     showPreparingText: true,
+  //     onRefresh: () {
+  //       provider.getIndicesData(showProgress: false);
+  //     },
+  //     child: Padding(
+  //       padding: const EdgeInsets.only(
+  //           left: Dimen.padding, right: Dimen.padding, bottom: 40),
+  //       child: Column(
+  //         children: [
+  //           HtmlTitle(
+  //             subTitle: provider.extra?.subTitle ?? "",
+  //             hasFilter: false,
 
-              // onFilterClick: _onFilterClick,
-              // margin: const EdgeInsets.only(top: 10, bottom: 10),
-            ),
-            Expanded(
-              child: RefreshControl(
-                onRefresh: () async => provider.getIndicesData(),
-                canLoadMore: provider.canLoadMore,
-                onLoadMore: () async => provider.getIndicesData(loadMore: true),
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  itemBuilder: (context, index) {
-                    IndicesRes? data = provider.data?[index];
-                    if (data == null) {
-                      return const SizedBox();
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // if (index == 0)
-                        //   HtmlTitle(
-                        //     subTitle: provider.subTitle,
-                        //   ),
-                        IndicesItem(data: data, index: index),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    if (provider.data == null) {
-                      return const SizedBox();
-                    }
-                    return const Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 16,
-                    );
-                  },
-                  itemCount: provider.typeDowThirty || provider.typeSpFifty
-                      ? provider.dataDowThirtyStocks?.length ?? 0
-                      : provider.data?.length ?? 0,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  //             // onFilterClick: _onFilterClick,
+  //             // margin: const EdgeInsets.only(top: 10, bottom: 10),
+  //           ),
+  //           Expanded(
+  //             child: RefreshControl(
+  //               onRefresh: () async => provider.getIndicesData(),
+  //               canLoadMore: provider.canLoadMore,
+  //               onLoadMore: () async => provider.getIndicesData(loadMore: true),
+  //               child: ListView.separated(
+  //                 padding: const EdgeInsets.symmetric(vertical: 10),
+  //                 itemBuilder: (context, index) {
+  //                   IndicesRes? data = provider.data?[index];
+  //                   if (data == null) {
+  //                     return const SizedBox();
+  //                   }
+  //                   return Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       // if (index == 0)
+  //                       //   HtmlTitle(
+  //                       //     subTitle: provider.subTitle,
+  //                       //   ),
+  //                       IndicesItem(data: data, index: index),
+  //                     ],
+  //                   );
+  //                 },
+  //                 separatorBuilder: (context, index) {
+  //                   if (provider.data == null) {
+  //                     return const SizedBox();
+  //                   }
+  //                   return const Divider(
+  //                     color: ThemeColors.greyBorder,
+  //                     height: 16,
+  //                   );
+  //                 },
+  //                 itemCount: provider.typeDowThirty || provider.typeSpFifty
+  //                     ? provider.dataDowThirtyStocks?.length ?? 0
+  //                     : provider.data?.length ?? 0,
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

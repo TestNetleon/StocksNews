@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/screens/marketData/widget/filter_multi_select_list.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter_textfiled.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -17,10 +16,12 @@ class MarketDataFilterBottomSheet extends StatefulWidget {
   const MarketDataFilterBottomSheet({
     required this.onFiltered,
     this.filterParam,
+    this.showExchange = true,
     super.key,
   });
   final FilteredParams? filterParam;
   final Function(FilteredParams?) onFiltered;
+  final bool showExchange;
 
   @override
   State<MarketDataFilterBottomSheet> createState() =>
@@ -75,6 +76,12 @@ class _MarketDataFilterBottomSheetState
           filterParams?.exchange_name =
               selectedValues.isEmpty ? null : selectedValues.split(",");
         }
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null) {
+          filterParams = null;
+        }
+
         setState(() {});
       },
     );
@@ -127,6 +134,12 @@ class _MarketDataFilterBottomSheetState
           filterParams?.sector =
               selectedValues.isEmpty ? null : selectedValues.split(",");
         }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null) {
+          filterParams = null;
+        }
         setState(() {});
       },
     );
@@ -156,6 +169,11 @@ class _MarketDataFilterBottomSheetState
         } else {
           filterParams?.industry =
               selectedValues.isEmpty ? null : selectedValues.split(",");
+        }
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null) {
+          filterParams = null;
         }
         setState(() {});
       },
@@ -323,18 +341,19 @@ class _MarketDataFilterBottomSheetState
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: MarketDataTextFiledClickable(
-                    hintText: filterParams?.exchange_name != null
-                        ? filterParams?.exchange_name?.join(", ") ?? ""
-                        : "All Exchange",
-                    label: "Exchange Type",
-                    onTap: () => _showExchangePicker(context),
-                    // controller: provider.exchangeController,
-                    controller: TextEditingController(),
+                if (widget.showExchange)
+                  Expanded(
+                    child: MarketDataTextFiledClickable(
+                      hintText: filterParams?.exchange_name != null
+                          ? filterParams?.exchange_name?.join(", ") ?? ""
+                          : "All Exchange",
+                      label: "Exchange Type",
+                      onTap: () => _showExchangePicker(context),
+                      // controller: provider.exchangeController,
+                      controller: TextEditingController(),
+                    ),
                   ),
-                ),
-                const SpacerHorizontal(width: 12),
+                if (widget.showExchange) const SpacerHorizontal(width: 12),
                 Expanded(
                   child: MarketDataTextFiledClickable(
                     hintText: filterParams?.sector != null

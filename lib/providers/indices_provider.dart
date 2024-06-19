@@ -86,6 +86,7 @@ class IndicesProvider extends ChangeNotifier {
       //   getIndicesData(showProgress: true, sPFiftyStocks: true);
       // } else {
       selectedIndex = index - 2;
+      _filterParams = null;
       notifyListeners();
       getIndicesData(showProgress: false);
     }
@@ -96,6 +97,43 @@ class IndicesProvider extends ChangeNotifier {
 
   FilteredParams? _filterParams;
   FilteredParams? get filterParams => _filterParams;
+
+  bool isFilterApplied() {
+    if (filterParams != null &&
+        (filterParams?.exchange_name != null ||
+            filterParams?.sector != null ||
+            filterParams?.industry != null ||
+            filterParams?.price != "" ||
+            filterParams?.market_cap != "" ||
+            filterParams?.beta != "" ||
+            filterParams?.dividend != "" ||
+            filterParams?.isEtf != "" ||
+            filterParams?.isFund != "" ||
+            filterParams?.isActivelyTrading != "")) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isSortingApplied() {
+    if (filterParams != null && filterParams?.sorting != "") {
+      return true;
+    }
+    return false;
+  }
+
+  void applySorting(String sortingKey) {
+    if (_filterParams == null) {
+      _filterParams = FilteredParams(sorting: sortingKey);
+    } else {
+      _filterParams!.sorting = sortingKey;
+    }
+    _page = 1;
+    notifyListeners();
+    Utils()
+        .showLog("Sorting Data ===   $sortingKey   ${_filterParams?.sorting}");
+    getIndicesData();
+  }
 
   void resetFilter() {
     _filterParams = null;
@@ -200,14 +238,14 @@ class IndicesProvider extends ChangeNotifier {
         "exchange": _tabs?[selectedIndex].value,
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry ?? "",
+        "industry": _filterParams?.industry?.join(",") ?? "",
         "market_cap": _filterParams?.market_cap ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector ?? "",
+        "sector": _filterParams?.sector?.join(",") ?? "",
       };
       // Map requestDowThirty = {
       //   "token":
