@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:stocks_news_new/modals/filters_res.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
 

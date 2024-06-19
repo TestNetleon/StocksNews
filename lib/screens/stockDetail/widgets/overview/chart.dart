@@ -10,7 +10,8 @@ import '../../../../providers/stock_detail_new.dart';
 
 class SdOverviewChart extends StatefulWidget {
   final String symbol;
-  const SdOverviewChart({super.key, required this.symbol});
+  final EdgeInsets? padding;
+  const SdOverviewChart({super.key, required this.symbol, this.padding});
 
   @override
   State<SdOverviewChart> createState() => _SdOverviewChartState();
@@ -35,7 +36,8 @@ class _SdOverviewChartState extends State<SdOverviewChart> {
     }
     if (provider.graphChart == null && !provider.isLoadingGraph) {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 40.sp),
+        padding: widget.padding ??
+            EdgeInsets.symmetric(horizontal: 10.sp, vertical: 40.sp),
         child: Text(
           "${provider.errorGraph}",
           style: stylePTSansRegular(),

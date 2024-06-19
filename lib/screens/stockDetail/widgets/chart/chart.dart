@@ -16,9 +16,9 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../widgets/disclaimer_widget.dart';
+import '../overview/chart.dart';
 
 class SdCharts extends StatefulWidget {
   final String? symbol;
@@ -84,7 +84,12 @@ class _SdChartsState extends State<SdCharts> {
                     );
                   },
                 ),
-                const SpacerVertical(height: 20),
+                // const SpacerVertical(height: 20),
+                SdOverviewChart(
+                  symbol: widget.symbol ?? "",
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.sp, vertical: 20.sp),
+                ),
                 Visibility(
                   visible:
                       provider.chartRes?.priceHistory?.isNotEmpty == true &&
