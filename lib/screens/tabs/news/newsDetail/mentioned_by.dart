@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../modals/news_datail_res.dart';
+import '../../../../providers/news_detail.provider.dart';
 import '../../../../widgets/cache_network_image.dart';
 
 class NewsDetailMentionedBy extends StatelessWidget {
@@ -12,13 +15,18 @@ class NewsDetailMentionedBy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewsDetailProvider provider = context.watch<NewsDetailProvider>();
+    if (provider.data?.postDetail?.tickers?.isEmpty == true ||
+        provider.data?.postDetail?.tickers == null) {
+      return const SizedBox();
+    }
     return Padding(
       padding: const EdgeInsets.only(top: Dimen.itemSpacing),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Mentioned in stories",
+            "Mentioned in Story",
             style: stylePTSansBold(),
           ),
           const SpacerVertical(height: 8),
@@ -27,8 +35,11 @@ class NewsDetailMentionedBy extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: List.generate(
-                10,
+                provider.data?.postDetail?.tickers?.length ?? 0,
                 (index) {
+                  NewsTicker? tickers =
+                      provider.data?.postDetail?.tickers?[index];
+
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: InkWell(
@@ -57,26 +68,24 @@ class NewsDetailMentionedBy extends StatelessWidget {
                               child: Container(
                                 width: 43,
                                 height: 43,
-                                padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                                child: const CachedNetworkImagesWidget(
-                                  "",
-                                  placeHolder: Images.userPlaceholder,
+                                child: CachedNetworkImagesWidget(
+                                  tickers?.image ?? "",
                                 ),
                               ),
                             ),
-                            const SpacerHorizontal(width: 10),
+                            const SpacerHorizontal(width: 15),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "data.symbol",
+                                  tickers?.symbol ?? "",
                                   style: stylePTSansBold(fontSize: 14),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SpacerVertical(height: 5),
                                 Text(
-                                  "data.name",
+                                  tickers?.name ?? "",
                                   style: stylePTSansRegular(
                                     color: ThemeColors.greyText,
                                     fontSize: 12,

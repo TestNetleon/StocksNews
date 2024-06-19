@@ -108,7 +108,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                 title: widget.slug == "about-us"
                     ? "About Stocks.News"
                     : widget.slug == "referral-terms"
-                        ? "Referral Program Official Terms and Conditions"
+                        ? "Referral Program Terms and Conditions"
                         : widget.slug == "terms-of-service"
                             ? "Terms of Service"
                             : widget.slug == "privacy-policy"
