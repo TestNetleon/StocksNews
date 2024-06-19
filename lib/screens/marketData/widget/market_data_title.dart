@@ -28,7 +28,7 @@ class MarketDataTitle extends StatelessWidget {
     this.htmlTitle = false,
     this.provider,
     // this.onDeleteExchange,
-    required this.onFilterClick,
+    this.onFilterClick,
   });
 
   @override

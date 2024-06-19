@@ -75,6 +75,12 @@ class _MarketDataFilterBottomSheetState
           filterParams?.exchange_name =
               selectedValues.isEmpty ? null : selectedValues.split(",");
         }
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null) {
+          filterParams = null;
+        }
+
         setState(() {});
       },
     );
@@ -127,6 +133,12 @@ class _MarketDataFilterBottomSheetState
           filterParams?.sector =
               selectedValues.isEmpty ? null : selectedValues.split(",");
         }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null) {
+          filterParams = null;
+        }
         setState(() {});
       },
     );
@@ -156,6 +168,11 @@ class _MarketDataFilterBottomSheetState
         } else {
           filterParams?.industry =
               selectedValues.isEmpty ? null : selectedValues.split(",");
+        }
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null) {
+          filterParams = null;
         }
         setState(() {});
       },

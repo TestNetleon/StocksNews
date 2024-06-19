@@ -88,7 +88,7 @@ class _EarningsListState extends State<EarningsList> {
                   subTitle: provider.extra?.subTitle,
                   provider: provider,
                   // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-                  onFilterClick: _onFilterClick,
+                  // onFilterClick: _onFilterClick,
                 ),
               Expanded(
                 child: BaseUiContainer(
