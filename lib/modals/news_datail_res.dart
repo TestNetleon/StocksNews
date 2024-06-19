@@ -42,6 +42,7 @@ class PostDetail {
   final String? postDateString;
   final String? title;
   final String? slug;
+  final List<NewsTicker>? tickers;
   final String? image;
   final String? site;
   final String? text;
@@ -71,6 +72,7 @@ class PostDetail {
     this.text,
     this.url,
     this.authors,
+    this.tickers,
     this.categories,
     this.tags,
     // this.status,
@@ -105,6 +107,11 @@ class PostDetail {
             : List<DetailListType>.from(
                 json["tags"]!.map((x) => DetailListType.fromJson(x))),
         image: json["image"],
+        tickers: json["tickers"] == null
+            ? []
+            : List<NewsTicker>.from(
+                json["tickers"]!.map((x) => NewsTicker.fromJson(x))),
+
         site: json["site"],
         text: json["text"],
         url: json["url"],
@@ -131,6 +138,10 @@ class PostDetail {
         'published_date_string': postDateString,
         "image": image,
         "site": site,
+        "tickers": tickers == null
+            ? []
+            : List<dynamic>.from(tickers!.map((x) => x.toJson())),
+
         "text": text,
         "url": url,
         "authors": authors == null
@@ -189,5 +200,33 @@ class DetailListType {
         "image": image,
         "slug": slug,
         "text": text,
+      };
+}
+
+class NewsTicker {
+  final String? id;
+  final String? symbol;
+  final String? name;
+  final String? image;
+
+  NewsTicker({
+    this.id,
+    this.symbol,
+    this.name,
+    this.image,
+  });
+
+  factory NewsTicker.fromJson(Map<String, dynamic> json) => NewsTicker(
+        id: json["_id"],
+        symbol: json["symbol"],
+        name: json["name"],
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "symbol": symbol,
+        "name": name,
+        "image": image,
       };
 }

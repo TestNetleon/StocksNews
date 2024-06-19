@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:readmore/readmore.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -165,7 +166,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               // fit: BoxFit.contain,
                             ),
 
-                            NewsDetailMentionedBy(),
+                            const NewsDetailMentionedBy(),
 
                             const SpacerVertical(height: Dimen.itemSpacing),
                             provider.data?.postDetail?.authors?.isNotEmpty ==
@@ -388,14 +389,41 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                 visible: data?.text != null &&
                                                     data?.text != '',
                                                 child: HtmlWidget(
-                                                  '${data?.text}',
-                                                  // textStyle: const TextStyle(
-                                                  //   fontFamily: Fonts.ptSans,
-                                                  // ),
-                                                  textStyle: stylePTSansRegular(
+                                                  data?.text ?? "",
+                                                  customWidgetBuilder:
+                                                      (element) => ReadMoreText(
+                                                    textAlign: TextAlign.start,
+                                                    element.text,
+                                                    trimLines: 2,
+                                                    colorClickableText:
+                                                        ThemeColors.accent,
+                                                    trimMode: TrimMode.Line,
+                                                    trimCollapsedText:
+                                                        ' Read more',
+                                                    trimExpandedText:
+                                                        ' Read less',
+                                                    moreStyle:
+                                                        stylePTSansRegular(
+                                                      color: ThemeColors.accent,
+                                                      height: 1.3,
+                                                    ),
+                                                    style: stylePTSansRegular(
+                                                      height: 1.3,
                                                       color:
-                                                          ThemeColors.greyText),
+                                                          ThemeColors.greyText,
+                                                    ),
+                                                  ),
                                                 ),
+
+                                                //  HtmlWidget(
+                                                //   '${data?.text}',
+                                                //   // textStyle: const TextStyle(
+                                                //   //   fontFamily: Fonts.ptSans,
+                                                //   // ),
+                                                //   textStyle: stylePTSansRegular(
+                                                //       color:
+                                                //           ThemeColors.greyText),
+                                                // ),
                                               ),
                                             ],
                                           ),
