@@ -113,7 +113,7 @@ class _MarketDataFilterBottomSheetState
     }
 
     BaseBottomSheets().gradientBottomSheetDraggable(
-      title: "Select Industry",
+      title: "Select Sector",
       items: provider.data!.sectors!,
       selected: filterParams?.sector,
       onSelected: (List<FiltersDataItem> selected) {

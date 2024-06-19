@@ -47,7 +47,7 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter 52 Weeks Stocks",
+      title: "Filter 52 Weeks Low Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapUpProvider.filterParams,
@@ -139,6 +139,8 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
         Align(
             alignment: Alignment.bottomCenter,
             child: MdBottomSheet(
+              isFilter: provider.isFilterApplied(),
+              isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
                   selected: context

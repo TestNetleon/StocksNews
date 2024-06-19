@@ -119,6 +119,8 @@ class _Snp500StocksState extends State<Snp500Stocks> {
         Align(
             alignment: Alignment.bottomCenter,
             child: MdBottomSheet(
+              isFilter: provider.isFilterApplied(),
+              isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
                   selected:

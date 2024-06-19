@@ -50,7 +50,7 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
       await provider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Today's Top Penny Stock",
+      title: "Filter Today's Top Penny Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: todayTopProvider.filterParams,
@@ -143,6 +143,8 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
         Align(
             alignment: Alignment.bottomCenter,
             child: MdBottomSheet(
+              isFilter: provider.isFilterApplied(),
+              isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
                   selected: context

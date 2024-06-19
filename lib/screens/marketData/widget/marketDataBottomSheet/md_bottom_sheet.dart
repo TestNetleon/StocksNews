@@ -6,10 +6,18 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class MdBottomSheet extends StatelessWidget {
-  const MdBottomSheet(
-      {required this.onTapSorting, required this.onTapFilter, super.key});
+  const MdBottomSheet({
+    required this.onTapSorting,
+    required this.onTapFilter,
+    this.isFilter = false,
+    this.isSort = false,
+    super.key,
+  });
+
   final void Function()? onTapSorting;
   final void Function()? onTapFilter;
+  final bool isFilter;
+  final bool isSort;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +36,14 @@ class MdBottomSheet extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Flexible(
-                flex: 1,
+              Expanded(
                 child: InkWell(
                   onTap: onTapSorting,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Center(
-                      child: Row(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
@@ -51,36 +59,60 @@ class MdBottomSheet extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
+                      Positioned(
+                        top: 0,
+                        right: 60,
+                        child: Visibility(
+                          visible: isSort,
+                          child: const Icon(
+                            Icons.circle,
+                            color: Colors.red,
+                            size: 12,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Flexible(
-                flex: 1,
+              Image.asset(
+                Images.line,
+                height: 18,
+                width: 18,
+                color: Colors.white,
+              ),
+              Expanded(
                 child: InkWell(
                   onTap: onTapFilter,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Stack(
+                    alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        Images.line,
-                        height: 18,
-                        width: 18,
-                        color: Colors.white,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.filter_alt,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          const SpacerHorizontal(width: 10),
+                          Text(
+                            "FILTER",
+                            style: stylePTSansBold(color: Colors.white),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.filter_alt,
-                                color: Colors.white, size: 16),
-                            const SpacerHorizontal(width: 10),
-                            Text(
-                              "FILTER",
-                              style: stylePTSansBold(color: Colors.white),
-                            ),
-                          ],
+                      Positioned(
+                        top: 0,
+                        right: 60,
+                        child: Visibility(
+                          visible: isFilter,
+                          child: const Icon(
+                            Icons.circle,
+                            color: Colors.red,
+                            size: 12,
+                          ),
                         ),
                       ),
                     ],

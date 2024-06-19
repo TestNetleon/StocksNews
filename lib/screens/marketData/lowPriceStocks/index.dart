@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/low_price_stock_list.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
@@ -32,6 +33,7 @@ class _LowPriceStocksIndexState extends State<LowPriceStocksIndex> {
   Widget build(BuildContext context) {
     LowPriceStocksProvider provider = context.watch<LowPriceStocksProvider>();
     return BaseContainer(
+      bottomSafeAreaColor: ThemeColors.background,
       appBar: const AppBarHome(
         canSearch: true,
         isPopback: true,

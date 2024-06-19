@@ -81,47 +81,10 @@ class EarningsItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "${data.price}",
+                  "${data.date}",
                   style: stylePTSansBold(fontSize: 14),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                ),
-                const SpacerVertical(height: 5),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    data.percentageChange > 0
-                        ? Icon(
-                            Icons.arrow_upward,
-                            size: 14,
-                            color: data.percentageChange > 0
-                                ? Colors.green
-                                : Colors.red,
-                          )
-                        : Icon(
-                            Icons.arrow_downward_rounded,
-                            size: 14,
-                            color: data.percentageChange > 0
-                                ? Colors.green
-                                : Colors.red,
-                          ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                "${data.priceChange} (${data.percentageChange}%)",
-                            style: stylePTSansRegular(
-                              fontSize: 11,
-                              color: data.percentageChange > 0
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -154,9 +117,26 @@ class EarningsItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                InnerRowItem(
-                  label: "Date",
-                  value: "${data.date ?? "N/A"}",
+                Visibility(
+                  visible: data.exchangeShortName != null,
+                  child: InnerRowItem(
+                    label: "Price",
+                    value: "${data.price}",
+                  ),
+                ),
+                Visibility(
+                  visible: data.exchangeShortName != null,
+                  child: InnerRowItem(
+                    label: "Price Change",
+                    value: "${data.priceChange}",
+                  ),
+                ),
+                Visibility(
+                  visible: data.exchangeShortName != null,
+                  child: InnerRowItem(
+                    label: "Percentage Change",
+                    value: "${data.percentageChange}%",
+                  ),
                 ),
                 InnerRowItem(
                   label: "Exchange",

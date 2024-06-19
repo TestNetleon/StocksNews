@@ -39,6 +39,7 @@ class _IndicesIndexState extends State<IndicesIndex> {
   Widget build(BuildContext context) {
     IndicesProvider provider = context.watch<IndicesProvider>();
     return BaseContainer(
+      bottomSafeAreaColor: ThemeColors.background,
       appBar: const AppBarHome(canSearch: true, isPopback: true),
       body: provider.tabLoading ? const Loading() : _getWidget(provider),
     );

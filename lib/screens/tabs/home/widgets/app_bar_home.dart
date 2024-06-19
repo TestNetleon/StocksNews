@@ -64,7 +64,6 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //   popHome = false;
                 //   deepLinkData = null;
                 // }
-
                 if (navigatorKey.currentState!.canPop()) {
                   if (popHome) {
                     Navigator.pushNamedAndRemoveUntil(

@@ -176,6 +176,31 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  bool isFilterApplied() {
+    if (filterParams != null &&
+        (filterParams?.exchange_name != null ||
+            filterParams?.sector != null ||
+            filterParams?.industry != null ||
+            filterParams?.price != "" ||
+            filterParams?.market_cap != "" ||
+            filterParams?.beta != "" ||
+            filterParams?.dividend != "" ||
+            filterParams?.isEtf != "" ||
+            filterParams?.isFund != "" ||
+            filterParams?.isActivelyTrading != "")) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isSortingApplied() {
+    if (filterParams != null && filterParams?.sorting != "") {
+      return true;
+    }
+
+    return false;
+  }
+
   void applyFilter(FilteredParams? params) {
     _filterParams = params;
     _page = 1;

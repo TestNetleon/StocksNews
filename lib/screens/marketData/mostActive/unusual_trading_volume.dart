@@ -47,7 +47,7 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
       await filterProvider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Unusual Trading Volume",
+      title: "Filter Unusual Trading Volume Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: provider.filterParams,
@@ -141,6 +141,8 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
         Align(
             alignment: Alignment.bottomCenter,
             child: MdBottomSheet(
+              isFilter: provider.isFilterApplied(),
+              isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
                   selected: context
