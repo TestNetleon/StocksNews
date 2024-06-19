@@ -47,7 +47,7 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
       await filterProvider.getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Most Volatile Stock",
+      title: "Filter Most Volatile Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: provider.filterParams,
@@ -141,6 +141,8 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
         Align(
             alignment: Alignment.bottomCenter,
             child: MdBottomSheet(
+              isFilter: provider.isFilterApplied(),
+              isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
                   selected: context

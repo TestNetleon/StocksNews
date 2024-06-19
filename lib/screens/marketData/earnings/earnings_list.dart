@@ -56,7 +56,7 @@ class _EarningsListState extends State<EarningsList> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Earning Stocks",
+      title: "Filter Earning Announcements",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapUpProvider.filterParams,
@@ -139,6 +139,8 @@ class _EarningsListState extends State<EarningsList> {
         Align(
           alignment: Alignment.bottomCenter,
           child: MdBottomSheet(
+            isFilter: provider.isFilterApplied(),
+            isSort: provider.isSortingApplied(),
             onTapFilter: _onFilterClick,
             onTapSorting: () => onSortingClick(
                 selected:

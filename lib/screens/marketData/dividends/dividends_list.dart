@@ -56,7 +56,7 @@ class _DividendsListState extends State<DividendsList> {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Dividend Stocks",
+      title: "Filter Dividend Announcements",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: gapUpProvider.filterParams,
@@ -138,6 +138,8 @@ class _DividendsListState extends State<DividendsList> {
         Align(
           alignment: Alignment.bottomCenter,
           child: MdBottomSheet(
+            isFilter: provider.isFilterApplied(),
+            isSort: provider.isSortingApplied(),
             onTapFilter: _onFilterClick,
             onTapSorting: () => onSortingClick(
                 selected:
