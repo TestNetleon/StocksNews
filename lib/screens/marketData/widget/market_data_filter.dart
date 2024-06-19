@@ -467,22 +467,22 @@ class _MarketDataFilterBottomSheetState
           const SpacerVertical(height: 20),
           Row(
             children: [
-              // Expanded(
-              //   child: ThemeButton(
-              //     color: filterParams != null
-              //         ? ThemeColors.accent
-              //         : ThemeColors.greyText,
-              //     onPressed: () {
-              //       if (filterParams == null) return;
-              //       Navigator.pop(context);
-              //       filterParams = null;
-              //       widget.onFiltered(filterParams);
-              //     },
-              //     text: "RESET FILTER",
-              //     textColor: Colors.white,
-              //   ),
-              // ),
-              // const SpacerHorizontal(width: 12),
+              Expanded(
+                child: ThemeButton(
+                  color: filterParams != null
+                      ? ThemeColors.accent
+                      : ThemeColors.greyText,
+                  onPressed: () {
+                    if (filterParams == null) return;
+                    Navigator.pop(context);
+                    filterParams = null;
+                    widget.onFiltered(filterParams);
+                  },
+                  text: "RESET FILTER",
+                  textColor: Colors.white,
+                ),
+              ),
+              const SpacerHorizontal(width: 12),
               Expanded(
                 child: ThemeButton(
                   color: ThemeColors.accent,
