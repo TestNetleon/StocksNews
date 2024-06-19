@@ -356,10 +356,11 @@ class _ReferLoginState extends State<ReferLogin> {
                                     context,
                                     createRoute(
                                       const TCandPolicy(
-                                          policyType: PolicyType.referral),
+                                        policyType: PolicyType.referral,
+                                        slug: "referral-terms",
+                                      ),
                                     ),
                                   );
-
                                   return true;
                                 },
                                 provider.extra?.verifyIdentity ?? "",
