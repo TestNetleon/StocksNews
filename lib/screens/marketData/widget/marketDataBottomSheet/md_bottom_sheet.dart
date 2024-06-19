@@ -39,8 +39,10 @@ class MdBottomSheet extends StatelessWidget {
               Expanded(
                 child: InkWell(
                   onTap: onTapSorting,
-                  child: Stack(
-                    alignment: Alignment.center,
+                  child: Row(
+                    // alignment: Alignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +63,7 @@ class MdBottomSheet extends StatelessWidget {
                       ),
                       Positioned(
                         top: 0,
-                        right: 60,
+                        right: 0,
                         child: Visibility(
                           visible: isSort,
                           child: const Icon(
@@ -84,8 +86,10 @@ class MdBottomSheet extends StatelessWidget {
               Expanded(
                 child: InkWell(
                   onTap: onTapFilter,
-                  child: Stack(
-                    alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // alignment: Alignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +109,7 @@ class MdBottomSheet extends StatelessWidget {
                       ),
                       Positioned(
                         top: 0,
-                        right: 60,
+                        right: 0,
                         child: Visibility(
                           visible: isFilter,
                           child: const Icon(
