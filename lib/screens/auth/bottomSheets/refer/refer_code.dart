@@ -231,10 +231,10 @@ class _ReferLoginState extends State<ReferLogin> {
                           style: stylePTSansBold(
                               color: Colors.black, fontSize: 18),
                           controller: name,
-                          fillColor: user?.name == '' || user?.name == null
-                              ? ThemeColors.white
-                              : const Color.fromARGB(255, 133, 133, 133),
-                          editable: user?.name == '' || user?.name == null,
+                          // fillColor: user?.name == '' || user?.name == null
+                          //     ? ThemeColors.white
+                          //     : const Color.fromARGB(255, 133, 133, 133),
+                          // editable: user?.name == '' || user?.name == null,
                           placeholder: "Enter your name",
                           keyboardType: TextInputType.name,
                           inputFormatters: [
@@ -255,13 +255,13 @@ class _ReferLoginState extends State<ReferLogin> {
                         child: ThemeInputField(
                           style: stylePTSansBold(
                               color: Colors.black, fontSize: 18),
-                          editable: user?.displayName == '' ||
-                              user?.displayName == null,
+                          // editable: user?.displayName == '' ||
+                          //     user?.displayName == null,
                           controller: displayName,
-                          fillColor: user?.displayName == '' ||
-                                  user?.displayName == null
-                              ? ThemeColors.white
-                              : const Color.fromARGB(255, 133, 133, 133),
+                          // fillColor: user?.displayName == '' ||
+                          //         user?.displayName == null
+                          //     ? ThemeColors.white
+                          //     : const Color.fromARGB(255, 133, 133, 133),
                           placeholder: "Enter your display name",
                           keyboardType: TextInputType.name,
                           inputFormatters: [
