@@ -65,84 +65,84 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
     TodayTopGainerProvider provider = context.watch<TodayTopGainerProvider>();
     List<GainersLosersDataRes>? gainers = provider.data?.data;
 
-    return Stack(
+    return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(
-              left: Dimen.padding, right: Dimen.padding, bottom: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              MarketDataHeader(
-                provider: provider,
-                onFilterClick: _onFilterClick,
-                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-              ),
-              // if (!(provider.data == null &&
-              //     provider.filterParams == null &&
-              //     provider.isLoading))
-              //   HtmlTitle(
-              //     subTitle: provider.extra?.subTitle ?? "",
-              //     onFilterClick: _onFilterClick,
-              //     hasFilter: provider.filterParams != null,
-              //   ),
-              // if (provider.filterParams != null)
-              //   FilterUiValues(
-              //     params: provider.filterParams,
-              //     onDeleteExchange: (exchange) {
-              //       provider.exchangeFilter(exchange);
-              //     },
-              //   ),
-              Expanded(
-                child: BaseUiContainer(
-                  error: provider.error,
-                  hasData: gainers != null && gainers.isNotEmpty,
-                  isLoading: provider.isLoading,
-                  errorDispCommon: true,
-                  showPreparingText: true,
-                  onRefresh: () => provider.getData(showProgress: true),
-                  child: RefreshControl(
-                    onRefresh: () async => provider.getData(showProgress: true),
-                    canLoadMore: provider.canLoadMore,
-                    onLoadMore: () async => provider.getData(loadMore: true),
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(
-                        bottom: Dimen.padding,
-                        top: Dimen.padding,
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: Dimen.padding, right: Dimen.padding, bottom: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                MarketDataHeader(
+                  provider: provider,
+                  onFilterClick: _onFilterClick,
+                  // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+                ),
+                // if (!(provider.data == null &&
+                //     provider.filterParams == null &&
+                //     provider.isLoading))
+                //   HtmlTitle(
+                //     subTitle: provider.extra?.subTitle ?? "",
+                //     onFilterClick: _onFilterClick,
+                //     hasFilter: provider.filterParams != null,
+                //   ),
+                // if (provider.filterParams != null)
+                //   FilterUiValues(
+                //     params: provider.filterParams,
+                //     onDeleteExchange: (exchange) {
+                //       provider.exchangeFilter(exchange);
+                //     },
+                //   ),
+                Expanded(
+                  child: BaseUiContainer(
+                    error: provider.error,
+                    hasData: gainers != null && gainers.isNotEmpty,
+                    isLoading: provider.isLoading,
+                    errorDispCommon: true,
+                    showPreparingText: true,
+                    onRefresh: () => provider.getData(showProgress: true),
+                    child: RefreshControl(
+                      onRefresh: () async =>
+                          provider.getData(showProgress: true),
+                      canLoadMore: provider.canLoadMore,
+                      onLoadMore: () async => provider.getData(loadMore: true),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.only(
+                          bottom: Dimen.padding,
+                          top: Dimen.padding,
+                        ),
+                        itemBuilder: (context, index) {
+                          return GainerLoserItem(
+                            data: gainers![index],
+                            index: index,
+                            // marketData: true,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 12.sp,
+                          );
+                        },
+                        itemCount: gainers?.length ?? 0,
                       ),
-                      itemBuilder: (context, index) {
-                        return GainerLoserItem(
-                          data: gainers![index],
-                          index: index,
-                          // marketData: true,
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 12.sp,
-                        );
-                      },
-                      itemCount: gainers?.length ?? 0,
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: MdBottomSheet(
-            onTapFilter: _onFilterClick,
-            onTapSorting: () => onSortingClick(
-              selected:
-                  context.read<TodayTopGainerProvider>().filterParams?.sorting,
-              onTap: (sortingKey) {
-                Navigator.pop(navigatorKey.currentContext!);
-                context.read<TodayTopGainerProvider>().applySorting(sortingKey);
-              },
-            ),
+        MdBottomSheet(
+          onTapFilter: _onFilterClick,
+          onTapSorting: () => onSortingClick(
+            selected:
+                context.read<TodayTopGainerProvider>().filterParams?.sorting,
+            onTap: (sortingKey) {
+              Navigator.pop(navigatorKey.currentContext!);
+              context.read<TodayTopGainerProvider>().applySorting(sortingKey);
+            },
           ),
         )
       ],
