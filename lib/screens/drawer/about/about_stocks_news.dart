@@ -394,6 +394,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                                 createRoute(
                                   const TCandPolicy(
                                     policyType: PolicyType.disclaimer,
+                                    slug: "disclaimer",
                                   ),
                                 ),
                               );
@@ -408,6 +409,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                                 createRoute(
                                   const TCandPolicy(
                                     policyType: PolicyType.privacy,
+                                    slug: "privacy-policy",
                                   ),
                                 ),
                               );
@@ -426,6 +428,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                                 createRoute(
                                   const TCandPolicy(
                                     policyType: PolicyType.tC,
+                                    slug: "terms-of-service",
                                   ),
                                 ),
                               );
@@ -440,6 +443,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           createRoute(
                             const TCandPolicy(
                               policyType: PolicyType.privacy,
+                              slug: "privacy-policy",
                             ),
                           ),
                         );

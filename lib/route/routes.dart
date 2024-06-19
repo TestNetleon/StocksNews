@@ -218,7 +218,10 @@ class Routes {
       case TCandPolicy.path:
         return MaterialWithModalsPageRoute(
           builder: (context) {
-            return TCandPolicy(policyType: settings.arguments as PolicyType);
+            return TCandPolicy(
+              policyType: PolicyType.aboutUs,
+              slug: settings.arguments as String,
+            );
           },
         );
       case StocksIndex.path:

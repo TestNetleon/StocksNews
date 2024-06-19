@@ -29,7 +29,10 @@ class DisclaimerWidget extends StatelessWidget {
           Navigator.push(
             context,
             createRoute(
-              const TCandPolicy(policyType: PolicyType.disclaimer),
+              const TCandPolicy(
+                policyType: PolicyType.disclaimer,
+                slug: "disclaimer",
+              ),
             ),
           );
           return true;

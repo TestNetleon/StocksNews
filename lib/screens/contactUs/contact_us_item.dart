@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/contact_us_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
@@ -32,6 +33,21 @@ class _ContactUsItemState extends State<ContactUsItem> {
   TextEditingController phone = TextEditingController();
   TextEditingController comments = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      UserProvider provider = context.read<UserProvider>();
+      if (provider.user != null) {
+        setState(() {
+          name.text = provider.user?.name ?? "";
+          email.text = provider.user?.email ?? "";
+        });
+        // phone.text = provider.user?.name ?? "";
+      }
+    });
+  }
+
   void _onTap() async {
     closeKeyboard();
     if (!isName(name.text)) {
@@ -44,9 +60,10 @@ class _ContactUsItemState extends State<ContactUsItem> {
       // showErrorMessage(message: "Please enter valid name");
     } else if (!isEmail(email.text) || email.text.isEmpty) {
       popUpAlert(
-          message: "Please enter valid email address",
-          title: "Alert",
-          icon: Images.alertPopGIF);
+        message: "Please enter valid email address",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
       // showErrorMessage(message: "Please enter valid email address");
     }
 

@@ -375,8 +375,12 @@ List<DrawerRes> aboutTiles = [
     iconData: Icons.list_alt_rounded,
     text: "About Stocks.News",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, TCandPolicy.path,
-          arguments: PolicyType.aboutUs);
+      Navigator.pushNamed(
+        navigatorKey.currentContext!,
+        TCandPolicy.path,
+        // arguments: PolicyType.aboutUs,
+        arguments: "about-us",
+      );
     },
   ),
   DrawerRes(

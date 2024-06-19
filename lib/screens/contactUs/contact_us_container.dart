@@ -23,7 +23,10 @@ class ContactUsContainer extends StatelessWidget {
 //
     return CommonRefreshIndicator(
       onRefresh: () async {
-        provider.getTermsPolicy(type: PolicyType.contactUs);
+        provider.getTermsPolicy(
+          type: PolicyType.contactUs,
+          slug: "contact-us",
+        );
       },
       child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
