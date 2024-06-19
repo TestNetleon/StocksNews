@@ -120,37 +120,53 @@ class HomeContainer extends StatelessWidget {
                       child: const HomeInnerTabs(),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: ScreenTitle(
-                        title: provider.homeTrendingRes?.text?.news ?? "",
-                      ),
-                    ),
-
-                    ListView.separated(
-                      itemCount:
-                          provider.homeTrendingRes?.trendingNews?.length ?? 0,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(top: 12.sp),
-                      itemBuilder: (context, index) {
-                        News? data =
-                            provider.homeTrendingRes?.trendingNews?[index];
-                        return NewsItem(
-                          news: News(
-                            title: data?.title ?? "",
-                            image: data?.image ?? "",
-                          ),
-                          showCategory: false,
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 20.sp,
-                        );
-                      },
-                    ),
+                    Visibility(
+                        visible: !provider.isLoadingTrending &&
+                            (provider.homeTrendingRes?.trendingNews
+                                        ?.isNotEmpty ==
+                                    true &&
+                                provider.homeTrendingRes?.trendingNews != null),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: ScreenTitle(
+                                title:
+                                    provider.homeTrendingRes?.text?.news ?? "",
+                              ),
+                            ),
+                            ListView.separated(
+                              itemCount: provider
+                                      .homeTrendingRes?.trendingNews?.length ??
+                                  0,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.only(top: 12.sp),
+                              itemBuilder: (context, index) {
+                                News? data = provider
+                                    .homeTrendingRes?.trendingNews?[index];
+                                return NewsItem(
+                                  news: News(
+                                    title: data?.title ?? "",
+                                    image: data?.image ?? "",
+                                    authors: data?.authors,
+                                    postDateString: data?.postDateString,
+                                    slug: data?.slug,
+                                  ),
+                                  showCategory: false,
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 15,
+                                );
+                              },
+                            ),
+                          ],
+                        )),
 
                     // HomePartialLoading(
                     //   loading: provider.isLoadingIpo,
