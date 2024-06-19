@@ -150,16 +150,21 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected: context
+                selected: context
+                    .read<HighBetaStocksProvider>()
+                    .filterParams
+                    ?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
                       .read<HighBetaStocksProvider>()
-                      .filterParams
-                      ?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context
-                        .read<HighBetaStocksProvider>()
-                        .applySorting(sortingKey);
-                  }),
+                      .applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<HighBetaStocksProvider>().applySorting("");
+                },
+              ),
             ))
       ],
     );

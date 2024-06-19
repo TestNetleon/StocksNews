@@ -142,12 +142,16 @@ class _DividendsListState extends State<DividendsList> {
             isSort: provider.isSortingApplied(),
             onTapFilter: _onFilterClick,
             onTapSorting: () => onSortingClick(
-                selected:
-                    context.read<DividendsProvider>().filterParams?.sorting,
-                onTap: (sortingKey) {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  context.read<DividendsProvider>().applySorting(sortingKey);
-                }),
+              selected: context.read<DividendsProvider>().filterParams?.sorting,
+              onTap: (sortingKey) {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<DividendsProvider>().applySorting(sortingKey);
+              },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<DividendsProvider>().applySorting("");
+              },
+            ),
           ),
         )
       ],

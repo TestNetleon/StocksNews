@@ -142,6 +142,10 @@ class _GapUpStocksState extends State<GapUpStocks> {
                 Navigator.pop(navigatorKey.currentContext!);
                 context.read<GapUpProvider>().applySorting(sortingKey);
               },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<GapUpProvider>().applySorting("");
+              },
             ),
           ),
         )

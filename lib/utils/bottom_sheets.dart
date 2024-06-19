@@ -4,7 +4,10 @@ import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/filter_multi_select_list.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 import '../widgets/bottom_sheet_tick.dart';
 
@@ -14,6 +17,7 @@ class BaseBottomSheets {
     String? title,
     String? subTitle,
     EdgeInsets? padding,
+    Function()? onResetClick,
   }) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -66,7 +70,49 @@ class BaseBottomSheets {
                     visible: title != null && title != '',
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: ScreenTitle(title: title, subTitle: subTitle),
+                      child: ScreenTitle(
+                        title: title,
+                        subTitle: subTitle,
+                        optionalWidget: onResetClick != null
+                            ? InkWell(
+                                onTap: onResetClick,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    // vertical: 3,
+                                    horizontal: 8,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.refresh,
+                                        size: 18,
+                                        color: ThemeColors.accent,
+                                      ),
+                                      const SpacerHorizontal(width: 5),
+                                      Text(
+                                        "Reset Sorting",
+                                        style: stylePTSansRegular(
+                                          color: ThemeColors.accent,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // child: Container(
+                                //   decoration: BoxDecoration(
+                                //     color: ThemeColors.accent,
+                                //     borderRadius: BorderRadius.circular(4),
+                                //   ),
+                                //   padding: const EdgeInsets.symmetric(
+                                //     vertical: 3,
+                                //     horizontal: 8,
+                                //   ),
+                                //   child:
+                                //       Text("Reset", style: stylePTSansBold()),
+                                // ),
+                              )
+                            : null,
+                      ),
                     ),
                   ),
                   child,

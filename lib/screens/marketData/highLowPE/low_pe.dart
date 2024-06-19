@@ -138,11 +138,16 @@ class _LowPEStocksState extends State<LowPEStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected: context.read<LowPeProvider>().filterParams?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context.read<LowPeProvider>().applySorting(sortingKey);
-                  }),
+                selected: context.read<LowPeProvider>().filterParams?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<LowPeProvider>().applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<LowPeProvider>().applySorting("");
+                },
+              ),
             ))
       ],
     );

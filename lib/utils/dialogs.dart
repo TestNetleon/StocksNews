@@ -46,6 +46,7 @@ void closeGlobalProgressDialog() {
 void onSortingClick({
   required void Function(String)? onTap,
   required String? selected,
+  required void Function()? onResetClick,
 }) async {
   FilterProvider provider = navigatorKey.currentContext!.read<FilterProvider>();
   if (provider.data == null) {
@@ -54,6 +55,7 @@ void onSortingClick({
   if (provider.data != null) {
     BaseBottomSheets().gradientBottomSheet(
       title: "SORT BY",
+      onResetClick: onResetClick,
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: provider.data?.sorting?.length ?? 0,
@@ -62,13 +64,11 @@ void onSortingClick({
           if (data == null) {
             return const SizedBox();
           }
-
           return GestureDetector(
             onTap: () {
               if (onTap == null) {
                 return;
               }
-
               onTap(provider.data?.sorting?[index].key ?? "");
             },
             child: Padding(

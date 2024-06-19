@@ -137,12 +137,16 @@ class _HighPeStocksState extends State<HighPeStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected:
-                      context.read<HighPeProvider>().filterParams?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context.read<HighPeProvider>().applySorting(sortingKey);
-                  }),
+                selected: context.read<HighPeProvider>().filterParams?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<HighPeProvider>().applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<HighPeProvider>().applySorting("");
+                },
+              ),
             ))
       ],
     );
