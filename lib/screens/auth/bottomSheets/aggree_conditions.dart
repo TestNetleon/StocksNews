@@ -34,6 +34,7 @@ class AgreeConditions extends StatelessWidget {
                     createRoute(
                       const TCandPolicy(
                         policyType: PolicyType.tC,
+                        slug: "terms-of-service",
                       ),
                     ),
                   );
@@ -54,6 +55,7 @@ class AgreeConditions extends StatelessWidget {
                     createRoute(
                       const TCandPolicy(
                         policyType: PolicyType.privacy,
+                        slug: "privacy-policy",
                       ),
                     ),
                   );
@@ -83,9 +85,13 @@ class AgreeConditions extends StatelessWidget {
           context,
           createRoute(
             TCandPolicy(
-                policyType: url == "terms-of-service"
-                    ? PolicyType.tC
-                    : PolicyType.privacy),
+              policyType: url == "terms-of-service"
+                  ? PolicyType.tC
+                  : PolicyType.privacy,
+              slug: url == "terms-of-service"
+                  ? "terms-of-service"
+                  : "privacy-policy",
+            ),
           ),
         );
 

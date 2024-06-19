@@ -81,130 +81,157 @@ class _SdDividendsState extends State<SdDividends> {
                   thickness: 2,
                   height: 20,
                 ),
-                CustomGridView(
-                  length: provider.dividends?.top?.length ?? 0,
-                  paddingVerticle: 8,
-                  getChild: (index) {
-                    SdTopRes? top = provider.dividends?.top?[index];
-                    return SdTopCard(top: top);
-                  },
-                ),
-                SpacerVertical(height: 20),
                 Visibility(
-                  visible:
-                      provider.dividends?.dividendHistory?.isNotEmpty == true &&
-                          provider.dividends?.dividendHistory != null,
+                  visible: provider.dividends?.dividendMessage == null,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ScreenTitle(
-                        title: "${widget.symbol} Dividend History by Quarter",
+                      CustomGridView(
+                        length: provider.dividends?.top?.length ?? 0,
+                        paddingVerticle: 8,
+                        getChild: (index) {
+                          SdTopRes? top = provider.dividends?.top?[index];
+                          return SdTopCard(top: top);
+                        },
                       ),
-                      ListView.separated(
-                          padding: const EdgeInsets.only(top: 0, bottom: 20),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            DividendHistory? data =
-                                provider.dividends?.dividendHistory?[index];
+                      const SpacerVertical(height: 20),
+                      Visibility(
+                        visible:
+                            provider.dividends?.dividendHistory?.isNotEmpty ==
+                                    true &&
+                                provider.dividends?.dividendHistory != null,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ScreenTitle(
+                              title:
+                                  "${widget.symbol} Dividend History by Quarter",
+                            ),
+                            ListView.separated(
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 20),
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  DividendHistory? data = provider
+                                      .dividends?.dividendHistory?[index];
 
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (index == 0)
-                                  Column(
+                                  return Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AutoSizeText(
-                                            maxLines: 1,
-                                            "Announced",
-                                            style: stylePTSansRegular(
-                                              fontSize: 12,
-                                              color: ThemeColors.greyText,
+                                      if (index == 0)
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                AutoSizeText(
+                                                  maxLines: 1,
+                                                  "Announced",
+                                                  style: stylePTSansRegular(
+                                                    fontSize: 12,
+                                                    color: ThemeColors.greyText,
+                                                  ),
+                                                ),
+                                                const SpacerHorizontal(
+                                                    width: 10),
+                                                AutoSizeText(
+                                                  maxLines: 1,
+                                                  "Amount",
+                                                  style: stylePTSansRegular(
+                                                    fontSize: 12,
+                                                    color: ThemeColors.greyText,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          const SpacerHorizontal(width: 10),
-                                          AutoSizeText(
-                                            maxLines: 1,
-                                            "Amount",
-                                            style: stylePTSansRegular(
-                                              fontSize: 12,
-                                              color: ThemeColors.greyText,
-                                            ),
-                                          ),
-                                        ],
+                                            Divider(
+                                              color: ThemeColors.greyBorder,
+                                              height: 20.sp,
+                                              thickness: 1,
+                                            )
+                                          ],
+                                        ),
+                                      SdDividendsHistory(
+                                        data: data,
+                                        isOpen: provider.openIndex == index,
+                                        onTap: () {
+                                          provider.setOpenIndex(
+                                            provider.openIndex == index
+                                                ? -1
+                                                : index,
+                                          );
+                                        },
                                       ),
-                                      Divider(
-                                        color: ThemeColors.greyBorder,
-                                        height: 20.sp,
-                                        thickness: 1,
-                                      )
                                     ],
-                                  ),
-                                SdDividendsHistory(
-                                  data: data,
-                                  isOpen: provider.openIndex == index,
-                                  onTap: () {
-                                    provider.setOpenIndex(
-                                      provider.openIndex == index ? -1 : index,
-                                    );
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return Divider(
-                              color: ThemeColors.greyBorder,
-                              height: 20.sp,
-                            );
-                          },
-                          itemCount:
-                              provider.dividends?.dividendHistory?.length ?? 0),
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return Divider(
+                                    color: ThemeColors.greyBorder,
+                                    height: 20.sp,
+                                  );
+                                },
+                                itemCount: provider
+                                        .dividends?.dividendHistory?.length ??
+                                    0),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: provider.dividends?.faq?.isNotEmpty == true &&
+                            provider.dividends?.faq != null,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ScreenTitle(
+                              title:
+                                  "${provider.tabRes?.keyStats?.name} Dividend - FAQs",
+                            ),
+                            ListView.separated(
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 20),
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  FaQsRes? data =
+                                      provider.dividends?.faq?[index];
+
+                                  return SdFaqCard(
+                                    data: data,
+                                    index: index,
+                                    openIndex: openIndex,
+                                    onCardTapped: changeOpenIndex,
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const SpacerVertical(height: 10);
+                                },
+                                itemCount: provider.dividends?.faq?.length ?? 0)
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 Visibility(
-                  visible: provider.dividends?.faq?.isNotEmpty == true &&
-                      provider.dividends?.faq != null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ScreenTitle(
-                        title:
-                            "${provider.tabRes?.keyStats?.name} Dividend - FAQs",
-                      ),
-                      ListView.separated(
-                          padding: const EdgeInsets.only(top: 0, bottom: 20),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            FaQsRes? data = provider.dividends?.faq?[index];
-
-                            return SdFaqCard(
-                              data: data,
-                              index: index,
-                              openIndex: openIndex,
-                              onCardTapped: changeOpenIndex,
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return const SpacerVertical(height: 10);
-                          },
-                          itemCount: provider.dividends?.faq?.length ?? 0)
-                    ],
+                  visible: provider.dividends?.dividendMessage != null,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 30),
+                    child: Text(
+                      "${provider.dividends?.dividendMessage}",
+                      style: stylePTSansRegular(color: ThemeColors.greyText),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 if (provider.extra?.disclaimer != null)
-                  DisclaimerWidget(
-                    data: provider.extra!.disclaimer!,
-                  ),
+                  DisclaimerWidget(data: provider.extra!.disclaimer!),
               ],
             ),
           ),

@@ -30,36 +30,38 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future getTermsPolicy({required PolicyType type}) async {
+  Future getTermsPolicy({
+    required PolicyType type,
+    required String slug,
+  }) async {
     setStatus(Status.loading);
     Map request = {
       "token":
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      "slug": type == PolicyType.contactUs
-          ? "contact-us"
-          : type == PolicyType.aboutUs
-              ? "about-us"
-              : type == PolicyType.privacy
-                  ? "privacy-policy"
-                  : type == PolicyType.tC
-                      ? "terms-of-service"
-                      : type == PolicyType.referral
-                          ? "referral-terms"
-                          : "disclaimer",
+      "slug": slug,
+      // "slug": type == PolicyType.contactUs
+      //     ? "contact-us"
+      //     : type == PolicyType.aboutUs
+      //         ? "about-us"
+      //         : type == PolicyType.privacy
+      //             ? "privacy-policy"
+      //             : type == PolicyType.tC
+      //                 ? "terms-of-service"
+      //                 : "disclaimer",
     };
     try {
       ApiResponse response = await apiRequest(
         url: Apis.infoPage,
         request: request,
-        showProgress: type == PolicyType.contactUs
-            ? false
-            : type == PolicyType.aboutUs
-                ? false
-                : type == PolicyType.privacy
-                    ? false
-                    : type == PolicyType.tC
-                        ? false
-                        : false,
+        // showProgress: type == PolicyType.contactUs
+        //     ? false
+        //     : type == PolicyType.aboutUs
+        //         ? false
+        //         : type == PolicyType.privacy
+        //             ? false
+        //             : type == PolicyType.tC
+        //                 ? false
+        //                 : false,
       );
 
       if (response.status) {

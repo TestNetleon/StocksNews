@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
+import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -27,8 +29,13 @@ import '../../widgets/progress_dialog.dart';
 
 class TermsPolicyContainer extends StatefulWidget {
   final PolicyType policyType;
+  final String slug;
 //
-  const TermsPolicyContainer({super.key, required this.policyType});
+  const TermsPolicyContainer({
+    super.key,
+    required this.policyType,
+    required this.slug,
+  });
 
   @override
   State<TermsPolicyContainer> createState() => _TermsPolicyContainerState();
@@ -44,7 +51,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context
           .read<TermsAndPolicyProvider>()
-          .getTermsPolicy(type: widget.policyType);
+          .getTermsPolicy(type: widget.policyType, slug: widget.slug);
     });
   }
 
@@ -96,15 +103,22 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
             GestureDetector(
               onTap: _triggerEvents,
               child: ScreenTitle(
-                title: widget.policyType == PolicyType.aboutUs
+                title: widget.slug == "about-us"
                     ? "About Stocks.News"
-                    : widget.policyType == PolicyType.tC
-                        ? "Terms of Service"
-                        : widget.policyType == PolicyType.privacy
-                            ? "Privacy Policy"
-                            : widget.policyType == PolicyType.referral
-                                ? "Referral Terms"
+                    : widget.slug == "referral-terms"
+                        ? "Referral Terms"
+                        : widget.slug == "terms-of-service"
+                            ? "Terms of Service"
+                            : widget.slug == "privacy-policy"
+                                ? "Privacy Policy"
                                 : "Disclaimer",
+                // title: widget.policyType == PolicyType.aboutUs
+                //     ? "About Stocks.News"
+                //     : widget.policyType == PolicyType.tC
+                //         ? "Terms of Service"
+                //         : widget.policyType == PolicyType.privacy
+                //             ? "Privacy Policy"
+                //             : "Disclaimer",
                 // optionalText: 'Last Updated: 5/12/2022',
               ),
             ),
@@ -118,7 +132,10 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
   Widget _getWidget(TermsAndPolicyProvider provider) {
     return Expanded(
       child: CommonRefreshIndicator(
-        onRefresh: () => provider.getTermsPolicy(type: widget.policyType),
+        onRefresh: () => provider.getTermsPolicy(
+          type: widget.policyType,
+          slug: widget.slug,
+        ),
         child: provider.isLoading
             ? const Loading()
             : provider.data != null
@@ -136,6 +153,24 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                             },
                             provider.data?.description ?? "",
                             textStyle: stylePTSansRegular(height: 1.5),
+                            onTapUrl: (url) {
+                              if (url.startsWith("https://app.stocks.news") ||
+                                  url.startsWith("http://app.stocks.news")) {
+                                String slug =
+                                    extractLastPathComponent(Uri.parse(url));
+                                Navigator.pushReplacement(
+                                  context,
+                                  createRoute(
+                                    TCandPolicy(
+                                      policyType: PolicyType.disclaimer,
+                                      slug: slug,
+                                    ),
+                                  ),
+                                );
+                                return true;
+                              }
+                              return false;
+                            },
                           ),
                           if (context
                                       .read<TermsAndPolicyProvider>()
@@ -154,8 +189,8 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                   )
                 : ErrorDisplayWidget(
                     error: provider.error,
-                    onRefresh: () =>
-                        provider.getTermsPolicy(type: widget.policyType),
+                    onRefresh: () => provider.getTermsPolicy(
+                        type: widget.policyType, slug: widget.slug),
                   ),
       ),
     );

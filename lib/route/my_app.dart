@@ -16,6 +16,7 @@ import 'package:stocks_news_new/route/routes.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
+import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -257,16 +258,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       }
       Utils().showLog("--goto dashboard---");
     } else {
-      // Navigator.push(
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => WebviewLink(
+            url: uri,
+          ),
+        ),
+      );
+      // Navigator.pushNamedAndRemoveUntil(
       //   navigatorKey.currentContext!,
-      //   MaterialPageRoute(
-      //     builder: ((context) => WebviewLink(
-      //           url: uri,
-      //         )),
-      //   ),
+      //   Tabs.path,
+      //   (route) => false,
       // );
-      Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
     }
   }
 
