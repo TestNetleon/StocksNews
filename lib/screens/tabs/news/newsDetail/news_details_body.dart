@@ -22,6 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 //
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../blogs/index.dart';
+import 'mentioned_by.dart';
 import 'news_details_list.dart';
 
 class NewsDetailsBody extends StatefulWidget {
@@ -163,7 +164,10 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               width: double.infinity,
                               // fit: BoxFit.contain,
                             ),
-                            SpacerVertical(height: Dimen.itemSpacing.sp),
+
+                            NewsDetailMentionedBy(),
+
+                            const SpacerVertical(height: Dimen.itemSpacing),
                             provider.data?.postDetail?.authors?.isNotEmpty ==
                                         true ||
                                     provider.data?.postDetail?.categories

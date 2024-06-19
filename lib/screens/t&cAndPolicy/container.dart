@@ -78,7 +78,6 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
       drawer: const BaseDrawer(resetIndex: true),
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       body:
-
           // Column(
           //   children: [
           //     Expanded(
@@ -93,10 +92,13 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
           //     ),
           //   ],
           // ),
-
           Padding(
         padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          Dimen.padding.sp,
+          0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -106,7 +108,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                 title: widget.slug == "about-us"
                     ? "About Stocks.News"
                     : widget.slug == "referral-terms"
-                        ? "Referral Terms"
+                        ? "Referral Program Official Terms and Conditions"
                         : widget.slug == "terms-of-service"
                             ? "Terms of Service"
                             : widget.slug == "privacy-policy"
