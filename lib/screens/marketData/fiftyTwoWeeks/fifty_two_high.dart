@@ -11,7 +11,6 @@ import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dar
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 
 import '../../../utils/constants.dart';
