@@ -26,17 +26,18 @@ class MarketDataHeader extends StatelessWidget {
             provider.extra != null)
           HtmlTitle(
             subTitle: provider.extra?.subTitle,
-            onFilterClick: onFilterClick,
-            hasFilter: provider.filterParams != null,
+            // onFilterClick: onFilterClick,
+            hasFilter: false,
+            // hasFilter: provider.filterParams != null,
           ),
-        if (provider.filterParams != null)
-          FilterUiValues(
-            params: provider.filterParams,
-            // onDeleteExchange: onDeleteExchange,
-            onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-            onDeleteSector: (exchange) => provider.sectorFilter(exchange),
-            onDeleteIndustry: (exchange) => provider.industryFilter(exchange),
-          ),
+        // if (provider.filterParams != null)
+        //   FilterUiValues(
+        //     params: provider.filterParams,
+        //     // onDeleteExchange: onDeleteExchange,
+        //     onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
+        //     onDeleteSector: (exchange) => provider.sectorFilter(exchange),
+        //     onDeleteIndustry: (exchange) => provider.industryFilter(exchange),
+        //   ),
       ],
     );
   }
