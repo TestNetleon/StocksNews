@@ -129,20 +129,21 @@ class _TodaysTopLoserState extends State<TodaysTopLoser> {
           ),
         ),
         Align(
-            alignment: Alignment.bottomCenter,
-            child: MdBottomSheet(
-              onTapFilter: _onFilterClick,
-              onTapSorting: () => onSortingClick(
-                selected:
-                    context.read<TodayTopLoserProvider>().filterParams?.sorting,
-                onTap: (sortingKey) {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  context
-                      .read<TodayTopLoserProvider>()
-                      .applySorting(sortingKey);
-                },
-              ),
-            ))
+          alignment: Alignment.bottomCenter,
+          child: MdBottomSheet(
+            isFilter: provider.isFilterApplied(),
+            isSort: provider.isSortingApplied(),
+            onTapFilter: _onFilterClick,
+            onTapSorting: () => onSortingClick(
+              selected:
+                  context.read<TodayTopLoserProvider>().filterParams?.sorting,
+              onTap: (sortingKey) {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<TodayTopLoserProvider>().applySorting(sortingKey);
+              },
+            ),
+          ),
+        )
       ],
     );
   }

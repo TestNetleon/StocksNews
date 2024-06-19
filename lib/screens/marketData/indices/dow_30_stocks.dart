@@ -115,6 +115,8 @@ class _Dow30StocksState extends State<Dow30Stocks> {
         Align(
             alignment: Alignment.bottomCenter,
             child: MdBottomSheet(
+              isFilter: provider.isFilterApplied(),
+              isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
                   selected: context.read<Dow30Provider>().filterParams?.sorting,

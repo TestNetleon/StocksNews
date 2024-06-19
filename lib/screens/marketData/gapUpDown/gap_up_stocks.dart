@@ -131,16 +131,20 @@ class _GapUpStocksState extends State<GapUpStocks> {
           ),
         ),
         Align(
-            alignment: Alignment.bottomCenter,
-            child: MdBottomSheet(
-              onTapFilter: _onFilterClick,
-              onTapSorting: () => onSortingClick(
-                  selected: context.read<GapUpProvider>().filterParams?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context.read<GapUpProvider>().applySorting(sortingKey);
-                  }),
-            ))
+          alignment: Alignment.bottomCenter,
+          child: MdBottomSheet(
+            isFilter: provider.isFilterApplied(),
+            isSort: provider.isSortingApplied(),
+            onTapFilter: _onFilterClick,
+            onTapSorting: () => onSortingClick(
+              selected: context.read<GapUpProvider>().filterParams?.sorting,
+              onTap: (sortingKey) {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<GapUpProvider>().applySorting(sortingKey);
+              },
+            ),
+          ),
+        )
       ],
     );
   }
