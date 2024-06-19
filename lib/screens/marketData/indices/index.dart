@@ -135,9 +135,8 @@ class IndicesData extends StatelessWidget {
         provider.getIndicesData(showProgress: false);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Dimen.padding,
-        ),
+        padding: const EdgeInsets.only(
+            left: Dimen.padding, right: Dimen.padding, bottom: 40),
         child: Column(
           children: [
             HtmlTitle(

@@ -112,15 +112,17 @@ class _Dow30StocksState extends State<Dow30Stocks> {
             ),
           ],
         ),
-        // Align( 6/18/2024
-        //     alignment: Alignment.bottomCenter,
-        //     child: MdBottomSheet(
-        //       onTapFilter: _onFilterClick,
-        //       onTapSorting: () => onSortingClick(onTap: (sortingKey) {
-        //         Navigator.pop(navigatorKey.currentContext!);
-        //         context.read<Dow30Provider>().applySorting(sortingKey);
-        //       }),
-        //     ))
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: MdBottomSheet(
+              onTapFilter: _onFilterClick,
+              onTapSorting: () => onSortingClick(
+                  selected: context.read<Dow30Provider>().filterParams?.sorting,
+                  onTap: (sortingKey) {
+                    Navigator.pop(navigatorKey.currentContext!);
+                    context.read<Dow30Provider>().applySorting(sortingKey);
+                  }),
+            ))
       ],
     );
   }

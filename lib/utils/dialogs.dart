@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/errorScreens/app_maintenance.dart';
 import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
@@ -46,6 +45,7 @@ void closeGlobalProgressDialog() {
 
 void onSortingClick({
   required void Function(String)? onTap,
+  required String? selected,
 }) async {
   FilterProvider provider = navigatorKey.currentContext!.read<FilterProvider>();
   if (provider.data == null) {
@@ -56,7 +56,7 @@ void onSortingClick({
       title: "SORT BY",
       child: ListView.separated(
         shrinkWrap: true,
-        itemCount: sortingArrayList.length,
+        itemCount: provider.data?.sorting?.length ?? 0,
         itemBuilder: (context, index) {
           FiltersData? data = context.watch<FilterProvider>().data;
           if (data == null) {
@@ -69,24 +69,19 @@ void onSortingClick({
                 return;
               }
 
-              onTap(sortingArrayList[index].key);
+              onTap(provider.data?.sorting?[index].key ?? "");
             },
             child: Padding(
               padding: EdgeInsets.only(left: 10.sp),
-              child: context
-                          .read<TodayTopGainerProvider>()
-                          .filterParams
-                          ?.sorting ==
-                      sortingArrayList[index].key
-                  ? Text(
-                      data.sorting![index].value,
-                      // sortingArrayList[index].value,
-                      style: stylePTSansBold(color: ThemeColors.blue),
-                    )
-                  : Text(
-                      data.sorting![index].value,
-                      style: stylePTSansBold(),
-                    ),
+              child: Text(
+                data.sorting![index].value,
+                // sortingArrayList[index].value,
+                style: stylePTSansBold(
+                  color: selected == provider.data?.sorting?[index].key
+                      ? ThemeColors.accent
+                      : Colors.white,
+                ),
+              ),
             ),
           );
         },

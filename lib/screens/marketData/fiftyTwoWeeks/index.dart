@@ -4,7 +4,6 @@ import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/fifty_two_lows.
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../../../utils/constants.dart';
 import '../../../widgets/custom_tab_container.dart';
 
 class FiftyTwoWeeksIndex extends StatelessWidget {
@@ -18,22 +17,14 @@ class FiftyTwoWeeksIndex extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainerNEW(
-          scrollable: false,
-          // tabsPadding: EdgeInsets.only(bottom: 10.sp),
-          tabs: ["52 Week Highs", "52 Week Lows"],
-          widgets: [
-            FiftyTwoWeeksHighsStocks(),
-            FiftyTwoWeeksLowsStocks(),
-          ],
-        ),
+      body: CustomTabContainerNEW(
+        scrollable: false,
+        // tabsPadding: EdgeInsets.only(bottom: 10.sp),
+        tabs: ["52 Week Highs", "52 Week Lows"],
+        widgets: [
+          FiftyTwoWeeksHighsStocks(),
+          FiftyTwoWeeksLowsStocks(),
+        ],
       ),
     );
   }

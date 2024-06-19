@@ -49,7 +49,11 @@ class GapDownProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   void applySorting(String sortingKey) {
-    _filterParams?.sorting = sortingKey;
+    if (_filterParams == null) {
+      _filterParams = FilteredParams(sorting: sortingKey);
+    } else {
+      _filterParams!.sorting = sortingKey;
+    }
     _page = 1;
     notifyListeners();
     Utils()

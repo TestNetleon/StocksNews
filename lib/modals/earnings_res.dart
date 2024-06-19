@@ -23,6 +23,8 @@ class EarningsRes {
   final dynamic fiscalDateEnding;
   final dynamic updatedFromDate;
   final dynamic image;
+  final dynamic percentageChange;
+  final dynamic priceChange;
 
   EarningsRes({
     this.symbol,
@@ -37,6 +39,8 @@ class EarningsRes {
     this.fiscalDateEnding,
     this.updatedFromDate,
     this.image,
+    this.percentageChange,
+    this.priceChange,
   });
 
   factory EarningsRes.fromJson(Map<String, dynamic> json) => EarningsRes(
@@ -52,6 +56,8 @@ class EarningsRes {
         fiscalDateEnding: json["fiscalDateEnding"],
         updatedFromDate: json["updatedFromDate"],
         image: json["image"],
+        percentageChange: json["percentage_change"],
+        priceChange: json["price_change"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +73,7 @@ class EarningsRes {
         "fiscalDateEnding": fiscalDateEnding,
         "updatedFromDate": updatedFromDate,
         "image": image,
+        "percentage_change": percentageChange,
+        "price_change": priceChange,
       };
 }
