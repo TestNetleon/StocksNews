@@ -58,7 +58,11 @@ loginSheet({
 class LoginBottom extends StatefulWidget {
   final String? state;
   final String? dontPop;
-  const LoginBottom({super.key, this.state, this.dontPop});
+  const LoginBottom({
+    super.key,
+    this.state,
+    this.dontPop,
+  });
 
   @override
   State<LoginBottom> createState() => _LoginBottomState();
@@ -66,8 +70,8 @@ class LoginBottom extends StatefulWidget {
 
 class _LoginBottomState extends State<LoginBottom> {
   final TextEditingController _controller = TextEditingController(
-    // text: kDebugMode ? "utkarshsinghdhakad@gmail.com" : "",
-    text: kDebugMode ? "chetan@netleon.com" : "",
+    text: kDebugMode ? "utkarshsinghdhakad@gmail.com" : "",
+    // text: kDebugMode ? "chetan@netleon.com" : "",
   );
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();

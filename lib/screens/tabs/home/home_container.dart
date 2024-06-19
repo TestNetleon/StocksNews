@@ -14,10 +14,15 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:upgrader/upgrader.dart';
+import '../../../modals/home_insider_res.dart';
+import '../../../modals/news_res.dart';
+import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
+import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
@@ -111,18 +116,40 @@ class HomeContainer extends StatelessWidget {
                     HomePartialLoading(
                       loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
-                      error: provider.statusTrending != Status.ideal &&
-                              !provider.isLoadingTrending &&
-                              provider.homeTrendingRes == null
-                          ? provider.homeTrendingRes?.gainers?.isEmpty == true
-                              ? HomeError.gainers
-                              : provider.homeTrendingRes?.losers?.isEmpty ==
-                                      true
-                                  ? HomeError.loosers
-                                  : HomeError.trending
-                          : null,
                       onRefresh: provider.refreshWithCheck,
                       child: const HomeInnerTabs(),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: ScreenTitle(
+                        title: provider.homeTrendingRes?.text?.news ?? "",
+                      ),
+                    ),
+
+                    ListView.separated(
+                      itemCount:
+                          provider.homeTrendingRes?.trendingNews?.length ?? 0,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 12.sp),
+                      itemBuilder: (context, index) {
+                        News? data =
+                            provider.homeTrendingRes?.trendingNews?[index];
+                        return NewsItem(
+                          news: News(
+                            title: data?.title ?? "",
+                            image: data?.image ?? "",
+                          ),
+                          showCategory: false,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 20.sp,
+                        );
+                      },
                     ),
 
                     // HomePartialLoading(

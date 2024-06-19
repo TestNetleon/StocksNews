@@ -22,7 +22,7 @@ class AgreeConditions extends StatelessWidget {
       return RichText(
         text: TextSpan(
           text: fromLogin
-              ? 'By signing in you agree to our '
+              ? 'By log in you agree to our '
               : 'By signing up you agree to our ',
           style: stylePTSansRegular(fontSize: isPhone ? 13 : 15, height: 1.4),
           children: [
@@ -80,11 +80,14 @@ class AgreeConditions extends StatelessWidget {
       },
       onTapUrl: (url) async {
         Navigator.push(
-            context,
-            createRoute(TCandPolicy(
+          context,
+          createRoute(
+            TCandPolicy(
                 policyType: url == "terms-of-service"
                     ? PolicyType.tC
-                    : PolicyType.privacy)));
+                    : PolicyType.privacy),
+          ),
+        );
 
         Utils().showLog("clicked url---$url");
 

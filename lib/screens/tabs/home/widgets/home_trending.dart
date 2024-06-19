@@ -14,7 +14,7 @@ class HomeTrending extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
-//
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -39,6 +39,10 @@ class HomeTrending extends StatelessWidget {
             );
           },
         ),
+        // Divider(
+        //   color: ThemeColors.greyBorder,
+        //   height: 20.sp,
+        // ),
       ],
     );
   }

@@ -244,7 +244,7 @@ class News {
   // final DateTime publishedDate;
   final String title;
   final String image;
-  final String site;
+  final String? site;
   final String? url;
   final String? postDate;
   final String? postDateString;
@@ -256,7 +256,7 @@ class News {
     // required this.publishedDate,
     required this.title,
     required this.image,
-    required this.site,
+    this.site,
     this.url,
     this.slug,
     this.postDate,

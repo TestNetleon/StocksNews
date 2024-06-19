@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +13,14 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
+import '../../../t&cAndPolicy/tc_policy.dart';
 import 'refer_otp.dart';
 
 referLogin() async {
@@ -71,6 +71,8 @@ class _ReferLoginState extends State<ReferLogin> {
     if (Platform.isAndroid) _getAppSignature();
     _checkProfile();
   }
+
+  bool checkBox = false;
 
   _checkProfile() {
     UserProvider provider = context.read<UserProvider>();
@@ -324,9 +326,54 @@ class _ReferLoginState extends State<ReferLogin> {
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
+                      InkWell(
+                        onTap: () {
+                          checkBox = !checkBox;
+                          setState(() {});
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              checkBox
+                                  ? Icons.check_box
+                                  : Icons.check_box_outline_blank_outlined,
+                              color: ThemeColors.accent,
+                            ),
+                            const SpacerHorizontal(width: 10),
+                            Flexible(
+                              child: HtmlWidget(
+                                customStylesBuilder: (element) {
+                                  if (element.localName == 'a') {
+                                    return {
+                                      'color': '#1bb449',
+                                      'text-decoration': 'none'
+                                    };
+                                  }
+                                  return null;
+                                },
+                                onTapUrl: (url) async {
+                                  Navigator.push(
+                                    context,
+                                    createRoute(
+                                      const TCandPolicy(
+                                          policyType: PolicyType.referral),
+                                    ),
+                                  );
+
+                                  return true;
+                                },
+                                provider.extra?.verifyIdentity ?? "",
+                                textStyle:
+                                    stylePTSansRegular(color: Colors.grey),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SpacerVertical(height: Dimen.itemSpacing),
                       ThemeButton(
                         text: "Send OTP",
-                        onPressed: _referLogin,
+                        onPressed: checkBox ? _referLogin : null,
                       ),
                       const SpacerVertical(
                         height: 200,

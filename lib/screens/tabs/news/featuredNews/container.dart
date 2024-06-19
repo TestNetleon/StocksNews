@@ -64,12 +64,12 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
                     news: News(
                       slug: newsItemData.slug,
                       // publishedDate: newsItemData.publishedDate,
-                      title: newsItemData.title,
-                      image: newsItemData.image,
+                      title: newsItemData.title ?? "",
+                      image: newsItemData.image ?? "",
                       site: newsItemData.site ?? '',
                       authors: newsItemData.authors,
                       postDate: DateFormat("MMMM dd, yyyy")
-                          .format(newsItemData.publishedDate),
+                          .format(newsItemData.publishedDate ?? DateTime.now()),
                       postDateString: newsItemData.postDateString,
                       url: newsItemData.url,
                     ),
@@ -83,13 +83,13 @@ class _FeaturedNewsListState extends State<FeaturedNewsList> {
               news: News(
                 slug: newsItemData.slug,
                 // publishedDate: newsItemData.publishedDate,
-                title: newsItemData.title,
-                image: newsItemData.image,
+                title: newsItemData.title ?? "",
+                image: newsItemData.image ?? "",
                 site: newsItemData.site ?? '',
                 authors: newsItemData.authors,
 
                 postDate: DateFormat("MMMM dd, yyyy")
-                    .format(newsItemData.publishedDate),
+                    .format(newsItemData.publishedDate ?? DateTime.now()),
                 postDateString: newsItemData.postDateString,
                 url: newsItemData.url,
                 //  "November 29, 2023",

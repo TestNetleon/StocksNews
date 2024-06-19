@@ -7,7 +7,7 @@ enum RequestType { get, post }
 
 enum SnackbarType { error, info }
 
-enum PolicyType { tC, privacy, disclaimer, aboutUs, contactUs }
+enum PolicyType { tC, privacy, disclaimer, aboutUs, contactUs, referral }
 
 enum Status { ideal, loading, loaded, loadingMore, searching, refreshing }
 

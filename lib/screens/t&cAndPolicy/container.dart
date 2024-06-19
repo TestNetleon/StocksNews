@@ -102,7 +102,9 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                         ? "Terms of Service"
                         : widget.policyType == PolicyType.privacy
                             ? "Privacy Policy"
-                            : "Disclaimer",
+                            : widget.policyType == PolicyType.referral
+                                ? "Referral Terms"
+                                : "Disclaimer",
                 // optionalText: 'Last Updated: 5/12/2022',
               ),
             ),

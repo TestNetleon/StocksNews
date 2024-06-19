@@ -43,7 +43,9 @@ class TermsAndPolicyProvider extends ChangeNotifier with AuthProviderBase {
                   ? "privacy-policy"
                   : type == PolicyType.tC
                       ? "terms-of-service"
-                      : "disclaimer",
+                      : type == PolicyType.referral
+                          ? "referral-terms"
+                          : "disclaimer",
     };
     try {
       ApiResponse response = await apiRequest(

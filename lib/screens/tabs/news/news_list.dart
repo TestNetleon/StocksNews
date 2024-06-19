@@ -62,13 +62,13 @@ class _NewsListState extends State<NewsList> {
                 news: News(
                   slug: newsItemData.slug,
                   // publishedDate: newsItemData.publishedDate,
-                  title: newsItemData.title,
-                  image: newsItemData.image,
+                  title: newsItemData.title ?? "",
+                  image: newsItemData.image ?? "",
                   site: newsItemData.site ?? '',
                   authors: newsItemData.authors,
                   postDateString: newsItemData.postDateString,
                   postDate: DateFormat("MMMM dd, yyyy")
-                      .format(newsItemData.publishedDate),
+                      .format(newsItemData.publishedDate ?? DateTime.now()),
                   url: newsItemData.url,
                   //  "November 29, 2023",
                 ),
@@ -80,13 +80,13 @@ class _NewsListState extends State<NewsList> {
               news: News(
                 slug: newsItemData.slug,
                 // publishedDate: newsItemData.publishedDate,
-                title: newsItemData.title,
-                image: newsItemData.image,
+                title: newsItemData.title ?? "",
+                image: newsItemData.image ?? "",
                 site: newsItemData.site ?? '',
                 authors: newsItemData.authors,
 
                 postDate: DateFormat("MMMM dd, yyyy")
-                    .format(newsItemData.publishedDate),
+                    .format(newsItemData.publishedDate ?? DateTime.now()),
                 url: newsItemData.url,
                 //  "November 29, 2023",
               ),

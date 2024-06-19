@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -146,14 +147,18 @@ class _TabsState extends State<Tabs> {
     // final newsProvider = context.read<FeaturedNewsProvider>();
     // final latestNewsProvider = context.read<NewsProvider>();
 
-    if (Platform.isAndroid) {
-      bool isVibe = await Vibration.hasVibrator() ?? false;
-      if (isVibe) {
-        Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+    try {
+      if (Platform.isAndroid) {
+        bool isVibe = await Vibration.hasVibrator() ?? false;
+        if (isVibe) {
+          Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+        }
+      } else {
+        // Vibration.vibrate(pattern: [0, 500], intensities: [1, 10]);
+        HapticFeedback.lightImpact();
       }
-    } else {
-      // Vibration.vibrate(pattern: [0, 500], intensities: [1, 10]);
-      HapticFeedback.lightImpact();
+    } catch (e) {
+      log('$e');
     }
 
     switch (currentIndex) {
@@ -188,6 +193,7 @@ class _TabsState extends State<Tabs> {
         }
         break;
       case 5:
+        log("---Compare");
         _compareStocks(context);
         break;
     }
