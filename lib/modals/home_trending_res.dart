@@ -4,7 +4,6 @@
 
 import 'dart:convert';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
-import 'package:stocks_news_new/modals/news_res.dart';
 
 import 'home_res.dart';
 

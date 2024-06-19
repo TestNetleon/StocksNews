@@ -20,7 +20,7 @@ class DynamicLinkService {
     log("Refere code = $code");
 
     final dynamicLinkParams = DynamicLinkParameters(
-      link: Uri.parse("https://app.stocks.news/install?code=${code}"),
+      link: Uri.parse("https://app.stocks.news/install?code=$code"),
       // link: Uri.parse(
       //     "https://app.stocks.news/news/nasdaq-mints-record-breaking-week-wall-streets-new-fast-food-darling-jumps-300"),
       uriPrefix: "https://stocksnews.page.link",
@@ -47,7 +47,7 @@ class DynamicLinkService {
 
   Future<Uri> getDynamicLink(code) async {
     final dynamicLinkParams = DynamicLinkParameters(
-      link: Uri.parse("https://app.stocks.news/install?code=${code}"),
+      link: Uri.parse("https://app.stocks.news/install?code=$code"),
       // link: Uri.parse(
       //     "https://app.stocks.news/news/nasdaq-mints-record-breaking-week-wall-streets-new-fast-food-darling-jumps-300"),
       uriPrefix: "https://stocksnews.page.link",

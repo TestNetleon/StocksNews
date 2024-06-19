@@ -23,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 //
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../blogs/index.dart';
+import '../../../t&cAndPolicy/tc_policy.dart';
 import 'mentioned_by.dart';
 import 'news_details_list.dart';
 
@@ -255,6 +256,22 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               //   return null;
                               // },
                               onTapUrl: (url) async {
+                                if (url.startsWith(
+                                    "https://app.stocks.news/page/")) {
+                                  String slug =
+                                      extractLastPathComponent(Uri.parse(url));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    createRoute(
+                                      TCandPolicy(
+                                        policyType: PolicyType.disclaimer,
+                                        slug: slug,
+                                      ),
+                                    ),
+                                  );
+                                  return true;
+                                }
+
                                 bool a = await launchUrl(Uri.parse(url));
                                 Utils().showLog(
                                     "clicked ur---$url, return value $a");

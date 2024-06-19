@@ -122,22 +122,13 @@ class ReferApp extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              // padding: const EdgeInsets.all(8),
-              // decoration: const BoxDecoration(
-              //     shape: BoxShape.circle, color: Colors.transparent),
-              // child: const Icon(
-              //   Icons.share,
-              //   color: ThemeColors.accent,
-              // ),
-              child: Image.asset(
-                Images.coin,
-                // Images.reward,
-                // Images.flames,
+            Image.asset(
+              Images.coin,
+              // Images.reward,
+              // Images.flames,
 
-                height: 40,
-                width: 40,
-              ),
+              height: 40,
+              width: 40,
             ),
             const SpacerHorizontal(width: 10),
             Flexible(
