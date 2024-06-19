@@ -25,6 +25,7 @@ otpLoginSheet({
   String? state,
   String? dontPop,
   String? id,
+  required String userName,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -42,6 +43,7 @@ otpLoginSheet({
         dontPop: dontPop,
         state: state,
         id: id,
+        userName: userName,
       );
     },
   );
@@ -51,8 +53,10 @@ class OTPLoginBottom extends StatefulWidget {
   final String? state;
   final String? dontPop;
   final String? id;
+  final String userName;
 
-  const OTPLoginBottom({super.key, this.state, this.dontPop, this.id});
+  const OTPLoginBottom(
+      {super.key, this.state, this.dontPop, this.id, required this.userName});
 
   @override
   State<OTPLoginBottom> createState() => _OTPLoginBottomState();
@@ -115,7 +119,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
       bool granted = await Permission.notification.isGranted;
 
       Map request = {
-        "username": provider.user?.username ?? "",
+        "username": widget.userName,
         "type": "email",
         "otp": _controller.text,
         "fcm_token": fcmToken ?? "",
@@ -141,7 +145,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
     setState(() {});
     UserProvider provider = context.read<UserProvider>();
     Map request = {
-      "username": provider.user?.username ?? "",
+      "username": widget.userName,
       "type": "email",
     };
     provider.resendOtp(request);
@@ -149,8 +153,6 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = context.watch<UserProvider>();
-
     return Container(
       constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
       decoration: BoxDecoration(
@@ -227,7 +229,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 //     color: Colors.white,
                 //   ),
                 // ),
-                EditEmail(email: "${provider.user?.username}"),
+                EditEmail(email: "${widget.userName}"),
 
                 const SpacerVertical(),
                 // Text(
@@ -320,7 +322,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 // ),
                 const SpacerVertical(),
                 EditEmailClick(
-                  email: "${provider.user?.username}",
+                  email: "${widget.userName}",
                   state: widget.state,
                   dontPop: widget.dontPop,
                 ),

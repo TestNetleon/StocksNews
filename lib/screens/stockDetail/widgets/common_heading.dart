@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
-import '../../../../utils/colors.dart';
-import '../../../../utils/theme.dart';
-import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/spacer_vertical.dart';
+import 'overview/desclaimer.dart';
+import 'overview/top_widget.dart';
 
 class SdCommonHeading extends StatelessWidget {
   const SdCommonHeading({this.showRating = false, super.key});
@@ -16,76 +10,84 @@ class SdCommonHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
-    KeyStats? keyStats = provider.tabRes?.keyStats;
+    // StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    // CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
+    // KeyStats? keyStats = provider.tabRes?.keyStats;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
+    return const Padding(
+      padding: EdgeInsets.only(bottom: 10),
+      child: Column(
         children: [
-          Visibility(
-            visible: companyInfo?.image != null,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0),
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                width: 43,
-                height: 43,
-                child: CachedNetworkImagesWidget(
-                  companyInfo?.image ?? "",
-                ),
-              ),
-            ),
-          ),
-          const SpacerHorizontal(width: 12),
-          Visibility(
-            visible: keyStats?.symbol != null || keyStats?.name != null,
-            child: Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    keyStats?.symbol ?? "",
-                    style: styleGeorgiaBold(fontSize: 18),
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    keyStats?.name ?? "",
-                    style: styleGeorgiaRegular(
-                      color: ThemeColors.greyText,
-                      fontSize: 14,
-                    ),
-                  ),
-                  if (keyStats?.rating != null &&
-                      keyStats?.rating != 0 &&
-                      showRating)
-                    Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      child: RatingBar.builder(
-                        initialRating: keyStats?.rating / 1,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        ignoreGestures: true,
-                        itemSize: 16,
-                        unratedColor: ThemeColors.greyBorder,
-                        itemPadding:
-                            const EdgeInsets.symmetric(horizontal: 0.0),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star,
-                          color: ThemeColors.accent,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
+          // Row(
+          //   children: [
+          //     Visibility(
+          //       visible: companyInfo?.image != null,
+          //       child: ClipRRect(
+          //         borderRadius: BorderRadius.circular(0),
+          //         child: Container(
+          //           padding: const EdgeInsets.all(5),
+          //           width: 43,
+          //           height: 43,
+          //           child: CachedNetworkImagesWidget(
+          //             companyInfo?.image ?? "",
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     const SpacerHorizontal(width: 12),
+          //     Visibility(
+          //       visible: keyStats?.symbol != null || keyStats?.name != null,
+          //       child: Expanded(
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Text(
+          //               keyStats?.symbol ?? "",
+          //               style: styleGeorgiaBold(fontSize: 18),
+          //             ),
+          //             const SpacerVertical(height: 5),
+          //             Text(
+          //               keyStats?.name ?? "",
+          //               style: styleGeorgiaRegular(
+          //                 color: ThemeColors.greyText,
+          //                 fontSize: 14,
+          //               ),
+          //             ),
+          //             if (keyStats?.rating != null &&
+          //                 keyStats?.rating != 0 &&
+          //                 showRating)
+          //               Container(
+          //                 margin: const EdgeInsets.only(top: 5),
+          //                 child: RatingBar.builder(
+          //                   initialRating: keyStats?.rating / 1,
+          //                   minRating: 1,
+          //                   direction: Axis.horizontal,
+          //                   allowHalfRating: true,
+          //                   itemCount: 5,
+          //                   ignoreGestures: true,
+          //                   itemSize: 16,
+          //                   unratedColor: ThemeColors.greyBorder,
+          //                   itemPadding:
+          //                       const EdgeInsets.symmetric(horizontal: 0.0),
+          //                   itemBuilder: (context, _) => const Icon(
+          //                     Icons.star,
+          //                     color: ThemeColors.accent,
+          //                   ),
+          //                   onRatingUpdate: (rating) {
+          //                     print(rating);
+          //                   },
+          //                 ),
+          //               ),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          SdTopWidgetDetail(),
+          SpacerVertical(height: 4),
+          SdTopDisclaimer(),
+          SpacerVertical(height: 4),
         ],
       ),
     );

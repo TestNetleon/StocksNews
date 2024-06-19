@@ -46,7 +46,6 @@ class _ReferSuccessState extends State<ReferSuccess> {
     ReferSuccessRes? referData = context.watch<UserProvider>().refer;
     return BaseContainer(
       appBar: const AppBarHome(
-        isHome: true,
         isPopback: true,
         showTrailing: false,
       ),

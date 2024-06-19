@@ -6,6 +6,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../widgets/cache_network_image.dart';
 import '../../../modals/affiliate/refer_friend_res.dart';
+import '../../../utils/constants.dart';
 
 class AffiliateReferItem extends StatelessWidget {
   final AffiliateReferRes? data;
@@ -42,11 +43,15 @@ class AffiliateReferItem extends StatelessWidget {
           // ),
           // SpacerHorizontal(width: index < 10 ? 10 : 5),
           Container(
-            width: 43,
-            height: 43,
+            width: 60,
+            height: 60,
             padding: const EdgeInsets.all(5),
-            child: CachedNetworkImagesWidget(
-              data?.image,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: CachedNetworkImagesWidget(
+                data?.image,
+                placeHolder: Images.userPlaceholder,
+              ),
             ),
           ),
           const SpacerHorizontal(width: 5),

@@ -6,7 +6,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -146,7 +145,6 @@ class _ReferLoginState extends State<ReferLogin> {
 
   @override
   Widget build(BuildContext context) {
-    UserRes? user = context.watch<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
     return GestureDetector(
       onTap: () {

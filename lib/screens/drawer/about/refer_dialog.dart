@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -19,7 +18,7 @@ class ReferDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.read<HomeProvider>();
-    UserProvider userProvider = context.read<UserProvider>();
+    // UserProvider userProvider = context.read<UserProvider>();
 
     return Container(
       // padding: const EdgeInsets.all(16),
@@ -53,11 +52,10 @@ class ReferDialog extends StatelessWidget {
           //   ),
           // ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SpacerVertical(height: 10),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Image.asset(

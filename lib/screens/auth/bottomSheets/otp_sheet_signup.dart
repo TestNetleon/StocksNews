@@ -22,6 +22,7 @@ import 'edit_email.dart';
 otpSignupSheet({
   String? state,
   String? dontPop,
+  required String email,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -35,14 +36,17 @@ otpSignupSheet({
     isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return const OTPSignupBottom();
+      return OTPSignupBottom(
+        email: email,
+      );
     },
   );
 }
 
 class OTPSignupBottom extends StatefulWidget {
+  final String email;
 //
-  const OTPSignupBottom({super.key});
+  const OTPSignupBottom({super.key, required this.email});
 
   @override
   State<OTPSignupBottom> createState() => _OTPSignupBottomState();
@@ -100,7 +104,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
       bool granted = await Permission.notification.isGranted;
 
       Map request = {
-        "username": provider.user?.username ?? "",
+        "username": widget.email,
         "otp": _controller.text,
         "type": "email",
         "fcm_token": fcmToken ?? "",
@@ -122,15 +126,14 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
 
     UserProvider provider = context.read<UserProvider>();
     Map request = {
-      "username": provider.user?.username ?? "",
-      "type": provider.user?.type ?? "",
+      "username": widget.email,
+      "type": "email",
     };
     provider.signupResendOtp(request);
   }
 
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = context.watch<UserProvider>();
     return Container(
       constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
       decoration: BoxDecoration(
@@ -209,7 +212,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                 //     color: Colors.white,
                 //   ),
                 // ),
-                EditEmail(email: "${provider.user?.username}"),
+                EditEmail(email: widget.email),
                 const SpacerVertical(),
                 // Text(
                 //   "Verification Code",
@@ -298,7 +301,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                 ),
                 const SpacerVertical(),
                 EditEmailClick(
-                  email: "${provider.user?.username}",
+                  email: widget.email,
                   fromLoginOTP: false,
                 ),
               ],

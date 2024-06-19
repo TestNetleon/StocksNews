@@ -69,7 +69,7 @@ class ReferApp extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             const Padding(
-              padding: EdgeInsets.only(top: 45),
+              padding: EdgeInsets.only(top: 30),
               child: SingleChildScrollView(child: ReferDialog()),
             ),
             // Container(
@@ -84,7 +84,7 @@ class ReferApp extends StatelessWidget {
             // ),
             Image.asset(
               Images.kingGIF,
-              height: 100,
+              height: 70,
               width: 100,
               fit: BoxFit.cover,
             ),

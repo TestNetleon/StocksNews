@@ -181,7 +181,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       setStatus(Status.loaded);
       if (response.status) {
-        _user = UserRes.fromJson(response.data);
+        // _user = UserRes.fromJson(response.data);
         // Navigator.pushNamed(navigatorKey.currentContext!, OTPLogin.path);
         // Navigator.push(
         //   navigatorKey.currentContext!,
@@ -194,7 +194,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           Navigator.pop(navigatorKey.currentContext!);
           // showErrorMessage(message: response.message, snackbar: false);
         } else {
-          otpLoginSheet(state: state, dontPop: dontPop, id: id);
+          otpLoginSheet(
+              state: state,
+              dontPop: dontPop,
+              id: id,
+              userName: response.data['username']);
           Timer(const Duration(seconds: 1), () {
             // popUpAlert(
             //     message: "${response.message}",
@@ -451,19 +455,19 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       setStatus(Status.loaded);
       if (response.status) {
-        _user = UserRes.fromJson(response.data);
+        // _user = UserRes.fromJson(response.data);
         // Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
           Navigator.pop(navigatorKey.currentContext!);
-          otpSignupSheet();
+          otpSignupSheet(email: response.data['username']);
           // showErrorMessage(message: response.message, snackbar: false);
           // popUpAlert(
           //     message: "${response.message}",
           //     title: "Alert",
           //     icon: Images.otpSuccessGIT);
         } else {
-          otpSignupSheet();
+          otpSignupSheet(email: response.data['username']);
         }
       } else {
         if (editEmail) {
