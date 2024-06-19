@@ -154,16 +154,21 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected: context
+                selected: context
+                    .read<LowPriceStocksProvider>()
+                    .filterParams
+                    ?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
                       .read<LowPriceStocksProvider>()
-                      .filterParams
-                      ?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context
-                        .read<LowPriceStocksProvider>()
-                        .applySorting(sortingKey);
-                  }),
+                      .applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<LowPriceStocksProvider>().applySorting("");
+                },
+              ),
             ))
       ],
     );

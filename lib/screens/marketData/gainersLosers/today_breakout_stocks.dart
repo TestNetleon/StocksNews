@@ -142,6 +142,10 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
                     .read<TodayBreakoutStockProvider>()
                     .applySorting(sortingKey);
               },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<TodayBreakoutStockProvider>().applySorting("");
+              },
             ),
           ),
         ),

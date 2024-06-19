@@ -135,12 +135,16 @@ class _GapDownStocksState extends State<GapDownStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected:
-                      context.read<GapDownProvider>().filterParams?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context.read<GapDownProvider>().applySorting(sortingKey);
-                  }),
+                selected: context.read<GapDownProvider>().filterParams?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<GapDownProvider>().applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<GapDownProvider>().applySorting("");
+                },
+              ),
             ))
       ],
     );

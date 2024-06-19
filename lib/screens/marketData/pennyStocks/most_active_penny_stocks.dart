@@ -146,16 +146,23 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected: context
+                selected: context
+                    .read<MostActivePennyStocksProviders>()
+                    .filterParams
+                    ?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
                       .read<MostActivePennyStocksProviders>()
-                      .filterParams
-                      ?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context
-                        .read<MostActivePennyStocksProviders>()
-                        .applySorting(sortingKey);
-                  }),
+                      .applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
+                      .read<MostActivePennyStocksProviders>()
+                      .applySorting("");
+                },
+              ),
             ))
       ],
     );

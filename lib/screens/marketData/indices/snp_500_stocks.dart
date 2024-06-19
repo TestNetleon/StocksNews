@@ -123,12 +123,16 @@ class _Snp500StocksState extends State<Snp500Stocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected:
-                      context.read<SnP500Provider>().filterParams?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context.read<SnP500Provider>().applySorting(sortingKey);
-                  }),
+                selected: context.read<SnP500Provider>().filterParams?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<SnP500Provider>().applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<SnP500Provider>().applySorting("");
+                },
+              ),
             ))
       ],
     );

@@ -145,6 +145,10 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
               Navigator.pop(navigatorKey.currentContext!);
               context.read<TodayTopGainerProvider>().applySorting(sortingKey);
             },
+            onResetClick: () {
+              Navigator.pop(navigatorKey.currentContext!);
+              context.read<TodayTopGainerProvider>().applySorting("");
+            },
           ),
         )
       ],

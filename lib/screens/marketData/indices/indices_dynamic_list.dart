@@ -163,6 +163,10 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                 Navigator.pop(navigatorKey.currentContext!);
                 context.read<IndicesProvider>().applySorting(sortingKey);
               },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<IndicesProvider>().applySorting("");
+              },
             ),
           ),
         )

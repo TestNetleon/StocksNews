@@ -143,12 +143,16 @@ class _EarningsListState extends State<EarningsList> {
             isSort: provider.isSortingApplied(),
             onTapFilter: _onFilterClick,
             onTapSorting: () => onSortingClick(
-                selected:
-                    context.read<EarningsProvider>().filterParams?.sorting,
-                onTap: (sortingKey) {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  context.read<EarningsProvider>().applySorting(sortingKey);
-                }),
+              selected: context.read<EarningsProvider>().filterParams?.sorting,
+              onTap: (sortingKey) {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<EarningsProvider>().applySorting(sortingKey);
+              },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<EarningsProvider>().applySorting("");
+              },
+            ),
           ),
         )
       ],

@@ -145,16 +145,21 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected: context
+                selected: context
+                    .read<UnusualTradingVolumeProvider>()
+                    .filterParams
+                    ?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
                       .read<UnusualTradingVolumeProvider>()
-                      .filterParams
-                      ?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context
-                        .read<UnusualTradingVolumeProvider>()
-                        .applySorting(sortingKey);
-                  }),
+                      .applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context.read<UnusualTradingVolumeProvider>().applySorting("");
+                },
+              ),
             ))
       ],
     );

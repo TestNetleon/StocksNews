@@ -153,23 +153,29 @@ class _FiftyTwoWeeksHighsStocksState extends State<FiftyTwoWeeksHighsStocks> {
           ),
         ),
         Align(
-            alignment: Alignment.bottomCenter,
-            child: MdBottomSheet(
-              isFilter: provider.isFilterApplied(),
-              isSort: provider.isSortingApplied(),
-              onTapFilter: _onFilterClick,
-              onTapSorting: () => onSortingClick(
-                  selected: context
-                      .read<FiftyTwoWeeksHighProvider>()
-                      .filterParams
-                      ?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context
-                        .read<FiftyTwoWeeksHighProvider>()
-                        .applySorting(sortingKey);
-                  }),
-            ))
+          alignment: Alignment.bottomCenter,
+          child: MdBottomSheet(
+            isFilter: provider.isFilterApplied(),
+            isSort: provider.isSortingApplied(),
+            onTapFilter: _onFilterClick,
+            onTapSorting: () => onSortingClick(
+              selected: context
+                  .read<FiftyTwoWeeksHighProvider>()
+                  .filterParams
+                  ?.sorting,
+              onTap: (sortingKey) {
+                Navigator.pop(navigatorKey.currentContext!);
+                context
+                    .read<FiftyTwoWeeksHighProvider>()
+                    .applySorting(sortingKey);
+              },
+              onResetClick: () {
+                Navigator.pop(navigatorKey.currentContext!);
+                context.read<FiftyTwoWeeksHighProvider>().applySorting("");
+              },
+            ),
+          ),
+        )
       ],
     );
   }

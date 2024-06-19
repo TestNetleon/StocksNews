@@ -146,16 +146,23 @@ class _MostPopularPennyStocksState extends State<MostPopularPennyStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
-                  selected: context
+                selected: context
+                    .read<MostPopularPennyStocksProviders>()
+                    .filterParams
+                    ?.sorting,
+                onTap: (sortingKey) {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
                       .read<MostPopularPennyStocksProviders>()
-                      .filterParams
-                      ?.sorting,
-                  onTap: (sortingKey) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                    context
-                        .read<MostPopularPennyStocksProviders>()
-                        .applySorting(sortingKey);
-                  }),
+                      .applySorting(sortingKey);
+                },
+                onResetClick: () {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  context
+                      .read<MostPopularPennyStocksProviders>()
+                      .applySorting("");
+                },
+              ),
             ))
       ],
     );
