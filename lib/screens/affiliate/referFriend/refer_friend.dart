@@ -58,7 +58,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
         onRefresh: () async {
           provider.getReferData();
         },
-        child: Container(
+        child: SizedBox(
           height: double.infinity,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),

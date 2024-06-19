@@ -32,7 +32,7 @@ class ThemeCheckbox extends StatelessWidget {
     );
   }
 
-  BorderSide getBorder(Set<MaterialState> states) {
+  BorderSide getBorder(Set<WidgetState> states) {
     return BorderSide(
       color: color ?? Colors.black,
       width: 1.sp,

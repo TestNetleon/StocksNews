@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -28,7 +27,7 @@ class LeaderBoardTopItem extends StatelessWidget {
       return const SizedBox();
     }
 
-    return Container(
+    return SizedBox(
       // color: ThemeColors.sos,
       width: ScreenUtil().screenWidth / 3,
       child: Column(
@@ -39,7 +38,7 @@ class LeaderBoardTopItem extends StatelessWidget {
             alignment: Alignment.topCenter,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 12),
+                margin: const EdgeInsets.only(top: 12),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: index == 2
