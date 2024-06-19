@@ -4,15 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/congressional_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/item.dart';
-import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
@@ -148,14 +145,19 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
             ],
           ),
         ),
-        // Align( 6/18/2024
+        // Align(
         //   alignment: Alignment.bottomCenter,
         //   child: MdBottomSheet(
         //     onTapFilter: _onFilterClick,
-        //     onTapSorting: () => onSortingClick(onTap: (sortingKey) {
-        //       Navigator.pop(navigatorKey.currentContext!);
-        //       context.read<CongressionalProvider>().applySorting(sortingKey);
-        //     }),
+        //     onTapSorting: () => onSortingClick(
+        //         selected:
+        //             context.read<CongressionalProvider>().filterParams?.sorting,
+        //         onTap: (sortingKey) {
+        //           Navigator.pop(navigatorKey.currentContext!);
+        //           context
+        //               .read<CongressionalProvider>()
+        //               .applySorting(sortingKey);
+        //         }),
         //   ),
         // )
       ],

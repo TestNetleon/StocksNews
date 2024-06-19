@@ -68,9 +68,8 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Dimen.padding,
-          ),
+          padding: const EdgeInsets.only(
+              left: Dimen.padding, right: Dimen.padding, bottom: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -130,15 +129,20 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
             ],
           ),
         ),
-        // Align( 6/18/2024
-        //     alignment: Alignment.bottomCenter,
-        //     child: MdBottomSheet(
-        //       onTapFilter: _onFilterClick,
-        //       onTapSorting: () => onSortingClick(onTap: (sortingKey) {
-        //         Navigator.pop(navigatorKey.currentContext!);
-        //         context.read<LowPeGrowthProvider>().applySorting(sortingKey);
-        //       }),
-        //     ))
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: MdBottomSheet(
+              onTapFilter: _onFilterClick,
+              onTapSorting: () => onSortingClick(
+                  selected:
+                      context.read<LowPeGrowthProvider>().filterParams?.sorting,
+                  onTap: (sortingKey) {
+                    Navigator.pop(navigatorKey.currentContext!);
+                    context
+                        .read<LowPeGrowthProvider>()
+                        .applySorting(sortingKey);
+                  }),
+            ))
       ],
     );
   }

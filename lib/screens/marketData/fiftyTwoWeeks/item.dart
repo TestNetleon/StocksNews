@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
-import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -14,15 +12,25 @@ import '../../stockDetail/index.dart';
 
 class FiftyTwoWeeksItem extends StatelessWidget {
   final FiftyTwoWeeksRes data;
-  final int index;
-  final bool fiftyTwoWeeks;
-//
+  final bool isOpen;
+
+  final Function() onTap;
   const FiftyTwoWeeksItem({
     required this.data,
-    required this.index,
-    this.fiftyTwoWeeks = false,
+    required this.isOpen,
+    required this.onTap,
     super.key,
   });
+//   final FiftyTwoWeeksRes data;
+//   final int index;
+//   final bool fiftyTwoWeeks;
+// //
+//   const FiftyTwoWeeksItem({
+//     required this.data,
+//     required this.index,
+//     this.fiftyTwoWeeks = false,
+//     super.key,
+//   });
 
   void _onTap(context) {
     Navigator.pushNamed(
@@ -34,8 +42,6 @@ class FiftyTwoWeeksItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FiftyTwoWeeksProvider provider = context.watch<FiftyTwoWeeksProvider>();
-
     return Column(
       children: [
         Row(
@@ -139,17 +145,12 @@ class FiftyTwoWeeksItem extends StatelessWidget {
             ),
             const SpacerHorizontal(width: 10),
             InkWell(
-              onTap: () {
-                if (fiftyTwoWeeks) {
-                  provider.setOpenIndexFiftyTwoWeeks(
-                    provider.openIndexFiftyTwoWeeks == index ? -1 : index,
-                  );
-                } else {
-                  provider.setOpenIndex(
-                    provider.openIndex == index ? -1 : index,
-                  );
-                }
-              },
+              onTap: onTap,
+              // onTap: () {
+              //   provider.setOpenIndex(
+              //     provider.openIndex == index ? -1 : index,
+              //   );
+              // },
               child: Container(
                 decoration: const BoxDecoration(
                   color: ThemeColors.accent,
@@ -157,44 +158,57 @@ class FiftyTwoWeeksItem extends StatelessWidget {
                 margin: EdgeInsets.only(left: 8.sp),
                 padding: const EdgeInsets.all(3),
                 child: Icon(
-                  fiftyTwoWeeks
-                      ? provider.openIndexFiftyTwoWeeks == index
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded
-                      : provider.openIndex == index
-                          ? Icons.arrow_upward_rounded
-                          : Icons.arrow_downward_rounded,
+                  // provider.openIndex == index
+                  isOpen
+                      ? Icons.arrow_upward_rounded
+                      : Icons.arrow_downward_rounded,
                   size: 16,
                 ),
               ),
             )
+            // const SpacerHorizontal(width: 10),
+            // InkWell(
+            //   onTap: () {
+            //     if (fiftyTwoWeeks) {
+            //       provider.setOpenIndexFiftyTwoWeeks(
+            //         provider.openIndexFiftyTwoWeeks == index ? -1 : index,
+            //       );
+            //     } else {
+            //       provider.setOpenIndex(
+            //         provider.openIndex == index ? -1 : index,
+            //       );
+            //     }
+            //   },
+            //   child: Container(
+            //     decoration: const BoxDecoration(
+            //       color: ThemeColors.accent,
+            //     ),
+            //     margin: EdgeInsets.only(left: 8.sp),
+            //     padding: const EdgeInsets.all(3),
+            //     child: Icon(
+            //       fiftyTwoWeeks
+            //           ? provider.openIndexFiftyTwoWeeks == index
+            //               ? Icons.arrow_upward_rounded
+            //               : Icons.arrow_downward_rounded
+            //           : provider.openIndex == index
+            //               ? Icons.arrow_upward_rounded
+            //               : Icons.arrow_downward_rounded,
+            //       size: 16,
+            //     ),
+            //   ),
+            // )
           ],
         ),
         AnimatedSize(
           duration: const Duration(milliseconds: 150),
           child: Container(
-            height: fiftyTwoWeeks
-                ? provider.openIndexFiftyTwoWeeks == index
-                    ? null
-                    : 0
-                : provider.openIndex == index
-                    ? null
-                    : 0,
+            // height: provider.openIndex == index ? null : 0,
+            height: isOpen ? null : 0,
             margin: EdgeInsets.only(
-              top: fiftyTwoWeeks
-                  ? provider.openIndexFiftyTwoWeeks == index
-                      ? 10.sp
-                      : 0
-                  : provider.openIndex == index
-                      ? 10.sp
-                      : 0,
-              bottom: fiftyTwoWeeks
-                  ? provider.openIndexFiftyTwoWeeks == index
-                      ? 10.sp
-                      : 0
-                  : provider.openIndex == index
-                      ? 10.sp
-                      : 0,
+              // top: provider.openIndex == index ? 10.sp : 0,
+              top: isOpen ? 10.sp : 0,
+              // bottom: provider.openIndex == index ? 10.sp : 0,
+              bottom: isOpen ? 10.sp : 0,
             ),
             child: Column(
               children: [

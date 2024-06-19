@@ -94,7 +94,7 @@ class MostActiveItem extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "${data.priceChange.toString()}(${data.percentageChange.toString()})%",
+                  "${data.priceChange.toString()}(${data.percentageChange.toString()}%)",
                   style: stylePTSansRegular(
                     fontSize: 12,
                     color: (data.percentageChange ?? 0) > 0

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/modals/dow_thirty_res.dart';
+import 'package:stocks_news_new/modals/fifty_two_weeks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -13,18 +13,18 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class SnP500Provider extends ChangeNotifier with AuthProviderBase {
+class FiftyTwoWeeksHighProvider extends ChangeNotifier with AuthProviderBase {
   int _openIndex = -1;
   int? get openIndex => _openIndex;
 
   // ************* GAP Up **************** //
   Status _status = Status.ideal;
-  List<Result>? _data;
+  List<FiftyTwoWeeksRes>? _data;
   String? _error;
   int _page = 1;
   Extra? _extra;
 
-  List<Result>? get data => _data;
+  List<FiftyTwoWeeksRes>? get data => _data;
   Extra? get extra => _extra;
   bool get canLoadMore => _page <= (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
@@ -43,7 +43,7 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
     _filterParams = params;
     _page = 1;
     notifyListeners();
-    getData();
+    getFiftyTwoWeekHigh();
   }
 
   void applySorting(String sortingKey) {
@@ -56,7 +56,7 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
     Utils()
         .showLog("Sorting Data ===   $sortingKey   ${_filterParams?.sorting}");
-    getData();
+    getFiftyTwoWeekHigh();
   }
 
   void exchangeFilter(String item) {
@@ -66,7 +66,7 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
     }
     _page = 1;
     notifyListeners();
-    getData();
+    getFiftyTwoWeekHigh();
   }
 
   void sectorFilter(String item) {
@@ -77,7 +77,7 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
     _page = 1;
 
     notifyListeners();
-    getData();
+    getFiftyTwoWeekHigh();
   }
 
   void industryFilter(String item) {
@@ -87,10 +87,10 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
     }
     _page = 1;
     notifyListeners();
-    getData();
+    getFiftyTwoWeekHigh();
   }
 
-  void setStatus(status) {
+  void setStatusUp(status) {
     _status = status;
     notifyListeners();
   }
@@ -100,22 +100,18 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future onRefresh() async {
-    getData();
+  Future onRefreshGapUp() async {
+    getFiftyTwoWeekHigh();
   }
 
-  Future getData({loadMore = false}) async {
+  Future getFiftyTwoWeekHigh({loadMore = false}) async {
     if (loadMore) {
       _page++;
-      setStatus(Status.loadingMore);
+      setStatusUp(Status.loadingMore);
     } else {
       _page = 1;
-      setStatus(Status.loading);
+      setStatusUp(Status.loading);
     }
-    _openIndex = -1;
-    // _extraDown = null;
-    // _extraUp = null;
-
     try {
       Map request = {
         "token":
@@ -133,21 +129,19 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
         "sector": _filterParams?.sector?.join(",") ?? "",
         "sortBy": _filterParams?.sorting ?? "",
       };
-
       ApiResponse response = await apiRequest(
-        url: Apis.spFifty,
+        url: Apis.weekHighs,
         request: request,
         showProgress: false,
-        onRefresh: getData,
       );
 
       if (response.status) {
         _error = null;
         if (_page == 1) {
-          _data = dowThirtyResFromJson(jsonEncode(response.data));
+          _data = fiftyTwoWeeksResFromJson(jsonEncode(response.data));
           _extra = response.extra is Extra ? response.extra : null;
         } else {
-          _data?.addAll(dowThirtyResFromJson(jsonEncode(response.data)));
+          _data?.addAll(fiftyTwoWeeksResFromJson(jsonEncode(response.data)));
         }
       } else {
         if (_page == 1) {
@@ -156,11 +150,11 @@ class SnP500Provider extends ChangeNotifier with AuthProviderBase {
           // showErrorMessage(message: response.message);
         }
       }
-      setStatus(Status.loaded);
+      setStatusUp(Status.loaded);
     } catch (e) {
       _data = null;
       Utils().showLog(e.toString());
-      setStatus(Status.loaded);
+      setStatusUp(Status.loaded);
     }
   }
 }

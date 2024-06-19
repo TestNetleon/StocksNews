@@ -405,13 +405,6 @@ String containsSpecificPath(Uri uri) {
   }
 }
 
-List<FiltersDataItem> sortingArrayList = [
-  FiltersDataItem(key: "price_asc", value: "Price - low to high"),
-  FiltersDataItem(key: "price_desc", value: "Price - high to low"),
-  FiltersDataItem(key: "per_gain", value: "Percentage Gain"),
-  FiltersDataItem(key: "per_loose", value: "Percentage Loose"),
-];
-
 String extractLastPathComponent(Uri uri) {
   List<String> parts = uri.pathSegments;
 

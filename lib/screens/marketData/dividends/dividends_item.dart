@@ -76,13 +76,13 @@ class DividendsItem extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SpacerVertical(height: 5),
-                    Text(
-                      "${data.price}",
-                      style: stylePTSansBold(fontSize: 14),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    // const SpacerVertical(height: 5),
+                    // Text(
+                    //   "${data.price}",
+                    //   style: stylePTSansBold(fontSize: 14),
+                    //   maxLines: 1,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
                   ],
                 ),
               ),
@@ -213,6 +213,27 @@ class DividendsItem extends StatelessWidget {
                 //     value: "${data.date}",
                 //   ),
                 // ),
+                Visibility(
+                  visible: data.exchangeShortName != null,
+                  child: InnerRowItem(
+                    lable: "Price",
+                    value: "${data.price}",
+                  ),
+                ),
+                Visibility(
+                  visible: data.exchangeShortName != null,
+                  child: InnerRowItem(
+                    lable: "Price Change",
+                    value: "${data.priceChange}",
+                  ),
+                ),
+                Visibility(
+                  visible: data.exchangeShortName != null,
+                  child: InnerRowItem(
+                    lable: "Percentage Change",
+                    value: "${data.percentageChange}%",
+                  ),
+                ),
                 Visibility(
                   visible: data.exchangeShortName != null,
                   child: InnerRowItem(

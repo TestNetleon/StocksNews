@@ -16,6 +16,7 @@ import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/dow_30_provider.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
+import 'package:stocks_news_new/providers/fifty_two_weeks_high_provider.dart';
 import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_down_provider.dart';
@@ -535,6 +536,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MostPopularPennyStocksProviders()),
       ChangeNotifierProvider(create: (_) => CongressionalDetailProvider()),
       ChangeNotifierProvider(create: (_) => LeaderBoardProvider()),
+      ChangeNotifierProvider(create: (_) => FiftyTwoWeeksHighProvider()),
     ];
   }
 }
