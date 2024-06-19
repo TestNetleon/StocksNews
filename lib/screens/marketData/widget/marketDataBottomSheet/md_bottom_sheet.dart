@@ -44,33 +44,31 @@ class MdBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            Images.sorting,
-                            height: 18,
-                            width: 18,
-                            color: Colors.white,
-                          ),
-                          const SpacerHorizontal(width: 10),
-                          Text(
-                            "SORT",
-                            style: stylePTSansBold(color: Colors.white),
-                          ),
-                        ],
+                      Flexible(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              Images.sorting,
+                              height: 18,
+                              width: 18,
+                              color: Colors.white,
+                            ),
+                            const SpacerHorizontal(width: 10),
+                            Text(
+                              "SORT",
+                              style: stylePTSansBold(color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Visibility(
-                          visible: isSort,
-                          child: const Icon(
-                            Icons.circle,
-                            color: Colors.red,
-                            size: 12,
-                          ),
+                      Visibility(
+                        visible: isSort,
+                        child: const Icon(
+                          Icons.circle,
+                          color: Colors.red,
+                          size: 12,
                         ),
                       ),
                     ],
@@ -91,32 +89,30 @@ class MdBottomSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     // alignment: Alignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.filter_alt,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          const SpacerHorizontal(width: 10),
-                          Text(
-                            "FILTER",
-                            style: stylePTSansBold(color: Colors.white),
-                          ),
-                        ],
+                      Flexible(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.filter_alt,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            const SpacerHorizontal(width: 10),
+                            Text(
+                              "FILTER",
+                              style: stylePTSansBold(color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Visibility(
-                          visible: isFilter,
-                          child: const Icon(
-                            Icons.circle,
-                            color: Colors.red,
-                            size: 12,
-                          ),
+                      Visibility(
+                        visible: isFilter,
+                        child: const Icon(
+                          Icons.circle,
+                          color: Colors.red,
+                          size: 12,
                         ),
                       ),
                     ],
