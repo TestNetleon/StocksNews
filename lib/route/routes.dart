@@ -188,12 +188,13 @@ class Routes {
     Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}");
 
     if (routingData != null &&
-        (isValidUrl(routingData) ||
+        (
+            // isValidUrl(routingData) ||
             routingData.contains("stock-detail") ||
-            routingData.contains("login") ||
-            routingData.contains("sign-up") ||
-            routingData.contains("blog") ||
-            routingData.contains("news"))) {
+                routingData.contains("login") ||
+                routingData.contains("sign-up") ||
+                routingData.contains("blog") ||
+                routingData.contains("news"))) {
       Uri? uri = Uri.tryParse(routingData);
       if (uri != null) {
         return handleDeepLink(uri);
@@ -205,11 +206,9 @@ class Routes {
         false;
 
     if (isReferral) {
-      return MaterialPageRoute(
-        builder: (context) {
-          return const Splash();
-        },
-      );
+      return MaterialPageRoute(builder: (context) {
+        return const Splash();
+      });
     }
 
     Utils().showLog(

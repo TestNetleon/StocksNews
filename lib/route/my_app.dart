@@ -10,6 +10,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
@@ -49,8 +50,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (Platform.isIOS) _getAppLinks();
-      // _getAppLinks();
-
       checkFirebaseDeepLinks();
       setState(() {});
     });
@@ -106,7 +105,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           log("CODE HERE @@@++++=========>  $referralCode");
           Preference.saveReferral(referralCode);
           Timer(const Duration(seconds: 4), () {
-            signupSheet();
+            if (navigatorKey.currentContext!.read<UserProvider>().user ==
+                null) {
+              signupSheet();
+            }
           });
           FirebaseAnalytics.instance.logEvent(
             name: 'referrals',
@@ -122,7 +124,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
-    Utils().showLog("**** is in foreground ==>  $isAppInForeground");
+    // Utils().showLog("**** is in foreground ==>  $isAppInForeground");
     setState(() {
       _appLifecycleState = state;
     });
@@ -144,11 +146,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } catch (e) {
       print('Error Receiving referral $e');
     }
+
     _appLinks.uriLinkStream.listen((event) {
+      bool isRef = event.toString().contains("/install") &&
+          event.toString().contains(".page.ling");
+      if (isRef) return;
+
       String type = containsSpecificPath(event);
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
-        Timer(const Duration(seconds: 5), () {
+        Timer(const Duration(seconds: 4), () {
           navigation(uri: event, slug: slug, type: type, fromBackground: true);
         });
       } else {
