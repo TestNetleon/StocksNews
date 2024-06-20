@@ -235,7 +235,7 @@ void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
 
   if (fromBackground) {
     Timer(const Duration(seconds: 5), () {
-      navigation(uri: uri, slug: slug, type: type, fromBackground: true);
+      navigation(uri: uri, slug: slug, type: type, fromBackground: false);
     });
   } else {
     Timer(const Duration(seconds: 1), () {
@@ -262,7 +262,7 @@ void navigation({
   if (slug == null && type == null) {
     return;
   }
-
+  popHome = true;
   Utils().showLog("----$userPresent---");
   if (type == "blog") {
     if (fromBackground) {
