@@ -43,6 +43,7 @@ class _HomeSplashState extends State<HomeSplash> {
       if (value == null) {
         Navigator.pushNamedAndRemoveUntil(context, Tabs.path, (route) => false);
       } else {
+        popHome = true;
         _navigateToRequiredScreen(value.data);
       }
     });
@@ -103,7 +104,6 @@ class _HomeSplashState extends State<HomeSplash> {
               message: "Welcome to the Home Screen!",
               title: "Alert",
               icon: Images.alertPopGIF);
-
           return;
         }
         isPhone ? signupSheet() : signupSheetTablet();
@@ -132,7 +132,11 @@ class _HomeSplashState extends State<HomeSplash> {
           arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
-        referLogin();
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        Timer(const Duration(milliseconds: 300), () {
+          referLogin();
+        });
       } else {
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,

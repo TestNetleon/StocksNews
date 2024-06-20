@@ -156,7 +156,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
         Timer(const Duration(seconds: 4), () {
-          navigation(uri: event, slug: slug, type: type, fromBackground: true);
+          navigation(uri: event, slug: slug, type: type, fromBackground: false);
         });
       } else {
         Timer(const Duration(seconds: 1), () {
