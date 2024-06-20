@@ -347,6 +347,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             Navigator.pushNamed(
                 navigatorKey.currentContext!, SignUpSuccess.path);
           } else {
+            navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+
             Navigator.pushNamedAndRemoveUntil(
               navigatorKey.currentContext!,
               Tabs.path,
@@ -428,6 +430,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             Navigator.pushNamed(
                 navigatorKey.currentContext!, SignUpSuccess.path);
           } else {
+            navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+
             Navigator.pushNamedAndRemoveUntil(
               navigatorKey.currentContext!,
               Tabs.path,
@@ -613,6 +617,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance
             .getDynamicLink(_user?.referralCode);
         if (dontPop == null) {
@@ -629,6 +634,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
           // Navigator.pushNamedAndRemoveUntil(
           //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+
           Navigator.pop(navigatorKey.currentContext!);
           Navigator.pop(navigatorKey.currentContext!);
         } else {
