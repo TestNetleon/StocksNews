@@ -250,7 +250,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'We have sent the verification code \nto your phone number',
+                    'We have sent the verification code \nto your phone number ${widget.phone}',
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),

@@ -4,7 +4,9 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -18,9 +20,11 @@ class DynamicLinkService {
 // Create new dynamic link
   void createDynamicLink(code) async {
     log("Refere code = $code");
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
 
     final dynamicLinkParams = DynamicLinkParameters(
-      link: Uri.parse("https://app.stocks.news/install?code=$code"),
+      link: Uri.parse(
+          "https://app.stocks.news/install?code=$code&_id=${user?.userId}"),
       // link: Uri.parse(
       //     "https://app.stocks.news/news/nasdaq-mints-record-breaking-week-wall-streets-new-fast-food-darling-jumps-300"),
       uriPrefix: "https://stocksnews.page.link",
@@ -46,8 +50,10 @@ class DynamicLinkService {
   }
 
   Future<Uri> getDynamicLink(code) async {
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
     final dynamicLinkParams = DynamicLinkParameters(
-      link: Uri.parse("https://app.stocks.news/install?code=$code"),
+      link: Uri.parse(
+          "https://app.stocks.news/install?code=$code&_id=${user?.userId}"),
       // link: Uri.parse(
       //     "https://app.stocks.news/news/nasdaq-mints-record-breaking-week-wall-streets-new-fast-food-darling-jumps-300"),
       uriPrefix: "https://stocksnews.page.link",

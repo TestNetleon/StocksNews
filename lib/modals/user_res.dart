@@ -5,6 +5,7 @@ UserRes userResFromJson(String str) => UserRes.fromJson(json.decode(str));
 String userResToJson(UserRes data) => json.encode(data.toJson());
 
 class UserRes {
+  final String userId;
   String? email;
   String? phone;
   final String? roleId;
@@ -25,15 +26,16 @@ class UserRes {
   bool? signupStatus;
 
   UserRes({
-    required this.email,
-    required this.phone,
-    required this.roleId,
-    required this.emailOtp,
-    required this.phoneOtp,
-    required this.otp,
-    required this.username,
-    required this.token,
-    required this.type,
+    this.email,
+    this.phone,
+    this.roleId,
+    this.emailOtp,
+    this.phoneOtp,
+    this.otp,
+    this.username,
+    this.token,
+    required this.userId,
+    this.type,
     this.notificationSeen = false,
     this.image,
     this.name,
@@ -47,6 +49,7 @@ class UserRes {
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
         email: json["email"],
+        userId: json['_id'],
         phone: json["phone"],
         roleId: json["role_id"],
         emailOtp: json["email_otp"],
@@ -68,6 +71,7 @@ class UserRes {
   Map<String, dynamic> toJson() => {
         "email": email,
         "phone": phone,
+        "_id": userId,
         "role_id": roleId,
         "email_otp": emailOtp,
         "phone_otp": phoneOtp,
