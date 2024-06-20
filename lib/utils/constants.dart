@@ -302,9 +302,7 @@ extension IntExtention on num {
 
 extension CurrencyFormat on num {
   String toCurrency() {
-    if (this == 0) {
-      return '0';
-    }
+    if (this == 0) return '0';
 
     String result = abs().toStringAsFixed(2); // Format with 2 decimal places
 
@@ -324,7 +322,7 @@ extension CurrencyFormat on num {
 }
 
 String containsSpecificPath(Uri uri) {
-  Utils().showLog("-----contain path $uri");
+  Utils().showLog("-----contain path * $uri");
   if (uri.path.contains('/blog/')) {
     return "blog";
   } else if (uri.path.contains('/stock-detail')) {
