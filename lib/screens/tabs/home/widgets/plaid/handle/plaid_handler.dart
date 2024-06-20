@@ -156,7 +156,7 @@ class PlaidLinkHandler {
       "user": {"client_user_id": userRes?.token ?? "N/A", "phone_number": ""},
       "client_name": "Stocks.News",
       "products": ["investments"],
-      "transactions": {"days_requested": 730},
+      // "transactions": {"days_requested": 730},
       "country_codes": ["US"],
       "language": "en",
       "android_package_name": "com.stocks.news"

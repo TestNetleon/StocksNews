@@ -15,6 +15,7 @@ import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 // ignore: unused_import
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 // ignore: unused_import
@@ -36,7 +37,13 @@ class Tabs extends StatefulWidget {
   static const String path = "Tabs";
   final int index;
   final String? inAppMsgId;
-  const Tabs({super.key, this.index = 0, this.inAppMsgId});
+  final bool showRef;
+  const Tabs({
+    super.key,
+    this.index = 0,
+    this.inAppMsgId,
+    this.showRef = false,
+  });
 
   @override
   State<Tabs> createState() => _TabsState();
@@ -54,6 +61,7 @@ class _TabsState extends State<Tabs> {
         _selectedIndex = widget.index;
         activeContainerApiCalls(currentIndex: _selectedIndex);
       });
+      if (widget.showRef) referLogin();
     });
   }
 

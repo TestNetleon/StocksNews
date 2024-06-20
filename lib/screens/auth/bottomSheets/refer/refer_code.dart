@@ -19,6 +19,7 @@ import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
+import '../../../contactUs/contact_us_item.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'refer_otp.dart';
 
@@ -218,10 +219,7 @@ class _ReferLoginState extends State<ReferLogin> {
                       const SpacerVertical(height: 30),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          "Real Name",
-                          style: stylePTSansRegular(),
-                        ),
+                        child: showAsteriskText(text: "Real Name"),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
@@ -243,10 +241,7 @@ class _ReferLoginState extends State<ReferLogin> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          "Display Name",
-                          style: stylePTSansRegular(),
-                        ),
+                        child: showAsteriskText(text: "Display Name"),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
@@ -263,17 +258,14 @@ class _ReferLoginState extends State<ReferLogin> {
                           placeholder: "Enter your display name",
                           keyboardType: TextInputType.name,
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(60)
+                            LengthLimitingTextInputFormatter(10)
                           ],
                           textCapitalization: TextCapitalization.words,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          "Phone Number",
-                          style: stylePTSansRegular(),
-                        ),
+                        child: showAsteriskText(text: "Phone Number"),
                       ),
                       IntrinsicHeight(
                         child: Row(

@@ -70,7 +70,8 @@ List<DrawerRes> marketData = [
       Navigator.pushNamed(
         navigatorKey.currentContext!,
         Tabs.path,
-        arguments: 2,
+        // arguments: 2,
+        arguments: {"index": 2},
       );
     },
   ),
@@ -82,7 +83,8 @@ List<DrawerRes> marketData = [
       Navigator.pushNamed(
         navigatorKey.currentContext!,
         Tabs.path,
-        arguments: 3,
+        // arguments: 3,
+        arguments: {"index": 3},
       );
     },
   ),
@@ -368,7 +370,7 @@ List<DrawerRes> aboutTiles = [
     iconData: Icons.leaderboard_outlined,
     text: "Refer and Earn",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, ReferAFriend.path);
+      // Navigator.pushNamed(navigatorKey.currentContext!, ReferAFriend.path);
     },
   ),
   DrawerRes(

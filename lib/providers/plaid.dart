@@ -206,7 +206,7 @@ class PlaidProvider extends ChangeNotifier {
         // getPlaidPortfolioData();
 
         if (!fromDrawer) {
-          navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
 
           Navigator.pushNamed(
               navigatorKey.currentContext!, HomePlaidAdded.path);

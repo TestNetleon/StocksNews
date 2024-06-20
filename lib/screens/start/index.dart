@@ -239,8 +239,7 @@ class _StartIndexState extends State<StartIndex> {
             ),
             GestureDetector(
               onTap: () {
-                Preference.setFirstTime(false);
-
+                Preference.setShowIntro(false);
                 Navigator.pushNamedAndRemoveUntil(
                     context, Tabs.path, (route) => false);
               },

@@ -97,7 +97,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _richText(text: "Name"),
+          showAsteriskText(text: "Name"),
           const SpacerVertical(height: 5),
           ThemeInputField(
             textCapitalization: TextCapitalization.words,
@@ -112,7 +112,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
           //   style: stylePTSansRegular(fontSize: 14),
           // ),
 
-          _richText(text: "Email"),
+          showAsteriskText(text: "Email"),
 
           const SpacerVertical(height: 5),
           ThemeInputField(
@@ -142,7 +142,7 @@ class _ContactUsItemState extends State<ContactUsItem> {
           //   "Comments",
           //   style: stylePTSansRegular(fontSize: 14),
           // ),
-          _richText(text: "Comment"),
+          showAsteriskText(text: "Comment"),
 
           const SpacerVertical(height: 5),
           ThemeInputField(
@@ -162,28 +162,28 @@ class _ContactUsItemState extends State<ContactUsItem> {
       ),
     );
   }
+}
 
-  Widget _richText({required String text, bool showAsterisk = true}) {
-    return OptionalParent(
-      addParent: showAsterisk,
-      parentBuilder: (child) {
-        return RichText(
-          text: TextSpan(
-            text: text,
-            style: stylePTSansRegular(fontSize: 14),
-            children: [
-              TextSpan(
-                text: ' *',
-                style: stylePTSansBold(fontSize: 14, color: ThemeColors.sos),
-              ),
-            ],
-          ),
-        );
-      },
-      child: Text(
-        text,
-        style: stylePTSansRegular(fontSize: 14),
-      ),
-    );
-  }
+Widget showAsteriskText({required String text, bool showAsterisk = true}) {
+  return OptionalParent(
+    addParent: showAsterisk,
+    parentBuilder: (child) {
+      return RichText(
+        text: TextSpan(
+          text: text,
+          style: stylePTSansRegular(fontSize: 14),
+          children: [
+            TextSpan(
+              text: ' *',
+              style: stylePTSansBold(fontSize: 15, color: ThemeColors.sos),
+            ),
+          ],
+        ),
+      );
+    },
+    child: Text(
+      text,
+      style: stylePTSansRegular(fontSize: 15),
+    ),
+  );
 }

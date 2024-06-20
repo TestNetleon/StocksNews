@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -30,11 +31,11 @@ bool isEven(index) {
 
 class Utils {
   void showLog(data) {
-    // if (kDebugMode) {
-    print("==================");
-    log("$data");
-    print("==================");
-    // }
+    if (kDebugMode) {
+      print("==================");
+      log("$data");
+      print("==================");
+    }
   }
 }
 
@@ -207,6 +208,8 @@ void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
   String type = containsSpecificPath(uri);
   String slug = extractLastPathComponent(uri);
 
+  log("SLUG == > $slug");
+
   if (slug == 'install') {
     String? referralCode = uri.queryParameters['code'];
     if (referralCode == null || referralCode == '') {
@@ -218,24 +221,28 @@ void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
     if (referralCode == null || referralCode == '') {
       referralCode = uri.queryParameters['referral_code'];
     }
-
     if (referralCode != null && referralCode != "") {
       Preference.saveReferral(referralCode);
     }
+    // log("SLUG FOUND ==> RETURNING NOW");
+    Timer(const Duration(seconds: 4), () {
+      signupSheet();
+    });
+    return;
   }
 
   if (fromBackground) {
     Timer(const Duration(seconds: 5), () {
-      _navigation(uri: uri, slug: slug, type: type, fromBackground: true);
+      navigation(uri: uri, slug: slug, type: type, fromBackground: true);
     });
   } else {
     Timer(const Duration(seconds: 1), () {
-      _navigation(uri: uri, slug: slug, type: type);
+      navigation(uri: uri, slug: slug, type: type);
     });
   }
 }
 
-void _navigation({
+void navigation({
   String? type,
   required Uri uri,
   String? slug,
@@ -243,7 +250,7 @@ void _navigation({
 }) async {
   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
   String slugForTicker = extractSymbolValue(uri);
-  Utils().showLog("slug for ticker $slugForTicker");
+  // Utils().showLog("slug for ticker $slugForTicker");
   bool userPresent = false;
 
   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();

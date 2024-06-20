@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -185,7 +186,7 @@ class Routes {
   static Route getRouteGenerate(RouteSettings settings) {
     var routingData = settings.name;
     Utils().showLog("GENERATED ROUT 1 ***=> $settings ,  ");
-    Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}}");
+    Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}");
 
     if (routingData != null &&
         (isValidUrl(routingData) ||
@@ -199,12 +200,13 @@ class Routes {
         return handleDeepLink(uri);
       }
     }
+
     bool isReferral = routingData?.contains("page.link") ??
         routingData?.contains("/install") ??
         false;
 
     if (isReferral) {
-      return MaterialWithModalsPageRoute(
+      return MaterialPageRoute(
         builder: (context) {
           return const Splash();
         },
@@ -217,7 +219,7 @@ class Routes {
 
     switch (routingData) {
       case TCandPolicy.path:
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return TCandPolicy(
               policyType: PolicyType.aboutUs,
@@ -226,19 +228,22 @@ class Routes {
           },
         );
       case StocksIndex.path:
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return StocksIndex(inAppMsgId: settings.arguments as String?);
           },
         );
       case NewsDetails.path:
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
-            var data = settings.arguments as Map<String, dynamic>;
+            var arguments = settings.arguments as Map<String, dynamic>;
+            String? slug = arguments['slug'] as String?;
+            String? inAppMsgId = arguments['inAppMsgId'] as String?;
+            String? notificationId = arguments['notificationId'] as String?;
             return NewsDetails(
-              slug: data['slug'],
-              inAppMsgId: data['inAppMsgId'],
-              notificationId: data['notificationId'],
+              slug: slug,
+              inAppMsgId: inAppMsgId,
+              notificationId: notificationId,
             );
             // return NewsDetails(
             //   slug: settings.arguments["slug"],
@@ -246,7 +251,7 @@ class Routes {
           },
         );
       // case StockDetails.path:
-      //   return MaterialWithModalsPageRoute(
+      //   return MaterialPageRoute(
       //     builder: (context) {
       //       final arguments = settings.arguments as Map<String, dynamic>?;
       //       return StockDetails(
@@ -258,19 +263,20 @@ class Routes {
       //     },
       //   );
       case StockDetail.path:
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
+
             return StockDetail(
-              symbol: arguments!['slug'],
-              inAppMsgId: arguments['inAppMsgId'],
-              notificationId: arguments['notificationId'],
+              symbol: arguments?['slug'],
+              inAppMsgId: arguments?['inAppMsgId'],
+              notificationId: arguments?['notificationId'],
             );
             // return StockDetails(symbol: settings.arguments as String);
           },
         );
       // case StockDetailiFrameItem.path:
-      //   return MaterialWithModalsPageRoute(
+      //   return MaterialPageRoute(
       //     builder: (context) {
       //       return StockDetailiFrameItem(
       //           type: settings.arguments as CommentType);
@@ -282,7 +288,7 @@ class Routes {
         BlogsType? type = arguments?['type'] as BlogsType?;
         String? inAppMsgId = arguments?['inAppMsgId'] as String?;
         String? notificationId = arguments?['notificationId'] as String?;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return Blog(
               type: type ?? BlogsType.blog,
@@ -293,28 +299,30 @@ class Routes {
           },
         );
       case BlogDetail.path:
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             final arguments = settings.arguments as Map<String, dynamic>?;
             return BlogDetail(
-              slug: arguments!['slug'],
-              inAppMsgId: arguments['inAppMsgId'],
-              notificationId: arguments['notificationId'],
+              slug: arguments?['slug'],
+              inAppMsgId: arguments?['inAppMsgId'],
+              notificationId: arguments?['notificationId'],
             );
           },
         );
       case Tabs.path:
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
-            return Tabs(index: (settings.arguments as int?) ?? 0);
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            bool showRef = (arguments?["showRef"] as bool?) ?? false;
+            int index = (arguments?["index"] as int?) ?? 0;
+            return Tabs(index: index, showRef: showRef);
           },
         );
       case NewsAuthorIndex.path:
         final arguments = settings.arguments as Map<String, dynamic>;
-
         DetailListType data = arguments["data"] as DetailListType;
         BlogsType type = arguments["type"] as BlogsType;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return NewsAuthorIndex(
               data: data,
@@ -328,7 +336,7 @@ class Routes {
         String name = arguments["name"] as String;
         String titleName = arguments["titleName"] as String;
 
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return SectorIndustry(
               name: name,
@@ -340,7 +348,7 @@ class Routes {
       case GainersLosersIndex.path:
         final arguments = settings.arguments as Map<String, dynamic>;
         StocksType type = arguments["type"] as StocksType;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return GainersLosersIndex(type: type);
           },
@@ -348,7 +356,7 @@ class Routes {
       case GapUpDownStocks.path:
         // final arguments = settings.arguments as Map<String, dynamic>;
         // StocksType type = arguments["type"] as StocksType;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return const GapUpDownStocks();
           },
@@ -356,7 +364,7 @@ class Routes {
       case PennyStocks.path:
         // final arguments = settings.arguments as Map<String, dynamic>;
         // StocksType type = arguments["type"] as StocksType;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return const PennyStocks();
           },
@@ -369,7 +377,7 @@ class Routes {
         final companyName = arguments['companyName'] as String?;
         final reportingName = arguments['reportingName'] as String?;
 
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return InsiderDetailsType(
               companySlug: companySlug ?? "",
@@ -383,7 +391,7 @@ class Routes {
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? inAppMsgId = arguments?['inAppMsgId'] as String?;
         String? notificationId = arguments?['notificationId'] as String?;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return BlogIndexNew(
               inAppMsgId: inAppMsgId,
@@ -394,14 +402,18 @@ class Routes {
       case CongressionalDetail.path:
         final arguments = settings.arguments as Map<String, dynamic>?;
         String slug = arguments?['slug'] as String;
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) {
             return CongressionalDetail(slug: slug);
           },
         );
+
+      default:
+        Splash();
     }
+
     // return _errorRoute();
-    return MaterialWithModalsPageRoute(
+    return MaterialPageRoute(
       builder: (context) {
         return const Splash();
       },
@@ -416,11 +428,11 @@ class Routes {
 
     switch (type) {
       case "blog":
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) => BlogDetail(slug: slug),
         );
       case "news":
-        return MaterialWithModalsPageRoute(
+        return MaterialPageRoute(
           builder: (context) => NewsDetails(slug: slug),
         );
       case "stock_detail":
@@ -428,7 +440,7 @@ class Routes {
           builder: (context) => StockDetail(symbol: slug),
         );
       case "dashboard":
-        return MaterialWithModalsPageRoute(builder: (context) => const Tabs());
+        return MaterialPageRoute(builder: (context) => const Tabs());
       case "login":
         Timer(const Duration(seconds: 1), () async {
           bool userPresent = false;
@@ -452,12 +464,13 @@ class Routes {
         });
         return MaterialPageRoute(builder: (context) => const Tabs());
       default:
+        log("HERE ");
         return MaterialPageRoute(builder: (context) => const Tabs());
     }
   }
 
   // static Route _errorRoute() {
-  //   return MaterialWithModalsPageRoute(
+  //   return MaterialPageRoute(
   //       builder: (context) => BaseContainer(
   //             body: Center(
   //               child: Text(

@@ -141,7 +141,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
             Visibility(
               visible: widget.companyName != "" && widget.reportingName == "",
               child: ScreenTitle(
-                title: "Insider Trading- ${widget.companyName}",
+                title: "Insider Trading - ${widget.companyName}",
                 subTitle: provider.textRes?.subTitle,
                 optionalWidget: GestureDetector(
                   onTap: () => _filterClick(
@@ -158,7 +158,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
             Visibility(
               visible: widget.reportingName != "",
               child: ScreenTitle(
-                title: "Insider Trading- ${widget.reportingName}",
+                title: "Insider Trading - ${widget.reportingName}",
                 subTitle: provider.textResI?.subTitle,
                 optionalWidget: GestureDetector(
                   onTap: () => _filterClick(

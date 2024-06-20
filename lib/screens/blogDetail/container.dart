@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -15,6 +17,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
@@ -102,6 +105,20 @@ class BlogDetailContainer extends StatelessWidget {
                     HtmlWidget(
                       onTapImage: (data) {
                         Utils().showLog(data.sources.first.url);
+                      },
+                      onTapUrl: (url) async {
+                        bool a = false;
+                        if (Platform.isAndroid) {
+                          a = await launchUrl(Uri.parse(url));
+                          Utils().showLog("clicked ur---$url, return value $a");
+                        } else {
+                          a = true;
+
+                          Uri uri = Uri.parse(url);
+                          iOSNavigate(uri);
+                          Utils().showLog("iOS navigation");
+                        }
+                        return a;
                       },
                       // customWidgetBuilder: (element) {
                       //   if (element.localName == 'img') {

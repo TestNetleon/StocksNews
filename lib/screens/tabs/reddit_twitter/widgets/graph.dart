@@ -240,7 +240,12 @@ class SocialSentimentsGraph extends StatelessWidget {
 
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, Tabs.path, arguments: 1);
+              Navigator.pushNamed(
+                context,
+                Tabs.path,
+                // arguments: 1,
+                arguments: {"index": 1},
+              );
             },
             child: Text(
               "See which stocks are bearish vs bullish",

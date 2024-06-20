@@ -57,7 +57,7 @@ class Apis {
   static const searchWithNews = "/search_with_news";
   static const getMostSearch = "/most-search-symbol";
   static const latestNews = "/latest-news";
-  static const trending = "/trending";
+  // static const trending = "/trending";
   static const insiderTrading = "/insider-trading";
   static const watchlist = "/watchlist";
   static const addWatchlist = "/add-watchlist";

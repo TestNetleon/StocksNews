@@ -95,6 +95,8 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:stocks.news</string>
+		<string>applinks:stocksnews.page.link</string>
+		<string>applinks:app.stocks.news</string>
 	</array>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>

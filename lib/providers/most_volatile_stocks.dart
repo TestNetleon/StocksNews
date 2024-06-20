@@ -20,7 +20,6 @@ class MostVolatileStocksProvider extends ChangeNotifier with AuthProviderBase {
   int _page = 1;
   Extra? _extra;
   List<MostActiveStocksRes>? _data;
-
   List<MostActiveStocksRes>? get data => _data;
 
   Extra? get extra => _extra;
