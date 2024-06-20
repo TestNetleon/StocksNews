@@ -265,27 +265,55 @@ void navigation({
 
   Utils().showLog("----$userPresent---");
   if (type == "blog") {
-    Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-            builder: (context) => BlogDetail(
-                  // id: "",
-                  slug: slug,
-                )));
+    if (fromBackground) {
+      Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => BlogDetail(
+                    // id: "",
+                    slug: slug,
+                  )));
+    } else {
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => BlogDetail(
+                    // id: "",
+                    slug: slug,
+                  )));
+    }
   } else if (type == "news") {
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => NewsDetails(
-          slug: slug,
-        ),
-      ),
-    );
-  } else if (type == "stock_detail") {
-    Navigator.pushReplacement(
+    if (fromBackground) {
+      Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-            builder: (context) => StockDetail(symbol: slugForTicker)));
+          builder: (context) => NewsDetails(
+            slug: slug,
+          ),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => NewsDetails(
+            slug: slug,
+          ),
+        ),
+      );
+    }
+  } else if (type == "stock_detail") {
+    if (fromBackground) {
+      Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => StockDetail(symbol: slugForTicker)));
+    } else {
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => StockDetail(symbol: slugForTicker)));
+    }
   } else if (type == "login") {
     if (userPresent) {
       if (fromBackground) {

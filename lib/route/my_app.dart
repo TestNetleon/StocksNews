@@ -48,7 +48,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (Platform.isIOS) _getAppLinks();
+      _getAppLinks();
+      // _getAppLinks();
+
       checkFirebaseDeepLinks();
       setState(() {});
     });
@@ -147,7 +149,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
         Timer(const Duration(seconds: 5), () {
-          navigation(uri: event, slug: slug, type: type);
+          navigation(uri: event, slug: slug, type: type, fromBackground: true);
         });
       } else {
         Timer(const Duration(seconds: 1), () {
