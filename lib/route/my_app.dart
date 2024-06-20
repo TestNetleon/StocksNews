@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (Platform.isIOS) _getAppLinks();
+      // if (Platform.isIOS) _getAppLinks();
       // Timer(const Duration(milliseconds: 7500), () {
       //   _checkForConnection();
       // });
