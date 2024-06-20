@@ -4,14 +4,24 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preference {
-  static Future<bool> setFirstTime(bool isFirstTime) async {
+  static Future<bool> setShowIntro(bool isFirstTime) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setBool("@firstTime", isFirstTime);
   }
 
-  static Future<bool> getFirstTime() async {
+  static Future<bool> getShowIntro() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getBool("@firstTime") ?? true;
+  }
+
+  static Future<bool> setIsFirstOpen(bool isFirstTime) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.setBool("@firstOpen", isFirstTime);
+  }
+
+  static Future<bool> isFirstOpen() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool("@firstOpen") ?? true;
   }
 
   static Future<bool> isLoggedIn() async {

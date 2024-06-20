@@ -224,7 +224,10 @@ void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
     if (referralCode != null && referralCode != "") {
       Preference.saveReferral(referralCode);
     }
-    log("SLUG FOUND ==> RETURNING NOW");
+    // log("SLUG FOUND ==> RETURNING NOW");
+    Timer(const Duration(seconds: 4), () {
+      signupSheet();
+    });
     return;
   }
 
