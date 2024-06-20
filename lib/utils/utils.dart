@@ -257,6 +257,10 @@ void navigation({
   if (await provider.checkForUser()) {
     userPresent = true;
   }
+  if (slug == null && type == null) {
+    return;
+  }
+
   Utils().showLog("----$userPresent---");
   if (type == "blog") {
     Navigator.push(
