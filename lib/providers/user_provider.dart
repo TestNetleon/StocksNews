@@ -337,11 +337,22 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             await notificationProvider.getData(showProgress: false);
           }
         } else {
-          // kDebugMode ? Preference.setFirstTime(true) : null;
-          Preference.setFirstTime(false);
-
-          Navigator.pushNamedAndRemoveUntil(
-              navigatorKey.currentContext!, Tabs.path, (route) => false);
+          // kDebugMode ? Preference.setShowIntro(true) : null;
+          Preference.setShowIntro(false);
+          // Navigator.pushNamedAndRemoveUntil(
+          //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+          if (_user?.signupStatus ?? false) {
+            shareUri = await DynamicLinkService.instance
+                .getDynamicLink(_user?.referralCode);
+            Navigator.pushNamed(
+                navigatorKey.currentContext!, SignUpSuccess.path);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!,
+              Tabs.path,
+              (route) => false,
+            );
+          }
         }
       } else {
         // showErrorMessage(message: response.message);
@@ -397,8 +408,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         Preference.saveUser(response.data);
         shareUri = await DynamicLinkService.instance
             .getDynamicLink(_user?.referralCode);
-        // Navigator.pushNamedAndRemoveUntil(
-        //     navigatorKey.currentContext!, Tabs.path, (route) => false);
         if (dontPop == null) {
           Navigator.pop(navigatorKey.currentContext!);
           if (state == "compare") {
@@ -411,12 +420,20 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             await notificationProvider.getData(showProgress: false);
           }
         } else {
-          Preference.setFirstTime(false);
-          Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!,
-            Tabs.path,
-            (route) => false,
-          );
+          Preference.setShowIntro(false);
+
+          if (_user?.signupStatus ?? false) {
+            shareUri = await DynamicLinkService.instance
+                .getDynamicLink(_user?.referralCode);
+            Navigator.pushNamed(
+                navigatorKey.currentContext!, SignUpSuccess.path);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              navigatorKey.currentContext!,
+              Tabs.path,
+              (route) => false,
+            );
+          }
         }
       } else {
         // showErrorMessage(message: response.message);
@@ -544,12 +561,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
       if (response.status) {
         _user = UserRes.fromJson(response.data);
-        // Preference.saveUser(response.data);
-        // _navigateToRequiredScreen(response);
         Preference.saveUser(response.data);
-
-        // kDebugMode ? Preference.setFirstTime(true) : null;
-        Preference.setFirstTime(false);
+        Preference.setShowIntro(false);
         shareUri = await DynamicLinkService.instance
             .getDynamicLink(_user?.referralCode);
         Navigator.pushNamed(navigatorKey.currentContext!, SignUpSuccess.path);
@@ -619,8 +632,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           Navigator.pop(navigatorKey.currentContext!);
           Navigator.pop(navigatorKey.currentContext!);
         } else {
-          // kDebugMode ? Preference.setFirstTime(true) : null;
-          Preference.setFirstTime(false);
+          // kDebugMode ? Preference.setShowIntro(true) : null;
+          Preference.setShowIntro(false);
 
           Navigator.pushNamedAndRemoveUntil(
               navigatorKey.currentContext!, Tabs.path, (route) => false);

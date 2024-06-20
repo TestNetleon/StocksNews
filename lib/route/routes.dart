@@ -200,6 +200,7 @@ class Routes {
         return handleDeepLink(uri);
       }
     }
+
     bool isReferral = routingData?.contains("page.link") ??
         routingData?.contains("/install") ??
         false;
@@ -311,12 +312,14 @@ class Routes {
       case Tabs.path:
         return MaterialPageRoute(
           builder: (context) {
-            return Tabs(index: (settings.arguments as int?) ?? 0);
+            final arguments = settings.arguments as Map<String, dynamic>?;
+            bool showRef = (arguments?["showRef"] as bool?) ?? false;
+            int index = (arguments?["index"] as int?) ?? 0;
+            return Tabs(index: index, showRef: showRef);
           },
         );
       case NewsAuthorIndex.path:
         final arguments = settings.arguments as Map<String, dynamic>;
-
         DetailListType data = arguments["data"] as DetailListType;
         BlogsType type = arguments["type"] as BlogsType;
         return MaterialPageRoute(

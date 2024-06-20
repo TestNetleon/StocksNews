@@ -65,7 +65,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   // }
 
   void _callAPI() async {
-    bool firstTime = await Preference.getFirstTime();
+    bool firstTime = await Preference.getShowIntro();
     if (firstTime) {
       getWelcomeData();
     }
@@ -100,7 +100,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   Future _navigateToRequiredScreen() async {
-    bool firstTime = await Preference.getFirstTime();
+    bool firstTime = await Preference.getShowIntro();
 
     if (firstTime) {
       if (welcome?.isEmpty == true || welcome == null) {

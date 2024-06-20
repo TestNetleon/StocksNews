@@ -10,17 +10,10 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
-import 'package:stocks_news_new/screens/blogDetail/index.dart';
-import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
-import 'package:stocks_news_new/screens/stockDetail/index.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 // import 'package:stocks_news_new/utils/dialogs.dart';
@@ -33,13 +26,7 @@ final _appLinks = AppLinks();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
-  final String? initialPath;
-  final String? slug;
-  const MyApp({
-    required this.initialPath,
-    required this.slug,
-    super.key,
-  });
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -62,11 +49,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (Platform.isIOS) _getAppLinks();
-      // Timer(const Duration(milliseconds: 7500), () {
-      //   _checkForConnection();
-      // });
-      // checkFirebaseDeepLinks();
-      // setState(() {});
+      checkFirebaseDeepLinks();
+      setState(() {});
     });
   }
 
@@ -74,28 +58,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String? slug;
 
   void checkFirebaseDeepLinks() async {
-    Utils().showLog("Checking firebase deep linking....");
-    // Check if you received the link via getInitialLink first
-
-    FirebaseDynamicLinks.instance.onLink.listen(
-      (pendingDynamicLinkData) {
-        // Set up the onLink event listener next as it may be received here
-        final Uri deepLink = pendingDynamicLinkData.link;
-        // Example of using the dynamic link to push the user to a different screen
-        // Navigator.pushNamed(context, deepLink.path);
-        log(
-          "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n\nn"}$deepLink${"\n\n"}",
-        );
-        // navigateDeepLinks(uri: deepLink);
-      },
-      onDone: () {
-        Utils().showLog("onDone ** => ${"\n\n"}");
-      },
-      onError: (error) {
-        Utils().showLog("onError ** => ${"\n\n"}$error${"\n\n"}");
-      },
-      cancelOnError: true,
-    );
+    FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) {
+      final Uri deepLink = pendingDynamicLinkData.link;
+      log(
+        "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n"}$deepLink${"\n"}",
+      );
+      navigateDeepLinks(uri: deepLink);
+    });
 
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
@@ -104,9 +73,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       final Uri deepLink = initialLink.link;
       initialRoute = containsSpecificPath(deepLink);
       slug = extractLastPathComponent(deepLink);
+
       log(
-        "Initial link Received ** => ${"\n\n"}${deepLink.path}${"\n\n"}$deepLink${"\n\n"}${deepLink.path.contains("/install")}${"\n\n"}${deepLink.hasQuery}${"\n\n"}${deepLink.origin}${"\n\n"}${"\n\n"}",
+        "Initial link Received ** => ${"\n\n"}${deepLink.path}${"\n"}$deepLink${"\n"}${deepLink.path.contains("/install")}${"\n"}${deepLink.hasQuery}${"\n"}${deepLink.origin}${"\n"}${"\n\n"}",
       );
+
       if (deepLink.path.contains("page.link") ||
           deepLink.path.contains("/install") ||
           deepLink.path.contains("?code=") ||
@@ -123,9 +94,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         if (referralCode == null || referralCode == '') {
           referralCode = deepLink.queryParameters['referral_code'];
         }
-        if (referralCode != null && referralCode != "") {
+        bool isFirstOpen = await Preference.isFirstOpen();
+        String? code = await Preference.getReferral();
+
+        if (referralCode != null &&
+            referralCode != "" &&
+            code == null &&
+            isFirstOpen) {
           log("CODE HERE @@@++++=========>  $referralCode");
           Preference.saveReferral(referralCode);
+          Timer(const Duration(seconds: 4), () {
+            signupSheet();
+          });
           FirebaseAnalytics.instance.logEvent(
             name: 'referrals',
             parameters: {'referral_code': referralCode},
@@ -140,7 +120,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
-    // showErrorMessage(message: "in app foreground $state");
     Utils().showLog("**** is in foreground ==>  $isAppInForeground");
     setState(() {
       _appLifecycleState = state;
@@ -148,7 +127,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _getAppLinks() async {
-    // -------- Check for referral Stat -------------
     try {
       if ((await Preference.getReferral()) == null) {
         Uri? initialLink = await _appLinks.getInitialLink();
@@ -164,15 +142,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } catch (e) {
       print('Error Receiving referral $e');
     }
-    // -------- Check for referral End -------------
-
     _appLinks.uriLinkStream.listen((event) {
       String type = containsSpecificPath(event);
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
         Timer(const Duration(seconds: 5), () {
           navigation(uri: event, slug: slug, type: type);
-          // navigation
         });
       } else {
         Timer(const Duration(seconds: 1), () {
@@ -180,146 +155,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         });
       }
     });
-  }
-
-  // String extractLastPathComponent(Uri uri) {
-  //   List<String> parts = uri.pathSegments;
-  //   return parts.isNotEmpty ? parts.last : '';
-  // }
-
-  // String extractSymbolValue(Uri uri) {
-  //   if (uri.path.contains('/stock-detail')) {
-  //     // Check if the query parameters contain 'symbol'
-  //     if (uri.queryParameters.containsKey('symbol')) {
-  //       return uri.queryParameters['symbol'] ?? '';
-  //     }
-  //   }
-  //   return '';
-  // }
-
-  // _navigation({String? type, required Uri uri, String? slug}) async {
-  //   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-  //   String slugForTicker = extractSymbolValue(uri);
-  //   Utils().showLog("slug for ticker $slugForTicker");
-  //   bool userPresent = false;
-
-  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  //   if (await provider.checkForUser()) {
-  //     userPresent = true;
-  //   }
-  //   Utils().showLog("----$userPresent---");
-  //   if (type == "blog") {
-  //     Navigator.push(
-  //         navigatorKey.currentContext!,
-  //         MaterialPageRoute(
-  //             builder: (context) => BlogDetail(
-  //                   // id: "",
-  //                   slug: slug,
-  //                 )));
-  //   } else if (type == "news") {
-  //     Navigator.push(
-  //       navigatorKey.currentContext!,
-  //       MaterialPageRoute(
-  //         builder: (context) => NewsDetails(
-  //           slug: slug,
-  //         ),
-  //       ),
-  //     );
-  //   } else if (type == "stock_detail") {
-  //     Navigator.push(
-  //         navigatorKey.currentContext!,
-  //         MaterialPageRoute(
-  //             builder: (context) => StockDetail(symbol: slugForTicker)));
-  //   } else if (type == "login") {
-  //     if (userPresent) {
-  //       if (_appLifecycleState == null) {
-  //         //
-  //       } else {
-  //         Navigator.pushNamedAndRemoveUntil(
-  //             navigatorKey.currentContext!, Tabs.path, (route) => false);
-  //       }
-  //     } else {
-  //       loginSheet();
-  //     }
-  //   } else if (type == "signUp") {
-  //     if (userPresent) {
-  //       if (_appLifecycleState == null) {
-  //         //
-  //       } else {
-  //         Navigator.pushNamedAndRemoveUntil(
-  //             navigatorKey.currentContext!, Tabs.path, (route) => false);
-  //       }
-  //     } else {
-  //       signupSheet();
-  //     }
-  //   } else if (type == "dashboard") {
-  //     if (_appLifecycleState == null) {
-  //       //
-  //     } else {
-  //       // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
-  //       Navigator.pushNamedAndRemoveUntil(
-  //           navigatorKey.currentContext!, Tabs.path, (route) => false);
-  //     }
-  //     Utils().showLog("--goto dashboard---");
-  //   } else {
-  //     Navigator.push(
-  //       navigatorKey.currentContext!,
-  //       MaterialPageRoute(
-  //         builder: (context) => WebviewLink(
-  //           url: uri,
-  //         ),
-  //       ),
-  //     );
-  //     // Navigator.pushNamedAndRemoveUntil(
-  //     //   navigatorKey.currentContext!,
-  //     //   Tabs.path,
-  //     //   (route) => false,
-  //     // );
-  //   }
-  // }
-
-  // String containsSpecificPath(Uri uri) {
-  //   Utils().showLog("-----contain path $uri");
-  //   if (uri.path.contains('/blog/')) {
-  //     return "blog";
-  //   } else if (uri.path.contains('/stock-detail')) {
-  //     return "stock_detail";
-  //   } else if (uri.path.contains('/news/')) {
-  //     return 'news';
-  //   } else if (uri.toString() == "https://app.stocks.news/" ||
-  //       uri.toString() == "https://app.stocks.news") {
-  //     return 'dashboard';
-  //   } else if (uri.path.contains('/login')) {
-  //     return 'login';
-  //   } else if (uri.path.contains('/sign-up')) {
-  //     return 'signUp';
-  //   } else {
-  //     return '';
-  //   }
-  // }
-
-  void _checkForConnection() async {
-    // Connectivity()
-    //     .onConnectivityChanged
-    //     .listen((List<ConnectivityResult>? result) async {
-    //   if ((result?.length ?? 0) == 1) {
-    //     if (result![0] == ConnectivityResult.none &&
-    //         result.length == 1 &&
-    //         !isShowingError) {
-    //       Timer(const Duration(milliseconds: 2000), () async {
-    //         final result = await (Connectivity().checkConnectivity());
-    //         if (result[0] == ConnectivityResult.none && result.length == 1) {
-    //           isShowingError = true;
-    //           showErrorFullScreenDialog(
-    //             errorCode: 0,
-    //             onClick: null,
-    //             log: "From My App",
-    //           );
-    //         }
-    //       });
-    //     }
-    //   }
-    // });
   }
 
   @override
@@ -334,302 +169,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             title: Const.appName,
             theme: lightTheme,
             home: child,
-            // home: widget.initialPath == null
-            //     ? child
-            //     : widget.initialPath == 'news'
-            //         ? NewsDetails(slug: widget.slug)
-            //         : child,
             routes: Routes.routes,
             onGenerateRoute: Routes.getRouteGenerate,
           ),
         );
       },
       child: const Splash(),
-      // child: ReferSuccess(),
-      // child: const DemoWeb(),
-      // child: const InternetErrorWidget(),
+      // child: const SignUpSuccess(),
     );
   }
 }
-
-
-
-
-
-// import 'dart:async';
-
-// import 'package:app_links/app_links.dart';
-// // import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:stocks_news_new/providers/user_provider.dart';
-// // import 'package:stocks_news_new/dummy.dart';
-// import 'package:stocks_news_new/route/routes.dart';
-// import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-// import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
-// import 'package:stocks_news_new/screens/blogDetail/index.dart';
-// import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
-// // import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
-// // import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
-// // import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/gainersLosers/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/gapUpDown/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/indices/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
-// // import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-// // import 'package:stocks_news_new/screens/stocks/index.dart';
-// import 'package:stocks_news_new/screens/splash/splash.dart';
-// import 'package:stocks_news_new/screens/stockDetails/stock_details.dart';
-// import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-// import 'package:stocks_news_new/screens/tabs/tabs.dart';
-// import 'package:stocks_news_new/utils/constants.dart';
-// import 'package:stocks_news_new/utils/dialogs.dart';
-// // import 'package:stocks_news_new/utils/dialogs.dart';
-// import 'package:stocks_news_new/utils/theme.dart';
-// import 'package:provider/provider.dart';
-// import 'package:stocks_news_new/utils/utils.dart';
-
-// final _appLinks = AppLinks();
-// //
-// final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-//   AppLifecycleState? _appLifecycleState;
-
-//   @override
-//   void dispose() {
-//     WidgetsBinding.instance.removeObserver(this);
-//     super.dispose();
-//   }
-
-//   bool connection = true;
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addObserver(this);
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       Timer(const Duration(milliseconds: 7500), () {
-//         _checkForConnection();
-//       });
-//       setState(() {});
-//     });
-//   }
-
-//   @override
-//   void didChangeAppLifecycleState(AppLifecycleState state) {
-//     isAppInForeground = state == AppLifecycleState.resumed;
-//     Utils().showLog("**** is in foreground ==>  $isAppInForeground");
-//     setState(() {
-//       _appLifecycleState = state;
-//       Utils().showLog("App lifeCycle ==>  $_appLifecycleState");
-//       showErrorMessage(message: "App lifeCycle ==>  $_appLifecycleState");
-//       _getAppLinks();
-//     });
-//   }
-
-//   void _getAppLinks() {
-//     _appLinks.uriLinkStream.listen((event) {
-//       String type = containsSpecificPath(event);
-//       String slug = extractLastPathComponent(event);
-
-//       Utils().showLog("Current app lifecycle is $_appLifecycleState");
-
-//       if ((_appLifecycleState != AppLifecycleState.paused) &&
-//           _appLifecycleState != AppLifecycleState.resumed) {
-//         // Timer(const Duration(seconds: 5), () {
-//         //   _navigation(uri: event, slug: slug, type: type);
-//         // });
-
-//         deepLinkData = event;
-//         Utils().showLog(">>>>---------$deepLinkData");
-//       } else {
-//         Timer(const Duration(milliseconds: 500), () {
-//           _navigation(uri: event, slug: slug, type: type);
-//         });
-//         Utils().showLog(">>>>---------$deepLinkData");
-//       }
-//     });
-//   }
-
-//   _navigation({String? type, required Uri uri, String? slug}) async {
-//     Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-//     String slugForTicker = extractSymbolValue(uri);
-//     Utils().showLog("slug for ticker $slugForTicker");
-//     bool userPresent = false;
-
-//     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-//     if (await provider.checkForUser()) {
-//       userPresent = true;
-//     }
-//     Utils().showLog("----$userPresent---");
-//     if (type == "blog") {
-//       Navigator.push(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(
-//               builder: (context) => BlogDetail(
-//                     // id: "",
-//                     slug: slug,
-//                   )));
-//     } else if (type == "news") {
-//       Navigator.push(
-//         navigatorKey.currentContext!,
-//         MaterialPageRoute(
-//           builder: (context) => NewsDetails(
-//             slug: slug,
-//           ),
-//         ),
-//       );
-//     }
-//     //will go with NEW DRAWER from here
-//     // else if (type == "gainer_loser") {
-//     //   Navigator.pushNamed(
-//     //     navigatorKey.currentContext!,
-//     //     GainersLosersIndex.path,
-//     //     arguments: {"type": StocksType.gainers},
-//     //   );
-//     // } else if (type == "indices") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, IndicesIndex.path);
-//     // } else if (type == "gapup_gapdown") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, GapUpDownStocks.path);
-//     // } else if (type == "insider") {
-//     //   Navigator.pushNamedAndRemoveUntil(
-//     //       navigatorKey.currentContext!, Tabs.path, (route) => false,
-//     //       arguments: 2);
-//     // } else if (type == "sentiments") {
-//     //   Navigator.pushNamedAndRemoveUntil(
-//     //       navigatorKey.currentContext!, Tabs.path, (route) => false,
-//     //       arguments: 3);
-//     // } else if (type == "high_lowPE") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, HighLowPEIndex.path);
-//     // } else if (type == "52_weeks") {
-//     //   Navigator.pushNamed(
-//     //       navigatorKey.currentContext!, FiftyTwoWeeksIndex.path);
-//     // } else if (type == "high_low_beta") {
-//     //   Navigator.pushNamed(
-//     //       navigatorKey.currentContext!, HighLowsBetaStocksIndex.path);
-//     // } else if (type == "low_prices") {
-//     //   Navigator.pushNamed(
-//     //       navigatorKey.currentContext!, LowPriceStocksIndex.path);
-//     // } else if (type == "most_active") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, MostActiveIndex.path);
-//     // } else if (type == "penny") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, PennyStocks.path);
-//     // } else if (type == "congress") {
-//     //   Navigator.pushNamed(
-//     //       navigatorKey.currentContext!, CongressionalIndex.path);
-//     // } else if (type == "dividend") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, DividendsScreen.path);
-//     // } else if (type == "earning") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, EarningsScreen.path);
-//     // } else if (type == "stocks") {
-//     //   Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
-//     // }
-
-//     //will go with NEW DRAWER to here.
-
-//     else if (type == "stock_detail") {
-//       Navigator.push(
-//           navigatorKey.currentContext!,
-//           MaterialPageRoute(
-//               builder: (context) => StockDetails(symbol: slugForTicker)));
-//     } else if (type == "login") {
-//       if (userPresent) {
-//         if (_appLifecycleState == null) {
-//           //
-//         } else {
-//           Navigator.pushNamedAndRemoveUntil(
-//               navigatorKey.currentContext!, Tabs.path, (route) => false);
-//         }
-//       } else {
-//         loginSheet();
-//       }
-//     } else if (type == "signUp") {
-//       if (userPresent) {
-//         if (_appLifecycleState == null) {
-//           //
-//         } else {
-//           Navigator.pushNamedAndRemoveUntil(
-//               navigatorKey.currentContext!, Tabs.path, (route) => false);
-//         }
-//       } else {
-//         signupSheet();
-//       }
-//     } else if (type == "dashboard") {
-//       if (_appLifecycleState == null) {
-//         //
-//       } else {
-//         // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
-//         Navigator.pushNamedAndRemoveUntil(
-//             navigatorKey.currentContext!, Tabs.path, (route) => false);
-//       }
-//       Utils().showLog("--goto dashboard---");
-//     } else {
-//       Navigator.push(
-//         navigatorKey.currentContext!,
-//         MaterialPageRoute(
-//           builder: ((context) => WebviewLink(
-//                 url: uri,
-//               )),
-//         ),
-//       );
-//     }
-//   }
-
-//   void _checkForConnection() async {
-//     // Connectivity()
-//     //     .onConnectivityChanged
-//     //     .listen((List<ConnectivityResult>? result) async {
-//     //   if ((result?.length ?? 0) == 1) {
-//     //     if (result![0] == ConnectivityResult.none &&
-//     //         result.length == 1 &&
-//     //         !isShowingError) {
-//     //       Timer(const Duration(milliseconds: 2000), () async {
-//     //         final result = await (Connectivity().checkConnectivity());
-//     //         if (result[0] == ConnectivityResult.none && result.length == 1) {
-//     //           isShowingError = true;
-//     //           showErrorFullScreenDialog(
-//     //             errorCode: 0,
-//     //             onClick: null,
-//     //             log: "From My App",
-//     //           );
-//     //         }
-//     //       });
-//     //     }
-//     //   }
-//     // });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ScreenUtilInit(
-//       builder: (_, child) {
-//         return MultiProvider(
-//           providers: Routes.providers,
-//           child: MaterialApp(
-//             navigatorKey: navigatorKey,
-//             debugShowCheckedModeBanner: false,
-//             title: Const.appName,
-//             theme: lightTheme,
-//             home: child,
-//             routes: Routes.routes,
-//             onGenerateRoute: Routes.getRouteGenerate,
-//           ),
-//         );
-//       },
-//       child: const Splash(),
-//       // child: const DemoWeb(),
-//       // child: const InternetErrorWidget(),
-//     );
-//   }
-// }

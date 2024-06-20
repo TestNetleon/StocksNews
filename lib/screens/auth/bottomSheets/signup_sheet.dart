@@ -168,12 +168,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "fcm_permission": "$granted",
         "referral_code": "$referralCode",
       };
-      provider.appleLogin(
-        request,
-        dontPop: 'true',
-        state: widget.state,
-        id: id,
-      );
+      provider.appleLogin(request,
+          dontPop: 'true', state: widget.state, id: id);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
