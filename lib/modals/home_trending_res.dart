@@ -84,6 +84,7 @@ class TextRes {
   final String? other;
   final String? sentimentText;
   final String? news;
+  final String? title;
 
   TextRes({
     this.trending,
@@ -104,28 +105,29 @@ class TextRes {
     this.note,
     this.other,
     this.news,
+    this.title,
   });
 
   factory TextRes.fromJson(Map<String, dynamic> json) => TextRes(
-        trending: json["trending"],
-        gainers: json["gainers"],
-        losers: json["losers"],
-        subTitle: json["sub_title"],
-        news: json['news'],
-        mentionText: json["mentions_text"],
-        recentMentions: json["recent_mentions"],
-        hotStocks: json["hot_stocks"],
-        mostBullish: json["most_bullish"],
-        mostBearish: json["most_bearish"],
-        sectors: json["sectors"],
-        generalNews: json["general_news"],
-        now: json["now"],
-        note: json["note"],
-        sentimentText: json["sentiment_text"],
-        other: json["other"],
-        recently: json["recently"],
-        cap: json["cap"],
-      );
+      trending: json["trending"],
+      gainers: json["gainers"],
+      losers: json["losers"],
+      subTitle: json["sub_title"],
+      news: json['news'],
+      mentionText: json["mentions_text"],
+      recentMentions: json["recent_mentions"],
+      hotStocks: json["hot_stocks"],
+      mostBullish: json["most_bullish"],
+      mostBearish: json["most_bearish"],
+      sectors: json["sectors"],
+      generalNews: json["general_news"],
+      now: json["now"],
+      note: json["note"],
+      sentimentText: json["sentiment_text"],
+      other: json["other"],
+      recently: json["recently"],
+      cap: json["cap"],
+      title: json["title"]);
 
   Map<String, dynamic> toJson() => {
         "trending": trending,
@@ -146,6 +148,7 @@ class TextRes {
         "now": now,
         "recently": recently,
         "cap": cap,
+        "title": title,
       };
 }
 

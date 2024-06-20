@@ -12,6 +12,7 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import 'home_provider.dart';
@@ -122,9 +123,9 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
 
-      // showErrorMessage(
-      //     message: response.message,
-      //     type: response.status ? SnackbarType.info : SnackbarType.error);
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
       setAdd(Status.loaded);
 
       return ApiResponse(status: response.status);
@@ -140,6 +141,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
     required int index,
   }) async {
     setAdd(Status.loading);
+    showGlobalProgressDialog();
 
     Map request = {
       "token":
@@ -172,15 +174,17 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
 
         notifyListeners();
       }
-      // showErrorMessage(
-      //     message: response.message,
-      //     type: response.status ? SnackbarType.info : SnackbarType.error);
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
       setAdd(Status.loaded);
+      closeGlobalProgressDialog();
 
       return ApiResponse(status: response.status);
     } catch (e) {
       Utils().showLog(e.toString());
       setAdd(Status.loaded);
+      closeGlobalProgressDialog();
 
       // showErrorMessage(message: Const.errSomethingWrong);
     }

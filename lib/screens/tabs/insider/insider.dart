@@ -35,7 +35,7 @@ class Insider extends StatelessWidget {
     //   content: const FilterInsiders(),
     // );
     BaseBottomSheets().gradientBottomSheet(
-      title: "Filter Insider Trades",
+      title: "All Transactions",
       child: const FilterInsiders(),
     );
   }

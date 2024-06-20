@@ -236,6 +236,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
         loginTxt = _extra?.loginText;
         signUpTxt = _extra?.signUpText;
+
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
 

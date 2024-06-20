@@ -10,6 +10,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class TrendingProvider extends ChangeNotifier with AuthProviderBase {
@@ -124,9 +125,9 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
 
-      // showErrorMessage(
-      //     message: response.message,
-      //     type: response.status ? SnackbarType.info : SnackbarType.error);
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
       setStatus(Status.loaded);
       return ApiResponse(status: response.status);
     } catch (e) {
@@ -140,6 +141,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
   Future addToWishList(
       {required String symbol, required bool up, required int index}) async {
     setStatus(Status.loading);
+    showGlobalProgressDialog();
 
     Map request = {
       "token":
@@ -168,13 +170,16 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
       }
-      // showErrorMessage(
-      //     message: response.message,
-      //     type: response.status ? SnackbarType.info : SnackbarType.error);
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
 
       setStatus(Status.loaded);
+      closeGlobalProgressDialog();
       return ApiResponse(status: response.status);
     } catch (e) {
+      closeGlobalProgressDialog();
+
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
       // showErrorMessage(message: Const.errSomethingWrong);

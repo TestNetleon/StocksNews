@@ -64,9 +64,10 @@ class _AlertBaseState extends State<AlertBase> {
         child: Column(
           children: [
             ScreenTitle(
-              title: homeProvider.totalAlerts == 1
-                  ? "Stock Alert"
-                  : "Stock Alerts",
+              title: provider.textRes?.title ??
+                  (homeProvider.totalAlerts == 1
+                      ? "Stock Alert"
+                      : "Stock Alerts"),
             ),
             userProvider.user == null
                 ? Expanded(

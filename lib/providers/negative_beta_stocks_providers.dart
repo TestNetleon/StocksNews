@@ -3,12 +3,15 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/high_low_beta_stocks_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -138,6 +141,8 @@ class NegativeBetaStocksProvider extends ChangeNotifier with AuthProviderBase {
     }
     try {
       Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
         "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
         "price": _filterParams?.price ?? "",

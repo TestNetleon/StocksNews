@@ -48,7 +48,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                   if (index == 0)
                     StateItemNEW(label: "Symbol", value: keyStats?.symbol),
                   if (index == 1)
-                    StateItemNEW(label: "Name", value: keyStats?.name),
+                    StateItemNEW(label: "Company Name", value: keyStats?.name),
 
                   if (index == 2)
                     StateItemNEW(label: "Price", value: keyStats?.price),
@@ -57,7 +57,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                       visible: keyStats?.change != null,
                       child: StateItemNEW(
                           label: "Change",
-                          value: "\$${keyStats?.change ?? ""}"),
+                          value: keyStats?.changeWithCur ?? ""),
                     ),
                   if (index == 4)
                     Visibility(
