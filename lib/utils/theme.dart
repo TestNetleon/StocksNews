@@ -217,6 +217,7 @@ TextStyle stylePTSansRegular({
     fontWeight: FontWeight.normal,
     height: height,
     decoration: decoration,
+
     decorationColor: color,
     // letterSpacing: letterSpacing,
   );

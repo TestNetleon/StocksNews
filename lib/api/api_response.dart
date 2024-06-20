@@ -80,6 +80,7 @@ class Extra {
   final HowItWorkRes? howItWork;
   final ReferLoginRes? referLogin;
   final String? verifyIdentity;
+  final String? nudgeText;
 
   Extra({
     this.search,
@@ -89,6 +90,7 @@ class Extra {
     this.priceRange,
     this.transactionType,
     this.referLogin,
+    this.nudgeText,
     this.period,
     this.affiliateReferText,
     this.type,
@@ -126,6 +128,7 @@ class Extra {
         search: json["search"],
         verifyIdentity: json['verify_identity_text'],
         received: json['total_points_received'],
+        nudgeText: json["nudge_text"],
         referLogin: json["refer_login"] == null
             ? null
             : ReferLoginRes.fromJson(json["refer_login"]),
@@ -202,6 +205,7 @@ class Extra {
   Map<String, dynamic> toJson() => {
         "search": search,
         "user_alerts": userAlert,
+        "nudge_text": nudgeText,
         "verify_identity_text": verifyIdentity,
         'total_points_received': received,
         "total_points_pending": pending,

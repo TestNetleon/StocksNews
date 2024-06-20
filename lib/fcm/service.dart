@@ -19,6 +19,7 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -134,6 +135,8 @@ class FirebaseApi {
           StockDetail.path,
           arguments: {"slug": slug, "notificationId": notificationId},
         );
+      } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
+        referLogin();
       } else {
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,

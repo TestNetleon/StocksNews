@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _getAppLinks();
+      if (Platform.isIOS) _getAppLinks();
       // _getAppLinks();
 
       checkFirebaseDeepLinks();

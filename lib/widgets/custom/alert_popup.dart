@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 void popUpAlert({
   required String message,
   required String title,
+  EdgeInsets? padding,
   String? icon,
   Function()? onTap,
   bool cancel = false,
@@ -32,6 +33,7 @@ void popUpAlert({
         showButton: showButton,
         showOk: showOk,
         messageTextAlign: messageTextAlign,
+        padding: padding,
       );
     },
   );
@@ -41,7 +43,7 @@ class AlertPopupCustom extends StatelessWidget {
   final String message, title;
   final String? icon;
   final TextAlign? messageTextAlign;
-
+  final EdgeInsets? padding;
   final String? okText;
   final Function()? onTap;
   final bool cancel;
@@ -53,6 +55,7 @@ class AlertPopupCustom extends StatelessWidget {
       required this.message,
       required this.title,
       this.showOk = true,
+      this.padding,
       this.icon,
       this.showButton = true,
       this.cancel = false,
@@ -81,7 +84,7 @@ class AlertPopupCustom extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.sp),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
+                    padding: padding ?? EdgeInsets.fromLTRB(10.sp, 0, 10.sp, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [

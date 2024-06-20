@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../../utils/preference.dart';
 import '../../widgets/custom/alert_popup.dart';
+import '../auth/bottomSheets/refer/refer_code.dart';
 import '../auth/bottomSheets/signup_sheet.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
@@ -130,6 +131,8 @@ class _HomeSplashState extends State<HomeSplash> {
           StockDetail.path,
           arguments: {"slug": slug, "notificationId": notificationId},
         );
+      } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
+        referLogin();
       } else {
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,

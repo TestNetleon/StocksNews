@@ -93,6 +93,7 @@ class Apis {
   static const blogDetails = "/blog-detail";
   static const trendingIndustries = "/trending-industries";
   static const stockDetailMention = "/trading-stock";
+  static const nudgeFriend = '/referrals/nudge-your-friend';
 
   static const trendingBullish = "/trending-bullish";
   static const trendingBearish = "/trending-bearish";

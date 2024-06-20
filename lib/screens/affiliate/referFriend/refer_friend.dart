@@ -264,10 +264,11 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                           );
                         },
                         separatorBuilder: (context, index) {
-                          return const Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 16,
-                          );
+                          // return const Divider(
+                          //   color: ThemeColors.greyBorder,
+                          //   height: 16,
+                          // );
+                          return const SpacerVertical(height: 16);
                         },
                         itemCount: provider.data?.length ?? 0,
                       ),

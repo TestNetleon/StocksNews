@@ -424,7 +424,7 @@ class Routes {
     String slug = extractLastPathComponent(uri);
 
     Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
-
+    popHome = true;
     switch (type) {
       case "blog":
         return MaterialPageRoute(

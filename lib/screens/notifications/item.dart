@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import '../../widgets/theme_image_view.dart';
+import '../auth/bottomSheets/refer/refer_code.dart';
 import '../auth/bottomSheets/signup_sheet.dart';
 import '../auth/bottomSheets/signup_sheet_tablet.dart';
 import '../blogDetail/index.dart';
@@ -93,6 +94,8 @@ class NotificationsItem extends StatelessWidget {
           StockDetail.path,
           arguments: {"slug": slug},
         );
+      } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
+        referLogin();
       } else {
         Navigator.pushNamedAndRemoveUntil(
           navigatorKey.currentContext!,
