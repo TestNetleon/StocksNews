@@ -129,6 +129,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "build_code": buildNumber,
           "fcm_permission": "$granted",
           "referral_code": "$referralCode",
+          // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, dontPop: 'true', state: widget.state);

@@ -123,19 +123,9 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
       bool granted = await Permission.notification.isGranted;
+      String? referralCode = await Preference.getReferral();
 
       Map request = {
-        // "username": widget.email,
-        // "type": "email",
-        // "otp": _controller.text,
-        // "fcm_token": fcmToken ?? "",
-        // "platform": Platform.operatingSystem,
-        // "address": address ?? "",
-        // "build_version": versionName,
-        // "build_code": buildNumber,
-        // "fcm_permission": "$granted",
-        // "apple_id": widget.id,
-        //
         "displayName": "",
         "email": widget.email ?? "",
         "id": widget.id ?? "",
@@ -146,6 +136,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         "fcm_token": fcmToken ?? "",
         "fcm_permission": "$granted",
         "otp": _controller.text,
+        "referral_code": "$referralCode",
       };
 
       provider.appleLogin(

@@ -226,7 +226,9 @@ void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
     }
     // log("SLUG FOUND ==> RETURNING NOW");
     Timer(const Duration(seconds: 4), () {
-      signupSheet();
+      if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+        signupSheet();
+      }
     });
     return;
   }
@@ -263,7 +265,7 @@ void navigation({
 
   Utils().showLog("----$userPresent---");
   if (type == "blog") {
-    Navigator.push(
+    Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(
             builder: (context) => BlogDetail(
@@ -271,7 +273,7 @@ void navigation({
                   slug: slug,
                 )));
   } else if (type == "news") {
-    Navigator.push(
+    Navigator.pushReplacement(
       navigatorKey.currentContext!,
       MaterialPageRoute(
         builder: (context) => NewsDetails(
@@ -280,7 +282,7 @@ void navigation({
       ),
     );
   } else if (type == "stock_detail") {
-    Navigator.push(
+    Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(
             builder: (context) => StockDetail(symbol: slugForTicker)));
@@ -312,12 +314,18 @@ void navigation({
     }
     Utils().showLog("--goto dashboard---");
   } else {
-    Navigator.push(
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
+    //     builder: (context) => const Tabs(),
+    //   ),
+    // );
+
+    Navigator.pushNamedAndRemoveUntil(
       navigatorKey.currentContext!,
-      MaterialPageRoute(
-        // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
-        builder: (context) => const Tabs(),
-      ),
+      Tabs.path,
+      (route) => false,
     );
   }
 }

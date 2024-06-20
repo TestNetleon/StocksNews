@@ -10,6 +10,9 @@
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher_round">
+
+         <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+          
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -36,7 +39,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="app.stocks.news" />
             </intent-filter>  -->
-            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+           
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -45,7 +48,6 @@
                 <data android:scheme="https" android:host="app.stocks.news" />
                 <data android:scheme="https" />
             </intent-filter>
-
 
         </activity>
         <activity
