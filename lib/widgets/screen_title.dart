@@ -119,6 +119,11 @@ class ScreenTitle extends StatelessWidget {
                     subTitle ?? "",
                     textStyle: stylePTSansRegular(
                         fontSize: 14, color: ThemeColors.greyText),
+                    customWidgetBuilder: (element) {
+                      return CustomReadMoreText(
+                        text: element.text,
+                      );
+                    },
                   )
                 : Visibility(
                     visible: subTitle != null,

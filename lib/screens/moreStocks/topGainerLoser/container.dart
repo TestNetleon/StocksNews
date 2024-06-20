@@ -63,15 +63,22 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: Column(
           children: [
-            ScreenTitle(
-              title: widget.type == StocksType.gainers
-                  ? "Today’s Top Gainers"
-                  : widget.type == StocksType.losers
-                      ? "Today’s Top Losers"
-                      : data?.length == 1
-                          ? "Popular Stock"
-                          : "Popular Stocks",
-            ),
+            if (provider.extraUpGainers?.title != null)
+              ScreenTitle(
+                title: widget.type == StocksType.gainers
+                    ? "Today’s Top Gainers"
+                    : widget.type == StocksType.losers
+                        ? "Today’s Top Losers"
+                        : data?.length == 1
+                            ? "Popular Stock"
+                            : provider.extraUpGainers?.title ??
+                                "Popular Stocks",
+                subTitle: widget.type == StocksType.gainers ||
+                        widget.type == StocksType.losers
+                    ? ""
+                    : provider.extraUpGainers?.subTitle,
+                subTitleHtml: true,
+              ),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,
