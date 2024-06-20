@@ -1,9 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
-import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -38,6 +36,16 @@ class AffiliateReferItem extends StatelessWidget {
         return _sheet();
       },
     );
+  }
+
+  String encryptString(String input) {
+    if (input.length <= 4) {
+      return input;
+    }
+    String firstPart = input.substring(0, 2);
+    String lastPart = input.substring(input.length - 4);
+    String encryptedPart = '*' * (input.length - 4);
+    return firstPart + encryptedPart + lastPart;
   }
 
   Widget _sheet() {
@@ -190,9 +198,12 @@ class AffiliateReferItem extends StatelessWidget {
                       ),
                       const SpacerVertical(height: 5),
                       Visibility(
-                        visible: data?.email != null && data?.email != '',
+                        visible: data?.email != null &&
+                            data?.email != '' &&
+                            data?.status == 0,
                         child: Text(
-                          data?.email ?? "N/A",
+                          // data?.email ?? "N/A",
+                          encryptString(data?.email ?? ""),
                           style: stylePTSansRegular(),
                         ),
                       ),
