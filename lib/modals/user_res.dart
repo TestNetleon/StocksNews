@@ -22,7 +22,7 @@ class UserRes {
   String? referralCode;
   String? referralUrl;
   String? displayName;
-  bool signupStatus;
+  bool? signupStatus;
 
   UserRes({
     required this.email,
