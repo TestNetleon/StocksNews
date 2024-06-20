@@ -33,7 +33,7 @@ class Utils {
   void showLog(data) {
     if (kDebugMode) {
       print("==================");
-      print("$data");
+      log("$data");
       print("==================");
     }
   }

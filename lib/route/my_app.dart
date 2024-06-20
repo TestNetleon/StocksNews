@@ -65,8 +65,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // Timer(const Duration(milliseconds: 7500), () {
       //   _checkForConnection();
       // });
-      checkFirebaseDeepLinks();
-      setState(() {});
+      // checkFirebaseDeepLinks();
+      // setState(() {});
     });
   }
 

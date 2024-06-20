@@ -7,12 +7,10 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -84,19 +82,18 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //   );
                 // }
 
-                try {
-                  // if (popHome) {
-                  //   Navigator.pushNamedAndRemoveUntil(
-                  //       context, Tabs.path, (route) => false);
-                  //   popHome = false;
-                  // } else {
-                  //   context.read<SearchProvider>().clearSearch();
-                  //   Navigator.pop(context);
-                  // }
+                Utils().showLog("----${Navigator.canPop(context)}");
+                Utils().showLog("----${navigatorKey.currentState?.canPop()}");
 
-                  Navigator.pop(context);
-                } catch (e) {
-                  popUpAlert(message: "$e", title: "Error");
+                if (popHome) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Tabs.path, (route) => false);
+                  popHome = false;
+                } else {
+                  // navigatorKey.currentContext!
+                  //     .read<SearchProvider>()
+                  //     .clearSearch();
+                  Navigator.pop(navigatorKey.currentContext!);
                 }
               },
               icon: const Icon(

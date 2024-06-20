@@ -23,7 +23,11 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
+import '../../affiliate/index.dart';
+import '../../auth/bottomSheets/login_sheet.dart';
+import '../../auth/bottomSheets/login_sheet_tablet.dart';
 import '../widgets/drawer_top_new.dart';
+import 'refer_dialog.dart';
 
 class AboutStocksNews extends StatefulWidget {
   final String version;
@@ -58,6 +62,70 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
   //     },
   //   );
   // }
+
+  Future _onShareAppClick() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user == null) {
+      isPhone ? await loginSheet() : await loginSheetTablet();
+    }
+
+    if (provider.user == null) {
+      return;
+    }
+
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      _bottomSheet();
+    } else {
+      await Navigator.pushNamed(
+          navigatorKey.currentContext!, ReferAFriend.path);
+    }
+  }
+
+  Future _bottomSheet() async {
+    await showModalBottomSheet(
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+        // side: const BorderSide(color: ThemeColors.greyBorder),
+      ),
+      context: navigatorKey.currentContext!,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
+      barrierColor: Colors.transparent,
+      builder: (BuildContext ctx) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: SingleChildScrollView(child: ReferDialog()),
+            ),
+            // Container(
+            //   width: 50,
+            //   height: 50,
+            //   color: Colors.amber,
+            // ),
+            // Image.asset(
+            //   Images.apple,
+            //   height: 60,
+            //   width: 60,
+            // ),
+            Image.asset(
+              Images.kingGIF,
+              height: 70,
+              width: 100,
+              fit: BoxFit.cover,
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,15 +203,18 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   }
                   if (index == 2) {
                     return Visibility(
-                      visible: context.watch<UserProvider>().user != null &&
-                          context
-                                  .watch<HomeProvider>()
-                                  .extra
-                                  ?.referral
-                                  ?.shwReferral ==
-                              true,
+                      visible: context
+                              .watch<HomeProvider>()
+                              .extra
+                              ?.referral
+                              ?.shwReferral ==
+                          true,
                       child: AboutTile(
-                          index: index, onTap: aboutTiles[index].onTap),
+                        index: index,
+                        onTap: () {
+                          _onShareAppClick();
+                        },
+                      ),
                     );
                   }
 

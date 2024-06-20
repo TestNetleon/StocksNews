@@ -368,7 +368,7 @@ List<DrawerRes> aboutTiles = [
     iconData: Icons.leaderboard_outlined,
     text: "Refer and Earn",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, ReferAFriend.path);
+      // Navigator.pushNamed(navigatorKey.currentContext!, ReferAFriend.path);
     },
   ),
   DrawerRes(
