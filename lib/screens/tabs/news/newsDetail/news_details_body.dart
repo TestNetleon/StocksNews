@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -21,10 +23,18 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
+import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
+import '../../../auth/bottomSheets/login_sheet.dart';
+import '../../../auth/bottomSheets/signup_sheet.dart';
+import '../../../blogDetail/index.dart';
 import '../../../blogs/index.dart';
+import '../../../deepLinkScreen/webscreen.dart';
+import '../../../stockDetail/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
+import '../../tabs.dart';
 import 'mentioned_by.dart';
+import 'new_detail.dart';
 import 'news_details_list.dart';
 
 class NewsDetailsBody extends StatefulWidget {
@@ -57,6 +67,83 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
             notificationId: widget.notificationId,
           );
     });
+  }
+
+  _navigate(event) {
+    String type = containsSpecificPath(event);
+    String slug = extractLastPathComponent(event);
+
+    _navigation(uri: event, slug: slug, type: type);
+  }
+
+  _navigation({String? type, required Uri uri, String? slug}) async {
+    Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+    String slugForTicker = extractSymbolValue(uri);
+    Utils().showLog("slug for ticker $slugForTicker");
+    bool userPresent = false;
+
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    if (await provider.checkForUser()) {
+      userPresent = true;
+    }
+    Utils().showLog("----$userPresent---");
+    if (type == "blog") {
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => BlogDetail(
+                    // id: "",
+                    slug: slug,
+                  )));
+    } else if (type == "news") {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => NewsDetails(
+            slug: slug,
+          ),
+        ),
+      );
+    } else if (type == "stock_detail") {
+      Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (context) => StockDetail(symbol: slugForTicker)));
+    } else if (type == "login") {
+      if (userPresent) {
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+      } else {
+        loginSheet();
+      }
+    } else if (type == "signUp") {
+      if (userPresent) {
+        Navigator.pushNamedAndRemoveUntil(
+            navigatorKey.currentContext!, Tabs.path, (route) => false);
+      } else {
+        signupSheet();
+      }
+    } else if (type == "dashboard") {
+      // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
+      Navigator.pushNamedAndRemoveUntil(
+          navigatorKey.currentContext!, Tabs.path, (route) => false);
+
+      Utils().showLog("--goto dashboard---");
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => WebviewLink(
+            url: uri,
+          ),
+        ),
+      );
+      // Navigator.pushNamedAndRemoveUntil(
+      //   navigatorKey.currentContext!,
+      //   Tabs.path,
+      //   (route) => false,
+      // );
+    }
   }
 
   // @override
@@ -271,11 +358,16 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                   );
                                   return true;
                                 }
-
-                                bool a = await launchUrl(Uri.parse(url));
-                                Utils().showLog(
-                                    "clicked ur---$url, return value $a");
-
+                                bool a = false;
+                                if (Platform.isAndroid) {
+                                  a = await launchUrl(Uri.parse(url));
+                                  Utils().showLog(
+                                      "clicked ur---$url, return value $a");
+                                } else {
+                                  // Uri uri = Uri.parse(url);
+                                  // _navigate(uri);
+                                  Utils().showLog("iOS navigation");
+                                }
                                 return a;
                               },
                               provider.data?.postDetail?.text ?? "",
