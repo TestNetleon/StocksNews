@@ -43,7 +43,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     // final connection = await _checkForConnection();
     // if (!connection) return;
 
-    _callAPI();
+    // _callAPI();
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
@@ -100,40 +100,43 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   Future _navigateToRequiredScreen() async {
-    bool firstTime = await Preference.getShowIntro();
+    Navigator.pushReplacementNamed(
+        navigatorKey.currentContext!, HomeSplash.path);
 
-    if (firstTime) {
-      if (welcome?.isEmpty == true || welcome == null) {
-        // Navigator.pushNamedAndRemoveUntil(
-        //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-        // Navigator.pushReplacementNamed(
-        //     navigatorKey.currentContext!, HomeSplash.path);
-      } else {
-        Navigator.pushAndRemoveUntil(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (context) => StartIndex(welcome: welcome),
-          ),
-          (route) => false,
-        );
-      }
-    } else {
-      // Navigator.pushNamedAndRemoveUntil(
-      //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+    // bool firstTime = await Preference.getShowIntro();
 
-      Navigator.pushReplacementNamed(
-        navigatorKey.currentContext!,
-        HomeSplash.path,
-      );
-      // Navigator.push(
-      //     navigatorKey.currentContext!,
-      //     MaterialPageRoute(
-      //       builder: (context) => const ReferSuccess(),
-      //     ));
-    }
+    // if (firstTime) {
+    //   if (welcome?.isEmpty == true || welcome == null) {
+    //     // Navigator.pushNamedAndRemoveUntil(
+    //     //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+    //     // Navigator.pushReplacementNamed(
+    //     //     navigatorKey.currentContext!, HomeSplash.path);
+    //   } else {
+    //     Navigator.pushAndRemoveUntil(
+    //       navigatorKey.currentContext!,
+    //       MaterialPageRoute(
+    //         builder: (context) => StartIndex(welcome: welcome),
+    //       ),
+    //       (route) => false,
+    //     );
+    //   }
+    // } else {
+    //   // Navigator.pushNamedAndRemoveUntil(
+    //   //     navigatorKey.currentContext!, Tabs.path, (route) => false);
 
-    // Navigator.pushNamedAndRemoveUntil(
-    //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+    //   Navigator.pushReplacementNamed(
+    //     navigatorKey.currentContext!,
+    //     HomeSplash.path,
+    //   );
+    //   // Navigator.push(
+    //   //     navigatorKey.currentContext!,
+    //   //     MaterialPageRoute(
+    //   //       builder: (context) => const ReferSuccess(),
+    //   //     ));
+    // }
+
+    // // Navigator.pushNamedAndRemoveUntil(
+    // //     navigatorKey.currentContext!, Tabs.path, (route) => false);
   }
 
   Future getWelcomeData() async {
