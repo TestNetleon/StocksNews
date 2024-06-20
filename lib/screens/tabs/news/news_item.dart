@@ -30,7 +30,7 @@ class NewsItem extends StatelessWidget {
   void _gotoDetail(BuildContext context) {
     if (fromMoreNews) {
       Navigator.pushReplacementNamed(
-        context,
+        navigatorKey.currentContext!,
         NewsDetails.path,
         arguments: {"slug": news?.slug},
       );
@@ -38,7 +38,7 @@ class NewsItem extends StatelessWidget {
     }
 
     Navigator.pushNamed(
-      context,
+      navigatorKey.currentContext!,
       NewsDetails.path,
       arguments: {"slug": news?.slug},
     );
@@ -278,7 +278,7 @@ class NewsItemSeparated extends StatelessWidget {
   void _gotoDetail(BuildContext context) {
     if (fromMoreNews) {
       Navigator.pushReplacementNamed(
-        context,
+        navigatorKey.currentContext!,
         NewsDetails.path,
         arguments: {"slug": news?.slug},
       );
@@ -286,7 +286,7 @@ class NewsItemSeparated extends StatelessWidget {
     }
 
     Navigator.pushNamed(
-      context,
+      navigatorKey.currentContext!,
       NewsDetails.path,
       arguments: {"slug": news?.slug},
     );

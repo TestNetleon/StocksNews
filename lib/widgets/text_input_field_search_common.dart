@@ -16,6 +16,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 
+import '../route/my_app.dart';
 import '../screens/stockDetail/index.dart';
 import 'spacer_horizontal.dart';
 
@@ -296,7 +297,7 @@ class _TextInputFieldSearchCommonState
                               closeKeyboard();
                               provider.clearSearch();
                               Navigator.pushNamed(
-                                context,
+                                navigatorKey.currentContext!,
                                 NewsDetails.path,
                                 arguments: {"slug": data?.slug},
                               );

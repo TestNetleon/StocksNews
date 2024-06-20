@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -74,6 +73,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String? slug;
 
   void checkFirebaseDeepLinks() async {
+    Utils().showLog("Checking firebase deep linking....");
     // Check if you received the link via getInitialLink first
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();

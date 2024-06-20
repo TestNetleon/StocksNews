@@ -29,23 +29,10 @@ class ReferApp extends StatelessWidget {
     }
 
     if (provider.user?.phone == null || provider.user?.phone == '') {
-      // await referLogin();
-
       _bottomSheet();
-      // await Navigator.pushNamed(
-      //     navigatorKey.currentContext!, ReferAFriend.path);
     } else {
-      // await _bottomSheet();
       await Navigator.pushNamed(
           navigatorKey.currentContext!, ReferAFriend.path);
-
-      // Navigator.push(
-      //   navigatorKey.currentContext!,
-      //   createRoute(
-      //     const ReferAFriend(),
-      //   ),
-      // );
-      // await referLogin();
     }
   }
 

@@ -14,6 +14,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../../../route/my_app.dart';
+
 class HomeTopNewsSlider extends StatefulWidget {
   const HomeTopNewsSlider({super.key});
 
@@ -27,7 +29,7 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
 
   void _newsDetail({String? slug}) {
     Navigator.pushNamed(
-      context,
+      navigatorKey.currentContext!,
       NewsDetails.path,
       arguments: {"slug": slug},
     );

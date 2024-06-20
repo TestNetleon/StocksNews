@@ -12,6 +12,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -64,22 +65,38 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //   popHome = false;
                 //   deepLinkData = null;
                 // }
-                if (navigatorKey.currentState!.canPop()) {
-                  if (popHome) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Tabs.path, (route) => false);
-                    popHome = false;
-                  } else {
-                    navigatorKey.currentContext!
-                        .read<SearchProvider>()
-                        .clearSearch();
-                    Navigator.pop(navigatorKey.currentContext!);
-                  }
-                } else {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const Splash()),
-                  );
+                // if (navigatorKey.currentState != null &&
+                //     navigatorKey.currentState!.canPop()) {
+                //   if (popHome) {
+                //     Navigator.pushNamedAndRemoveUntil(
+                //         context, Tabs.path, (route) => false);
+                //     popHome = false;
+                //   } else {
+                //     navigatorKey.currentContext!
+                //         .read<SearchProvider>()
+                //         .clearSearch();
+                //     Navigator.pop(navigatorKey.currentContext!);
+                //   }
+                // } else {
+                //   Navigator.pushReplacement(
+                //     context,
+                //     MaterialPageRoute(builder: (_) => const Splash()),
+                //   );
+                // }
+
+                try {
+                  // if (popHome) {
+                  //   Navigator.pushNamedAndRemoveUntil(
+                  //       context, Tabs.path, (route) => false);
+                  //   popHome = false;
+                  // } else {
+                  //   context.read<SearchProvider>().clearSearch();
+                  //   Navigator.pop(context);
+                  // }
+
+                  Navigator.pop(context);
+                } catch (e) {
+                  popUpAlert(message: "$e", title: "Error");
                 }
               },
               icon: const Icon(
