@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -452,6 +453,7 @@ class Routes {
         });
         return MaterialPageRoute(builder: (context) => const Tabs());
       default:
+        log("HERE ");
         return MaterialPageRoute(builder: (context) => const Tabs());
     }
   }

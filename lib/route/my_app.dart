@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (Platform.isIOS) _getAppLinks();
+      if (Platform.isIOS) _getAppLinks();
       // Timer(const Duration(milliseconds: 7500), () {
       //   _checkForConnection();
       // });
@@ -75,6 +75,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   void checkFirebaseDeepLinks() async {
     // Check if you received the link via getInitialLink first
+
+    FirebaseDynamicLinks.instance.onLink.listen(
+      (pendingDynamicLinkData) {
+        // Set up the onLink event listener next as it may be received here
+        final Uri deepLink = pendingDynamicLinkData.link;
+        // Example of using the dynamic link to push the user to a different screen
+        // Navigator.pushNamed(context, deepLink.path);
+        log(
+          "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n\nn"}$deepLink${"\n\n"}",
+        );
+        // navigateDeepLinks(uri: deepLink);
+      },
+      onDone: () {
+        Utils().showLog("onDone ** => ${"\n\n"}");
+      },
+      onError: (error) {
+        Utils().showLog("onError ** => ${"\n\n"}$error${"\n\n"}");
+      },
+      cancelOnError: true,
+    );
+
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
 
@@ -113,25 +134,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
       // navigateDeepLinks(uri: deepLink);
     }
-
-    FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) {
-      // Set up the onLink event listener next as it may be received here
-      final Uri deepLink = pendingDynamicLinkData.link;
-      // Example of using the dynamic link to push the user to a different screen
-      // Navigator.pushNamed(context, deepLink.path);
-      log(
-        "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n\nn"}$deepLink${"\n\n"}",
-      );
-      navigateDeepLinks(uri: deepLink);
-    }, onDone: () {
-      Utils().showLog(
-        "onDone ** => ${"\n\n"}",
-      );
-    }, onError: (error) {
-      Utils().showLog(
-        "onError ** => ${"\n\n"}$error${"\n\n"}",
-      );
-    });
   }
 
   @override
@@ -168,11 +170,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
         Timer(const Duration(seconds: 5), () {
-          _navigation(uri: event, slug: slug, type: type);
+          navigation(uri: event, slug: slug, type: type);
+          // navigation
         });
       } else {
         Timer(const Duration(seconds: 1), () {
-          _navigation(uri: event, slug: slug, type: type);
+          navigation(uri: event, slug: slug, type: type);
         });
       }
     });
@@ -193,86 +196,86 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   return '';
   // }
 
-  _navigation({String? type, required Uri uri, String? slug}) async {
-    Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-    String slugForTicker = extractSymbolValue(uri);
-    Utils().showLog("slug for ticker $slugForTicker");
-    bool userPresent = false;
+  // _navigation({String? type, required Uri uri, String? slug}) async {
+  //   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+  //   String slugForTicker = extractSymbolValue(uri);
+  //   Utils().showLog("slug for ticker $slugForTicker");
+  //   bool userPresent = false;
 
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (await provider.checkForUser()) {
-      userPresent = true;
-    }
-    Utils().showLog("----$userPresent---");
-    if (type == "blog") {
-      Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => BlogDetail(
-                    // id: "",
-                    slug: slug,
-                  )));
-    } else if (type == "news") {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => NewsDetails(
-            slug: slug,
-          ),
-        ),
-      );
-    } else if (type == "stock_detail") {
-      Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => StockDetail(symbol: slugForTicker)));
-    } else if (type == "login") {
-      if (userPresent) {
-        if (_appLifecycleState == null) {
-          //
-        } else {
-          Navigator.pushNamedAndRemoveUntil(
-              navigatorKey.currentContext!, Tabs.path, (route) => false);
-        }
-      } else {
-        loginSheet();
-      }
-    } else if (type == "signUp") {
-      if (userPresent) {
-        if (_appLifecycleState == null) {
-          //
-        } else {
-          Navigator.pushNamedAndRemoveUntil(
-              navigatorKey.currentContext!, Tabs.path, (route) => false);
-        }
-      } else {
-        signupSheet();
-      }
-    } else if (type == "dashboard") {
-      if (_appLifecycleState == null) {
-        //
-      } else {
-        // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
-      }
-      Utils().showLog("--goto dashboard---");
-    } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => WebviewLink(
-            url: uri,
-          ),
-        ),
-      );
-      // Navigator.pushNamedAndRemoveUntil(
-      //   navigatorKey.currentContext!,
-      //   Tabs.path,
-      //   (route) => false,
-      // );
-    }
-  }
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   if (await provider.checkForUser()) {
+  //     userPresent = true;
+  //   }
+  //   Utils().showLog("----$userPresent---");
+  //   if (type == "blog") {
+  //     Navigator.push(
+  //         navigatorKey.currentContext!,
+  //         MaterialPageRoute(
+  //             builder: (context) => BlogDetail(
+  //                   // id: "",
+  //                   slug: slug,
+  //                 )));
+  //   } else if (type == "news") {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(
+  //         builder: (context) => NewsDetails(
+  //           slug: slug,
+  //         ),
+  //       ),
+  //     );
+  //   } else if (type == "stock_detail") {
+  //     Navigator.push(
+  //         navigatorKey.currentContext!,
+  //         MaterialPageRoute(
+  //             builder: (context) => StockDetail(symbol: slugForTicker)));
+  //   } else if (type == "login") {
+  //     if (userPresent) {
+  //       if (_appLifecycleState == null) {
+  //         //
+  //       } else {
+  //         Navigator.pushNamedAndRemoveUntil(
+  //             navigatorKey.currentContext!, Tabs.path, (route) => false);
+  //       }
+  //     } else {
+  //       loginSheet();
+  //     }
+  //   } else if (type == "signUp") {
+  //     if (userPresent) {
+  //       if (_appLifecycleState == null) {
+  //         //
+  //       } else {
+  //         Navigator.pushNamedAndRemoveUntil(
+  //             navigatorKey.currentContext!, Tabs.path, (route) => false);
+  //       }
+  //     } else {
+  //       signupSheet();
+  //     }
+  //   } else if (type == "dashboard") {
+  //     if (_appLifecycleState == null) {
+  //       //
+  //     } else {
+  //       // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
+  //       Navigator.pushNamedAndRemoveUntil(
+  //           navigatorKey.currentContext!, Tabs.path, (route) => false);
+  //     }
+  //     Utils().showLog("--goto dashboard---");
+  //   } else {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(
+  //         builder: (context) => WebviewLink(
+  //           url: uri,
+  //         ),
+  //       ),
+  //     );
+  //     // Navigator.pushNamedAndRemoveUntil(
+  //     //   navigatorKey.currentContext!,
+  //     //   Tabs.path,
+  //     //   (route) => false,
+  //     // );
+  //   }
+  // }
 
   // String containsSpecificPath(Uri uri) {
   //   Utils().showLog("-----contain path $uri");
