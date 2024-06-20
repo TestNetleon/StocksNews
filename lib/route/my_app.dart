@@ -48,7 +48,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (Platform.isIOS) _getAppLinks();
+      // if (Platform.isIOS)
+      _getAppLinks();
       checkFirebaseDeepLinks();
       setState(() {});
     });
@@ -120,7 +121,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     isAppInForeground = state == AppLifecycleState.resumed;
-    Utils().showLog("**** is in foreground ==>  $isAppInForeground");
+    // Utils().showLog("**** is in foreground ==>  $isAppInForeground");
     setState(() {
       _appLifecycleState = state;
     });
@@ -142,12 +143,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } catch (e) {
       print('Error Receiving referral $e');
     }
+
     _appLinks.uriLinkStream.listen((event) {
+      print('RECEIVING -- _appLinks.uriLinkStream ===>  $event');
       String type = containsSpecificPath(event);
       String slug = extractLastPathComponent(event);
       if (_appLifecycleState == null) {
         Timer(const Duration(seconds: 5), () {
-          navigation(uri: event, slug: slug, type: type);
+          navigation(uri: event, slug: slug, type: type, fromBackground: true);
         });
       } else {
         Timer(const Duration(seconds: 1), () {
