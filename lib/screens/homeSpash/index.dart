@@ -48,6 +48,7 @@ class _HomeSplashState extends State<HomeSplash> {
   }
 
   _navigateToRequiredScreen(payload) async {
+    Utils().showLog("----Navigating to req screen...");
     popHome = true;
     String? type = payload["type"];
     String? slug = payload['slug'];
@@ -64,13 +65,13 @@ class _HomeSplashState extends State<HomeSplash> {
           (route) => false,
         );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushNamed(
+        Navigator.pushReplacementNamed(
           navigatorKey.currentContext!,
           NewsDetails.path,
           arguments: {"slug": slug, "notificationId": notificationId},
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
-        Navigator.push(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) => WebviewLink(
@@ -80,7 +81,7 @@ class _HomeSplashState extends State<HomeSplash> {
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Navigator.pushNamed(
+        Navigator.pushReplacementNamed(
           navigatorKey.currentContext!,
           BlogDetail.path,
           arguments: {"slug": slug, "notificationId": notificationId},
@@ -124,7 +125,7 @@ class _HomeSplashState extends State<HomeSplash> {
         });
       } else if (slug != '' && type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type ?? "")) {
-        Navigator.pushNamed(
+        Navigator.pushReplacementNamed(
           navigatorKey.currentContext!,
           StockDetail.path,
           arguments: {"slug": slug, "notificationId": notificationId},

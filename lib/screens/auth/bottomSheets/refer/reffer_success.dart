@@ -170,28 +170,28 @@ class _ReferSuccessState extends State<ReferSuccess> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ThemeButtonSmall(
-                            iconFront: true,
-                            color: const Color.fromARGB(255, 3, 94, 15),
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, ReferAFriend.path);
-                            },
-                            text: "Affiliate Dashboard",
-                            icon: Icons.dashboard,
-                          ),
-                          const SpacerHorizontal(width: 10),
-                          Expanded(
+                          Flexible(
                             child: ThemeButtonSmall(
                               iconFront: true,
+                              color: const Color.fromARGB(255, 3, 94, 15),
                               onPressed: () {
-                                Share.share(
-                                  "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                                );
+                                Navigator.pushReplacementNamed(
+                                    context, ReferAFriend.path);
                               },
-                              text: "Share Link",
-                              icon: Icons.share,
+                              text: "Affiliate Panel",
+                              icon: Icons.dashboard,
                             ),
+                          ),
+                          const SpacerHorizontal(width: 6),
+                          ThemeButtonSmall(
+                            iconFront: true,
+                            onPressed: () {
+                              Share.share(
+                                "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                              );
+                            },
+                            text: "Share Link",
+                            icon: Icons.share,
                           ),
                         ],
                       ),
