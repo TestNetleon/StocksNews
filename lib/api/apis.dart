@@ -28,6 +28,11 @@ class Apis {
   static const savePlaidPortfolio = "/save-plaid-portfolio";
   static const plaidPortfolio = "/plaid-portfolio";
   static const referLogin = "/send-phone-otp";
+  static const updateEmailOtp = "/update-email-otp";
+  static const checkEmailOtp = "/check-email-otp";
+  static const updatePhoneOtp = "/update-phone-otp";
+  static const checkUpdatePhoneOtp = "/check-update-phone-otp";
+
   static const checkPhone = "/check-phone-otp";
 
   static const lowPricesStocks = "/low-priced-stocks-under";

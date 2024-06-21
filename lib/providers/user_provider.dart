@@ -26,6 +26,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart'
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
+import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
@@ -45,11 +46,47 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   UserRes? get user => _user;
   bool isKeyboardVisible = false;
 
+  String _emailClickText = "Edit";
+  String get emailClickText => _emailClickText;
+
+  bool _emailEditable = false;
+  bool get emailEditable => _emailEditable;
+
+  String _phoneClickText = "Edit";
+  String get phoneClickText => _phoneClickText;
+
+  bool _phoneEditable = false;
+  bool get phoneEditable => _phoneEditable;
+
   DrawerDataRes? _drawerData;
   DrawerDataRes? get drawerData => _drawerData;
 
   void setStatus(status) {
     _status = status;
+    notifyListeners();
+  }
+
+  void setEmailClickText() {
+    _emailClickText = "update";
+    _emailEditable = true;
+    notifyListeners();
+  }
+
+  void setEmailClickEditText() {
+    _emailClickText = "Edit";
+    _emailEditable = false;
+    notifyListeners();
+  }
+
+  void setPhoneClickText() {
+    _phoneClickText = "update";
+    _phoneEditable = true;
+    notifyListeners();
+  }
+
+  void setPhoneClickEditText() {
+    _phoneClickText = "Edit";
+    _phoneEditable = false;
     notifyListeners();
   }
 
@@ -882,6 +919,122 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       Utils().showLog("$e");
       notifyListeners();
 
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  Future emailUpdateOtp(request,
+      {bool resendButtonClick = false, String email = ""}) async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.updateEmailOtp,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        if (resendButtonClick == false) {
+          phoneEmailOTP(text: email.toLowerCase(), screenType: false);
+        }
+
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+        //
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  Future phoneUpdateOtp(request,
+      {bool resendButtonClick = false, String phone = ""}) async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.updatePhoneOtp,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        if (resendButtonClick == false) {
+          phoneEmailOTP(text: phone, screenType: true);
+        }
+
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+        //
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  Future checkEmailOtp(request) async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.checkEmailOtp,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _emailClickText = "Edit";
+        _emailEditable = false;
+        notifyListeners();
+        closeKeyboard();
+        showErrorMessage(message: response.message, type: SnackbarType.info);
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+        //
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+  Future checkPhoneOtp(request) async {
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.checkUpdatePhoneOtp,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _phoneClickText = "Edit";
+        _phoneEditable = false;
+        notifyListeners();
+        closeKeyboard();
+        showErrorMessage(message: response.message, type: SnackbarType.info);
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+        //
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
