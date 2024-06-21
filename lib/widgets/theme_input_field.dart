@@ -29,6 +29,8 @@ class ThemeInputField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.textInputAction,
     this.onChanged,
+    this.suffix,
+    this.prefix,
     super.key,
   });
 
@@ -52,6 +54,8 @@ class ThemeInputField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
+  final Widget? suffix;
+  final Widget? prefix;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +98,8 @@ class ThemeInputField extends StatelessWidget {
                 inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
                 style: style ?? stylePTSansRegular(color: Colors.black),
                 decoration: InputDecoration(
+                  prefix: prefix,
+                  suffix: suffix,
                   hintText: placeholder ?? '',
                   hintStyle: stylePTSansRegular(color: ThemeColors.dividerDark),
                   constraints: BoxConstraints(

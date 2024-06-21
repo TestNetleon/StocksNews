@@ -1,21 +1,19 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/api/image_service.dart';
+
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
-import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
-import 'package:stocks_news_new/utils/bottom_sheets.dart';
+
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
@@ -29,7 +27,6 @@ import '../../utils/utils.dart';
 import '../../utils/validations.dart';
 import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_input_field.dart';
-import '../drawer/widgets/profile_image.dart';
 
 class MyAccountContainer extends StatefulWidget {
   const MyAccountContainer({super.key});
@@ -41,19 +38,36 @@ class MyAccountContainer extends StatefulWidget {
 class _MyAccountContainerState extends State<MyAccountContainer>
     with WidgetsBindingObserver {
   final picker = ImagePicker();
-  File? _image;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController displayController = TextEditingController();
-  // TextEditingController mobileController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
+  String appSignature = "";
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+
     nameController.dispose();
     emailController.dispose();
     displayController.dispose();
+    mobileController.dispose();
     super.dispose();
+  }
+
+  void _getAppSignature() {
+    try {
+      SmsAutoFill().getAppSignature.then((signature) {
+        setState(() {
+          appSignature = signature;
+          setState(() {});
+          Utils().showLog("App Signature => $appSignature");
+        });
+      });
+    } catch (e) {
+      Utils().showLog("autofill error $e");
+    }
   }
 
   @override
@@ -65,15 +79,26 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) _getAppSignature();
+
     WidgetsBinding.instance.addObserver(this);
     _updateUser();
   }
 
   void _updateUser() {
+    UserProvider provider = context.read<UserProvider>();
+
     UserRes? user = context.read<UserProvider>().user;
+    if (user?.email?.isNotEmpty != true && user?.email != null) {
+      provider.setEmailClickText();
+    }
+    if (user?.phone?.isNotEmpty != true && user?.phone != null) {
+      provider.setPhoneClickText();
+    }
     if (user?.name?.isNotEmpty == true) nameController.text = user?.name ?? "";
     if (user?.email?.isNotEmpty == true) {
       emailController.text = user?.email ?? "";
+      mobileController.text = user?.phone ?? "";
     }
     if (user?.displayName?.isNotEmpty == true) {
       displayController.text = user?.displayName ?? "";
@@ -81,8 +106,9 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   void _onTap() async {
-    closeKeyboard();
     UserProvider provider = context.read<UserProvider>();
+
+    closeKeyboard();
     if (isEmpty(nameController.text)) {
       popUpAlert(
           message: "Please enter valid name.",
@@ -97,20 +123,39 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           icon: Images.alertPopGIF);
       return;
     }
-    if (!isEmail(emailController.text)) {
-      popUpAlert(
-          message: "Please enter valid email address.",
-          title: "Alert",
-          icon: Images.alertPopGIF);
-      return;
-    }
+    // if (!isEmail(emailController.text)) {
+    //   popUpAlert(
+    //       message: "Please enter valid email address.",
+    //       title: "Alert",
+    //       icon: Images.alertPopGIF);
+    //   return;
+    // }
+    // if (mobileController.text.isEmpty || mobileController.text.length < 10) {
+    //   popUpAlert(
+    //     message: "Please enter a valid phone number.",
+    //     title: "Alert",
+    //     icon: Images.alertPopGIF,
+    //   );
+    //   return;
+    // }
+    // if (provider.user?.phone != mobileController.text.trim()) {
+    //   Utils().showLog("mobile not exist ${provider.user?.phone}");
+    // phoneOTP(
+    //   phone: mobileController.text.trim(),
+    //   name: nameController.text.trim(),
+    //   displayName: displayController.text.trim(),
+    //   email: nameController.text.trim(),
+    // );
+
+    //   return;
+    // }
     {
       try {
         ApiResponse res = await context.read<UserProvider>().updateProfile(
               token: context.read<UserProvider>().user?.token ?? "",
               name: nameController.text,
               displayName: displayController.text,
-              email: emailController.text.toLowerCase(),
+              email: "",
             );
 
         if (res.status) {
@@ -133,91 +178,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         //
       }
     }
-  }
-
-  Future _pickImage({ImageSource? source}) async {
-    Navigator.pop(context);
-    closeKeyboard();
-    try {
-      CroppedFile? croppedFile;
-      final pickedFile =
-          await picker.pickImage(source: source ?? ImageSource.gallery);
-      if (pickedFile != null) {
-        croppedFile = await ImageCropper().cropImage(
-          sourcePath: pickedFile.path,
-          aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-          aspectRatioPresets: [CropAspectRatioPreset.square],
-          uiSettings: [
-            AndroidUiSettings(
-                toolbarTitle: "Image Cropper",
-                toolbarColor: ThemeColors.background,
-                toolbarWidgetColor: ThemeColors.border,
-                initAspectRatio: CropAspectRatioPreset.original,
-                lockAspectRatio: true),
-            IOSUiSettings(
-              title: "Image Cropper",
-            ),
-          ],
-        );
-        if (croppedFile != null) {
-          Utils().showLog("cropped image=> ${croppedFile.path}");
-          _image = File(croppedFile.path);
-          setState(() {});
-          _uploadImage(image: _image);
-        }
-      }
-    } catch (e) {
-      Utils().showLog("Error => $e");
-    }
-  }
-
-  void _uploadImage({File? image}) async {
-    MultipartFile? multipartFile;
-    String? token = context.read<UserProvider>().user?.token ?? "";
-    UserProvider userProvider = context.read<UserProvider>();
-
-    if (image != null) {
-      Uint8List? result = await testCompressAndGetFile(image);
-
-      if (result != null) {
-        multipartFile = MultipartFile.fromBytes(
-          result,
-          filename: image.path.substring(image.path.lastIndexOf("/") + 1),
-        );
-        final request = FormData.fromMap({
-          "token": token,
-          "image": multipartFile,
-        });
-
-        try {
-          ApiResponse response = await requestUploadImage(
-              url: Apis.updateProfile, request: request);
-          if (response.status) {
-            userProvider.updateUser(image: response.data);
-          } else {
-            //
-          }
-        } catch (e) {
-          Utils().showLog("Error $e");
-        }
-      }
-    }
-  }
-
-  void _selectOption() {
-    // showPlatformBottomSheet(
-    //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-    //     context: context,
-    //     content: MyAccountImageType(
-    //       onCamera: () => _pickImage(source: ImageSource.camera),
-    //       onGallery: () => _pickImage(),
-    //     ));
-
-    BaseBottomSheets().gradientBottomSheet(
-        child: MyAccountImageType(
-      onCamera: () => _pickImage(source: ImageSource.camera),
-      onGallery: () => _pickImage(),
-    ));
   }
 
   void _sendOTP({String? otp}) {
@@ -249,37 +209,33 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.all(25.sp),
-            child: ProfileImage(
-              imageSize: 95,
-              cameraSize: 19,
-              onTap: _selectOption,
-              url: context.watch<UserProvider>().user?.image,
-            ),
-          ),
-        ),
+        const MyAccountHeader(),
+        const SpacerVertical(height: 13),
         Text(
-          "Name",
-          style: stylePTSansRegular(fontSize: 14),
+          "Name  ",
+          style: stylePTSansRegular(fontSize: 15),
         ),
         const SpacerVertical(height: 5),
         ThemeInputField(
+          fillColor: ThemeColors.primaryLight,
+          borderColor: ThemeColors.primaryLight,
           controller: nameController,
           placeholder: "Enter your name",
           keyboardType: TextInputType.text,
           inputFormatters: [AlphabetInputFormatter()],
           textCapitalization: TextCapitalization.words,
+          style: stylePTSansRegular(color: Colors.white),
         ),
         const SpacerVertical(height: 13),
         Text(
-          "Display Name",
-          style: stylePTSansRegular(fontSize: 14),
+          "Display Name  ",
+          style: stylePTSansRegular(fontSize: 15),
         ),
         const SpacerVertical(height: 5),
         ThemeInputField(
+          style: stylePTSansRegular(color: Colors.white),
+          fillColor: ThemeColors.primaryLight,
+          borderColor: ThemeColors.primaryLight,
           controller: displayController,
           placeholder: "Enter your display name",
           keyboardType: TextInputType.text,
@@ -290,32 +246,157 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 13),
         Text(
-          "Email",
+          "Email  ",
           style: stylePTSansRegular(fontSize: 14),
         ),
         const SpacerVertical(height: 5),
-        ThemeInputField(
-          controller: emailController,
-          placeholder: "Enter your email id",
-          keyboardType: TextInputType.emailAddress,
-          inputFormatters: [emailFormatter],
-          textCapitalization: TextCapitalization.none,
+        IntrinsicHeight(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ThemeInputField(
+                  style: stylePTSansRegular(color: Colors.white),
+                  fillColor: ThemeColors.primaryLight,
+                  borderColor: ThemeColors.primaryLight,
+                  controller: emailController,
+                  placeholder: "Enter your email id",
+                  keyboardType: TextInputType.emailAddress,
+                  inputFormatters: [emailFormatter],
+                  textCapitalization: TextCapitalization.none,
+                  onChanged: (email) {
+                    emailController.text = email;
+                    setState(() {});
+                  },
+                  borderRadiusOnly: const BorderRadius.only(
+                    bottomLeft: Radius.circular(4),
+                    topLeft: Radius.circular(4),
+                  ),
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
+                decoration: const BoxDecoration(
+                  color: ThemeColors.primaryLight,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(4),
+                    bottomRight: Radius.circular(4),
+                  ),
+                ),
+                child: Expanded(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                    decoration: const BoxDecoration(
+                      color: ThemeColors.accent,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                        topLeft: Radius.circular(20),
+                      ),
+                    ),
+                    child: GestureDetector(
+                      onTap: () =>
+                          _onEmailUpdateClick(emailController.text.trim()),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
+                        child: Text(
+                          "Verify",
+                          style: stylePTSansBold(
+                              color: Colors.white, fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        // const SpacerVertical(height: 13),
-        // Text(
-        //   "Phone Number",
-        //   style: stylePTSansRegular(fontSize: 14),
-        // ),
-        // const SpacerVertical(height: 5),
-        // ThemeInputField(
-        //   controller: mobileController,
-        //   placeholder: "Enter your phone number",
-        //   keyboardType: TextInputType.phone,
-        //   inputFormatters: [
-        //     FilteringTextInputFormatter.digitsOnly,
-        //     // LengthLimitingTextInputFormatter(10),
-        //   ],
-        // ),
+        const SpacerVertical(height: 13),
+        Text(
+          "Phone Number  ",
+          style: stylePTSansBold(color: Colors.white, fontSize: 14),
+        ),
+        const SpacerVertical(height: 5),
+        IntrinsicHeight(
+          child: Expanded(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: ThemeInputField(
+                    prefix: Text(
+                      "+1 ",
+                      style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                    ),
+                    style: stylePTSansRegular(color: Colors.white),
+                    fillColor: ThemeColors.primaryLight,
+                    borderColor: ThemeColors.primaryLight,
+                    onChanged: (phone) {
+                      mobileController.text = phone;
+                      setState(() {});
+                    },
+                    borderRadiusOnly: const BorderRadius.only(
+                      bottomLeft: const Radius.circular(4),
+                      topLeft: Radius.circular(4),
+                    ),
+                    controller: mobileController,
+                    placeholder: "Enter your phone number",
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: [
+                      _formatter,
+                      LengthLimitingTextInputFormatter(10)
+                    ],
+                    textCapitalization: TextCapitalization.none,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 11.7),
+                  decoration: const BoxDecoration(
+                    color: ThemeColors.primaryLight,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      bottomRight: Radius.circular(4),
+                    ),
+                  ),
+                  child: Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 0),
+                      decoration: const BoxDecoration(
+                        color: ThemeColors.accent,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          topLeft: Radius.circular(20),
+                        ),
+                      ),
+                      child: GestureDetector(
+                        onTap: () =>
+                            _onPhoneUpdateClick(mobileController.text.trim()),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: Text(
+                            "Verify",
+                            style: stylePTSansBold(
+                                color: Colors.white, fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         const SpacerVertical(height: 20),
         ThemeButton(onPressed: _onTap, text: "Update Profile"),
         const SpacerVertical(height: 20),
@@ -326,54 +407,45 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                 context.watch<HomeProvider>().extra?.referral?.shwReferral ??
                     false,
             child: const ReferApp()),
-        // Column(
-        //   children: [
-        //     Text(
-        //       "Refer and Earn",
-        //       style: styleGeorgiaBold(fontSize: 20),
-        //       textAlign: TextAlign.center,
-        //     ),
-        //     const SpacerVertical(height: 3),
-        //     Text(
-        //       "Invite your friend and earn reward point for each registration.",
-        //       style: styleGeorgiaRegular(),
-        //       textAlign: TextAlign.center,
-        //     ),
-        //     const SpacerVertical(height: 10),
-        //     GestureDetector(
-        //       onTap: () {
-        //         HomeProvider provider = context.read<HomeProvider>();
-        //         UserProvider userProvider = context.read<UserProvider>();
-        //         Share.share(
-        //           "${provider.extra?.referral?.shareText}${"\n\n"}${userProvider.user?.referralUrl}",
-        //         );
-        //         // Share.share(
-        //         //   "Hey, Stay updated on the stock market with this excellent app. Daily updates and market news at your fingertips.\n\nhttps://app.stocks.news/refer/abc123",
-        //         // );
-        //       },
-        //       child: Container(
-        //         decoration: BoxDecoration(
-        //           borderRadius: BorderRadius.circular(4),
-        //           color: ThemeColors.gradientLight,
-        //         ),
-        //         padding: const EdgeInsets.symmetric(
-        //           horizontal: 20,
-        //           vertical: 10,
-        //         ),
-        //         child: Row(
-        //           mainAxisSize: MainAxisSize.min,
-        //           children: [
-        //             Text("Refer Now", style: styleGeorgiaBold()),
-        //             const SpacerHorizontal(width: 5),
-        //             const Icon(Icons.share, size: 20),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //     // const SpacerVertical(height: 100),
-        //   ],
-        // )
       ],
     );
+  }
+
+  void _onEmailUpdateClick(String email) {
+    UserProvider provider = context.read<UserProvider>();
+
+    if (!isEmail(emailController.text)) {
+      popUpAlert(
+          message: "Please enter valid email address.",
+          title: "Alert",
+          icon: Images.alertPopGIF);
+      return;
+    }
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "email": email.toLowerCase(),
+    };
+
+    provider.emailUpdateOtp(request, resendButtonClick: false, email: email);
+  }
+
+  void _onPhoneUpdateClick(String phone) {
+    UserProvider provider = context.read<UserProvider>();
+
+    if (mobileController.text.isEmpty || mobileController.text.length < 10) {
+      popUpAlert(
+        message: "Please enter a valid phone number.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    Map request = {
+      "token": provider.user?.token ?? "",
+      "phone": phone,
+      "phone_hash": appSignature,
+    };
+
+    provider.phoneUpdateOtp(request, resendButtonClick: false, phone: phone);
   }
 }

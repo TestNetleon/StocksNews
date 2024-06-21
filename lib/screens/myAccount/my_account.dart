@@ -27,40 +27,33 @@ class MyAccount extends StatelessWidget {
     );
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
-      body: Stack(
-        fit: StackFit.expand,
-        alignment: Alignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(Dimen.padding.sp),
-            child: provider.user == null
-                ? Column(
-                    children: [
-                      // const ScreenTitle(title: "My Profile"),
-                      Expanded(child: LoginError(
-                        onClick: () async {
-                          isPhone
-                              ? await loginSheet()
-                              : await loginSheetTablet();
-                        },
-                      ))
-                    ],
-                  )
-                : const SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        // ScreenTitle(title: "My Profile"),
-                        MyAccountContainer(),
-                      ],
+      body: Padding(
+        padding: EdgeInsets.all(Dimen.padding.sp),
+        child: provider.user == null
+            ? Column(
+                children: [
+                  // const ScreenTitle(title: "My Profile"),
+                  Expanded(child: LoginError(
+                    onClick: () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
+                    },
+                  ))
+                ],
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // ScreenTitle(title: "My Profile"),
+                    MyAccountContainer(),
+                    Visibility(
+                      visible: provider.user != null,
+                      child: const Positioned(
+                          bottom: 10, child: MyAccountDelete()),
                     ),
-                  ),
-          ),
-          Visibility(
-            visible: provider.user != null,
-            child: const Positioned(bottom: 10, child: MyAccountDelete()),
-          ),
-        ],
+                  ],
+                ),
+              ),
       ),
     );
   }

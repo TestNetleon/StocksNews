@@ -81,3 +81,5 @@ final FilteringTextInputFormatter jobHistoryFormatter =
 
 FilteringTextInputFormatter nameFormatter =
     FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]*$'));
+FilteringTextInputFormatter usPhoneNumber = FilteringTextInputFormatter.allow(
+    RegExp(r'^(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})$'));
