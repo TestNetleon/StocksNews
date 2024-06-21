@@ -48,8 +48,7 @@ class MyAccount extends StatelessWidget {
                     MyAccountContainer(),
                     Visibility(
                       visible: provider.user != null,
-                      child: const Positioned(
-                          bottom: 10, child: MyAccountDelete()),
+                      child: MyAccountDelete(),
                     ),
                   ],
                 ),

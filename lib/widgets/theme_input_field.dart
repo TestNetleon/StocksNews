@@ -31,6 +31,7 @@ class ThemeInputField extends StatelessWidget {
     this.onChanged,
     this.suffix,
     this.prefix,
+    this.cursorColor,
     super.key,
   });
 
@@ -56,6 +57,7 @@ class ThemeInputField extends StatelessWidget {
   final Function(String)? onChanged;
   final Widget? suffix;
   final Widget? prefix;
+  final Color? cursorColor;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,7 @@ class ThemeInputField extends StatelessWidget {
           ),
           child ??
               TextField(
+                cursorColor: cursorColor,
                 onChanged: onChanged,
                 textInputAction: textInputAction,
                 controller: controller,
