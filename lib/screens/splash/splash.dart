@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -43,6 +44,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     // if (!connection) return;
 
     // _callAPI();
+    try {
+      var deviceType = getDeviceType(
+        Size(ScreenUtil().screenWidth, ScreenUtil().scaleHeight),
+      );
+
+      if (deviceType == DeviceScreenType.tablet) {
+        isPhone = false;
+      } else if (deviceType == DeviceScreenType.mobile) {
+        isPhone = true;
+      }
+    } catch (e) {
+      //
+    }
+
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
@@ -71,17 +86,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _getDeviceType() async {
-    try {
-      var deviceType = getDeviceType(MediaQuery.of(context).size);
-
-      if (deviceType == DeviceScreenType.tablet) {
-        isPhone = false;
-      } else if (deviceType == DeviceScreenType.mobile) {
-        isPhone = true;
-      }
-    } catch (e) {
-      //
-    }
     UserProvider provider = context.read<UserProvider>();
 
     MessageRes? messageObject = await Preference.getLocalDataBase();
