@@ -15,15 +15,19 @@ class AffiliateReferRes {
   final String? phone;
   final num? points;
   final num? status;
+  double timer;
+  final int? dbId;
 
   AffiliateReferRes({
     this.displayName,
     this.name,
     this.image,
     this.email,
+    this.dbId,
     this.phone,
     this.points,
     this.status,
+    this.timer = 0,
   });
 
   factory AffiliateReferRes.fromJson(Map<String, dynamic> json) =>
@@ -31,6 +35,7 @@ class AffiliateReferRes {
         displayName: json["display_name"],
         name: json["name"],
         image: json["image"],
+        dbId: json["db_id"],
         email: json["email"],
         phone: json["phone"],
         points: json["points"],
@@ -42,6 +47,7 @@ class AffiliateReferRes {
         "name": name,
         "image": image,
         "email": email,
+        "db_id": dbId,
         "phone": phone,
         "points": points,
         "status": status,

@@ -92,7 +92,10 @@ class AffiliateReferItem extends StatelessWidget {
                     LeaderBoardProvider provider = navigatorKey.currentContext!
                         .read<LeaderBoardProvider>();
                     Navigator.pop(navigatorKey.currentContext!);
-                    provider.nudgeAPI(email: data?.email);
+                    provider.nudgeAPI(
+                      email: data?.email,
+                      dbId: data?.dbId ?? 0,
+                    );
                   },
                   icon: Icons.email_outlined,
                 ),
@@ -142,6 +145,9 @@ class AffiliateReferItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: data?.status == 0 ? _showBottomSheet : null,
+      // onTap: () {
+      //   context.read<LeaderBoardProvider>().startNudgeTimer(index);
+      // },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
@@ -232,6 +238,8 @@ class AffiliateReferItem extends StatelessWidget {
             ),
             Visibility(
               visible: data?.status == 0,
+              // visible:
+              //     context.watch<LeaderBoardProvider>().data?[index].timer != 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -239,13 +247,27 @@ class AffiliateReferItem extends StatelessWidget {
                     color: ThemeColors.greyBorder,
                     height: 10,
                   ),
-                  Text(
-                    "Click here to nudge your friend",
-                    style: stylePTSansBold(
-                      fontSize: 14,
-                      color: ThemeColors.accent,
-                      decoration: TextDecoration.underline,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Images.nudge,
+                        height: 20,
+                        width: 20,
+                        color: ThemeColors.accent,
+                      ),
+                      const SpacerHorizontal(width: 5),
+                      Flexible(
+                        child: Text(
+                          "Click here to nudge your friend",
+                          style: stylePTSansBold(
+                            fontSize: 14,
+                            color: ThemeColors.accent,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

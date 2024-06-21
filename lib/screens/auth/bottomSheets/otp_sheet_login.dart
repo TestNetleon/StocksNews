@@ -229,7 +229,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 //     color: Colors.white,
                 //   ),
                 // ),
-                EditEmail(email: "${widget.userName}"),
+                EditEmail(email: widget.userName),
 
                 const SpacerVertical(),
                 // Text(
@@ -322,7 +322,7 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 // ),
                 const SpacerVertical(),
                 EditEmailClick(
-                  email: "${widget.userName}",
+                  email: widget.userName,
                   state: widget.state,
                   dontPop: widget.dontPop,
                 ),

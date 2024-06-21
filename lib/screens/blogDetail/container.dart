@@ -133,10 +133,11 @@ class BlogDetailContainer extends StatelessWidget {
                         return const ProgressDialog();
                       },
                       provider.blogsDetail?.description ?? "",
-                      textStyle: styleGeorgiaRegular(
-                        fontSize: 14,
-                        height: 1.5,
-                      ),
+                      // textStyle: styleGeorgiaRegular(
+                      //   fontSize: 14,
+                      //   height: 1.5,
+                      // ),
+                      textStyle: styleGeorgiaRegular(fontSize: 18, height: 1.5),
                     ),
                     const SpacerVertical(height: 10),
                   ],

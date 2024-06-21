@@ -23,6 +23,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/apple_otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -356,6 +357,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             );
           }
         }
+        if ((_user?.phone == null || _user?.phone == "") &&
+            (_user?.signupStatus == false)) {
+          referLogin();
+        }
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -438,6 +443,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
               (route) => false,
             );
           }
+        }
+
+        if ((_user?.phone == null || _user?.phone == "") &&
+            (_user?.signupStatus == false)) {
+          referLogin();
         }
       } else {
         // showErrorMessage(message: response.message);
@@ -646,6 +656,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         }
 
         notifyListeners();
+        if ((_user?.phone == null || _user?.phone == "") &&
+            (_user?.signupStatus == false)) {
+          referLogin();
+        }
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -806,7 +820,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
 //-------------------------------------------------
 
-  Future referLogin(request) async {
+  Future referLoginApi(request) async {
     try {
       ApiResponse response = await apiRequest(
         url: Apis.referLogin,

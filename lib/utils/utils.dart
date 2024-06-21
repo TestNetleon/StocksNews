@@ -251,7 +251,7 @@ void navigation({
   fromBackground = false,
 }) async {
   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-  String slugForTicker = extractSymbolValue(uri);
+  // String slugForTicker = extractSymbolValue(uri);
   // Utils().showLog("slug for ticker $slugForTicker");
   bool userPresent = false;
 
@@ -307,12 +307,12 @@ void navigation({
       Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-              builder: (context) => StockDetail(symbol: slugForTicker)));
+              builder: (context) => StockDetail(symbol: slug ?? "")));
     } else {
       Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-              builder: (context) => StockDetail(symbol: slugForTicker)));
+              builder: (context) => StockDetail(symbol: slug ?? "")));
     }
   } else if (type == "login") {
     if (userPresent) {

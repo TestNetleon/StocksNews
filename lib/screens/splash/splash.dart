@@ -71,7 +71,17 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _getDeviceType() async {
-    var deviceType = getDeviceType(MediaQuery.of(context).size);
+    try {
+      var deviceType = getDeviceType(MediaQuery.of(context).size);
+
+      if (deviceType == DeviceScreenType.tablet) {
+        isPhone = false;
+      } else if (deviceType == DeviceScreenType.mobile) {
+        isPhone = true;
+      }
+    } catch (e) {
+      //
+    }
     UserProvider provider = context.read<UserProvider>();
 
     MessageRes? messageObject = await Preference.getLocalDataBase();
@@ -81,12 +91,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     }
     if (messageObject?.loading != null) {
       Const.loadingMessage = messageObject!.loading!;
-    }
-
-    if (deviceType == DeviceScreenType.tablet) {
-      isPhone = false;
-    } else if (deviceType == DeviceScreenType.mobile) {
-      isPhone = true;
     }
 
     UserRes? user = await Preference.getUser();

@@ -129,7 +129,7 @@ class _ReferLoginState extends State<ReferLogin> {
       };
 
       try {
-        ApiResponse response = await provider.referLogin(request);
+        ApiResponse response = await provider.referLoginApi(request);
         if (response.status) {
           provider.updateUser(name: name.text, displayName: displayName.text);
           Navigator.pop(navigatorKey.currentContext!);
@@ -300,7 +300,7 @@ class _ReferLoginState extends State<ReferLogin> {
                                 keyboardType: TextInputType.phone,
                                 inputFormatters: [
                                   _formatter,
-                                  LengthLimitingTextInputFormatter(10)
+                                  LengthLimitingTextInputFormatter(20)
                                 ],
                                 textCapitalization: TextCapitalization.none,
                               ),

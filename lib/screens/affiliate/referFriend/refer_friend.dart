@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/howit_work.dart';
+import 'package:stocks_news_new/screens/affiliate/referFriend/suspend.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -38,9 +39,9 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
 
   _callAPI() {
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    if (provider.data == null || provider.data?.isEmpty == true) {
-      context.read<LeaderBoardProvider>().getReferData();
-    }
+    provider.getReferData();
+    // if (provider.data == null || provider.data?.isEmpty == true) {
+    // }
   }
 
   @override
@@ -64,9 +65,11 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
+                const ReferFriendSuspend(),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: Dimen.padding),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
@@ -154,7 +157,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 20, horizontal: Dimen.padding),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -246,33 +250,38 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                 Visibility(
                   visible: provider.data?.isNotEmpty == true &&
                       provider.data != null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const ScreenTitle(
-                        title: "Friends joined with your referral link",
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(bottom: 10),
-                        itemBuilder: (context, index) {
-                          AffiliateReferRes? data = provider.data?[index];
-                          return AffiliateReferItem(
-                            index: index,
-                            data: data,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          // return const Divider(
-                          //   color: ThemeColors.greyBorder,
-                          //   height: 16,
-                          // );
-                          return const SpacerVertical(height: 16);
-                        },
-                        itemCount: provider.data?.length ?? 0,
-                      ),
-                    ],
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: Dimen.padding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ScreenTitle(
+                          title: "Friends joined with your referral link",
+                          subTitle: provider.extra?.earnCondition ?? "",
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.only(bottom: 10),
+                          itemBuilder: (context, index) {
+                            AffiliateReferRes? data = provider.data?[index];
+                            return AffiliateReferItem(
+                              index: index,
+                              data: data,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            // return const Divider(
+                            //   color: ThemeColors.greyBorder,
+                            //   height: 16,
+                            // );
+                            return const SpacerVertical(height: 16);
+                          },
+                          itemCount: provider.data?.length ?? 0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Visibility(
@@ -281,6 +290,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: Dimen.padding),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),

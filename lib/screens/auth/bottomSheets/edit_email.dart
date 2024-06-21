@@ -41,7 +41,7 @@ class EditEmail extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: ".",
+            text: " ",
             style: stylePTSansRegular(
               fontSize: 14,
               height: 1.4,

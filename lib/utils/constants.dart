@@ -78,6 +78,7 @@ class Images {
   static const String temp = "assets/images/temp.png";
   static const String sorting = "assets/images/sorting.png";
   static const String leaderBoard = "assets/images/leaderboard.png";
+  static const String nudge = "assets/images/nudge.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -403,14 +404,35 @@ String containsSpecificPath(Uri uri) {
   }
 }
 
+// String extractLastPathComponent(Uri uri) {
+//   try {
+//     List<String> parts = uri.pathSegments;
+
+//     if (parts.last.contains("stock-detail") ||
+//         uri.queryParameters['symbol'] != null) {
+//       return uri.queryParameters['symbol'] ??
+//           (parts.isNotEmpty ? parts.last : '');
+//     }
+
+//     return parts.isNotEmpty ? parts.last : '';
+//   } catch (e) {
+//     return '';
+//   }
+// }
+
 String extractLastPathComponent(Uri uri) {
   try {
     List<String> parts = uri.pathSegments;
 
-    if (parts.last.contains("stock-detail") ||
-        uri.queryParameters['symbol'] != null) {
-      return uri.queryParameters['symbol'] ??
-          (parts.isNotEmpty ? parts.last : '');
+    if (parts.contains("stock-detail")) {
+      int index = parts.indexOf("stock-detail");
+      if (index < parts.length - 1) {
+        return parts[index + 2];
+      }
+    }
+
+    if (uri.queryParameters.containsKey('symbol')) {
+      return uri.queryParameters['symbol'] ?? '';
     }
 
     return parts.isNotEmpty ? parts.last : '';
@@ -419,12 +441,13 @@ String extractLastPathComponent(Uri uri) {
   }
 }
 
-String extractSymbolValue(Uri uri) {
-  if (uri.path.contains('/stock-detail')) {
-    // Check if the query parameters contain 'symbol'
-    if (uri.queryParameters.containsKey('symbol')) {
-      return uri.queryParameters['symbol'] ?? '';
-    }
-  }
-  return '';
-}
+
+// String extractSymbolValue(Uri uri) {
+//   if (uri.path.contains('/stock-detail')) {
+//     // Check if the query parameters contain 'symbol'
+//     if (uri.queryParameters.containsKey('symbol')) {
+//       return uri.queryParameters['symbol'] ?? '';
+//     }
+//   }
+//   return '';
+// }

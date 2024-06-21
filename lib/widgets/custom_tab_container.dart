@@ -11,6 +11,7 @@ class CustomTabContainer extends StatefulWidget {
     required this.widgets,
     this.rightWidget = const SizedBox(),
     this.header,
+    this.padding,
     this.onChange,
     this.showDivider = false,
     this.isScrollable = false,
@@ -20,6 +21,7 @@ class CustomTabContainer extends StatefulWidget {
   final Widget rightWidget;
   final Widget? header;
   final List<Widget> tabs;
+  final EdgeInsets? padding;
   final bool isScrollable;
   final List<Widget> widgets;
   final bool showDivider;
@@ -71,6 +73,7 @@ class _CustomState extends State<CustomTabContainer>
               borderRadius: BorderRadius.circular(10),
             ),
             child: TabBar(
+                padding: widget.padding,
                 controller: _controller,
                 onTap: (index) {
                   setState(() {

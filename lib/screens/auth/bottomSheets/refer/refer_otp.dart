@@ -166,7 +166,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
 
     try {
       _listenCode();
-      ApiResponse response = await provider.referLogin(request);
+      ApiResponse response = await provider.referLoginApi(request);
       if (response.status) {
         _otpFocusNode.requestFocus();
 

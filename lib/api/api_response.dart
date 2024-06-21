@@ -81,6 +81,8 @@ class Extra {
   final ReferLoginRes? referLogin;
   final String? verifyIdentity;
   final String? nudgeText;
+  final String? earnCondition;
+  final String? suspendMsg;
 
   Extra({
     this.search,
@@ -91,6 +93,7 @@ class Extra {
     this.transactionType,
     this.referLogin,
     this.nudgeText,
+    this.suspendMsg,
     this.period,
     this.affiliateReferText,
     this.type,
@@ -122,12 +125,15 @@ class Extra {
     this.messageObject,
     this.user,
     this.referral,
+    this.earnCondition,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
         verifyIdentity: json['verify_identity_text'],
+        earnCondition: json['earn_condition'],
         received: json['total_points_received'],
+        suspendMsg: json['referral_status_message'],
         nudgeText: json["nudge_text"],
         referLogin: json["refer_login"] == null
             ? null
@@ -207,8 +213,10 @@ class Extra {
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
         "verify_identity_text": verifyIdentity,
+        "earn_condition": earnCondition,
         'total_points_received': received,
         "total_points_pending": pending,
+        'referral_status_message': suspendMsg,
         "heading": affiliateReferText,
         "refer_login": referLogin?.toJson(),
         "title": title,
