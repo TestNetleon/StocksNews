@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
@@ -124,6 +125,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = context.watch<UserProvider>();
+    LeaderBoardProvider leaderProvider = context.read<LeaderBoardProvider>();
 
     return SizedBox(
       width: double.infinity,
@@ -210,16 +212,10 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 40),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.abc),
-                              Text(
-                                "0",
-                                style: stylePTSansBold(
-                                    color: Colors.white, fontSize: 14),
-                              ),
-                            ],
+                          child: Text(
+                            "${leaderProvider.extra?.received ?? 0}",
+                            style: stylePTSansBold(
+                                color: Colors.white, fontSize: 14),
                           ),
                         ),
                       ),

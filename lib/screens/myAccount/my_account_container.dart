@@ -10,6 +10,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
@@ -56,6 +57,25 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     super.dispose();
   }
 
+  @override
+  void didChangeMetrics() {
+    UserProvider provider = context.read<UserProvider>();
+    provider.keyboardVisiblity(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) _getAppSignature();
+
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callAPI();
+    });
+
+    _updateUser();
+  }
+
   void _getAppSignature() {
     try {
       SmsAutoFill().getAppSignature.then((signature) {
@@ -70,19 +90,9 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     }
   }
 
-  @override
-  void didChangeMetrics() {
-    UserProvider provider = context.read<UserProvider>();
-    provider.keyboardVisiblity(context);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) _getAppSignature();
-
-    WidgetsBinding.instance.addObserver(this);
-    _updateUser();
+  _callAPI() {
+    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+    provider.getReferData();
   }
 
   void _updateUser() {
@@ -217,6 +227,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 5),
         ThemeInputField(
+          cursorColor: Colors.white,
           fillColor: ThemeColors.primaryLight,
           borderColor: ThemeColors.primaryLight,
           controller: nameController,
@@ -233,6 +244,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 5),
         ThemeInputField(
+          cursorColor: Colors.white,
           style: stylePTSansRegular(color: Colors.white),
           fillColor: ThemeColors.primaryLight,
           borderColor: ThemeColors.primaryLight,
@@ -256,6 +268,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             children: [
               Expanded(
                 child: ThemeInputField(
+                  cursorColor: Colors.white,
                   style: stylePTSansRegular(color: Colors.white),
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
@@ -264,10 +277,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [emailFormatter],
                   textCapitalization: TextCapitalization.none,
-                  onChanged: (email) {
-                    emailController.text = email;
-                    setState(() {});
-                  },
                   borderRadiusOnly: const BorderRadius.only(
                     bottomLeft: Radius.circular(4),
                     topLeft: Radius.circular(4),
@@ -284,30 +293,28 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                     bottomRight: Radius.circular(4),
                   ),
                 ),
-                child: Expanded(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                    decoration: const BoxDecoration(
-                      color: ThemeColors.accent,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20),
-                        topLeft: Radius.circular(20),
-                      ),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  decoration: const BoxDecoration(
+                    color: ThemeColors.accent,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      topLeft: Radius.circular(20),
                     ),
-                    child: GestureDetector(
-                      onTap: () =>
-                          _onEmailUpdateClick(emailController.text.trim()),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: Text(
-                          "Verify",
-                          style: stylePTSansBold(
-                              color: Colors.white, fontSize: 14),
-                        ),
+                  ),
+                  child: GestureDetector(
+                    onTap: () =>
+                        _onEmailUpdateClick(emailController.text.trim()),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: Text(
+                        "Verify",
+                        style:
+                            stylePTSansBold(color: Colors.white, fontSize: 14),
                       ),
                     ),
                   ),
@@ -323,78 +330,71 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         ),
         const SpacerVertical(height: 5),
         IntrinsicHeight(
-          child: Expanded(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: ThemeInputField(
-                    prefix: Text(
-                      "+1 ",
-                      style: stylePTSansBold(color: Colors.white, fontSize: 14),
-                    ),
-                    style: stylePTSansRegular(color: Colors.white),
-                    fillColor: ThemeColors.primaryLight,
-                    borderColor: ThemeColors.primaryLight,
-                    onChanged: (phone) {
-                      mobileController.text = phone;
-                      setState(() {});
-                    },
-                    borderRadiusOnly: const BorderRadius.only(
-                      bottomLeft: const Radius.circular(4),
-                      topLeft: Radius.circular(4),
-                    ),
-                    controller: mobileController,
-                    placeholder: "Enter your phone number",
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [
-                      _formatter,
-                      LengthLimitingTextInputFormatter(10)
-                    ],
-                    textCapitalization: TextCapitalization.none,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ThemeInputField(
+                  cursorColor: Colors.white,
+                  prefix: Text(
+                    "+1 ",
+                    style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                  ),
+                  style: stylePTSansRegular(color: Colors.white),
+                  fillColor: ThemeColors.primaryLight,
+                  borderColor: ThemeColors.primaryLight,
+                  borderRadiusOnly: const BorderRadius.only(
+                    bottomLeft: const Radius.circular(4),
+                    topLeft: Radius.circular(4),
+                  ),
+                  controller: mobileController,
+                  placeholder: "Enter your phone number",
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    _formatter,
+                    LengthLimitingTextInputFormatter(10)
+                  ],
+                  textCapitalization: TextCapitalization.none,
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 11.7),
+                decoration: const BoxDecoration(
+                  color: ThemeColors.primaryLight,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(4),
+                    bottomRight: Radius.circular(4),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 11.7),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   decoration: const BoxDecoration(
-                    color: ThemeColors.primaryLight,
+                    color: ThemeColors.accent,
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(4),
-                      bottomRight: Radius.circular(4),
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      topLeft: Radius.circular(20),
                     ),
                   ),
-                  child: Expanded(
-                    child: Container(
+                  child: GestureDetector(
+                    onTap: () =>
+                        _onPhoneUpdateClick(mobileController.text.trim()),
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 0),
-                      decoration: const BoxDecoration(
-                        color: ThemeColors.accent,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          topLeft: Radius.circular(20),
-                        ),
-                      ),
-                      child: GestureDetector(
-                        onTap: () =>
-                            _onPhoneUpdateClick(mobileController.text.trim()),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          child: Text(
-                            "Verify",
-                            style: stylePTSansBold(
-                                color: Colors.white, fontSize: 14),
-                          ),
-                        ),
+                          vertical: 5, horizontal: 10),
+                      child: Text(
+                        "Verify",
+                        style:
+                            stylePTSansBold(color: Colors.white, fontSize: 14),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         const SpacerVertical(height: 20),
