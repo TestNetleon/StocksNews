@@ -37,7 +37,15 @@ class Preference {
   static Future<UserRes?> getUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     final userString = preferences.getString("@userlogin");
-    return userString == null ? null : UserRes.fromJson(jsonDecode(userString));
+    if (userString == null) return null;
+
+    try {
+      UserRes? user = UserRes.fromJson(jsonDecode(userString));
+      return user;
+    } catch (e) {
+      return null;
+    }
+    // return userString == null ? null : UserRes.fromJson(jsonDecode(userString));
   } //
 
   static void logout() async {

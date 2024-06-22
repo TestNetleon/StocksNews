@@ -5,7 +5,7 @@ UserRes userResFromJson(String str) => UserRes.fromJson(json.decode(str));
 String userResToJson(UserRes data) => json.encode(data.toJson());
 
 class UserRes {
-  final String userId;
+  String? userId;
   String? email;
   String? phone;
   final String? roleId;
@@ -34,7 +34,7 @@ class UserRes {
     this.otp,
     this.username,
     this.token,
-    required this.userId,
+    this.userId,
     this.type,
     this.notificationSeen = false,
     this.image,
