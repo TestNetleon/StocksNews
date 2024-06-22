@@ -148,8 +148,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
 
     _appLinks.uriLinkStream.listen((event) {
-      bool isRef = event.toString().contains("/install") &&
-          event.toString().contains(".page.ling");
+      bool isRef = event.toString().contains("/install") ||
+          event.toString().contains(".page.link") ||
+          event.toString().contains("app.stocks.news://");
       if (isRef) return;
 
       String type = containsSpecificPath(event);

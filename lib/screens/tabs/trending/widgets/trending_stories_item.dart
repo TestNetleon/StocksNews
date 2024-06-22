@@ -27,7 +27,7 @@ class TrendingStoriesItem extends StatelessWidget {
                 //   style: stylePTSansRegular(fontSize: 10),
                 // ),
                 Text(
-                  data.title ?? "",
+                  data.title?.trim() ?? "",
                   style: stylePTSansRegular(fontSize: 16),
                 ),
 
@@ -43,7 +43,7 @@ class TrendingStoriesItem extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: "${data.site}",
+                        text: "${data.site?.trim()}",
                         style: stylePTSansRegular(
                           fontSize: 13,
                           color: ThemeColors.greyText,

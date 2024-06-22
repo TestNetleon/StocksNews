@@ -17,6 +17,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+
+import '../tabs/tabs.dart';
 
 class Splash extends StatefulWidget {
   static const String path = "splash";
@@ -39,7 +42,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     });
   }
 
-  void _startProcess() async {
+  void _startProcess() {
     // final connection = await _checkForConnection();
     // if (!connection) return;
 
@@ -56,6 +59,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       }
     } catch (e) {
       //
+      // popUpAlert(message: "$e", title: "Error");
+
+      // Navigator.pushNamedAndRemoveUntil(context, Tabs.path, (route) => false);
     }
 
     Timer(const Duration(seconds: 3), () {
@@ -86,27 +92,33 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _getDeviceType() async {
-    UserProvider provider = context.read<UserProvider>();
+    try {
+      UserProvider provider = context.read<UserProvider>();
 
-    MessageRes? messageObject = await Preference.getLocalDataBase();
+      MessageRes? messageObject = await Preference.getLocalDataBase();
 
-    if (messageObject?.error != null) {
-      Const.errSomethingWrong = messageObject!.error!;
-    }
-    if (messageObject?.loading != null) {
-      Const.loadingMessage = messageObject!.loading!;
-    }
+      if (messageObject?.error != null) {
+        Const.errSomethingWrong = messageObject!.error!;
+      }
+      if (messageObject?.loading != null) {
+        Const.loadingMessage = messageObject!.loading!;
+      }
 
-    UserRes? user = await Preference.getUser();
-    if (user != null) {
-      Utils().showLog("-------FROM SPLASH USER UPDATING---------");
-      provider.setUser(user);
+      UserRes? user = await Preference.getUser();
+      if (user != null) {
+        Utils().showLog("-------FROM SPLASH USER UPDATING---------");
+        provider.setUser(user);
+      }
+    } catch (e) {
+      // popUpAlert(message: "$e", title: "Error");
+      // Navigator.pushNamedAndRemoveUntil(
+      //     navigatorKey.currentContext!, Tabs.path, (route) => false);
     }
 
     _navigateToRequiredScreen();
   }
 
-  Future _navigateToRequiredScreen() async {
+  _navigateToRequiredScreen() {
     Navigator.pushReplacementNamed(
         navigatorKey.currentContext!, HomeSplash.path);
 

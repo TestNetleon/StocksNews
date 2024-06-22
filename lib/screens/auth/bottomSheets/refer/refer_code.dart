@@ -258,7 +258,7 @@ class _ReferLoginState extends State<ReferLogin> {
                           placeholder: "Enter your display name",
                           keyboardType: TextInputType.name,
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(10)
+                            LengthLimitingTextInputFormatter(20)
                           ],
                           textCapitalization: TextCapitalization.words,
                         ),
@@ -300,7 +300,7 @@ class _ReferLoginState extends State<ReferLogin> {
                                 keyboardType: TextInputType.phone,
                                 inputFormatters: [
                                   _formatter,
-                                  LengthLimitingTextInputFormatter(20)
+                                  LengthLimitingTextInputFormatter(10)
                                 ],
                                 textCapitalization: TextCapitalization.none,
                               ),

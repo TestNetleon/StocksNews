@@ -251,6 +251,7 @@ void navigation({
   fromBackground = false,
 }) async {
   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+
   // String slugForTicker = extractSymbolValue(uri);
   // Utils().showLog("slug for ticker $slugForTicker");
   bool userPresent = false;

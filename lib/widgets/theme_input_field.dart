@@ -74,7 +74,7 @@ class ThemeInputField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: fillColor,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: borderRadiusOnly ?? BorderRadius.circular(borderRadius),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
