@@ -151,19 +151,25 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                 ),
                 const SpacerVertical(height: 13),
                 Text(
-                  userProvider.user?.displayName ?? "",
+                  userProvider.user?.name ?? "Hello",
                   style: stylePTSansBold(fontSize: 24),
                 ),
-                Text(
-                  userProvider.user?.email ?? "",
-                  style: stylePTSansRegular(
-                      fontSize: 14, color: ThemeColors.greyText),
+                Visibility(
+                  visible: userProvider.user?.email != null,
+                  child: Text(
+                    userProvider.user?.email ?? "",
+                    style: stylePTSansRegular(
+                        fontSize: 14, color: ThemeColors.greyText),
+                  ),
                 ),
                 Visibility(
                   visible: userProvider.user?.name != null &&
-                      userProvider.user?.displayName != null &&
-                      userProvider.user?.email != null &&
-                      userProvider.user?.phone != null,
+                      (userProvider.user?.displayName != null &&
+                          userProvider.user?.displayName != '') &&
+                      (userProvider.user?.email != null &&
+                          userProvider.user?.email != '') &&
+                      (userProvider.user?.phone != null &&
+                          userProvider.user?.phone != ''),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 13),
                     child: Row(
@@ -176,7 +182,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                         ),
                         const SpacerHorizontal(width: 5),
                         Text(
-                          "Successfully verified",
+                          "Verified",
                           style: stylePTSansRegular(
                               fontSize: 14, color: ThemeColors.greyText),
                         ),
@@ -184,44 +190,43 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                     ),
                   ),
                 ),
-                const SpacerVertical(height: 13),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(.2),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          topLeft: Radius.circular(20),
-                        ),
-                      ),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: ThemeColors.primaryLight,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                            bottomLeft: Radius.circular(20),
-                            topLeft: Radius.circular(20),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 40),
-                          child: Text(
-                            "${leaderProvider.extra?.received ?? 0}",
-                            style: stylePTSansBold(
-                                color: Colors.white, fontSize: 14),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
+                // Visibility(
+                //   visible: leaderProvider.extra?.received != null &&
+                //       leaderProvider.extra?.received != 0,
+                //   child: Container(
+                //     padding: const EdgeInsets.all(.2),
+                //     margin: const EdgeInsets.only(top: 13),
+                //     decoration: const BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.only(
+                //         topRight: Radius.circular(20),
+                //         bottomRight: Radius.circular(20),
+                //         bottomLeft: Radius.circular(20),
+                //         topLeft: Radius.circular(20),
+                //       ),
+                //     ),
+                //     child: Container(
+                //       decoration: const BoxDecoration(
+                //         color: ThemeColors.primaryLight,
+                //         borderRadius: BorderRadius.only(
+                //           topRight: Radius.circular(20),
+                //           bottomRight: Radius.circular(20),
+                //           bottomLeft: Radius.circular(20),
+                //           topLeft: Radius.circular(20),
+                //         ),
+                //       ),
+                //       child: Padding(
+                //         padding: const EdgeInsets.symmetric(
+                //             vertical: 5, horizontal: 40),
+                //         child: Text(
+                //           "${leaderProvider.extra?.received ?? 0}",
+                //           style: stylePTSansBold(
+                //               color: Colors.white, fontSize: 14),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),

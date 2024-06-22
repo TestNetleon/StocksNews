@@ -9,7 +9,6 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
@@ -19,7 +18,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/custom/refer.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 //
@@ -28,6 +26,7 @@ import '../../utils/utils.dart';
 import '../../utils/validations.dart';
 import '../../widgets/spacer_vertical.dart';
 import '../../widgets/theme_input_field.dart';
+import '../contactUs/contact_us_item.dart';
 
 class MyAccountContainer extends StatefulWidget {
   const MyAccountContainer({super.key});
@@ -221,10 +220,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       children: [
         const MyAccountHeader(),
         const SpacerVertical(height: 13),
-        Text(
-          "Name  ",
-          style: stylePTSansRegular(fontSize: 15),
-        ),
+        showAsteriskText(text: "Real Name"),
         const SpacerVertical(height: 5),
         ThemeInputField(
           cursorColor: Colors.white,
@@ -238,10 +234,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           style: stylePTSansRegular(color: Colors.white),
         ),
         const SpacerVertical(height: 13),
-        Text(
-          "Display Name  ",
-          style: stylePTSansRegular(fontSize: 15),
-        ),
+        showAsteriskText(text: "Display Name"),
+
         const SpacerVertical(height: 5),
         ThemeInputField(
           cursorColor: Colors.white,
@@ -257,10 +251,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           textCapitalization: TextCapitalization.words,
         ),
         const SpacerVertical(height: 13),
-        Text(
-          "Email  ",
-          style: stylePTSansRegular(fontSize: 14),
-        ),
+        showAsteriskText(text: "Email Address"),
+
         const SpacerVertical(height: 5),
         IntrinsicHeight(
           child: Row(
@@ -273,7 +265,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
                   controller: emailController,
-                  placeholder: "Enter your email id",
+                  placeholder: "Enter your email address",
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [emailFormatter],
                   textCapitalization: TextCapitalization.none,
@@ -333,20 +325,34 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                decoration: const BoxDecoration(
+                  color: ThemeColors.primaryLight,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(4),
+                    bottomLeft: Radius.circular(4),
+                  ),
+                ),
+                child: Text(
+                  "+1",
+                  style: stylePTSansBold(),
+                ),
+              ),
               Expanded(
                 child: ThemeInputField(
                   cursorColor: Colors.white,
-                  prefix: Text(
-                    "+1 ",
-                    style: stylePTSansBold(color: Colors.white, fontSize: 14),
-                  ),
-                  style: stylePTSansRegular(color: Colors.white),
+                  // prefix: Text(
+                  //   "+1 ",
+                  //   style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                  // ),
+                  style: stylePTSansRegular(color: Colors.white, height: 1.5),
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
-                  borderRadiusOnly: const BorderRadius.only(
-                    bottomLeft: const Radius.circular(4),
-                    topLeft: Radius.circular(4),
-                  ),
+                  borderRadiusOnly: BorderRadius.zero,
+
+                  borderRadius: 0,
                   controller: mobileController,
                   placeholder: "Enter your phone number",
                   keyboardType: TextInputType.phone,
@@ -402,11 +408,14 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         const SpacerVertical(height: 20),
         const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),
-        Visibility(
-            visible:
-                context.watch<HomeProvider>().extra?.referral?.shwReferral ??
-                    false,
-            child: const ReferApp()),
+        // Visibility(
+        //   visible: context.watch<HomeProvider>().extra?.referral?.shwReferral ??
+        //       false,
+        //   child: const Padding(
+        //     padding: EdgeInsets.only(bottom: Dimen.padding),
+        //     child: ReferApp(),
+        //   ),
+        // ),
       ],
     );
   }

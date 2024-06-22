@@ -68,12 +68,12 @@ class _CustomState extends State<CustomTabContainer>
         children: [
           Container(
             padding: const EdgeInsets.all(5),
+            margin: widget.padding,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 21, 21, 21),
               borderRadius: BorderRadius.circular(10),
             ),
             child: TabBar(
-                padding: widget.padding,
                 controller: _controller,
                 onTap: (index) {
                   setState(() {

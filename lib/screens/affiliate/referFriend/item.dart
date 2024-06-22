@@ -119,6 +119,7 @@ class AffiliateReferItem extends StatelessWidget {
                   icon: Icons.send,
                 ),
               ),
+              const SpacerVertical(height: 20)
             ],
           ),
         ),
