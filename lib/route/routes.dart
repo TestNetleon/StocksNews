@@ -75,6 +75,7 @@ import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -405,7 +406,14 @@ class Routes {
             return CongressionalDetail(slug: slug);
           },
         );
-
+      case HelpDesk.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String? slug = arguments?['slug'] as String?;
+        return MaterialPageRoute(
+          builder: (context) {
+            return HelpDesk(slug: slug);
+          },
+        );
       default:
         Splash();
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -396,6 +397,13 @@ List<DrawerRes> aboutTiles = [
     text: "Contact Us",
     onTap: () {
       Navigator.pushNamed(navigatorKey.currentContext!, ContactUs.path);
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.support_agent,
+    text: "Helpdesk",
+    onTap: () {
+      Navigator.pushNamed(navigatorKey.currentContext!, HelpDesk.path);
     },
   ),
   DrawerRes(
