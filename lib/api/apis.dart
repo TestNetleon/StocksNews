@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
+
 class Apis {
-  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
   // static const baseUrl =
   //     "https://notification.stocks.news/api/v1"; // live server
-  // static const baseUrl = kDebugMode
-  //     ? "https://notification.stocks.news/api/v1"
-  //     : "https://app.stocks.news/api/v1"; // live server
+  static const baseUrl = kDebugMode
+      ? "https://notification.stocks.news/api/v1"
+      : "https://app.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
@@ -158,6 +160,10 @@ class Apis {
   static const stockDetailInsider = "/stock-detail-insider";
   static const detailFinancial = "/stock-detail-financial";
   static const stockDetailMergers = "/stock-detail-mergers";
+  static const getTickets = "/get-tickets";
+  static const sendTicket = "/send-ticket";
+  static const ticketDetail = "/ticket-detail";
+  static const ticketReply = "/ticket-reply";
 }
 
 //
