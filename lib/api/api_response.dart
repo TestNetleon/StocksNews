@@ -83,9 +83,13 @@ class Extra {
   final String? nudgeText;
   final String? earnCondition;
   final String? suspendMsg;
+  final ProfileText? profileText;
+  final int? selfRank;
 
   Extra({
     this.search,
+    this.selfRank,
+    this.profileText,
     this.verifyIdentity,
     this.howItWork,
     this.exchangeShortName,
@@ -130,6 +134,10 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        selfRank: json["self_rank"],
+        profileText: json["profile_text"] == null
+            ? null
+            : ProfileText.fromJson(json["profile_text"]),
         verifyIdentity: json['verify_identity_text'],
         earnCondition: json['earn_condition'],
         received: json['total_points_received'],
@@ -213,10 +221,12 @@ class Extra {
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
         "verify_identity_text": verifyIdentity,
+        "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,
         "total_points_pending": pending,
         'referral_status_message': suspendMsg,
+        "profile_text": profileText?.toJson(),
         "heading": affiliateReferText,
         "refer_login": referLogin?.toJson(),
         "title": title,
@@ -262,6 +272,35 @@ class Extra {
         "message": messageObject?.toJson(),
         "user": user?.toJson(),
         "referral": referral?.toJson(),
+      };
+}
+
+class ProfileText {
+  final String? verified;
+  final String? unVerified;
+
+  final String? points;
+  final String? rank;
+
+  ProfileText({
+    this.verified,
+    this.unVerified,
+    this.points,
+    this.rank,
+  });
+
+  factory ProfileText.fromJson(Map<String, dynamic> json) => ProfileText(
+        verified: json["verified"],
+        unVerified: json["unverified"],
+        points: json["points"],
+        rank: json["rank"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "verified": verified,
+        "unverified": unVerified,
+        "points": points,
+        "rank": rank,
       };
 }
 

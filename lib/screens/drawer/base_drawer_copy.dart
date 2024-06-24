@@ -90,7 +90,9 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                     top: 5.sp,
                                   ),
                                   child: Text(
-                                    "${provider.homeSliderRes?.text.drawerHeader}",
+                                    provider.homeSliderRes?.text
+                                            ?.drawerHeader ??
+                                        "",
                                     style: stylePTSansRegular(
                                         fontSize: 13,
                                         color: ThemeColors.greyText),

@@ -67,7 +67,7 @@ class ThemeInputField extends StatelessWidget {
                 borderRadiusOnly ?? BorderRadius.circular(borderRadius),
             borderSide: BorderSide(
               color: borderColor ?? Colors.grey[300]!,
-              width: 1,
+              width: 0.5,
             ),
           )
         : InputBorder.none;

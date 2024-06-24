@@ -61,6 +61,35 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   DrawerDataRes? _drawerData;
   DrawerDataRes? get drawerData => _drawerData;
 
+  bool emailVerified = false;
+  bool phoneVerified = false;
+
+  resetVerification() {
+    emailVerified = false;
+    phoneVerified = false;
+    notifyListeners();
+  }
+
+  void onChangeEmail(String value) {
+    if ((value == _user?.email) &&
+        (_user?.email != null && _user?.email != '')) {
+      emailVerified = true;
+    } else {
+      emailVerified = false;
+    }
+    notifyListeners();
+  }
+
+  void onChangePhone(String value) {
+    if ((value == _user?.phone) &&
+        (_user?.phone != null && _user?.phone != '')) {
+      phoneVerified = true;
+    } else {
+      phoneVerified = false;
+    }
+    notifyListeners();
+  }
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -69,6 +98,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   void setEmailClickText() {
     _emailClickText = "update";
     _emailEditable = true;
+    emailVerified = true;
     notifyListeners();
   }
 
@@ -81,6 +111,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   void setPhoneClickText() {
     _phoneClickText = "update";
     _phoneEditable = true;
+    phoneVerified = true;
+
     notifyListeners();
   }
 

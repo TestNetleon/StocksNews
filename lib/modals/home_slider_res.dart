@@ -16,7 +16,7 @@ class HomeSliderRes {
   final String? telegramLink;
   final String? shareUrl;
   final String? shareText;
-  final TextSliderRes text;
+  final TextSliderRes? text;
   final Rating? rating;
 
   HomeSliderRes({
@@ -34,7 +34,8 @@ class HomeSliderRes {
   factory HomeSliderRes.fromJson(Map<String, dynamic> json) => HomeSliderRes(
         totalAlerts: json["total_alerts"],
         whatsappLink: json["whats-app-link"],
-        text: TextSliderRes.fromJson(json["text"]),
+        text:
+            json["text"] == null ? null : TextSliderRes.fromJson(json["text"]),
         telegramLink: json['telegram-link'],
         rating: json["rating"] == null ? null : Rating.fromJson(json["rating"]),
         shareUrl: json["share-url"],
@@ -54,7 +55,7 @@ class HomeSliderRes {
         "share-url": shareUrl,
         "share_text": shareText,
         "rating": rating?.toJson(),
-        "text": text.toJson(),
+        "text": text?.toJson(),
         "total_watchlist": totalWatchList,
         "telegram-link": telegramLink,
         "whats-app-link": whatsappLink,
@@ -103,10 +104,10 @@ class SliderPost {
 }
 
 class TextSliderRes {
-  final String drawerHeader;
+  final String? drawerHeader;
 
   TextSliderRes({
-    required this.drawerHeader,
+    this.drawerHeader,
   });
 
   factory TextSliderRes.fromJson(Map<String, dynamic> json) => TextSliderRes(

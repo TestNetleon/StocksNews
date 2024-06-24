@@ -268,46 +268,82 @@ class _ReferLoginState extends State<ReferLogin> {
                         child: showAsteriskText(text: "Phone Number"),
                       ),
                       IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 12.7),
-                              decoration: const BoxDecoration(
-                                color: ThemeColors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(4),
-                                  bottomLeft: Radius.circular(4),
-                                ),
-                              ),
-                              child: Text(
-                                "+1",
-                                style: stylePTSansBold(
-                                    color: ThemeColors.greyText, fontSize: 18),
-                              ),
-                            ),
-                            // const SpacerHorizontal(width: 2),
-                            Expanded(
-                              child: ThemeInputField(
-                                style: stylePTSansBold(
-                                    color: Colors.black, fontSize: 18),
-                                borderRadiusOnly: const BorderRadius.only(
-                                  topRight: Radius.circular(4),
-                                  bottomRight: Radius.circular(4),
-                                ),
-                                controller: mobile,
-                                placeholder: "Enter your phone number",
-                                keyboardType: TextInputType.phone,
-                                inputFormatters: [
-                                  _formatter,
-                                  LengthLimitingTextInputFormatter(10)
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ThemeColors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Row(
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: ThemeColors.white,
+                                        ),
+                                      ),
+                                      color: ThemeColors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(4),
+                                        bottomLeft: Radius.circular(4),
+                                      ),
+                                    ),
+                                    // child: Text(
+                                    //   "+1",
+                                    //   style: stylePTSansBold(
+                                    //       color: ThemeColors.greyText, fontSize: 18),
+                                    // ),
+                                  ),
+                                  Text(
+                                    "+1",
+                                    style: stylePTSansBold(
+                                        color: ThemeColors.greyText,
+                                        fontSize: 18),
+                                  ),
                                 ],
-                                textCapitalization: TextCapitalization.none,
                               ),
-                            ),
-                          ],
+                              const SpacerHorizontal(width: 2),
+                              Flexible(
+                                child: ThemeInputField(
+                                  style: stylePTSansBold(
+                                      color: Colors.black, fontSize: 18),
+                                  borderRadiusOnly: const BorderRadius.only(
+                                    topRight: Radius.circular(4),
+                                    bottomRight: Radius.circular(4),
+                                  ),
+                                  controller: mobile,
+                                  placeholder: "Enter your phone number",
+                                  keyboardType: TextInputType.phone,
+                                  inputFormatters: [
+                                    _formatter,
+                                    LengthLimitingTextInputFormatter(10)
+                                  ],
+                                  textCapitalization: TextCapitalization.none,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+
+                      // IntrinsicHeight(
+                      //   child: Row(
+                      //     children: [
+                      //       Container(
+                      //         // height: 40,
+                      //         width: 30,
+                      //         color: ThemeColors.accent,
+                      //       ),
+                      //       Flexible(child: TextInputField(controller: mobile)),
+                      //     ],
+                      //   ),
+                      // ),
+
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??

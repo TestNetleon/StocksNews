@@ -123,9 +123,11 @@ class _OTPBottomPhoneState extends State<OTPBottomPhone> {
           closeKeyboard();
           if (widget.screenType == false) {
             provider.updateUser(email: widget.text);
+            provider.setEmailClickText();
           }
           if (widget.screenType == true) {
             provider.updateUser(phone: widget.text);
+            provider.setPhoneClickText();
           }
 
           Navigator.pop(navigatorKey.currentContext!);
