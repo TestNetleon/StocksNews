@@ -257,7 +257,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                               onTap: () {
                                 popUpAlert(
                                   padding: const EdgeInsets.all(10),
-                                  message: verified
+                                  message: !verified
                                       ? homeProvider
                                               .extra?.profileText?.unVerified ??
                                           "Unverified users are those who have not confirmed their name, email, display name, or mobile number."
