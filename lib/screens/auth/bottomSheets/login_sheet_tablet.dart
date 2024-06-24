@@ -180,247 +180,253 @@ class _LoginBottomState extends State<LoginBottom> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.sp), topRight: Radius.circular(10.sp)),
-        gradient: const RadialGradient(
-          center: Alignment.bottomCenter,
-          radius: 0.6,
-          // transform: GradientRotation(radians),
-          // tileMode: TileMode.decal,
-          stops: [
-            0.0,
-            0.9,
-          ],
-          colors: [
-            Color.fromARGB(255, 0, 93, 12),
-            // ThemeColors.accent.withOpacity(0.1),
-            Colors.black,
-          ],
-        ),
-        color: ThemeColors.background,
-        border: const Border(
-          top: BorderSide(color: ThemeColors.greyBorder),
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-            height: 6.sp,
-            width: 50.sp,
-            margin: EdgeInsets.only(top: 8.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.sp),
-              color: ThemeColors.greyBorder,
-            ),
+    return GestureDetector(
+      onTap: () {
+        closeKeyboard();
+      },
+      child: Container(
+        constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.sp),
+              topRight: Radius.circular(10.sp)),
+          gradient: const RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 0.6,
+            // transform: GradientRotation(radians),
+            // tileMode: TileMode.decal,
+            stops: [
+              0.0,
+              0.9,
+            ],
+            colors: [
+              Color.fromARGB(255, 0, 93, 12),
+              // ThemeColors.accent.withOpacity(0.1),
+              Colors.black,
+            ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // SpacerVertical(height: 20.sp),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .45,
-                  // constraints:
-                  //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-                  child: Image.asset(
-                    Images.logo,
-                    fit: BoxFit.contain,
+          color: ThemeColors.background,
+          border: const Border(
+            top: BorderSide(color: ThemeColors.greyBorder),
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 6.sp,
+              width: 50.sp,
+              margin: EdgeInsets.only(top: 8.sp),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: ThemeColors.greyBorder,
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // SpacerVertical(height: 20.sp),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .45,
+                    // constraints:
+                    //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+                    child: Image.asset(
+                      Images.logo,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                SpacerVertical(height: 10.sp),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SpacerVertical(height: Dimen.authScreenPadding),
+                  SpacerVertical(height: 10.sp),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SpacerVertical(height: Dimen.authScreenPadding),
 
-                      Text(
-                        "WELCOME BACK",
-                        style: stylePTSansBold(fontSize: 24),
-                      ),
-                      const SpacerVertical(height: 30),
-                      // Text(
-                      //   "Email Address",
-                      //   style: stylePTSansRegular(fontSize: 14),
-                      // ),
-                      // const SpacerVertical(height: 5),
-                      ThemeInputField(
-                        controller: _controller,
-                        placeholder: "Enter email address to log in",
-                        keyboardType: TextInputType.emailAddress,
-                        inputFormatters: [emailFormatter],
-                        textCapitalization: TextCapitalization.none,
-                      ),
-                      const SpacerVertical(height: Dimen.itemSpacing),
-                      ThemeButton(
-                        text: "Log in",
-                        onPressed: _onLoginClick,
-                      ),
-                      const SpacerVertical(),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Divider(
-                            color: ThemeColors.dividerDark,
-                            height: 1.sp,
-                            thickness: 1.sp,
-                          ),
-                          Container(
-                            color: ThemeColors.background,
-                            padding: EdgeInsets.symmetric(horizontal: 8.sp),
-                            child: Text(
-                              "or continue with",
-                              style: stylePTSansRegular(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
+                        Text(
+                          "WELCOME BACK",
+                          style: stylePTSansBold(fontSize: 24),
+                        ),
+                        const SpacerVertical(height: 30),
+                        // Text(
+                        //   "Email Address",
+                        //   style: stylePTSansRegular(fontSize: 14),
+                        // ),
+                        // const SpacerVertical(height: 5),
+                        ThemeInputField(
+                          controller: _controller,
+                          placeholder: "Enter email address to log in",
+                          keyboardType: TextInputType.emailAddress,
+                          inputFormatters: [emailFormatter],
+                          textCapitalization: TextCapitalization.none,
+                        ),
+                        const SpacerVertical(height: Dimen.itemSpacing),
+                        ThemeButton(
+                          text: "Log in",
+                          onPressed: _onLoginClick,
+                        ),
+                        const SpacerVertical(),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Divider(
+                              color: ThemeColors.dividerDark,
+                              height: 1.sp,
+                              thickness: 1.sp,
                             ),
-                          )
-                        ],
-                      ),
-                      const SpacerVertical(),
-                      ThemeButton(
-                        onPressed: () async {
-                          _handleSignIn();
-                        },
-                        color: ThemeColors.primaryLight,
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Positioned(
-                                left: 0,
-                                child: Image.asset(
-                                  Images.google,
-                                  width: 16,
-                                  height: 16,
-                                  fit: BoxFit.contain,
+                            Container(
+                              color: ThemeColors.background,
+                              padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                              child: Text(
+                                "or continue with",
+                                style: stylePTSansRegular(
+                                  fontSize: 12,
+                                  color: ThemeColors.greyText,
                                 ),
                               ),
+                            )
+                          ],
+                        ),
+                        const SpacerVertical(),
+                        ThemeButton(
+                          onPressed: () async {
+                            _handleSignIn();
+                          },
+                          color: ThemeColors.primaryLight,
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Positioned(
+                                  left: 0,
+                                  child: Image.asset(
+                                    Images.google,
+                                    width: 16,
+                                    height: 16,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                Text(
+                                  "Continue with Google",
+                                  style: stylePTSansRegular(fontSize: 15),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Visibility(
+                          visible: Platform.isIOS,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: Dimen.itemSpacing),
+                            child: ThemeButton(
+                              onPressed: () async {
+                                try {
+                                  final AuthorizationCredentialAppleID
+                                      credential = await SignInWithApple
+                                          .getAppleIDCredential(
+                                    scopes: [
+                                      AppleIDAuthorizationScopes.email,
+                                      AppleIDAuthorizationScopes.fullName,
+                                    ],
+                                  );
+                                  _handleSignInApple(
+                                    credential.userIdentifier,
+                                    credential.givenName != null
+                                        ? "${credential.givenName} ${credential.familyName}"
+                                        : null,
+                                    credential.email,
+                                  );
+                                } catch (e) {
+                                  if (e.toString().contains(
+                                      "SignInWithAppleNotSupportedException")) {
+                                    // showErrorMessage(
+                                    //   message:
+                                    //       "Sign in with Apple not supported in this device",
+                                    // );
+                                  }
+                                }
+                              },
+                              color: ThemeColors.white,
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Positioned(
+                                      left: 0,
+                                      child: Image.asset(
+                                        Images.apple,
+                                        width: 18,
+                                        height: 18,
+                                        fit: BoxFit.contain,
+                                        color: ThemeColors.background,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Continue with Apple",
+                                      style: stylePTSansRegular(
+                                          fontSize: 15,
+                                          color: ThemeColors.background),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SpacerVertical(),
+                        const AgreeConditions(),
+
+                        Padding(
+                          padding: EdgeInsets.all(15.sp),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
                               Text(
-                                "Continue with Google",
-                                style: stylePTSansRegular(fontSize: 15),
-                                textAlign: TextAlign.center,
+                                "Don't have an account?",
+                                style: stylePTSansRegular(
+                                  fontSize: 15,
+                                  color: ThemeColors.white,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.pop(context);
+                                  isPhone
+                                      ? await signupSheet(
+                                          dontPop: widget.dontPop,
+                                          state: widget.state,
+                                        )
+                                      : await signupSheetTablet(
+                                          dontPop: widget.dontPop,
+                                          state: widget.state,
+                                        );
+                                },
+                                child: Text(
+                                  " Sign up ",
+                                  style: stylePTSansRegular(
+                                    fontSize: 15,
+                                    color: ThemeColors.accent,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-
-                      Visibility(
-                        visible: Platform.isIOS,
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: Dimen.itemSpacing),
-                          child: ThemeButton(
-                            onPressed: () async {
-                              try {
-                                final AuthorizationCredentialAppleID
-                                    credential =
-                                    await SignInWithApple.getAppleIDCredential(
-                                  scopes: [
-                                    AppleIDAuthorizationScopes.email,
-                                    AppleIDAuthorizationScopes.fullName,
-                                  ],
-                                );
-                                _handleSignInApple(
-                                  credential.userIdentifier,
-                                  credential.givenName != null
-                                      ? "${credential.givenName} ${credential.familyName}"
-                                      : null,
-                                  credential.email,
-                                );
-                              } catch (e) {
-                                if (e.toString().contains(
-                                    "SignInWithAppleNotSupportedException")) {
-                                  // showErrorMessage(
-                                  //   message:
-                                  //       "Sign in with Apple not supported in this device",
-                                  // );
-                                }
-                              }
-                            },
-                            color: ThemeColors.white,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Positioned(
-                                    left: 0,
-                                    child: Image.asset(
-                                      Images.apple,
-                                      width: 18,
-                                      height: 18,
-                                      fit: BoxFit.contain,
-                                      color: ThemeColors.background,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Continue with Apple",
-                                    style: stylePTSansRegular(
-                                        fontSize: 15,
-                                        color: ThemeColors.background),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SpacerVertical(),
-                      const AgreeConditions(),
-
-                      Padding(
-                        padding: EdgeInsets.all(15.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Don't have an account?",
-                              style: stylePTSansRegular(
-                                fontSize: 15,
-                                color: ThemeColors.white,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.pop(context);
-                                isPhone
-                                    ? await signupSheet(
-                                        dontPop: widget.dontPop,
-                                        state: widget.state,
-                                      )
-                                    : await signupSheetTablet(
-                                        dontPop: widget.dontPop,
-                                        state: widget.state,
-                                      );
-                              },
-                              child: Text(
-                                " Sign up ",
-                                style: stylePTSansRegular(
-                                  fontSize: 15,
-                                  color: ThemeColors.accent,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

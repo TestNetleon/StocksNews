@@ -23,7 +23,7 @@ class EditEmail extends StatelessWidget {
     // return Text(
     //   "Please enter the 4-digit verification code that was sent to $email. The code is valid for 10 minutes.",
     //   style: stylePTSansRegular(
-    //     fontSize: 14,
+
     //     color: Colors.white,
     //   ),
     // );
@@ -35,29 +35,25 @@ class EditEmail extends StatelessWidget {
           TextSpan(
             text: email,
             style: stylePTSansRegular(
-              fontSize: 14,
               color: ThemeColors.accent,
               height: 1.4,
             ),
           ),
           TextSpan(
-            text: ".",
+            text: " ",
             style: stylePTSansRegular(
-              fontSize: 14,
               height: 1.4,
             ),
           ),
           TextSpan(
             text: "\n The code is valid for 10 minutes.",
             style: stylePTSansRegular(
-              fontSize: 14,
               height: 1.5,
             ),
           ),
         ],
         text: "Please enter the 4-digit verification code that was sent to ",
         style: stylePTSansRegular(
-          fontSize: 14,
           height: 1.5,
         ),
       ),
@@ -100,20 +96,20 @@ class _EditEmailClickState extends State<EditEmailClick> {
         Visibility(
           visible: !widget.fromLoginOTP,
           child: RichText(
+            textAlign: TextAlign.center,
             text: TextSpan(
               children: [
                 TextSpan(
                   text: widget.email,
-                  style: stylePTSansRegular(
-                      fontSize: 14, color: ThemeColors.accent),
+                  style: stylePTSansRegular(color: ThemeColors.accent),
                 ),
                 TextSpan(
                   text: " is not your email address, click here to edit it.",
-                  style: stylePTSansRegular(fontSize: 14),
+                  style: stylePTSansRegular(),
                 ),
               ],
               text: "If ",
-              style: stylePTSansRegular(fontSize: 14),
+              style: stylePTSansRegular(),
             ),
           ),
         ),
@@ -144,6 +140,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
 
   void _openEditSheet(
       {TextEditingController? controller, required UserProvider provider}) {
+    controller?.clear();
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -159,6 +156,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Container(
+            padding: const EdgeInsets.only(bottom: 30),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10.sp),

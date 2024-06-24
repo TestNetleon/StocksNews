@@ -227,6 +227,7 @@ TextStyle stylePTSansBold({
   color = Colors.white,
   double fontSize = 16,
   letterSpacing = 0.70,
+  height = 1.2,
   decoration,
 }) {
   return TextStyle(
@@ -236,6 +237,8 @@ TextStyle stylePTSansBold({
     fontWeight: FontWeight.bold,
     decoration: decoration,
     decorationColor: color,
+    height: height,
+
     // letterSpacing: letterSpacing,
   );
 }

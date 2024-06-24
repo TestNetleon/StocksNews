@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -54,6 +55,21 @@ class LeaderBoardProvider extends ChangeNotifier {
 
   num verified = 0;
   num unVerified = 0;
+
+  // void startNudgeTimer(int index) {
+  //   _data?[index].timer = 60;
+  //   notifyListeners();
+  //   Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     if ((_data?[index].timer ?? 0) > 0) {
+  //       _data?[index].timer--;
+  //       Utils().showLog("---Timer ----${_data?[index].timer}");
+  //       notifyListeners();
+  //     } else {
+  //       timer.cancel();
+  //       Utils().showLog("Cancel Timer");
+  //     }
+  //   });
+  // }
 
   void setStatusL(status) {
     _statusL = status;
@@ -112,12 +128,13 @@ class LeaderBoardProvider extends ChangeNotifier {
     }
   }
 
-  Future nudgeAPI({String? email}) async {
+  Future nudgeAPI({String? email, required int dbId}) async {
     try {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "email": email,
+        "db_id": dbId,
       });
 
       ApiResponse response = await apiRequest(

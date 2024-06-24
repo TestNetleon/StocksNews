@@ -269,140 +269,140 @@ commonShare({String? url, String? title}) {
 //   }
 // }
 
-void navigation(
-    {String? type,
-    required Uri uri,
-    String? slug,
-    fromBackground = false,
-    String from = ""}) async {
-  Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+// void navigation(
+//     {String? type,
+//     required Uri uri,
+//     String? slug,
+//     fromBackground = false,
+//     String from = ""}) async {
+//   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
 
-  Preference.saveDataList(
-    DeeplinkData(
-      uri: uri,
-      from: from,
-      path: "Navigation",
-      slug: slug,
-      type: type,
-      onDeepLink: onDeepLinking,
-    ),
-  );
+//   Preference.saveDataList(
+//     DeeplinkData(
+//       uri: uri,
+//       from: from,
+//       path: "Navigation",
+//       slug: slug,
+//       type: type,
+//       onDeepLink: onDeepLinking,
+//     ),
+//   );
 
-  String slugForTicker = extractSymbolValue(uri);
-  // Utils().showLog("slug for ticker $slugForTicker");
-  bool userPresent = false;
+//   // String slugForTicker = extractSymbolValue(uri);
+//   // Utils().showLog("slug for ticker $slugForTicker");
+//   bool userPresent = false;
 
-  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  if (await provider.checkForUser()) {
-    userPresent = true;
-  }
-  if (slug == null && type == null) {
-    return;
-  }
-  popHome = true;
-  Utils().showLog("----$userPresent---");
-  if (type == "blog") {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => BlogDetail(
-                    // id: "",
-                    slug: slug,
-                  )));
-    } else {
-      Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => BlogDetail(
-                    // id: "",
-                    slug: slug,
-                  )));
-    }
-  } else if (type == "news") {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => NewsDetails(
-            slug: slug,
-          ),
-        ),
-      );
-    } else {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (context) => NewsDetails(
-            slug: slug,
-          ),
-        ),
-      );
-    }
-  } else if (type == "stock_detail") {
-    if (fromBackground) {
-      Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => StockDetail(symbol: slugForTicker)));
-    } else {
-      Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-              builder: (context) => StockDetail(symbol: slugForTicker)));
-    }
-  } else if (type == "login") {
-    if (userPresent) {
-      if (fromBackground) {
-        Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => const Tabs()),
-        );
-      }
-    } else {
-      loginSheet();
-    }
-  } else if (type == "signUp") {
-    if (userPresent) {
-      if (fromBackground) {
-        Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacement(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => const Tabs()),
-        );
-      }
-    } else {
-      signupSheet();
-    }
-  } else if (type == "dashboard") {
-    if (fromBackground) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-    }
-    Utils().showLog("--goto dashboard---");
-  } else {
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
-    //     builder: (context) => const Tabs(),
-    //   ),
-    // );
+//   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+//   if (await provider.checkForUser()) {
+//     userPresent = true;
+//   }
+//   if (slug == null && type == null) {
+//     return;
+//   }
+//   popHome = true;
+//   Utils().showLog("----$userPresent---");
+//   if (type == "blog") {
+//     if (fromBackground) {
+//       Navigator.pushReplacement(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(
+//               builder: (context) => BlogDetail(
+//                     // id: "",
+//                     slug: slug,
+//                   )));
+//     } else {
+//       Navigator.push(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(
+//               builder: (context) => BlogDetail(
+//                     // id: "",
+//                     slug: slug,
+//                   )));
+//     }
+//   } else if (type == "news") {
+//     if (fromBackground) {
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => NewsDetails(
+//             slug: slug,
+//           ),
+//         ),
+//       );
+//     } else {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//           builder: (context) => NewsDetails(
+//             slug: slug,
+//           ),
+//         ),
+//       );
+//     }
+//   } else if (type == "stock_detail") {
+//     if (fromBackground) {
+//       Navigator.pushReplacement(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(
+//               builder: (context) => StockDetail(symbol: slug ?? "")));
+//     } else {
+//       Navigator.push(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(
+//               builder: (context) => StockDetail(symbol: slug ?? "")));
+//     }
+//   } else if (type == "login") {
+//     if (userPresent) {
+//       if (fromBackground) {
+//         Navigator.popUntil(
+//             navigatorKey.currentContext!, (route) => route.isFirst);
+//         Navigator.pushReplacement(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(builder: (_) => const Tabs()),
+//         );
+//       }
+//     } else {
+//       loginSheet();
+//     }
+//   } else if (type == "signUp") {
+//     if (userPresent) {
+//       if (fromBackground) {
+//         Navigator.popUntil(
+//             navigatorKey.currentContext!, (route) => route.isFirst);
+//         Navigator.pushReplacement(
+//           navigatorKey.currentContext!,
+//           MaterialPageRoute(builder: (_) => const Tabs()),
+//         );
+//       }
+//     } else {
+//       signupSheet();
+//     }
+//   } else if (type == "dashboard") {
+//     if (fromBackground) {
+//       Navigator.popUntil(
+//           navigatorKey.currentContext!, (route) => route.isFirst);
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const Tabs()),
+//       );
+//     }
+//     Utils().showLog("--goto dashboard---");
+//   } else {
+//     // Navigator.push(
+//     //   navigatorKey.currentContext!,
+//     //   MaterialPageRoute(
+//     //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
+//     //     builder: (context) => const Tabs(),
+//     //   ),
+//     // );
 
-    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs()),
-    );
-  }
-}
+//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+//     Navigator.pushReplacement(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(builder: (_) => const Tabs()),
+//     );
+//   }
+// }
 
 bool isValidUrl(String? url) {
   if (url == null) return false;
@@ -427,7 +427,7 @@ Widget findInitialWidget({required Uri uri}) {
     ),
   );
 
-  String slugForTicker = extractSymbolValue(uri);
+  String slugForTicker = extractLastPathComponent(uri);
   // Utils().showLog("slug for ticker $slugForTicker");
   bool userPresent = false;
 
@@ -572,7 +572,7 @@ void handleNavigation({
     ),
   );
 
-  String slugForTicker = extractSymbolValue(uri);
+  // String slugForTicker = extractLastPathComponent(uri);
   bool userPresent = false;
 
   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -624,14 +624,14 @@ void handleNavigation({
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-          builder: (context) => StockDetail(symbol: slugForTicker),
+          builder: (context) => StockDetail(symbol: slug!),
         ),
       );
     } else {
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-          builder: (context) => StockDetail(symbol: slugForTicker),
+          builder: (context) => StockDetail(symbol: slug!),
         ),
       );
     }

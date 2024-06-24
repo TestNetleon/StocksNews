@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/affiliate/index.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/help/deeplinks/deeplinks.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';

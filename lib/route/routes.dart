@@ -21,6 +21,7 @@ import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_down_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_provider.dart';
+import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/providers/high_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/high_pe_growth_provider.dart';
 import 'package:stocks_news_new/providers/high_pe_provider.dart';
@@ -75,6 +76,9 @@ import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
+import 'package:stocks_news_new/screens/help/widget/view_all_list.dart';
 import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/help/deeplinks/deeplinks.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/index.dart';
@@ -427,7 +431,6 @@ class Routes {
             return CongressionalDetail(slug: slug);
           },
         );
-
       case HelpDesk.path:
         final arguments = settings.arguments as Map<String, dynamic>?;
         String? slug = arguments?['slug'] as String?;
@@ -436,7 +439,25 @@ class Routes {
             return HelpDesk(slug: slug);
           },
         );
+      case ChatScreen.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String? slug = arguments?['slug'] as String?;
+        String? ticketId = arguments?['ticketId'] as String?;
 
+        return MaterialPageRoute(
+          builder: (context) {
+            return ChatScreen(slug: slug, ticketId: ticketId);
+          },
+        );
+
+      case ViewAllList.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String? slug = arguments?['slug'] as String?;
+        return MaterialPageRoute(
+          builder: (context) {
+            return ViewAllList(slug: slug);
+          },
+        );
       default:
         Preference.saveDataList(
           DeeplinkData(
@@ -616,6 +637,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => CongressionalDetailProvider()),
       ChangeNotifierProvider(create: (_) => LeaderBoardProvider()),
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksHighProvider()),
+      ChangeNotifierProvider(create: (_) => HelpDeskProvider()),
     ];
   }
 }

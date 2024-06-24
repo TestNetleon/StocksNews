@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Apis {
   static const baseUrl = "https://app.stocks.news/api/v1"; // live server
   // static const baseUrl =
@@ -28,6 +30,11 @@ class Apis {
   static const savePlaidPortfolio = "/save-plaid-portfolio";
   static const plaidPortfolio = "/plaid-portfolio";
   static const referLogin = "/send-phone-otp";
+  static const updateEmailOtp = "/update-email-otp";
+  static const checkEmailOtp = "/check-email-otp";
+  static const updatePhoneOtp = "/update-phone-otp";
+  static const checkUpdatePhoneOtp = "/check-update-phone-otp";
+
   static const checkPhone = "/check-phone-otp";
 
   static const lowPricesStocks = "/low-priced-stocks-under";
@@ -155,6 +162,10 @@ class Apis {
   static const stockDetailMergers = "/stock-detail-mergers";
 
   static const sendFeedback = "/send-feedback";
+  static const getTickets = "/get-tickets";
+  static const sendTicket = "/send-ticket";
+  static const ticketDetail = "/ticket-detail";
+  static const ticketReply = "/ticket-reply";
 }
 
 //

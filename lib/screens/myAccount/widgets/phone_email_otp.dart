@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
@@ -20,9 +17,11 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../api/api_response.dart';
-import 'reffer_success.dart';
 
-referOTP({required String phone, String appSignature = ''}) async {
+phoneEmailOTP({
+  String? text,
+  bool screenType = false,
+}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: RoundedRectangleBorder(
@@ -35,37 +34,39 @@ referOTP({required String phone, String appSignature = ''}) async {
     isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return OTPLoginBottomRefer(
-        phone: phone,
-        appSignature: appSignature,
+      return OTPBottomPhone(
+        text: text ?? "",
+        screenType: screenType,
       );
     },
   );
 }
 
-class OTPLoginBottomRefer extends StatefulWidget {
-  final String phone;
-  final String appSignature;
+class OTPBottomPhone extends StatefulWidget {
+  final String text;
+  final bool screenType;
 
-  const OTPLoginBottomRefer({
+  const OTPBottomPhone({
     super.key,
-    required this.phone,
-    this.appSignature = '',
+    required this.text,
+    required this.screenType,
   });
 
   @override
-  State<OTPLoginBottomRefer> createState() => _OTPLoginBottomReferState();
+  State<OTPBottomPhone> createState() => _OTPBottomPhoneState();
 }
 
-class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
+class _OTPBottomPhoneState extends State<OTPBottomPhone> {
   final TextEditingController _controller = TextEditingController();
   int startTiming = 30;
   final FocusNode _otpFocusNode = FocusNode();
+  String appSignature = "";
 
   Timer? _timer;
   @override
   void initState() {
     super.initState();
+
     _listenCode();
     _startTime();
     _otpFocusNode.requestFocus();
@@ -100,14 +101,6 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   SmsAutoFill().unregisterListener();
-  //   // _controller.dispose();
-  //   _timer?.cancel();
-  //   super.dispose();
-  // }
-
   void _onVeryClick() async {
     if (_controller.text.isEmpty) {
       popUpAlert(
@@ -117,34 +110,28 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
       );
     } else {
       UserProvider provider = context.read<UserProvider>();
-      HomeProvider homeProvider = context.read<HomeProvider>();
 
       Map request = {
         'token': provider.user?.token,
-        'phone': widget.phone,
-        'otp': _controller.text,
-        'platform': Platform.operatingSystem,
+        'otp': _controller.text.trim(),
       };
       try {
-        ApiResponse response = await provider.verifyReferLogin(request);
+        ApiResponse response = widget.screenType == true
+            ? await provider.checkPhoneOtp(request)
+            : await provider.checkEmailOtp(request);
         if (response.status) {
           closeKeyboard();
-          provider.updateUser(phone: widget.phone);
-          Extra extra = response.extra;
+          if (widget.screenType == false) {
+            provider.updateUser(email: widget.text);
+            provider.setEmailClickText();
+          }
+          if (widget.screenType == true) {
+            provider.updateUser(phone: widget.text);
+            provider.setPhoneClickText();
+          }
 
-          homeProvider.updateReferShare(extra.referral?.shareText);
-          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
-          // Navigator.push(
-          //   navigatorKey.currentContext!,
-          //   ReferAFriend.path,
-          // );
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const ReferSuccess(),
-            ),
-          );
+          closeKeyboard();
         }
       } catch (e) {
         //
@@ -152,29 +139,38 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     }
   }
 
-  void _onResendOtpClick() async {
+  void _onResendOtpClick(String? text) async {
     _startTime();
     _controller.text = '';
     setState(() {});
+
     UserProvider provider = context.read<UserProvider>();
-    Map request = {
-      "phone": widget.phone,
-      "phone_hash": widget.appSignature,
-      "platform": Platform.operatingSystem,
-      "token": provider.user?.token ?? "",
-    };
+    Map request = widget.screenType == true
+        ? {
+            "token": provider.user?.token ?? "",
+            "phone": text,
+            "phone_hash": appSignature,
+          }
+        : {
+            "token": provider.user?.token ?? "",
+            "email": text?.toLowerCase(),
+          };
 
     try {
       _listenCode();
-      ApiResponse response = await provider.referLoginApi(request);
+      ApiResponse response;
+      if (widget.screenType == true) {
+        response = await provider.emailUpdateOtp(request,
+            resendButtonClick: true, email: text ?? "");
+      } else {
+        response = await provider.phoneUpdateOtp(request,
+            resendButtonClick: false, phone: text ?? "");
+      }
+
       if (response.status) {
         _otpFocusNode.requestFocus();
-
-        // popUpAlert(message: response.message ?? "", title: "title");
       }
-    } catch (e) {
-      //
-    }
+    } catch (e) {}
   }
 
   @override
@@ -250,7 +246,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'We have sent the verification code \nto your phone number ${widget.phone}',
+                    'We have sent the verification code \nto your ${widget.screenType == true ? "phone number +1" : "email"} ${widget.text}',
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),
@@ -274,7 +270,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                           ),
                           alignment: Alignment.center,
                           child: GestureDetector(
-                            onTap: _onResendOtpClick,
+                            onTap: () => _onResendOtpClick(widget.text),
                             child: RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(

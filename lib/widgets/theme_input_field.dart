@@ -29,6 +29,9 @@ class ThemeInputField extends StatelessWidget {
     this.textCapitalization = TextCapitalization.sentences,
     this.textInputAction,
     this.onChanged,
+    this.suffix,
+    this.prefix,
+    this.cursorColor,
     super.key,
   });
 
@@ -52,6 +55,9 @@ class ThemeInputField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
+  final Widget? suffix;
+  final Widget? prefix;
+  final Color? cursorColor;
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +67,14 @@ class ThemeInputField extends StatelessWidget {
                 borderRadiusOnly ?? BorderRadius.circular(borderRadius),
             borderSide: BorderSide(
               color: borderColor ?? Colors.grey[300]!,
-              width: 1,
+              width: 0.5,
             ),
           )
         : InputBorder.none;
     return Container(
       decoration: BoxDecoration(
         color: fillColor,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: borderRadiusOnly ?? BorderRadius.circular(borderRadius),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,6 +88,7 @@ class ThemeInputField extends StatelessWidget {
           ),
           child ??
               TextField(
+                cursorColor: cursorColor,
                 onChanged: onChanged,
                 textInputAction: textInputAction,
                 controller: controller,
@@ -94,6 +101,8 @@ class ThemeInputField extends StatelessWidget {
                 inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
                 style: style ?? stylePTSansRegular(color: Colors.black),
                 decoration: InputDecoration(
+                  prefix: prefix,
+                  suffix: suffix,
                   hintText: placeholder ?? '',
                   hintStyle: stylePTSansRegular(color: ThemeColors.dividerDark),
                   constraints: BoxConstraints(

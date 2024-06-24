@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../utils/constants.dart';
 
@@ -27,40 +28,33 @@ class MyAccount extends StatelessWidget {
     );
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
-      body: Stack(
-        fit: StackFit.expand,
-        alignment: Alignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(Dimen.padding.sp),
-            child: provider.user == null
-                ? Column(
-                    children: [
-                      // const ScreenTitle(title: "My Profile"),
-                      Expanded(child: LoginError(
-                        onClick: () async {
-                          isPhone
-                              ? await loginSheet()
-                              : await loginSheetTablet();
-                        },
-                      ))
-                    ],
-                  )
-                : const SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        // ScreenTitle(title: "My Profile"),
-                        MyAccountContainer(),
-                      ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
+        child: provider.user == null
+            ? Column(
+                children: [
+                  // const ScreenTitle(title: "My Profile"),
+                  Expanded(child: LoginError(
+                    onClick: () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
+                    },
+                  ))
+                ],
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // ScreenTitle(title: "My Profile"),
+                    const MyAccountContainer(),
+                    Visibility(
+                      visible: provider.user != null,
+                      child: const MyAccountDelete(),
                     ),
-                  ),
-          ),
-          Visibility(
-            visible: provider.user != null,
-            child: const Positioned(bottom: 10, child: MyAccountDelete()),
-          ),
-        ],
+                    const SpacerVertical(),
+                  ],
+                ),
+              ),
       ),
     );
   }

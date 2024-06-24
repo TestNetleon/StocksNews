@@ -915,8 +915,8 @@ iOSNavigate(event) {
 
 pushNavigation({String? type, required Uri uri, String? slug}) async {
   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-  String slugForTicker = extractSymbolValue(uri);
-  Utils().showLog("slug for ticker $slugForTicker");
+  // String slugForTicker = extractSymbolValue(uri);
+  // Utils().showLog("slug for ticker $slugForTicker");
   bool userPresent = false;
 
   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -945,7 +945,7 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
     Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
-            builder: (context) => StockDetail(symbol: slugForTicker)));
+            builder: (context) => StockDetail(symbol: slug ?? "")));
   } else if (type == "login") {
     if (userPresent) {
       Navigator.popUntil(

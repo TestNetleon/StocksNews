@@ -153,183 +153,189 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.sp), topRight: Radius.circular(10.sp)),
-        gradient: const RadialGradient(
-          center: Alignment.bottomCenter,
-          radius: 0.6,
-          // transform: GradientRotation(radians),
-          // tileMode: TileMode.decal,
-          stops: [
-            0.0,
-            0.9,
-          ],
-          colors: [
-            Color.fromARGB(255, 0, 93, 12),
-            // ThemeColors.accent.withOpacity(0.1),
-            Colors.black,
-          ],
+    return GestureDetector(
+      onTap: () {
+        closeKeyboard();
+      },
+      child: Container(
+        constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.sp),
+              topRight: Radius.circular(10.sp)),
+          gradient: const RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 0.6,
+            // transform: GradientRotation(radians),
+            // tileMode: TileMode.decal,
+            stops: [
+              0.0,
+              0.9,
+            ],
+            colors: [
+              Color.fromARGB(255, 0, 93, 12),
+              // ThemeColors.accent.withOpacity(0.1),
+              Colors.black,
+            ],
+          ),
+          color: ThemeColors.background,
+          border: const Border(
+            top: BorderSide(color: ThemeColors.greyBorder),
+          ),
         ),
-        color: ThemeColors.background,
-        border: const Border(
-          top: BorderSide(color: ThemeColors.greyBorder),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width * .45,
-          //   child: Image.asset(Images.logo),
-          // ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width * .45,
+            //   child: Image.asset(Images.logo),
+            // ),
 
-          Container(
-            height: 6.sp,
-            width: 50.sp,
-            margin: EdgeInsets.only(top: 8.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.sp),
-              color: ThemeColors.greyBorder,
+            Container(
+              height: 6.sp,
+              width: 50.sp,
+              margin: EdgeInsets.only(top: 8.sp),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: ThemeColors.greyBorder,
+              ),
             ),
-          ),
-          const SpacerVertical(height: 70),
+            const SpacerVertical(height: 70),
 
-          Container(
-            width: MediaQuery.of(context).size.width * .45,
-            constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-            child: Image.asset(
-              Images.logo,
-              fit: BoxFit.contain,
+            Container(
+              width: MediaQuery.of(context).size.width * .45,
+              constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+              child: Image.asset(
+                Images.logo,
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
-          const SpacerVertical(height: 30),
-          Image.asset(
-            Images.otpSuccessGIT,
-            height: 95.sp,
-            width: 95.sp,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(Dimen.authScreenPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // const SpacerVertical(height: 50),
-                Text(
-                  "VERIFICATION OTP SENT",
-                  style: stylePTSansBold(fontSize: 22),
-                ),
-                const SpacerVertical(height: 8),
-                // Text(
-                //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
-                //   style: stylePTSansRegular(
-                //     fontSize: 14,
-                //     color: Colors.white,
-                //   ),
-                // ),
-                EditEmail(email: "${widget.userName}"),
+            const SpacerVertical(height: 30),
+            Image.asset(
+              Images.otpSuccessGIT,
+              height: 95.sp,
+              width: 95.sp,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(Dimen.authScreenPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // const SpacerVertical(height: 50),
+                  Text(
+                    "VERIFICATION OTP SENT",
+                    style: stylePTSansBold(fontSize: 22),
+                  ),
+                  const SpacerVertical(height: 8),
+                  // Text(
+                  //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
+                  //   style: stylePTSansRegular(
+                  //     fontSize: 14,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  EditEmail(email: widget.userName),
 
-                const SpacerVertical(),
-                // Text(
-                //   "Verification Code",
-                //   style: stylePTSansRegular(fontSize: 14),
-                // ),
-                // const SpacerVertical(height: 5),
-                // Stack(
-                //   alignment: Alignment.center,
-                //   children: [
-                //     ThemeInputField(
-                //       controller: _controller,
-                //       placeholder: "",
-                //       // keyboardType: TextInputType.phone,
-                //       inputFormatters: [mobilrNumberAllow],
-                //       maxLength: 4,
-                //     ),
-                //     Container(
-                //       margin: EdgeInsets.only(right: 8.sp),
-                //       alignment: Alignment.centerRight,
-                //       child: TextButton(
-                //         onPressed: _onResendOtpClick,
-                //         child: Text(
-                //           "Resend",
-                //           style: stylePTSansBold(
-                //             fontSize: 14,
-                //             color: ThemeColors.accent,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                  const SpacerVertical(),
+                  // Text(
+                  //   "Verification Code",
+                  //   style: stylePTSansRegular(fontSize: 14),
+                  // ),
+                  // const SpacerVertical(height: 5),
+                  // Stack(
+                  //   alignment: Alignment.center,
+                  //   children: [
+                  //     ThemeInputField(
+                  //       controller: _controller,
+                  //       placeholder: "",
+                  //       // keyboardType: TextInputType.phone,
+                  //       inputFormatters: [mobilrNumberAllow],
+                  //       maxLength: 4,
+                  //     ),
+                  //     Container(
+                  //       margin: EdgeInsets.only(right: 8.sp),
+                  //       alignment: Alignment.centerRight,
+                  //       child: TextButton(
+                  //         onPressed: _onResendOtpClick,
+                  //         child: Text(
+                  //           "Resend",
+                  //           style: stylePTSansBold(
+                  //             fontSize: 14,
+                  //             color: ThemeColors.accent,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
 
-                CommonPinput(
-                  controller: _controller,
-                  onCompleted: (p0) {
-                    _onVeryClick();
-                  },
-                ),
+                  CommonPinput(
+                    controller: _controller,
+                    onCompleted: (p0) {
+                      _onVeryClick();
+                    },
+                  ),
 
-                startTiming == 30
-                    ? Container(
-                        margin: EdgeInsets.only(
-                          right: 8.sp,
-                          top: 20.sp,
-                        ),
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                          onTap: _onResendOtpClick,
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              text: "Resend OTP",
-                              style: stylePTSansBold(
-                                  fontSize: 15, color: ThemeColors.accent),
-                            ),
+                  startTiming == 30
+                      ? Container(
+                          margin: EdgeInsets.only(
+                            right: 8.sp,
+                            top: 20.sp,
                           ),
-                        ),
-                      )
-                    : Container(
-                        margin: EdgeInsets.only(
-                          right: 8.sp,
-                          top: 20.sp,
-                        ),
-                        alignment: Alignment.center,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "${startTiming}Sec",
+                          alignment: Alignment.center,
+                          child: GestureDetector(
+                            onTap: _onResendOtpClick,
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: "Resend OTP",
                                 style: stylePTSansBold(
-                                  fontSize: 15,
-                                  color: ThemeColors.accent,
-                                ),
+                                    fontSize: 15, color: ThemeColors.accent),
                               ),
-                            ],
-                            text: "Resend OTP in ",
-                            style: stylePTSansRegular(
-                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin: EdgeInsets.only(
+                            right: 8.sp,
+                            top: 20.sp,
+                          ),
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "${startTiming}Sec",
+                                  style: stylePTSansBold(
+                                    fontSize: 15,
+                                    color: ThemeColors.accent,
+                                  ),
+                                ),
+                              ],
+                              text: "Resend OTP in ",
+                              style: stylePTSansRegular(
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ),
-                      ),
 
-                const SpacerVertical(),
-                // ThemeButton(
-                //   onPressed: _onVeryClick,
-                //   text: "Verify and Log in",
-                // ),
-                const SpacerVertical(),
-                EditEmailClick(
-                  email: "${widget.userName}",
-                  state: widget.state,
-                  dontPop: widget.dontPop,
-                ),
-              ],
+                  const SpacerVertical(),
+                  // ThemeButton(
+                  //   onPressed: _onVeryClick,
+                  //   text: "Verify and Log in",
+                  // ),
+                  const SpacerVertical(),
+                  EditEmailClick(
+                    email: widget.userName,
+                    state: widget.state,
+                    dontPop: widget.dontPop,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

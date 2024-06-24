@@ -98,7 +98,7 @@ class EarningHistoryItem extends StatelessWidget {
                 ),
                 InnerRowItem(
                   lable: "Beat/Miss",
-                  value: "${data?.beatMiss}",
+                  value: "${data?.beatMiss?.value}",
                 ),
                 InnerRowItem(
                   lable: "Revenue Estimate",

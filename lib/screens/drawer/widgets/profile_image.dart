@@ -9,6 +9,7 @@ class ProfileImage extends StatelessWidget {
   final double cameraSize;
   final Function()? onTap;
   final String? url;
+  final IconData? icon;
   final bool showCameraIcon;
 
   const ProfileImage({
@@ -17,6 +18,7 @@ class ProfileImage extends StatelessWidget {
     this.cameraSize = 14,
     this.onTap,
     this.url,
+    this.icon,
     this.showCameraIcon = true,
   });
 //
@@ -56,7 +58,7 @@ class ProfileImage extends StatelessWidget {
                   padding: const EdgeInsets.all(4),
                   child: ClipOval(
                     child: Icon(
-                      Icons.camera_alt,
+                      icon ?? Icons.camera_alt,
                       size: cameraSize,
                     ),
                   ),

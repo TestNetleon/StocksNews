@@ -59,27 +59,24 @@ class ReferAFriend extends StatelessWidget {
         isPopback: true,
         showTrailing: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: CustomTabContainer(
-          tabs: [
-            Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: const Text("Refer a friend")),
-            Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: const Text("Leaderboard")),
-          ],
-          widgets: const [
-            AffiliateReferFriend(),
-            AffiliateLeaderBoard(),
-          ],
-        ),
+      body: CustomTabContainer(
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
+        tabs: [
+          Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: const Text("Refer a friend")),
+          Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: const Text("Leaderboard")),
+        ],
+        widgets: const [
+          AffiliateReferFriend(),
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+                Dimen.padding, Dimen.padding, Dimen.padding, 0),
+            child: AffiliateLeaderBoard(),
+          ),
+        ],
       ),
     );
   }

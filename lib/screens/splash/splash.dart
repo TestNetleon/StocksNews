@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -50,13 +51,24 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       ),
     );
 
+    // _callAPI();
     try {
-      deviceType = getDeviceType(MediaQuery.of(context).size);
+      var deviceType = getDeviceType(
+        Size(ScreenUtil().screenWidth, ScreenUtil().scaleHeight),
+      );
+
+      if (deviceType == DeviceScreenType.tablet) {
+        isPhone = false;
+      } else if (deviceType == DeviceScreenType.mobile) {
+        isPhone = true;
+      }
     } catch (e) {
       //
+      // popUpAlert(message: "$e", title: "Error");
+
+      // Navigator.pushNamedAndRemoveUntil(context, Tabs.path, (route) => false);
     }
 
-    // _callAPI();
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
@@ -83,15 +95,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         Const.loadingMessage = messageObject!.loading!;
       }
 
-      if (deviceType == DeviceScreenType.tablet) {
-        isPhone = false;
-      } else if (deviceType == DeviceScreenType.mobile) {
-        isPhone = true;
-      }
-
       UserRes? user = await Preference.getUser();
       if (user != null) {
-        Utils().showLog("-------FROM SPLASH USER UPDATING---------");
         provider.setUser(user);
       }
     } catch (e) {
@@ -106,9 +111,13 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       return;
     }
 
+    // Navigator.pushReplacement(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(builder: (_) => const Tabs()),
+    // );
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs()),
+      MaterialPageRoute(builder: (_) => const HomeSplash()),
     );
     // Navigator.pushReplacement(
     //   navigatorKey.currentContext!,

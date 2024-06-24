@@ -16,6 +16,7 @@ void popUpAlert({
   bool canPop = true,
   bool showButton = true,
   bool showOk = true,
+  Widget? iconWidget,
   TextAlign? messageTextAlign = TextAlign.center,
 }) {
   showDialog(
@@ -34,6 +35,7 @@ void popUpAlert({
         showOk: showOk,
         messageTextAlign: messageTextAlign,
         padding: padding,
+        iconWidget: iconWidget,
       );
     },
   );
@@ -50,10 +52,12 @@ class AlertPopupCustom extends StatelessWidget {
   final bool showButton;
   final bool canPop;
   final bool showOk;
+  final Widget? iconWidget;
   const AlertPopupCustom(
       {super.key,
       required this.message,
       required this.title,
+      this.iconWidget,
       this.showOk = true,
       this.padding,
       this.icon,
@@ -96,6 +100,7 @@ class AlertPopupCustom extends StatelessWidget {
                             width: 80.sp,
                           ),
                         ),
+                        iconWidget ?? const SizedBox(),
                         // const SpacerVertical(height: 5),
                         Text(
                           title,
