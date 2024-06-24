@@ -20,11 +20,12 @@ class AgreeConditions extends StatelessWidget {
     if ((provider.loginTxt == null || provider.loginTxt == '') &&
         (provider.signUpTxt == null || provider.signUpTxt == '')) {
       return RichText(
+        textAlign: TextAlign.center,
         text: TextSpan(
           text: fromLogin
               ? 'By log in you agree to our '
               : 'By signing up you agree to our ',
-          style: stylePTSansRegular(fontSize: isPhone ? 13 : 15, height: 1.4),
+          style: stylePTSansRegular(height: 1.4),
           children: [
             TextSpan(
               recognizer: TapGestureRecognizer()
@@ -40,12 +41,11 @@ class AgreeConditions extends StatelessWidget {
                   );
                 },
               text: 'terms of service',
-              style: stylePTSansRegular(
-                  fontSize: 13, color: ThemeColors.accent, height: 1.4),
+              style: stylePTSansRegular(color: ThemeColors.accent, height: 1.4),
             ),
             TextSpan(
               text: ' and ',
-              style: stylePTSansRegular(fontSize: 13, height: 1.4),
+              style: stylePTSansRegular(height: 1.4),
             ),
             TextSpan(
               recognizer: TapGestureRecognizer()
@@ -61,12 +61,11 @@ class AgreeConditions extends StatelessWidget {
                   );
                 },
               text: 'privacy policy',
-              style: stylePTSansRegular(
-                  fontSize: 13, color: ThemeColors.accent, height: 1.4),
+              style: stylePTSansRegular(color: ThemeColors.accent, height: 1.4),
             ),
             TextSpan(
               text: '.',
-              style: stylePTSansRegular(fontSize: 13, height: 1.4),
+              style: stylePTSansRegular(height: 1.4),
             ),
           ],
         ),
@@ -100,7 +99,7 @@ class AgreeConditions extends StatelessWidget {
         return true;
       },
       fromLogin ? provider.loginTxt ?? "" : provider.signUpTxt ?? "",
-      textStyle: styleGeorgiaRegular(fontSize: 13),
+      textStyle: styleGeorgiaRegular(height: 1.5),
     );
   }
 }

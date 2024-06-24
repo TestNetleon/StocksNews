@@ -10,6 +10,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../utils/constants.dart';
 
@@ -28,7 +29,7 @@ class MyAccount extends StatelessWidget {
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: Padding(
-        padding: EdgeInsets.all(Dimen.padding.sp),
+        padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
         child: provider.user == null
             ? Column(
                 children: [
@@ -45,11 +46,12 @@ class MyAccount extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     // ScreenTitle(title: "My Profile"),
-                    MyAccountContainer(),
+                    const MyAccountContainer(),
                     Visibility(
                       visible: provider.user != null,
-                      child: MyAccountDelete(),
+                      child: const MyAccountDelete(),
                     ),
+                    const SpacerVertical(),
                   ],
                 ),
               ),

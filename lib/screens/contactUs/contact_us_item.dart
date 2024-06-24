@@ -164,14 +164,20 @@ class _ContactUsItemState extends State<ContactUsItem> {
   }
 }
 
-Widget showAsteriskText({required String text, bool showAsterisk = true}) {
+Widget showAsteriskText({
+  required String text,
+  bool showAsterisk = true,
+  bool bold = false,
+}) {
   return OptionalParent(
     addParent: showAsterisk,
     parentBuilder: (child) {
       return RichText(
         text: TextSpan(
           text: text,
-          style: stylePTSansRegular(fontSize: 14),
+          style: bold
+              ? stylePTSansBold(fontSize: 14)
+              : stylePTSansRegular(fontSize: 14),
           children: [
             TextSpan(
               text: ' *',
@@ -183,7 +189,9 @@ Widget showAsteriskText({required String text, bool showAsterisk = true}) {
     },
     child: Text(
       text,
-      style: stylePTSansRegular(fontSize: 15),
+      style: bold
+          ? stylePTSansBold(fontSize: 15)
+          : stylePTSansRegular(fontSize: 15),
     ),
   );
 }

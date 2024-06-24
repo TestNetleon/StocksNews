@@ -17,7 +17,7 @@ class MyAccountImageType extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        GestureDetector(
+        InkWell(
           onTap: onCamera,
           child: Container(
             width: double.infinity,
@@ -41,7 +41,7 @@ class MyAccountImageType extends StatelessWidget {
           color: ThemeColors.greyBorder.withOpacity(0.4),
           thickness: 0.5,
         ),
-        GestureDetector(
+        InkWell(
           onTap: onGallery,
           child: Container(
             width: double.infinity,

@@ -42,7 +42,7 @@ class ReferDialog extends StatelessWidget {
             Images.referBack,
             color: const Color.fromARGB(150, 81, 81, 81),
             fit: BoxFit.cover,
-            height: 290,
+            height: 550,
           ),
           // const Align(
           //   alignment: Alignment.center,

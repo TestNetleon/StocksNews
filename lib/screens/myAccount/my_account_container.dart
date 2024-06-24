@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -45,10 +46,19 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
   String appSignature = "";
 
+  // bool emailVerified = false;
+  // bool phoneVerified = false;
+
+  // _validate() {
+  //   UserRes? user = context.read<UserProvider>().user;
+  //   if (user?.email != null && user?.email != '') {
+  //     emailController.text = ;
+  //   }
+  // }
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-
     nameController.dispose();
     emailController.dispose();
     displayController.dispose();
@@ -69,10 +79,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserProvider>().resetVerification();
       _callAPI();
+      _updateUser();
     });
-
-    _updateUser();
   }
 
   void _getAppSignature() {
@@ -98,10 +108,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     UserProvider provider = context.read<UserProvider>();
 
     UserRes? user = context.read<UserProvider>().user;
-    if (user?.email?.isNotEmpty != true && user?.email != null) {
+    if (user?.email != '' && user?.email != null) {
       provider.setEmailClickText();
     }
-    if (user?.phone?.isNotEmpty != true && user?.phone != null) {
+
+    log("------------${user?.phone != ''}");
+    if (user?.phone != '' && user?.phone != null) {
       provider.setPhoneClickText();
     }
     if (user?.name?.isNotEmpty == true) nameController.text = user?.name ?? "";
@@ -215,12 +227,14 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
   @override
   Widget build(BuildContext context) {
+    UserProvider provider = context.watch<UserProvider>();
+    // UserRes? user = provider.user;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const MyAccountHeader(),
         const SpacerVertical(height: 13),
-        showAsteriskText(text: "Real Name"),
+        showAsteriskText(text: "Real Name", bold: true),
         const SpacerVertical(height: 5),
         ThemeInputField(
           cursorColor: Colors.white,
@@ -234,7 +248,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           style: stylePTSansRegular(color: Colors.white),
         ),
         const SpacerVertical(height: 13),
-        showAsteriskText(text: "Display Name"),
+        showAsteriskText(text: "Display Name", bold: true),
 
         const SpacerVertical(height: 5),
         ThemeInputField(
@@ -251,7 +265,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           textCapitalization: TextCapitalization.words,
         ),
         const SpacerVertical(height: 13),
-        showAsteriskText(text: "Email Address"),
+        showAsteriskText(text: "Email Address", bold: true),
 
         const SpacerVertical(height: 5),
         IntrinsicHeight(
@@ -260,6 +274,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             children: [
               Expanded(
                 child: ThemeInputField(
+                  onChanged: (value) => provider.onChangeEmail(value),
                   cursorColor: Colors.white,
                   style: stylePTSansRegular(color: Colors.white),
                   fillColor: ThemeColors.primaryLight,
@@ -288,9 +303,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.accent,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: provider.emailVerified
+                        ? ThemeColors.greyBorder
+                        : ThemeColors.accent,
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20),
@@ -298,15 +315,34 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: () =>
-                        _onEmailUpdateClick(emailController.text.trim()),
+                    onTap: provider.emailVerified
+                        ? null
+                        : () =>
+                            _onEmailUpdateClick(emailController.text.trim()),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Text(
-                        "Verify",
-                        style:
-                            stylePTSansBold(color: Colors.white, fontSize: 14),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                      child: Row(
+                        children: [
+                          Visibility(
+                            visible: provider.emailVerified,
+                            child: const Padding(
+                              padding: EdgeInsets.only(right: 5),
+                              child: Icon(
+                                Icons.check,
+                                size: 15,
+                                color: ThemeColors.accent,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            provider.emailVerified ? "Verified" : "Verify",
+                            style: stylePTSansBold(
+                                color: provider.emailVerified
+                                    ? ThemeColors.accent
+                                    : Colors.white,
+                                fontSize: 14),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -325,23 +361,28 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                decoration: const BoxDecoration(
-                  color: ThemeColors.primaryLight,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(4),
-                    bottomLeft: Radius.circular(4),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: const BoxDecoration(
+                      color: ThemeColors.primaryLight,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(4),
+                        bottomLeft: Radius.circular(4),
+                      ),
+                    ),
                   ),
-                ),
-                child: Text(
-                  "+1",
-                  style: stylePTSansBold(),
-                ),
+                  Text(
+                    "+1",
+                    style: stylePTSansBold(),
+                  ),
+                ],
               ),
-              Expanded(
+              Flexible(
                 child: ThemeInputField(
+                  onChanged: (value) => provider.onChangePhone(value),
                   cursorColor: Colors.white,
                   // prefix: Text(
                   //   "+1 ",
@@ -376,9 +417,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.accent,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: provider.phoneVerified
+                        ? ThemeColors.greyBorder
+                        : ThemeColors.accent,
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                       bottomLeft: Radius.circular(20),
@@ -386,15 +429,35 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: () =>
-                        _onPhoneUpdateClick(mobileController.text.trim()),
+                    onTap: provider.phoneVerified
+                        ? null
+                        : () =>
+                            _onPhoneUpdateClick(mobileController.text.trim()),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Text(
-                        "Verify",
-                        style:
-                            stylePTSansBold(color: Colors.white, fontSize: 14),
+                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                      child: Row(
+                        children: [
+                          Visibility(
+                            visible: provider.phoneVerified,
+                            child: const Padding(
+                              padding: EdgeInsets.only(right: 5),
+                              child: Icon(
+                                Icons.check,
+                                size: 15,
+                                color: ThemeColors.accent,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            provider.phoneVerified ? "Verified" : "Verify",
+                            style: stylePTSansBold(
+                              color: provider.phoneVerified
+                                  ? ThemeColors.accent
+                                  : Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -420,7 +483,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     );
   }
 
-  void _onEmailUpdateClick(String email) {
+  Future _onEmailUpdateClick(String email) async {
     UserProvider provider = context.read<UserProvider>();
 
     if (!isEmail(emailController.text)) {
@@ -435,10 +498,17 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       "email": email.toLowerCase(),
     };
 
-    provider.emailUpdateOtp(request, resendButtonClick: false, email: email);
+    try {
+      ApiResponse response = await provider.emailUpdateOtp(request,
+          resendButtonClick: false, email: email);
+
+      if (response.status) {}
+    } catch (e) {
+      //
+    }
   }
 
-  void _onPhoneUpdateClick(String phone) {
+  Future _onPhoneUpdateClick(String phone) async {
     UserProvider provider = context.read<UserProvider>();
 
     if (mobileController.text.isEmpty || mobileController.text.length < 10) {
@@ -455,6 +525,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       "phone_hash": appSignature,
     };
 
-    provider.phoneUpdateOtp(request, resendButtonClick: false, phone: phone);
+    try {
+      ApiResponse response = await provider.phoneUpdateOtp(request,
+          resendButtonClick: false, phone: phone);
+      if (response.status) {}
+    } catch (e) {
+      //
+    }
   }
 }

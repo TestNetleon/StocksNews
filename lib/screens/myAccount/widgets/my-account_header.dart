@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/leaderboard.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
@@ -12,6 +11,7 @@ import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -22,6 +22,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/api/image_service.dart';
+
+import '../../../providers/leaderboard.dart';
+import '../../../utils/constants.dart';
 
 //
 
@@ -125,113 +128,246 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = context.watch<UserProvider>();
-    LeaderBoardProvider leaderProvider = context.read<LeaderBoardProvider>();
+    LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
-    return SizedBox(
-      width: double.infinity,
-      child: Card(
-        color: ThemeColors.primaryLight,
-        elevation: 5, // Adjust the elevation to give a shadow effect
-        shape: RoundedRectangleBorder(
+    bool verified = userProvider.user?.name != null &&
+        (userProvider.user?.displayName != null &&
+            userProvider.user?.displayName != '') &&
+        (userProvider.user?.email != null && userProvider.user?.email != '') &&
+        (userProvider.user?.phone != null && userProvider.user?.phone != '');
+
+    return Stack(
+      children: [
+        ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          // Rounded corners
-        ),
-        child: Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.all(25.sp),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ProfileImage(
-                  imageSize: 95,
-                  cameraSize: 19,
-                  onTap: _selectOption,
-                  url: context.watch<UserProvider>().user?.image,
-                ),
-                const SpacerVertical(height: 13),
-                Text(
-                  userProvider.user?.name ?? "Hello",
-                  style: stylePTSansBold(fontSize: 24),
-                ),
-                Visibility(
-                  visible: userProvider.user?.email != null,
-                  child: Text(
-                    userProvider.user?.email ?? "",
-                    style: stylePTSansRegular(
-                        fontSize: 14, color: ThemeColors.greyText),
-                  ),
-                ),
-                Visibility(
-                  visible: userProvider.user?.name != null &&
-                      (userProvider.user?.displayName != null &&
-                          userProvider.user?.displayName != '') &&
-                      (userProvider.user?.email != null &&
-                          userProvider.user?.email != '') &&
-                      (userProvider.user?.phone != null &&
-                          userProvider.user?.phone != ''),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 13),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.verified,
-                          size: 18,
-                          color: ThemeColors.accent,
-                        ),
-                        const SpacerHorizontal(width: 5),
-                        Text(
-                          "Verified",
-                          style: stylePTSansRegular(
-                              fontSize: 14, color: ThemeColors.greyText),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // Visibility(
-                //   visible: leaderProvider.extra?.received != null &&
-                //       leaderProvider.extra?.received != 0,
-                //   child: Container(
-                //     padding: const EdgeInsets.all(.2),
-                //     margin: const EdgeInsets.only(top: 13),
-                //     decoration: const BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.only(
-                //         topRight: Radius.circular(20),
-                //         bottomRight: Radius.circular(20),
-                //         bottomLeft: Radius.circular(20),
-                //         topLeft: Radius.circular(20),
-                //       ),
-                //     ),
-                //     child: Container(
-                //       decoration: const BoxDecoration(
-                //         color: ThemeColors.primaryLight,
-                //         borderRadius: BorderRadius.only(
-                //           topRight: Radius.circular(20),
-                //           bottomRight: Radius.circular(20),
-                //           bottomLeft: Radius.circular(20),
-                //           topLeft: Radius.circular(20),
-                //         ),
-                //       ),
-                //       child: Padding(
-                //         padding: const EdgeInsets.symmetric(
-                //             vertical: 5, horizontal: 40),
-                //         child: Text(
-                //           "${leaderProvider.extra?.received ?? 0}",
-                //           style: stylePTSansBold(
-                //               color: Colors.white, fontSize: 14),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // )
-              ],
+          child: Opacity(
+            opacity: 0.2,
+            child: Image.asset(
+              Images.profileBg,
+              height: 230,
+              width: double.infinity,
             ),
           ),
         ),
-      ),
+        SizedBox(
+          width: double.infinity,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            // color: ThemeColors.primaryLight,
+            // elevation: 5, // Adjust the elevation to give a shadow effect
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.circular(10),
+            //   // Rounded corners
+            // ),
+            child: Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(25),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ProfileImage(
+                      imageSize: 95,
+                      cameraSize: 19,
+                      onTap: _selectOption,
+                      url: context.watch<UserProvider>().user?.image,
+                    ),
+                    const SpacerVertical(height: 13),
+                    Text(
+                      userProvider.user?.name == null ||
+                              userProvider.user?.name == ''
+                          ? "Hello"
+                          : userProvider.user?.name ?? "",
+                      textAlign: TextAlign.center,
+                      style: stylePTSansBold(
+                        fontSize: 24,
+                      ),
+                    ),
+                    // Visibility(
+                    //   visible: userProvider.user?.email != null,
+                    //   child: Text(
+                    //     userProvider.user?.email ?? "",
+                    //     style: stylePTSansRegular(
+                    //         fontSize: 14, color: ThemeColors.greyText),
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 13),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Container(
+                          //   padding: const EdgeInsets.all(.2),
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.circular(5),
+                          //   ),
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       color: ThemeColors.primaryLight,
+                          //       borderRadius: BorderRadius.circular(5),
+                          //     ),
+                          //     child: Padding(
+                          //       padding:
+                          //           const EdgeInsets.fromLTRB(17, 5, 20, 5),
+                          //       // child: Row(
+                          //       //   mainAxisSize: MainAxisSize.min,
+                          //       //   children: [
+                          //       //     const Icon(
+                          //       //       Icons.verified,
+                          //       //       size: 18,
+                          //       //       color: ThemeColors.accent,
+                          //       //     ),
+                          //       //     const SpacerHorizontal(width: 5),
+                          //       //     Text(
+                          //       //       "Verified",
+                          //       //       style: stylePTSansRegular(
+                          //       //           fontSize: 14,
+                          //       //           color: ThemeColors.greyText),
+                          //       //     ),
+                          //       //   ],
+                          //       // ),
+                          //       child: Column(
+                          //         mainAxisSize: MainAxisSize.min,
+                          //         children: [
+                          //           const Icon(
+                          //             Icons.verified,
+                          //             size: 18,
+                          //             color: ThemeColors.accent,
+                          //           ),
+                          //           const SpacerVertical(height: 5),
+                          //           Text(
+                          //             "Verified",
+                          //             style: stylePTSansRegular(
+                          //                 fontSize: 14,
+                          //                 color: ThemeColors.greyText),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+
+                          Flexible(
+                            child: InkWell(
+                              onTap: () {
+                                popUpAlert(
+                                  padding: const EdgeInsets.all(10),
+                                  message: verified
+                                      ? homeProvider
+                                              .extra?.profileText?.unVerified ??
+                                          "Unverified users are those who have not confirmed their name, email, display name, or mobile number."
+                                      : homeProvider
+                                              .extra?.profileText?.verified ??
+                                          "Verified users are those who have confirmed their name, email, display name, and mobile number.",
+                                  title: verified ? "Verified" : "Unverified",
+                                  iconWidget: Icon(
+                                    Icons.verified,
+                                    size: 80,
+                                    color: verified
+                                        ? ThemeColors.accent
+                                        : ThemeColors.sos,
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.verified,
+                                    size: 18,
+                                    color: verified
+                                        ? ThemeColors.accent
+                                        : ThemeColors.sos,
+                                  ),
+                                  const SpacerVertical(height: 5),
+                                  Text(
+                                    verified ? "Verified" : "Unverified",
+                                    style: stylePTSansBold(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          const SpacerHorizontal(width: 10),
+                          Flexible(
+                            child: InkWell(
+                              onTap: () {
+                                popUpAlert(
+                                  padding: EdgeInsets.all(10),
+                                  message: homeProvider
+                                          .extra?.profileText?.points ??
+                                      "Points are earned by referring the app to friends and family who join and verify their contact information, with the referring user receiving points for each verified referral.",
+                                  title: "Points",
+                                  icon: Images.starAffiliate,
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    Images.starAffiliate,
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                  const SpacerVertical(height: 5),
+                                  Text(
+                                    "Points - ${leaderProvider.extra?.received ?? 0}",
+                                    style: stylePTSansBold(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SpacerHorizontal(width: 10),
+                          Flexible(
+                            child: InkWell(
+                              onTap: () {
+                                popUpAlert(
+                                  padding: const EdgeInsets.all(10),
+                                  message: homeProvider
+                                          .extra?.profileText?.rank ??
+                                      "Rank is the position a user holds on the leaderboard of the affiliate program.",
+                                  title: "Rank",
+                                  icon: Images.rankAffiliate,
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    Images.rankAffiliate,
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                  const SpacerVertical(height: 5),
+                                  Text(
+                                    verified
+                                        ? "Rank - ${leaderProvider.extra?.selfRank ?? 0}"
+                                        : "Rank - N/A",
+                                    style: stylePTSansBold(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
