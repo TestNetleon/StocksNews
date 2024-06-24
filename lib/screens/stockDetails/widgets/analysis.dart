@@ -248,7 +248,7 @@
 //   Widget build(BuildContext context) {
 //     return InkWell(
 //       onTap: () {
-//         Navigator.pushNamed(
+//         Navigator.push(
 //           context,
 //           StockDetail.path, // arguments: data?.symbol,
 //           arguments: {"slug": data?.symbol},

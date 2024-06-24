@@ -69,7 +69,7 @@ class SdOwnershipItem extends StatelessWidget {
                   // const SpacerVertical(height: 15),
                   // InkWell(
                   //   onTap: () {
-                  //     // Navigator.pushNamed(context, InsiderDetailsType.path,
+                  //     // Navigator.push(context, InsiderDetailsType.path,
                   //     //     arguments: {
                   //     //       "companySlug": data?.companySlug,
                   //     //       "reportingSlug": data?.reportingSlug,

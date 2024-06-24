@@ -10,7 +10,9 @@ import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
   String? _error;
@@ -72,28 +74,45 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future logoutUser(request) async {
+  Future requestFeedbackSubmit({
+    showProgress = true,
+    required id,
+    required type,
+    required feedbackType,
+  }) async {
+    // setStatus(Status.loading);
     try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "post_id": id,
+        "type": type,
+        "feedback_type": feedbackType,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sendFeedback,
         request: request,
-        showProgress: true,
+        showProgress: showProgress,
       );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
+
+      if (response.status) {
+        _data?.feedbackExistMsg = response.message;
+        notifyListeners();
       } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(
-        //   message: res.message,
-        // );
+        popUpAlert(
+          title: "Alert",
+          message: response.message ?? Const.errSomethingWrong,
+        );
       }
+      // setStatus(Status.loaded);
     } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
+      Utils().showLog(e.toString());
+      popUpAlert(
+        title: "Alert",
+        message: Const.errSomethingWrong,
+      );
+      // setStatus(Status.loaded);
     }
   }
 }

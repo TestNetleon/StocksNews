@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -17,11 +18,9 @@ class SocialSentimentMentions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(
-        context,
-        StockDetail.path,
-        // arguments: data.symbol,
-        arguments: {"slug": data.symbol},
+      onTap: () => Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

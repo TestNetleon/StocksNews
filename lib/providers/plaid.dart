@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -208,8 +209,10 @@ class PlaidProvider extends ChangeNotifier {
         if (!fromDrawer) {
           // navigatorKey.currentContext!.read<HomeProvider>().getHomePortfolio();
 
-          Navigator.pushNamed(
-              navigatorKey.currentContext!, HomePlaidAdded.path);
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
+          );
         } else {
           // getTabData();
           getPlaidPortfolioDataNew();

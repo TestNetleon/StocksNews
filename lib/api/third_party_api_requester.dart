@@ -64,7 +64,7 @@ Future<ApiResponse> apiRequest({
       //   isServerError = true;
       //   Navigator.popUntil(
       //       navigatorKey.currentContext!, (route) => route.isFirst);
-      //   Navigator.pushNamed(
+      //   Navigator.push(
       //       navigatorKey.currentContext!, ServerErrorWidget.path);
       // });
       //   return ApiResponse(

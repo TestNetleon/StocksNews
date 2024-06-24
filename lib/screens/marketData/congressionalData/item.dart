@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/congressional_res.dart';
 import 'package:stocks_news_new/providers/high_low_pe.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -20,18 +21,18 @@ class CongressionalItem extends StatelessWidget {
   const CongressionalItem({super.key, this.data, required this.index});
 
   void _onTap(context) {
-    Navigator.pushNamed(
-      context,
-      StockDetail.path,
-      arguments: {"slug": data?.symbol},
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => StockDetail(symbol: data?.symbol)),
     );
   }
 
   void _onPersonTap(context) {
-    Navigator.pushNamed(
-      context,
-      CongressionalDetail.path,
-      arguments: {"slug": data?.slug},
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (_) => CongressionalDetail(slug: data?.symbol),
+      ),
     );
   }
 

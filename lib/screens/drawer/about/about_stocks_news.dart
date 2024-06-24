@@ -42,7 +42,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
   //   if (context.read<UserProvider>().user == null) {
   //     isPhone ? await loginSheet() : await loginSheetTablet();
   //   }
-
   //   showModalBottomSheet(
   //     useSafeArea: true,
   //     shape: RoundedRectangleBorder(
@@ -77,8 +76,10 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     if (provider.user?.phone == null || provider.user?.phone == '') {
       _bottomSheet();
     } else {
-      await Navigator.pushNamed(
-          navigatorKey.currentContext!, ReferAFriend.path);
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const ReferAFriend()),
+      );
     }
   }
 

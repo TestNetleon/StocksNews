@@ -11,7 +11,9 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -29,39 +31,36 @@ class Splash extends StatefulWidget {
 //
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   List<WelcomeRes>? welcome;
-
+  var deviceType;
   @override
   void initState() {
     super.initState();
+    splashLoaded = false;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _startProcess();
     });
   }
 
   void _startProcess() async {
-    // final connection = await _checkForConnection();
-    // if (!connection) return;
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: null,
+        from: "Splash called ** ",
+        onDeepLink: onDeepLinking,
+      ),
+    );
+
+    try {
+      deviceType = getDeviceType(MediaQuery.of(context).size);
+    } catch (e) {
+      //
+    }
 
     // _callAPI();
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
   }
-
-  // Future<bool> _checkForConnection() async {
-  //   try {
-  //     final result = await (Connectivity().checkConnectivity());
-  //     if (result[0] == ConnectivityResult.none && result.length == 1) {
-  //       isShowingError = true;
-  //       showErrorFullScreenDialog(
-  //           errorCode: 0, onClick: null, log: "From Splash");
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     return true;
-  //   }
-  //   return true;
-  // }
 
   void _callAPI() async {
     bool firstTime = await Preference.getShowIntro();
@@ -71,44 +70,58 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _getDeviceType() async {
-    var deviceType = getDeviceType(MediaQuery.of(context).size);
-    UserProvider provider = context.read<UserProvider>();
+    try {
+      UserProvider provider = context.read<UserProvider>();
 
-    MessageRes? messageObject = await Preference.getLocalDataBase();
+      MessageRes? messageObject = await Preference.getLocalDataBase();
 
-    if (messageObject?.error != null) {
-      Const.errSomethingWrong = messageObject!.error!;
+      if (messageObject?.error != null) {
+        Const.errSomethingWrong = messageObject!.error!;
+      }
+
+      if (messageObject?.loading != null) {
+        Const.loadingMessage = messageObject!.loading!;
+      }
+
+      if (deviceType == DeviceScreenType.tablet) {
+        isPhone = false;
+      } else if (deviceType == DeviceScreenType.mobile) {
+        isPhone = true;
+      }
+
+      UserRes? user = await Preference.getUser();
+      if (user != null) {
+        Utils().showLog("-------FROM SPLASH USER UPDATING---------");
+        provider.setUser(user);
+      }
+    } catch (e) {
+      //
     }
-    if (messageObject?.loading != null) {
-      Const.loadingMessage = messageObject!.loading!;
-    }
-
-    if (deviceType == DeviceScreenType.tablet) {
-      isPhone = false;
-    } else if (deviceType == DeviceScreenType.mobile) {
-      isPhone = true;
-    }
-
-    UserRes? user = await Preference.getUser();
-    if (user != null) {
-      Utils().showLog("-------FROM SPLASH USER UPDATING---------");
-      provider.setUser(user);
-    }
-
     _navigateToRequiredScreen();
   }
 
   Future _navigateToRequiredScreen() async {
-    Navigator.pushReplacementNamed(
-        navigatorKey.currentContext!, HomeSplash.path);
+    if (onDeepLinking) {
+      popHome = true;
+      return;
+    }
+
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
+    // Navigator.pushReplacement(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   // HomeSplash.path,
+    // );
 
     // bool firstTime = await Preference.getShowIntro();
-
     // if (firstTime) {
     //   if (welcome?.isEmpty == true || welcome == null) {
-    //     // Navigator.pushNamedAndRemoveUntil(
+    //     // Navigator.pushAndRemoveUntil(
     //     //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-    //     // Navigator.pushReplacementNamed(
+    //     // Navigator.pushReplacement(
     //     //     navigatorKey.currentContext!, HomeSplash.path);
     //   } else {
     //     Navigator.pushAndRemoveUntil(
@@ -120,10 +133,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     //     );
     //   }
     // } else {
-    //   // Navigator.pushNamedAndRemoveUntil(
+    //   // Navigator.pushAndRemoveUntil(
     //   //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-
-    //   Navigator.pushReplacementNamed(
+    //   Navigator.pushReplacement(
     //     navigatorKey.currentContext!,
     //     HomeSplash.path,
     //   );
@@ -133,8 +145,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     //   //       builder: (context) => const ReferSuccess(),
     //   //     ));
     // }
-
-    // // Navigator.pushNamedAndRemoveUntil(
+    // // Navigator.pushAndRemoveUntil(
     // //     navigatorKey.currentContext!, Tabs.path, (route) => false);
   }
 

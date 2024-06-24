@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -42,11 +43,15 @@ class InsiderContentItem extends StatelessWidget {
                       // ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "companyName": data?.companyName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "${data?.companyName}",
@@ -67,13 +72,15 @@ class InsiderContentItem extends StatelessWidget {
                       // ),
                       InkWell(
                         onTap: () {
-                          // Navigator.pushNamed(context, StockDetails.path,
-                          //     arguments: data?.symbol);
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "companyName": data?.companyName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "${data?.exchangeShortName}:${data?.symbol}",
@@ -89,13 +96,17 @@ class InsiderContentItem extends StatelessWidget {
                       const SpacerVertical(height: 15),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "reportingSlug": data?.reportingSlug,
-                                "companyName": data?.companyName,
-                                "reportingName": data?.reportingName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                                reportingName: data?.reportingName,
+                                reportingSlug: data?.reportingSlug,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "${data?.reportingName}",

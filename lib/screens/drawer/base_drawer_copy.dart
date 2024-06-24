@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
@@ -131,10 +132,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                           version: version ?? "",
                                         ),
                                       );
-
-                                      // Navigator.pop(context);
-                                      // Navigator.pushNamed(
-                                      //     context, MyAccount.path);
                                     },
                                     child: Column(
                                       crossAxisAlignment:
@@ -207,7 +204,11 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               InkWell(
                                 onTap: () {
                                   Scaffold.of(context).closeDrawer();
-                                  Navigator.pushNamed(context, Alerts.path);
+                                  Navigator.push(
+                                    navigatorKey.currentContext!,
+                                    MaterialPageRoute(
+                                        builder: (_) => const Alerts()),
+                                  );
                                 },
                                 child: Column(
                                   children: [
@@ -237,7 +238,11 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               InkWell(
                                 onTap: () {
                                   Scaffold.of(context).closeDrawer();
-                                  Navigator.pushNamed(context, WatchList.path);
+                                  Navigator.push(
+                                    navigatorKey.currentContext!,
+                                    MaterialPageRoute(
+                                        builder: (_) => const WatchList()),
+                                  );
                                 },
                                 child: Column(
                                   children: [

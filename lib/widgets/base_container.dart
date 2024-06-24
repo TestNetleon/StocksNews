@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class BaseContainer extends StatelessWidget {
+// final GlobalKey<PopScopeState> _popScopeKey = GlobalKey<PopScopeState>();
+
+class BaseContainer extends StatefulWidget {
   const BaseContainer({
     required this.body,
     this.appBar,
@@ -25,6 +27,13 @@ class BaseContainer extends StatelessWidget {
   final bool? resizeToAvoidBottomInset;
   final bool moreGradient;
   final Color? bottomSafeAreaColor;
+
+  @override
+  State<BaseContainer> createState() => _BaseContainerState();
+}
+
+class _BaseContainerState extends State<BaseContainer> {
+  bool isNavigating = true;
 //
   @override
   Widget build(BuildContext context) {
@@ -41,7 +50,7 @@ class BaseContainer extends StatelessWidget {
             //   0.0,
             //   0.9,
             // ],
-            radius: moreGradient ? 0.7 : 0.6,
+            radius: widget.moreGradient ? 0.7 : 0.6,
             stops: const [
               0.0,
               0.9,
@@ -52,30 +61,92 @@ class BaseContainer extends StatelessWidget {
             ],
           ),
         ),
-        child: Scaffold(
+        child:
+            // onPopInvoked: (didPop) {
+            //   log("POPDPODPODPODPO  ===>  $didPop  NAVI =>$isNavigating  popHONE => $popHome");
+            //   if (isNavigating) {
+            //     // if (!didPop) return;
+            //     Preference.saveDataList(
+            //       DeeplinkData(
+            //         uri: null,
+            //         from: "POP Scope => didPop => $didPop",
+            //         onDeepLink: onDeepLinking,
+            //       ),
+            //     );
+            //     if (popHome) {
+            //       Navigator.popUntil(
+            //           navigatorKey.currentContext!, (route) => route.isFirst);
+            //       Navigator.pushReplacement(
+            //         navigatorKey.currentContext!,
+            //         MaterialPageRoute(builder: (_) => const Tabs()),
+            //       );
+            //     } else {
+            //       log("HERE ******* ");
+            //       try {
+            //         Navigator.pop(context);
+            //       } catch (e) {
+            //         log("HERE ERROR  ******* ${e.toString()}");
+            //       }
+            //     }
+            //     isNavigating = false;
+            //   }
+            // },
+            Scaffold(
           extendBodyBehindAppBar: true,
           backgroundColor: ThemeColors.transparent,
-          appBar: appBar,
-          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-          drawer: drawer,
-          body: bottomSafeAreaColor != null
-              ? Column(
-                  children: [
-                    Container(
-                      color: bottomSafeAreaColor,
-                      height: MediaQuery.of(context).padding.top +
-                          (appBar?.preferredSize.height ?? 0),
-                    ),
-                    Expanded(child: body),
-                    Container(
-                      color: bottomSafeAreaColor,
-                      height: MediaQuery.of(context).padding.bottom,
-                    ),
-                  ],
-                )
-              : SafeArea(child: body),
-          bottomNavigationBar: bottomNavigationBar,
-          floatingActionButton: floatingActionButton,
+          appBar: widget.appBar,
+          resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+          drawer: widget.drawer,
+          body: PopScope(
+            canPop: false,
+            // onPopInvoked: (didPop) {
+            //   log("POPDPODPODPODPO  ===>  $didPop  NAVI =>$isNavigating  popHONE => $popHome");
+            //   if (isNavigating) {
+            //     try {
+            //       // if (!didPop) return;
+            //       Preference.saveDataList(
+            //         DeeplinkData(
+            //           uri: null,
+            //           from: "POP Scope => didPop => $didPop",
+            //           onDeepLink: onDeepLinking,
+            //         ),
+            //       );
+            //       if (popHome) {
+            //         // Navigator.popUntil(
+            //         //     navigatorKey.currentContext!, (route) => route.isFirst);
+            //         Navigator.pushReplacement(
+            //           navigatorKey.currentContext!,
+            //           MaterialPageRoute(builder: (_) => const Tabs()),
+            //         );
+            //       } else {
+            //         log("HERE ******* ");
+            //         Navigator.pop(navigatorKey.currentContext!);
+            //       }
+            //       isNavigating = false;
+            //     } catch (e) {
+            //       log("HERE ERROR  ******* ${e.toString()}");
+            //     }
+            //   }
+            // },
+            child: widget.bottomSafeAreaColor != null
+                ? Column(
+                    children: [
+                      Container(
+                        color: widget.bottomSafeAreaColor,
+                        height: MediaQuery.of(context).padding.top +
+                            (widget.appBar?.preferredSize.height ?? 0),
+                      ),
+                      Expanded(child: widget.body),
+                      Container(
+                        color: widget.bottomSafeAreaColor,
+                        height: MediaQuery.of(context).padding.bottom,
+                      ),
+                    ],
+                  )
+                : SafeArea(child: widget.body),
+          ),
+          bottomNavigationBar: widget.bottomNavigationBar,
+          floatingActionButton: widget.floatingActionButton,
         ),
       ),
     );

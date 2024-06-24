@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
 import 'package:stocks_news_new/screens/tabs/trending/menuButton/popup_menu.dart';
@@ -46,10 +47,11 @@ class TopTrendingItem extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    StockDetail.path, // arguments: data.symbol,
-                    arguments: {"slug": data.symbol},
+                  Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                      builder: (_) => StockDetail(symbol: data.symbol),
+                    ),
                   );
                 },
                 child: Row(
@@ -271,11 +273,17 @@ class TopTrendingItem extends StatelessWidget {
   }
 
   void _navigateToAlert(BuildContext context) {
-    Navigator.pushNamed(context, Alerts.path);
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Alerts()),
+    );
   }
 
   void _navigateToWatchlist(BuildContext context) {
-    Navigator.pushNamed(context, WatchList.path);
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const WatchList()),
+    );
   }
 
   void _alertElse(BuildContext context) {

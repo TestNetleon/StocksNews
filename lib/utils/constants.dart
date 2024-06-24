@@ -44,6 +44,8 @@ bool popHome = false;
 Uri? deepLinkData;
 bool fromDrawer = false;
 Uri? shareUri;
+bool onDeepLinking = false;
+bool splashLoaded = false;
 // String? clientId;
 // String? secret;
 // String? createAPI;
@@ -141,6 +143,7 @@ class Images {
   static const telegram = "assets/images/telegram_share.png";
   static const ratingIcon = "assets/images/rating_icon.png";
   static const appRating = "assets/images/app_rating.png";
+  static const tickFeedback = "assets/images/tick_feedback.png";
 }
 
 class AudioFiles {

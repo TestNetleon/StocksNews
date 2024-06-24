@@ -13,7 +13,7 @@ String blogsDetailResToJson(BlogsDetailRes data) => json.encode(data.toJson());
 
 //
 class BlogsDetailRes {
-  // final String id;
+  final String id;
   final String name;
   final String description;
   final String slug;
@@ -23,9 +23,11 @@ class BlogsDetailRes {
   final DateTime? publishedDate;
   final String? postDateString;
   final String image;
+  String? feedbackMsg;
+  String? feedbackExistMsg;
 
   BlogsDetailRes({
-    // required this.id,
+    required this.id,
     required this.name,
     required this.description,
     this.authors,
@@ -35,10 +37,12 @@ class BlogsDetailRes {
     // required this.tags,
     this.publishedDate,
     required this.image,
+    this.feedbackMsg,
+    this.feedbackExistMsg,
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
-        // id: json["_id"],
+        id: json["_id"],
         name: json["name"],
         description: json["description"],
         slug: json["slug"],
@@ -55,10 +59,12 @@ class BlogsDetailRes {
             : DateTime.parse(json["published_date"]),
         postDateString: json['published_date_string'],
         image: json["image"],
+        feedbackExistMsg: json["feedback_exist_msg"],
+        feedbackMsg: json["feedback_msg"],
       );
 
   Map<String, dynamic> toJson() => {
-        // "_id": id,
+        "_id": id,
         "name": name,
         "description": description,
         'published_date_string': postDateString,
@@ -70,5 +76,7 @@ class BlogsDetailRes {
         // "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
         "published_date": publishedDate?.toIso8601String(),
         "image": image,
+        "feedback_msg": feedbackMsg,
+        "feedback_exist_msg": feedbackExistMsg,
       };
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 
 class Preference {
   static Future<bool> setShowIntro(bool isFirstTime) async {
@@ -101,4 +102,48 @@ class Preference {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("@referral", token);
   }
+
+  //----------- For Testing Only ---------------
+
+  static const String dataListKey = 'data_list';
+
+  static Future<void> saveDataList(DeeplinkData data) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    // List<String> jsonDataList =
+    //     dataList.map((data) => json.encode(data.toJson())).toList();
+    // preferences.setStringList(dataListKey, jsonDataList);
+
+    List<String>? jsonDataList = preferences.getStringList(dataListKey);
+
+    List<String> updatedJsonDataList;
+    if (jsonDataList == null) {
+      updatedJsonDataList = [json.encode(data.toJson())];
+    } else {
+      updatedJsonDataList = List.from(jsonDataList);
+      updatedJsonDataList.add(json.encode(data.toJson()));
+    }
+
+    preferences.setStringList(dataListKey, updatedJsonDataList);
+  }
+
+  static Future<void> saveClearDataList() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove(dataListKey);
+  }
+
+  static Future<List<DeeplinkData>> getDataList() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String>? jsonDataList = preferences.getStringList(dataListKey);
+
+    if (jsonDataList == null) {
+      return [];
+    }
+
+    List<DeeplinkData> dataList = jsonDataList
+        .map((jsonData) => DeeplinkData.fromJson(json.decode(jsonData)))
+        .toList();
+    return dataList;
+  }
+
+  //-------------------------------------------
 }

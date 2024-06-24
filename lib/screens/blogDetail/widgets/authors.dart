@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -30,10 +31,15 @@ class BlogDetailAuthor extends StatelessWidget {
               // return route.settings.name == IndexBlog.path;
               return route.settings.name == Blog.path;
             });
-            Navigator.pushNamed(context, Blog.path, arguments: {
-              "type": BlogsType.author,
-              "id": item.id,
-            });
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => Blog(
+                  id: item.id!,
+                  type: BlogsType.author,
+                ),
+              ),
+            );
           },
           child: Text(
             item.name ?? "",

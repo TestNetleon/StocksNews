@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplinks.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -16,6 +17,7 @@ import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -48,30 +50,32 @@ List<DrawerRes> marketData = [
     icon: Images.gainerLoser,
     text: "Gainers & Losers",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        GainersLosersIndex.path,
-        arguments: {"type": StocksType.gainers},
+        MaterialPageRoute(
+          builder: (_) => const GainersLosersIndex(type: StocksType.gainers),
+        ),
       );
     },
   ),
   DrawerRes(
-    iconData: Icons.precision_manufacturing_outlined,
-    icon: Images.feedback,
-    text: "Gap Up/Down Stocks",
-    onTap: () =>
-        Navigator.pushNamed(navigatorKey.currentContext!, GapUpDownStocks.path),
-  ),
+      iconData: Icons.precision_manufacturing_outlined,
+      icon: Images.feedback,
+      text: "Gap Up/Down Stocks",
+      onTap: () => Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => const GapUpDownStocks()),
+          )),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
     icon: Images.insider,
     text: "Insider Trades",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        Tabs.path,
-        // arguments: 2,
-        arguments: {"index": 2},
+        MaterialPageRoute(
+          builder: (_) => const Tabs(index: 2),
+        ),
       );
     },
   ),
@@ -80,11 +84,11 @@ List<DrawerRes> marketData = [
     icon: Images.performance,
     text: "Market Sentiment",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        Tabs.path,
-        // arguments: 3,
-        arguments: {"index": 3},
+        MaterialPageRoute(
+          builder: (_) => const Tabs(index: 3),
+        ),
       );
     },
   ),
@@ -93,7 +97,10 @@ List<DrawerRes> marketData = [
     text: "High & Low PE",
     icon: Images.highPE,
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, HighLowPEIndex.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const HighLowPEIndex()),
+      );
     },
   ),
   DrawerRes(
@@ -101,8 +108,10 @@ List<DrawerRes> marketData = [
     icon: Images.week,
     text: "52 Weeks",
     onTap: () {
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, FiftyTwoWeeksIndex.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const FiftyTwoWeeksIndex()),
+      );
     },
   ),
   DrawerRes(
@@ -110,8 +119,10 @@ List<DrawerRes> marketData = [
     icon: Images.exchange,
     text: "Highs & Lows Beta Stocks",
     onTap: () {
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, HighLowsBetaStocksIndex.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const HighLowsBetaStocksIndex()),
+      );
     },
   ),
   DrawerRes(
@@ -119,9 +130,9 @@ List<DrawerRes> marketData = [
     icon: Images.indices,
     text: "Indices",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        IndicesIndex.path,
+        MaterialPageRoute(builder: (_) => const IndicesIndex()),
       );
     },
   ),
@@ -130,9 +141,9 @@ List<DrawerRes> marketData = [
     icon: Images.discount,
     text: "Low Prices Stocks",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        LowPriceStocksIndex.path,
+        MaterialPageRoute(builder: (_) => const LowPriceStocksIndex()),
       );
     },
   ),
@@ -141,9 +152,9 @@ List<DrawerRes> marketData = [
     icon: Images.activities,
     text: "Most Active",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        MostActiveIndex.path,
+        MaterialPageRoute(builder: (_) => const MostActiveIndex()),
       );
     },
   ),
@@ -155,10 +166,12 @@ List<DrawerRes> marketData = [
     iconData: Icons.stacked_line_chart_outlined,
     icon: Images.penny,
     text: "Penny Stocks",
-    onTap: () => Navigator.pushNamed(
-      navigatorKey.currentContext!,
-      PennyStocks.path,
-    ),
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const PennyStocks()),
+      );
+    },
   ),
   // DrawerRes(
   //   iconData: Icons.settings_input_composite_rounded,
@@ -173,8 +186,10 @@ List<DrawerRes> marketData = [
     icon: Images.advisor,
     text: "Congressional Data",
     onTap: () {
-      Navigator.pushNamed(
-          navigatorKey.currentContext!, CongressionalIndex.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const CongressionalIndex()),
+      );
     },
   ),
   DrawerRes(
@@ -182,7 +197,10 @@ List<DrawerRes> marketData = [
     icon: Images.dividends,
     text: "Dividends",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, DividendsScreen.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const DividendsScreen()),
+      );
     },
   ),
   DrawerRes(
@@ -190,7 +208,10 @@ List<DrawerRes> marketData = [
     icon: Images.earnings,
     text: "Earnings",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, EarningsScreen.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const EarningsScreen()),
+      );
     },
   ),
   DrawerRes(
@@ -198,10 +219,9 @@ List<DrawerRes> marketData = [
     icon: Images.blogging,
     text: "Blogs",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        // IndexBlog.path,
-        BlogIndexNew.path,
+        MaterialPageRoute(builder: (_) => const BlogIndexNew()),
       );
     },
   ),
@@ -210,14 +230,17 @@ List<DrawerRes> marketData = [
     icon: Images.technical,
     text: "Stocks",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const StocksIndex()),
+      );
     },
   ),
   // DrawerRes(
   //   iconData: Icons.screen_search_desktop_outlined,
   //   text: "Stock Screener",
   //   onTap: () {
-  //     Navigator.pushNamed(
+  //     Navigator.push(
   //         navigatorKey.currentContext!, StockScreenerScreen.path);
   //   },
   // ),
@@ -356,32 +379,42 @@ List<DrawerRes> aboutTiles = [
     iconData: Icons.person_2_outlined,
     text: "My Profile",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, MyAccount.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const MyAccount()),
+      );
     },
   ),
   DrawerRes(
     iconData: Icons.person_pin_outlined,
     text: "Portfolio",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, HomePlaidAdded.path);
+      // Navigator.push(navigatorKey.currentContext!, HomePlaidAdded.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
+      );
     },
   ),
   DrawerRes(
     iconData: Icons.leaderboard_outlined,
     text: "Refer and Earn",
     onTap: () {
-      // Navigator.pushNamed(navigatorKey.currentContext!, ReferAFriend.path);
+      // Navigator.push(navigatorKey.currentContext!, ReferAFriend.path);
     },
   ),
   DrawerRes(
     iconData: Icons.list_alt_rounded,
     text: "About Stocks.News",
     onTap: () {
-      Navigator.pushNamed(
+      Navigator.push(
         navigatorKey.currentContext!,
-        TCandPolicy.path,
-        // arguments: PolicyType.aboutUs,
-        arguments: "about-us",
+        MaterialPageRoute(builder: (_) {
+          return const TCandPolicy(
+            slug: "about-us",
+            policyType: PolicyType.aboutUs,
+          );
+        }),
       );
     },
   ),
@@ -389,21 +422,50 @@ List<DrawerRes> aboutTiles = [
     iconData: Icons.featured_play_list_outlined,
     text: "What We Do",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, WhatWeDoIndex.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
+      );
     },
   ),
   DrawerRes(
     iconData: Icons.mail_outline_sharp,
     text: "Contact Us",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, ContactUs.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const ContactUs()),
+      );
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.support_agent,
+    text: "Helpdesk",
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const HelpDesk()),
+      );
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.support_agent,
+    text: "Deep Links",
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Deeplinks()),
+      );
     },
   ),
   DrawerRes(
     iconData: Icons.help_outline_rounded,
     text: "FAQ",
     onTap: () {
-      Navigator.pushNamed(navigatorKey.currentContext!, FAQ.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const FAQ()),
+      );
     },
   ),
 ];

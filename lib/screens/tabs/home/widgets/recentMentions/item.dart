@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -30,10 +31,9 @@ class RecentMentionsItem extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(0.sp, 0.sp, 0.sp, 0.sp),
         child: InkWell(
           borderRadius: BorderRadius.circular(10.sp),
-          onTap: () => Navigator.pushNamed(
-            context,
-            StockDetail.path, // arguments: data.symbol,
-            arguments: {"slug": data.symbol},
+          onTap: () => Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
           ),
           child: Ink(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

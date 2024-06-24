@@ -44,7 +44,7 @@ class DrawerTopNew extends StatelessWidget {
         //     if (provider.user != null) {
         //       homeProvider.setNotification(true);
         //     }
-        //     Navigator.pushNamed(context, Notifications.path);
+        //     Navigator.push(context, Notifications.path);
         //   },
         //   icon: const Icon(
         //     Icons.notifications,

@@ -28,10 +28,11 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
   int _activeIndex = 0;
 
   void _newsDetail({String? slug}) {
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      NewsDetails.path,
-      arguments: {"slug": slug},
+      MaterialPageRoute(
+        builder: (_) => NewsDetails(slug: slug),
+      ),
     );
   }
 
@@ -262,10 +263,15 @@ class NewsDetailAuthorA extends StatelessWidget {
         widgets.add(
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, NewsAuthorIndex.path, arguments: {
-                "data": data?[i],
-                "type": type,
-              });
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                  builder: (_) => NewsAuthorIndex(
+                    type: type,
+                    data: data?[i],
+                  ),
+                ),
+              );
             },
             child: Text(
               "${data?[i].name}",

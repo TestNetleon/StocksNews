@@ -175,8 +175,12 @@ class _ReferSuccessState extends State<ReferSuccess> {
                               iconFront: true,
                               color: const Color.fromARGB(255, 3, 94, 15),
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, ReferAFriend.path);
+                                Navigator.pushReplacement(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                    builder: (_) => const ReferAFriend(),
+                                  ),
+                                );
                               },
                               text: "Affiliate Panel",
                               icon: Icons.dashboard,

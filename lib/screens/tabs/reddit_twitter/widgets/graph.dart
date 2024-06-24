@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -240,11 +241,9 @@ class SocialSentimentsGraph extends StatelessWidget {
 
           InkWell(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                Tabs.path,
-                // arguments: 1,
-                arguments: {"index": 1},
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
               );
             },
             child: Text(

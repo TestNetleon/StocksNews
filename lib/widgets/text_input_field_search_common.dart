@@ -109,8 +109,12 @@ class _TextInputFieldSearchCommonState
     );
 
     return GestureDetector(
-      onTap: () =>
-          widget.editable ? {} : Navigator.pushNamed(context, Search.path),
+      onTap: () => widget.editable
+          ? {}
+          : Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const Search()),
+            ),
       child: AnimatedSize(
         alignment: Alignment.topCenter,
         duration: const Duration(milliseconds: 300),
@@ -227,11 +231,11 @@ class _TextInputFieldSearchCommonState
                             onTap: () {
                               closeKeyboard();
                               provider.clearSearch();
-                              Navigator.pushNamed(
-                                context,
-                                StockDetail.path,
-                                // arguments: data?.symbol,
-                                arguments: {"slug": data?.symbol},
+                              Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        StockDetail(symbol: data!.symbol)),
                               );
                             },
                             child: Padding(
@@ -296,10 +300,11 @@ class _TextInputFieldSearchCommonState
                             onTap: () {
                               closeKeyboard();
                               provider.clearSearch();
-                              Navigator.pushNamed(
+                              Navigator.push(
                                 navigatorKey.currentContext!,
-                                NewsDetails.path,
-                                arguments: {"slug": data?.slug},
+                                MaterialPageRoute(
+                                  builder: (_) => NewsDetails(slug: data!.slug),
+                                ),
                               );
                             },
                             child: Padding(

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
@@ -240,8 +241,12 @@ class _StartIndexState extends State<StartIndex> {
             GestureDetector(
               onTap: () {
                 Preference.setShowIntro(false);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, Tabs.path, (route) => false);
+                Navigator.popUntil(
+                    navigatorKey.currentContext!, (route) => route.isFirst);
+                Navigator.pushReplacement(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(builder: (_) => const Tabs()),
+                );
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.sp),

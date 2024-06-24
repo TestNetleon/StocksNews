@@ -142,62 +142,20 @@ Future<ApiResponse> apiRequest({
       }
 
       return res;
-      // } else if (response.statusCode == 429 || response.statusCode == 500) {
-      //   Utils().showLog('Status Code Error ${response.statusCode}');
-      //   if (showProgress) closeGlobalProgressDialog();
-      //   // Timer(const Duration(milliseconds: 200), () {
-      //   //   isServerError = true;
-      //   //   Navigator.popUntil(
-      //   //       navigatorKey.currentContext!, (route) => route.isFirst);
-      //   //   Navigator.pushNamed(
-      //   //       navigatorKey.currentContext!, ServerErrorWidget.path);
-      //   // });
-      //   return ApiResponse(
-      //     status: false,
-      //     message: Const.errSomethingWrong,
-      //   );
     } else {
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
-      if (!isShowingError && showErrorOnFull) {
-        // isShowingError = true;
-        // showErrorFullScreenDialog(
-        //   errorCode: response.statusCode,
-        //   onClick: onRefresh,
-        //   log: "API REQUEST ERROR",
-        // );
-      }
+      if (!isShowingError && showErrorOnFull) {}
       return ApiResponse(
         status: false,
         message: Const.errSomethingWrong,
       );
     }
-    // } on TimeoutException {
-    //   Utils().showLog('Request Timed Out');
-    //   if (showProgress) closeGlobalProgressDialog();
-    //   return ApiResponse(
-    //     status: false,
-    //     message: Const.timedOut,
-    //   );
-    // } on SocketException {
-    //   Utils().showLog('Internet Error');
-    //   if (showProgress) closeGlobalProgressDialog();
-    //   return ApiResponse(
-    //     status: false,
-    //     message: Const.noInternet,
-    //   );
   } catch (e) {
     Utils().showLog('Catch error => ${e.toString()}');
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
-    if (!isShowingError && showErrorOnFull) {
-      // isShowingError = true;
-      // showErrorFullScreenDialog(
-      //   errorCode: -1,
-      //   onClick: onRefresh,
-      //   log: "API REQUEST ERROR",
-      // );
-    }
+    if (!isShowingError && showErrorOnFull) {}
     return ApiResponse(
       status: false,
       message: Const.errSomethingWrong,
@@ -208,11 +166,10 @@ Future<ApiResponse> apiRequest({
 void _handleSessionOut() {
   // Handle session timeout, e.g., by calling logout() or refreshing tokens
   Preference.logout();
-  // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-  Navigator.pushNamedAndRemoveUntil(
+  Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+  Navigator.pushReplacement(
     navigatorKey.currentContext!,
-    Tabs.path,
-    (route) => false,
+    MaterialPageRoute(builder: (_) => const Tabs()),
   );
   navigatorKey.currentContext!.read<UserProvider>().clearUser();
 }
@@ -270,17 +227,22 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
   } else if (inAppMsg?.redirectOn == 'stock') {
     Utils().showLog("Navigating to Stocks");
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      StocksIndex.path,
-      arguments: inAppMsg?.id,
+      MaterialPageRoute(
+        builder: (_) => StocksIndex(inAppMsgId: inAppMsg?.id),
+      ),
     );
   } else if (inAppMsg?.redirectOn == 'stock_detail') {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      StockDetail.path,
-      arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
+      MaterialPageRoute(
+        builder: (_) => StockDetail(
+          symbol: inAppMsg!.slug!,
+          inAppMsgId: inAppMsg.id,
+        ),
+      ),
     );
   } else if (inAppMsg?.redirectOn == 'news') {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -295,31 +257,42 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
     );
   } else if (inAppMsg?.redirectOn == 'news_detail') {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      NewsDetails.path,
-      arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
+      // NewsDetails.path,
+      MaterialPageRoute(
+        builder: (_) => NewsDetails(
+          inAppMsgId: inAppMsg?.id,
+          slug: inAppMsg!.slug,
+        ),
+      ),
+      // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog') {
     Utils().showLog("message");
     Navigator.pop(navigatorKey.currentContext!);
     Utils().showLog("message");
-    // Navigator.pushNamed(
-    //   navigatorKey.currentContext!,
-    //   Blog.path,
-    //   arguments: {"type": BlogsType.blog, "id": "", "inAppMsgId": inAppMsg?.id},
-    // );
-    Navigator.pushNamed(
+
+    Navigator.push(
       navigatorKey.currentContext!,
-      BlogIndexNew.path,
-      arguments: {"inAppMsgId": inAppMsg?.id},
+      // BlogIndexNew.path,
+      MaterialPageRoute(
+        builder: (_) => BlogIndexNew(inAppMsgId: inAppMsg?.id),
+      ),
+      // arguments: {"inAppMsgId": inAppMsg?.id},
     );
   } else if (inAppMsg?.redirectOn == 'blog_detail') {
     Navigator.pop(navigatorKey.currentContext!);
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      BlogDetail.path,
-      arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
+      // BlogDetail.path,
+      MaterialPageRoute(
+        builder: (_) => BlogDetail(
+          slug: inAppMsg!.slug!,
+          inAppMsgId: inAppMsg!.id,
+        ),
+      ),
+      // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
     );
   }
 }

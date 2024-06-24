@@ -31,8 +31,10 @@ class ReferApp extends StatelessWidget {
     if (provider.user?.phone == null || provider.user?.phone == '') {
       _bottomSheet();
     } else {
-      await Navigator.pushNamed(
-          navigatorKey.currentContext!, ReferAFriend.path);
+      await Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const ReferAFriend()),
+      );
     }
   }
 

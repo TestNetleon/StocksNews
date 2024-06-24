@@ -9,7 +9,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 //   const States({super.key});
 
 //   // void _navigateSector(context, name, titleName) {
-//   //   Navigator.pushNamed(context, SectorIndustry.path, arguments: {
+//   //   Navigator.push(context, SectorIndustry.path, arguments: {
 //   //     "type": StockStates.sector,
 //   //     "name": name,
 //   //     "titleName": titleName,
@@ -17,7 +17,7 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 //   // }
 
 //   // void _navigateIndustry(context, name, titleName) {
-//   //   Navigator.pushNamed(context, SectorIndustry.path, arguments: {
+//   //   Navigator.push(context, SectorIndustry.path, arguments: {
 //   //     "type": StockStates.industry,
 //   //     "name": name,
 //   //     "titleName": titleName,

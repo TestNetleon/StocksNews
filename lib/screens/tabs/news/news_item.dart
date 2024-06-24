@@ -29,21 +29,19 @@ class NewsItem extends StatelessWidget {
 
   void _gotoDetail(BuildContext context) {
     if (fromMoreNews) {
-      Navigator.pushReplacementNamed(
+      Navigator.pushReplacement(
         navigatorKey.currentContext!,
-        NewsDetails.path,
-        arguments: {"slug": news?.slug},
+        MaterialPageRoute(
+          builder: (_) => NewsDetails(slug: news?.slug),
+        ),
       );
       return;
     }
 
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      NewsDetails.path,
-      arguments: {"slug": news?.slug},
+      MaterialPageRoute(builder: (_) => NewsDetails(slug: news?.slug)),
     );
-    // Navigator.pushNamed(context, NewsAuthorIndex.path,
-    //     arguments: "Author Name");
   }
 
   List<Widget> _buildTextWidgets(List<DetailListType>? data,
@@ -57,12 +55,15 @@ class NewsItem extends StatelessWidget {
       widgets.add(
         InkWell(
           onTap: () {
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, NewsAuthorIndex.path,
-                arguments: {
-                  "data": detail,
-                  "type": type,
-                });
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => NewsAuthorIndex(
+                  type: type,
+                  data: detail,
+                ),
+              ),
+            );
           },
           child: Text(
             "${detail.name}",
@@ -277,21 +278,22 @@ class NewsItemSeparated extends StatelessWidget {
 
   void _gotoDetail(BuildContext context) {
     if (fromMoreNews) {
-      Navigator.pushReplacementNamed(
+      Navigator.pushReplacement(
         navigatorKey.currentContext!,
-        NewsDetails.path,
-        arguments: {"slug": news?.slug},
+        MaterialPageRoute(
+          builder: (_) => NewsDetails(slug: news?.slug),
+        ),
       );
+
       return;
     }
 
-    Navigator.pushNamed(
+    Navigator.push(
       navigatorKey.currentContext!,
-      NewsDetails.path,
-      arguments: {"slug": news?.slug},
+      MaterialPageRoute(
+        builder: (_) => NewsDetails(slug: news!.slug),
+      ),
     );
-    // Navigator.pushNamed(context, NewsAuthorIndex.path,
-    //     arguments: "Author Name");
   }
 
   List<Widget> _buildTextWidgets(List<DetailListType>? data,
@@ -305,12 +307,15 @@ class NewsItemSeparated extends StatelessWidget {
       widgets.add(
         InkWell(
           onTap: () {
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, NewsAuthorIndex.path,
-                arguments: {
-                  "data": detail,
-                  "type": type,
-                });
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => NewsAuthorIndex(
+                  type: type,
+                  data: detail,
+                ),
+              ),
+            );
           },
           child: Text(
             "${detail.name}",

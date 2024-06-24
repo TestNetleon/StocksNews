@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -16,11 +17,16 @@ class TrendingSectorItem extends StatelessWidget {
   const TrendingSectorItem({required this.data, super.key});
 
   void _navigateSector(context, name, titleName) {
-    Navigator.pushNamed(context, SectorIndustry.path, arguments: {
-      "type": StockStates.sector,
-      "name": name,
-      "titleName": titleName,
-    });
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (_) => SectorIndustry(
+          name: name,
+          stockStates: StockStates.sector,
+          titleName: titleName,
+        ),
+      ),
+    );
   }
 
   @override

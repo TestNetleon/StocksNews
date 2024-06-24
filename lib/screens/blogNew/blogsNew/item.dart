@@ -32,11 +32,15 @@ class BlogItemNew extends StatelessWidget {
       widgets.add(
         InkWell(
           onTap: () {
-            Navigator.pushNamed(navigatorKey.currentContext!, Blog.path,
-                arguments: {
-                  "type": BlogsType.author,
-                  "id": detail.id,
-                });
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => Blog(
+                  type: BlogsType.author,
+                  id: detail.id!,
+                ),
+              ),
+            );
           },
           child: Text(
             "${detail.name}",
@@ -59,10 +63,9 @@ class BlogItemNew extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          BlogDetail.path,
-          arguments: {"slug": blogItem?.slug},
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => BlogDetail(slug: blogItem?.slug)),
         );
       },
       child: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../modals/home_alert_res.dart';
@@ -18,11 +19,9 @@ class AllFeaturedItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          StockDetail.path,
-          // arguments: data.symbol,
-          arguments: {"slug": data.symbol},
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
         );
       },
       child: Row(
@@ -212,7 +211,7 @@ class AllFeaturedItem extends StatelessWidget {
   // Widget bigWidget() {
   //   return InkWell(
   //     onTap: () {
-  //       Navigator.pushNamed(navigatorKey.currentContext!, StockDetails.path,
+  //       Navigator.push(navigatorKey.currentContext!, StockDetails.path,
   //           arguments: data.symbol);
   //     },
   //     child: Column(

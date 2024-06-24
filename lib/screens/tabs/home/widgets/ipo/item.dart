@@ -31,7 +31,7 @@ class IpoItem extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          // Navigator.pushNamed(context, InsiderDetailsType.path,
+                          // Navigator.push(context, InsiderDetailsType.path,
                           //     arguments: {
                           //       "companySlug": data?.companySlug,
                           //       "companyName": data?.companyName,
@@ -47,7 +47,7 @@ class IpoItem extends StatelessWidget {
                       const SpacerVertical(height: 3),
                       InkWell(
                         onTap: () {
-                          // Navigator.pushNamed(context, InsiderDetailsType.path,
+                          // Navigator.push(context, InsiderDetailsType.path,
                           //     arguments: {
                           //       "companySlug": data?.companySlug,
                           //       "companyName": data?.companyName,
@@ -66,7 +66,7 @@ class IpoItem extends StatelessWidget {
                       const SpacerVertical(height: 15),
                       // InkWell(
                       //   onTap: () {
-                      //     // Navigator.pushNamed(context, InsiderDetailsType.path,
+                      //     // Navigator.push(context, InsiderDetailsType.path,
                       //     //     arguments: {
                       //     //       "companySlug": data?.companySlug,
                       //     //       "reportingSlug": data?.reportingSlug,
@@ -120,7 +120,7 @@ class IpoItem extends StatelessWidget {
                 //     children: [
                 //       // InkWell(
                 //       //   onTap: () {
-                //       //     Navigator.pushNamed(context, InsiderDetailsType.path,
+                //       //     Navigator.push(context, InsiderDetailsType.path,
                 //       //         arguments: {
                 //       //           "companySlug": data?.companySlug,
                 //       //           "reportingSlug": data?.reportingSlug,

@@ -4,6 +4,7 @@ import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/allFeatured/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
@@ -24,7 +25,10 @@ class HomeMyAlerts extends StatelessWidget {
     UserRes? userRes = context.read<UserProvider>().user;
 
     if (userRes != null && provider.totalAlerts != 0) {
-      Navigator.pushNamed(context, Alerts.path);
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Alerts()),
+      );
     } else {
       Navigator.push(
         context,
@@ -115,10 +119,12 @@ class HomeMyAlerts extends StatelessWidget {
                                 fit: BoxFit.scaleDown,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      StockDetail.path,
-                                      arguments: {"slug": data.symbol},
+                                    Navigator.push(
+                                      navigatorKey.currentContext!,
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            StockDetail(symbol: data.symbol),
+                                      ),
                                     );
                                   },
                                   child: HomeMyAlertItem(data: data),
@@ -158,10 +164,10 @@ class AddAlert extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                StockDetail.path,
-                arguments: {"slug": data?.symbol},
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                    builder: (_) => StockDetail(symbol: data!.symbol)),
               );
             },
             child: HomeMyAlertItem(data: data!),
@@ -198,7 +204,10 @@ class AddAlert extends StatelessWidget {
                 const SpacerVertical(height: 10),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, StocksIndex.path);
+                    Navigator.push(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const StocksIndex()),
+                    );
                   },
                   child: Container(
                       padding: const EdgeInsets.all(15),

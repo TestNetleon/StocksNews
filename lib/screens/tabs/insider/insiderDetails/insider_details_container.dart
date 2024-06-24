@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/insider_trading_company_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/graph/graph.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -128,13 +129,17 @@ class InsiderCompanyContainer extends StatelessWidget {
                         isOpen: provider.indexCompany == index,
                         leadingSubtitle: data?.typeOfOwner,
                         leadingClick: () {
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "reportingSlug": data?.reportingSlug,
-                                "companyName": data?.companyName,
-                                "reportingName": data?.reportingName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                                reportingName: data?.reportingName,
+                                reportingSlug: data?.reportingSlug,
+                              ),
+                            ),
+                          );
                         },
                         onTap: () => provider.change(
                             provider.indexCompany == index ? -1 : index, true),
@@ -168,13 +173,17 @@ class InsiderCompanyContainer extends StatelessWidget {
                   price: data?.price ?? "",
                   transacted: "${data?.securitiesTransacted ?? 0}",
                   leadingClick: () {
-                    Navigator.pushNamed(context, InsiderDetailsType.path,
-                        arguments: {
-                          "companySlug": data?.companySlug,
-                          "reportingSlug": data?.reportingSlug,
-                          "companyName": data?.companyName,
-                          "reportingName": data?.reportingName,
-                        });
+                    Navigator.push(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(
+                        builder: (_) => InsiderDetailsType(
+                          companyName: data?.companyName,
+                          companySlug: data?.companySlug,
+                          reportingName: data?.reportingName,
+                          reportingSlug: data?.reportingSlug,
+                        ),
+                      ),
+                    );
                   },
                   symbol: data?.symbol ?? '',
                   leading: data?.reportingName,

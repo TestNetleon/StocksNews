@@ -75,6 +75,8 @@ import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplinks.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -100,6 +102,7 @@ import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
@@ -108,6 +111,7 @@ import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../providers/featured_ticker.dart';
@@ -159,6 +163,7 @@ class Routes {
     StockScreenerScreen.path: (_) => const StockScreenerScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
     ReferAFriend.path: (_) => const ReferAFriend(),
+    Deeplinks.path: (_) => const Deeplinks(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
@@ -183,6 +188,15 @@ class Routes {
   }
 
   static Route getRouteGenerate(RouteSettings settings) {
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: null,
+        from: "onGenerateRoute",
+        path: settings.name,
+        onDeepLink: onDeepLinking,
+      ),
+    );
+
     var routingData = settings.name;
     Utils().showLog("GENERATED ROUT 1 ***=> $settings ,  ");
     Utils().showLog("GENERATED ROUT 2 ***=> ${isValidUrl(routingData)}");
@@ -197,6 +211,7 @@ class Routes {
                 routingData.contains("news"))) {
       Uri? uri = Uri.tryParse(routingData);
       if (uri != null) {
+        onDeepLinking = true;
         return handleDeepLink(uri);
       }
     }
@@ -206,6 +221,13 @@ class Routes {
         false;
 
     if (isReferral) {
+      Preference.saveDataList(
+        DeeplinkData(
+          uri: null,
+          from: "Splash called ** FromReferral ",
+          onDeepLink: onDeepLinking,
+        ),
+      );
       return MaterialPageRoute(builder: (context) {
         return const Splash();
       });
@@ -406,24 +428,67 @@ class Routes {
           },
         );
 
+      case HelpDesk.path:
+        final arguments = settings.arguments as Map<String, dynamic>?;
+        String? slug = arguments?['slug'] as String?;
+        return MaterialPageRoute(
+          builder: (context) {
+            return HelpDesk(slug: slug);
+          },
+        );
+
       default:
-        Splash();
+        Preference.saveDataList(
+          DeeplinkData(
+            uri: null,
+            from: "Splash called **  as DEFAULT PATH",
+            onDeepLink: onDeepLinking,
+          ),
+        );
+        return MaterialPageRoute(
+          builder: (context) {
+            return const Splash();
+          },
+        );
     }
 
-    // return _errorRoute();
-    return MaterialPageRoute(
-      builder: (context) {
-        return const Splash();
-      },
-    );
+    // Preference.saveDataList(
+    //   DeeplinkData(
+    //     uri: null,
+    //     from: "Splash called ** AS ERROR PATH ",
+    //     onDeepLink: onDeepLinking,
+    //   ),
+    // );
+    // // return _errorRoute();
+    // return MaterialPageRoute(
+    //   builder: (context) {
+    //     return const Splash();
+    //   },
+    // );
   }
 
   static Route<dynamic> handleDeepLink(Uri uri) {
     String type = containsSpecificPath(uri);
     String slug = extractLastPathComponent(uri);
 
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: uri,
+        from: "HandleDeepLinks From OnGeneratedRout",
+        path: "Navigation",
+        slug: slug,
+        type: type,
+        onDeepLink: onDeepLinking,
+      ),
+    );
+
     Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
     popHome = true;
+
+    Timer(const Duration(seconds: 5), () {
+      onDeepLinking = false;
+    });
+
     switch (type) {
       case "blog":
         return MaterialPageRoute(

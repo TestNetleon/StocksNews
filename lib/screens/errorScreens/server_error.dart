@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -156,13 +157,21 @@ class _ServerErrorState extends State<ServerError> {
                   bool isNet = await _checkForInternet();
                   if (isNet) {
                     isShowingError = false;
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                    Navigator.pushReplacementNamed(context, Tabs.path);
+                    Navigator.popUntil(
+                        navigatorKey.currentContext!, (route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const Tabs()),
+                    );
                   }
                 } else {
                   isShowingError = false;
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                  Navigator.pushReplacementNamed(context, Tabs.path);
+                  Navigator.popUntil(
+                      navigatorKey.currentContext!, (route) => route.isFirst);
+                  Navigator.pushReplacement(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(builder: (_) => const Tabs()),
+                  );
                 }
               },
               showArrow: false,

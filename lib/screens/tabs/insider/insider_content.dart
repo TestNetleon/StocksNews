@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -164,11 +165,15 @@ class StocksItemTrending extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "companyName": data?.companyName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "${data?.companyName}",
@@ -180,13 +185,15 @@ class StocksItemTrending extends StatelessWidget {
                       const SpacerVertical(height: 3),
                       InkWell(
                         onTap: () {
-                          // Navigator.pushNamed(context, StockDetails.path,
-                          //     arguments: data?.symbol);
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "companyName": data?.companyName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "${data?.exchangeShortName}: ${data?.symbol}",
@@ -202,13 +209,17 @@ class StocksItemTrending extends StatelessWidget {
                       const SpacerVertical(height: 15),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, InsiderDetailsType.path,
-                              arguments: {
-                                "companySlug": data?.companySlug,
-                                "reportingSlug": data?.reportingSlug,
-                                "companyName": data?.companyName,
-                                "reportingName": data?.reportingName,
-                              });
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => InsiderDetailsType(
+                                companyName: data?.companyName,
+                                companySlug: data?.companySlug,
+                                reportingName: data?.reportingName,
+                                reportingSlug: data?.reportingSlug,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "${data?.reportingName}",
@@ -256,7 +267,7 @@ class StocksItemTrending extends StatelessWidget {
                 //     children: [
                 //       // InkWell(
                 //       //   onTap: () {
-                //       //     Navigator.pushNamed(context, InsiderDetailsType.path,
+                //       //     Navigator.push(context, InsiderDetailsType.path,
                 //       //         arguments: {
                 //       //           "companySlug": data?.companySlug,
                 //       //           "reportingSlug": data?.reportingSlug,

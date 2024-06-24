@@ -154,7 +154,7 @@
 //                   const SpacerVertical(height: 12),
 //                   ThemeButtonSmall(
 //                     onPressed: () {
-//                       Navigator.pushNamed(
+//                       Navigator.push(
 //                         context,
 //                         StockDetailiFrameItem.path,
 //                         arguments: CommentType.reddit,
@@ -185,7 +185,7 @@
 //                   const SpacerVertical(height: 12),
 //                   ThemeButtonSmall(
 //                     onPressed: () {
-//                       Navigator.pushNamed(context, StockDetailiFrameItem.path,
+//                       Navigator.push(context, StockDetailiFrameItem.path,
 //                           arguments: CommentType.twitter);
 //                     },
 //                     text: "Read More",

@@ -159,10 +159,9 @@ class LowPriceStocksItem extends StatelessWidget {
   }
 
   void _onTap(context) {
-    Navigator.pushNamed(
-      context,
-      StockDetail.path,
-      arguments: {"slug": data.symbol},
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
     );
   }
 

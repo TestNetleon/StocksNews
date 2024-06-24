@@ -9,10 +9,14 @@ String newsDetailDataResToJson(NewsDetailDataRes data) =>
 class NewsDetailDataRes {
   final PostDetail? postDetail;
   final List<PostDetail>? otherPost;
-//
+  String? feedbackMsg;
+  String? feedbackExistMsg;
+
   NewsDetailDataRes({
     this.postDetail,
     this.otherPost,
+    this.feedbackMsg,
+    this.feedbackExistMsg,
   });
 
   factory NewsDetailDataRes.fromJson(Map<String, dynamic> json) =>
@@ -24,6 +28,8 @@ class NewsDetailDataRes {
             ? []
             : List<PostDetail>.from(
                 json["other_post"]!.map((x) => PostDetail.fromJson(x))),
+        feedbackExistMsg: json["feedback_exist_msg"],
+        feedbackMsg: json["feedback_msg"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,11 +37,13 @@ class NewsDetailDataRes {
         "other_post": otherPost == null
             ? []
             : List<dynamic>.from(otherPost!.map((x) => x.toJson())),
+        "feedback_msg": feedbackMsg,
+        "feedback_exist_msg": feedbackExistMsg,
       };
 }
 
 class PostDetail {
-  // final String? id;
+  final String? id;
   // final String? api;
   // final String? symbol;
   final DateTime? publishedDate;
@@ -60,7 +68,7 @@ class PostDetail {
   // final int? views;
 
   PostDetail({
-    // this.id,
+    this.id,
     // this.api,
     // this.symbol,
     this.publishedDate,
@@ -85,7 +93,7 @@ class PostDetail {
   });
 
   factory PostDetail.fromJson(Map<String, dynamic> json) => PostDetail(
-        // id: json["_id"],
+        id: json["_id"],
         // api: json["api"],
         // symbol: json["symbol"],
         publishedDate: json["published_date"] == null
@@ -129,7 +137,7 @@ class PostDetail {
       );
 
   Map<String, dynamic> toJson() => {
-        // "_id": id,
+        "_id": id,
         // "api": api,
         // "symbol": symbol,
         "published_date": publishedDate?.toIso8601String(),

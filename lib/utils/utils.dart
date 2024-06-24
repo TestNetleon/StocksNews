@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
+import 'package:stocks_news_new/screens/splash/splash.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -204,53 +206,88 @@ commonShare({String? url, String? title}) {
   }
 }
 
-void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
-  String type = containsSpecificPath(uri);
-  String slug = extractLastPathComponent(uri);
+// void navigateDeepLinks({required Uri uri, bool fromBackground = false}) {
+//   String type = containsSpecificPath(uri);
+//   String slug = extractLastPathComponent(uri);
 
-  log("SLUG == > $slug");
+//   log("SLUG == > $slug");
 
-  if (slug == 'install') {
-    String? referralCode = uri.queryParameters['code'];
-    if (referralCode == null || referralCode == '') {
-      referralCode = uri.queryParameters['referrer'];
-    }
-    if (referralCode == null || referralCode == '') {
-      referralCode = uri.queryParameters['ref'];
-    }
-    if (referralCode == null || referralCode == '') {
-      referralCode = uri.queryParameters['referral_code'];
-    }
-    if (referralCode != null && referralCode != "") {
-      Preference.saveReferral(referralCode);
-    }
-    // log("SLUG FOUND ==> RETURNING NOW");
-    Timer(const Duration(seconds: 4), () {
-      if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
-        signupSheet();
-      }
-    });
-    return;
-  }
+//   if (slug == 'install') {
+//     String? referralCode = uri.queryParameters['code'];
+//     if (referralCode == null || referralCode == '') {
+//       referralCode = uri.queryParameters['referrer'];
+//     }
+//     if (referralCode == null || referralCode == '') {
+//       referralCode = uri.queryParameters['ref'];
+//     }
+//     if (referralCode == null || referralCode == '') {
+//       referralCode = uri.queryParameters['referral_code'];
+//     }
+//     if (referralCode != null && referralCode != "") {
+//       Preference.saveReferral(referralCode);
+//     }
+//     // log("SLUG FOUND ==> RETURNING NOW");
+//     Timer(const Duration(seconds: 4), () {
+//       if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+//         signupSheet();
+//         // onDeepLinking = false;
+//         Timer(const Duration(seconds: 3), () {
+//           onDeepLinking = false;
+//         });
+//       }
+//     });
+//     return;
+//   }
 
-  if (fromBackground) {
-    Timer(const Duration(seconds: 5), () {
-      navigation(uri: uri, slug: slug, type: type, fromBackground: false);
-    });
-  } else {
-    Timer(const Duration(seconds: 1), () {
-      navigation(uri: uri, slug: slug, type: type);
-    });
-  }
-}
+//   if (fromBackground) {
+//     Timer(const Duration(seconds: 4), () {
+//       navigation(
+//         uri: uri,
+//         slug: slug,
+//         type: type,
+//         fromBackground: false,
+//         from: "Firebase Deeplinks BACKGROUND condition",
+//       );
+//       // onDeepLinking = false;
+//       Timer(const Duration(seconds: 3), () {
+//         onDeepLinking = false;
+//       });
+//     });
+//   } else {
+//     Timer(const Duration(seconds: 1), () {
+//       navigation(
+//         uri: uri,
+//         slug: slug,
+//         type: type,
+//         from: "Firebase Deeplinks Foreground condition",
+//       );
+//       // onDeepLinking = false;
+//       Timer(const Duration(seconds: 3), () {
+//         onDeepLinking = false;
+//       });
+//     });
+//   }
+// }
 
-void navigation({
-  String? type,
-  required Uri uri,
-  String? slug,
-  fromBackground = false,
-}) async {
+void navigation(
+    {String? type,
+    required Uri uri,
+    String? slug,
+    fromBackground = false,
+    String from = ""}) async {
   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+
+  Preference.saveDataList(
+    DeeplinkData(
+      uri: uri,
+      from: from,
+      path: "Navigation",
+      slug: slug,
+      type: type,
+      onDeepLink: onDeepLinking,
+    ),
+  );
+
   String slugForTicker = extractSymbolValue(uri);
   // Utils().showLog("slug for ticker $slugForTicker");
   bool userPresent = false;
@@ -317,8 +354,12 @@ void navigation({
   } else if (type == "login") {
     if (userPresent) {
       if (fromBackground) {
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
       }
     } else {
       loginSheet();
@@ -326,18 +367,23 @@ void navigation({
   } else if (type == "signUp") {
     if (userPresent) {
       if (fromBackground) {
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
       }
     } else {
       signupSheet();
     }
   } else if (type == "dashboard") {
     if (fromBackground) {
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
         navigatorKey.currentContext!,
-        Tabs.path,
-        (route) => false,
+        MaterialPageRoute(builder: (_) => const Tabs()),
       );
     }
     Utils().showLog("--goto dashboard---");
@@ -350,10 +396,10 @@ void navigation({
     //   ),
     // );
 
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      Tabs.path,
-      (route) => false,
+      MaterialPageRoute(builder: (_) => const Tabs()),
     );
   }
 }
@@ -364,4 +410,279 @@ bool isValidUrl(String? url) {
   Uri? uri = Uri.tryParse(url);
   return uri != null && uri.hasScheme && uri.hasAuthority;
   // return uri != null;
+}
+
+Widget findInitialWidget({required Uri uri}) {
+  String type = containsSpecificPath(uri);
+  String slug = extractLastPathComponent(uri);
+
+  Preference.saveDataList(
+    DeeplinkData(
+      uri: uri,
+      from: "TYPE  - $type",
+      path: "CHECKING INITIAL ROUTE ",
+      slug: slug,
+      type: type,
+      onDeepLink: onDeepLinking,
+    ),
+  );
+
+  String slugForTicker = extractSymbolValue(uri);
+  // Utils().showLog("slug for ticker $slugForTicker");
+  bool userPresent = false;
+
+  // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // if (await provider.checkForUser()) {
+  //   userPresent = true;
+  // }
+
+  popHome = true;
+  Utils().showLog("----$userPresent---");
+  if (type == "blog") {
+    return BlogDetail(slug: slug);
+  } else if (type == "news") {
+    return NewsDetails(slug: slug);
+  } else if (type == "stock_detail") {
+    return StockDetail(symbol: slugForTicker);
+  } else if (type == "login") {
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: null,
+        from: "Splash called ** FOR INITIAL ROUTE FIND login",
+        onDeepLink: onDeepLinking,
+      ),
+    );
+    return const Splash();
+    // if (userPresent) {
+    //   if (fromBackground) {
+    //     Navigator.pushAndRemoveUntil(
+    //         navigatorKey.currentContext!, Tabs.path, (route) => false);
+    //   }
+    // } else {
+    //   loginSheet();
+    // }
+  } else if (type == "signUp") {
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: null,
+        from: "Splash called ** FOR INITIAL ROUTE FIND singup",
+        onDeepLink: onDeepLinking,
+      ),
+    );
+    return const Splash();
+    // if (userPresent) {
+    //   if (fromBackground) {
+    //     Navigator.pushAndRemoveUntil(
+    //         navigatorKey.currentContext!, Tabs.path, (route) => false);
+    //   }
+    // } else {
+    //   signupSheet();
+    // }
+  } else if (type == "dashboard") {
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: null,
+        from: "Splash called ** FOR INITIAL ROUTE dasboard",
+        onDeepLink: onDeepLinking,
+      ),
+    );
+    return const Splash();
+    // if (fromBackground) {
+    //   Navigator.pushAndRemoveUntil(
+    //     navigatorKey.currentContext!,
+    //     Tabs.path,
+    //     (route) => false,
+    //   );
+    // }
+    // Utils().showLog("--goto dashboard---");
+  } else {
+    Preference.saveDataList(
+      DeeplinkData(
+        uri: null,
+        from: "Splash called ** FOR INITIAL ROUTE FIND Else PArt",
+        onDeepLink: onDeepLinking,
+      ),
+    );
+    return const Splash();
+    // Navigator.push(
+    //   navigatorKey.currentContext!,
+    //   MaterialPageRoute(
+    //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
+    //     builder: (context) => const Tabs(),
+    //   ),
+    // );
+
+    // Navigator.pushAndRemoveUntil(
+    //   navigatorKey.currentContext!,
+    //   Tabs.path,
+    //   (route) => false,
+    // );
+  }
+}
+
+void handleDeepLinkNavigation({required Uri? uri}) {
+  if (uri == null) {
+    onDeepLinking = false;
+    return;
+  }
+
+  bool isRef = uri.toString().contains("/install") ||
+      uri.toString().contains(".page.link") ||
+      uri.toString().contains("app.stocks.news://");
+
+  if (isRef) {
+    onDeepLinking = false;
+    return;
+  }
+
+  // onDeepLinking = true;
+  String type = containsSpecificPath(uri);
+  String slug = extractLastPathComponent(uri);
+
+  // here will be some conditions to handle in background
+  // like if from background then add 4 sec else 1 sec
+  Timer(const Duration(seconds: 1), () {
+    handleNavigation(
+      uri: uri,
+      slug: slug,
+      type: type,
+      fromBackground: false,
+      from: "Handle Navigation Common",
+    );
+  });
+}
+
+void handleNavigation({
+  String? type,
+  required Uri uri,
+  String? slug,
+  fromBackground = false,
+  String from = "",
+}) async {
+  // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+
+  Preference.saveDataList(
+    DeeplinkData(
+      uri: uri,
+      from: from,
+      path: "Navigation",
+      slug: slug,
+      type: type,
+      onDeepLink: onDeepLinking,
+    ),
+  );
+
+  String slugForTicker = extractSymbolValue(uri);
+  bool userPresent = false;
+
+  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  if (await provider.checkForUser()) {
+    userPresent = true;
+  }
+
+  if (slug == null && type == null) {
+    return;
+  }
+
+  popHome = true;
+  Utils().showLog("----$userPresent---");
+
+  if (type == "blog") {
+    if (fromBackground) {
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => BlogDetail(slug: slug),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => BlogDetail(slug: slug),
+        ),
+      );
+    }
+  } else if (type == "news") {
+    if (fromBackground) {
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => NewsDetails(slug: slug),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => NewsDetails(slug: slug),
+        ),
+      );
+    }
+  } else if (type == "stock_detail") {
+    if (fromBackground) {
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => StockDetail(symbol: slugForTicker),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => StockDetail(symbol: slugForTicker),
+        ),
+      );
+    }
+  } else if (type == "login") {
+    if (userPresent) {
+      if (fromBackground) {
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
+      }
+    } else {
+      Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
+        loginSheet();
+      });
+    }
+  } else if (type == "signUp") {
+    if (userPresent) {
+      if (fromBackground) {
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
+      }
+    } else {
+      Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () {
+        signupSheet();
+      });
+    }
+  } else if (type == "dashboard") {
+    if (fromBackground) {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
+    }
+    Utils().showLog("--goto dashboard---");
+  } else {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
+  }
+  Timer(const Duration(seconds: 2), () {
+    onDeepLinking = false;
+  });
 }

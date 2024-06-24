@@ -12,13 +12,13 @@ mixin AuthProviderBase {
   //   // Clear user data and perform any other logout-related tasks
   //   Preference.logout();
   //   Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-  //   Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+  //   Navigator.pushReplacement(navigatorKey.currentContext!, Login.path);
   //   navigatorKey.currentContext!.read<UserProvider>().clearUser();
   // }
 //
   void handleSessionOut() {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    // Navigator.pushReplacement(navigatorKey.currentContext!, Login.path);
     // Navigator.pushReplacement(
     //     navigatorKey.currentContext!,
     //     MaterialPageRoute(
@@ -30,6 +30,6 @@ mixin AuthProviderBase {
     Preference.logout();
     navigatorKey.currentContext!.read<UserProvider>().clearUser();
     //   Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    //   Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    //   Navigator.pushReplacement(navigatorKey.currentContext!, Login.path);
   }
 }

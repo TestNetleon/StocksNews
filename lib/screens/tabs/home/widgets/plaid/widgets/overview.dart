@@ -16,7 +16,7 @@
 //     return InkWell(
 //       borderRadius: const BorderRadius.all(Radius.circular(8)),
 //       onTap: () {
-//         Navigator.pushNamed(context, HomePlaidAdded.path);
+//         Navigator.push(context, HomePlaidAdded.path);
 //       },
 //       child: Ink(
 //         decoration: const BoxDecoration(
@@ -109,6 +109,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -134,7 +135,10 @@ class PlaidHomeInvestmentOverview extends StatelessWidget {
         InkWell(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           onTap: () {
-            Navigator.pushNamed(context, HomePlaidAdded.path);
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
+            );
           },
           child: Ink(
             decoration: const BoxDecoration(

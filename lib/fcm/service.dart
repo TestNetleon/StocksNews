@@ -73,16 +73,21 @@ class FirebaseApi {
     try {
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
+          MaterialPageRoute(builder: (_) => const Tabs()),
         );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushNamed(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          NewsDetails.path,
-          arguments: {"slug": slug, "notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (_) => NewsDetails(
+              slug: slug,
+              notificationId: notificationId,
+            ),
+          ),
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
@@ -95,19 +100,15 @@ class FirebaseApi {
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Navigator.pushNamed(
+        Navigator.push(
           navigatorKey.currentContext!,
-          BlogDetail.path,
-          arguments: {"slug": slug, "notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (context) => BlogDetail(
+              slug: slug ?? "",
+              notificationId: notificationId,
+            ),
+          ),
         );
-        // Navigator.push(
-        //   navigatorKey.currentContext!,
-        //   MaterialPageRoute(
-        //     builder: (context) => BlogDetail(
-        //       slug: slug ?? "",
-        //     ),
-        //   ),
-        // );
       } else if (slug != '' && type == NotificationType.register.name) {
         if (await Preference.isLoggedIn()) {
           popUpAlert(
@@ -130,37 +131,40 @@ class FirebaseApi {
         );
       } else if (slug != '' && type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type ?? "")) {
-        Navigator.pushNamed(
+        Navigator.push(
           navigatorKey.currentContext!,
-          StockDetail.path,
-          arguments: {"slug": slug, "notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (_) => StockDetail(
+              symbol: "$slug",
+              notificationId: notificationId,
+            ),
+          ),
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         referLogin();
       } else {
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
-          arguments: {"notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (_) => Tabs(
+              inAppMsgId: notificationId,
+            ),
+          ),
         );
       }
-
-      //  else {
-      //   Navigator.pushNamed(
-      //     navigatorKey.currentContext!,
-      //     StockDetails.path,
-      //     arguments: {"slug": type, "notificationId": notificationId},
-      //   );
-      // }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
-      Navigator.pushNamedAndRemoveUntil(
+
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+
+      Navigator.pushReplacement(
         navigatorKey.currentContext!,
-        Tabs.path,
-        (route) => false,
-        arguments: {"notificationId": notificationId},
+        MaterialPageRoute(builder: (_) => const Tabs()),
       );
+      // arguments: {"notificationId": notificationId},
     }
   }
 

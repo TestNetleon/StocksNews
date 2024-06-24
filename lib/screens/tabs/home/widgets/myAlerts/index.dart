@@ -51,7 +51,7 @@
 //                     InkWell(
 //                       onTap: () {
 //                         userRes != null && provider.totalAlerts != 0
-//                             ? Navigator.pushNamed(context, Alerts.path)
+//                             ? Navigator.push(context, Alerts.path)
 //                             : Navigator.push(
 //                                 context,
 //                                 MaterialPageRoute(
@@ -119,7 +119,7 @@
 //                           fit: BoxFit.scaleDown,
 //                           child: GestureDetector(
 //                             onTap: () {
-//                               Navigator.pushNamed(
+//                               Navigator.push(
 //                                 context,
 //                                 StockDetails.path,
 //                                 arguments: {"slug": data.symbol},
@@ -159,7 +159,7 @@
 //                                 const SpacerVertical(height: 10),
 //                                 InkWell(
 //                                   onTap: () {
-//                                     Navigator.pushNamed(
+//                                     Navigator.push(
 //                                         context, StocksIndex.path);
 //                                   },
 //                                   child: Container(
@@ -183,7 +183,7 @@
 //                     fit: BoxFit.scaleDown,
 //                     child: GestureDetector(
 //                       onTap: () {
-//                         Navigator.pushNamed(
+//                         Navigator.push(
 //                           context,
 //                           StockDetails.path,
 //                           arguments: {"slug": data.symbol},

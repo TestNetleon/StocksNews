@@ -6,9 +6,12 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -27,6 +30,28 @@ class BlogDetailContainer extends StatelessWidget {
   final String slug;
 
   const BlogDetailContainer({super.key, required this.slug});
+
+  void _onSubmit(value, context) async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
+
+    if (userProvider.user == null) {
+      await loginSheet();
+
+      if (userProvider.user != null) {
+        await provider.getBlogDetailData(slug: slug);
+      }
+      return;
+    }
+
+    provider.requestFeedbackSubmit(
+      showProgress: true,
+      feedbackType: "blog",
+      id: provider.blogsDetail!.id,
+      type: value,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,35 +135,35 @@ class BlogDetailContainer extends StatelessWidget {
                         bool a = false;
                         if (Platform.isAndroid) {
                           a = await launchUrl(Uri.parse(url));
-                          Utils().showLog("clicked ur---$url, return value $a");
+                          // Utils().showLog("clicked ur---$url, return value $a");
                         } else {
                           a = true;
-
                           Uri uri = Uri.parse(url);
                           iOSNavigate(uri);
-                          Utils().showLog("iOS navigation");
+                          // Utils().showLog("iOS navigation");
                         }
                         return a;
                       },
                       // customWidgetBuilder: (element) {
                       //   if (element.localName == 'img') {
                       //     final src = element.attributes['src'];
-
                       //     return ZoomableImage(url: src ?? "");
                       //   }
-
                       //   return null;
                       // },
                       onLoadingBuilder: (context, element, loadingProgress) {
                         return const ProgressDialog();
                       },
                       provider.blogsDetail?.description ?? "",
-                      textStyle: styleGeorgiaRegular(
-                        fontSize: 14,
-                        height: 1.5,
-                      ),
+                      textStyle: styleGeorgiaRegular(fontSize: 14, height: 1.5),
                     ),
-                    const SpacerVertical(height: 10),
+                    if (provider.blogsDetail?.feedbackMsg != null)
+                      ArticleFeedback(
+                        title: provider.blogsDetail?.feedbackMsg,
+                        submitMessage: provider.blogsDetail?.feedbackExistMsg,
+                        onSubmit: (value) => _onSubmit(value, context),
+                      ),
+                    const SpacerVertical(height: 30),
                   ],
                 ),
               ),
@@ -179,28 +204,23 @@ Widget buildList({
         InkWell(
           onTap: () {
             if (blog) {
-              Utils().showLog("1");
-              Navigator.pushReplacementNamed(
-                  navigatorKey.currentContext!, Blog.path,
-                  arguments: {
-                    "type": BlogsType.author,
-                    "id": list[i].id,
-                  });
+              Navigator.pushReplacement(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                  builder: (_) => Blog(
+                    id: list[i].id!,
+                    type: BlogsType.author,
+                  ),
+                ),
+              );
             } else {
-              Navigator.pushNamed(
-                  navigatorKey.currentContext!, NewsAuthorIndex.path,
-                  arguments: {
-                    "data": list[i],
-                    "type": type,
-                  });
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                  builder: (_) => NewsAuthorIndex(data: list[i], type: type),
+                ),
+              );
             }
-
-            // Navigator.pushNamed(
-            //     navigatorKey.currentContext!, NewsAuthorIndex.path,
-            //     arguments: {
-            //       "data": list[i],
-            //       "type": type,
-            //     });
           },
           child: Text(
             list[i].name ?? "",

@@ -38,7 +38,7 @@
 //         try {
 //           // if (popHome || deepLinkData != null) {
 //           //   Future.delayed(const Duration(milliseconds: 50), () {
-//           //     Navigator.pushNamedAndRemoveUntil(
+//           //     Navigator.pushAndRemoveUntil(
 //           //         context, Tabs.path, (route) => false);
 //           //     popHome = false;
 //           //     deepLinkData = null;
@@ -46,7 +46,7 @@
 //           // }
 //           if (popHome) {
 //             Future.delayed(const Duration(milliseconds: 50), () {
-//               Navigator.pushNamedAndRemoveUntil(
+//               Navigator.pushAndRemoveUntil(
 //                   context, Tabs.path, (route) => false);
 //               popHome = false;
 //             });

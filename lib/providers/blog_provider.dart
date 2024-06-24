@@ -12,6 +12,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 //
 class BlogProvider extends ChangeNotifier with AuthProviderBase {
@@ -239,6 +240,48 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
       // setStatus(Status.loaded);
       _statusDetail = Status.loaded;
       notifyListeners();
+    }
+  }
+
+  Future requestFeedbackSubmit({
+    showProgress = true,
+    required id,
+    required type,
+    required feedbackType,
+  }) async {
+    // setStatus(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "post_id": id,
+        "type": type,
+        "feedback_type": feedbackType,
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.sendFeedback,
+        request: request,
+        showProgress: showProgress,
+      );
+
+      if (response.status) {
+        _blogsDetail?.feedbackExistMsg = response.message;
+        notifyListeners();
+      } else {
+        popUpAlert(
+          title: "Alert",
+          message: response.message ?? Const.errSomethingWrong,
+        );
+      }
+      // setStatus(Status.loaded);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      popUpAlert(
+        title: "Alert",
+        message: Const.errSomethingWrong,
+      );
+      // setStatus(Status.loaded);
     }
   }
 }

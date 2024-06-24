@@ -156,7 +156,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     // _user = null;
     // notifyListeners();
     // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Login.path);
+    // Navigator.pushReplacement(navigatorKey.currentContext!, Login.path);
   }
 
   void clearUser() async {
@@ -182,7 +182,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
       if (response.status) {
         // _user = UserRes.fromJson(response.data);
-        // Navigator.pushNamed(navigatorKey.currentContext!, OTPLogin.path);
+        // Navigator.push(navigatorKey.currentContext!, OTPLogin.path);
         // Navigator.push(
         //   navigatorKey.currentContext!,
         //   createRoute(OTPLogin(
@@ -322,7 +322,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
         // Navigator.popUntil(
         //     navigatorKey.currentContext!, (route) => route.isFirst);
-        // Navigator.pushNamedAndRemoveUntil(
+        // Navigator.pushAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
         if (dontPop == null) {
           Navigator.pop(navigatorKey.currentContext!);
@@ -339,20 +339,22 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         } else {
           // kDebugMode ? Preference.setShowIntro(true) : null;
           Preference.setShowIntro(false);
-          // Navigator.pushNamedAndRemoveUntil(
+          // Navigator.pushAndRemoveUntil(
           //     navigatorKey.currentContext!, Tabs.path, (route) => false);
           if (_user?.signupStatus ?? false) {
             shareUri = await DynamicLinkService.instance
                 .getDynamicLink(_user?.referralCode);
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, SignUpSuccess.path);
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            );
           } else {
             navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-
-            Navigator.pushNamedAndRemoveUntil(
+            Navigator.popUntil(
+                navigatorKey.currentContext!, (route) => route.isFirst);
+            Navigator.pushReplacement(
               navigatorKey.currentContext!,
-              Tabs.path,
-              (route) => false,
+              MaterialPageRoute(builder: (_) => const Tabs()),
             );
           }
         }
@@ -427,15 +429,19 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           if (_user?.signupStatus ?? false) {
             shareUri = await DynamicLinkService.instance
                 .getDynamicLink(_user?.referralCode);
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, SignUpSuccess.path);
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            );
           } else {
             navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-
-            Navigator.pushNamedAndRemoveUntil(
+            Navigator.popUntil(
               navigatorKey.currentContext!,
-              Tabs.path,
-              (route) => false,
+              (route) => route.isFirst,
+            );
+            Navigator.pushReplacement(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const Tabs()),
             );
           }
         }
@@ -477,7 +483,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
       if (response.status) {
         // _user = UserRes.fromJson(response.data);
-        // Navigator.pushNamed(navigatorKey.currentContext!, OTPSignup.path);
+        // Navigator.push(navigatorKey.currentContext!, OTPSignup.path);
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
           Navigator.pop(navigatorKey.currentContext!);
@@ -569,7 +575,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         Preference.setShowIntro(false);
         shareUri = await DynamicLinkService.instance
             .getDynamicLink(_user?.referralCode);
-        Navigator.pushNamed(navigatorKey.currentContext!, SignUpSuccess.path);
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+        );
+
         notifyListeners();
       } else {
         // showErrorMessage(message: response.message);
@@ -631,8 +641,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             await notificationProvider.getData(showProgress: false);
           }
 
-          // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
-          // Navigator.pushNamedAndRemoveUntil(
+          // Navigator.push(navigatorKey.currentContext!, Tabs.path);
+          // Navigator.pushAndRemoveUntil(
           //     navigatorKey.currentContext!, Tabs.path, (route) => false);
 
           Navigator.pop(navigatorKey.currentContext!);
@@ -640,9 +650,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         } else {
           // kDebugMode ? Preference.setShowIntro(true) : null;
           Preference.setShowIntro(false);
-
-          Navigator.pushNamedAndRemoveUntil(
-              navigatorKey.currentContext!, Tabs.path, (route) => false);
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => const Tabs()),
+          );
         }
 
         notifyListeners();
@@ -677,7 +690,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // handleSessionOut();
         if (pop) Navigator.pop(navigatorKey.currentContext!);
         Navigator.pop(navigatorKey.currentContext!);
-        // Navigator.pushReplacementNamed(navigatorKey.currentContext!, Tabs.path);
+        // Navigator.pushReplacement(navigatorKey.currentContext!, Tabs.path);
         Preference.logout();
         clearUser();
         provider.setTotalsAlerts(0);

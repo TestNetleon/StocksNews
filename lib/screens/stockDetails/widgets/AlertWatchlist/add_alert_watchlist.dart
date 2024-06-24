@@ -86,7 +86,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                               const Duration(milliseconds: 200));
                           _showAlertPopup(navigatorKey.currentContext!, symbol);
                         } else {
-                          Navigator.pushNamed(context, Alerts.path);
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(builder: (_) => const Alerts()),
+                          );
                         }
                       }
                     } catch (e) {
@@ -99,7 +102,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                         _showAlertPopup(navigatorKey.currentContext!, symbol);
                       }
                     : () {
-                        Navigator.pushNamed(context, Alerts.path);
+                        Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(builder: (_) => const Alerts()),
+                        );
                       },
           ),
           const SpacerHorizontal(width: 10),
@@ -132,7 +138,12 @@ class AddToAlertWatchlist extends StatelessWidget {
                               .read<StockDetailProviderNew>()
                               .addToWishList();
                         } else {
-                          Navigator.pushNamed(context, WatchList.path);
+                          Navigator.push(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(
+                              builder: (_) => const WatchList(),
+                            ),
+                          );
                         }
                       }
                     } catch (e) {
@@ -148,7 +159,12 @@ class AddToAlertWatchlist extends StatelessWidget {
                             .addToWishList();
                       }
                     : () {
-                        Navigator.pushNamed(context, WatchList.path);
+                        Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (_) => const WatchList(),
+                          ),
+                        );
                       },
           ),
         ],

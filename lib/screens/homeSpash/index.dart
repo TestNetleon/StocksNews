@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -38,15 +39,69 @@ class _HomeSplashState extends State<HomeSplash> {
     });
   }
 
-  _navigation() {
-    FirebaseMessaging.instance.getInitialMessage().then((value) {
-      if (value == null) {
-        Navigator.pushNamedAndRemoveUntil(context, Tabs.path, (route) => false);
-      } else {
+  _navigation() async {
+    // FirebaseMessaging.instance.getInitialMessage().then((value) {
+    //   // if (onDeepLinking) return;
+    //   if (value == null) {
+    //     Preference.saveDataList(
+    //       DeeplinkData(
+    //         uri: null,
+    //         from: "New Home Screen to Tab navigate on Notification 1",
+    //         type: value?.data.toString(),
+    //       ),
+    //     );
+    //     Navigator.pushAndRemoveUntil(context, Tabs.path, (route) => false);
+    //   } else {
+    //     Preference.saveDataList(
+    //       DeeplinkData(
+    //         uri: null,
+    //         from: "New Home Screen to Tab navigate on Notification 2",
+    //       ),
+    //     );
+    //     popHome = true;
+    //     _navigateToRequiredScreen(value.data);
+    //   }
+    // });
+
+    RemoteMessage? value = await FirebaseMessaging.instance.getInitialMessage();
+
+    if (value == null) {
+      if (onDeepLinking) {
         popHome = true;
-        _navigateToRequiredScreen(value.data);
+        return;
       }
-    });
+
+      Preference.saveDataList(
+        DeeplinkData(
+          uri: null,
+          from: "Navigation with Empty Home Screen to TABS",
+          type: value?.data.toString(),
+          onDeepLink: onDeepLinking,
+        ),
+      );
+
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
+    } else {
+      if (onDeepLinking) {
+        popHome = true;
+        return;
+      }
+      Preference.saveDataList(
+        DeeplinkData(
+          uri: null,
+          from: "New Home Screen to Tab navigate on Notification 2",
+          onDeepLink: onDeepLinking,
+        ),
+      );
+      popHome = true;
+      _navigateToRequiredScreen(value.data);
+    }
   }
 
   _navigateToRequiredScreen(payload) async {
@@ -55,22 +110,29 @@ class _HomeSplashState extends State<HomeSplash> {
     String? type = payload["type"];
     String? slug = payload['slug'];
     String? notificationId = payload['notification_id'];
+
     try {
       // String? type = payload["type"];
       // String? slug = payload['slug'];
       // String? notificationId = payload['notification_id'];
 
       if (type == NotificationType.dashboard.name) {
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
+          MaterialPageRoute(builder: (_) => const Tabs()),
         );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushReplacementNamed(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          NewsDetails.path,
-          arguments: {"slug": slug, "notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (_) => NewsDetails(
+              slug: slug,
+              notificationId: notificationId,
+            ),
+          ),
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.pushReplacement(
@@ -83,11 +145,16 @@ class _HomeSplashState extends State<HomeSplash> {
           ),
         );
       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-        Navigator.pushReplacementNamed(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          BlogDetail.path,
-          arguments: {"slug": slug, "notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (_) => BlogDetail(
+              slug: slug,
+              notificationId: notificationId,
+            ),
+          ),
         );
+
         // Navigator.push(
         //   navigatorKey.currentContext!,
         //   MaterialPageRoute(
@@ -97,8 +164,13 @@ class _HomeSplashState extends State<HomeSplash> {
         //   ),
         // );
       } else if (slug != '' && type == NotificationType.register.name) {
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
         if (await Preference.isLoggedIn()) {
           popUpAlert(
               message: "Welcome to the Home Screen!",
@@ -109,12 +181,13 @@ class _HomeSplashState extends State<HomeSplash> {
         isPhone ? signupSheet() : signupSheetTablet();
       } else if (slug != '' && type == NotificationType.review.name) {
         //review pop up
-        Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
-        );
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
 
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
         Timer(const Duration(seconds: 1), () {
           showDialog(
             context: navigatorKey.currentContext!,
@@ -126,27 +199,37 @@ class _HomeSplashState extends State<HomeSplash> {
         });
       } else if (slug != '' && type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type ?? "")) {
-        Navigator.pushReplacementNamed(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          StockDetail.path,
-          arguments: {"slug": slug, "notificationId": notificationId},
+          MaterialPageRoute(
+            builder: (_) => StockDetail(
+              symbol: slug!,
+              notificationId: notificationId,
+            ),
+          ),
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
         Timer(const Duration(milliseconds: 300), () {
           referLogin();
         });
       } else {
-        Navigator.pushNamedAndRemoveUntil(
+        // arguments: {"notificationId": notificationId},
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
-          arguments: {"notificationId": notificationId},
+          MaterialPageRoute(builder: (_) => const Tabs()),
         );
       }
       //  else {
-      //   Navigator.pushNamed(
+      //   Navigator.push(
       //     navigatorKey.currentContext!,
       //     StockDetails.path,
       //     arguments: {"slug": type, "notificationId": notificationId},
@@ -154,10 +237,12 @@ class _HomeSplashState extends State<HomeSplash> {
       // }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+
+      Navigator.pushReplacement(
         navigatorKey.currentContext!,
-        Tabs.path,
-        (route) => false,
+        MaterialPageRoute(builder: (_) => const Tabs()),
       );
     }
   }
@@ -165,11 +250,9 @@ class _HomeSplashState extends State<HomeSplash> {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-        appBar: AppBarHome(
-          canSearch: true,
-          showTrailing: true,
-        ),
-        body: SizedBox());
+      appBar: AppBarHome(canSearch: true, showTrailing: true),
+      body: SizedBox(),
+    );
   }
 }
 
@@ -270,47 +353,47 @@ class _HomeSplashState extends State<HomeSplash> {
 //       }
 //       //will go with NEW DRAWER from here
 //       // else if (type == "gainer_loser") {
-//       //   Navigator.pushNamed(
+//       //   Navigator.push(
 //       //     navigatorKey.currentContext!,
 //       //     GainersLosersIndex.path,
 //       //     arguments: {"type": StocksType.gainers},
 //       //   );
 //       // } else if (type == "indices") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, IndicesIndex.path);
+//       //   Navigator.push(navigatorKey.currentContext!, IndicesIndex.path);
 //       // } else if (type == "gapup_gapdown") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, GapUpDownStocks.path);
+//       //   Navigator.push(navigatorKey.currentContext!, GapUpDownStocks.path);
 //       // } else if (type == "insider") {
-//       //   Navigator.pushNamedAndRemoveUntil(
+//       //   Navigator.pushAndRemoveUntil(
 //       //       navigatorKey.currentContext!, Tabs.path, (route) => false,
 //       //       arguments: 2);
 //       // } else if (type == "sentiments") {
-//       //   Navigator.pushNamedAndRemoveUntil(
+//       //   Navigator.pushAndRemoveUntil(
 //       //       navigatorKey.currentContext!, Tabs.path, (route) => false,
 //       //       arguments: 3);
 //       // } else if (type == "high_lowPE") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, HighLowPEIndex.path);
+//       //   Navigator.push(navigatorKey.currentContext!, HighLowPEIndex.path);
 //       // } else if (type == "52_weeks") {
-//       //   Navigator.pushNamed(
+//       //   Navigator.push(
 //       //       navigatorKey.currentContext!, FiftyTwoWeeksIndex.path);
 //       // } else if (type == "high_low_beta") {
-//       //   Navigator.pushNamed(
+//       //   Navigator.push(
 //       //       navigatorKey.currentContext!, HighLowsBetaStocksIndex.path);
 //       // } else if (type == "low_prices") {
-//       //   Navigator.pushNamed(
+//       //   Navigator.push(
 //       //       navigatorKey.currentContext!, LowPriceStocksIndex.path);
 //       // } else if (type == "most_active") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, MostActiveIndex.path);
+//       //   Navigator.push(navigatorKey.currentContext!, MostActiveIndex.path);
 //       // } else if (type == "penny") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, PennyStocks.path);
+//       //   Navigator.push(navigatorKey.currentContext!, PennyStocks.path);
 //       // } else if (type == "congress") {
-//       //   Navigator.pushNamed(
+//       //   Navigator.push(
 //       //       navigatorKey.currentContext!, CongressionalIndex.path);
 //       // } else if (type == "dividend") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, DividendsScreen.path);
+//       //   Navigator.push(navigatorKey.currentContext!, DividendsScreen.path);
 //       // } else if (type == "earning") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, EarningsScreen.path);
+//       //   Navigator.push(navigatorKey.currentContext!, EarningsScreen.path);
 //       // } else if (type == "stocks") {
-//       //   Navigator.pushNamed(navigatorKey.currentContext!, StocksIndex.path);
+//       //   Navigator.push(navigatorKey.currentContext!, StocksIndex.path);
 //       // }
 
 //       //will go with NEW DRAWER to here.
@@ -323,7 +406,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //           ),
 //         );
 //       } else if (type == "login") {
-//         Navigator.pushNamedAndRemoveUntil(
+//         Navigator.pushAndRemoveUntil(
 //           navigatorKey.currentContext!,
 //           Tabs.path,
 //           (route) => false,
@@ -339,7 +422,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //         }
 //         deepLinkData = null;
 //       } else if (type == "signUp") {
-//         Navigator.pushNamedAndRemoveUntil(
+//         Navigator.pushAndRemoveUntil(
 //           navigatorKey.currentContext!,
 //           Tabs.path,
 //           (route) => false,
@@ -354,7 +437,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //         }
 //         deepLinkData = null;
 //       } else if (type == "dashboard") {
-//         Navigator.pushNamedAndRemoveUntil(
+//         Navigator.pushAndRemoveUntil(
 //           navigatorKey.currentContext!,
 //           Tabs.path,
 //           (route) => false,
@@ -372,7 +455,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //         );
 //       }
 //     } catch (e) {
-//       Navigator.pushNamedAndRemoveUntil(
+//       Navigator.pushAndRemoveUntil(
 //         navigatorKey.currentContext!,
 //         Tabs.path,
 //         (route) => false,
@@ -384,7 +467,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //   _navigation() {
 //     FirebaseMessaging.instance.getInitialMessage().then((value) {
 //       if (value == null) {
-//         Navigator.pushNamedAndRemoveUntil(context, Tabs.path, (route) => false);
+//         Navigator.pushAndRemoveUntil(context, Tabs.path, (route) => false);
 //       } else {
 //         _navigateToRequiredScreen(value.data);
 //       }
@@ -402,13 +485,13 @@ class _HomeSplashState extends State<HomeSplash> {
 //       // String? notificationId = payload['notification_id'];
 
 //       if (type == NotificationType.dashboard.name) {
-//         Navigator.pushNamedAndRemoveUntil(
+//         Navigator.pushAndRemoveUntil(
 //           navigatorKey.currentContext!,
 //           Tabs.path,
 //           (route) => false,
 //         );
 //       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-//         Navigator.pushNamed(
+//         Navigator.push(
 //           navigatorKey.currentContext!,
 //           NewsDetails.path,
 //           arguments: {"slug": slug, "notificationId": notificationId},
@@ -424,7 +507,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //           ),
 //         );
 //       } else if (slug != '' && type == NotificationType.blogDetail.name) {
-//         Navigator.pushNamed(
+//         Navigator.push(
 //           navigatorKey.currentContext!,
 //           BlogDetail.path,
 //           arguments: {"slug": slug, "notificationId": notificationId},
@@ -438,7 +521,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //         //   ),
 //         // );
 //       } else if (slug != '' && type == NotificationType.register.name) {
-//         Navigator.pushNamedAndRemoveUntil(
+//         Navigator.pushAndRemoveUntil(
 //           navigatorKey.currentContext!,
 //           Tabs.path,
 //           (route) => false,
@@ -449,7 +532,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //         });
 //       } else if (slug != '' && type == NotificationType.review.name) {
 //         //review pop up
-//         Navigator.pushNamedAndRemoveUntil(
+//         Navigator.pushAndRemoveUntil(
 //           navigatorKey.currentContext!,
 //           Tabs.path,
 //           (route) => false,
@@ -466,7 +549,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //           popHome = false;
 //         });
 //       } else {
-//         Navigator.pushNamed(
+//         Navigator.push(
 //           navigatorKey.currentContext!,
 //           StockDetails.path,
 //           arguments: {"slug": type, "notificationId": notificationId},
@@ -474,7 +557,7 @@ class _HomeSplashState extends State<HomeSplash> {
 //       }
 //     } catch (e) {
 //       Utils().showLog("Exception ===>> $e");
-//       Navigator.pushNamedAndRemoveUntil(
+//       Navigator.pushAndRemoveUntil(
 //         navigatorKey.currentContext!,
 //         Tabs.path,
 //         (route) => false,

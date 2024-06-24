@@ -13,20 +13,6 @@ class Home extends StatelessWidget {
       name: 'ScreensVisit',
       parameters: {'screen_name': "Home Screen"},
     );
-    return const BaseContainer(
-      body: HomeContainer(),
-      // TODO: Remove after Testing
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: ThemeColors.accent,
-      //   onPressed: () {
-      //     Navigator.pushNamed(
-      //       context,
-      //       StockDetail.path,
-      //       arguments: {"slug": 'aapl'},
-      //     );
-      //   },
-      //   child: const Icon(Icons.bar_chart),
-      // ),
-    );
+    return const BaseContainer(body: HomeContainer());
   }
 }

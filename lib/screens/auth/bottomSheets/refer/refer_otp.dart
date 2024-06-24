@@ -135,7 +135,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
           homeProvider.updateReferShare(extra.referral?.shareText);
           // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
           Navigator.pop(navigatorKey.currentContext!);
-          // Navigator.pushNamed(
+          // Navigator.push(
           //   navigatorKey.currentContext!,
           //   ReferAFriend.path,
           // );

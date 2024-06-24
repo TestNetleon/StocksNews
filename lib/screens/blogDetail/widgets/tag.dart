@@ -27,7 +27,7 @@
 //             Navigator.of(context).popUntil((route) {
 //               return route.settings.name == IndexBlog.path;
 //             });
-//             Navigator.pushNamed(context, Blog.path, arguments: {
+//             Navigator.push(context, Blog.path, arguments: {
 //               "type": BlogsType.tag,
 //               "id": item.id,
 //             });

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/states.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -18,19 +19,29 @@ import '../../../../modals/stockDetailRes/tab.dart';
 class SdCompanyBrief extends StatelessWidget {
   const SdCompanyBrief({super.key});
   void _navigateSector(context, name, titleName) {
-    Navigator.pushNamed(context, SectorIndustry.path, arguments: {
-      "type": StockStates.sector,
-      "name": name,
-      "titleName": titleName,
-    });
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (_) => SectorIndustry(
+          name: name,
+          stockStates: StockStates.sector,
+          titleName: titleName,
+        ),
+      ),
+    );
   }
 
   void _navigateIndustry(context, name, titleName) {
-    Navigator.pushNamed(context, SectorIndustry.path, arguments: {
-      "type": StockStates.industry,
-      "name": name,
-      "titleName": titleName,
-    });
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (_) => SectorIndustry(
+          name: name,
+          stockStates: StockStates.industry,
+          titleName: titleName,
+        ),
+      ),
+    );
   }
 
   @override

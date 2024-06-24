@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -51,13 +52,13 @@ class SignUpSuccess extends StatelessWidget {
                 const SpacerVertical(),
                 ThemeButton(
                   onPressed: () {
-                    // Navigator.popUntil(context, (route) => route.isFirst);
-                    // Navigator.pushReplacementNamed(context, Tabs.path);
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      Tabs.path,
-                      arguments: {"showRef": true},
-                      (route) => false,
+                    Navigator.popUntil(
+                        navigatorKey.currentContext!, (route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(
+                        builder: (_) => const Tabs(showRef: true),
+                      ),
                     );
                   },
                   text: "Get Start",

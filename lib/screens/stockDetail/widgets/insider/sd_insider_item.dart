@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sd_insider_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -41,14 +42,17 @@ class SdInsiderItem extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, InsiderDetailsType.path,
-                                  arguments: {
-                                    "companySlug": data?.companySlug,
-                                    "reportingSlug": data?.reportingSlug,
-                                    "companyName": data?.companyName,
-                                    "reportingName": data?.reportingName,
-                                  });
+                              Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                  builder: (_) => InsiderDetailsType(
+                                    companyName: data?.companyName,
+                                    companySlug: data?.companySlug,
+                                    reportingName: data?.reportingName,
+                                    reportingSlug: data?.reportingSlug,
+                                  ),
+                                ),
+                              );
                             },
                             child: Text(
                               "${data?.name}",

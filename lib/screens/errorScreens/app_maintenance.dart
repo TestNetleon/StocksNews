@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -72,8 +73,12 @@ class _ServerErrorState extends State<AppMaintenance> {
     });
 
     if (!isUnderMaintenance) {
-      Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacementNamed(context, Tabs.path);
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
     }
   }
 
@@ -159,8 +164,12 @@ class _ServerErrorState extends State<AppMaintenance> {
                         if (isNet) {
                           // Navigator.pop(context);
                           isShowingError = false;
-                          Navigator.popUntil(context, (route) => route.isFirst);
-                          Navigator.pushReplacementNamed(context, Tabs.path);
+                          Navigator.popUntil(navigatorKey.currentContext!,
+                              (route) => route.isFirst);
+                          Navigator.pushReplacement(
+                            navigatorKey.currentContext!,
+                            MaterialPageRoute(builder: (_) => const Tabs()),
+                          );
                         }
                       } else {
                         _checkForMaintenanceMode();

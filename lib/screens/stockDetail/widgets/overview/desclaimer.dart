@@ -69,7 +69,7 @@ class SdTopDisclaimer extends StatelessWidget {
                                   ),
                                 ),
                               );
-                              // Navigator.pushNamed(context, TCandPolicy.path,
+                              // Navigator.push(context, TCandPolicy.path,
                               //     arguments: PolicyType.disclaimer);
                             },
                         ),

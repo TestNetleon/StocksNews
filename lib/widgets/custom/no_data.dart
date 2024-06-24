@@ -62,7 +62,7 @@
 //                     child: ThemeButtonSmall(
 //                       icon: Icons.home,
 //                       onPressed: () {
-//                         Navigator.pushNamedAndRemoveUntil(
+//                         Navigator.pushAndRemoveUntil(
 //                             context, Tabs.path, (route) => false);
 //                       },
 //                       text: "Go to Home",

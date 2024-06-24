@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -46,10 +47,13 @@ class NewsDetailMentionedBy extends StatelessWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(8),
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          StockDetail.path,
-                          arguments: {"slug": tickers?.symbol},
+                        Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (_) => StockDetail(
+                              symbol: tickers!.symbol!,
+                            ),
+                          ),
                         );
                       },
                       child: Container(

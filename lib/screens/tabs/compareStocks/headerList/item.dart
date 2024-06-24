@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/compare_stock_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -23,10 +24,11 @@ class HeaderItem extends StatelessWidget {
           border: Border.all(color: ThemeColors.dividerDark)),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            StockDetail.path, // arguments: company?.symbol,
-            arguments: {"slug": company?.symbol},
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (_) => StockDetail(symbol: company!.symbol),
+            ),
           );
         },
         child: Stack(

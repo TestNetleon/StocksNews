@@ -38,13 +38,16 @@ class NotificationsItem extends StatelessWidget {
       // );
 
       if (type == NotificationType.dashboard.name) {
-        Navigator.pushNamedAndRemoveUntil(
-            navigatorKey.currentContext!, Tabs.path, (route) => false);
-      } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushNamed(
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          NewsDetails.path,
-          arguments: {"slug": slug},
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
+      } else if (slug != '' && type == NotificationType.newsDetail.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => NewsDetails(slug: slug)),
         );
       } else if (slug != '' && type == NotificationType.lpPage.name) {
         Navigator.push(
@@ -76,8 +79,12 @@ class NotificationsItem extends StatelessWidget {
         );
       } else if (slug != '' && type == NotificationType.register.name) {
         if (await Preference.isLoggedIn()) {
-          Navigator.pushNamedAndRemoveUntil(
-              navigatorKey.currentContext!, Tabs.path, (route) => false);
+          Navigator.popUntil(
+              navigatorKey.currentContext!, (route) => route.isFirst);
+          Navigator.pushReplacement(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => const Tabs()),
+          );
           popUpAlert(
               message: "Welcome to the Home Screen!",
               title: "Alert",
@@ -89,24 +96,28 @@ class NotificationsItem extends StatelessWidget {
         isPhone ? signupSheet() : signupSheetTablet();
       } else if (slug != '' && type == NotificationType.stockDetail.name ||
           isValidTickerSymbol(type)) {
-        Navigator.pushNamed(
+        Navigator.push(
           navigatorKey.currentContext!,
-          StockDetail.path,
-          arguments: {"slug": slug},
+          MaterialPageRoute(builder: (_) => StockDetail(symbol: slug!)),
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         referLogin();
       } else {
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
-          Tabs.path,
-          (route) => false,
+          MaterialPageRoute(builder: (_) => const Tabs()),
         );
       }
     } catch (e) {
       Utils().showLog("Exception ===>> $e");
-      Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
     }
   }
 
@@ -120,7 +131,7 @@ class NotificationsItem extends StatelessWidget {
       onTap: () => _onTap(context),
       // onTap: data.type == "dashboard"
       //     ? () {
-      //         Navigator.pushNamedAndRemoveUntil(
+      //         Navigator.pushAndRemoveUntil(
       //             navigatorKey.currentContext!, Tabs.path, (route) => false);
       //       }
       //     : data.slug != "" && data.type == ''
@@ -128,7 +139,7 @@ class NotificationsItem extends StatelessWidget {
       //             if (data.slug == '') {
       //               return;
       //             }
-      //             Navigator.pushNamed(context, NewsDetails.path,
+      //             Navigator.push(context, NewsDetails.path,
       //                 arguments: data.slug);
       //           }
       //         : () {
@@ -136,7 +147,7 @@ class NotificationsItem extends StatelessWidget {
       //               return;
       //             }
 
-      //             Navigator.pushNamed(context, StockDetails.path,
+      //             Navigator.push(context, StockDetails.path,
       //                 arguments: data.type);
       //           },
       borderRadius: BorderRadius.circular(5.sp),

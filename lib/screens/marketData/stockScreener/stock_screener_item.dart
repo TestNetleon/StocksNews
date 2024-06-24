@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_screener_res.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -24,10 +25,11 @@ class StockScreenerItem extends StatelessWidget {
   });
 
   void _onTap(context) {
-    Navigator.pushNamed(
-      context,
-      StockDetail.path,
-      arguments: {"slug": data?[index].symbol},
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (_) => StockDetail(symbol: data?[index].symbol),
+      ),
     );
   }
 

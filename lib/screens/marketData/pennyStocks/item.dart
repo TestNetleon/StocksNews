@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/penny_stocks.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -25,10 +26,9 @@ class PennyStocksItem extends StatelessWidget {
   });
 
   void _onTap(context) {
-    Navigator.pushNamed(
-      context,
-      StockDetail.path,
-      arguments: {"slug": data.symbol},
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
     );
   }
 

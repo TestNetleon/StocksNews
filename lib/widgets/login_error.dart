@@ -50,7 +50,7 @@
 //                 const SpacerVertical(),
 //                 ThemeButtonSmall(
 //                   onPressed: () async {
-//                     // Navigator.pushNamed(context, Login.path);
+//                     // Navigator.push(context, Login.path);
 
 //                     // await Navigator.push(
 //                     //   context,
@@ -124,7 +124,7 @@ class LoginError extends StatelessWidget {
                 const SpacerVertical(),
                 ThemeButtonSmall(
                   // onPressed: () async {
-                  //   // Navigator.pushNamed(context, Login.path);
+                  //   // Navigator.push(context, Login.path);
 
                   //   // await Navigator.push(
                   //   //   context,

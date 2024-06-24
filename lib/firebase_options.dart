@@ -63,9 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '661986825229',
     projectId: 'stocksnews-ef556',
     storageBucket: 'stocksnews-ef556.appspot.com',
-    androidClientId: '661986825229-0de23kv34v919suf1ticnuth3f8rn9i3.apps.googleusercontent.com',
-    iosClientId: '661986825229-jrjm8ffa2meg5ld2drpmg9pgsg4mh6nq.apps.googleusercontent.com',
+    androidClientId:
+        '661986825229-0de23kv34v919suf1ticnuth3f8rn9i3.apps.googleusercontent.com',
+    iosClientId:
+        '661986825229-jrjm8ffa2meg5ld2drpmg9pgsg4mh6nq.apps.googleusercontent.com',
     iosBundleId: 'app.stocks.news',
   );
-
 }

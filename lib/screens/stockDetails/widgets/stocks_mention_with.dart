@@ -66,7 +66,7 @@
 //       return const SizedBox();
 //     }
 //     return InkWell(
-//       onTap: () => Navigator.pushReplacementNamed(
+//       onTap: () => Navigator.pushReplacement(
 //         context,
 //         StockDetail.path, // arguments: item.symbol,
 //         arguments: {"slug": item.symbol},

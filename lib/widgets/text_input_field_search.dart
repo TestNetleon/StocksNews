@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -69,8 +70,12 @@ class _TextInputFieldSearchState extends State<TextInputFieldSearch> {
       ),
     );
     return GestureDetector(
-      onTap: () =>
-          widget.editable ? {} : Navigator.pushNamed(context, Search.path),
+      onTap: () => widget.editable
+          ? {}
+          : Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const Search()),
+            ),
       child: AnimatedSize(
         alignment: Alignment.topCenter,
         duration: const Duration(milliseconds: 300),
@@ -185,11 +190,12 @@ class _TextInputFieldSearchState extends State<TextInputFieldSearch> {
                       onTap: () {
                         closeKeyboard();
                         provider.clearSearch();
-                        Navigator.pushNamed(
-                          context,
-                          StockDetail.path,
-                          // arguments: data?.symbol,
-                          arguments: {"slug": data?.symbol},
+
+                        Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                            builder: (_) => StockDetail(symbol: data!.symbol),
+                          ),
                         );
                       },
                       child: Padding(

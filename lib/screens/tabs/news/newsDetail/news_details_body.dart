@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -69,6 +70,32 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     });
   }
 
+  void _onSubmit(value) async {
+    UserProvider userProvider = context.read<UserProvider>();
+    NewsDetailProvider provider = context.read<NewsDetailProvider>();
+
+    if (userProvider.user == null) {
+      await loginSheet();
+
+      if (context.read<UserProvider>().user != null) {
+        await provider.getNewsDetailData(
+          showProgress: false,
+          slug: widget.slug,
+          inAppMsgId: widget.inAppMsgId,
+          notificationId: widget.notificationId,
+        );
+      }
+      return;
+    }
+
+    provider.requestFeedbackSubmit(
+      showProgress: true,
+      feedbackType: "news",
+      id: provider.data!.postDetail!.id!,
+      type: value,
+    );
+  }
+
   // @override
   // void dispose() {
   //   _scrollController?.removeListener(_scrollListener);
@@ -109,7 +136,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   //     widgets.add(
   //       InkWell(
   //         onTap: () {
-  //           Navigator.pushNamed(context, NewsAuthorIndex.path, arguments: {
+  //           Navigator.push(context, NewsAuthorIndex.path, arguments: {
   //             "data": detail,
   //             "type": type,
   //           });
@@ -176,9 +203,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               width: double.infinity,
                               // fit: BoxFit.contain,
                             ),
-
                             const NewsDetailMentionedBy(),
-
                             const SpacerVertical(height: Dimen.itemSpacing),
                             provider.data?.postDetail?.authors?.isNotEmpty ==
                                         true ||
@@ -253,7 +278,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               color: ThemeColors.greyText),
                                         ),
                                       ),
-
                             SpacerVertical(height: Dimen.itemSpacing.sp),
                             HtmlWidget(
                               // customStylesBuilder: (element) {
@@ -300,6 +324,12 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                   fontSize: 18, height: 1.5),
                             ),
                             // const SpacerVertical(height: 20),
+                            if (provider.data?.feedbackMsg != null)
+                              ArticleFeedback(
+                                title: provider.data?.feedbackMsg,
+                                submitMessage: provider.data?.feedbackExistMsg,
+                                onSubmit: _onSubmit,
+                              ),
                             Visibility(
                               visible: (provider.data?.postDetail?.categories
                                           ?.length ??
@@ -326,7 +356,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 ),
                               ),
                             ),
-
                             Visibility(
                               visible:
                                   provider.data?.postDetail?.tags?.isNotEmpty ==
@@ -340,7 +369,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 ),
                               ),
                             ),
-
                             Visibility(
                               visible: provider.data?.postDetail?.authors
                                           ?.isNotEmpty ==
@@ -472,9 +500,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                 },
                               ),
                             ),
-
                             const SpacerVertical(height: 25),
-
                             const ScreenTitle(title: "More News to Read"),
                             ListView.separated(
                               itemCount: provider.data?.otherPost?.length ?? 0,
@@ -484,7 +510,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               itemBuilder: (context, index) {
                                 PostDetail? moreNewsData =
                                     provider.data?.otherPost?[index];
-
                                 return NewsDetailList(
                                   moreNewsData: moreNewsData,
                                 );
@@ -500,7 +525,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             ),
                             if (provider.extra?.disclaimer != null && foundSite)
                               DisclaimerWidget(
-                                  data: provider.extra?.disclaimer ?? "")
+                                data: provider.extra?.disclaimer ?? "",
+                              )
                           ],
                         ),
                       ),
@@ -566,10 +592,15 @@ class NewsDetailAuthor extends StatelessWidget {
         widgets.add(
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, NewsAuthorIndex.path, arguments: {
-                "data": data?[i],
-                "type": type,
-              });
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                  builder: (_) => NewsAuthorIndex(
+                    type: type,
+                    data: data?[i],
+                  ),
+                ),
+              );
             },
             child: Text(
               "${data?[i].name}",
@@ -607,10 +638,15 @@ class NewsDetailAuthor extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, NewsAuthorIndex.path, arguments: {
-                "data": data?[i],
-                "type": BlogsType.tag,
-              });
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                  builder: (_) => NewsAuthorIndex(
+                    type: BlogsType.tag,
+                    data: data?[i],
+                  ),
+                ),
+              );
             },
             child: Text(
               data![i].name ?? "",
@@ -686,10 +722,15 @@ class NewsDetailAuthorAB extends StatelessWidget {
         widgets.add(
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, NewsAuthorIndex.path, arguments: {
-                "data": data?[i],
-                "type": type,
-              });
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(
+                  builder: (_) => NewsAuthorIndex(
+                    type: type,
+                    data: data?[i],
+                  ),
+                ),
+              );
             },
             child: Text(
               "${data?[i].name}",
@@ -809,28 +850,26 @@ class ListAlignment extends StatelessWidget {
           InkWell(
             onTap: () {
               if (blog) {
-                Utils().showLog("1");
-                Navigator.pushReplacementNamed(
-                    navigatorKey.currentContext!, Blog.path,
-                    arguments: {
-                      "type": BlogsType.author,
-                      "id": list[i].id,
-                    });
+                Navigator.pushReplacement(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                    builder: (_) => Blog(
+                      id: list[i].id!,
+                      type: BlogsType.author,
+                    ),
+                  ),
+                );
               } else {
-                Navigator.pushNamed(
-                    navigatorKey.currentContext!, NewsAuthorIndex.path,
-                    arguments: {
-                      "data": list[i],
-                      "type": type,
-                    });
+                Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(
+                    builder: (_) => NewsAuthorIndex(
+                      type: type,
+                      data: list[i],
+                    ),
+                  ),
+                );
               }
-
-              // Navigator.pushNamed(
-              //     navigatorKey.currentContext!, NewsAuthorIndex.path,
-              //     arguments: {
-              //       "data": list[i],
-              //       "type": type,
-              //     });
             },
             child: Text(
               list[i].name ?? "",
@@ -909,22 +948,32 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
             builder: (context) => StockDetail(symbol: slugForTicker)));
   } else if (type == "login") {
     if (userPresent) {
-      Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
     } else {
       loginSheet();
     }
   } else if (type == "signUp") {
     if (userPresent) {
-      Navigator.pushNamedAndRemoveUntil(
-          navigatorKey.currentContext!, Tabs.path, (route) => false);
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
     } else {
       signupSheet();
     }
   } else if (type == "dashboard") {
-    // Navigator.pushNamed(navigatorKey.currentContext!, Tabs.path);
-    Navigator.pushNamedAndRemoveUntil(
-        navigatorKey.currentContext!, Tabs.path, (route) => false);
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
 
     Utils().showLog("--goto dashboard---");
   } else {

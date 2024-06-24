@@ -5,11 +5,13 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
@@ -58,7 +60,7 @@ class _AppBarHomeState extends State<AppBarHome> {
           ? IconButton(
               onPressed: () {
                 // if (popHome || deepLinkData != null) {
-                //   Navigator.pushNamedAndRemoveUntil(
+                //   Navigator.pushAndRemoveUntil(
                 //       context, Tabs.path, (route) => false);
                 //   popHome = false;
                 //   deepLinkData = null;
@@ -66,7 +68,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                 // if (navigatorKey.currentState != null &&
                 //     navigatorKey.currentState!.canPop()) {
                 //   if (popHome) {
-                //     Navigator.pushNamedAndRemoveUntil(
+                //     Navigator.pushAndRemoveUntil(
                 //         context, Tabs.path, (route) => false);
                 //     popHome = false;
                 //   } else {
@@ -81,13 +83,22 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //     MaterialPageRoute(builder: (_) => const Splash()),
                 //   );
                 // }
-
                 Utils().showLog("----${Navigator.canPop(context)}");
                 Utils().showLog("----${navigatorKey.currentState?.canPop()}");
-
                 if (popHome) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, Tabs.path, (route) => false);
+                  Preference.saveDataList(
+                    DeeplinkData(
+                      uri: null,
+                      from: "on App Bar Back Press Going to Tabs",
+                      onDeepLink: onDeepLinking,
+                    ),
+                  );
+                  Navigator.popUntil(
+                      navigatorKey.currentContext!, (route) => route.isFirst);
+                  Navigator.pushReplacement(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(builder: (_) => const Tabs()),
+                  );
                   popHome = false;
                 } else {
                   // navigatorKey.currentContext!
@@ -140,8 +151,12 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //   MaterialPageRoute(builder: (_) => const Tabs(index: 0)),
                 // );
 
-                Navigator.pushNamedAndRemoveUntil(
-                    context, Tabs.path, (route) => false);
+                Navigator.popUntil(
+                    navigatorKey.currentContext!, (route) => route.isFirst);
+                Navigator.pushReplacement(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(builder: (_) => const Tabs()),
+                );
               },
         child: Container(
           width: MediaQuery.of(context).size.width * .40,
@@ -160,7 +175,7 @@ class _AppBarHomeState extends State<AppBarHome> {
         //   visible: widget.showQR,
         //   child: IconButton(
         //     onPressed: () {
-        //       Navigator.pushNamed(context, QrScan.path);
+        //       Navigator.push(context, QrScan.path);
         //     },
         //     icon: const Icon(
         //       Icons.qr_code,
@@ -182,7 +197,10 @@ class _AppBarHomeState extends State<AppBarHome> {
           visible: widget.canSearch,
           child: IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, Search.path);
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const Search()),
+              );
             },
             icon: const Icon(
               Icons.search,
@@ -199,7 +217,12 @@ class _AppBarHomeState extends State<AppBarHome> {
                       if (provider.user != null) {
                         homeProvider.setNotification(true);
                       }
-                      Navigator.pushNamed(context, Notifications.path);
+                      Navigator.push(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(
+                          builder: (_) => const Notifications(),
+                        ),
+                      );
                     },
                     icon: const Icon(
                       Icons.notifications,

@@ -28,6 +28,7 @@ import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
 import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
@@ -56,6 +57,7 @@ class _TabsState extends State<Tabs> {
   @override
   void initState() {
     super.initState();
+    splashLoaded = true;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         _selectedIndex = widget.index;
@@ -80,70 +82,71 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: _selectedIndex == 0,
-      onPopInvoked: (isPop) {
-        if (_selectedIndex != 0) {
-          setState(() {
-            _selectedIndex = 0;
-          });
-        }
-      },
-      child: BaseContainer(
-        appBar: AppBarHome(
-          canSearch: true,
-          showTrailing: true,
-          isHome: _selectedIndex == 0,
-        ),
-        drawer: const BaseDrawer(),
-        body: Screens.screens.elementAt(_selectedIndex),
-
-        //  _selectedIndex == 0
-        //     ? const Home()
-        //     : _selectedIndex == 1
-        //         ? const Trending()
-        //         : _selectedIndex == 2
-        //             ? const Insider()
-        //             : _selectedIndex == 3
-        //                 ? const RedditTwitter()
-        //                 : _selectedIndex == 4
-        //                     ? const WatchList()
-        //                     : const News(),
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedItemColor: ThemeColors.white,
-          selectedItemColor: ThemeColors.accent,
-          // backgroundColor: ThemeColors.tabBack,
-          backgroundColor: ThemeColors.transparent,
-
-          showUnselectedLabels: true,
-          showSelectedLabels: true,
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          unselectedLabelStyle:
-              stylePTSansBold(color: ThemeColors.white, fontSize: 11),
-          selectedLabelStyle:
-              stylePTSansBold(color: ThemeColors.accent, fontSize: 11),
-          onTap: (index) {
-            context.read<SearchProvider>().clearSearch();
-            if (_selectedIndex != index) {
-              setState(() {
-                _selectedIndex = index;
-                activeContainerApiCalls(currentIndex: index);
-              });
-            }
-          },
-          items: [
-            bottomTab(icon: Icons.home, lable: "Home"),
-            bottomTab(icon: Icons.fireplace_outlined, lable: "Trending"),
-            bottomTab(icon: Icons.trending_up_sharp, lable: "Insider"),
-            bottomTab(
-                icon: Icons.alternate_email_outlined, lable: "Sentiments"),
-            // bottomTab(icon: Icons.trending_up_sharp, lable: "Watchlist"),
-            bottomTab(icon: Icons.newspaper_rounded, lable: "News"),
-            bottomTab(icon: Icons.compare_arrows, lable: "Compare"),
-          ],
-        ),
+    return
+        // PopScope(
+        //   canPop: _selectedIndex == 0,
+        //   onPopInvoked: (isPop) {
+        //     if (_selectedIndex != 0) {
+        //       setState(() {
+        //         _selectedIndex = 0;
+        //       });
+        //     }
+        //   },
+        //   child:
+        BaseContainer(
+      appBar: AppBarHome(
+        canSearch: true,
+        showTrailing: true,
+        isHome: _selectedIndex == 0,
       ),
+      drawer: const BaseDrawer(),
+      body: Screens.screens.elementAt(_selectedIndex),
+
+      //  _selectedIndex == 0
+      //     ? const Home()
+      //     : _selectedIndex == 1
+      //         ? const Trending()
+      //         : _selectedIndex == 2
+      //             ? const Insider()
+      //             : _selectedIndex == 3
+      //                 ? const RedditTwitter()
+      //                 : _selectedIndex == 4
+      //                     ? const WatchList()
+      //                     : const News(),
+      bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: ThemeColors.white,
+        selectedItemColor: ThemeColors.accent,
+        // backgroundColor: ThemeColors.tabBack,
+        backgroundColor: ThemeColors.transparent,
+
+        showUnselectedLabels: true,
+        showSelectedLabels: true,
+        currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        unselectedLabelStyle:
+            stylePTSansBold(color: ThemeColors.white, fontSize: 11),
+        selectedLabelStyle:
+            stylePTSansBold(color: ThemeColors.accent, fontSize: 11),
+        onTap: (index) {
+          context.read<SearchProvider>().clearSearch();
+          if (_selectedIndex != index) {
+            setState(() {
+              _selectedIndex = index;
+              activeContainerApiCalls(currentIndex: index);
+            });
+          }
+        },
+        items: [
+          bottomTab(icon: Icons.home, lable: "Home"),
+          bottomTab(icon: Icons.fireplace_outlined, lable: "Trending"),
+          bottomTab(icon: Icons.trending_up_sharp, lable: "Insider"),
+          bottomTab(icon: Icons.alternate_email_outlined, lable: "Sentiments"),
+          // bottomTab(icon: Icons.trending_up_sharp, lable: "Watchlist"),
+          bottomTab(icon: Icons.newspaper_rounded, lable: "News"),
+          bottomTab(icon: Icons.compare_arrows, lable: "Compare"),
+        ],
+      ),
+      // ),
     );
   }
 
@@ -211,7 +214,6 @@ class _TabsState extends State<Tabs> {
 void _compareStocks(BuildContext context) {
   UserProvider provider = context.read<UserProvider>();
   final compareProvider = context.read<CompareStocksProvider>();
-
   if (provider.user != null && compareProvider.company.isEmpty) {
     compareProvider.getCompareStock();
   }

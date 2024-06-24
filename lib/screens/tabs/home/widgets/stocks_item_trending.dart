@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_res.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -22,10 +23,10 @@ class StocksItemTrending extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          StockDetail.path, // arguments: trending.symbol,
-          arguments: {"slug": trending.symbol},
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (_) => StockDetail(symbol: trending.symbol)),
         );
       },
       child: Row(
@@ -128,7 +129,7 @@ class StocksItemTrending extends StatelessWidget {
 
     // return InkWell(
     //   onTap: () {
-    //     Navigator.pushNamed(context, StockDetails.path,
+    //     Navigator.push(context, StockDetails.path,
     //         arguments: trending.symbol);
     //   },
     //   child: Row(
