@@ -256,7 +256,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
 
                   // ThemeButton(
                   //   onPressed: () {
-                  //     // Navigator.pushNamed(context, CreateAccount.path);
+                  //     // Navigator.push(context, CreateAccount.path);
                   //     createAccountSheet();
                   //   },
                   //   child: SizedBox(

@@ -72,14 +72,19 @@ class Tickets extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, ChatScreen.path,
-                            arguments: {
-                              "slug": "0",
-                              "ticketId": provider.data?.tickets?.isEmpty ==
-                                      true
-                                  ? ""
-                                  : provider.data?.tickets?[0].ticketId ?? ""
-                            });
+                        Navigator.push(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(
+                              builder: (_) => ChatScreen(
+                                    slug: "0",
+                                    ticketId: provider.data?.tickets?.isEmpty ==
+                                            true
+                                        ? ""
+                                        : provider.data?.tickets?[0].ticketId ??
+                                            "",
+                                  )),
+                        );
+
                         context
                             .read<HelpDeskProvider>()
                             .setReasonController("", "");
@@ -130,6 +135,9 @@ class Tickets extends StatelessWidget {
   }
 
   _onViewAllRequestClick() {
-    Navigator.pushNamed(navigatorKey.currentContext!, ViewAllList.path);
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const ViewAllList(slug: null)),
+    );
   }
 }

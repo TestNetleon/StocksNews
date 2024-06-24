@@ -66,7 +66,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       //
       // popUpAlert(message: "$e", title: "Error");
 
-      // Navigator.pushNamedAndRemoveUntil(context, Tabs.path, (route) => false);
+      // Navigator.pushAndRemoveUntil(context, Tabs.path, (route) => false);
     }
 
     Timer(const Duration(seconds: 3), () {

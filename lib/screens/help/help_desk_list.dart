@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
 import 'package:stocks_news_new/screens/help/tickets/tickets.dart';
 import 'package:stocks_news_new/screens/help/widget/help_desk_item.dart';
@@ -74,12 +75,16 @@ class _HelpDeskListState extends State<HelpDeskList> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, ChatScreen.path,
-                                    arguments: {
-                                      "slug": "1",
-                                      "ticketId":
-                                          "${provider.data?.tickets?[index].ticketId}"
-                                    });
+                                Navigator.push(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                    builder: (_) => ChatScreen(
+                                      slug: "1",
+                                      ticketId:
+                                          "${provider.data?.tickets?[index].ticketId}",
+                                    ),
+                                  ),
+                                );
 
                                 context.read<HelpDeskProvider>().setSlug("1",
                                     '${provider.data?.tickets?[index].ticketId}');

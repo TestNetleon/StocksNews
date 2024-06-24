@@ -1,12 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
-  // static const baseUrl =
-  //     "https://notification.stocks.news/api/v1"; // live server
-  // static const baseUrl = kDebugMode
-  //     ? "https://notification.stocks.news/api/v1"
-  //     : "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  static const baseUrl = kDebugMode
+      ? "https://notification.stocks.news/api/v1"
+      : "https://app.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
@@ -34,14 +32,11 @@ class Apis {
   static const checkEmailOtp = "/check-email-otp";
   static const updatePhoneOtp = "/update-phone-otp";
   static const checkUpdatePhoneOtp = "/check-update-phone-otp";
-
   static const checkPhone = "/check-phone-otp";
-
   static const lowPricesStocks = "/low-priced-stocks-under";
   static const indices = "/indices";
   static const spFifty = "/sp-500-stocks";
   static const dowThirty = "/dow-30-stocks";
-
   static const saleOnStocks = "/stocks-on-sale";
   static const highPE = "/high-pe-ratio-stocks";
   static const lowPE = "/low-pe-ratio-stocks";
@@ -59,7 +54,6 @@ class Apis {
   static const mostActivePenny = "/most-active-penny-stocks";
   static const mostPopularPenny = "/most-popular-penny-stocks";
   static const topPennyStocksToday = "/top-penny-stocks-today";
-
   static const search = "/search";
   static const searchWithNews = "/search_with_news";
   static const getMostSearch = "/most-search-symbol";
@@ -72,7 +66,6 @@ class Apis {
   static const moreStocks = "/trending_gainer_loser";
   static const congress = "/congress-stock-trades";
   static const congressMember = "/profile-congress-member";
-
   static const updateProfile = "/update-profile";
   static const updateProfileEmail = "/update-profile-otp";
   static const updateProfileOTP = "/update-profile-resend-otp";
@@ -101,7 +94,6 @@ class Apis {
   static const trendingIndustries = "/trending-industries";
   static const stockDetailMention = "/trading-stock";
   static const nudgeFriend = '/referrals/nudge-your-friend';
-
   static const trendingBullish = "/trending-bullish";
   static const trendingBearish = "/trending-bearish";
   static const trendingNews = "/trending-news";
@@ -112,13 +104,11 @@ class Apis {
   static const trendingIndustryChart = "/trending-industries-chart";
   static const gainerLoser = "/gainer_loser";
   static const breakoutStocks = "/breakout-stocks";
-
   static const socialTrending = "/social-trending";
   static const featuredNews = "/featured-news";
   static const getOtherData = "/stock-other-details";
   static const newsTab = "/category-list";
   static const marketTickers = "/market-tickers";
-
   static const gapUpStocks = "/gap-up-stocks";
   static const gapDownStocks = "/gap-down-stocks";
   static const highPEGrowth = "/high-pe-growth-stocks";
@@ -135,17 +125,14 @@ class Apis {
   static const dividends = "/dividends";
   static const earnings = "/earnings";
   static const stockScreener = "/stock-screener";
-
   static const filters = "/common-filters";
   static const drawerData = "/drawer-data";
-
   static const blogCategory = "/blog-category-list";
   static const sendAppleOtp = "/signup-apple-email";
   static const disconnectPlaid = "/remove-plaid-portfolio";
   static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
-
-//Stock Detail New
+  // Stock Detail New ---
   static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";
   static const detailDividends = "/stock-detail-dividend";
@@ -160,7 +147,7 @@ class Apis {
   static const stockDetailInsider = "/stock-detail-insider";
   static const detailFinancial = "/stock-detail-financial";
   static const stockDetailMergers = "/stock-detail-mergers";
-
+  // Stock Detail New ended ----
   static const sendFeedback = "/send-feedback";
   static const getTickets = "/get-tickets";
   static const sendTicket = "/send-ticket";

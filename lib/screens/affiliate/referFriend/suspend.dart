@@ -23,7 +23,12 @@ class ReferFriendSuspend extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 15, top: 5),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(navigatorKey.currentContext!, ContactUs.path);
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (_) => const ContactUs(),
+            ),
+          );
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
@@ -52,8 +57,12 @@ class ReferFriendSuspend extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                 text: "Contact Support",
                 onPressed: () {
-                  Navigator.pushNamed(
-                      navigatorKey.currentContext!, ContactUs.path);
+                  Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(
+                      builder: (_) => const ContactUs(),
+                    ),
+                  );
                 },
                 icon: Icons.support_agent,
               ),
