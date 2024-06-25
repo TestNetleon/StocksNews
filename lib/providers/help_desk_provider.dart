@@ -14,6 +14,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
@@ -72,13 +73,8 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getHelpDeskList({loadMore = false}) async {
-    if (loadMore) {
-      _page++;
-      setStatus(Status.loadingMore);
-    } else {
-      _page = 1;
-      setStatus(Status.loading);
-    }
+    setStatus(Status.loading);
+
     try {
       Map request = {
         "token":
@@ -92,23 +88,22 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       );
 
       if (response.status) {
-        _error = null;
-
         _data = helpDeskResFromJson(jsonEncode(response.data));
+        _error = null;
         _extra = response.extra is Extra ? response.extra : null;
 
-        setSlug("1",
-            "${data?.tickets == null ? "" : helpDeskResFromJson(jsonEncode(response.data)).tickets?[0].ticketId}");
-        notifyListeners();
-        getHelpDeskChatScreen(loaderChatMessage: "0");
+        // setSlug("1",
+        //     "${helpDeskResFromJson(jsonEncode(response.data)).tickets?.isEmpty == true ? "" : helpDeskResFromJson(jsonEncode(response.data)).tickets?[0].ticketId}");
+        // notifyListeners();
+        // getHelpDeskChatScreen(loaderChatMessage: "0");
       } else {
         _error = response.message ?? Const.errSomethingWrong;
-        _data = null;
       }
 
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
+      Utils().showLog(e);
       setStatus(Status.loaded);
     }
   }
@@ -130,13 +125,56 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (response.status) {
         messageController.text = "";
-        notifyListeners();
-        _showProgressChatMessage = true;
+        // notifyListeners();
+        // _showProgressChatMessage = true;
 
-        getHelpDeskList(loadMore: false);
+        Map requestList = {
+          "token":
+              navigatorKey.currentContext!.read<UserProvider>().user?.token ??
+                  "",
+        };
+
+        ApiResponse responseList = await apiRequest(
+          url: Apis.getTickets,
+          request: requestList,
+          showProgress: false,
+        );
+
+        if (responseList.status) {
+          _data = helpDeskResFromJson(jsonEncode(responseList.data));
+          _error = null;
+          _extra = responseList.extra is Extra ? responseList.extra : null;
+          setSlug("0",
+              "${helpDeskResFromJson(jsonEncode(responseList.data)).tickets?.isEmpty == true ? "" : helpDeskResFromJson(jsonEncode(responseList.data)).tickets?[0].ticketId}");
+
+          Map requestDetail = {
+            "token":
+                navigatorKey.currentContext!.read<UserProvider>().user?.token ??
+                    "",
+            "ticket_id": ticketId,
+          };
+
+          ApiResponse responseDetail = await apiRequest(
+            url: Apis.ticketDetail,
+            request: requestDetail,
+            showProgress: showProgressChatMessage,
+          );
+
+          if (responseDetail.status) {
+            _error = null;
+
+            _chatData =
+                helpDeskChatResFromJson(jsonEncode(responseDetail.data));
+            _extra =
+                responseDetail.extra is Extra ? responseDetail.extra : null;
+
+            setSlug("1",
+                "${helpDeskResFromJson(jsonEncode(responseList.data)).tickets?.isEmpty == true ? "" : helpDeskResFromJson(jsonEncode(responseList.data)).tickets?[0].ticketId}");
+          }
+        }
       }
-      notifyListeners();
       closeGlobalProgressDialog();
+      notifyListeners();
     } catch (e) {
       closeGlobalProgressDialog();
     }
@@ -167,7 +205,6 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       notifyListeners();
       closeGlobalProgressDialog();
     } catch (e) {
-      _data = null;
       closeGlobalProgressDialog();
     }
   }
@@ -176,13 +213,12 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       {loaderChatMessage = "1", loadMore = false}) async {
     if (loaderChatMessage == "0") {
       _chatData = null;
+      setStatus(Status.loading);
     }
 
     if (showProgressChatMessage) {
       _error = "";
     }
-
-    if (loaderChatMessage == "0") setStatus(Status.loading);
 
     try {
       Map request = {

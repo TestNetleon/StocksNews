@@ -4,6 +4,7 @@ import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
+import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -43,6 +44,18 @@ class NotificationsItem extends StatelessWidget {
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
+        );
+      } else if (slug != '' && type == NotificationType.ticketDetail.name) {
+        Utils().showLog("----Navigating  servoce12 ...");
+
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(
+              slug: "1",
+              ticketId: slug,
+            ),
+          ),
         );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         Navigator.push(

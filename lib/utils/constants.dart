@@ -25,6 +25,7 @@ enum NotificationType {
   review,
   stockDetail,
   nudgeFriend,
+  ticketDetail,
 }
 
 enum BlogsType { blog, author, category, tag }

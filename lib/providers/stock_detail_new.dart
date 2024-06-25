@@ -125,6 +125,28 @@ class StockDetailProviderNew extends ChangeNotifier {
     periodIndex = 0;
   }
 
+  void updateSocket({
+    String? price,
+    num? change,
+    num? changePercentage,
+    String? changeString,
+  }) {
+    if (change != null) {
+      _tabRes?.keyStats?.change = change;
+    }
+    if (price != null && price != '') {
+      _tabRes?.keyStats?.price = price;
+    }
+    if (changePercentage != null) {
+      _tabRes?.keyStats?.changesPercentage = changePercentage;
+    }
+    if (changeString != null && changeString != '') {
+      _tabRes?.keyStats?.changeWithCur = changeString;
+    }
+
+    notifyListeners();
+  }
+
   //TAB DATA
   String? _errorTab;
   String? get errorTab => _errorTab ?? Const.errSomethingWrong;

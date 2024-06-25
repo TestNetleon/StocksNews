@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
-import '../../../stockDetails/widgets/states.dart';
 
 class SdStockScore extends StatelessWidget {
   const SdStockScore({super.key});
@@ -21,13 +22,75 @@ class SdStockScore extends StatelessWidget {
           title: 'Stock Score/grades',
           subTitle: provider.overviewRes?.stockScore?.text,
         ),
-        StateItem(
-            label: "Altman Z Score ", value: score?.altmanZScore ?? "N/A"),
-        StateItem(
-            label: "Piotroski Score", value: score?.piotroskiScore ?? "N/A"),
-        StateItem(label: "Grade", value: score?.mostRepeatedGrade ?? "N/A"),
-        const SpacerVertical(height: 20),
+        // StateItem(
+        //     label: "Altman Z Score ", value: score?.altmanZScore ?? "N/A"),
+        // StateItem(
+        //     label: "Piotroski Score", value: score?.piotroskiScore ?? "N/A"),
+        // StateItem(label: "Grade", value: score?.mostRepeatedGrade ?? "N/A"),
+        Row(
+          children: [
+            Expanded(
+                child: stockDOverviewItem(
+                    title: "Altman Z Score", value: score?.altmanZScore)),
+            const SpacerHorizontal(width: 8),
+            Expanded(
+                child: stockDOverviewItem(
+                    title: "Piotroski Score", value: score?.piotroskiScore)),
+          ],
+        ),
+
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          width: double.infinity,
+          child: stockDOverviewItem(
+              title: "Grade", value: score?.mostRepeatedGrade),
+        ),
+        const SpacerVertical(height: 10),
       ],
     );
   }
+}
+
+Container stockDOverviewItem({
+  String? title,
+  String? value,
+  Function()? onTap,
+}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    decoration: BoxDecoration(
+      gradient: const LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Color.fromARGB(255, 23, 23, 23),
+          // ThemeColors.greyBorder,
+          Color.fromARGB(255, 39, 39, 39),
+        ],
+      ),
+      borderRadius: BorderRadius.circular(5),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title ?? "N/A",
+          style: styleGeorgiaBold(color: ThemeColors.white, fontSize: 15),
+        ),
+        GestureDetector(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              value == null || value == '' ? "N/A" : value,
+              style: stylePTSansRegular(
+                  fontSize: 15,
+                  color:
+                      onTap != null ? ThemeColors.accent : ThemeColors.white),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

@@ -134,7 +134,7 @@ class HelpDeskRes {
   factory HelpDeskRes.fromJson(Map<String, dynamic> json) => HelpDeskRes(
         noTicketMsg: json["no_ticket_msg"],
         totalTickets: json["total_tickets"],
-        tickets: json["tickets"] == null
+        tickets: json["tickets"] == [] || json["tickets"] == null
             ? null
             : List<Ticket>.from(json["tickets"].map((x) => Ticket.fromJson(x))),
         subjects: json["subjects"] == null
@@ -146,7 +146,7 @@ class HelpDeskRes {
   Map<String, dynamic> toJson() => {
         "no_ticket_msg": noTicketMsg,
         "total_tickets": totalTickets,
-        "tickets": tickets == null
+        "tickets": tickets == [] || tickets == null
             ? null
             : List<dynamic>.from(tickets!.map((x) => x.toJson())),
         "subjects": subjects == null

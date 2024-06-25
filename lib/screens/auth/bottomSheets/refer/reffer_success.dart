@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -199,6 +200,22 @@ class _ReferSuccessState extends State<ReferSuccess> {
                           ),
                         ],
                       ),
+                    Align(
+                      // alignment: Alignment.centerLeft,
+                      child: ThemeButtonSmall(
+                        iconFront: true,
+                        color: const Color.fromARGB(255, 3, 94, 15),
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Tabs()),
+                              (route) => false);
+                        },
+                        text: "Go to Home",
+                        icon: Icons.home,
+                      ),
+                    ),
 
                     // Row(
                     //   children: [

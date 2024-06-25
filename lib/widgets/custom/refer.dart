@@ -91,6 +91,13 @@ class ReferApp extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       onTap: () {
         _onShareAppClick();
+
+        // Navigator.push(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const ReferSuccess(),
+        //   ),
+        // );
         // Share.share(
         //   "${referral?.shareText}${"\n\n"}${provider.user?.referralUrl}",
         // );
