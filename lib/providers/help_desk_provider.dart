@@ -92,10 +92,10 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         _error = null;
         _extra = response.extra is Extra ? response.extra : null;
 
-        setSlug("1",
-            "${helpDeskResFromJson(jsonEncode(response.data)).tickets?.isEmpty == true ? "" : helpDeskResFromJson(jsonEncode(response.data)).tickets?[0].ticketId}");
-        notifyListeners();
-        getHelpDeskChatScreen(loaderChatMessage: "0");
+        // setSlug("1",
+        //     "${helpDeskResFromJson(jsonEncode(response.data)).tickets?.isEmpty == true ? "" : helpDeskResFromJson(jsonEncode(response.data)).tickets?[0].ticketId}");
+        // notifyListeners();
+        // getHelpDeskChatScreen(loaderChatMessage: "0");
       } else {
         _error = response.message ?? Const.errSomethingWrong;
       }
@@ -144,6 +144,8 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
           _data = helpDeskResFromJson(jsonEncode(responseList.data));
           _error = null;
           _extra = responseList.extra is Extra ? responseList.extra : null;
+          setSlug("0",
+              "${helpDeskResFromJson(jsonEncode(responseList.data)).tickets?.isEmpty == true ? "" : helpDeskResFromJson(jsonEncode(responseList.data)).tickets?[0].ticketId}");
 
           Map requestDetail = {
             "token":

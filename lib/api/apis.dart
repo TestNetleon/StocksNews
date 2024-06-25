@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Apis {
   static const baseUrl = "https://app.stocks.news/api/v1"; // live server
   // static const baseUrl = kDebugMode

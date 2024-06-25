@@ -289,7 +289,7 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
       MaterialPageRoute(
         builder: (_) => BlogDetail(
           slug: inAppMsg!.slug!,
-          inAppMsgId: inAppMsg!.id,
+          inAppMsgId: inAppMsg.id,
         ),
       ),
       // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},

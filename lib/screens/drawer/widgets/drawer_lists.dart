@@ -432,16 +432,16 @@ List<DrawerRes> aboutTiles = [
       );
     },
   ),
-  DrawerRes(
-    iconData: Icons.mail_outline_sharp,
-    text: "Contact Us",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const ContactUs()),
-      );
-    },
-  ),
+  // DrawerRes(
+  //   iconData: Icons.mail_outline_sharp,
+  //   text: "Contact Us",
+  //   onTap: () {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(builder: (_) => const ContactUs()),
+  //     );
+  //   },
+  // ),
   DrawerRes(
     iconData: Icons.support_agent,
     text: "Helpdesk",
