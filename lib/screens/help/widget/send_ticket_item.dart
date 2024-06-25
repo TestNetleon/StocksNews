@@ -21,14 +21,11 @@ class SendTicketItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Text(
-                provider.reasonController.text,
-                style: stylePTSansRegular(color: Colors.white, fontSize: 18),
-              ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Text(
+              provider.reasonController.text,
+              style: styleGeorgiaBold(color: Colors.white, fontSize: 18),
             ),
           ),
         ),
@@ -45,34 +42,36 @@ class SendTicketItem extends StatelessWidget {
               child: const SingleChildScrollView(
                   child: SelectReasonBottomSheet())),
         if (!isEmpty(provider.reasonController.text))
-          Positioned(
-            bottom: 10,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ThemeInputField(
-                          controller: provider.messageController,
-                          placeholder: "Enter your query",
-                          keyboardType: TextInputType.emailAddress,
-                          inputFormatters: [allSpecialSymbolsRemove],
-                          minLines: 4,
-                          textCapitalization: TextCapitalization.none,
-                        ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ThemeInputField(
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 30, 10),
+                        controller: provider.messageController,
+                        placeholder: "Message",
+                        keyboardType: TextInputType.emailAddress,
+                        inputFormatters: [allSpecialSymbolsRemove],
+                        minLines: 1,
+                        maxLines: 4,
+                        maxLength: 200,
+                        textCapitalization: TextCapitalization.none,
                       ),
-                      IconButton(
-                          icon: const Icon(Icons.send),
-                          onPressed: () => _onSendTicketClick(),
-                          color: ThemeColors.accent),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: () => _onSendTicketClick(),
+                        color: ThemeColors.accent),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
       ],
     );

@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -9,6 +11,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
@@ -38,25 +41,23 @@ class _ChatScreenListState extends State<ChatScreenList> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     HelpDeskProvider provider = context.watch<HelpDeskProvider>();
-
-    print("shoe ${provider.slug == "0"}");
-
     return provider.slug == "0"
         ? const SendTicketItem()
         : Column(
             children: [
-              Text(
-                provider.chatData?.subject ?? "",
-                style: stylePTSansRegular(color: Colors.white, fontSize: 18),
-              ),
-              const SpacerVertical(),
               provider.chatData?.logs?.isEmpty == true &&
                       provider.chatData == null
                   ? const SizedBox()
                   : Expanded(
                       child: BaseUiContainer(
+                        isFull: true,
                         error: provider.error ?? "",
                         hasData: provider.chatData != null &&
                             provider.chatData?.logs?.isNotEmpty == true,
@@ -64,17 +65,38 @@ class _ChatScreenListState extends State<ChatScreenList> {
                         errorDispCommon: true,
                         showPreparingText: true,
                         onRefresh: () => provider.getHelpDeskChatScreen(),
-                        child: RefreshControl(
-                          onRefresh: () async =>
-                              provider.getHelpDeskChatScreen(),
-                          canLoadMore: false,
-                          onLoadMore: () async => {},
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: provider.chatData?.logs?.length,
-                            itemBuilder: (context, index) {
-                              return ChatScreenItem(index: index);
-                            },
+                        child: CommonRefreshIndicator(
+                          onRefresh: () => provider.getHelpDeskChatScreen(),
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color:
+                                        const Color.fromARGB(255, 61, 61, 61),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 15),
+                                  child: Text(
+                                    provider.chatData?.subject ?? "",
+                                    style: styleGeorgiaBold(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                ),
+                                const SpacerVertical(),
+                                ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: provider.chatData?.logs?.length,
+                                  itemBuilder: (context, index) {
+                                    return ChatScreenItem(index: index);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -82,34 +104,43 @@ class _ChatScreenListState extends State<ChatScreenList> {
               if (provider.loaderChatMessage == "0" ||
                   (provider.chatData?.logs != null &&
                       provider.chatData?.logs?.isNotEmpty == true))
-                Positioned(
-                  bottom: 10,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ThemeInputField(
-                                controller: provider.messageController,
-                                placeholder: "Enter your query",
-                                keyboardType: TextInputType.emailAddress,
-                                inputFormatters: [allSpecialSymbolsRemove],
-                                minLines: 4,
-                                textCapitalization: TextCapitalization.none,
-                              ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Stack(
+                              children: [
+                                ThemeInputField(
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(10, 10, 30, 10),
+                                  controller: provider.messageController,
+                                  placeholder: "Message",
+                                  keyboardType: TextInputType.text,
+                                  inputFormatters: [allSpecialSymbolsRemove],
+                                  minLines: 1,
+                                  maxLines: 4,
+                                  maxLength: 200,
+                                  textCapitalization: TextCapitalization.none,
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: IconButton(
+                                      icon: const Icon(Icons.send),
+                                      onPressed: () => _onReplyTicketClick(),
+                                      color: ThemeColors.accent),
+                                ),
+                              ],
                             ),
-                            IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () => _onReplyTicketClick(),
-                                color: ThemeColors.accent),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
             ],
           );

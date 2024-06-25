@@ -15,6 +15,7 @@ class ThemeInputField extends StatelessWidget {
     this.borderRadius = 4,
     this.borderRadiusOnly,
     this.minLines = 1,
+    this.maxLines,
     this.editable = true,
     this.shadow = true,
     this.filled = false,
@@ -31,6 +32,7 @@ class ThemeInputField extends StatelessWidget {
     this.onChanged,
     this.suffix,
     this.prefix,
+    this.contentPadding,
     this.cursorColor,
     super.key,
   });
@@ -39,8 +41,11 @@ class ThemeInputField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLength;
   final int minLines;
+  final int? maxLines;
+
   final bool editable;
   final bool shadow;
+  final EdgeInsetsGeometry? contentPadding;
   final bool filled;
   final bool isUnderline;
   final BorderRadius? borderRadiusOnly;
@@ -95,7 +100,7 @@ class ThemeInputField extends StatelessWidget {
                 keyboardType: keyboardType,
                 maxLength: maxLength,
                 minLines: minLines,
-                maxLines: minLines,
+                maxLines: maxLines,
                 enabled: editable,
                 textCapitalization: textCapitalization,
                 inputFormatters: inputFormatters ?? [allSpecialSymbolsRemove],
@@ -105,16 +110,17 @@ class ThemeInputField extends StatelessWidget {
                   suffix: suffix,
                   hintText: placeholder ?? '',
                   hintStyle: stylePTSansRegular(color: ThemeColors.dividerDark),
-                  constraints: BoxConstraints(
-                    minHeight: 0,
-                    maxHeight: minLines > 1 ? 150.sp : 50.sp,
-                  ),
-                  contentPadding: EdgeInsets.fromLTRB(
-                    10.sp,
-                    10.sp,
-                    12.sp,
-                    10.sp,
-                  ),
+                  // constraints: BoxConstraints(
+                  //   minHeight: 0,
+                  //   maxHeight: minLines > 1 ? 150.sp : 50.sp,
+                  // ),
+                  contentPadding: contentPadding ??
+                      EdgeInsets.fromLTRB(
+                        10.sp,
+                        10.sp,
+                        12.sp,
+                        10.sp,
+                      ),
                   filled: true,
                   fillColor: fillColor,
                   enabledBorder: outlineInputBorder,
