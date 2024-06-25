@@ -109,6 +109,16 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
     getData();
   }
 
+  // void marketCapFilter(String item) {
+  //   _filterParams!.market_cap!.remove(item);
+  //   if (_filterParams!.industry!.isEmpty) {
+  //     _filterParams!.industry = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getData();
+  // }
+
   void industryFilter(String item) {
     _filterParams!.industry!.remove(item);
     if (_filterParams!.industry!.isEmpty) {
