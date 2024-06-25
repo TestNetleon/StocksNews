@@ -17,6 +17,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
+import '../../socket/socket.dart';
+import '../../utils/constants.dart';
 import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/chart/chart.dart';
 import 'widgets/dividends/dividends.dart';
@@ -47,7 +49,7 @@ class _StockDetailState extends State<StockDetail> {
   @override
   void initState() {
     super.initState();
-
+    _addSocket();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
       FirebaseAnalytics.instance.logEvent(
@@ -59,6 +61,49 @@ class _StockDetailState extends State<StockDetail> {
 
   _callApi() {
     context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
+  }
+
+  late WebSocketService _webSocketService;
+  String? tickerPrice;
+  num? tickerChange;
+  num? tickerPercentage;
+  String? tickerChangeString;
+
+  _addSocket() {
+    StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
+
+    try {
+      _webSocketService = WebSocketService(
+        url: 'wss://websockets.financialmodelingprep.com',
+        apiKey: apiKeyFMP,
+        ticker: widget.symbol,
+      );
+      _webSocketService.connect();
+
+      _webSocketService.onDataReceived =
+          (price, change, percentage, changeString) {
+        setState(() {
+          tickerPrice = price;
+          tickerChange = change;
+          tickerPercentage = percentage;
+          tickerChangeString = changeString;
+        });
+        provider.updateSocket(
+          change: tickerChange,
+          changePercentage: tickerPercentage,
+          changeString: tickerChangeString,
+          price: tickerPrice,
+        );
+      };
+    } catch (e) {
+//
+    }
+  }
+
+  @override
+  void dispose() {
+    _webSocketService.disconnect();
+    super.dispose();
   }
 
   @override

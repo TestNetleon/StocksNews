@@ -14,6 +14,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
   Status _status = Status.ideal;
@@ -97,8 +98,6 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         _data = helpDeskResFromJson(jsonEncode(response.data));
         _extra = response.extra is Extra ? response.extra : null;
 
-        setSlug("1",
-            "${data?.tickets == null ? "" : helpDeskResFromJson(jsonEncode(response.data)).tickets?[0].ticketId}");
         notifyListeners();
         getHelpDeskChatScreen(loaderChatMessage: "0");
       } else {
@@ -109,6 +108,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
+      Utils().showLog(e);
       setStatus(Status.loaded);
     }
   }

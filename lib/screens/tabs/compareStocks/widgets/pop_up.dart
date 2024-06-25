@@ -158,7 +158,8 @@ class _CompareStocksPopupState extends State<CompareStocksPopup> {
                         right: 10.sp,
                         top: 12.sp,
                         child: Visibility(
-                          visible: provider.isLoading,
+                          visible: provider.isLoading &&
+                              provider.status != Status.ideal,
                           child: SizedBox(
                             width: 20,
                             height: 20,

@@ -85,9 +85,10 @@ class _SdOverviewState extends State<SdOverview> {
                 //   child: StockDetailAnalystData(),
                 // ),
                 const SpacerVertical(height: 4),
-                const SdStockScore(),
-                const SpacerVertical(height: 4),
                 const SdCompanyBrief(),
+
+                const SpacerVertical(height: 4),
+                const SdStockScore(),
                 SdOverviewLists(
                   dataOver: provider.overviewRes?.calendar,
                   title: "Company Calendar",
