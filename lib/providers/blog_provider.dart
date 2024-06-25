@@ -201,17 +201,31 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
     String? slug,
     inAppMsgId,
     notificationId,
+    point_deduction,
   }) async {
     // setStatus(Status.loading);
     _statusDetail = Status.loading;
     notifyListeners();
     try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        // "blog_id": blogId,
-        "slug": slug ?? "",
-      };
+      Map request = point_deduction != null
+          ? {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              // "blog_id": blogId,
+              "slug": slug ?? "",
+              "point_deduction": "$point_deduction",
+            }
+          : {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "slug": slug ?? "",
+            };
 
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId!});
