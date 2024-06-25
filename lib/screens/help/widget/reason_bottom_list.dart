@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
+
+import '../../../route/my_app.dart';
 
 class SelectReasonBottomSheet extends StatelessWidget {
   const SelectReasonBottomSheet({super.key});
@@ -21,6 +24,7 @@ class SelectReasonBottomSheet extends StatelessWidget {
                   context
                       .read<HelpDeskProvider>()
                       .setReasonController(subject.title, subject.id);
+                  _onSendTicketClick(subject.title);
                 },
                 child: Container(
                   padding:
@@ -79,5 +83,18 @@ class SelectReasonBottomSheet extends StatelessWidget {
     //     },
     //   ),
     // );
+  }
+
+  void _onSendTicketClick(msg) {
+    HelpDeskProvider provider =
+        navigatorKey.currentContext!.read<HelpDeskProvider>();
+    provider.setMessage(msg);
+
+    provider.chatData?.logs?.clear();
+
+    closeKeyboard();
+
+    provider.sendTicket();
+    return;
   }
 }

@@ -105,7 +105,7 @@ class Images {
   static const String indices = "assets/images/bank_ind.png";
   static const String insider = "assets/images/insider.png";
   static const String highPE = "assets/images/finance.png";
-
+  static const String ticket = "assets/images/support-ticket.png";
   static const String referT = "assets/images/refer_t.png";
   static const String referW = "assets/images/refer_w.png";
   static const String referE = "assets/images/refer_e.png";

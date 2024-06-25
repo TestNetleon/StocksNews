@@ -49,10 +49,16 @@ class HelpDeskItem extends StatelessWidget {
                 Container(
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: ThemeColors.accent),
-                  padding: const EdgeInsets.all(5),
-                  child: const Icon(
-                    Icons.edit,
-                    size: 28,
+                  padding: const EdgeInsets.all(6),
+                  // child: const Icon(
+                  //   Icons.edit,
+                  //   size: 28,
+                  // ),
+                  child: Image.asset(
+                    Images.ticket,
+                    height: 26,
+                    width: 26,
+                    color: ThemeColors.white,
                   ),
                 ),
                 const SpacerHorizontal(width: 10),

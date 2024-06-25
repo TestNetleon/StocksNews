@@ -1,6 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -12,7 +10,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
-import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
@@ -71,25 +68,30 @@ class _ChatScreenListState extends State<ChatScreenList> {
                             physics: const AlwaysScrollableScrollPhysics(),
                             child: Column(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color:
-                                        const Color.fromARGB(255, 61, 61, 61),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 15),
-                                  child: Text(
-                                    provider.chatData?.subject ?? "",
-                                    style: styleGeorgiaBold(
-                                        color: Colors.white, fontSize: 18),
+                                Visibility(
+                                  visible: provider.chatData?.subject != null &&
+                                      provider.chatData?.subject != '',
+                                  child: Container(
+                                    margin: const EdgeInsets.only(top: 20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color:
+                                          const Color.fromARGB(255, 61, 61, 61),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 15),
+                                    child: Text(
+                                      provider.chatData?.subject ?? "",
+                                      style: styleGeorgiaBold(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
                                   ),
                                 ),
                                 const SpacerVertical(),
                                 ListView.builder(
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount: provider.chatData?.logs?.length,
                                   itemBuilder: (context, index) {
                                     return ChatScreenItem(index: index);
@@ -113,26 +115,45 @@ class _ChatScreenListState extends State<ChatScreenList> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Stack(
+                            child: Column(
                               children: [
-                                ThemeInputField(
-                                  contentPadding:
-                                      const EdgeInsets.fromLTRB(10, 10, 30, 10),
-                                  controller: provider.messageController,
-                                  placeholder: "Message",
-                                  keyboardType: TextInputType.text,
-                                  inputFormatters: [allSpecialSymbolsRemove],
-                                  minLines: 1,
-                                  maxLines: 4,
-                                  maxLength: 200,
-                                  textCapitalization: TextCapitalization.none,
+                                Visibility(
+                                  visible: provider.chatData?.closeMsg != null,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Text(
+                                      provider.chatData?.closeMsg ?? "",
+                                      style: stylePTSansBold(
+                                          color: ThemeColors.sos),
+                                    ),
+                                  ),
                                 ),
-                                Positioned(
-                                  right: 0,
-                                  child: IconButton(
-                                      icon: const Icon(Icons.send),
-                                      onPressed: () => _onReplyTicketClick(),
-                                      color: ThemeColors.accent),
+                                Stack(
+                                  children: [
+                                    ThemeInputField(
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                          10, 10, 30, 10),
+                                      controller: provider.messageController,
+                                      placeholder: "Message",
+                                      keyboardType: TextInputType.text,
+                                      inputFormatters: [
+                                        allSpecialSymbolsRemove
+                                      ],
+                                      minLines: 1,
+                                      maxLines: 4,
+                                      maxLength: 200,
+                                      textCapitalization:
+                                          TextCapitalization.none,
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      child: IconButton(
+                                          icon: const Icon(Icons.send),
+                                          onPressed: () =>
+                                              _onReplyTicketClick(),
+                                          color: ThemeColors.accent),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
