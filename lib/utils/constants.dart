@@ -405,6 +405,8 @@ String containsSpecificPath(Uri uri) {
     return 'login';
   } else if (uri.path.contains('/sign-up')) {
     return 'signUp';
+  } else if (uri.path.contains('/page/')) {
+    return 'page';
   } else {
     return '';
   }

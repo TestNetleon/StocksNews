@@ -25,6 +25,10 @@ class BlogsDetailRes {
   final String image;
   String? feedbackMsg;
   String? feedbackExistMsg;
+  bool? readingStatus;
+  String? readingTitle;
+  String? readingSubtitle;
+  bool? balanceStatus;
 
   BlogsDetailRes({
     required this.id,
@@ -39,6 +43,10 @@ class BlogsDetailRes {
     required this.image,
     this.feedbackMsg,
     this.feedbackExistMsg,
+    this.readingStatus,
+    this.readingTitle,
+    this.readingSubtitle,
+    this.balanceStatus,
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
@@ -61,6 +69,10 @@ class BlogsDetailRes {
         image: json["image"],
         feedbackExistMsg: json["feedback_exist_msg"],
         feedbackMsg: json["feedback_msg"],
+        readingStatus: json["reading_status"],
+        readingTitle: json["reading_title"],
+        readingSubtitle: json["reading_subtitle"],
+        balanceStatus: json["balance_status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -78,5 +90,9 @@ class BlogsDetailRes {
         "image": image,
         "feedback_msg": feedbackMsg,
         "feedback_exist_msg": feedbackExistMsg,
+        "reading_status": readingStatus,
+        "reading_title": readingTitle,
+        "reading_subtitle": readingSubtitle,
+        "balance_status": balanceStatus,
       };
 }

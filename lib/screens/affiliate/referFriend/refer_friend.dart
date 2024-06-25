@@ -101,10 +101,12 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                               padding:
                                   const EdgeInsets.fromLTRB(10, 10, 10, 10),
                               decoration: const BoxDecoration(
-                                  color: ThemeColors.greyBorder,
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(4),
-                                      topLeft: Radius.circular(4))),
+                                color: ThemeColors.greyBorder,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(4),
+                                  topLeft: Radius.circular(4),
+                                ),
+                              ),
                               child: Text(
                                 "${shareUri ?? ""}",
                                 maxLines: 1,
