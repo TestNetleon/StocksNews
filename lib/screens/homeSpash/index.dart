@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
 import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -123,6 +124,16 @@ class _HomeSplashState extends State<HomeSplash> {
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
+        );
+      } else if (slug != '' && type == NotificationType.ticketDetail.name) {
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(
+              slug: "1",
+              ticketId: slug,
+            ),
+          ),
         );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
         Navigator.pushReplacement(

@@ -5,10 +5,10 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen_item.dart';
 import 'package:stocks_news_new/screens/help/widget/send_ticket_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
@@ -31,8 +31,9 @@ class _ChatScreenListState extends State<ChatScreenList> {
       HelpDeskProvider provider = context.read<HelpDeskProvider>();
 
       provider.setSlug(widget.slug, widget.ticketId ?? "");
-
-      provider.getHelpDeskChatScreen(loaderChatMessage: "0");
+      if (widget.ticketId != "") {
+        provider.getHelpDeskChatScreen(loaderChatMessage: "0");
+      }
     });
   }
 
@@ -40,10 +41,16 @@ class _ChatScreenListState extends State<ChatScreenList> {
   Widget build(BuildContext context) {
     HelpDeskProvider provider = context.watch<HelpDeskProvider>();
 
+    print("shoe ${provider.slug == "0"}");
+
     return provider.slug == "0"
         ? const SendTicketItem()
         : Column(
             children: [
+              Text(
+                provider.chatData?.subject ?? "",
+                style: stylePTSansRegular(color: Colors.white, fontSize: 18),
+              ),
               const SpacerVertical(),
               provider.chatData?.logs?.isEmpty == true &&
                       provider.chatData == null

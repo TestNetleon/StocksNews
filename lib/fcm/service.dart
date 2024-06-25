@@ -24,6 +24,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
+import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
@@ -75,12 +76,22 @@ class FirebaseApi {
         if (whenAppKilled) return null;
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-        Navigator.pushReplacement(
+        Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
         );
+      } else if (slug != '' && type == NotificationType.ticketDetail.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(
+              slug: "1",
+              ticketId: slug,
+            ),
+          ),
+        );
       } else if (slug != '' && type == NotificationType.newsDetail.name) {
-        Navigator.pushReplacement(
+        Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => NewsDetails(
