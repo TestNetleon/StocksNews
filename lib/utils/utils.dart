@@ -555,7 +555,7 @@ void handleDeepLinkNavigation({required Uri? uri}) {
 
   // here will be some conditions to handle in background
   // like if from background then add 4 sec else 1 sec
-  Timer(const Duration(seconds: 1), () {
+  Timer(const Duration(milliseconds: 300), () {
     handleNavigation(
       uri: uri,
       slug: slug,
@@ -722,13 +722,18 @@ void handleNavigation({
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
+      MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
   } else if (type == DeeplinkEnum.trendingIndustries) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
+      MaterialPageRoute(
+        builder: (_) => const Tabs(
+          index: 1,
+          trendingIndex: 4,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.sentiments) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -736,6 +741,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs(index: 3)),
     );
+
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
     Navigator.push(

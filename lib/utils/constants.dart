@@ -382,6 +382,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
   } else if (uri.path.contains('/page/')) {
     // return 'page';
     return DeeplinkEnum.page;
+  } else if (uri.path.contains('/trending-industries')) {
+    // return 'page';
+    return DeeplinkEnum.trendingIndustries;
   }
 
   // Only Market data goes here set else above
