@@ -31,7 +31,7 @@ class _ChatScreenListState extends State<ChatScreenList> {
       HelpDeskProvider provider = context.read<HelpDeskProvider>();
 
       provider.setSlug(widget.slug, widget.ticketId ?? "");
-      if (widget.ticketId != "") {
+      if (widget.ticketId != "" && widget.slug != "0") {
         provider.getHelpDeskChatScreen(loaderChatMessage: "0");
       }
     });

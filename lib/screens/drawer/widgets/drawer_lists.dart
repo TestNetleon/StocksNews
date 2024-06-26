@@ -381,7 +381,7 @@ List<DrawerRes> learn = [
 List<DrawerRes> aboutTiles = [
   DrawerRes(
     iconData: Icons.person_2_outlined,
-    text: "My Profile",
+    text: "My Account",
     onTap: () {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -456,16 +456,16 @@ List<DrawerRes> aboutTiles = [
       );
     },
   ),
-  DrawerRes(
-    iconData: Icons.support_agent,
-    text: "Deep Links",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Deeplinks()),
-      );
-    },
-  ),
+  // DrawerRes(
+  //   iconData: Icons.support_agent,
+  //   text: "Deep Links",
+  //   onTap: () {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(builder: (_) => const Deeplinks()),
+  //     );
+  //   },
+  // ),
   DrawerRes(
     iconData: Icons.help_outline_rounded,
     text: "FAQ",

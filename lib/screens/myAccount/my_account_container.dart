@@ -281,6 +281,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
                   controller: emailController,
+                  maxLines: 1,
                   placeholder: "Enter your email address",
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [emailFormatter],
