@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -129,17 +130,25 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     );
   }
 
-  Future _HelpDesk(UserRes? user) async {
-    if (user == null) {
+  Future _helpDesk() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user == null) {
+      log("1");
       isPhone ? await loginSheet() : await loginSheetTablet();
+      log("2");
     }
-    if (user == null) {
+    if (provider.user == null) {
+      log("3");
       return;
     }
+    log("4");
+
     await Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const HelpDesk()),
     );
+    log("5");
   }
 
   @override
@@ -236,7 +245,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   if (index == 5) {
                     return AboutTile(
                       index: index,
-                      onTap: () => _HelpDesk(user),
+                      onTap: _helpDesk,
                     );
                   }
                   return AboutTile(
