@@ -903,7 +903,7 @@ class ListAlignment extends StatelessWidget {
 
 iOSNavigate(event) {
   log("1");
-  String type = containsSpecificPath(event);
+  DeeplinkEnum type = containsSpecificPath(event);
   log("2");
 
   String slug = extractLastPathComponent(event);
@@ -913,7 +913,7 @@ iOSNavigate(event) {
   log("4");
 }
 
-pushNavigation({String? type, required Uri uri, String? slug}) async {
+pushNavigation({DeeplinkEnum? type, required Uri uri, String? slug}) async {
   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
   // String slugForTicker = extractSymbolValue(uri);
   // Utils().showLog("slug for ticker $slugForTicker");
@@ -924,7 +924,8 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
     userPresent = true;
   }
   Utils().showLog("----$userPresent---");
-  if (type == "blog") {
+  if (type == DeeplinkEnum.blogDetail) {
+    // if (type == "blog") {
     Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
@@ -932,7 +933,9 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
                   // id: "",
                   slug: slug,
                 )));
-  } else if (type == "news") {
+    // } else if (type == "news") {
+  }
+  if (type == DeeplinkEnum.newsDetail) {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
@@ -941,12 +944,16 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
         ),
       ),
     );
-  } else if (type == "stock_detail") {
+    // } else if (type == "stock_detail") {
+  }
+  if (type == DeeplinkEnum.stocksDetail) {
     Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(
             builder: (context) => StockDetail(symbol: slug ?? "")));
-  } else if (type == "login") {
+    // } else if (type == "login") {
+  }
+  if (type == DeeplinkEnum.login) {
     if (userPresent) {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
@@ -957,7 +964,9 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
     } else {
       loginSheet();
     }
-  } else if (type == "signUp") {
+    // } else if (type == "signUp") {
+  }
+  if (type == DeeplinkEnum.signup) {
     if (userPresent) {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
@@ -968,7 +977,9 @@ pushNavigation({String? type, required Uri uri, String? slug}) async {
     } else {
       signupSheet();
     }
-  } else if (type == "dashboard") {
+    // } else if (type == "dashboard") {
+  }
+  if (type == DeeplinkEnum.dashboard) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
