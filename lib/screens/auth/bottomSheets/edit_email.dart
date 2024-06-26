@@ -23,7 +23,6 @@ class EditEmail extends StatelessWidget {
     // return Text(
     //   "Please enter the 4-digit verification code that was sent to $email. The code is valid for 10 minutes.",
     //   style: stylePTSansRegular(
-
     //     color: Colors.white,
     //   ),
     // );

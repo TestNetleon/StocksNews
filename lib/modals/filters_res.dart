@@ -33,10 +33,10 @@ class FiltersData {
             ? null
             : List<FiltersDataItem>.from(
                 json["exchange"].map((x) => FiltersDataItem.fromJson(x))),
-        marketCap: json["MarketCap"] == null
+        marketCap: json["marketcap"] == null
             ? null
             : List<FiltersDataItem>.from(
-                json["MarketCap"].map((x) => FiltersDataItem.fromJson(x))),
+                json["marketcap"].map((x) => FiltersDataItem.fromJson(x))),
         sorting: json["sorting"] == null
             ? null
             : List<FiltersDataItem>.from(
@@ -53,7 +53,7 @@ class FiltersData {
         "exchange": exchange == null
             ? null
             : List<dynamic>.from(exchange!.map((x) => x.toJson())),
-        "MarketCap": marketCap == null
+        "marketcap": marketCap == null
             ? null
             : List<dynamic>.from(marketCap!.map((x) => x.toJson())),
         "sorting": sorting == null

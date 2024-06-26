@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
@@ -20,6 +22,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
@@ -31,14 +34,12 @@ class BlogDetailContainer extends StatelessWidget {
 
   const BlogDetailContainer({super.key, required this.slug});
 
-  void _onSubmit(value, context) async {
+  void _onSubmitAffiliate(value, context) async {
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
-
     if (userProvider.user == null) {
       await loginSheet();
-
       if (userProvider.user != null) {
         await provider.getBlogDetailData(slug: slug);
       }
@@ -53,138 +54,304 @@ class BlogDetailContainer extends StatelessWidget {
     );
   }
 
+  void _onLoginClick(context) async {
+    await loginSheet();
+
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
+
+    if (userProvider.user != null) {
+      provider.getBlogDetailData(slug: slug);
+    }
+  }
+
+  void _onViewBlogClick(context) async {
+    BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
+    await provider.getBlogDetailData(slug: slug, point_deduction: true);
+  }
+
   @override
   Widget build(BuildContext context) {
+    double height = (ScreenUtil().screenHeight -
+            ScreenUtil().bottomBarHeight -
+            ScreenUtil().statusBarHeight) /
+        2.2;
+
     BlogProvider provider = context.watch<BlogProvider>();
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
-      child: BaseUiContainer(
-        error: provider.error,
-        hasData: provider.blogsDetail != null && !provider.isLoadingDetail,
-        isLoading: provider.isLoadingDetail,
-        showPreparingText: true,
-        onRefresh: () => provider.getBlogDetailData(slug: slug),
-        child: CommonRefreshIndicator(
-          onRefresh: () => provider.getBlogDetailData(slug: slug),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // const SpacerVertical(height: 5),
-                    Text(
-                      provider.blogsDetail?.name ?? "",
-                      style: styleGeorgiaBold(fontSize: 25),
+    return Stack(
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(
+            Dimen.padding.sp,
+            Dimen.padding.sp,
+            Dimen.padding.sp,
+            0,
+          ),
+          child: BaseUiContainer(
+            error: provider.error,
+            hasData: provider.blogsDetail != null && !provider.isLoadingDetail,
+            isLoading: provider.isLoadingDetail,
+            showPreparingText: true,
+            onRefresh: () => provider.getBlogDetailData(slug: slug),
+            child: CommonRefreshIndicator(
+              onRefresh: () => provider.getBlogDetailData(slug: slug),
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // const SpacerVertical(height: 5),
+                        Text(
+                          provider.blogsDetail?.name ?? "",
+                          style: styleGeorgiaBold(fontSize: 25),
+                        ),
+                        const SpacerVertical(height: 5),
+                        // Padding(
+                        //   padding: EdgeInsets.only(bottom: 15.sp),
+                        //   child: ListAlignment(
+                        //     // date: DateFormat("MMMM dd, yyyy").format(
+                        //     //     provider.blogsDetail?.publishedDate ??
+                        //     //         DateTime.now()),
+                        //     date: provider.blogsDetail?.postDateString ?? "",
+                        //     list1: provider.blogsDetail?.authors,
+                        //     list2: const [],
+                        //     blog: true,
+                        //   ),
+                        // ),
+                        const SpacerVertical(height: 10),
+                        // SizedBox(
+                        //   width: double.infinity,
+                        //   // height: isPhone
+                        //   //     ? ScreenUtil().screenHeight * 0.3
+                        //   //     : ScreenUtil().screenHeight * 0.4,
+                        //   child: ThemeImageView(
+                        //     url: provider.blogsDetail?.image ?? "",
+                        //     // fit: BoxFit.contain,
+                        //   ),
+                        // ),
+                        CachedNetworkImagesWidget(
+                          provider.blogsDetail?.image ?? "",
+                          height: ScreenUtil().screenHeight * 0.27,
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                          // fit: BoxFit.contain,
+                        ),
+                        const SpacerVertical(height: 10),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 0.sp),
+                          child: ListAlignment(
+                            date: provider.blogsDetail?.postDateString ?? "",
+                            list1: provider.blogsDetail?.authors,
+                            list2: const [],
+                            blog: true,
+                          ),
+                        ),
+                        SpacerVertical(height: Dimen.itemSpacing.sp),
+                        // const BlogDetailAuthor(),
+                        // const SpacerVertical(height: 5),
+                        // const BlogDetailCategory(),
+                        // const SpacerVertical(height: 5),
+                        // const BlogDetailTags(),
+                        HtmlWidget(
+                          onTapImage: (data) {
+                            Utils().showLog(data.sources.first.url);
+                          },
+                          onTapUrl: (url) async {
+                            bool a = false;
+                            if (Platform.isAndroid) {
+                              a = await launchUrl(Uri.parse(url));
+                              // Utils().showLog("clicked ur---$url, return value $a");
+                            } else {
+                              a = true;
+                              Uri uri = Uri.parse(url);
+                              iOSNavigate(uri);
+                              // Utils().showLog("iOS navigation");
+                            }
+                            return a;
+                          },
+                          // customWidgetBuilder: (element) {
+                          //   if (element.localName == 'img') {
+                          //     final src = element.attributes['src'];
+                          //     return ZoomableImage(url: src ?? "");
+                          //   }
+                          //   return null;
+                          // },
+                          onLoadingBuilder:
+                              (context, element, loadingProgress) {
+                            return const ProgressDialog();
+                          },
+                          provider.blogsDetail?.description ?? "",
+                          textStyle:
+                              styleGeorgiaRegular(fontSize: 18, height: 1.5),
+                        ),
+                        if (provider.blogsDetail?.feedbackMsg != null)
+                          ArticleFeedback(
+                            title: provider.blogsDetail?.feedbackMsg,
+                            submitMessage:
+                                provider.blogsDetail?.feedbackExistMsg,
+                            onSubmit: (value) =>
+                                _onSubmitAffiliate(value, context),
+                          ),
+                        const SpacerVertical(height: 30),
+                      ],
                     ),
-                    const SpacerVertical(height: 5),
-                    // Padding(
-                    //   padding: EdgeInsets.only(bottom: 15.sp),
-                    //   child: ListAlignment(
-                    //     // date: DateFormat("MMMM dd, yyyy").format(
-                    //     //     provider.blogsDetail?.publishedDate ??
-                    //     //         DateTime.now()),
-                    //     date: provider.blogsDetail?.postDateString ?? "",
-                    //     list1: provider.blogsDetail?.authors,
-                    //     list2: const [],
-                    //     blog: true,
-                    //   ),
-                    // ),
-                    const SpacerVertical(height: 10),
-                    // SizedBox(
-                    //   width: double.infinity,
-                    //   // height: isPhone
-                    //   //     ? ScreenUtil().screenHeight * 0.3
-                    //   //     : ScreenUtil().screenHeight * 0.4,
-                    //   child: ThemeImageView(
-                    //     url: provider.blogsDetail?.image ?? "",
-                    //     // fit: BoxFit.contain,
-                    //   ),
-                    // ),
-                    CachedNetworkImagesWidget(
-                      provider.blogsDetail?.image ?? "",
-                      height: ScreenUtil().screenHeight * 0.27,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                      // fit: BoxFit.contain,
-                    ),
-                    const SpacerVertical(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 0.sp),
-                      child: ListAlignment(
-                        date: provider.blogsDetail?.postDateString ?? "",
-                        list1: provider.blogsDetail?.authors,
-                        list2: const [],
-                        blog: true,
-                      ),
-                    ),
-                    SpacerVertical(height: Dimen.itemSpacing.sp),
-                    // const BlogDetailAuthor(),
-                    // const SpacerVertical(height: 5),
-                    // const BlogDetailCategory(),
-                    // const SpacerVertical(height: 5),
-                    // const BlogDetailTags(),
-                    HtmlWidget(
-                      onTapImage: (data) {
-                        Utils().showLog(data.sources.first.url);
+                  ),
+
+                  //TODO: Add condition here
+                  Positioned(
+                    bottom: 6.sp,
+                    right: 0,
+                    child: FloatingActionButton(
+                      backgroundColor: ThemeColors.accent,
+                      child: const Icon(Icons.share),
+                      onPressed: () {
+                        commonShare(
+                          title: provider.blogsDetail?.name ?? "",
+                          url: provider.blogsDetail?.slug ?? "",
+                        );
                       },
-                      onTapUrl: (url) async {
-                        bool a = false;
-                        if (Platform.isAndroid) {
-                          a = await launchUrl(Uri.parse(url));
-                          // Utils().showLog("clicked ur---$url, return value $a");
-                        } else {
-                          a = true;
-                          Uri uri = Uri.parse(url);
-                          iOSNavigate(uri);
-                          // Utils().showLog("iOS navigation");
-                        }
-                        return a;
-                      },
-                      // customWidgetBuilder: (element) {
-                      //   if (element.localName == 'img') {
-                      //     final src = element.attributes['src'];
-                      //     return ZoomableImage(url: src ?? "");
-                      //   }
-                      //   return null;
-                      // },
-                      onLoadingBuilder: (context, element, loadingProgress) {
-                        return const ProgressDialog();
-                      },
-                      provider.blogsDetail?.description ?? "",
-                      textStyle: styleGeorgiaRegular(fontSize: 18, height: 1.5),
                     ),
-                    if (provider.blogsDetail?.feedbackMsg != null)
-                      ArticleFeedback(
-                        title: provider.blogsDetail?.feedbackMsg,
-                        submitMessage: provider.blogsDetail?.feedbackExistMsg,
-                        onSubmit: (value) => _onSubmit(value, context),
-                      ),
-                    const SpacerVertical(height: 30),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Positioned(
-                bottom: 6.sp,
-                right: 0,
-                child: FloatingActionButton(
-                  backgroundColor: ThemeColors.accent,
-                  child: const Icon(Icons.share),
-                  onPressed: () {
-                    commonShare(
-                      title: provider.blogsDetail?.name ?? "",
-                      url: provider.blogsDetail?.slug ?? "",
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        if ((provider.blogsDetail?.readingStatus == false) &&
+            !provider.isLoadingDetail)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Container(
+                  height: height / 2,
+                  // height: double.infinity,
+                  // width: double.infinity,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        ThemeColors.tabBack,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: height / 1.2,
+                // width: double.infinity,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: ThemeColors.tabBack,
+                ),
+                child: context.watch<UserProvider>().user == null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.lock, size: 40),
+                            const SpacerVertical(),
+                            Text(
+                              "${provider.blogsDetail?.readingTitle}",
+                              style: stylePTSansBold(fontSize: 18),
+                            ),
+                            const SpacerVertical(height: 10),
+                            Text(
+                              "${provider.blogsDetail?.readingSubtitle}",
+                              style: stylePTSansRegular(fontSize: 14),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SpacerVertical(height: 10),
+                            // if (context.watch<UserProvider>().user == null)
+                            ThemeButtonSmall(
+                              onPressed: () => _onLoginClick(context),
+                              text: "Login to continue",
+                              showArrow: false,
+                            ),
+                            const SpacerVertical(),
+                          ],
+                        ),
+                      )
+                    : provider.blogsDetail?.balanceStatus == null ||
+                            provider.blogsDetail?.balanceStatus == false
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.lock, size: 40),
+                                const SpacerVertical(),
+                                Text(
+                                  "${provider.blogsDetail?.readingTitle}",
+                                  style: stylePTSansBold(fontSize: 18),
+                                ),
+                                const SpacerVertical(height: 10),
+                                Text(
+                                  "${provider.blogsDetail?.readingSubtitle}",
+                                  style: stylePTSansRegular(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SpacerVertical(height: 10),
+                                ThemeButtonSmall(
+                                  onPressed: () {
+                                    Share.share(
+                                      "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                                    );
+                                  },
+                                  text: "Refer Now",
+                                  showArrow: false,
+                                )
+                              ],
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.lock, size: 40),
+                                const SpacerVertical(),
+                                Text(
+                                  "${provider.blogsDetail?.readingTitle}",
+                                  style: stylePTSansBold(fontSize: 18),
+                                ),
+                                const SpacerVertical(height: 10),
+                                Text(
+                                  "${provider.blogsDetail?.readingSubtitle}",
+                                  style: stylePTSansRegular(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SpacerVertical(height: 10),
+                                ThemeButtonSmall(
+                                  onPressed: () => _onViewBlogClick(context),
+                                  text: "View Blog",
+                                  showArrow: false,
+                                ),
+                              ],
+                            ),
+                          ),
+              ),
+            ],
+          )
+      ],
     );
   }
 }
@@ -250,55 +417,3 @@ Widget buildList({
 
   return Wrap(children: widgets);
 }
-
-
-// String? extractImageUrl(String html) {
-//   final document = parse(html);
-//   final imgElement = document.querySelector('img');
-//   final imgSrc = imgElement?.attributes['src'];
-//   log("Image->$imgSrc");
-//   return imgSrc;
-// }
-
-// class ZoomableImage extends StatefulWidget {
-//   final String url;
-
-//   const ZoomableImage({super.key, required this.url});
-
-//   @override
-//   State<ZoomableImage> createState() => _ZoomableImageState();
-// }
-
-// class _ZoomableImageState extends State<ZoomableImage> {
-//   double _scale = 1.0;
-//   Offset _startOffset = Offset.zero;
-//   Offset _currentOffset = Offset.zero;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onScaleStart: (details) {
-//         _startOffset = details.focalPoint;
-//       },
-//       onScaleUpdate: (details) {
-//         setState(() {
-//           _scale = details.scale;
-//           _currentOffset = details.focalPoint - _startOffset + _currentOffset;
-//           _startOffset = details.focalPoint;
-//         });
-//       },
-//       onScaleEnd: (details) {
-//         setState(() {
-//           _scale = 1.0;
-//           _currentOffset = Offset.zero;
-//         });
-//       },
-//       child: Transform(
-//         transform: Matrix4.identity()
-//           ..translate(_currentOffset.dx, _currentOffset.dy)
-//           ..scale(_scale),
-//         child: Image.network(widget.url),
-//       ),
-//     );
-//   }
-// }

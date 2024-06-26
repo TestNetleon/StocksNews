@@ -874,6 +874,39 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
+  Future updatePhone({
+    required token,
+    required phone,
+    required name,
+    required displayName,
+  }) async {
+    Map request = {
+      "token": token ?? "",
+      "phone": phone,
+      "name": name,
+      "display_name": displayName,
+    };
+
+    try {
+      ApiResponse res = await apiRequest(
+        url: Apis.updateProfile,
+        request: request,
+        showProgress: true,
+      );
+      if (res.status) {
+        setStatus(Status.loaded);
+        updateUser(name: name, displayName: displayName, phone: phone);
+        return ApiResponse(status: true, message: res.message);
+      } else {
+        setStatus(Status.loaded);
+        return ApiResponse(status: false, message: res.message);
+      }
+    } catch (e) {
+      setStatus(Status.loaded);
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
   Future resendUpdateEmailOtp(request) async {
     setStatus(Status.loading);
     try {

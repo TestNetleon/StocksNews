@@ -126,7 +126,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           deepLink.path.contains("?referrer=") ||
           deepLink.path.contains("?ref=") ||
           deepLink.path.contains("?referral_code=")) {
-        onDeepLinking = true;
+        // onDeepLinking = true;
 
         String? referralCode = deepLink.queryParameters['code'];
         if (referralCode == null || referralCode == '') {
@@ -150,7 +150,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             if (navigatorKey.currentContext!.read<UserProvider>().user ==
                 null) {
               signupSheet();
-              onDeepLinking = false;
+              // onDeepLinking = false;
             }
           });
           FirebaseAnalytics.instance.logEvent(

@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/marketData/widget/market_data_filter_tex
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -218,21 +219,53 @@ class _MarketDataFilterBottomSheetState
     // );
   }
 
-  // void _showMarketCapPicker(BuildContext context) {
-  //   BaseBottomSheets().gradientBottomSheet(
-  //     child: MarketDataFilterListing(
-  //       label: "All Market Cap",
-  //       items: provider.dataFilterBottomSheet.marketCap,
-  //       onSelected: (index) {
-  //         context.read<StockScreenerProvider>().onChangeMarketcap(
-  //               provider.dataFilterBottomSheet.marketCap[index].key.toString(),
-  //               provider.dataFilterBottomSheet.marketCap[index].value
-  //                   .toString(),
-  //             );
-  //       },
-  //     ),
-  //   );
-  // }
+  void _showMarketCapPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.marketCap == null) {
+      popUpAlert(
+        message: "MarketCap data not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggableSingleSelected(
+      title: "Select Market Cap",
+      items: provider.data!.marketCap!,
+      selected: filterParams?.market_cap,
+      onSelected: (selected) {
+        Utils().showLog('selected ===== ${selected?.value}');
+        String selectedValues = selected?.value ?? "";
+        if (filterParams == null) {
+          filterParams = FilteredParams(
+            market_cap: selectedValues,
+          );
+        } else {
+          filterParams?.market_cap = selectedValues;
+        }
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null) {
+          filterParams = null;
+        }
+        setState(() {});
+      },
+    );
+    // BaseBottomSheets().gradientBottomSheet(
+    //   child: MarketDataFilterListing(
+    //     label: "All Market Cap",
+    //     items: provider.dataFilterBottomSheet.marketCap,
+    //     onSelected: (index) {
+    //       context.read<StockScreenerProvider>().onChangeMarketcap(
+    //             provider.dataFilterBottomSheet.marketCap[index].key.toString(),
+    //             provider.dataFilterBottomSheet.marketCap[index].value
+    //                 .toString(),
+    //           );
+    //     },
+    //   ),
+    // );
+  }
 
   // void _showPricePicker(BuildContext context) {
   //   BaseBottomSheets().gradientBottomSheet(
@@ -384,14 +417,19 @@ class _MarketDataFilterBottomSheetState
                     controller: TextEditingController(),
                   ),
                 ),
-                // const SpacerHorizontal(width: 10),
-                // Expanded(
-                //   child: MarketDataTextFiledClickable(
-                //       hintText: "All Market Cap",
-                //       label: "Market Cap",
-                //       onTap: () => _showMarketCapPicker(context),
-                //       controller: provider.marketCapController),
-                // ),
+                const SpacerHorizontal(width: 10),
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText: filterParams?.market_cap != null
+                        ? filterParams?.market_cap ?? ""
+                        : "All Market Cap",
+                    label: "Market Cap",
+                    onTap: () => _showMarketCapPicker(context),
+                    controller: TextEditingController(),
+
+                    // controller: provider.marketCapController,
+                  ),
+                ),
               ],
             ),
           ),

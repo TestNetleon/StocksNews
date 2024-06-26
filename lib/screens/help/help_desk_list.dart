@@ -55,17 +55,17 @@ class _HelpDeskListState extends State<HelpDeskList> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color.fromARGB(255, 23, 23, 23),
-                              Color.fromARGB(255, 48, 48, 48),
-                            ],
-                          ),
-                        ),
+                        // decoration: BoxDecoration(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   gradient: const LinearGradient(
+                        //     begin: Alignment.topCenter,
+                        //     end: Alignment.bottomCenter,
+                        //     colors: [
+                        //       Color.fromARGB(255, 23, 23, 23),
+                        //       Color.fromARGB(255, 48, 48, 48),
+                        //     ],
+                        //   ),
+                        // ),
                         child: ListView.separated(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -100,7 +100,9 @@ class _HelpDeskListState extends State<HelpDeskList> {
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return const Divider(color: Colors.white12);
+                            return const Divider(
+                              color: Colors.white12,
+                            );
                           },
                         ),
                       ),

@@ -62,6 +62,11 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  setMessage(msg) {
+    messageController.text = msg;
+    notifyListeners();
+  }
+
   void setReasonController(reason, reasonId) {
     reasonController.text = reason;
     _reasonId = reasonId == "" ? reasonId : reasonId;
@@ -215,6 +220,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       _chatData = null;
       setStatus(Status.loading);
     }
+    messageController.clear();
 
     if (showProgressChatMessage) {
       _error = "";

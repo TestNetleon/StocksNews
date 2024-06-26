@@ -9,13 +9,20 @@ class ChatScreen extends StatelessWidget {
   final String? slug;
   final String? ticketId;
 
-  const ChatScreen({this.slug, this.ticketId, super.key});
+  const ChatScreen({
+    this.slug,
+    this.ticketId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
-      body: ChatScreenList(slug: slug, ticketId: ticketId),
+      body: ChatScreenList(
+        slug: slug,
+        ticketId: ticketId,
+      ),
     );
   }
 }

@@ -219,6 +219,14 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                     );
                   }
 
+                  if (index == 5) {
+                    return Visibility(
+                      visible: user != null,
+                      child: AboutTile(
+                          index: index, onTap: aboutTiles[index].onTap),
+                    );
+                  }
+
                   return AboutTile(
                       index: index, onTap: aboutTiles[index].onTap);
                 },

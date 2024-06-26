@@ -182,11 +182,14 @@ class Ticket {
   final String? subject;
   final String? message;
   final String? ticketDate;
+  final String? resolvedOn;
+
   final int? status;
   final String? statusText;
 
   Ticket({
     this.ticketNo,
+    this.resolvedOn,
     this.ticketId,
     this.subject,
     this.message,
@@ -198,6 +201,7 @@ class Ticket {
   factory Ticket.fromJson(Map<String, dynamic> json) => Ticket(
         ticketNo: json["ticket_no"],
         ticketId: json["ticket_id"],
+        resolvedOn: json['resolve_date'],
         subject: json["subject"],
         message: json["message"],
         ticketDate: json["ticket_date"],
@@ -209,6 +213,7 @@ class Ticket {
         "ticket_no": ticketNo,
         "ticket_id": ticketId,
         "subject": subject,
+        "resolve_date": resolvedOn,
         "message": message,
         "ticket_date": ticketDate,
         "status": status,

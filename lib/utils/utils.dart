@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
+import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
@@ -674,7 +675,28 @@ void handleNavigation({
         MaterialPageRoute(builder: (_) => const Tabs()),
       );
     }
-    Utils().showLog("--goto dashboard---");
+  } else if (type == "page") {
+    if (fromBackground) {
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => TCandPolicy(
+            policyType: PolicyType.aboutUs,
+            slug: "$slug",
+          ),
+        ),
+      );
+    } else {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (context) => TCandPolicy(
+            policyType: PolicyType.aboutUs,
+            slug: "$slug",
+          ),
+        ),
+      );
+    }
   } else {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
