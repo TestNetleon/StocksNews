@@ -7,7 +7,20 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
+import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
+import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
+import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
+import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
+import 'package:stocks_news_new/screens/marketData/gainersLosers/index.dart';
+import 'package:stocks_news_new/screens/marketData/gapUpDown/index.dart';
+import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
+import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
+import 'package:stocks_news_new/screens/marketData/indices/index.dart';
+import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
+import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
+import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
+import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -413,113 +426,113 @@ bool isValidUrl(String? url) {
   // return uri != null;
 }
 
-Widget findInitialWidget({required Uri uri}) {
-  String type = containsSpecificPath(uri);
-  String slug = extractLastPathComponent(uri);
+// Widget findInitialWidget({required Uri uri}) {
+//   String type = containsSpecificPath(uri);
+//   String slug = extractLastPathComponent(uri);
 
-  Preference.saveDataList(
-    DeeplinkData(
-      uri: uri,
-      from: "TYPE  - $type",
-      path: "CHECKING INITIAL ROUTE ",
-      slug: slug,
-      type: type,
-      onDeepLink: onDeepLinking,
-    ),
-  );
+//   Preference.saveDataList(
+//     DeeplinkData(
+//       uri: uri,
+//       from: "TYPE  - $type",
+//       path: "CHECKING INITIAL ROUTE ",
+//       slug: slug,
+//       type: type,
+//       onDeepLink: onDeepLinking,
+//     ),
+//   );
 
-  String slugForTicker = extractLastPathComponent(uri);
-  // Utils().showLog("slug for ticker $slugForTicker");
-  bool userPresent = false;
+//   String slugForTicker = extractLastPathComponent(uri);
+//   // Utils().showLog("slug for ticker $slugForTicker");
+//   bool userPresent = false;
 
-  // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  // if (await provider.checkForUser()) {
-  //   userPresent = true;
-  // }
+//   // UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+//   // if (await provider.checkForUser()) {
+//   //   userPresent = true;
+//   // }
 
-  popHome = true;
-  Utils().showLog("----$userPresent---");
-  if (type == "blog") {
-    return BlogDetail(slug: slug);
-  } else if (type == "news") {
-    return NewsDetails(slug: slug);
-  } else if (type == "stock_detail") {
-    return StockDetail(symbol: slugForTicker);
-  } else if (type == "login") {
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: null,
-        from: "Splash called ** FOR INITIAL ROUTE FIND login",
-        onDeepLink: onDeepLinking,
-      ),
-    );
-    return const Splash();
-    // if (userPresent) {
-    //   if (fromBackground) {
-    //     Navigator.pushAndRemoveUntil(
-    //         navigatorKey.currentContext!, Tabs.path, (route) => false);
-    //   }
-    // } else {
-    //   loginSheet();
-    // }
-  } else if (type == "signUp") {
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: null,
-        from: "Splash called ** FOR INITIAL ROUTE FIND singup",
-        onDeepLink: onDeepLinking,
-      ),
-    );
-    return const Splash();
-    // if (userPresent) {
-    //   if (fromBackground) {
-    //     Navigator.pushAndRemoveUntil(
-    //         navigatorKey.currentContext!, Tabs.path, (route) => false);
-    //   }
-    // } else {
-    //   signupSheet();
-    // }
-  } else if (type == "dashboard") {
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: null,
-        from: "Splash called ** FOR INITIAL ROUTE dasboard",
-        onDeepLink: onDeepLinking,
-      ),
-    );
-    return const Splash();
-    // if (fromBackground) {
-    //   Navigator.pushAndRemoveUntil(
-    //     navigatorKey.currentContext!,
-    //     Tabs.path,
-    //     (route) => false,
-    //   );
-    // }
-    // Utils().showLog("--goto dashboard---");
-  } else {
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: null,
-        from: "Splash called ** FOR INITIAL ROUTE FIND Else PArt",
-        onDeepLink: onDeepLinking,
-      ),
-    );
-    return const Splash();
-    // Navigator.push(
-    //   navigatorKey.currentContext!,
-    //   MaterialPageRoute(
-    //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
-    //     builder: (context) => const Tabs(),
-    //   ),
-    // );
+//   popHome = true;
+//   Utils().showLog("----$userPresent---");
+//   if (type == "blog") {
+//     return BlogDetail(slug: slug);
+//   } else if (type == "news") {
+//     return NewsDetails(slug: slug);
+//   } else if (type == "stock_detail") {
+//     return StockDetail(symbol: slugForTicker);
+//   } else if (type == "login") {
+//     Preference.saveDataList(
+//       DeeplinkData(
+//         uri: null,
+//         from: "Splash called ** FOR INITIAL ROUTE FIND login",
+//         onDeepLink: onDeepLinking,
+//       ),
+//     );
+//     return const Splash();
+//     // if (userPresent) {
+//     //   if (fromBackground) {
+//     //     Navigator.pushAndRemoveUntil(
+//     //         navigatorKey.currentContext!, Tabs.path, (route) => false);
+//     //   }
+//     // } else {
+//     //   loginSheet();
+//     // }
+//   } else if (type == "signUp") {
+//     Preference.saveDataList(
+//       DeeplinkData(
+//         uri: null,
+//         from: "Splash called ** FOR INITIAL ROUTE FIND singup",
+//         onDeepLink: onDeepLinking,
+//       ),
+//     );
+//     return const Splash();
+//     // if (userPresent) {
+//     //   if (fromBackground) {
+//     //     Navigator.pushAndRemoveUntil(
+//     //         navigatorKey.currentContext!, Tabs.path, (route) => false);
+//     //   }
+//     // } else {
+//     //   signupSheet();
+//     // }
+//   } else if (type == "dashboard") {
+//     Preference.saveDataList(
+//       DeeplinkData(
+//         uri: null,
+//         from: "Splash called ** FOR INITIAL ROUTE dasboard",
+//         onDeepLink: onDeepLinking,
+//       ),
+//     );
+//     return const Splash();
+//     // if (fromBackground) {
+//     //   Navigator.pushAndRemoveUntil(
+//     //     navigatorKey.currentContext!,
+//     //     Tabs.path,
+//     //     (route) => false,
+//     //   );
+//     // }
+//     // Utils().showLog("--goto dashboard---");
+//   } else {
+//     Preference.saveDataList(
+//       DeeplinkData(
+//         uri: null,
+//         from: "Splash called ** FOR INITIAL ROUTE FIND Else PArt",
+//         onDeepLink: onDeepLinking,
+//       ),
+//     );
+//     return const Splash();
+//     // Navigator.push(
+//     //   navigatorKey.currentContext!,
+//     //   MaterialPageRoute(
+//     //     // builder: (context) => WebviewLink(url: uri), // Changes by Lokendra Sir
+//     //     builder: (context) => const Tabs(),
+//     //   ),
+//     // );
 
-    // Navigator.pushAndRemoveUntil(
-    //   navigatorKey.currentContext!,
-    //   Tabs.path,
-    //   (route) => false,
-    // );
-  }
-}
+//     // Navigator.pushAndRemoveUntil(
+//     //   navigatorKey.currentContext!,
+//     //   Tabs.path,
+//     //   (route) => false,
+//     // );
+//   }
+// }
 
 void handleDeepLinkNavigation({required Uri? uri}) {
   if (uri == null) {
@@ -537,7 +550,7 @@ void handleDeepLinkNavigation({required Uri? uri}) {
   }
 
   // onDeepLinking = true;
-  String type = containsSpecificPath(uri);
+  DeeplinkEnum type = containsSpecificPath(uri);
   String slug = extractLastPathComponent(uri);
 
   // here will be some conditions to handle in background
@@ -554,7 +567,7 @@ void handleDeepLinkNavigation({required Uri? uri}) {
 }
 
 void handleNavigation({
-  String? type,
+  DeeplinkEnum? type,
   required Uri uri,
   String? slug,
   fromBackground = false,
@@ -568,7 +581,7 @@ void handleNavigation({
       from: from,
       path: "Navigation",
       slug: slug,
-      type: type,
+      type: type.toString(),
       onDeepLink: onDeepLinking,
     ),
   );
@@ -588,7 +601,9 @@ void handleNavigation({
   popHome = true;
   Utils().showLog("----$userPresent---");
 
-  if (type == "blog") {
+  // if (type == "blog") {
+
+  if (type == DeeplinkEnum.blogDetail) {
     if (fromBackground) {
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
@@ -604,7 +619,8 @@ void handleNavigation({
         ),
       );
     }
-  } else if (type == "news") {
+    // } else if (type == "news") {
+  } else if (type == DeeplinkEnum.newsDetail) {
     if (fromBackground) {
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
@@ -620,7 +636,8 @@ void handleNavigation({
         ),
       );
     }
-  } else if (type == "stock_detail") {
+    // } else if (type == "stock_detail") {
+  } else if (type == DeeplinkEnum.stocksDetail) {
     if (fromBackground) {
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
@@ -636,7 +653,8 @@ void handleNavigation({
         ),
       );
     }
-  } else if (type == "login") {
+    // } else if (type == "login") {
+  } else if (type == DeeplinkEnum.login) {
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
@@ -651,7 +669,8 @@ void handleNavigation({
         loginSheet();
       });
     }
-  } else if (type == "signUp") {
+    // } else if (type == "signUp") {
+  } else if (type == DeeplinkEnum.signup) {
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
@@ -666,7 +685,8 @@ void handleNavigation({
         signupSheet();
       });
     }
-  } else if (type == "dashboard") {
+    // } else if (type == "dashboard") {
+  } else if (type == DeeplinkEnum.dashboard) {
     if (fromBackground) {
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
@@ -675,7 +695,8 @@ void handleNavigation({
         MaterialPageRoute(builder: (_) => const Tabs()),
       );
     }
-  } else if (type == "page") {
+    // } else if (type == "page") {
+  } else if (type == DeeplinkEnum.page) {
     if (fromBackground) {
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
@@ -697,6 +718,117 @@ void handleNavigation({
         ),
       );
     }
+  } else if (type == DeeplinkEnum.insiderTrades) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
+    );
+  } else if (type == DeeplinkEnum.trendingIndustries) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
+    );
+  } else if (type == DeeplinkEnum.sentiments) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs(index: 3)),
+    );
+    // *********** Market data Pages from Here ********
+  } else if (type == DeeplinkEnum.gainerLoser) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) =>
+            const GainersLosersIndex(type: StocksType.gainers),
+      ),
+    );
+  } else if (type == DeeplinkEnum.gapUpDown) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const GapUpDownStocks(type: StocksType.gapUp),
+      ),
+    );
+  } else if (type == DeeplinkEnum.highLowPE) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const HighLowPEIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.fiftyTwoWeeks) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const FiftyTwoWeeksIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.highLowBeta) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const HighLowsBetaStocksIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.indices) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const IndicesIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.lowPriceStocks) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const LowPriceStocksIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.mostActive) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const MostActiveIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.pennyStocks) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const PennyStocks(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.congressional) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const CongressionalIndex(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.dividents) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const DividendsScreen(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.earnings) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const EarningsScreen(),
+      ),
+    );
+  } else if (type == DeeplinkEnum.stocks) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) => const StocksIndex(),
+      ),
+    );
   } else {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(

@@ -49,22 +49,9 @@ void main() async {
     ),
   );
 
-  // --------- initially ---------–
-  // Uri? initialUri;
-  // try {
-  //   initialUri = await AppLinks().getInitialLink();
-  //   Preference.saveDataList(
-  //     DeeplinkData(
-  //       uri: initialUri,
-  //       from: "AppLinks getInitialLink on app open before RUN().",
-  //     ),
-  //   );
-  // } catch (e) {
-  //   print('Error Receiving referral $e');
-  // }
   splashLoaded = false;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(const MyApp(initialUri: null));
+    runApp(const MyApp());
   });
 }
