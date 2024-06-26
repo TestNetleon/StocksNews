@@ -19,16 +19,13 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
-
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
 import '../screens/auth/bottomSheets/login_sheet.dart';
@@ -572,6 +569,7 @@ void handleNavigation({
   String? slug,
   fromBackground = false,
   String from = "",
+  bool setPopHome = true,
 }) async {
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
 
@@ -598,7 +596,7 @@ void handleNavigation({
     return;
   }
 
-  popHome = true;
+  if (setPopHome) popHome = true;
   Utils().showLog("----$userPresent---");
 
   // if (type == "blog") {
