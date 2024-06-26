@@ -10,6 +10,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
@@ -39,6 +40,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   AppLifecycleState? _appLifecycleState;
 
   bool _initialDeepLinks = false;
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -59,6 +61,50 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // setState(() {});
     });
   }
+
+  //--------In-App Purchase--------------
+  // void _checkForUpdate() {
+  //   InAppUpdate.checkForUpdate().then((updateInfo) {
+  //     if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+  //       if (updateInfo.flexibleUpdateAllowed) {
+  //         // Perform flexible update
+  //         InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
+  //           if (appUpdateResult == AppUpdateResult.success) {
+  //             InAppUpdate.completeFlexibleUpdate();
+  //             _showUpdateSuccessDialog();
+  //           }
+  //         });
+  //       } else if (updateInfo.immediateUpdateAllowed) {
+  //         // Perform immediate update
+  //         InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+  //           if (appUpdateResult == AppUpdateResult.success) {
+  //             _showUpdateSuccessDialog();
+  //           }
+  //         });
+  //       }
+  //     }
+  //   });
+  // }
+
+  // void _showUpdateSuccessDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Update Successful'),
+  //         content: Text('The app has been updated to the latest version.'),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   // -------- Initial Deeplinks For Referral Started ---------------
   void getInitialReferralsIfAny() async {

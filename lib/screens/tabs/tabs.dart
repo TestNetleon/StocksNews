@@ -101,7 +101,6 @@ class _TabsState extends State<Tabs> {
       ),
       drawer: const BaseDrawer(),
       body: Screens.screens.elementAt(_selectedIndex),
-
       //  _selectedIndex == 0
       //     ? const Home()
       //     : _selectedIndex == 1
@@ -123,10 +122,8 @@ class _TabsState extends State<Tabs> {
         showSelectedLabels: true,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        unselectedLabelStyle:
-            stylePTSansBold(color: ThemeColors.white, fontSize: 11),
-        selectedLabelStyle:
-            stylePTSansBold(color: ThemeColors.accent, fontSize: 11),
+        unselectedLabelStyle: stylePTSansBold(color: ThemeColors.white, fontSize: 11),
+        selectedLabelStyle: stylePTSansBold(color: ThemeColors.accent, fontSize: 11),
         onTap: (index) {
           context.read<SearchProvider>().clearSearch();
           if (_selectedIndex != index) {

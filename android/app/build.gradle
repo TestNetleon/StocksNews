@@ -95,6 +95,12 @@ dependencies {
     // coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     implementation("com.google.firebase:firebase-analytics")
+
+    //======== In app implementation ============
+    //implementation("com.google.android.play:app-update:2.1.0")
+    // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
+    //implementation("com.google.android.play:app-update-ktx:2.1.0")
+    //-======== In app implementation ============
 //    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
     // implementation "androidx.window:window:1.2.0"
     // implementation "androidx.window:window-java:1.2.0"

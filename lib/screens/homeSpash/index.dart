@@ -81,8 +81,7 @@ class _HomeSplashState extends State<HomeSplash> {
         ),
       );
 
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
 
       Navigator.pushReplacement(
         navigatorKey.currentContext!,

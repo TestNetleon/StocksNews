@@ -76,7 +76,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // const SpacerVertical(height: 30),
-
                           Visibility(
                             visible: userProvider.user == null,
                             child: Column(
@@ -199,6 +198,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ],
                             ),
                           ),
+
                           Divider(color: ThemeColors.greyBorder, height: 40.sp),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

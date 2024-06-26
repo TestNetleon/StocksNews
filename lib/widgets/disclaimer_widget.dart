@@ -25,7 +25,6 @@ class DisclaimerWidget extends StatelessWidget {
         onTapUrl: (url) async {
           // bool a = await launchUrl(Uri.parse(url));
           // bool a = await openUrl(url);
-
           Navigator.push(
             context,
             createRoute(

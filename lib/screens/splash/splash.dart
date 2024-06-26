@@ -65,7 +65,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     } catch (e) {
       //
       // popUpAlert(message: "$e", title: "Error");
-
       // Navigator.pushAndRemoveUntil(context, Tabs.path, (route) => false);
     }
 
@@ -167,7 +166,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         request: request,
         showProgress: false,
       );
-
       if (response.status) {
         welcome = welcomeResFromJson(jsonEncode(response.data));
         setState(() {});
