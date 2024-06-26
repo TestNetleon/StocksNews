@@ -93,7 +93,7 @@ class MentionedByItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(0),
-                child: Container(
+                child: SizedBox(
                   width: 43,
                   height: 43,
                   child: CachedNetworkImagesWidget(

@@ -132,6 +132,7 @@ class Apis {
   static const disconnectPlaid = "/remove-plaid-portfolio";
   static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
+  static const checkPhoneNo = "/check-phone-no";
   // Stock Detail New ---
   static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";

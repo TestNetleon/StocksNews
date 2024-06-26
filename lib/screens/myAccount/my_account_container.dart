@@ -186,6 +186,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
             popUpAlert(
               message: res.message ?? "",
               title: "",
+              icon: Images.referSuccess,
             );
 
             provider.updateUser(

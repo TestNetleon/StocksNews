@@ -59,15 +59,17 @@ Container stockDOverviewItem({
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
     decoration: BoxDecoration(
+      border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
       gradient: const LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
         colors: [
           Color.fromARGB(255, 23, 23, 23),
-          // ThemeColors.greyBorder,
-          Color.fromARGB(255, 39, 39, 39),
+          Color.fromARGB(255, 36, 36, 36),
+          Color.fromARGB(255, 23, 23, 23),
         ],
       ),
+      // color: Color.fromARGB(255, 23, 23, 23),
       borderRadius: BorderRadius.circular(5),
     ),
     child: Column(
@@ -75,7 +77,7 @@ Container stockDOverviewItem({
       children: [
         Text(
           title ?? "N/A",
-          style: styleGeorgiaBold(color: ThemeColors.white, fontSize: 15),
+          style: stylePTSansRegular(color: ThemeColors.greyText, fontSize: 15),
         ),
         GestureDetector(
           onTap: onTap,
@@ -83,8 +85,8 @@ Container stockDOverviewItem({
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               value == null || value == '' ? "N/A" : value,
-              style: stylePTSansRegular(
-                  fontSize: 15,
+              style: stylePTSansBold(
+                  fontSize: 20,
                   color:
                       onTap != null ? ThemeColors.accent : ThemeColors.white),
             ),
