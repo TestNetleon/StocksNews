@@ -154,6 +154,13 @@ class TodayBreakoutStockProvider extends ChangeNotifier with AuthProviderBase {
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
+        "TimePeriod": _filterParams?.timePeriod?.key ??
+            navigatorKey.currentContext!
+                .read<FilterProvider>()
+                .data
+                ?.timePeriod?[0]
+                .key ??
+            "",
       };
 
       ApiResponse response = await apiRequest(

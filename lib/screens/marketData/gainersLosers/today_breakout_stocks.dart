@@ -53,6 +53,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
         filterParam: filterParams,
+        showTimePeriod: true,
       ),
     );
   }

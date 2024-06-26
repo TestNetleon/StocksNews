@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter_textfiled.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -18,12 +19,12 @@ class MarketDataFilterBottomSheet extends StatefulWidget {
     required this.onFiltered,
     this.filterParam,
     this.showExchange = true,
-    this.sortBy = false,
+    this.showTimePeriod = false,
     super.key,
   });
   final FilteredParams? filterParam;
   final Function(FilteredParams?) onFiltered;
-  final bool showExchange, sortBy;
+  final bool showExchange, showTimePeriod;
 
   @override
   State<MarketDataFilterBottomSheet> createState() =>
@@ -452,6 +453,42 @@ class _MarketDataFilterBottomSheetState
   //     ),
   //   );
   // }
+  void _showTimePeriodPiker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.timePeriod == null) {
+      popUpAlert(
+        message: "Time Period data not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggableSingleSelected(
+      title: "Select Time Period",
+      items: provider.data!.timePeriod!,
+      selected: filterParams?.timePeriod?.value,
+      onSelected: (selected) {
+        Utils().showLog('selected ===== ${selected?.value}, ${selected?.key} ');
+
+        if (filterParams == null) {
+          filterParams = FilteredParams(timePeriod: selected);
+        } else {
+          filterParams?.timePeriod = selected;
+        }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null &&
+            filterParams?.timePeriod == null) {
+          filterParams = null;
+        }
+
+        Utils().showLog('selected ===== ${filterParams?.timePeriod?.key}');
+        setState(() {});
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -527,29 +564,42 @@ class _MarketDataFilterBottomSheetState
               ],
             ),
           ),
-          const SpacerVertical(height: 20),
-          // IntrinsicHeight(
-          //   child: Row(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Expanded(
-          //         child: MarketDataTextFiledClickable(
-          //             hintText: "Sort By",
-          //             label: "Sort By",
-          //             onTap: () => _showPricePicker(context),
-          //             controller: provider.priceController),
-          //       ),
-          //       // const SpacerHorizontal(width: 10),
-          //       // Expanded(
-          //       //   child: MarketDataTextFiledClickable(
-          //       //       hintText: "All Beta",
-          //       //       label: "Beta",
-          //       //       onTap: () => _showBetaPicker(context),
-          //       //       controller: provider.betaController),
-          //       // ),
-          //     ],
-          //   ),
-          // ),
+          Visibility(
+              visible: widget.showTimePeriod,
+              child: const SpacerVertical(height: 12)),
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Visibility(
+                  visible: widget.showTimePeriod,
+                  child: Expanded(
+                    child: MarketDataTextFiledClickable(
+                      hintText: filterParams?.timePeriod?.value != null
+                          ? filterParams?.timePeriod?.value ?? ""
+                          : navigatorKey.currentContext!
+                                  .watch<FilterProvider>()
+                                  .data
+                                  ?.timePeriod?[0]
+                                  .value ??
+                              "Time Period",
+                      label: "Time Period",
+                      onTap: () => _showTimePeriodPiker(context),
+                      controller: TextEditingController(),
+                    ),
+                  ),
+                ),
+                // const SpacerHorizontal(width: 10),
+                // Expanded(
+                //   child: MarketDataTextFiledClickable(
+                //       hintText: "All Beta",
+                //       label: "Beta",
+                //       onTap: () => _showBetaPicker(context),
+                //       controller: provider.betaController),
+                // ),
+              ],
+            ),
+          ),
           // const SpacerVertical(height: 20),
           // IntrinsicHeight(
           //   child: Row(

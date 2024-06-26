@@ -11,6 +11,7 @@ class FiltersData {
   final List<FiltersDataItem>? exchange;
   final List<FiltersDataItem>? marketCap;
   final List<FiltersDataItem>? sorting;
+  final List<FiltersDataItem>? timePeriod;
 
   FiltersData({
     required this.industries,
@@ -18,6 +19,7 @@ class FiltersData {
     required this.exchange,
     required this.marketCap,
     required this.sorting,
+    required this.timePeriod,
   });
 
   factory FiltersData.fromJson(Map<String, dynamic> json) => FiltersData(
@@ -41,6 +43,10 @@ class FiltersData {
             ? null
             : List<FiltersDataItem>.from(
                 json["sorting"].map((x) => FiltersDataItem.fromJson(x))),
+        timePeriod: json["TimePeriod"] == null
+            ? null
+            : List<FiltersDataItem>.from(
+                json["TimePeriod"].map((x) => FiltersDataItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +65,9 @@ class FiltersData {
         "sorting": sorting == null
             ? null
             : List<dynamic>.from(sorting!.map((x) => x.toJson())),
+        "TimePeriod": timePeriod == null
+            ? null
+            : List<dynamic>.from(timePeriod!.map((x) => x.toJson())),
       };
 }
 
