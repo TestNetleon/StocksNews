@@ -22,8 +22,11 @@ class HelpDeskItem extends StatelessWidget {
 
     return Container(
       // color: Colors.transparent,
+
       decoration: showBg
           ? BoxDecoration(
+              border:
+                  Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
               borderRadius: BorderRadius.circular(10),
               gradient: const LinearGradient(
                 begin: Alignment.topCenter,

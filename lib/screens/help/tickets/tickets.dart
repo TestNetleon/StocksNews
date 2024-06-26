@@ -171,6 +171,7 @@ class Tickets extends StatelessWidget {
             subTitle: provider.extra?.subTitle),
         Container(
           decoration: BoxDecoration(
+            border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
             borderRadius: BorderRadius.circular(10),
             gradient: const LinearGradient(
               begin: Alignment.topCenter,
@@ -215,7 +216,9 @@ class Tickets extends StatelessWidget {
                       ),
                     ),
                     Visibility(
-                      visible: !provider.isLoading,
+                      visible: !provider.isLoading &&
+                          (provider.data?.subjects?.isNotEmpty == true &&
+                              provider.data?.subjects != null),
                       child: InkWell(
                         onTap: () {
                           Navigator.push(

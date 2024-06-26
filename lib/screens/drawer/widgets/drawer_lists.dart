@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
@@ -442,15 +445,18 @@ List<DrawerRes> aboutTiles = [
   DrawerRes(
     iconData: Icons.support_agent,
     text: "Helpdesk",
-    onTap: () async {
-      if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
-        isPhone ? await loginSheet() : await loginSheetTablet();
-        return;
-      }
+    onTap: () {
+      // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+      // log("1");
+      // if (user == null) {
+      //   isPhone ? await loginSheet() : await loginSheetTablet();
+      // }
+
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => const HelpDesk()),
       );
+      // log("3");
     },
   ),
   // DrawerRes(
