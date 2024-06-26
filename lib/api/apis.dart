@@ -5,7 +5,6 @@ class Apis {
   // static const baseUrl = kDebugMode
   //     ? "https://notification.stocks.news/api/v1"
   //     : "https://app.stocks.news/api/v1"; // live server
-
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
   static const resendOtp = "/resend-otp";
@@ -132,6 +131,7 @@ class Apis {
   static const disconnectPlaid = "/remove-plaid-portfolio";
   static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
+  static const checkPhoneNo = "/check-phone-no";
   // Stock Detail New ---
   static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";

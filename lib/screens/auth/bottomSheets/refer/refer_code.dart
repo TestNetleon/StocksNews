@@ -15,10 +15,10 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
-import '../../../../utils/constants.dart';
-import '../../../../utils/theme.dart';
-import '../../../../widgets/spacer_vertical.dart';
-import '../../../../widgets/theme_input_field.dart';
+import '../../../../../utils/constants.dart';
+import '../../../../../utils/theme.dart';
+import '../../../../../widgets/spacer_vertical.dart';
+import '../../../../../widgets/theme_input_field.dart';
 import '../../../contactUs/contact_us_item.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'refer_otp.dart';

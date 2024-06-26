@@ -1,8 +1,6 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
-import 'dart:developer';
-import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -35,13 +33,10 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  AppLifecycleState? _appLifecycleState;
-
+class _MyAppState extends State<MyApp> {
   bool _initialDeepLinks = false;
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -49,14 +44,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
-      // if (Platform.isIOS) _getAppLinks();
-      // checkFirebaseDeepLinks();
-      // setState(() {});
     });
   }
 
@@ -128,9 +119,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ),
     );
     if (initialUri != null) {
-      String type = containsSpecificPath(initialUri);
+      DeeplinkEnum type = containsSpecificPath(initialUri);
       _initialDeepLinks = true;
-      onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+      // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+      onDeepLinking =
+          (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+              ? false
+              : true;
       handleDeepLinkNavigation(uri: initialUri);
       Timer(const Duration(milliseconds: 500), () {
         _initialDeepLinks = false;
@@ -152,205 +147,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       );
       if (onDeepLinking || _initialDeepLinks) return;
 
-      String type = containsSpecificPath(event);
-      onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+      DeeplinkEnum type = containsSpecificPath(event);
+      // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+      onDeepLinking =
+          (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+              ? false
+              : true;
       handleDeepLinkNavigation(uri: event);
-
-      // bool isRef = event.toString().contains("/install") ||
-      //     event.toString().contains(".page.link") ||
-      //     event.toString().contains("app.stocks.news://");
-
-      // if (isRef) {
-      //   return;
-      // }
-
-      // if (onDeepLinking == true) return;
-      // onDeepLinking = true;
-
-      // String type = containsSpecificPath(event);
-      // String slug = extractLastPathComponent(event);
-
-      // if (_appLifecycleState == null) {
-      //   Timer(const Duration(seconds: 4), () {
-      //     navigation(
-      //       uri: event,
-      //       slug: slug,
-      //       type: type,
-      //       fromBackground: false,
-      //       from: "_appLinks.uriLinkStream.listen BACKGROUND condition",
-      //     );
-      //     // onDeepLinking = false;
-      //     Timer(const Duration(seconds: 3), () {
-      //       onDeepLinking = false;
-      //     });
-      //   });
-      // } else {
-      //   Timer(const Duration(seconds: 1), () {
-      //     navigation(
-      //       uri: event,
-      //       slug: slug,
-      //       type: type,
-      //       from: "_appLinks.uriLinkStream.listen NORMAL Condition",
-      //     );
-      //   });
-      // }
     });
   }
   // -------- Listen for incoming deeplinks Ended ---------------
-
-  //   String? initialRoute;
-//   String? slug;
-//   void checkFirebaseDeepLinks() async {
-//     // FirebaseDynamicLinks.instance.onLink.listen((pendingDynamicLinkData) {
-//     //   final Uri deepLink = pendingDynamicLinkData.link;
-//     //   log(
-//     //     "Link Received onListen ** => ${"\n\n"}${deepLink.path}${"\n"}$deepLink${"\n"}",
-//     //   );
-//     //   if (onDeepLinking == true) return;
-//     //   onDeepLinking = true;
-//     //   Preference.saveDataList(
-//     //     DeeplinkData(
-//     //       uri: deepLink,
-//     //       from: "FirebaseDynamicLinks onLink received on Listen.",
-//     //     ),
-//     //   );
-//     //   navigateDeepLinks(uri: deepLink);
-//     // });
-//     final PendingDynamicLinkData? initialLink =
-//         await FirebaseDynamicLinks.instance.getInitialLink();
-//     if (initialLink != null) {
-//       if (onDeepLinking == true) return;
-//       onDeepLinking = true;
-//       Preference.saveDataList(
-//         DeeplinkData(
-//           uri: initialLink.link,
-//           from: "FirebaseDynamicLinks onLink received on starting/app open.",
-//         ),
-//       );
-//       final Uri deepLink = initialLink.link;
-//       initialRoute = containsSpecificPath(deepLink);
-//       slug = extractLastPathComponent(deepLink);
-//       log(
-//         "Initial link Received ** => ${"\n\n"}${deepLink.path}${"\n"}$deepLink${"\n"}${deepLink.path.contains("/install")}${"\n"}${deepLink.hasQuery}${"\n"}${deepLink.origin}${"\n"}${"\n\n"}",
-//       );
-//       if (deepLink.path.contains("page.link") ||
-//           deepLink.path.contains("/install") ||
-//           deepLink.path.contains("?code=") ||
-//           deepLink.path.contains("?referrer=") ||
-//           deepLink.path.contains("?ref=") ||
-//           deepLink.path.contains("?referral_code=")) {
-//         String? referralCode = deepLink.queryParameters['code'];
-//         if (referralCode == null || referralCode == '') {
-//           referralCode = deepLink.queryParameters['referrer'];
-//         }
-//         if (referralCode == null || referralCode == '') {
-//           referralCode = deepLink.queryParameters['ref'];
-//         }
-//         if (referralCode == null || referralCode == '') {
-//           referralCode = deepLink.queryParameters['referral_code'];
-//         }
-//         bool isFirstOpen = await Preference.isFirstOpen();
-//         String? code = await Preference.getReferral();
-//         if (referralCode != null &&
-//             referralCode != "" &&
-//             code == null &&
-//             isFirstOpen) {
-//           log("CODE HERE @@@++++=========>  $referralCode");
-//           Preference.saveReferral(referralCode);
-//           Timer(const Duration(seconds: 4), () {
-//             if (navigatorKey.currentContext!.read<UserProvider>().user ==
-//                 null) {
-//               signupSheet();
-//               // onDeepLinking = false;
-//               Timer(const Duration(seconds: 3), () {
-//                 onDeepLinking = false;
-//               });
-//             }
-//           });
-//           FirebaseAnalytics.instance.logEvent(
-//             name: 'referrals',
-//             parameters: {'referral_code': referralCode},
-//           );
-//         }
-//       }
-//       // navigateDeepLinks(uri: deepLink);
-//     }
-//   }
-//   @override
-//   void didChangeAppLifecycleState(AppLifecycleState state) {
-//     isAppInForeground = state == AppLifecycleState.resumed;
-//     // Utils().showLog("**** is in foreground ==>  $isAppInForeground");
-//     setState(() {
-//       _appLifecycleState = state;
-//     });
-//   }
-//   void _getAppLinks() async {
-//     // --------- initially ---------–
-//     // try {
-//     //   if ((await Preference.getReferral()) == null) {
-//     //     Uri? initialLink = await _appLinks.getInitialLink();
-//     //     Preference.saveDataList(
-//     //       DeeplinkData(
-//     //         uri: initialLink,
-//     //         from: "AppLinks getInitialLink on starting/app open.",
-//     //       ),
-//     //     );
-//     //     if (initialLink != null) {
-//     //       String? referralCode = initialLink.queryParameters['referrer'] ??
-//     //           initialLink.queryParameters['ref'] ??
-//     //           initialLink.queryParameters['referral_code'];
-//     //       if (referralCode != null && referralCode != "") {
-//     //         Preference.saveReferral(referralCode);
-//     //       }
-//     //     }
-//     //   }
-//     // } catch (e) {
-//     //   print('Error Receiving referral $e');
-//     // }
-// // --------- Listen ----------
-//     _appLinks.uriLinkStream.listen((event) {
-//       Preference.saveDataList(
-//         DeeplinkData(
-//           uri: event,
-//           from: "AppLinks listened on _appLinks.uriLinkStream.listen",
-//         ),
-//       );
-//       bool isRef = event.toString().contains("/install") ||
-//           event.toString().contains(".page.link") ||
-//           event.toString().contains("app.stocks.news://");
-//       if (isRef) {
-//         return;
-//       }
-//       if (onDeepLinking == true) return;
-//       onDeepLinking = true;
-//       String type = containsSpecificPath(event);
-//       String slug = extractLastPathComponent(event);
-//       if (_appLifecycleState == null) {
-//         Timer(const Duration(seconds: 4), () {
-//           navigation(
-//             uri: event,
-//             slug: slug,
-//             type: type,
-//             fromBackground: false,
-//             from: "_appLinks.uriLinkStream.listen BACKGROUND condition",
-//           );
-//           // onDeepLinking = false;
-//           Timer(const Duration(seconds: 3), () {
-//             onDeepLinking = false;
-//           });
-//         });
-//       } else {
-//         Timer(const Duration(seconds: 1), () {
-//           navigation(
-//             uri: event,
-//             slug: slug,
-//             type: type,
-//             from: "_appLinks.uriLinkStream.listen NORMAL Condition",
-//           );
-//         });
-//       }
-//     });
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -364,16 +170,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             title: Const.appName,
             theme: lightTheme,
             home: child,
-            // home: widget.initialUri != null
-            //     ? findInitialWidget(uri: widget.initialUri!)
-            //     : child,
             routes: Routes.routes,
-            // onGenerateRoute: Routes.getRouteGenerate,
           ),
         );
       },
       child: const Splash(),
-      // child: const SignUpSuccess(),
     );
   }
 }

@@ -874,6 +874,39 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
+  Future updatePhone({
+    required token,
+    required phone,
+    required name,
+    required displayName,
+  }) async {
+    Map request = {
+      "token": token ?? "",
+      "phone": phone,
+      "name": name,
+      "display_name": displayName,
+    };
+
+    try {
+      ApiResponse res = await apiRequest(
+        url: Apis.updateProfile,
+        request: request,
+        showProgress: true,
+      );
+      if (res.status) {
+        setStatus(Status.loaded);
+        updateUser(name: name, displayName: displayName, phone: phone);
+        return ApiResponse(status: true, message: res.message);
+      } else {
+        setStatus(Status.loaded);
+        return ApiResponse(status: false, message: res.message);
+      }
+    } catch (e) {
+      setStatus(Status.loaded);
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
   Future resendUpdateEmailOtp(request) async {
     setStatus(Status.loading);
     try {
@@ -1071,15 +1104,51 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         //
       } else {
         popUpAlert(
-            message: response.message ?? "",
-            title: "Alert",
-            icon: Images.alertPopGIF);
+          message: response.message ?? "",
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
         //
       }
 
       return ApiResponse(status: response.status, message: response.message);
     } catch (e) {
       Utils().showLog("$e");
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+//----check phone no---------
+
+  Future checkPhoneNo(phoneNo) async {
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    Map request = {
+      'token': user?.token ?? "",
+      'phone': phoneNo,
+    };
+
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.checkPhoneNo,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF);
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }

@@ -12,16 +12,19 @@ String helpDeskChatResToJson(HelpDeskChatRes data) =>
 
 class HelpDeskChatRes {
   final String? subject;
+  final String? closeMsg;
   List<Log>? logs;
 
   HelpDeskChatRes({
     this.subject,
     this.logs,
+    this.closeMsg,
   });
 
   factory HelpDeskChatRes.fromJson(Map<String, dynamic> json) =>
       HelpDeskChatRes(
         subject: json["subject"],
+        closeMsg: json["close_msg"],
         logs: json["logs"] == null || json["logs"].isEmpty
             ? null
             : List<Log>.from(json["logs"].map((x) => Log.fromJson(x))),
@@ -29,6 +32,7 @@ class HelpDeskChatRes {
 
   Map<String, dynamic> toJson() => {
         "subject": subject,
+        "close_msg": closeMsg,
         "logs": logs == null || logs?.isEmpty == true
             ? null
             : List<dynamic>.from(logs!.map((x) => x.toJson())),

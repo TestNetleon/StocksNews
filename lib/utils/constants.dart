@@ -105,7 +105,7 @@ class Images {
   static const String indices = "assets/images/bank_ind.png";
   static const String insider = "assets/images/insider.png";
   static const String highPE = "assets/images/finance.png";
-
+  static const String ticket = "assets/images/support-ticket.png";
   static const String referT = "assets/images/refer_t.png";
   static const String referW = "assets/images/refer_w.png";
   static const String referE = "assets/images/refer_e.png";
@@ -330,86 +330,132 @@ extension CurrencyFormat on num {
   }
 }
 
-String containsSpecificPath(Uri uri) {
+enum DeeplinkEnum {
+  blogDetail,
+  stocksDetail,
+  newsDetail,
+  dashboard,
+  login,
+  signup,
+  page,
+  insiderTrades,
+  trendingIndustries,
+  sentiments,
+
+  //below add for Market data only else add above
+  gainerLoser,
+  gapUpDown,
+  highLowPE,
+  fiftyTwoWeeks,
+  highLowBeta,
+  indices,
+  lowPriceStocks,
+  mostActive,
+  pennyStocks,
+  congressional,
+  dividents,
+  earnings,
+  stocks,
+}
+
+DeeplinkEnum containsSpecificPath(Uri uri) {
   Utils().showLog("-----contain path * $uri");
   if (uri.path.contains('/blog/')) {
-    return "blog";
+    // return "blog";
+    return DeeplinkEnum.blogDetail;
   } else if (uri.path.contains('/stock-detail')) {
-    return "stock_detail";
+    // return "stock_detail";
+    return DeeplinkEnum.stocksDetail;
   } else if (uri.path.contains('/news/')) {
-    return 'news';
+    // return 'news';
+    return DeeplinkEnum.newsDetail;
   } else if (uri.toString() == "https://app.stocks.news/" ||
       uri.toString() == "https://app.stocks.news") {
-    return 'dashboard';
+    // return 'dashboard';
+    return DeeplinkEnum.dashboard;
+  } else if (uri.path.contains('/login')) {
+    // return 'login';
+    return DeeplinkEnum.login;
+  } else if (uri.path.contains('/sign-up')) {
+    // return 'signUp';
+    return DeeplinkEnum.signup;
+  } else if (uri.path.contains('/page/')) {
+    // return 'page';
+    return DeeplinkEnum.page;
   }
 
-  //will go with NEW DRAWER from here
-  // else if (uri.path.contains('/top-gainers') ||
-  //     uri.path.contains('/top-losers') ||
-  //     uri.path.contains('/market-data/breakout-stocks')) {
-  //   return "gainer_loser";
-  // } else if (uri.path.contains('/stocks/NYSE') ||
-  //     uri.path.contains('/stocks/NASDAQ') ||
-  //     uri.path.contains('/stocks/OTCMKTS') ||
-  //     uri.path.contains('/market-data/dow-30-stocks') ||
-  //     uri.path.contains('/market-data/sp-500-stocks')) {
-  //   return "indices";
-  // } else if (uri.path.contains('/market-data/gap-up-stocks') ||
-  //     uri.path.contains('/market-data/gap-down-stocks')) {
-  //   return "gapup_gapdown";
-  // } else if (uri.path.contains('/insider-trading')) {
-  //   return 'insider';
-  // } else if (uri.path.contains(' /social-sentiment')) {
-  //   return 'sentiments';
-  // } else if (uri.path.contains('/market-data/high-pe-ratio-stocks') ||
-  //     uri.path.contains('/market-data/low-pe-ratio-stocks') ||
-  //     uri.path.contains('/market-data/high-pe-growth-stocks') ||
-  //     uri.path.contains('/market-data/low-pe-growth-stocks')) {
-  //   return "high_lowPE";
-  // } else if (uri.path.contains('/market-data/52-week-highs') ||
-  //     uri.path.contains('/market-data/52-week-lows')) {
-  //   return "52_weeks";
-  // } else if (uri.path.contains('/market-data/high-beta-stocks') ||
-  //     uri.path.contains('/market-data/low-beta-stocks') ||
-  //     uri.path.contains('/market-data/negative-beta-stocks')) {
-  //   return "high_low_beta";
-  // } else if (uri.path
-  //         .contains('/market-data/low-priced-stocks/stocks-under-50-cents') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-1') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-2') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-5') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-10') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-20') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-30') ||
-  //     uri.path.contains('/market-data/low-priced-stocks/stocks-under-50')) {
-  //   return "low_prices";
-  // } else if (uri.path.contains('/market-data/most-active-stocks') ||
-  //     uri.path.contains('/market-data/most-volatile-stocks') ||
-  //     uri.path.contains('/market-data/unusual-volume-stocks')) {
-  //   return "most_active";
-  // } else if (uri.path.contains('/market-data/most-active-penny-stocks') ||
-  //     uri.path.contains('/market-data/top-penny-stocks-today')) {
-  //   return "penny";
-  // } else if (uri.path.contains('/congress-stock-trades')) {
-  //   return "congress";
-  // } else if (uri.path.contains('/dividend')) {
-  //   return "dividend";
-  // } else if (uri.path.contains('/earning')) {
-  //   return "earning";
-  // } else if (uri.path.contains('/stocks')) {
-  //   return "stocks";
-  // }
-
-  //will go with NEW DRAWER to here.
-
-  else if (uri.path.contains('/login')) {
-    return 'login';
-  } else if (uri.path.contains('/sign-up')) {
-    return 'signUp';
-  } else if (uri.path.contains('/page/')) {
-    return 'page';
+  // Only Market data goes here set else above
+  else if (uri.path.contains('/top-gainers') ||
+      uri.path.contains('/top-losers') ||
+      uri.path.contains('/market-data/breakout-stocks')) {
+    // return "gainer_loser";
+    return DeeplinkEnum.gainerLoser;
+  } else if (uri.path.contains('/stocks/NYSE') ||
+      uri.path.contains('/stocks/NASDAQ') ||
+      uri.path.contains('/stocks/OTCMKTS') ||
+      uri.path.contains('/market-data/dow-30-stocks') ||
+      uri.path.contains('/market-data/sp-500-stocks')) {
+    // return "indices";
+    return DeeplinkEnum.indices;
+  } else if (uri.path.contains('/market-data/gap-up-stocks') ||
+      uri.path.contains('/market-data/gap-down-stocks')) {
+    // return "gapup_gapdown";
+    return DeeplinkEnum.gapUpDown;
+  } else if (uri.path.contains('/insider-trading')) {
+    // return 'insider';
+    return DeeplinkEnum.insiderTrades;
+  } else if (uri.path.contains(' /social-sentiment')) {
+    // return 'sentiments';
+    return DeeplinkEnum.sentiments;
+  } else if (uri.path.contains('/market-data/high-pe-ratio-stocks') ||
+      uri.path.contains('/market-data/low-pe-ratio-stocks') ||
+      uri.path.contains('/market-data/high-pe-growth-stocks') ||
+      uri.path.contains('/market-data/low-pe-growth-stocks')) {
+    // return "high_lowPE";
+    return DeeplinkEnum.highLowPE;
+  } else if (uri.path.contains('/market-data/52-week-highs') ||
+      uri.path.contains('/market-data/52-week-lows')) {
+    // return "52_weeks";
+    return DeeplinkEnum.fiftyTwoWeeks;
+  } else if (uri.path.contains('/market-data/high-beta-stocks') ||
+      uri.path.contains('/market-data/low-beta-stocks') ||
+      uri.path.contains('/market-data/negative-beta-stocks')) {
+    // return "high_low_beta";
+    return DeeplinkEnum.highLowBeta;
+  } else if (uri.path
+          .contains('/market-data/low-priced-stocks/stocks-under-50-cents') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-1') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-2') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-5') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-10') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-20') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-30') ||
+      uri.path.contains('/market-data/low-priced-stocks/stocks-under-50')) {
+    // return "low_prices";
+    return DeeplinkEnum.lowPriceStocks;
+  } else if (uri.path.contains('/market-data/most-active-stocks') ||
+      uri.path.contains('/market-data/most-volatile-stocks') ||
+      uri.path.contains('/market-data/unusual-volume-stocks')) {
+    // return "most_active";
+    return DeeplinkEnum.mostActive;
+  } else if (uri.path.contains('/market-data/most-active-penny-stocks') ||
+      uri.path.contains('/market-data/top-penny-stocks-today')) {
+    // return "penny";
+    return DeeplinkEnum.pennyStocks;
+  } else if (uri.path.contains('/congress-stock-trades')) {
+    // return "congress";
+    return DeeplinkEnum.congressional;
+  } else if (uri.path.contains('/dividend')) {
+    // return "dividend";
+    return DeeplinkEnum.dividents;
+  } else if (uri.path.contains('/earning')) {
+    // return "earning";
+    return DeeplinkEnum.earnings;
+  } else if (uri.path.contains('/stocks')) {
+    // return "stocks";
+    return DeeplinkEnum.stocks;
   } else {
-    return '';
+    return DeeplinkEnum.dashboard;
   }
 }
 
@@ -449,7 +495,6 @@ String extractLastPathComponent(Uri uri) {
     return '';
   }
 }
-
 
 // String extractSymbolValue(Uri uri) {
 //   if (uri.path.contains('/stock-detail')) {

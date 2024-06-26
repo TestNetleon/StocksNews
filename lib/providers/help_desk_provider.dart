@@ -62,6 +62,11 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
+  setMessage(msg) {
+    messageController.text = msg;
+    notifyListeners();
+  }
+
   void setReasonController(reason, reasonId) {
     reasonController.text = reason;
     _reasonId = reasonId == "" ? reasonId : reasonId;

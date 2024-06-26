@@ -19,7 +19,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../../api/api_response.dart';
+import '../../../../../api/api_response.dart';
 import 'reffer_success.dart';
 
 referOTP({required String phone, String appSignature = ''}) async {
