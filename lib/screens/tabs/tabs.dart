@@ -39,11 +39,14 @@ class Tabs extends StatefulWidget {
   final int index;
   final String? inAppMsgId;
   final bool showRef;
+  final int trendingIndex;
+
   const Tabs({
     super.key,
     this.index = 0,
     this.inAppMsgId,
     this.showRef = false,
+    this.trendingIndex = 0,
   });
 
   @override
@@ -82,37 +85,14 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // PopScope(
-        //   canPop: _selectedIndex == 0,
-        //   onPopInvoked: (isPop) {
-        //     if (_selectedIndex != 0) {
-        //       setState(() {
-        //         _selectedIndex = 0;
-        //       });
-        //     }
-        //   },
-        //   child:
-        BaseContainer(
+    return BaseContainer(
       appBar: AppBarHome(
         canSearch: true,
         showTrailing: true,
         isHome: _selectedIndex == 0,
       ),
       drawer: const BaseDrawer(),
-      body: Screens.screens.elementAt(_selectedIndex),
-
-      //  _selectedIndex == 0
-      //     ? const Home()
-      //     : _selectedIndex == 1
-      //         ? const Trending()
-      //         : _selectedIndex == 2
-      //             ? const Insider()
-      //             : _selectedIndex == 3
-      //                 ? const RedditTwitter()
-      //                 : _selectedIndex == 4
-      //                     ? const WatchList()
-      //                     : const News(),
+      body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.white,
         selectedItemColor: ThemeColors.accent,
@@ -141,12 +121,10 @@ class _TabsState extends State<Tabs> {
           bottomTab(icon: Icons.fireplace_outlined, lable: "Trending"),
           bottomTab(icon: Icons.trending_up_sharp, lable: "Insider"),
           bottomTab(icon: Icons.alternate_email_outlined, lable: "Sentiments"),
-          // bottomTab(icon: Icons.trending_up_sharp, lable: "Watchlist"),
           bottomTab(icon: Icons.newspaper_rounded, lable: "News"),
           bottomTab(icon: Icons.compare_arrows, lable: "Compare"),
         ],
       ),
-      // ),
     );
   }
 
@@ -155,8 +133,6 @@ class _TabsState extends State<Tabs> {
     final insiderProvider = context.read<InsiderTradingProvider>();
     final redditTwitterProvider = context.read<RedditTwitterProvider>();
     final newsCatProvider = context.read<NewsCategoryProvider>();
-    // final newsProvider = context.read<FeaturedNewsProvider>();
-    // final latestNewsProvider = context.read<NewsProvider>();
 
     try {
       if (Platform.isAndroid) {
@@ -165,7 +141,6 @@ class _TabsState extends State<Tabs> {
           Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
         }
       } else {
-        // Vibration.vibrate(pattern: [0, 500], intensities: [1, 10]);
         HapticFeedback.lightImpact();
       }
     } catch (e) {
@@ -220,14 +195,15 @@ void _compareStocks(BuildContext context) {
 }
 
 class Screens {
-  static List<Widget> screens = <Widget>[
-    const Home(),
-    const Trending(),
-    const Insider(),
-    const RedditTwitter(),
-    // const WatchList(),
-    const News(),
-    const CompareStocks(),
-    // const CompareNew(),
-  ];
+  static List<Widget> screens(int? trendingIndex) {
+    return <Widget>[
+      const Home(),
+      Trending(index: trendingIndex ?? 0),
+      const Insider(),
+      const RedditTwitter(),
+      const News(),
+      const CompareStocks(),
+      // const CompareNew(),
+    ];
+  }
 }
