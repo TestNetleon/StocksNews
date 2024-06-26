@@ -146,7 +146,7 @@ class CustomTabContainerNEW extends StatefulWidget {
   final bool? scrollable;
   final ScrollPhysics physics;
   final Function(int index)? onChange;
-  final Function(TabController? _controller)? onController;
+  final Function(TabController? controller)? onController;
 
   @override
   State<CustomTabContainerNEW> createState() => _CustomTabContainerNEWState();
