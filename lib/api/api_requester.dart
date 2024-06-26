@@ -91,19 +91,16 @@ Future<ApiResponse> apiRequest({
 
       if (formData.files.isNotEmpty) {
         for (var file in formData.files) {
-          request.files.add(await http.MultipartFile.fromPath(
-              file.key, file.value as String));
+          request.files.add(
+            await http.MultipartFile.fromPath(file.key, file.value as String),
+          );
         }
       }
       var streamedResponse = await request.send();
       response = await http.Response.fromStream(streamedResponse);
     } else {
       response = await http
-          .post(
-            Uri.parse(baseUrl + url),
-            body: request,
-            headers: headers,
-          )
+          .post(Uri.parse(baseUrl + url), body: request, headers: headers)
           .timeout(timeoutDuration);
     }
 
@@ -155,20 +152,14 @@ Future<ApiResponse> apiRequest({
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
       if (!isShowingError && showErrorOnFull) {}
-      return ApiResponse(
-        status: false,
-        message: Const.errSomethingWrong,
-      );
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   } catch (e) {
     Utils().showLog('Catch error => ${e.toString()}');
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
-    return ApiResponse(
-      status: false,
-      message: Const.errSomethingWrong,
-    );
+    return ApiResponse(status: false, message: Const.errSomethingWrong);
   }
 }
 

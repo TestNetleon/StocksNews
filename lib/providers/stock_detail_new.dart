@@ -287,6 +287,9 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
+
+        _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
+
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
         if (_tabRes != null) {
