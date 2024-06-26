@@ -47,6 +47,8 @@ bool fromDrawer = false;
 Uri? shareUri;
 bool onDeepLinking = false;
 bool splashLoaded = false;
+String? fcmTokenGlobal;
+String? appVersion;
 // String? clientId;
 // String? secret;
 // String? createAPI;

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -38,6 +39,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     super.initState();
     splashLoaded = false;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getAppVersion();
       _startProcess();
     });
   }
@@ -72,6 +74,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
+  }
+
+  void _getAppVersion() async {
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      appVersion = packageInfo.version;
+    } catch (e) {
+      //
+    }
   }
 
   void _callAPI() async {
