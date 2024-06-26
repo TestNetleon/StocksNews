@@ -13,9 +13,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -34,6 +32,7 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   List<WelcomeRes>? welcome;
   var deviceType;
+
   @override
   void initState() {
     super.initState();
@@ -45,14 +44,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void _startProcess() async {
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: null,
-        from: "Splash called ** ",
-        onDeepLink: onDeepLinking,
-      ),
-    );
-
     // _callAPI();
     try {
       var deviceType = getDeviceType(

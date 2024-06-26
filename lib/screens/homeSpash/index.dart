@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -72,15 +71,6 @@ class _HomeSplashState extends State<HomeSplash> {
         return;
       }
 
-      Preference.saveDataList(
-        DeeplinkData(
-          uri: null,
-          from: "Navigation with Empty Home Screen to TABS",
-          type: value?.data.toString(),
-          onDeepLink: onDeepLinking,
-        ),
-      );
-
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
 
@@ -93,13 +83,7 @@ class _HomeSplashState extends State<HomeSplash> {
         popHome = true;
         return;
       }
-      Preference.saveDataList(
-        DeeplinkData(
-          uri: null,
-          from: "New Home Screen to Tab navigate on Notification 2",
-          onDeepLink: onDeepLinking,
-        ),
-      );
+
       popHome = true;
       _navigateToRequiredScreen(value.data);
     }

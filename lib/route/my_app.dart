@@ -12,7 +12,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
@@ -56,14 +55,6 @@ class _MyAppState extends State<MyApp> {
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (initialLink != null) {
-      Preference.saveDataList(
-        DeeplinkData(
-          uri: initialLink.link,
-          from: "FirebaseDynamicLinks onLink received on starting/app open.",
-          onDeepLink: onDeepLinking,
-        ),
-      );
-
       final Uri deepLink = initialLink.link;
       if (deepLink.path.contains("page.link") ||
           deepLink.path.contains("/install") ||
@@ -111,13 +102,7 @@ class _MyAppState extends State<MyApp> {
   // -------- Initial Deeplinks when App Opened Started ---------------
   void getInitialDeeplinkWhenAppOpen() async {
     Uri? initialUri = await _appLinks.getInitialLink();
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: initialUri,
-        from: "AppLinks getInitialLink on starting/app open.",
-        onDeepLink: onDeepLinking,
-      ),
-    );
+
     if (initialUri != null) {
       DeeplinkEnum type = containsSpecificPath(initialUri);
       _initialDeepLinks = true;
@@ -138,13 +123,7 @@ class _MyAppState extends State<MyApp> {
   void startListeningForDeepLinks() {
     _appLinks.uriLinkStream.listen((event) {
       if (event.toString().contains("app.stocks.news://")) return;
-      Preference.saveDataList(
-        DeeplinkData(
-          uri: event,
-          from: "AppLinks listened on _appLinks.uriLinkStream.listen",
-          onDeepLink: onDeepLinking,
-        ),
-      );
+
       if (onDeepLinking || _initialDeepLinks) return;
 
       DeeplinkEnum type = containsSpecificPath(event);

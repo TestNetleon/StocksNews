@@ -5,13 +5,11 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
@@ -86,13 +84,6 @@ class _AppBarHomeState extends State<AppBarHome> {
                 Utils().showLog("----${Navigator.canPop(context)}");
                 Utils().showLog("----${navigatorKey.currentState?.canPop()}");
                 if (popHome) {
-                  Preference.saveDataList(
-                    DeeplinkData(
-                      uri: null,
-                      from: "on App Bar Back Press Going to Tabs",
-                      onDeepLink: onDeepLinking,
-                    ),
-                  );
                   Navigator.popUntil(
                       navigatorKey.currentContext!, (route) => route.isFirst);
                   Navigator.pushReplacement(

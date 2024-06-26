@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -19,7 +18,6 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
@@ -37,7 +35,6 @@ import '../screens/blogDetail/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../screens/tabs/tabs.dart';
-import 'preference.dart';
 
 // import 'package:whatsapp_share/whatsapp_share.dart';
 
@@ -574,17 +571,6 @@ void handleNavigation({
   String from = "",
 }) async {
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-
-  Preference.saveDataList(
-    DeeplinkData(
-      uri: uri,
-      from: from,
-      path: "Navigation",
-      slug: slug,
-      type: type.toString(),
-      onDeepLink: onDeepLinking,
-    ),
-  );
 
   // String slugForTicker = extractLastPathComponent(uri);
   bool userPresent = false;

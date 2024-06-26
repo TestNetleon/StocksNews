@@ -76,7 +76,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // const SpacerVertical(height: 30),
-
                           Visibility(
                             visible: userProvider.user == null,
                             child: Column(
@@ -103,7 +102,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ],
                             ),
                           ),
-
                           Visibility(
                             visible: userProvider.user != null,
                             child: Row(
@@ -272,12 +270,10 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ],
                           ),
                           const SpacerVertical(height: 15),
-
                           // Text(
                           //   "Market Data",
                           //   style: stylePTSansBold(),
                           // ),
-
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(
@@ -293,7 +289,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               style: stylePTSansBold(),
                             ),
                           ),
-
                           CustomGridViewPerChild(
                             paddingHorizontal: 5,
                             paddingVertical: 25,
@@ -310,7 +305,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               );
                             },
                           ),
-
                           // Align(
                           //   alignment: Alignment.center,
                           //   child: InkWell(
