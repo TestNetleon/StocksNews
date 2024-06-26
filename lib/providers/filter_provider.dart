@@ -57,11 +57,11 @@ class FilterProvider extends ChangeNotifier with AuthProviderBase {
 }
 
 class FilteredParams {
-  List<String>? exchange_name;
-  List<String>? sector;
-  List<String>? industry;
+  FiltersDataItem? exchange_name;
+  FiltersDataItem? sector;
+ FiltersDataItem? industry;
   String price;
-  String market_cap;
+  FiltersDataItem? market_cap;
   String beta;
   String dividend;
   String isEtf;
@@ -73,7 +73,7 @@ class FilteredParams {
     this.exchange_name,
     this.price = "",
     this.industry,
-    this.market_cap = "",
+    this.market_cap,
     this.beta = "",
     this.dividend = "",
     this.isEtf = "",

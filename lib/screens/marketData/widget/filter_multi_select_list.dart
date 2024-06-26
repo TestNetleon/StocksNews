@@ -96,7 +96,7 @@ class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
                         },
                       ),
                       Text(
-                        item.value,
+                        item.value ?? "",
                         style: stylePTSansRegular(fontSize: 15),
                       ),
                     ],

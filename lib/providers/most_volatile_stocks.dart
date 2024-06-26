@@ -83,36 +83,36 @@ class MostVolatileStocksProvider extends ChangeNotifier with AuthProviderBase {
     getData();
   }
 
-  void exchangeFilter(String item) {
-    _filterParams!.exchange_name!.remove(item);
-    if (_filterParams!.exchange_name!.isEmpty) {
-      _filterParams!.exchange_name = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getData();
-  }
+  // void exchangeFilter(String item) {
+  //   _filterParams!.exchange_name!.remove(item);
+  //   if (_filterParams!.exchange_name!.isEmpty) {
+  //     _filterParams!.exchange_name = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getData();
+  // }
 
-  void sectorFilter(String item) {
-    _filterParams!.sector!.remove(item);
-    if (_filterParams!.sector!.isEmpty) {
-      _filterParams!.sector = null;
-    }
-    _page = 1;
+  // void sectorFilter(String item) {
+  //   _filterParams!.sector!.remove(item);
+  //   if (_filterParams!.sector!.isEmpty) {
+  //     _filterParams!.sector = null;
+  //   }
+  //   _page = 1;
 
-    notifyListeners();
-    getData();
-  }
+  //   notifyListeners();
+  //   getData();
+  // }
 
-  void industryFilter(String item) {
-    _filterParams!.industry!.remove(item);
-    if (_filterParams!.industry!.isEmpty) {
-      _filterParams!.industry = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getData();
-  }
+  // void industryFilter(String item) {
+  //   _filterParams!.industry!.remove(item);
+  //   if (_filterParams!.industry!.isEmpty) {
+  //     _filterParams!.industry = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getData();
+  // }
 
   void setStatus(status) {
     _status = status;
@@ -141,9 +141,9 @@ class MostVolatileStocksProvider extends ChangeNotifier with AuthProviderBase {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
-        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
-        "sector": _filterParams?.sector?.join(",") ?? "",
-        "industry": _filterParams?.industry?.join(",") ?? "",
+        "exchange_name": _filterParams?.exchange_name?.key ?? "",
+        "sector": _filterParams?.sector?.key ?? "",
+        "industry": _filterParams?.industry?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
       };
 

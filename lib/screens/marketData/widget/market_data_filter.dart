@@ -18,11 +18,12 @@ class MarketDataFilterBottomSheet extends StatefulWidget {
     required this.onFiltered,
     this.filterParam,
     this.showExchange = true,
+    this.sortBy = false,
     super.key,
   });
   final FilteredParams? filterParam;
   final Function(FilteredParams?) onFiltered;
-  final bool showExchange;
+  final bool showExchange, sortBy;
 
   @override
   State<MarketDataFilterBottomSheet> createState() =>
@@ -64,25 +65,29 @@ class _MarketDataFilterBottomSheetState
     BaseBottomSheets().gradientBottomSheetDraggable(
       title: "Select Exchange",
       items: provider.data!.exchange!,
-      selected: filterParams?.exchange_name,
+      selected: filterParams?.exchange_name?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        String selectedValues = selected.map((item) => item.value).join(',');
+        FiltersDataItem item = FiltersDataItem(
+            key: selected.map((item) => item.key).join(','),
+            value: selected.map((item) => item.value).join(','));
 
         if (filterParams == null) {
-          filterParams = FilteredParams(
-            exchange_name:
-                selectedValues.isEmpty ? null : selectedValues.split(","),
-          );
+          filterParams = FilteredParams(exchange_name: item);
         } else {
-          filterParams?.exchange_name =
-              selectedValues.isEmpty ? null : selectedValues.split(",");
+          filterParams?.exchange_name = item;
         }
+
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
-            filterParams?.industry == null) {
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null) {
           filterParams = null;
         }
 
+        Utils().showLog('selected ===== ${filterParams?.exchange_name?.key}');
         setState(() {});
       },
     );
@@ -119,31 +124,60 @@ class _MarketDataFilterBottomSheetState
       );
       return;
     }
-
     BaseBottomSheets().gradientBottomSheetDraggable(
       title: "Select Sector",
       items: provider.data!.sectors!,
-      selected: filterParams?.sector,
+      selected: filterParams?.sector?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        String selectedValues = selected.map((item) => item.value).join(',');
+        FiltersDataItem item = FiltersDataItem(
+            key: selected.map((item) => item.key).join(','),
+            value: selected.map((item) => item.value).join(','));
 
         if (filterParams == null) {
-          filterParams = FilteredParams(
-            sector: selectedValues.isEmpty ? null : selectedValues.split(","),
-          );
+          filterParams = FilteredParams(sector: item);
         } else {
-          filterParams?.sector =
-              selectedValues.isEmpty ? null : selectedValues.split(",");
+          filterParams?.sector = item;
         }
 
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
-            filterParams?.industry == null) {
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null) {
           filterParams = null;
         }
+
+        Utils().showLog('selected ===== ${filterParams?.sector?.key}');
         setState(() {});
       },
     );
+
+    // BaseBottomSheets().gradientBottomSheetDraggable(
+    //   title: "Select Sector",
+    //   items: provider.data!.sectors!,
+    //   selected: filterParams?.sector,
+    //   onSelected: (List<FiltersDataItem> selected) {
+    //     String selectedValues = selected.map((item) => item.value).join(',');
+
+    //     if (filterParams == null) {
+    //       filterParams = FilteredParams(
+    //         sector: selectedValues.isEmpty ? null : selectedValues.split(","),
+    //       );
+    //     } else {
+    //       filterParams?.sector =
+    //           selectedValues.isEmpty ? null : selectedValues.split(",");
+    //     }
+
+    //     if (filterParams?.exchange_name == null &&
+    //         filterParams?.sector == null &&
+    //         filterParams?.industry == null) {
+    //       filterParams = null;
+    //     }
+    //     setState(() {});
+    //   },
+    // );
   }
 
   void _showIndustryPicker(BuildContext context) {
@@ -156,29 +190,58 @@ class _MarketDataFilterBottomSheetState
       );
       return;
     }
-
     BaseBottomSheets().gradientBottomSheetDraggable(
       title: "Select Industry",
       items: provider.data!.industries!,
-      selected: filterParams?.industry,
+      selected: filterParams?.industry?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        String selectedValues = selected.map((item) => item.value).join(',');
+        FiltersDataItem item = FiltersDataItem(
+            key: selected.map((item) => item.key).join(','),
+            value: selected.map((item) => item.value).join(','));
+
         if (filterParams == null) {
-          filterParams = FilteredParams(
-            industry: selectedValues.isEmpty ? null : selectedValues.split(","),
-          );
+          filterParams = FilteredParams(industry: item);
         } else {
-          filterParams?.industry =
-              selectedValues.isEmpty ? null : selectedValues.split(",");
+          filterParams?.industry = item;
         }
+
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
-            filterParams?.industry == null) {
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null) {
           filterParams = null;
         }
+
+        Utils().showLog('selected ===== ${filterParams?.industry?.key}');
         setState(() {});
       },
     );
+
+    // BaseBottomSheets().gradientBottomSheetDraggable(
+    //   title: "Select Industry",
+    //   items: provider.data!.industries!,
+    //   selected: filterParams?.industry,
+    //   onSelected: (List<FiltersDataItem> selected) {
+    //     String selectedValues = selected.map((item) => item.value).join(',');
+    //     if (filterParams == null) {
+    //       filterParams = FilteredParams(
+    //         industry: selectedValues.isEmpty ? null : selectedValues.split(","),
+    //       );
+    //     } else {
+    //       filterParams?.industry =
+    //           selectedValues.isEmpty ? null : selectedValues.split(",");
+    //     }
+    //     if (filterParams?.exchange_name == null &&
+    //         filterParams?.sector == null &&
+    //         filterParams?.industry == null) {
+    //       filterParams = null;
+    //     }
+    //     setState(() {});
+    //   },
+    // );
 
     // isScrollable: false,
     // child: FilterMultiSelectListing(
@@ -232,26 +295,57 @@ class _MarketDataFilterBottomSheetState
     BaseBottomSheets().gradientBottomSheetDraggableSingleSelected(
       title: "Select Market Cap",
       items: provider.data!.marketCap!,
-      selected: filterParams?.market_cap,
+      selected: filterParams?.market_cap?.value,
       onSelected: (selected) {
-        Utils().showLog('selected ===== ${selected?.value}');
-        String selectedValues = selected?.value ?? "";
+        Utils().showLog('selected ===== ${selected?.value}, ${selected?.key} ');
+
         if (filterParams == null) {
-          filterParams = FilteredParams(
-            market_cap: selectedValues,
-          );
+          filterParams = FilteredParams(market_cap: selected);
         } else {
-          filterParams?.market_cap = selectedValues;
+          filterParams?.market_cap = selected;
         }
+
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
             filterParams?.market_cap == null) {
           filterParams = null;
         }
+
+        Utils().showLog('selected ===== ${filterParams?.market_cap?.key}');
         setState(() {});
       },
     );
+
+    // BaseBottomSheets().gradientBottomSheetDraggableSingleSelected(
+    //   title: "Select Market Cap",
+    //   items: provider.data!.marketCap!,
+    //   selected: filterParams?.market_cap?.value,
+    //   onSelected: (selected) {
+    //     Utils().showLog('selected ===== ${selected?.value}');
+    //     FiltersDataItem? selectedValues = selected;
+    //     if (filterParams == null) {
+    //       // filterParams?.market_cap = selectedValues;
+    //       // filterParams?.market_cap = FiltersDataItem(key: key, value: value)(
+    //       //   market_cap: selectedValues,
+    //       // ) as FiltersDataItem?;
+    //       filterParams?.market_cap = FiltersDataItem(
+    //           key: selectedValues?.key, value: selectedValues?.value);
+    //     } else {
+    //       filterParams?.market_cap = FiltersDataItem(
+    //           key: selectedValues?.key, value: selectedValues?.value);
+    //     }
+    //     if (filterParams?.exchange_name == null &&
+    //         filterParams?.sector == null &&
+    //         filterParams?.industry == null &&
+    //         filterParams?.market_cap == null) {
+    //       filterParams = null;
+    //     }
+    //     Utils().showLog('selected ===== ${filterParams?.market_cap?.key}');
+
+    //     setState(() {});
+    //   },
+    // );
     // BaseBottomSheets().gradientBottomSheet(
     //   child: MarketDataFilterListing(
     //     label: "All Market Cap",
@@ -378,7 +472,7 @@ class _MarketDataFilterBottomSheetState
                   Expanded(
                     child: MarketDataTextFiledClickable(
                       hintText: filterParams?.exchange_name != null
-                          ? filterParams?.exchange_name?.join(", ") ?? ""
+                          ? filterParams?.exchange_name?.value ?? ""
                           : "All Exchange",
                       label: "Exchange Type",
                       onTap: () => _showExchangePicker(context),
@@ -390,7 +484,7 @@ class _MarketDataFilterBottomSheetState
                 Expanded(
                   child: MarketDataTextFiledClickable(
                     hintText: filterParams?.sector != null
-                        ? filterParams?.sector?.join(", ") ?? ""
+                        ? filterParams?.sector?.value ?? ""
                         : "All Sectors",
                     label: "Sector",
                     onTap: () => _showSectorPicker(context),
@@ -409,7 +503,7 @@ class _MarketDataFilterBottomSheetState
                 Expanded(
                   child: MarketDataTextFiledClickable(
                     hintText: filterParams?.industry != null
-                        ? filterParams?.industry?.join(", ") ?? ""
+                        ? filterParams?.industry?.value ?? ""
                         : "All Industry",
                     label: "Industry",
                     onTap: () => _showIndustryPicker(context),
@@ -420,8 +514,8 @@ class _MarketDataFilterBottomSheetState
                 const SpacerHorizontal(width: 10),
                 Expanded(
                   child: MarketDataTextFiledClickable(
-                    hintText: filterParams?.market_cap != null
-                        ? filterParams?.market_cap ?? ""
+                    hintText: filterParams?.market_cap?.value != null
+                        ? filterParams?.market_cap?.value ?? ""
                         : "All Market Cap",
                     label: "Market Cap",
                     onTap: () => _showMarketCapPicker(context),
@@ -433,26 +527,26 @@ class _MarketDataFilterBottomSheetState
               ],
             ),
           ),
-          // const SpacerVertical(height: 20),
+          const SpacerVertical(height: 20),
           // IntrinsicHeight(
           //   child: Row(
           //     mainAxisSize: MainAxisSize.min,
           //     children: [
           //       Expanded(
           //         child: MarketDataTextFiledClickable(
-          //             hintText: "All Price",
-          //             label: "Price",
+          //             hintText: "Sort By",
+          //             label: "Sort By",
           //             onTap: () => _showPricePicker(context),
           //             controller: provider.priceController),
           //       ),
-          //       const SpacerHorizontal(width: 10),
-          //       Expanded(
-          //         child: MarketDataTextFiledClickable(
-          //             hintText: "All Beta",
-          //             label: "Beta",
-          //             onTap: () => _showBetaPicker(context),
-          //             controller: provider.betaController),
-          //       ),
+          //       // const SpacerHorizontal(width: 10),
+          //       // Expanded(
+          //       //   child: MarketDataTextFiledClickable(
+          //       //       hintText: "All Beta",
+          //       //       label: "Beta",
+          //       //       onTap: () => _showBetaPicker(context),
+          //       //       controller: provider.betaController),
+          //       // ),
           //     ],
           //   ),
           // ),

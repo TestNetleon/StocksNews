@@ -5,7 +5,6 @@ import 'package:stocks_news_new/modals/stock_screener_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
 import 'package:stocks_news_new/screens/marketData/stockScreener/stock_screener_item.dart';
-import 'package:stocks_news_new/screens/marketData/widget/filter_ui_values.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -68,19 +67,19 @@ class _StockScreenerListState extends State<StockScreenerList> {
           subTitle: provider.extraUp?.subTitle ?? "",
           onFilterClick: _onFilterClick,
         ),
-        if (provider.filterParams != null)
-          FilterUiValues(
-            params: provider.filterParams,
-            onDeleteExchange: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
-            onDeleteSector: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
-            onDeleteIndustry: (exchange) {
-              provider.exchangeFilter(exchange);
-            },
-          ),
+        // if (provider.filterParams != null)
+        //   FilterUiValues(
+        //     params: provider.filterParams,
+        //     onDeleteExchange: (exchange) {
+        //       provider.exchangeFilter(exchange);
+        //     },
+        //     onDeleteSector: (exchange) {
+        //       provider.exchangeFilter(exchange);
+        //     },
+        //     onDeleteIndustry: (exchange) {
+        //       provider.exchangeFilter(exchange);
+        //     },
+        //   ),
         Expanded(
           child: BaseUiContainer(
             error: provider.error,

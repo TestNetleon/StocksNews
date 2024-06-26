@@ -82,36 +82,36 @@ class EarningsProvider extends ChangeNotifier with AuthProviderBase {
     getEarningsStocks();
   }
 
-  void exchangeFilter(String item) {
-    _filterParams!.exchange_name!.remove(item);
-    if (_filterParams!.exchange_name!.isEmpty) {
-      _filterParams!.exchange_name = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getEarningsStocks();
-  }
+  // void exchangeFilter(String item) {
+  //   _filterParams!.exchange_name!.remove(item);
+  //   if (_filterParams!.exchange_name!.isEmpty) {
+  //     _filterParams!.exchange_name = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getEarningsStocks();
+  // }
 
-  void sectorFilter(String item) {
-    _filterParams!.sector!.remove(item);
-    if (_filterParams!.sector!.isEmpty) {
-      _filterParams!.sector = null;
-    }
-    _page = 1;
+  // void sectorFilter(String item) {
+  //   _filterParams!.sector!.remove(item);
+  //   if (_filterParams!.sector!.isEmpty) {
+  //     _filterParams!.sector = null;
+  //   }
+  //   _page = 1;
 
-    notifyListeners();
-    getEarningsStocks();
-  }
+  //   notifyListeners();
+  //   getEarningsStocks();
+  // }
 
-  void industryFilter(String item) {
-    _filterParams!.industry!.remove(item);
-    if (_filterParams!.industry!.isEmpty) {
-      _filterParams!.industry = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getEarningsStocks();
-  }
+  // void industryFilter(String item) {
+  //   _filterParams!.industry!.remove(item);
+  //   if (_filterParams!.industry!.isEmpty) {
+  //     _filterParams!.industry = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getEarningsStocks();
+  // }
 
   void setStatus(status) {
     _status = status;
@@ -136,16 +136,16 @@ class EarningsProvider extends ChangeNotifier with AuthProviderBase {
         "page": "$_page",
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "exchange_name": _filterParams?.exchange_name?.key ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry?.join(",") ?? "",
-        "market_cap": _filterParams?.market_cap ?? "",
+        "industry": _filterParams?.industry?.key ?? "",
+        "market_cap": _filterParams?.market_cap?.key ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector?.join(",") ?? "",
+        "sector": _filterParams?.sector?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
       };
 

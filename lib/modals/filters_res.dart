@@ -63,12 +63,12 @@ class FiltersData {
 }
 
 class FiltersDataItem {
-  final String key;
-  final String value;
+  final String? key;
+  final String? value;
 
   FiltersDataItem({
-    required this.key,
-    required this.value,
+    this.key,
+    this.value,
   });
 
   factory FiltersDataItem.fromJson(Map<String, dynamic> json) =>
