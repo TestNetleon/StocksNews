@@ -51,22 +51,30 @@ Future<ApiResponse> apiRequest({
   showErrorOnFull = true,
 }) async {
   Map<String, String> headers = getHeaders();
-  if (header != null) {
-    headers.addAll(header);
-  }
-  String? fcmToken = await Preference.getFcmToken();
+  if (header != null) headers.addAll(header);
+
+  String? fcmToken = fcmTokenGlobal;
+  fcmToken ??= await Preference.getFcmToken();
   if (fcmToken != null) {
     Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
     headers.addAll(fcmHeaders);
   }
+  if (appVersion != null) {
+    Map<String, String> versionHeader = {"appVersion": "$appVersion"};
+    headers.addAll(versionHeader);
+  }
+
+  // *********** debug prints only **********
   Utils().showLog("URL  =  ${baseUrl + url}");
   Utils().showLog("HEADERS  =  ${headers.toString()}");
   if (formData != null) {
     Utils().showLog(
-        "REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}");
+      "REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}",
+    );
   } else {
     Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
   }
+  // *********** debug prints only **********
 
   Future.delayed(Duration.zero, () {
     if (showProgress) {
@@ -100,6 +108,7 @@ Future<ApiResponse> apiRequest({
     }
 
     Utils().showLog("RESPONSE  =  ${response.body}");
+
     if (response.statusCode == 200) {
       if (showProgress) closeGlobalProgressDialog();
       bool session = jsonDecode(response.body)['status'] == false &&

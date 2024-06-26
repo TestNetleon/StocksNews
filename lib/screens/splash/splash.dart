@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -12,9 +13,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/modals/welcome_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -33,24 +32,18 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   List<WelcomeRes>? welcome;
   var deviceType;
+
   @override
   void initState() {
     super.initState();
     splashLoaded = false;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getAppVersion();
       _startProcess();
     });
   }
 
   void _startProcess() async {
-    Preference.saveDataList(
-      DeeplinkData(
-        uri: null,
-        from: "Splash called ** ",
-        onDeepLink: onDeepLinking,
-      ),
-    );
-
     // _callAPI();
     try {
       var deviceType = getDeviceType(
@@ -72,6 +65,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     Timer(const Duration(seconds: 3), () {
       _getDeviceType();
     });
+  }
+
+  void _getAppVersion() async {
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      appVersion = packageInfo.version;
+    } catch (e) {
+      //
+    }
   }
 
   void _callAPI() async {

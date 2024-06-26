@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/foundation.dart';
 
 class Apis {
@@ -5,6 +7,7 @@ class Apis {
   // static const baseUrl = kDebugMode
   //     ? "https://notification.stocks.news/api/v1"
   //     : "https://app.stocks.news/api/v1"; // live server
+
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
   static const resendOtp = "/resend-otp";

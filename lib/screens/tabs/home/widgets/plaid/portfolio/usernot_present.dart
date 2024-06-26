@@ -126,7 +126,7 @@ class _PortfolioUserNotLoggedInState extends State<PortfolioUserNotLoggedIn> {
                                 provider.user?.name == null ||
                                         provider.user?.name == ''
                                     ? "Hello Investor"
-                                    : "Hello, ${provider.user?.name}",
+                                    : "Hello ${provider.user?.name}",
                                 style: stylePTSansBold(
                                   color: ThemeColors.accent,
                                 ),

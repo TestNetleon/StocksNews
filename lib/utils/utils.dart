@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -19,16 +18,13 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:intl/intl.dart';
-
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
 import '../screens/auth/bottomSheets/login_sheet.dart';
@@ -37,7 +33,6 @@ import '../screens/blogDetail/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
 import '../screens/tabs/tabs.dart';
-import 'preference.dart';
 
 // import 'package:whatsapp_share/whatsapp_share.dart';
 
@@ -555,7 +550,7 @@ void handleDeepLinkNavigation({required Uri? uri}) {
 
   // here will be some conditions to handle in background
   // like if from background then add 4 sec else 1 sec
-  Timer(const Duration(seconds: 1), () {
+  Timer(const Duration(milliseconds: 300), () {
     handleNavigation(
       uri: uri,
       slug: slug,
@@ -572,19 +567,9 @@ void handleNavigation({
   String? slug,
   fromBackground = false,
   String from = "",
+  bool setPopHome = true,
 }) async {
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-
-  Preference.saveDataList(
-    DeeplinkData(
-      uri: uri,
-      from: from,
-      path: "Navigation",
-      slug: slug,
-      type: type.toString(),
-      onDeepLink: onDeepLinking,
-    ),
-  );
 
   // String slugForTicker = extractLastPathComponent(uri);
   bool userPresent = false;
@@ -598,7 +583,7 @@ void handleNavigation({
     return;
   }
 
-  popHome = true;
+  if (setPopHome) popHome = true;
   Utils().showLog("----$userPresent---");
 
   // if (type == "blog") {
@@ -722,13 +707,18 @@ void handleNavigation({
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
+      MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
   } else if (type == DeeplinkEnum.trendingIndustries) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs(index: 1)),
+      MaterialPageRoute(
+        builder: (_) => const Tabs(
+          index: 1,
+          trendingIndex: 4,
+        ),
+      ),
     );
   } else if (type == DeeplinkEnum.sentiments) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -736,6 +726,7 @@ void handleNavigation({
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs(index: 3)),
     );
+
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
     Navigator.push(

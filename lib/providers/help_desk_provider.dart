@@ -167,7 +167,6 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
 
           if (responseDetail.status) {
             _error = null;
-
             _chatData =
                 helpDeskChatResFromJson(jsonEncode(responseDetail.data));
             _extra =

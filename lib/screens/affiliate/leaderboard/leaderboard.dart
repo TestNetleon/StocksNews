@@ -84,9 +84,10 @@ class _AffiliateLeaderBoardState extends State<AffiliateLeaderBoard> {
 
   _callAPI() {
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    if (provider.leaderBoard == null || provider.leaderBoard?.isEmpty == true) {
-      context.read<LeaderBoardProvider>().getLeaderBoardData();
-    }
+    // if (provider.leaderBoard == null || provider.leaderBoard?.isEmpty == true) {
+    //   provider.getLeaderBoardData();
+    // }
+    provider.getLeaderBoardData();
   }
 
   @override

@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplinks.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -21,13 +23,11 @@ import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
-import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../blogNew/blogsNew/index.dart';
-import '../../contactUs/contact_us.dart';
 import '../../faq/index.dart';
 import '../../t&cAndPolicy/tc_policy.dart';
 import '../../whatWeDo/index.dart';
@@ -381,7 +381,7 @@ List<DrawerRes> learn = [
 List<DrawerRes> aboutTiles = [
   DrawerRes(
     iconData: Icons.person_2_outlined,
-    text: "My Profile",
+    text: "My Account",
     onTap: () {
       Navigator.push(
         navigatorKey.currentContext!,
@@ -445,27 +445,30 @@ List<DrawerRes> aboutTiles = [
   DrawerRes(
     iconData: Icons.support_agent,
     text: "Helpdesk",
-    onTap: () async {
-      if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
-        isPhone ? await loginSheet() : await loginSheetTablet();
-        return;
-      }
+    onTap: () {
+      // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+      // log("1");
+      // if (user == null) {
+      //   isPhone ? await loginSheet() : await loginSheetTablet();
+      // }
+
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => const HelpDesk()),
       );
+      // log("3");
     },
   ),
-  DrawerRes(
-    iconData: Icons.support_agent,
-    text: "Deep Links",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Deeplinks()),
-      );
-    },
-  ),
+  // DrawerRes(
+  //   iconData: Icons.support_agent,
+  //   text: "Deep Links",
+  //   onTap: () {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(builder: (_) => const Deeplinks()),
+  //     );
+  //   },
+  // ),
   DrawerRes(
     iconData: Icons.help_outline_rounded,
     text: "FAQ",

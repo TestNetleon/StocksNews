@@ -41,7 +41,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
             CustomGridView(
               paddingVerticle: 0,
               paddingHorizontal: 0,
-              itemSpace: 8,
+              itemSpace: 10,
               length: 25,
               getChild: (index) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

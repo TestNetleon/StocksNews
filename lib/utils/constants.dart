@@ -26,6 +26,7 @@ enum NotificationType {
   stockDetail,
   nudgeFriend,
   ticketDetail,
+  referRegistration,
 }
 
 enum BlogsType { blog, author, category, tag }
@@ -47,6 +48,8 @@ bool fromDrawer = false;
 Uri? shareUri;
 bool onDeepLinking = false;
 bool splashLoaded = false;
+String? fcmTokenGlobal;
+String? appVersion;
 // String? clientId;
 // String? secret;
 // String? createAPI;
@@ -133,6 +136,7 @@ class Images {
   static const String otpVerify = "assets/images/otp1.gif";
   static const String referSuccess = "assets/images/success.gif";
   static const String kingGIF = "assets/images/king.gif";
+  static const String receiveGIF = "assets/images/receive.gif";
 
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
@@ -382,6 +386,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
   } else if (uri.path.contains('/page/')) {
     // return 'page';
     return DeeplinkEnum.page;
+  } else if (uri.path.contains('/trending-industries')) {
+    // return 'page';
+    return DeeplinkEnum.trendingIndustries;
   }
 
   // Only Market data goes here set else above

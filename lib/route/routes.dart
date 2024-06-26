@@ -1,9 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
@@ -65,33 +60,18 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/providers/what_we_do_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/qrScan/index.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
-import 'package:stocks_news_new/screens/blogDetail/index.dart';
-import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
-import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/contactUs/contact_us.dart';
-import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
-import 'package:stocks_news_new/screens/help/help_desk.dart';
-import 'package:stocks_news_new/screens/help/widget/view_all_list.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplink_data.dart';
-import 'package:stocks_news_new/screens/help/deeplinks/deeplinks.dart';
-import 'package:stocks_news_new/screens/marketData/congressionDetail/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
 import 'package:stocks_news_new/screens/marketData/fiftyTwoWeeks/index.dart';
-import 'package:stocks_news_new/screens/marketData/gainersLosers/index.dart';
-import 'package:stocks_news_new/screens/marketData/gapUpDown/index.dart';
 import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
-import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
@@ -100,23 +80,11 @@ import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/screens/start/index.dart';
-import 'package:stocks_news_new/screens/stockDetail/index.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry.dart';
-import 'package:stocks_news_new/screens/stocks/index.dart';
-import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/index.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
-import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
-import 'package:stocks_news_new/screens/tabs/insider/insiderDetails/insider_details.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/preference.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
@@ -167,7 +135,6 @@ class Routes {
     StockScreenerScreen.path: (_) => const StockScreenerScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
     ReferAFriend.path: (_) => const ReferAFriend(),
-    Deeplinks.path: (_) => const Deeplinks(),
   };
 
   static Route bottomToTopScreenRoute(widget) {
