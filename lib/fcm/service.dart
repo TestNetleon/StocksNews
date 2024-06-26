@@ -19,6 +19,7 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
@@ -153,6 +154,11 @@ class FirebaseApi {
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         referLogin();
+      } else if (type == NotificationType.referRegistration.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const ReferAFriend()),
+        );
       } else {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);

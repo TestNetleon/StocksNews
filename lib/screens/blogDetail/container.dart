@@ -270,7 +270,10 @@ class BlogDetailContainer extends StatelessWidget {
                             const SpacerVertical(height: 10),
                             Text(
                               "${provider.blogsDetail?.readingSubtitle}",
-                              style: stylePTSansRegular(fontSize: 14),
+                              style: stylePTSansRegular(
+                                fontSize: 14,
+                                height: 1.3,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                             const SpacerVertical(height: 10),
@@ -303,7 +306,10 @@ class BlogDetailContainer extends StatelessWidget {
                                 const SpacerVertical(height: 10),
                                 Text(
                                   "${provider.blogsDetail?.readingSubtitle}",
-                                  style: stylePTSansRegular(fontSize: 14),
+                                  style: stylePTSansRegular(
+                                    fontSize: 14,
+                                    height: 1.3,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                                 const SpacerVertical(height: 10),
@@ -336,7 +342,10 @@ class BlogDetailContainer extends StatelessWidget {
                                 const SpacerVertical(height: 10),
                                 Text(
                                   "${provider.blogsDetail?.readingSubtitle}",
-                                  style: stylePTSansRegular(fontSize: 14),
+                                  style: stylePTSansRegular(
+                                    fontSize: 14,
+                                    height: 1.3,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                                 const SpacerVertical(height: 10),

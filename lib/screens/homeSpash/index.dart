@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -214,6 +215,11 @@ class _HomeSplashState extends State<HomeSplash> {
         Timer(const Duration(milliseconds: 300), () {
           referLogin();
         });
+      } else if (type == NotificationType.referRegistration.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const ReferAFriend()),
+        );
       } else {
         // arguments: {"notificationId": notificationId},
         Navigator.popUntil(

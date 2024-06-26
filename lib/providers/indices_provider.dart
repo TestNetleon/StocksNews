@@ -104,7 +104,7 @@ class IndicesProvider extends ChangeNotifier {
             filterParams?.sector != null ||
             filterParams?.industry != null ||
             filterParams?.price != "" ||
-            filterParams?.market_cap != "" ||
+            filterParams?.market_cap != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||

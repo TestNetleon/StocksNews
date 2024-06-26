@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
@@ -112,6 +113,11 @@ class NotificationsItem extends StatelessWidget {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => StockDetail(symbol: slug!)),
+        );
+      } else if (type == NotificationType.referRegistration.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const ReferAFriend()),
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         referLogin();
