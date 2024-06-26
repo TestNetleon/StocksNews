@@ -148,7 +148,20 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       ),
                       const SpacerVertical(height: 15),
                       ThemeButton(
-                        text: "Share with friends",
+                        // text: "Share with friends",
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.share),
+                            const SpacerHorizontal(width: 6),
+                            Flexible(
+                              child: Text(
+                                "Share with friends",
+                                style: stylePTSansBold(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
                         onPressed: () {
                           Share.share(
                             "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
@@ -162,8 +175,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                   alignment: Alignment.bottomCenter,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
+                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
                       margin: const EdgeInsets.fromLTRB(
                           Dimen.padding, 20, Dimen.padding, 0),
                       width: double.infinity,
@@ -184,7 +196,14 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                         ),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            "Recent Points Activity",
+                            style: stylePTSansBold(fontSize: 25),
+                          ),
+                          const SpacerVertical(height: 15),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -240,7 +259,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Points Earned",
+                                "Earned",
                                 style: stylePTSansBold(fontSize: 17),
                               ),
                               const SpacerVertical(height: 10),
@@ -258,7 +277,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Points Spent",
+                                "Spent",
                                 style: stylePTSansBold(fontSize: 17),
                               ),
                               const SpacerVertical(height: 10),
@@ -277,7 +296,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Points Balance",
+                                "Balance",
                                 style: stylePTSansBold(fontSize: 17),
                               ),
                               const SpacerVertical(height: 10),
@@ -363,7 +382,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       children: [
                         const SpacerVertical(height: 20),
                         ScreenTitle(
-                          title: "Friends joined with your referral link",
+                          title: "Friends Joined",
                           subTitle: provider.extra?.earnCondition ?? "",
                         ),
                         ListView.separated(

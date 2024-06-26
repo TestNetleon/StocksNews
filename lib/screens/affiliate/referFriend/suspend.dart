@@ -61,7 +61,7 @@ class ReferFriendSuspend extends StatelessWidget {
                   Navigator.push(
                     navigatorKey.currentContext!,
                     MaterialPageRoute(
-                      builder: (_) => const ContactUs(),
+                      builder: (_) => const HelpDesk(),
                     ),
                   );
                 },

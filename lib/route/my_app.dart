@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> {
         if (referralCode == null || referralCode == '') {
           referralCode = deepLink.queryParameters['referral_code'];
         }
+
         bool isFirstOpen = await Preference.isFirstOpen();
         String? code = await Preference.getReferral();
 
