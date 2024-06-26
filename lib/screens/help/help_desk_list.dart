@@ -73,6 +73,9 @@ class _HelpDeskListState extends State<HelpDeskList> {
                               ? provider.data?.tickets?.length ?? 0
                               : 5,
                           itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return const SizedBox();
+                            }
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(

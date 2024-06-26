@@ -119,7 +119,7 @@ class ReferApp extends StatelessWidget {
         child: Row(
           children: [
             Image.asset(
-              Images.coin,
+              Images.starAffiliate,
               // Images.reward,
               // Images.flames,
 

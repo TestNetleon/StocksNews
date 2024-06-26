@@ -21,8 +21,12 @@ class ArticleFeedback extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20),
       decoration: const BoxDecoration(
         border: Border(
-          top: BorderSide(color: ThemeColors.tabBack, width: 1),
-          bottom: BorderSide(color: ThemeColors.tabBack, width: 1),
+          top: BorderSide(
+            color: ThemeColors.greyBorder,
+          ),
+          bottom: BorderSide(
+            color: ThemeColors.greyBorder,
+          ),
         ),
       ),
       // color: Colors.amber,

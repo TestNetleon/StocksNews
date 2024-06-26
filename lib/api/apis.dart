@@ -135,6 +135,8 @@ class Apis {
   static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
   static const checkPhoneNo = "/check-phone-no";
+  static const affiliateTnx = "/referrals/txn-report";
+
   // Stock Detail New ---
   static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";

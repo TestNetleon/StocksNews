@@ -89,6 +89,7 @@ class Images {
   static const String starAffiliate = "assets/images/star.png";
   static const String profileBg = "assets/images/profile_bg1.png";
   static const String rankAffiliate = "assets/images/award.png";
+  static const String transaction = "assets/images/transaction.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";

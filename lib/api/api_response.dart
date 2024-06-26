@@ -75,6 +75,9 @@ class Extra {
   final bool? showPortfolio;
   final ReferralRes? referral;
   final num? received;
+  final num? balance;
+  final num? spent;
+
   final num? pending;
   final String? affiliateReferText;
   final HowItWorkRes? howItWork;
@@ -102,6 +105,8 @@ class Extra {
     this.affiliateReferText,
     this.type,
     this.received,
+    this.balance,
+    this.spent,
     this.pending,
     this.cap,
     this.sector,
@@ -141,6 +146,8 @@ class Extra {
         verifyIdentity: json['verify_identity_text'],
         earnCondition: json['earn_condition'],
         received: json['total_points_received'],
+        balance: json['total_balance'],
+        spent: json['total_spent'],
         suspendMsg: json['referral_status_message'],
         nudgeText: json["nudge_text"],
         referLogin: json["refer_login"] == null
@@ -224,6 +231,8 @@ class Extra {
         "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,
+        "total_balance": balance,
+        "total_spent": spent,
         "total_points_pending": pending,
         'referral_status_message': suspendMsg,
         "profile_text": profileText?.toJson(),
