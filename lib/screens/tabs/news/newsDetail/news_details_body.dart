@@ -28,14 +28,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../auth/bottomSheets/login_sheet.dart';
-import '../../../auth/bottomSheets/signup_sheet.dart';
-import '../../../blogDetail/index.dart';
 import '../../../blogs/index.dart';
-import '../../../stockDetail/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
-import '../../tabs.dart';
 import 'mentioned_by.dart';
-import 'new_detail.dart';
 import 'news_details_list.dart';
 
 class NewsDetailsBody extends StatefulWidget {
@@ -203,7 +198,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               width: double.infinity,
                               // fit: BoxFit.contain,
                             ),
-                            const NewsDetailMentionedBy(),
+                            NewsDetailMentionedBy(
+                              data: provider.data?.postDetail?.tickers,
+                            ),
                             const SpacerVertical(height: Dimen.itemSpacing),
                             provider.data?.postDetail?.authors?.isNotEmpty ==
                                         true ||
@@ -909,86 +906,91 @@ iOSNavigate(event) {
   String slug = extractLastPathComponent(event);
   log("3");
 
-  pushNavigation(uri: event, slug: slug, type: type);
+  handleNavigation(
+    uri: event,
+    slug: slug,
+    type: type,
+    setPopHome: false,
+  );
   log("4");
 }
 
-pushNavigation({DeeplinkEnum? type, required Uri uri, String? slug}) async {
-  Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-  // String slugForTicker = extractSymbolValue(uri);
-  // Utils().showLog("slug for ticker $slugForTicker");
-  bool userPresent = false;
+// pushNavigation({DeeplinkEnum? type, required Uri uri, String? slug}) async {
+//   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
+//   // String slugForTicker = extractSymbolValue(uri);
+//   // Utils().showLog("slug for ticker $slugForTicker");
+//   bool userPresent = false;
 
-  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  if (await provider.checkForUser()) {
-    userPresent = true;
-  }
-  Utils().showLog("----$userPresent---");
-  if (type == DeeplinkEnum.blogDetail) {
-    // if (type == "blog") {
-    Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-            builder: (context) => BlogDetail(
-                  // id: "",
-                  slug: slug,
-                )));
-    // } else if (type == "news") {
-  }
-  if (type == DeeplinkEnum.newsDetail) {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (context) => NewsDetails(
-          slug: slug,
-        ),
-      ),
-    );
-    // } else if (type == "stock_detail") {
-  }
-  if (type == DeeplinkEnum.stocksDetail) {
-    Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-            builder: (context) => StockDetail(symbol: slug ?? "")));
-    // } else if (type == "login") {
-  }
-  if (type == DeeplinkEnum.login) {
-    if (userPresent) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-    } else {
-      loginSheet();
-    }
-    // } else if (type == "signUp") {
-  }
-  if (type == DeeplinkEnum.signup) {
-    if (userPresent) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-    } else {
-      signupSheet();
-    }
-    // } else if (type == "dashboard") {
-  }
-  if (type == DeeplinkEnum.dashboard) {
-    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const Tabs()),
-    );
+//   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+//   if (await provider.checkForUser()) {
+//     userPresent = true;
+//   }
+//   Utils().showLog("----$userPresent---");
+//   if (type == DeeplinkEnum.blogDetail) {
+//     // if (type == "blog") {
+//     Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//             builder: (context) => BlogDetail(
+//                   // id: "",
+//                   slug: slug,
+//                 )));
+//     // } else if (type == "news") {
+//   }
+//   if (type == DeeplinkEnum.newsDetail) {
+//     Navigator.push(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(
+//         builder: (context) => NewsDetails(
+//           slug: slug,
+//         ),
+//       ),
+//     );
+//     // } else if (type == "stock_detail") {
+//   }
+//   if (type == DeeplinkEnum.stocksDetail) {
+//     Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(
+//             builder: (context) => StockDetail(symbol: slug ?? "")));
+//     // } else if (type == "login") {
+//   }
+//   if (type == DeeplinkEnum.login) {
+//     if (userPresent) {
+//       Navigator.popUntil(
+//           navigatorKey.currentContext!, (route) => route.isFirst);
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const Tabs()),
+//       );
+//     } else {
+//       loginSheet();
+//     }
+//     // } else if (type == "signUp") {
+//   }
+//   if (type == DeeplinkEnum.signup) {
+//     if (userPresent) {
+//       Navigator.popUntil(
+//           navigatorKey.currentContext!, (route) => route.isFirst);
+//       Navigator.pushReplacement(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const Tabs()),
+//       );
+//     } else {
+//       signupSheet();
+//     }
+//     // } else if (type == "dashboard") {
+//   }
+//   if (type == DeeplinkEnum.dashboard) {
+//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+//     Navigator.pushReplacement(
+//       navigatorKey.currentContext!,
+//       MaterialPageRoute(builder: (_) => const Tabs()),
+//     );
 
-    Utils().showLog("--goto dashboard---");
-  } else {
-    Utils().showLog("Else case");
-    launchUrl(uri);
-  }
-}
+//     Utils().showLog("--goto dashboard---");
+//   } else {
+//     Utils().showLog("Else case");
+//     launchUrl(uri);
+//   }
+// }

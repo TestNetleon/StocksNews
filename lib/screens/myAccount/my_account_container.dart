@@ -185,8 +185,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           } else {
             popUpAlert(
               message: res.message ?? "",
-              title: "",
-              icon: Images.referSuccess,
+              title: "Profile Updated",
+              iconWidget: Image.asset(
+                Images.receiveGIF,
+                height: 80,
+                width: 80,
+              ),
             );
 
             provider.updateUser(
