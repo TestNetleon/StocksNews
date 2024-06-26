@@ -159,6 +159,25 @@ class FirebaseApi {
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const ReferAFriend()),
         );
+      } else if (type == NotificationType.appUpdate.name) {
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => Tabs(
+              inAppMsgId: notificationId,
+            ),
+          ),
+        );
+        Timer(const Duration(milliseconds: 300), () {
+          if (Platform.isAndroid) {
+            openUrl(
+                "https://play.google.com/store/apps/details?id=com.stocks.news");
+          } else {
+            openUrl("https://apps.apple.com/us/app/stocks-news/id6476615803");
+          }
+        });
       } else {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
@@ -176,7 +195,6 @@ class FirebaseApi {
 
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => const Tabs()),

@@ -27,6 +27,7 @@ enum NotificationType {
   nudgeFriend,
   ticketDetail,
   referRegistration,
+  appUpdate,
 }
 
 enum BlogsType { blog, author, category, tag }
