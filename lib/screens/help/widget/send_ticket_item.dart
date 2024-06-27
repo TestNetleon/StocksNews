@@ -64,6 +64,7 @@ class SendTicketItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Stack(
+                        alignment: Alignment.centerRight,
                         children: [
                           ThemeInputField(
                             contentPadding:

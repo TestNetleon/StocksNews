@@ -129,6 +129,7 @@ class _ChatScreenListState extends State<ChatScreenList> {
                                   ),
                                 ),
                                 Stack(
+                                  alignment: Alignment.centerRight,
                                   children: [
                                     ThemeInputField(
                                       contentPadding: const EdgeInsets.fromLTRB(
