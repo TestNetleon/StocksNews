@@ -25,7 +25,7 @@ class _HelpDeskListState extends State<HelpDeskList> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       HelpDeskProvider provider = context.read<HelpDeskProvider>();
 
-      provider.getHelpDeskList();
+      provider.getHelpDeskList(reset: true);
     });
   }
 
@@ -33,69 +33,81 @@ class _HelpDeskListState extends State<HelpDeskList> {
   Widget build(BuildContext context) {
     HelpDeskProvider provider = context.watch<HelpDeskProvider>();
 
-    return BaseUiContainer(
-      error: provider.data?.noTicketMsg ?? provider.error,
-      hasData: provider.data?.tickets != null &&
-          provider.data?.tickets?.isNotEmpty == true,
-      isLoading: provider.isLoading,
-      errorDispCommon: true,
-      showPreparingText: true,
-      onRefresh: () => provider.getHelpDeskList(),
-      child: CommonRefreshIndicator(
-        onRefresh: () => provider.getHelpDeskList(),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              const Tickets(),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: (provider.data?.tickets?.length ?? 0) < 5
-                    ? provider.data?.tickets?.length ?? 0
-                    : 5,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return const SizedBox();
-                  }
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        navigatorKey.currentContext!,
-                        MaterialPageRoute(
-                          builder: (_) => ChatScreen(
-                            slug: "1",
-                            ticketId:
-                                "${provider.data?.tickets?[index].ticketId}",
-                          ),
-                        ),
-                      );
+    return Column(
+      children: [
+        const Tickets(),
+        Expanded(
+          child: BaseUiContainer(
+            error: provider.data?.noTicketMsg ?? provider.error,
+            hasData: provider.data?.tickets != null &&
+                provider.data?.tickets?.isNotEmpty == true,
+            isLoading: provider.isLoading,
+            errorDispCommon: true,
+            showPreparingText: true,
+            onRefresh: () => provider.getHelpDeskList(),
+            child: CommonRefreshIndicator(
+              onRefresh: () => provider.getHelpDeskList(),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: (provider.data?.tickets?.length ?? 0) < 5
+                          ? provider.data?.tickets?.length ?? 0
+                          : 5,
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return const SizedBox();
+                        }
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              navigatorKey.currentContext!,
+                              MaterialPageRoute(
+                                builder: (_) => ChatScreen(
+                                  slug: "1",
+                                  ticketId:
+                                      "${provider.data?.tickets?[index].ticketId}",
+                                ),
+                              ),
+                            );
 
-                      context.read<HelpDeskProvider>().setSlug(
-                          "1", '${provider.data?.tickets?[index].ticketId}');
-                      context.read<HelpDeskProvider>().setReasonController(
-                          "${provider.data?.subjects?[index].title}",
-                          "${provider.data?.subjects?[index].id}");
-                    },
-                    child: HelpDeskItem(
-                      index: index,
+                            context.read<HelpDeskProvider>().setSlug("1",
+                                '${provider.data?.tickets?[index].ticketId}');
+                            context
+                                .read<HelpDeskProvider>()
+                                .setReasonController(
+                                    "${provider.data?.subjects?[index].title}",
+                                    "${provider.data?.subjects?[index].id}");
+                          },
+                          child: HelpDeskItem(
+                            index: index,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: Colors.white12,
+                        );
+                      },
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    color: Colors.white12,
-                  );
-                },
+                    const SpacerVertical(),
+                    if (context.read<HelpDeskProvider>().extra?.disclaimer !=
+                        null)
+                      DisclaimerWidget(
+                          data: context
+                              .read<HelpDeskProvider>()
+                              .extra!
+                              .disclaimer!)
+                  ],
+                ),
               ),
-              const SpacerVertical(),
-              if (context.read<HelpDeskProvider>().extra?.disclaimer != null)
-                DisclaimerWidget(
-                    data: context.read<HelpDeskProvider>().extra!.disclaimer!)
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

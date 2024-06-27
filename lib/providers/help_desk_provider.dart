@@ -77,8 +77,11 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
     notifyListeners();
   }
 
-  Future getHelpDeskList({loadMore = false}) async {
-    _data = null;
+  Future getHelpDeskList({
+    loadMore = false,
+    reset = false,
+  }) async {
+    if (reset) _data = null;
     setStatus(Status.loading);
 
     try {
