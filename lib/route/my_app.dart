@@ -67,11 +67,34 @@ class _MyAppState extends State<MyApp> {
           deepLink.path.contains("?referrer=") ||
           deepLink.path.contains("?ref=") ||
           deepLink.path.contains("?referral_code=")) {
-        // onDeepLinking = true;
-
+        _initialDeepLinks = true;
         await _handleReferralLink(deepLink);
+        Timer(const Duration(seconds: 2), () {
+          _initialDeepLinks = false;
+        });
       }
     }
+
+    // FirebaseDynamicLinks.instance.onLink.listen(
+    //   (pendingDynamicLinkData) {
+    //     if (pendingDynamicLinkData != null) {
+    //       final Uri deepLink = pendingDynamicLinkData.link;
+    //       // if (deepLink != null) {
+    //       if (deepLink.path.contains("page.link") ||
+    //           deepLink.path.contains("/install") ||
+    //           deepLink.path.contains("?code=") ||
+    //           deepLink.path.contains("?referrer=") ||
+    //           deepLink.path.contains("?ref=") ||
+    //           deepLink.path.contains("?referral_code=")) {
+    //         _initialDeepLinks = true;
+    //         _handleReferralLink(deepLink);
+    //         Timer(const Duration(seconds: 2), () {
+    //           _initialDeepLinks = false;
+    //         });
+    //       }
+    //     }
+    //   },
+    // );
   }
 
   Future<void> _handleReferralLink(Uri deepLink) async {
@@ -93,9 +116,10 @@ class _MyAppState extends State<MyApp> {
         "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen");
 
     // popUpAlert(
-    //     message:
-    //         "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen",
-    //     title: "title");
+    //   message:
+    //       "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen",
+    //   title: "title",
+    // );
 
     if (referralCode != null &&
         referralCode != "" &&
@@ -122,6 +146,13 @@ class _MyAppState extends State<MyApp> {
     Uri? initialUri = await _appLinks.getInitialLink();
     Utils().showLog(" _appLinks.getInitialLink CALLED");
 
+    // if (initialUri != null) {
+    //   popUpAlert(
+    //     message: "GetInitialDeeplinkWhenAppOpen = $initialUri ",
+    //     title: "title",
+    //   );
+    // }
+
     if (initialUri != null) {
       final Uri deepLink = initialUri;
       if (deepLink.path.contains("page.link") ||
@@ -131,7 +162,6 @@ class _MyAppState extends State<MyApp> {
           deepLink.path.contains("?ref=") ||
           deepLink.path.contains("?referral_code=")) {
         // onDeepLinking = true;
-
         await _handleReferralLink(deepLink);
         return;
       }
