@@ -148,7 +148,7 @@ class AffiliateTranItem extends StatelessWidget {
                   Text(
                     // "Point earned",
                     ((data?.earn ?? 0) > 1) ? "Points earned" : "Point earned",
-                    style: styleGeorgiaBold(fontSize: 20),
+                    style: styleGeorgiaBold(fontSize: 16),
                   ),
                   Text(
                     "+${data?.earn}",

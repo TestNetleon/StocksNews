@@ -301,7 +301,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                             child: InkWell(
                               onTap: () {
                                 popUpAlert(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   message: homeProvider
                                           .extra?.profileText?.points ??
                                       "Points are earned by referring the app to friends and family who join and verify their contact information, with the referring user receiving points for each verified referral.",
