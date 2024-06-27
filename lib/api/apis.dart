@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  // static const baseUrl = "https://app.stocks.news/api/v1"; // live server
-  static const baseUrl = kDebugMode
-      ? "https://notification.stocks.news/api/v1"
-      : "https://app.stocks.news/api/v1"; // live server
+  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
+  // static const baseUrl = kDebugMode
+  //     ? "https://notification.stocks.news/api/v1"
+  //     : "https://app.stocks.news/api/v1"; // live server
 
   static const signup = "/sign-up";
   static const verifySignupOtp = "/check-signup-otp";
@@ -133,7 +133,7 @@ class Apis {
   static const referralList = "/referrals/list";
   static const referralLeaderBoard = "/referrals/leaderboard";
   // Stock Detail New ---
-  static const stockDetailTab = "/stock-detail-topbar";
+  static const stockDetailTab = "/stock-detail";
   static const detailEarning = "/stock-detail-earning";
   static const detailDividends = "/stock-detail-dividend";
   static const detailChart = "/stock-detail-chart";

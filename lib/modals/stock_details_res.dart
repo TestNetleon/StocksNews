@@ -93,7 +93,6 @@ class CompanyInfo {
   final String? sectorSlug;
   final String? industry;
   final String? industrySlug;
-
   final String? ceo;
   final String? website;
   final String? country;

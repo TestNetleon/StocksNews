@@ -38,9 +38,7 @@ class NewsDetailMentionedBy extends StatelessWidget {
               children: List.generate(
                 provider.data?.postDetail?.tickers?.length ?? 0,
                 (index) {
-                  NewsTicker? tickers =
-                      provider.data?.postDetail?.tickers?[index];
-
+                  NewsTicker? tickers = provider.data?.postDetail?.tickers?[index];
                   return MentionedByItem(
                     tickers: tickers,
                   );
@@ -93,7 +91,7 @@ class MentionedByItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(0),
-                child: Container(
+                child: SizedBox(
                   width: 43,
                   height: 43,
                   child: CachedNetworkImagesWidget(

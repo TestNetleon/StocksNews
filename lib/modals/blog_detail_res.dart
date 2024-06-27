@@ -18,8 +18,10 @@ class BlogsDetailRes {
   final String description;
   final String slug;
   final List<DetailListType>? authors;
+  final List<NewsTicker>? tickers;
   // final List<BlogItemRes> categories;
   // final List<BlogItemRes> tags;
+  // final BlogDetail? blogDetail;
   final DateTime? publishedDate;
   final String? postDateString;
   final String image;
@@ -36,6 +38,7 @@ class BlogsDetailRes {
     required this.description,
     this.authors,
     this.postDateString,
+    this.tickers,
     required this.slug,
     // required this.categories,
     // required this.tags,
@@ -52,6 +55,9 @@ class BlogsDetailRes {
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
         id: json["_id"],
         name: json["name"],
+        tickers: json["tickers"] == null
+        ? []
+        : List<NewsTicker>.from(json["tickers"]!.map((x) => NewsTicker.fromJson(x))),
         description: json["description"],
         slug: json["slug"],
         authors: json["authors"] == null
@@ -81,6 +87,7 @@ class BlogsDetailRes {
         "description": description,
         'published_date_string': postDateString,
         "slug": slug,
+        "tickers": tickers == null ? [] : List<dynamic>.from(tickers!.map((x) => x.toJson())),
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
@@ -96,3 +103,4 @@ class BlogsDetailRes {
         "balance_status": balanceStatus,
       };
 }
+

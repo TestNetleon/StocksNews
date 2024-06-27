@@ -154,8 +154,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   Status _statusTab = Status.ideal;
   Status get statusTab => _statusTab;
 
-  bool get isLoadingTab =>
-      _statusTab == Status.loading || _statusTab == Status.ideal;
+  bool get isLoadingTab => _statusTab == Status.loading || _statusTab == Status.ideal;
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -276,8 +275,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusTab(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(

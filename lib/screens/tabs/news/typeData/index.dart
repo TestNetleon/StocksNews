@@ -21,11 +21,9 @@ class NewsTypeData extends StatelessWidget {
   Widget build(BuildContext context) {
     NewsCategoryProvider provider = context.watch<NewsCategoryProvider>();
     TabsNewsHolder? newsHolder = provider.newsData[id];
-
     return BaseUiContainer(
       error: newsHolder?.error,
-      hasData: newsHolder?.data != null &&
-          (newsHolder?.data?.data.isNotEmpty ?? false),
+      hasData: newsHolder?.data != null && (newsHolder?.data?.data.isNotEmpty ?? false),
       isLoading: newsHolder?.loading ?? true,
       errorDispCommon: true,
       showPreparingText: true,

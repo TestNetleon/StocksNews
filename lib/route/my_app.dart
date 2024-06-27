@@ -62,51 +62,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  //--------In-App Purchase--------------
-  // void _checkForUpdate() {
-  //   InAppUpdate.checkForUpdate().then((updateInfo) {
-  //     if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
-  //       if (updateInfo.flexibleUpdateAllowed) {
-  //         // Perform flexible update
-  //         InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
-  //           if (appUpdateResult == AppUpdateResult.success) {
-  //             InAppUpdate.completeFlexibleUpdate();
-  //             _showUpdateSuccessDialog();
-  //           }
-  //         });
-  //       } else if (updateInfo.immediateUpdateAllowed) {
-  //         // Perform immediate update
-  //         InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-  //           if (appUpdateResult == AppUpdateResult.success) {
-  //             _showUpdateSuccessDialog();
-  //           }
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
 
-  // void _showUpdateSuccessDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Update Successful'),
-  //         content: Text('The app has been updated to the latest version.'),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text('OK'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  // -------- Initial Deeplinks For Referral Started ---------------
   void getInitialReferralsIfAny() async {
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();

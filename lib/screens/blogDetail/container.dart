@@ -27,6 +27,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
+import 'blog_mention_by.dart';
 
 //
 class BlogDetailContainer extends StatelessWidget {
@@ -35,8 +36,7 @@ class BlogDetailContainer extends StatelessWidget {
   const BlogDetailContainer({super.key, required this.slug});
 
   void _onSubmitAffiliate(value, context) async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
     if (userProvider.user == null) {
       await loginSheet();
@@ -110,6 +110,7 @@ class BlogDetailContainer extends StatelessWidget {
                           provider.blogsDetail?.name ?? "",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
+
                         const SpacerVertical(height: 5),
                         // Padding(
                         //   padding: EdgeInsets.only(bottom: 15.sp),
@@ -134,6 +135,7 @@ class BlogDetailContainer extends StatelessWidget {
                         //     // fit: BoxFit.contain,
                         //   ),
                         // ),
+
                         CachedNetworkImagesWidget(
                           provider.blogsDetail?.image ?? "",
                           height: ScreenUtil().screenHeight * 0.27,
@@ -151,6 +153,11 @@ class BlogDetailContainer extends StatelessWidget {
                             blog: true,
                           ),
                         ),
+                       SpacerVertical(height: Dimen.itemSpacing.sp),
+                        //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
+                        //New Blog Tickers Widget
+                        const BlogDetailMentionBy(),
+
                         SpacerVertical(height: Dimen.itemSpacing.sp),
                         // const BlogDetailAuthor(),
                         // const SpacerVertical(height: 5),
@@ -174,6 +181,7 @@ class BlogDetailContainer extends StatelessWidget {
                             }
                             return a;
                           },
+
                           // customWidgetBuilder: (element) {
                           //   if (element.localName == 'img') {
                           //     final src = element.attributes['src'];

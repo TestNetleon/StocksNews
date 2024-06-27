@@ -17,6 +17,8 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
+import '../../providers/user_provider.dart';
+import '../../route/my_app.dart';
 import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
@@ -57,6 +59,9 @@ class _StockDetailState extends State<StockDetail> {
         parameters: {'screen_name': "Stock Detail"},
       );
     });
+
+    print("passed symbol"+ widget.symbol);
+    // print("passed token"+ navigatorKey.currentContext!.read<UserProvider>().user!.token.toString());
   }
 
   _callApi() {
@@ -109,7 +114,6 @@ class _StockDetailState extends State<StockDetail> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),

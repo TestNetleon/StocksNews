@@ -41,8 +41,7 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
     setStatus(Status.loading);
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "slug": slug ?? "",
       };
       if (inAppMsgId != null) {

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/screens/blogDetail/index.dart';
+
 List<BlogTabRes> blogTabResFromJson(String str) =>
     List<BlogTabRes>.from(json.decode(str).map((x) => BlogTabRes.fromJson(x)));
 

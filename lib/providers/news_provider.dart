@@ -331,8 +331,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     setTabStatus(Status.loading);
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.newsTab,
