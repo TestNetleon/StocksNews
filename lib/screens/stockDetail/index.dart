@@ -10,15 +10,11 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/news/news.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/secFiling/sd_sec_filing.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/socialActivities/social_activities.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-
-import '../../providers/user_provider.dart';
-import '../../route/my_app.dart';
 import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
@@ -59,9 +55,6 @@ class _StockDetailState extends State<StockDetail> {
         parameters: {'screen_name': "Stock Detail"},
       );
     });
-
-    print("passed symbol"+ widget.symbol);
-    // print("passed token"+ navigatorKey.currentContext!.read<UserProvider>().user!.token.toString());
   }
 
   _callApi() {

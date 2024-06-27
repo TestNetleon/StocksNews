@@ -6,9 +6,15 @@ import '../../../utils/theme.dart';
 
 class SdTopCard extends StatelessWidget {
   final SdTopRes? top;
-  final dynamic colorValue;
+  final bool textRed;
+  final bool gridRed;
 
-  const SdTopCard({super.key, this.top, this.colorValue = Colors.white});
+  const SdTopCard({
+    super.key,
+    this.top,
+    this.textRed = false,
+    this.gridRed = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,30 +33,32 @@ class SdTopCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Visibility(
-                visible: top?.key != null,
+                visible: top?.key != null && top?.key != '',
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 6),
                   child: Text(
-                    "${top?.key?.toUpperCase()}",
+                    top?.key?.toUpperCase() ?? "N/A",
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(fontSize: 12),
                   ),
                 ),
               ),
               Visibility(
-                visible: top?.value != null,
+                visible: top?.value != null && top?.value != '',
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 6),
                   child: Text(
-                    "${top?.value}",
-                    style: styleGeorgiaBold(fontSize: 20, color: colorValue),
+                    "${top?.value ?? "N/A"}",
+                    style: styleGeorgiaBold(
+                        fontSize: 20,
+                        color: textRed ? ThemeColors.sos : ThemeColors.accent),
                   ),
                 ),
               ),
               Visibility(
-                visible: top?.other != null,
+                visible: top?.other != null && top?.other != '',
                 child: Text(
-                  "${top?.other}",
+                  top?.other ?? "N/A",
                   style: stylePTSansRegular(fontSize: 12),
                 ),
               ),
@@ -63,11 +71,11 @@ class SdTopCard extends StatelessWidget {
           bottom: 0,
           child: Container(
             height: 4,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(5),
                   bottomRight: Radius.circular(5)),
-              color: ThemeColors.accent,
+              color: gridRed ? ThemeColors.sos : ThemeColors.accent,
             ),
           ),
         ),

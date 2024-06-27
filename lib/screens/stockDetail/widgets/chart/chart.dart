@@ -76,11 +76,8 @@ class _SdChartsState extends State<SdCharts> {
                     SdTopRes? top = provider.chartRes?.top?[index];
                     return SdTopCard(
                       top: top,
-                      colorValue: top?.value == null
-                          ? null
-                          : "${top!.value}".contains('-')
-                              ? Colors.red
-                              : Colors.green,
+                      textRed: "${top?.value ?? "N/A"}".contains('-'),
+                      gridRed: "${top?.value ?? "N/A"}".contains('-'),
                     );
                   },
                 ),

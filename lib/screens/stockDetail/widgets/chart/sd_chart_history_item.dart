@@ -50,6 +50,7 @@ class SdChartHistory extends StatelessWidget {
                   children: [
                     Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           data?.closingPrice ?? "",
