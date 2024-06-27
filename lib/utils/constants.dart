@@ -116,7 +116,6 @@ class Images {
   static const String referE = "assets/images/refer_e.png";
   static const String referS = "assets/images/refer_s.png";
   static const String referF = "assets/images/refer_f.png";
-
   static const String line = "assets/images/line.png";
 
   //GIF
@@ -139,7 +138,6 @@ class Images {
   static const String referSuccess = "assets/images/success.gif";
   static const String kingGIF = "assets/images/king.gif";
   static const String receiveGIF = "assets/images/receive.gif";
-
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
   static const String start3 = "assets/images/3rd_page.png";
