@@ -10,12 +10,20 @@ String affiliateTransactionResToJson(List<AffiliateTransactionRes> data) =>
 class AffiliateTransactionRes {
   final String? createdAt;
   final String? txnDetail;
+  final dynamic txnId;
+  final String? title;
+  final String? slug;
+  final String? txnType;
   final int? earn;
   final int? spent;
 
   AffiliateTransactionRes({
     this.createdAt,
     this.txnDetail,
+    this.txnId,
+    this.title,
+    this.slug,
+    this.txnType,
     this.earn,
     this.spent,
   });
@@ -24,6 +32,10 @@ class AffiliateTransactionRes {
       AffiliateTransactionRes(
         createdAt: json["created_at"],
         txnDetail: json["txn_detail"],
+        txnId: json["txn_id"],
+        title: json["title"],
+        slug: json["slug"],
+        txnType: json["txn_type"],
         earn: json["earn"],
         spent: json["spent"],
       );
@@ -31,6 +43,10 @@ class AffiliateTransactionRes {
   Map<String, dynamic> toJson() => {
         "created_at": createdAt,
         "txn_detail": txnDetail,
+        "txn_id": txnId,
+        "title": title,
+        "slug": slug,
+        "txn_type": txnType,
         "earn": earn,
         "spent": spent,
       };

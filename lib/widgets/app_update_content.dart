@@ -7,7 +7,6 @@ import 'package:in_app_update/in_app_update.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 class AppUpdateContent extends StatefulWidget {
@@ -49,21 +48,22 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
 
   void _showUpdateSuccessDialog() {
     showDialog(
-
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Update Successful'),
-          content: Text('The app has been updated to the latest version.'),
+          title: const Text('Update Successful'),
+          content:
+              const Text('The app has been updated to the latest version.'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
           ],
         );
-      }, context: context,
+      },
+      context: context,
     );
   }
 

@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -11,7 +13,14 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/affiliate/transaction.dart';
+import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/utils.dart';
+import '../../blogDetail/index.dart';
+import '../../help/chatScreen/chat_screen.dart';
+import '../../stockDetail/index.dart';
+import '../../tabs/tabs.dart';
 
 class AffiliateTransaction extends StatefulWidget {
   const AffiliateTransaction({super.key});
@@ -90,7 +99,12 @@ class AffiliateTranItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
-        border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
+        border: Border.all(
+            // color: ThemeColors.greyBorder.withOpacity(0.4),
+
+            color: data?.spent != null && data?.spent != 0
+                ? ThemeColors.sos.withOpacity(0.4)
+                : ThemeColors.accent.withOpacity(0.4)),
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -113,14 +127,12 @@ class AffiliateTranItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Point spent",
-                    style:
-                        styleGeorgiaBold(fontSize: 20, color: ThemeColors.sos),
+                    ((data?.spent ?? 0) > 1) ? "Points spent" : "Point spent",
+                    style: styleGeorgiaBold(fontSize: 16),
                   ),
                   Text(
                     "-${data?.spent}",
-                    style:
-                        styleGeorgiaBold(fontSize: 20, color: ThemeColors.sos),
+                    style: styleGeorgiaBold(fontSize: 16),
                   ),
                 ],
               ),
@@ -135,13 +147,11 @@ class AffiliateTranItem extends StatelessWidget {
                 children: [
                   Text(
                     "Point earned",
-                    style: styleGeorgiaBold(
-                        fontSize: 20, color: ThemeColors.accent),
+                    style: styleGeorgiaBold(fontSize: 16),
                   ),
                   Text(
                     "+${data?.earn}",
-                    style: styleGeorgiaBold(
-                        fontSize: 20, color: ThemeColors.accent),
+                    style: styleGeorgiaBold(fontSize: 16),
                   ),
                 ],
               ),
@@ -151,20 +161,104 @@ class AffiliateTranItem extends StatelessWidget {
             color: ThemeColors.greyBorder,
             height: 20,
           ),
-          Text(
-            data?.txnDetail ?? "",
-            style: stylePTSansRegular(height: 1.5),
+          // Text(
+          //   "${data?.txnDetail ?? ""} - ${data?.title}",
+          //   style: stylePTSansRegular(height: 1.5),
+          // ),
+
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "${data?.txnDetail ?? ""} - ",
+                  style: stylePTSansRegular(height: 1.5),
+                ),
+                TextSpan(
+                  text: " ${data?.title ?? ""}",
+                  style: stylePTSansRegular(
+                      height: 1.5,
+                      color: data?.spent != null && data?.spent != 0
+                          ? ThemeColors.accent
+                          : ThemeColors.white),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = data?.spent != null && data?.spent != 0
+                        ? () {
+                            _onTap(context);
+                          }
+                        : null,
+                ),
+              ],
+            ),
           ),
+
           const SpacerVertical(height: 10),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              "${data?.createdAt}",
-              style: stylePTSansRegular(color: ThemeColors.greyText),
+              data?.createdAt ?? "",
+              style:
+                  stylePTSansRegular(color: ThemeColors.greyText, fontSize: 13),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _onTap(
+    BuildContext context,
+  ) async {
+    try {
+      String? type = data?.txnType;
+      String? slug = data?.slug;
+      Utils().showLog("-----$type, $slug");
+
+      if (type == NotificationType.dashboard.name) {
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const Tabs()),
+        );
+      } else if (slug != '' && type == NotificationType.ticketDetail.name) {
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(
+              slug: "1",
+              ticketId: slug,
+            ),
+          ),
+        );
+      } else if (slug != '' && type == NotificationType.newsDetail.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => NewsDetails(slug: slug)),
+        );
+      } else if (slug != '' && type == NotificationType.blogDetail.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => BlogDetail(
+              slug: slug ?? "",
+            ),
+          ),
+        );
+      } else if (slug != '' && type == NotificationType.stockDetail.name ||
+          isValidTickerSymbol(type ?? "")) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => StockDetail(symbol: slug!)),
+        );
+      } else {}
+    } catch (e) {
+      Utils().showLog("Exception ===>> $e");
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
+    }
   }
 }
