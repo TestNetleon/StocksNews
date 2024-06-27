@@ -69,7 +69,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
               children: [
                 const ReferFriendSuspend(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   margin: const EdgeInsets.symmetric(horizontal: Dimen.padding),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -199,7 +200,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                         children: [
                           Text(
                             "Recent Points Activity",
-                            style: stylePTSansBold(fontSize: 25),
+                            style: stylePTSansBold(fontSize: 18),
                           ),
                           const SpacerVertical(height: 15),
 
