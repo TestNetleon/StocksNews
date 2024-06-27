@@ -17,7 +17,10 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // HelpDeskProvider provider = context.watch<HelpDeskProvider>();
     return BaseContainer(
+      // bottomSafeAreaColor:
+      //     provider.slug == "0" ? ThemeColors.primaryLight : null,
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: ChatScreenList(
         slug: slug,
