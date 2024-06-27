@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,16 +10,15 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
-import '../../../../utils/constants.dart';
-import '../../../../utils/theme.dart';
-import '../../../../widgets/spacer_vertical.dart';
-import '../../../../widgets/theme_input_field.dart';
+import '../../../../../utils/constants.dart';
+import '../../../../../utils/theme.dart';
+import '../../../../../widgets/spacer_vertical.dart';
+import '../../../../../widgets/theme_input_field.dart';
 import '../../../contactUs/contact_us_item.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'refer_otp.dart';
@@ -120,67 +118,29 @@ class _ReferLoginState extends State<ReferLogin> {
         icon: Images.alertPopGIF,
       );
     } else {
-      showGlobalProgressDialog();
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        // phoneNumber: '+44 7123 123 456',
-        phoneNumber: "+91" + mobile.text,
-        verificationCompleted: (PhoneAuthCredential credential) {
-          Utils().showLog("COMPLETED ******** ");
-          closeGlobalProgressDialog();
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          Utils().showLog("CODE SEND FAILED ******** ${e.message}");
-          closeGlobalProgressDialog();
-          popUpAlert(
-            message: e.message ?? Const.errSomethingWrong,
-            title: "Alert",
-            icon: Images.alertPopGIF,
-          );
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          Utils().showLog("CODE SENT ******** ");
-          closeGlobalProgressDialog();
+      UserProvider provider = context.read<UserProvider>();
+      Map request = {
+        "token": provider.user?.token ?? "",
+        "phone": mobile.text,
+        "name": name.text,
+        "display_name": displayName.text,
+        "phone_hash": appSignature,
+        "platform": Platform.operatingSystem,
+      };
+
+      try {
+        ApiResponse response = await provider.referLoginApi(request);
+        if (response.status) {
+          provider.updateUser(name: name.text, displayName: displayName.text);
+          Navigator.pop(navigatorKey.currentContext!);
           referOTP(
-            name: name.text,
-            displayName: displayName.text,
             phone: mobile.text,
             appSignature: appSignature,
-            verificationId: verificationId,
           );
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          // closeGlobalProgressDialog();
-          // Utils().showLog("CODE SEND TIMEOUT ******** ");
-          // popUpAlert(
-          //   message: Const.errSomethingWrong,
-          //   title: "Alert",
-          //   icon: Images.alertPopGIF,
-          // );
-        },
-      );
-
-      // UserProvider provider = context.read<UserProvider>();
-      // Map request = {
-      //   "token": provider.user?.token ?? "",
-      //   "phone": mobile.text,
-      //   "name": name.text,
-      //   "display_name": displayName.text,
-      //   "phone_hash": appSignature,
-      //   "platform": Platform.operatingSystem,
-      // };
-      // try {
-      //   ApiResponse response = await provider.referLoginApi(request);
-      //   if (response.status) {
-      //     provider.updateUser(name: name.text, displayName: displayName.text);
-      //     Navigator.pop(navigatorKey.currentContext!);
-      //     referOTP(
-      //       phone: mobile.text,
-      //       appSignature: appSignature,
-      //     );
-      //   }
-      // } catch (e) {
-      //   //
-      // }
+        }
+      } catch (e) {
+        //
+      }
     }
   }
 

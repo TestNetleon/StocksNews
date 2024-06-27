@@ -185,7 +185,12 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           } else {
             popUpAlert(
               message: res.message ?? "",
-              title: "",
+              title: "Profile Updated",
+              iconWidget: Image.asset(
+                Images.receiveGIF,
+                height: 80,
+                width: 80,
+              ),
             );
 
             provider.updateUser(
@@ -280,6 +285,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
                   controller: emailController,
+                  maxLines: 1,
                   placeholder: "Enter your email address",
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [emailFormatter],

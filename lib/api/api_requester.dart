@@ -51,21 +51,30 @@ Future<ApiResponse> apiRequest({
   showErrorOnFull = true,
 }) async {
   Map<String, String> headers = getHeaders();
-  if (header != null) {
-    headers.addAll(header);
-  }
-  String? fcmToken = await Preference.getFcmToken();
+  if (header != null) headers.addAll(header);
+
+  String? fcmToken = fcmTokenGlobal;
+  fcmToken ??= await Preference.getFcmToken();
   if (fcmToken != null) {
     Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
     headers.addAll(fcmHeaders);
   }
+  if (appVersion != null) {
+    Map<String, String> versionHeader = {"appVersion": "$appVersion"};
+    headers.addAll(versionHeader);
+  }
+
+  // *********** debug prints only **********
   Utils().showLog("URL  =  ${baseUrl + url}");
   Utils().showLog("HEADERS  =  ${headers.toString()}");
   if (formData != null) {
-    Utils().showLog("REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}");
+    Utils().showLog(
+      "REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}",
+    );
   } else {
     Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
   }
+  // *********** debug prints only **********
 
   Future.delayed(Duration.zero, () {
     if (showProgress) {
@@ -82,23 +91,21 @@ Future<ApiResponse> apiRequest({
 
       if (formData.files.isNotEmpty) {
         for (var file in formData.files) {
-          request.files.add(await http.MultipartFile.fromPath(
-              file.key, file.value as String));
+          request.files.add(
+            await http.MultipartFile.fromPath(file.key, file.value as String),
+          );
         }
       }
       var streamedResponse = await request.send();
       response = await http.Response.fromStream(streamedResponse);
     } else {
       response = await http
-          .post(
-            Uri.parse(baseUrl + url),
-            body: request,
-            headers: headers,
-          )
+          .post(Uri.parse(baseUrl + url), body: request, headers: headers)
           .timeout(timeoutDuration);
     }
 
     Utils().showLog("RESPONSE  =  ${response.body}");
+
     if (response.statusCode == 200) {
       if (showProgress) closeGlobalProgressDialog();
       bool session = jsonDecode(response.body)['status'] == false &&
@@ -145,20 +152,14 @@ Future<ApiResponse> apiRequest({
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
       if (!isShowingError && showErrorOnFull) {}
-      return ApiResponse(
-        status: false,
-        message: Const.errSomethingWrong,
-      );
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   } catch (e) {
     Utils().showLog('Catch error => ${e.toString()}');
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
-    return ApiResponse(
-      status: false,
-      message: Const.errSomethingWrong,
-    );
+    return ApiResponse(status: false, message: Const.errSomethingWrong);
   }
 }
 

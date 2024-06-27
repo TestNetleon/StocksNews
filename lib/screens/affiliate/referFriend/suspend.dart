@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
@@ -26,7 +27,7 @@ class ReferFriendSuspend extends StatelessWidget {
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(
-              builder: (_) => const ContactUs(),
+              builder: (_) => const HelpDesk(),
             ),
           );
         },
@@ -60,7 +61,7 @@ class ReferFriendSuspend extends StatelessWidget {
                   Navigator.push(
                     navigatorKey.currentContext!,
                     MaterialPageRoute(
-                      builder: (_) => const ContactUs(),
+                      builder: (_) => const HelpDesk(),
                     ),
                   );
                 },

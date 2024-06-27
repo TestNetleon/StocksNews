@@ -19,6 +19,7 @@ import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
@@ -153,6 +154,30 @@ class FirebaseApi {
         );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         referLogin();
+      } else if (type == NotificationType.referRegistration.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const ReferAFriend()),
+        );
+      } else if (type == NotificationType.appUpdate.name) {
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => Tabs(
+              inAppMsgId: notificationId,
+            ),
+          ),
+        );
+        Timer(const Duration(milliseconds: 300), () {
+          if (Platform.isAndroid) {
+            openUrl(
+                "https://play.google.com/store/apps/details?id=com.stocks.news");
+          } else {
+            openUrl("https://apps.apple.com/us/app/stocks-news/id6476615803");
+          }
+        });
       } else {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
@@ -170,7 +195,6 @@ class FirebaseApi {
 
       Navigator.popUntil(
           navigatorKey.currentContext!, (route) => route.isFirst);
-
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => const Tabs()),
@@ -339,6 +363,7 @@ class FirebaseApi {
     await _firebaseMessaging.getToken().then((value) async {
       Utils().showLog("FCM TOKEN  ******   $value");
       String? address = await _getUserLocation();
+      fcmTokenGlobal = value;
       if (!isShowingError) {
         saveFCMapi(value: value, address: address);
       }

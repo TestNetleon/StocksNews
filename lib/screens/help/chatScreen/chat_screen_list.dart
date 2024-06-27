@@ -31,7 +31,7 @@ class _ChatScreenListState extends State<ChatScreenList> {
       HelpDeskProvider provider = context.read<HelpDeskProvider>();
 
       provider.setSlug(widget.slug, widget.ticketId ?? "");
-      if (widget.ticketId != "") {
+      if (widget.ticketId != "" && widget.slug != "0") {
         provider.getHelpDeskChatScreen(loaderChatMessage: "0");
       }
     });
@@ -135,7 +135,8 @@ class _ChatScreenListState extends State<ChatScreenList> {
                                           10, 10, 30, 10),
                                       controller: provider.messageController,
                                       placeholder: "Message",
-                                      keyboardType: TextInputType.text,
+                                      keyboardType: TextInputType.multiline,
+                                      textInputAction: TextInputAction.newline,
                                       inputFormatters: [
                                         allSpecialSymbolsRemove
                                       ],

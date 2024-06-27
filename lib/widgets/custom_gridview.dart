@@ -7,11 +7,13 @@ class CustomGridView extends StatelessWidget {
     required this.getChild,
     this.paddingVerticle = 16,
     this.paddingHorizontal = 8,
+    this.itemSpace,
     super.key,
   });
 
   final double paddingVerticle, paddingHorizontal;
   final int length;
+  final double? itemSpace;
   final Widget Function(int index) getChild;
 //
   @override
@@ -30,7 +32,7 @@ class CustomGridView extends StatelessWidget {
               children: [
                 Expanded(child: getChild(index * 2)),
                 length > (index * 2 + 1)
-                    ? SizedBox(width: paddingHorizontal.sp)
+                    ? SizedBox(width: itemSpace ?? paddingHorizontal.sp)
                     : const SizedBox(),
                 length > (index * 2 + 1)
                     ? Expanded(child: getChild(index * 2 + 1))

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -8,17 +7,21 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../modals/news_datail_res.dart';
-import '../../../../providers/news_detail.provider.dart';
 import '../../../../widgets/cache_network_image.dart';
 
 class NewsDetailMentionedBy extends StatelessWidget {
-  const NewsDetailMentionedBy({super.key});
+  final List<NewsTicker>? data;
+  const NewsDetailMentionedBy({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
-    NewsDetailProvider provider = context.watch<NewsDetailProvider>();
-    if (provider.data?.postDetail?.tickers?.isEmpty == true ||
-        provider.data?.postDetail?.tickers == null) {
+    // NewsDetailProvider provider = context.watch<NewsDetailProvider>();
+    // if (provider.data?.postDetail?.tickers?.isEmpty == true ||
+    //     provider.data?.postDetail?.tickers == null) {
+    //   return const SizedBox();
+    // }
+
+    if (data?.isEmpty == true || data == null) {
       return const SizedBox();
     }
     return Padding(
@@ -36,9 +39,14 @@ class NewsDetailMentionedBy extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: List.generate(
-                provider.data?.postDetail?.tickers?.length ?? 0,
+                // provider.data?.postDetail?.tickers?.length ?? 0,
+                data?.length ?? 0,
+
                 (index) {
-                  NewsTicker? tickers = provider.data?.postDetail?.tickers?[index];
+                  NewsTicker? tickers =
+                      // provider.data?.postDetail?.tickers?[index];
+                      data?[index];
+
                   return MentionedByItem(
                     tickers: tickers,
                   );

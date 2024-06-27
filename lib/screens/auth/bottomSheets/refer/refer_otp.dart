@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,28 +10,19 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
-import 'package:stocks_news_new/screens/auth/otp/pinput_phone.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../../api/api_response.dart';
+import '../../../../../api/api_response.dart';
 import 'reffer_success.dart';
 
-referOTP({
-  required String phone,
-  String appSignature = '',
-  name = "",
-  displayName = "",
-  required String verificationId,
-}) async {
+referOTP({required String phone, String appSignature = ''}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: RoundedRectangleBorder(
@@ -46,11 +36,8 @@ referOTP({
     context: navigatorKey.currentContext!,
     builder: (context) {
       return OTPLoginBottomRefer(
-        name: name,
-        displayName: displayName,
         phone: phone,
         appSignature: appSignature,
-        verificationId: verificationId,
       );
     },
   );
@@ -59,17 +46,11 @@ referOTP({
 class OTPLoginBottomRefer extends StatefulWidget {
   final String phone;
   final String appSignature;
-  final String name;
-  final String displayName;
-  final String verificationId;
 
   const OTPLoginBottomRefer({
     super.key,
     required this.phone,
     this.appSignature = '',
-    required this.name,
-    required this.displayName,
-    required this.verificationId,
   });
 
   @override
@@ -127,183 +108,72 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   //   super.dispose();
   // }
 
-  // void _onVeryClick() async {
-  //   if (_controller.text.isEmpty) {
-  //     popUpAlert(
-  //       message: "Please enter a valid OTP.",
-  //       title: "Alert",
-  //       icon: Images.alertPopGIF,
-  //     );
-  //   } else {
-  //     UserProvider provider = context.read<UserProvider>();
-  //     HomeProvider homeProvider = context.read<HomeProvider>();
-
-  //     Map request = {
-  //       'token': provider.user?.token,
-  //       'phone': widget.phone,
-  //       'otp': _controller.text,
-  //       'platform': Platform.operatingSystem,
-  //     };
-  //     try {
-  //       ApiResponse response = await provider.verifyReferLogin(request);
-  //       if (response.status) {
-  //         closeKeyboard();
-  //         provider.updateUser(phone: widget.phone);
-  //         Extra extra = response.extra;
-
-  //         homeProvider.updateReferShare(extra.referral?.shareText);
-  //         // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-  //         Navigator.pop(navigatorKey.currentContext!);
-  //         // Navigator.push(
-  //         //   navigatorKey.currentContext!,
-  //         //   ReferAFriend.path,
-  //         // );
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(
-  //             builder: (context) => const ReferSuccess(),
-  //           ),
-  //         );
-  //       }
-  //     } catch (e) {
-  //       //
-  //     }
-  //   }
-  // }
-
-  // void _onResendOtpClick() async {
-  //   _startTime();
-  //   _controller.text = '';
-  //   setState(() {});
-  //   UserProvider provider = context.read<UserProvider>();
-  //   Map request = {
-  //     "phone": widget.phone,
-  //     "phone_hash": widget.appSignature,
-  //     "platform": Platform.operatingSystem,
-  //     "token": provider.user?.token ?? "",
-  //   };
-
-  //   try {
-  //     _listenCode();
-  //     ApiResponse response = await provider.referLoginApi(request);
-  //     if (response.status) {
-  //       _otpFocusNode.requestFocus();
-
-  //       // popUpAlert(message: response.message ?? "", title: "title");
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  // }
-
-  void _onResendOtpClick() async {
-    _startTime();
-    _controller.text = '';
-    setState(() {});
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      // phoneNumber: '+44 7123 123 456',
-      phoneNumber: "+91${widget.phone}",
-      verificationCompleted: (PhoneAuthCredential credential) {
-        Utils().showLog("COMPLETED ******** ");
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        Utils().showLog("CODE SEND FAILED ******** ");
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        Utils().showLog("CODE SENT ******** ");
-        // referOTP(
-        //   name: name.text,
-        //   displayName: displayName.text,
-        //   phone: mobile.text,
-        //   appSignature: appSignature,
-        // );
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        Utils().showLog("CODE SEND TIMEOUT ******** ");
-      },
-    );
-  }
-
-  Future _verifyPhoneNumber() async {
-    // Update the UI - wait for the user to enter the SMS code
-    if (_controller.text.isEmpty || _controller.text.length < 6) {
+  void _onVeryClick() async {
+    if (_controller.text.isEmpty) {
       popUpAlert(
         message: "Please enter a valid OTP.",
         title: "Alert",
         icon: Images.alertPopGIF,
       );
-      return;
-    }
+    } else {
+      UserProvider provider = context.read<UserProvider>();
+      HomeProvider homeProvider = context.read<HomeProvider>();
 
-    String smsCode = _controller.text;
+      Map request = {
+        'token': provider.user?.token,
+        'phone': widget.phone,
+        'otp': _controller.text,
+        'platform': Platform.operatingSystem,
+      };
+      try {
+        ApiResponse response = await provider.verifyReferLogin(request);
+        if (response.status) {
+          closeKeyboard();
+          provider.updateUser(phone: widget.phone);
+          Extra extra = response.extra;
 
-    // Create a PhoneAuthCredential with the code
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: widget.verificationId,
-      smsCode: smsCode,
-    );
-
-    showGlobalProgressDialog();
-
-    try {
-      // Sign the user in (or link) with the credential
-      UserCredential result =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      closeGlobalProgressDialog();
-
-      _updatePhoneNumber();
-      log("Here SUCCESSFULL ${result}");
-    } on FirebaseAuthException catch (e) {
-      closeGlobalProgressDialog();
-      log("Here Error ${e.message}");
-      Utils().showLog("CODE SEND FAILED ******** ${e.message}");
-      popUpAlert(
-        message: e.message ?? Const.errSomethingWrong,
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-      //
-    } catch (e) {
-      log("Here Error $e");
-      //
+          homeProvider.updateReferShare(extra.referral?.shareText);
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          Navigator.pop(navigatorKey.currentContext!);
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   ReferAFriend.path,
+          // );
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const ReferSuccess(),
+            ),
+          );
+        }
+      } catch (e) {
+        //
+      }
     }
   }
 
-  void _updatePhoneNumber() async {
-    closeKeyboard();
+  void _onResendOtpClick() async {
+    _startTime();
+    _controller.text = '';
+    setState(() {});
     UserProvider provider = context.read<UserProvider>();
+    Map request = {
+      "phone": widget.phone,
+      "phone_hash": widget.appSignature,
+      "platform": Platform.operatingSystem,
+      "token": provider.user?.token ?? "",
+    };
+
     try {
-      ApiResponse response = await provider.updatePhone(
-        displayName: widget.displayName,
-        name: widget.name,
-        phone: widget.phone,
-        token: provider.user?.token ?? "",
-      );
+      _listenCode();
+      ApiResponse response = await provider.referLoginApi(request);
       if (response.status) {
-        Navigator.popUntil(
-          navigatorKey.currentContext!,
-          (route) => route.isFirst,
-        );
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => const ReferAFriend(),
-          ),
-        );
-      } else {
-        popUpAlert(
-          message: response.message ?? Const.errSomethingWrong,
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
+        _otpFocusNode.requestFocus();
+
+        // popUpAlert(message: response.message ?? "", title: "title");
       }
     } catch (e) {
-      popUpAlert(
-        message: Const.errSomethingWrong,
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-      Navigator.pop(navigatorKey.currentContext!);
+      //
     }
   }
 
@@ -342,6 +212,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
             //   width: MediaQuery.of(context).size.width * .45,
             //   child: Image.asset(Images.logo),
             // ),
+
             Container(
               height: 6.sp,
               width: 50.sp,
@@ -352,6 +223,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
               ),
             ),
             const SpacerVertical(height: 70),
+
             Container(
               width: MediaQuery.of(context).size.width * .45,
               constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
@@ -383,14 +255,17 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                     style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),
                   const SpacerVertical(height: 8),
+
                   const SpacerVertical(),
-                  CommonPinputPhone(
+
+                  CommonPinput(
                     focusNode: _otpFocusNode,
                     controller: _controller,
                     onCompleted: (p0) {
-                      _verifyPhoneNumber();
+                      _onVeryClick();
                     },
                   ),
+
                   startTiming == 30
                       ? Container(
                           margin: EdgeInsets.only(
@@ -442,6 +317,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                             ),
                           ),
                         ),
+
                   const SpacerVertical(),
                 ],
               ),

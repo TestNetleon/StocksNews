@@ -78,6 +78,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   Future getHelpDeskList({loadMore = false}) async {
+    _data = null;
     setStatus(Status.loading);
 
     try {
@@ -167,7 +168,6 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
 
           if (responseDetail.status) {
             _error = null;
-
             _chatData =
                 helpDeskChatResFromJson(jsonEncode(responseDetail.data));
             _extra =

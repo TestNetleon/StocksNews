@@ -6,12 +6,14 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/howit_work.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/suspend.dart';
+import 'package:stocks_news_new/screens/affiliate/referFriend/trasnsaction.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom/toast.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../modals/affiliate/refer_friend_res.dart';
@@ -145,7 +147,20 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                       ),
                       const SpacerVertical(height: 15),
                       ThemeButton(
-                        text: "Share with friends",
+                        // text: "Share with friends",
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.share),
+                            const SpacerHorizontal(width: 6),
+                            Flexible(
+                              child: Text(
+                                "Share with friends",
+                                style: stylePTSansBold(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
                         onPressed: () {
                           Share.share(
                             "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
@@ -155,98 +170,205 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                     ],
                   ),
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 20, horizontal: Dimen.padding),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: ThemeColors.greyBorder.withOpacity(0.5),
-                    ),
-                    // color: ThemeColors.greyBorder.withOpacity(0.4),
-                    gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        Color.fromARGB(255, 23, 23, 23),
-                        // ThemeColors.greyBorder,
-                        Color.fromARGB(255, 48, 48, 48),
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(20, 15, 20, 20),
+                      margin: const EdgeInsets.fromLTRB(
+                          Dimen.padding, 20, Dimen.padding, 0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: ThemeColors.greyBorder.withOpacity(0.5),
+                        ),
+                        // color: ThemeColors.greyBorder.withOpacity(0.4),
+                        gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color.fromARGB(255, 23, 23, 23),
+                            // ThemeColors.greyBorder,
+                            Color.fromARGB(255, 48, 48, 48),
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Friends Joined",
-                            style: stylePTSansBold(fontSize: 17),
+                            "Recent Points Activity",
+                            style: stylePTSansBold(fontSize: 25),
                           ),
+                          const SpacerVertical(height: 15),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Friends Joined",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                              const SpacerVertical(height: 10),
+                              Text(
+                                "${provider.data?.length ?? 0}",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                            ],
+                          ),
+                          // const Divider(
+                          //   color: ThemeColors.greyBorder,
+                          //   height: 10,
+                          // ),
                           const SpacerVertical(height: 10),
-                          Text(
-                            "${provider.data?.length ?? 0}",
-                            style: stylePTSansBold(fontSize: 17),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Visibility(
+                                  visible: provider.verified != 0,
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 5),
+                                    child: Text(
+                                      "Verified: ${provider.verified}${provider.unVerified != 0 ? "," : ""}",
+                                      style: stylePTSansRegular(
+                                          color: ThemeColors.accent),
+                                    ),
+                                  ),
+                                ),
+                                // const SpacerHorizontal(width: 5),
+                                Visibility(
+                                  visible: provider.unVerified != 0,
+                                  child: Text(
+                                    "Unverified: ${provider.unVerified}",
+                                    style: stylePTSansRegular(
+                                        color: ThemeColors.sos),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Earned",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                              const SpacerVertical(height: 10),
+                              Text(
+                                "${provider.extra?.received ?? 0}",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                            ],
+                          ),
+                          const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Spent",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                              const SpacerVertical(height: 10),
+                              Text(
+                                "${provider.extra?.spent ?? 0}",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                            ],
+                          ),
+
+                          const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Balance",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                              const SpacerVertical(height: 10),
+                              Text(
+                                "${provider.extra?.balance ?? 0}",
+                                style: stylePTSansBold(fontSize: 17),
+                              ),
+                            ],
+                          ),
+                          // const Divider(
+                          //   color: ThemeColors.greyBorder,
+                          //   height: 20,
+                          // ),
+
+                          const SpacerVertical(height: 30),
                         ],
                       ),
-                      // const Divider(
-                      //   color: ThemeColors.greyBorder,
-                      //   height: 10,
-                      // ),
-                      const SpacerVertical(height: 10),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Visibility(
-                              visible: provider.verified != 0,
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 5),
-                                child: Text(
-                                  "Verified: ${provider.verified}${provider.unVerified != 0 ? "," : ""}",
-                                  style: stylePTSansRegular(
-                                      color: ThemeColors.accent),
-                                ),
-                              ),
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AffiliateTransaction(),
+                        ),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 8),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: Dimen.padding),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: ThemeColors.greyBorder.withOpacity(0.5),
                             ),
-                            // const SpacerHorizontal(width: 5),
-                            Visibility(
-                              visible: provider.unVerified != 0,
+                            left: BorderSide(
+                              color: ThemeColors.greyBorder.withOpacity(0.5),
+                            ),
+                            right: BorderSide(
+                              color: ThemeColors.greyBorder.withOpacity(0.5),
+                            ),
+                          ),
+                          color: const Color.fromARGB(255, 62, 62, 62),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              Images.transaction,
+                              height: 20,
+                              width: 20,
+                              color: ThemeColors.accent,
+                            ),
+                            const SpacerHorizontal(width: 5),
+                            Flexible(
                               child: Text(
-                                "Unverified: ${provider.unVerified}",
-                                style:
-                                    stylePTSansRegular(color: ThemeColors.sos),
+                                "View Points Transactions",
+                                style: stylePTSansBold(
+                                  fontSize: 14,
+                                  color: ThemeColors.accent,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Points Earned",
-                            style: stylePTSansBold(fontSize: 17),
-                          ),
-                          const SpacerVertical(height: 10),
-                          Text(
-                            "${provider.extra?.received ?? 0}",
-                            style: stylePTSansBold(fontSize: 17),
-                          ),
-                        ],
-                      ),
-                      // const SpacerVertical(height: 10),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 Visibility(
                   visible: provider.data?.isNotEmpty == true &&
@@ -257,8 +379,9 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SpacerVertical(height: 20),
                         ScreenTitle(
-                          title: "Friends joined with your referral link",
+                          title: "Friends Joined",
                           subTitle: provider.extra?.earnCondition ?? "",
                         ),
                         ListView.separated(
@@ -291,8 +414,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: Dimen.padding),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: Dimen.padding, vertical: 20),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),

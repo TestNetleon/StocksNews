@@ -1104,15 +1104,51 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         //
       } else {
         popUpAlert(
-            message: response.message ?? "",
-            title: "Alert",
-            icon: Images.alertPopGIF);
+          message: response.message ?? "",
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
         //
       }
 
       return ApiResponse(status: response.status, message: response.message);
     } catch (e) {
       Utils().showLog("$e");
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    }
+  }
+
+//----check phone no---------
+
+  Future checkPhoneNo(phoneNo) async {
+    UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    Map request = {
+      'token': user?.token ?? "",
+      'phone': phoneNo,
+    };
+
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.checkPhoneNo,
+        request: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        //
+      } else {
+        popUpAlert(
+            message: response.message ?? "",
+            title: "Alert",
+            icon: Images.alertPopGIF);
+      }
+
+      return ApiResponse(status: response.status, message: response.message);
+    } catch (e) {
+      Utils().showLog("$e");
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF);
       return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }

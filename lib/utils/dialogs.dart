@@ -74,7 +74,7 @@ void onSortingClick({
             child: Padding(
               padding: EdgeInsets.only(left: 10.sp),
               child: Text(
-                data.sorting![index].value,
+                data.sorting![index].value ?? "",
                 // sortingArrayList[index].value,
                 style: stylePTSansBold(
                   color: selected == provider.data?.sorting?[index].key

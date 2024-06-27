@@ -177,15 +177,15 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
     getStockScreenerStocks();
   }
 
-  void exchangeFilter(String item) {
-    _filterParams!.exchange_name!.remove(item);
-    if (_filterParams!.exchange_name!.isEmpty) {
-      _filterParams!.exchange_name = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getStockScreenerStocks();
-  }
+  // void exchangeFilter(String item) {
+  //   _filterParams!.exchange_name!.remove(item);
+  //   if (_filterParams!.exchange_name!.isEmpty) {
+  //     _filterParams!.exchange_name = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getStockScreenerStocks();
+  // }
 
   void setStatus(status) {
     _status = status;
@@ -217,10 +217,10 @@ class StockScreenerProvider extends ChangeNotifier with AuthProviderBase {
     }
     try {
       Map<String, dynamic> request = {
-        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "exchange_name": _filterParams?.exchange_name?.key ?? "",
         "price": _filterParams?.price ?? "",
         "industry": _filterParams?.industry ?? "",
-        "market_cap": _filterParams?.market_cap ?? "",
+        "market_cap": _filterParams?.market_cap?.key ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",

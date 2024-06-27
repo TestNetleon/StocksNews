@@ -11,6 +11,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../modals/affiliate/refer_friend_res.dart';
+import '../modals/affiliate/transaction.dart';
 import '../route/my_app.dart';
 import '../utils/constants.dart';
 import '../utils/utils.dart';
@@ -189,6 +190,54 @@ class LeaderBoardProvider extends ChangeNotifier {
       _errorL = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatusL(Status.loaded);
+    }
+  }
+
+//Transaction
+  String? _errorT;
+  String? get errorT => _errorT ?? Const.errSomethingWrong;
+
+  Status _statusT = Status.ideal;
+  Status get statusT => _statusT;
+
+  bool get isLoadingT => _statusT == Status.loading;
+
+  Extra? _extraT;
+  Extra? get extraT => _extraT;
+  List<AffiliateTransactionRes>? _tnxData;
+  List<AffiliateTransactionRes>? get tnxData => _tnxData;
+
+  void setStatusT(status) {
+    _statusT = status;
+    notifyListeners();
+  }
+
+  Future getTransactionData() async {
+    _tnxData = null;
+    setStatusT(Status.loading);
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.affiliateTnx,
+        formData: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        _tnxData = affiliateTransactionResFromJson(jsonEncode(response.data));
+        _errorT = null;
+      } else {
+        _errorT = response.message;
+        _tnxData = null;
+      }
+      setStatusT(Status.loaded);
+    } catch (e) {
+      _tnxData = null;
+      _errorT = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusT(Status.loaded);
     }
   }
 }

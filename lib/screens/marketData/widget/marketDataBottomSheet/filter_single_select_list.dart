@@ -84,7 +84,7 @@ class _FilterSingleSelectListingState extends State<FilterSingleSelectListing> {
                   child: Row(
                     children: [
                       Text(
-                        item.value,
+                        item.value ?? '',
                         style: stylePTSansRegular(fontSize: 15),
                       ),
                     ],

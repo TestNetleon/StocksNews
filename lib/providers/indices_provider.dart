@@ -104,7 +104,7 @@ class IndicesProvider extends ChangeNotifier {
             filterParams?.sector != null ||
             filterParams?.industry != null ||
             filterParams?.price != "" ||
-            filterParams?.market_cap != "" ||
+            filterParams?.market_cap != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
@@ -148,15 +148,15 @@ class IndicesProvider extends ChangeNotifier {
     getIndicesData();
   }
 
-  void exchangeFilter(String item) {
-    _filterParams!.exchange_name!.remove(item);
-    if (_filterParams!.exchange_name!.isEmpty) {
-      _filterParams!.exchange_name = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getIndicesData();
-  }
+  // void exchangeFilter(String item) {
+  //   _filterParams!.exchange_name!.remove(item);
+  //   if (_filterParams!.exchange_name!.isEmpty) {
+  //     _filterParams!.exchange_name = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getIndicesData();
+  // }
 
 //----------Filter ------------------
   Future onRefresh() async {
@@ -236,16 +236,16 @@ class IndicesProvider extends ChangeNotifier {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "page": "$_page",
         "exchange": _tabs?[selectedIndex].value,
-        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "exchange_name": _filterParams?.exchange_name?.key ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry?.join(",") ?? "",
-        "market_cap": _filterParams?.market_cap ?? "",
+        "industry": _filterParams?.industry?.key ?? "",
+        "market_cap": _filterParams?.market_cap?.key ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector?.join(",") ?? "",
+        "sector": _filterParams?.sector?.key ?? "",
       };
       // Map requestDowThirty = {
       //   "token":

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
@@ -46,8 +47,6 @@ class NotificationsItem extends StatelessWidget {
           MaterialPageRoute(builder: (_) => const Tabs()),
         );
       } else if (slug != '' && type == NotificationType.ticketDetail.name) {
-        Utils().showLog("----Navigating  servoce12 ...");
-
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -113,6 +112,11 @@ class NotificationsItem extends StatelessWidget {
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => StockDetail(symbol: slug!)),
         );
+      } else if (type == NotificationType.referRegistration.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const ReferAFriend()),
+        );
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         referLogin();
       } else {
@@ -166,7 +170,16 @@ class NotificationsItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(5.sp),
       child: Container(
         decoration: BoxDecoration(
-            color: ThemeColors.greyBorder.withOpacity(0.6),
+            border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 23, 23, 23),
+                // ThemeColors.greyBorder,
+                Color.fromARGB(255, 39, 39, 39),
+              ],
+            ),
             borderRadius: BorderRadius.circular(5.sp)),
         child: Padding(
           padding: EdgeInsets.fromLTRB(13.sp, 13.sp, 13.sp, 13.sp),

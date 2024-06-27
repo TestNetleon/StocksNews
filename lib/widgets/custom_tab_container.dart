@@ -120,98 +120,6 @@ class _CustomState extends State<CustomTabContainer>
   }
 }
 
-// class CustomTabContainerNews extends StatefulWidget {
-//   const CustomTabContainerNews({
-//     required this.tabs,
-//     required this.widgets,
-//     this.rightWidget = const SizedBox(),
-//     this.header,
-//     required this.onChange,
-//     this.showDivider = false,
-//     super.key,
-//   });
-
-//   final Widget rightWidget;
-//   final Widget? header;
-//   final List<Widget> tabs;
-//   final List<Widget> widgets;
-//   final bool showDivider;
-//   final Function() onChange;
-
-//   @override
-//   State<CustomTabContainerNews> createState() => _CustomTabContainerNewsState();
-// }
-
-// class _CustomTabContainerNewsState extends State<CustomTabContainerNews>
-//     with SingleTickerProviderStateMixin {
-//   bool sync = true;
-//   TabController? _controller;
-//   int _selectedIndex = 0;
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller = TabController(length: widget.tabs.length, vsync: this);
-//     _controller?.addListener(() {
-//       setState(() {
-//         _selectedIndex = _controller?.index ?? 0;
-//       });
-//       widget.onChange();
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _controller?.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return DefaultTabController(
-//       length: widget.tabs.length,
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           TabBar(
-//             tabAlignment: TabAlignment.center,
-//             physics: const BouncingScrollPhysics(),
-//             isScrollable: true,
-//             labelPadding: EdgeInsets.all(6.sp),
-//             controller: _controller,
-//             indicatorColor: Colors.transparent,
-//             automaticIndicatorColorAdjustment: false,
-//             enableFeedback: false,
-//             // onTap: (index) {
-//             //   setState(
-//             //     () {
-//             //       _selectedIndex = index;
-//             //     },
-//             //   );
-//             // },
-//             tabs: List.generate(
-//               widget.tabs.length,
-//               (index) => CustomTabLabelNews(
-//                 "${widget.tabs[index]}",
-//                 selected: 1 == index,
-//                 onTap: widget.onChange,
-//               ),
-//             ),
-//           ),
-//           Visibility(
-//               visible: widget.showDivider,
-//               child: Divider(color: ThemeColors.border, height: 10.sp)),
-//           Expanded(
-//             child: TabBarView(
-//               controller: _controller,
-//               children: widget.widgets,
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class CustomTabContainerNEW extends StatefulWidget {
   const CustomTabContainerNEW({
     required this.tabs,
@@ -224,6 +132,7 @@ class CustomTabContainerNEW extends StatefulWidget {
     this.isTabWidget,
     this.tabsPadding,
     this.physics = const AlwaysScrollableScrollPhysics(),
+    this.onController,
     super.key,
   });
 //
@@ -237,6 +146,7 @@ class CustomTabContainerNEW extends StatefulWidget {
   final bool? scrollable;
   final ScrollPhysics physics;
   final Function(int index)? onChange;
+  final Function(TabController? controller)? onController;
 
   @override
   State<CustomTabContainerNEW> createState() => _CustomTabContainerNEWState();

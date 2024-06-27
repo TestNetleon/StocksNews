@@ -43,7 +43,7 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
             filterParams?.sector != null ||
             filterParams?.industry != null ||
             filterParams?.price != "" ||
-            filterParams?.market_cap != "" ||
+            filterParams?.market_cap != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
@@ -88,26 +88,26 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
     getData();
   }
 
-  void exchangeFilter(String item) {
-    _filterParams!.exchange_name!.remove(item);
-    if (_filterParams!.exchange_name!.isEmpty) {
-      _filterParams!.exchange_name = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getData();
-  }
+  // void exchangeFilter(String item) {
+  //   _filterParams!.exchange_name!.remove(item);
+  //   if (_filterParams!.exchange_name!.isEmpty) {
+  //     _filterParams!.exchange_name = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getData();
+  // }
 
-  void sectorFilter(String item) {
-    _filterParams!.sector!.remove(item);
-    if (_filterParams!.sector!.isEmpty) {
-      _filterParams!.sector = null;
-    }
-    _page = 1;
+  // void sectorFilter(String item) {
+  //   _filterParams!.sector!.remove(item);
+  //   if (_filterParams!.sector!.isEmpty) {
+  //     _filterParams!.sector = null;
+  //   }
+  //   _page = 1;
 
-    notifyListeners();
-    getData();
-  }
+  //   notifyListeners();
+  //   getData();
+  // }
 
   // void marketCapFilter(String item) {
   //   _filterParams!.market_cap!.remove(item);
@@ -119,15 +119,15 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
   //   getData();
   // }
 
-  void industryFilter(String item) {
-    _filterParams!.industry!.remove(item);
-    if (_filterParams!.industry!.isEmpty) {
-      _filterParams!.industry = null;
-    }
-    _page = 1;
-    notifyListeners();
-    getData();
-  }
+  // void industryFilter(String item) {
+  //   _filterParams!.industry!.remove(item);
+  //   if (_filterParams!.industry!.isEmpty) {
+  //     _filterParams!.industry = null;
+  //   }
+  //   _page = 1;
+  //   notifyListeners();
+  //   getData();
+  // }
 
   void setStatus(status) {
     _status = status;
@@ -155,16 +155,16 @@ class TodayTopGainerProvider extends ChangeNotifier with AuthProviderBase {
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "type": "gainers",
         "page": "$_page",
-        "exchange_name": _filterParams?.exchange_name?.join(",") ?? "",
+        "exchange_name": _filterParams?.exchange_name?.key ?? "",
         "price": _filterParams?.price ?? "",
-        "industry": _filterParams?.industry?.join(",") ?? "",
-        "market_cap": _filterParams?.market_cap ?? "",
+        "industry": _filterParams?.industry?.key ?? "",
+        "market_cap": _filterParams?.market_cap?.key ?? "",
         "beta": _filterParams?.beta ?? "",
         "dividend": _filterParams?.dividend ?? "",
         "isEtf": _filterParams?.isEtf ?? "",
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
-        "sector": _filterParams?.sector?.join(",") ?? "",
+        "sector": _filterParams?.sector?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
       };
 

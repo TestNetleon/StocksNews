@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -26,6 +27,7 @@ import '../../../widgets/spacer_vertical.dart';
 import '../../affiliate/index.dart';
 import '../../auth/bottomSheets/login_sheet.dart';
 import '../../auth/bottomSheets/login_sheet_tablet.dart';
+import '../../help/help_desk.dart';
 import '../widgets/drawer_top_new.dart';
 import 'refer_dialog.dart';
 
@@ -128,6 +130,27 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     );
   }
 
+  Future _helpDesk() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user == null) {
+      log("1");
+      isPhone ? await loginSheet() : await loginSheetTablet();
+      log("2");
+    }
+    if (provider.user == null) {
+      log("3");
+      return;
+    }
+    log("4");
+
+    await Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const HelpDesk()),
+    );
+    log("5");
+  }
+
   @override
   Widget build(BuildContext context) {
     // HomeProvider provider = context.watch<HomeProvider>();
@@ -220,15 +243,15 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                   }
 
                   if (index == 5) {
-                    return Visibility(
-                      visible: user != null,
-                      child: AboutTile(
-                          index: index, onTap: aboutTiles[index].onTap),
+                    return AboutTile(
+                      index: index,
+                      onTap: _helpDesk,
                     );
                   }
-
                   return AboutTile(
-                      index: index, onTap: aboutTiles[index].onTap);
+                    index: index,
+                    onTap: aboutTiles[index].onTap,
+                  );
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox();
