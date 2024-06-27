@@ -70,14 +70,18 @@ class _MarketDataFilterBottomSheetState
           .map((item) => item.trim())
           .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        FiltersDataItem item = FiltersDataItem(
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
             key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','));
-
-        if (filterParams == null) {
-          filterParams = FilteredParams(exchange_name: item);
+            value: selected.map((item) => item.value).join(','),
+          );
+          if (filterParams == null) {
+            filterParams = FilteredParams(exchange_name: item);
+          } else {
+            filterParams?.exchange_name = item;
+          }
         } else {
-          filterParams?.exchange_name = item;
+          filterParams?.exchange_name = null;
         }
 
         if (filterParams?.exchange_name == null &&
@@ -132,16 +136,19 @@ class _MarketDataFilterBottomSheetState
           .map((item) => item.trim())
           .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        FiltersDataItem item = FiltersDataItem(
-            key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','));
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
 
-        if (filterParams == null) {
-          filterParams = FilteredParams(sector: item);
+          if (filterParams == null) {
+            filterParams = FilteredParams(sector: item);
+          } else {
+            filterParams?.sector = item;
+          }
         } else {
-          filterParams?.sector = item;
+          filterParams?.sector = null;
         }
-
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
@@ -198,14 +205,18 @@ class _MarketDataFilterBottomSheetState
           .map((item) => item.trim())
           .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        FiltersDataItem item = FiltersDataItem(
-            key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','));
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
 
-        if (filterParams == null) {
-          filterParams = FilteredParams(industry: item);
+          if (filterParams == null) {
+            filterParams = FilteredParams(industry: item);
+          } else {
+            filterParams?.industry = item;
+          }
         } else {
-          filterParams?.industry = item;
+          filterParams?.industry = null;
         }
 
         if (filterParams?.exchange_name == null &&
