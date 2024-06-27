@@ -8,7 +8,6 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
-import '../../contactUs/contact_us.dart';
 
 class ReferFriendSuspend extends StatelessWidget {
   const ReferFriendSuspend({super.key});

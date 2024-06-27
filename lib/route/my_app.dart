@@ -8,7 +8,6 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
@@ -20,7 +19,6 @@ import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
 final _appLinks = AppLinks();
 //

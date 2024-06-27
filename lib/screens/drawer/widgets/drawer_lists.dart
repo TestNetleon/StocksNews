@@ -1,13 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
