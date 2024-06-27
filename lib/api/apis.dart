@@ -138,7 +138,7 @@ class Apis {
   static const affiliateTnx = "/referrals/txn-report";
 
   // Stock Detail New ---
-  static const stockDetailTab = "/stock-detail";
+  static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";
   static const detailDividends = "/stock-detail-dividend";
   static const detailChart = "/stock-detail-chart";
