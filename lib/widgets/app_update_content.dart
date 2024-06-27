@@ -9,6 +9,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../utils/utils.dart';
+
 class AppUpdateContent extends StatefulWidget {
   const AppUpdateContent({
     super.key,
@@ -135,7 +137,7 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
                       child: ThemeButtonSmall(
-                        onPressed: _checkForUpdate,
+                        onPressed: _onUpdateClick,
                         text: "Update Now",
                         showArrow: false,
                         fontBold: true,
@@ -165,5 +167,13 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
         ),
       ],
     );
+  }
+
+  void _onUpdateClick() {
+    if (Platform.isAndroid) {
+      openUrl("https://play.google.com/store/apps/details?id=com.stocks.news");
+    } else {
+      openUrl("https://apps.apple.com/us/app/stocks-news/id6476615803");
+    }
   }
 }

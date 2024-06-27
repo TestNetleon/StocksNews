@@ -194,9 +194,7 @@
 
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/plaid_data_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';

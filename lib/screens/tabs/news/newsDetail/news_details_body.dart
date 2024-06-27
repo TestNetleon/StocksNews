@@ -31,6 +31,7 @@ import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../auth/bottomSheets/login_sheet.dart';
+import '../../../auth/bottomSheets/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'mentioned_by.dart';
@@ -167,6 +168,20 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
 
     if (userProvider.user != null) {
       provider.getNewsDetailData(slug: widget.slug);
+    }
+  }
+
+  Future _onReferClick(BuildContext context) async {
+    UserProvider userProvider = context.read<UserProvider>();
+
+    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+      await referLogin();
+    } else {
+      if (userProvider.user != null) {
+        await Share.share(
+          "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+        );
+      }
     }
   }
 
@@ -668,10 +683,12 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                             ),
                                             const SpacerVertical(height: 10),
                                             ThemeButtonSmall(
-                                              onPressed: () {
-                                                Share.share(
-                                                  "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                                                );
+                                              onPressed: () async {
+                                                // Share.share(
+                                                //   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                                                // );
+
+                                                await _onReferClick(context);
                                               },
                                               text: "Refer Now",
                                               showArrow: false,

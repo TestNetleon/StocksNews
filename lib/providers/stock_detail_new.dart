@@ -922,6 +922,8 @@ class StockDetailProviderNew extends ChangeNotifier {
           .reduce((a, b) => a > b ? a : b),
       lineBarsData: [
         LineChartBarData(
+          preventCurveOverShooting: true,
+
           spots: spots,
           // color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
           //     ? ThemeColors.sos

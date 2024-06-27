@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
@@ -64,6 +65,20 @@ class BlogDetailContainer extends StatelessWidget {
 
     if (userProvider.user != null) {
       provider.getBlogDetailData(slug: slug);
+    }
+  }
+
+  Future _onReferClick(BuildContext context) async {
+    UserProvider userProvider = context.read<UserProvider>();
+
+    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+      await referLogin();
+    } else {
+      if (userProvider.user != null) {
+        await Share.share(
+          "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+        );
+      }
     }
   }
 
@@ -323,10 +338,8 @@ class BlogDetailContainer extends StatelessWidget {
                                 ),
                                 const SpacerVertical(height: 10),
                                 ThemeButtonSmall(
-                                  onPressed: () {
-                                    Share.share(
-                                      "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                                    );
+                                  onPressed: () async {
+                                    await _onReferClick(context);
                                   },
                                   text: "Refer Now",
                                   showArrow: false,
