@@ -60,8 +60,10 @@ class SendTicketItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 20,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -83,9 +85,10 @@ class SendTicketItem extends StatelessWidget {
                           Positioned(
                             right: 0,
                             child: IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () => _onSendTicketClick(),
-                                color: ThemeColors.accent),
+                              icon: const Icon(Icons.send),
+                              onPressed: () => _onSendTicketClick(),
+                              color: ThemeColors.accent,
+                            ),
                           ),
                         ],
                       ),

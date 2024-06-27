@@ -113,7 +113,7 @@ class AffiliateTranItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Point spent",
+                    ((data?.spent ?? 0) > 1) ? "Points spent" : "Point spent",
                     style:
                         styleGeorgiaBold(fontSize: 20, color: ThemeColors.sos),
                   ),
@@ -134,7 +134,8 @@ class AffiliateTranItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Point earned",
+                    // "Point earned",
+                    ((data?.earn ?? 0) > 1) ? "Points earned" : "Point earned",
                     style: styleGeorgiaBold(
                         fontSize: 20, color: ThemeColors.accent),
                   ),
