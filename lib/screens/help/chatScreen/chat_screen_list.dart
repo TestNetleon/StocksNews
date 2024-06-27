@@ -135,7 +135,8 @@ class _ChatScreenListState extends State<ChatScreenList> {
                                           10, 10, 30, 10),
                                       controller: provider.messageController,
                                       placeholder: "Message",
-                                      keyboardType: TextInputType.text,
+                                      keyboardType: TextInputType.multiline,
+                                      textInputAction: TextInputAction.newline,
                                       inputFormatters: [
                                         allSpecialSymbolsRemove
                                       ],

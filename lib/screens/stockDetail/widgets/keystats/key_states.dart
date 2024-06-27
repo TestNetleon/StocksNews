@@ -53,65 +53,65 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                   // if (index == 1)
                   //   StateItemNEW(label: "Company Name", value: keyStats?.name),
 
+                  // if (index == 0)
+                  //   // StateItemNEW(label: "Price", value: keyStats?.price),
+                  //   SizedBox(
+                  //       width: double.infinity,
+                  //       child: stockDOverviewItem(
+                  //           title: "Price", value: keyStats?.price)),
+
+                  // if (index == 1)
+                  //   // Visibility(
+                  //   //   visible: keyStats?.change != null,
+                  //   //   child: StateItemNEW(
+                  //   //       label: "Change",
+                  //   //       value: keyStats?.changeWithCur ?? ""),
+                  //   // ),
+                  //   Visibility(
+                  //     visible: keyStats?.change != null,
+                  //     child: SizedBox(
+                  //       width: double.infinity,
+                  //       child: stockDOverviewItem(
+                  //           title: "Change",
+                  //           value: keyStats?.changeWithCur ?? ""),
+                  //     ),
+                  //   ),
+                  // if (index == 2)
+                  //   // Visibility(
+                  //   //   visible: keyStats?.changesPercentage != null,
+                  //   //   child: StateItemNEW(
+                  //   //     label: "Change Per.",
+                  //   //     value: "${keyStats?.changesPercentage?.toCurrency()}%",
+                  //   //   ),
+                  //   // ),
+
+                  //   Visibility(
+                  //     visible: keyStats?.changesPercentage != null,
+                  //     child: SizedBox(
+                  //       width: double.infinity,
+                  //       child: stockDOverviewItem(
+                  //         title: "Change Per.",
+                  //         value:
+                  //             "${keyStats?.changesPercentage?.toCurrency()}%",
+                  //       ),
+                  //     ),
+                  //   ),
+
                   if (index == 0)
-                    // StateItemNEW(label: "Price", value: keyStats?.price),
-                    SizedBox(
-                        width: double.infinity,
-                        child: stockDOverviewItem(
-                            title: "Price", value: keyStats?.price)),
-
-                  if (index == 1)
-                    // Visibility(
-                    //   visible: keyStats?.change != null,
-                    //   child: StateItemNEW(
-                    //       label: "Change",
-                    //       value: keyStats?.changeWithCur ?? ""),
-                    // ),
-                    Visibility(
-                      visible: keyStats?.change != null,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: stockDOverviewItem(
-                            title: "Change",
-                            value: keyStats?.changeWithCur ?? ""),
-                      ),
-                    ),
-                  if (index == 2)
-                    // Visibility(
-                    //   visible: keyStats?.changesPercentage != null,
-                    //   child: StateItemNEW(
-                    //     label: "Change Per.",
-                    //     value: "${keyStats?.changesPercentage?.toCurrency()}%",
-                    //   ),
-                    // ),
-
-                    Visibility(
-                      visible: keyStats?.changesPercentage != null,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: stockDOverviewItem(
-                          title: "Change Per.",
-                          value:
-                              "${keyStats?.changesPercentage?.toCurrency()}%",
-                        ),
-                      ),
-                    ),
-
-                  if (index == 3)
                     // StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
                     Container(
                         width: double.infinity,
                         child: stockDOverviewItem(
                             title: "Day Low", value: keyStats?.dayLow)),
 
-                  if (index == 4)
+                  if (index == 1)
                     // StateItemNEW(label: "Day High", value: keyStats?.dayHigh),
                     SizedBox(
                         width: double.infinity,
                         child: stockDOverviewItem(
                             title: "Day High", value: keyStats?.dayHigh)),
 
-                  if (index == 5)
+                  if (index == 2)
                     // StateItemNEW(label: "Year Low", value: keyStats?.yearLow),
                     SizedBox(
                       width: double.infinity,
@@ -119,7 +119,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           title: "Year Low", value: keyStats?.yearLow),
                     ),
 
-                  if (index == 6)
+                  if (index == 3)
                     // StateItemNEW(label: "Year High", value: keyStats?.yearHigh),
                     SizedBox(
                       width: double.infinity,
@@ -127,7 +127,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           title: "Year High", value: keyStats?.yearHigh),
                     ),
 
-                  if (index == 7)
+                  if (index == 4)
                     // StateItemNEW(label: "Volume", value: keyStats?.volume),
                     SizedBox(
                       width: double.infinity,
@@ -135,7 +135,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           title: "Volume", value: keyStats?.volume),
                     ),
 
-                  if (index == 8)
+                  if (index == 5)
                     // StateItemNEW(
                     //     label: "Avg. Volume (3m)", value: keyStats?.avgVolume),
 
@@ -146,7 +146,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           value: keyStats?.avgVolume),
                     ),
 
-                  if (index == 9)
+                  if (index == 6)
                     // StateItemNEW(
                     //     label: "Previous Close",
                     //     value: keyStats?.previousClose),
@@ -157,14 +157,14 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           value: keyStats?.previousClose),
                     ),
 
-                  if (index == 10)
+                  if (index == 7)
                     // StateItemNEW(label: "Open", value: keyStats?.open),
                     SizedBox(
                         width: double.infinity,
                         child: stockDOverviewItem(
                             title: "Open", value: keyStats?.open)),
 
-                  if (index == 11)
+                  if (index == 8)
                     // StateItemNEW(label: "EPS", value: "${keyStats?.eps ?? ""}"),
                     SizedBox(
                       width: double.infinity,
@@ -172,17 +172,17 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           title: "EPS", value: "${keyStats?.eps ?? ""}"),
                     ),
 
-                  if (index == 12)
+                  if (index == 9)
                     // StateItemNEW(
                     //     label: "P/E ratio", value: "${keyStats?.pe ?? ""}"),
 
                     SizedBox(
                       width: double.infinity,
                       child: stockDOverviewItem(
-                          title: "P/E ratio", value: "${keyStats?.pe ?? ""}"),
+                          title: "P/E Ratio", value: "${keyStats?.pe ?? ""}"),
                     ),
 
-                  if (index == 13)
+                  if (index == 10)
                     // StateItemNEW(
                     //     label: "Avg 50 EMA (D)", value: keyStats?.priceAvg50),
                     SizedBox(
@@ -190,7 +190,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                       child: stockDOverviewItem(
                           title: "Avg 50 EMA (D)", value: keyStats?.priceAvg50),
                     ),
-                  if (index == 14)
+                  if (index == 11)
                     // StateItemNEW(
                     //     label: "Avg 200 EMA (D)", value: keyStats?.priceAvg200),
                     SizedBox(
@@ -201,7 +201,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                     ),
                   // if (index == 10)
                   //   StateItemNEW(label: "Exchange", value: keyStats?.exchange),
-                  if (index == 15)
+                  if (index == 12)
                     // Visibility(
                     //     visible: keyStats?.revenue != null,
                     //     child: StateItemNEW(
@@ -213,7 +213,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           child: stockDOverviewItem(
                               title: "Revenue", value: keyStats?.revenue),
                         )),
-                  if (index == 16)
+                  if (index == 13)
                     // Visibility(
                     //   visible: keyStats?.bookValuePerShare != null,
                     //   child: StateItemNEW(
@@ -226,12 +226,12 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                       child: SizedBox(
                         width: double.infinity,
                         child: stockDOverviewItem(
-                            title: "Book value/Share",
+                            title: "Book value/share",
                             value: keyStats?.bookValuePerShare),
                       ),
                     ),
 
-                  if (index == 17)
+                  if (index == 14)
                     // StateItemNEW(
                     //     label: "Dividend (yield)",
                     //     value: keyStats?.dividendYield),
@@ -243,7 +243,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           value: keyStats?.dividendYield),
                     ),
 
-                  if (index == 18)
+                  if (index == 15)
                     // StateItemNEW(
                     //     label: "EV/Ebitda",
                     //     value: keyStats?.enterpriseValueOverEbitda),
@@ -276,7 +276,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                   //     ),
                   //   ),
 
-                  if (index == 19)
+                  if (index == 16)
                     // StateItemNEW(
                     //     label: "Market Cap.", value: keyStats?.marketCap),
 
@@ -285,7 +285,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                       child: stockDOverviewItem(
                           title: "Market Cap.", value: keyStats?.marketCap),
                     ),
-                  if (index == 20)
+                  if (index == 17)
                     // StateItemNEW(
                     //     label: "Shares Outstanding",
                     //     value: keyStats?.sharesOutstanding),
@@ -297,7 +297,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
                           value: keyStats?.sharesOutstanding),
                     ),
 
-                  if (index == 21)
+                  if (index == 18)
                     // StateItemNEW(
                     //     label: "Earnings Announcement",
                     //     value: keyStats?.earningsAnnouncement),
