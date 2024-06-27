@@ -99,7 +99,7 @@ class HelpDeskItem extends StatelessWidget {
                       Visibility(
                         visible: provider.data?.tickets?[index].status == 1,
                         child: Text(
-                          "Resolved on: ${provider.data?.tickets?[index].resolvedOn}",
+                          "Resolved on: ${provider.data?.tickets?[index].resolvedOn ?? ""}",
                           style: stylePTSansRegular(
                               color: ThemeColors.greyText, fontSize: 14),
                         ),
