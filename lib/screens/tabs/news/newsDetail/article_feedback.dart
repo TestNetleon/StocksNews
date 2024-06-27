@@ -8,11 +8,13 @@ class ArticleFeedback extends StatelessWidget {
   const ArticleFeedback({
     this.title,
     this.submitMessage,
+    this.feebackType,
     required this.onSubmit,
     super.key,
   });
   final String? title, submitMessage;
   final Function(String) onSubmit;
+  final List<String>? feebackType;
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +57,19 @@ class ArticleFeedback extends StatelessWidget {
                   children: [
                     ItemArticleLike(
                       icon: Icons.thumb_down,
-                      label: "Bad",
+                      label: feebackType?[0] ?? "Bad",
                       onTap: () => onSubmit("bad"),
                     ),
                     // const SpacerHorizontal(width: 30),
                     ItemArticleLike(
                       icon: Icons.sentiment_neutral_sharp,
-                      label: " Just Okay ",
+                      label: feebackType?[1] ?? "Just Okay",
                       onTap: () => onSubmit("sort_of"),
                     ),
                     // const SpacerHorizontal(width: 15),
                     ItemArticleLike(
                       icon: Icons.thumb_up,
-                      label: "AMAZING",
+                      label: feebackType?[2] ?? "AMAZING",
                       onTap: () => onSubmit("absolutely"),
                     ),
                   ],

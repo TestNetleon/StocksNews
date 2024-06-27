@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -36,7 +37,8 @@ class BlogDetailContainer extends StatelessWidget {
   const BlogDetailContainer({super.key, required this.slug});
 
   void _onSubmitAffiliate(value, context) async {
-    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
     if (userProvider.user == null) {
       await loginSheet();
@@ -79,7 +81,6 @@ class BlogDetailContainer extends StatelessWidget {
         2.2;
 
     BlogProvider provider = context.watch<BlogProvider>();
-
     return Stack(
       children: [
         Padding(
@@ -153,7 +154,7 @@ class BlogDetailContainer extends StatelessWidget {
                             blog: true,
                           ),
                         ),
-                       SpacerVertical(height: Dimen.itemSpacing.sp),
+                        SpacerVertical(height: Dimen.itemSpacing.sp),
                         //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
                         //New Blog Tickers Widget
                         const BlogDetailMentionBy(),
@@ -199,6 +200,7 @@ class BlogDetailContainer extends StatelessWidget {
                         ),
                         if (provider.blogsDetail?.feedbackMsg != null)
                           ArticleFeedback(
+                            feebackType: provider.extra?.feebackType,
                             title: provider.blogsDetail?.feedbackMsg,
                             submitMessage:
                                 provider.blogsDetail?.feedbackExistMsg,

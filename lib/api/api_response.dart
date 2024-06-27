@@ -43,6 +43,7 @@ class ApiResponse {
 }
 
 class Extra {
+  final List<String>? feebackType;
   final String? search;
   final int? notificationCount;
   final List<KeyValueElement>? exchangeShortName;
@@ -90,6 +91,7 @@ class Extra {
   final int? selfRank;
 
   Extra({
+    this.feebackType,
     this.search,
     this.selfRank,
     this.profileText,
@@ -139,6 +141,9 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        feebackType: json["feeback_type"] == null
+            ? []
+            : List<String>.from(json["feeback_type"]!.map((x) => x)),
         selfRank: json["self_rank"],
         profileText: json["profile_text"] == null
             ? null
@@ -224,6 +229,9 @@ class Extra {
       );
 
   Map<String, dynamic> toJson() => {
+        "feeback_type": feebackType == null
+            ? []
+            : List<dynamic>.from(feebackType!.map((x) => x)),
         "search": search,
         "user_alerts": userAlert,
         "nudge_text": nudgeText,

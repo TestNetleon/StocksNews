@@ -58,6 +58,10 @@ class PostDetail {
   final List<DetailListType>? authors;
   final List<DetailListType>? categories;
   final List<DetailListType>? tags;
+  bool? readingStatus;
+  String? readingTitle;
+  String? readingSubtitle;
+  bool? balanceStatus;
 
   // final int? status;
   // final String? sector;
@@ -83,6 +87,10 @@ class PostDetail {
     this.tickers,
     this.categories,
     this.tags,
+    this.readingStatus,
+    this.readingTitle,
+    this.readingSubtitle,
+    this.balanceStatus,
     // this.status,
     // this.sector,
     // this.mentionStatus,
@@ -100,6 +108,10 @@ class PostDetail {
             ? null
             : DateTime.parse(json["published_date"]),
         title: json["title"],
+        readingStatus: json["reading_status"],
+        readingTitle: json["reading_title"],
+        readingSubtitle: json["reading_subtitle"],
+        balanceStatus: json["balance_status"],
         postDateString: json['published_date_string'],
         slug: json["slug"],
         authors: json["authors"] == null
@@ -143,6 +155,10 @@ class PostDetail {
         "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
+        "reading_status": readingStatus,
+        "reading_title": readingTitle,
+        "reading_subtitle": readingSubtitle,
+        "balance_status": balanceStatus,
         'published_date_string': postDateString,
         "image": image,
         "site": site,

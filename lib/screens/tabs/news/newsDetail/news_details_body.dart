@@ -6,8 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
+import 'package:stocks_news_new/providers/news_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
@@ -25,8 +27,10 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 //
+import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
+import '../../../../widgets/theme_button_small.dart';
 import '../../../auth/bottomSheets/login_sheet.dart';
 import '../../../blogs/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
@@ -154,6 +158,25 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   //   return widgets;
   // }
 
+  void _onLoginClick(context) async {
+    await loginSheet();
+
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    NewsDetailProvider provider =
+        Provider.of<NewsDetailProvider>(context, listen: false);
+
+    if (userProvider.user != null) {
+      provider.getNewsDetailData(slug: widget.slug);
+    }
+  }
+
+  void _onViewNewsClick(context) async {
+    NewsDetailProvider provider =
+        Provider.of<NewsDetailProvider>(context, listen: false);
+    await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     NewsDetailProvider provider = context.watch<NewsDetailProvider>();
@@ -166,7 +189,10 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
 
     // ScrollControllerProvider controllerProvider =
     //     context.watch<ScrollControllerProvider>();
-
+    double height = (ScreenUtil().screenHeight -
+            ScreenUtil().bottomBarHeight -
+            ScreenUtil().statusBarHeight) /
+        2.2;
     return provider.isLoading
         ? const Loading()
         : provider.data != null && !provider.isLoading
@@ -323,6 +349,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                             // const SpacerVertical(height: 20),
                             if (provider.data?.feedbackMsg != null)
                               ArticleFeedback(
+                                feebackType: provider.extra?.feebackType,
                                 title: provider.data?.feedbackMsg,
                                 submitMessage: provider.data?.feedbackExistMsg,
                                 onSubmit: _onSubmit,
@@ -542,6 +569,158 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         },
                       ),
                     ),
+                    if ((provider.data?.postDetail?.readingStatus == false) &&
+                        !provider.isLoading)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: height / 2,
+                              // height: double.infinity,
+                              // width: double.infinity,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.transparent,
+                                    ThemeColors.tabBack,
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: height / 1.2,
+                            // width: double.infinity,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              color: ThemeColors.tabBack,
+                            ),
+                            child: context.watch<UserProvider>().user == null
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 10,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.lock, size: 40),
+                                        const SpacerVertical(),
+                                        Text(
+                                          "${provider.data?.postDetail?.readingTitle}",
+                                          style: stylePTSansBold(fontSize: 18),
+                                        ),
+                                        const SpacerVertical(height: 10),
+                                        Text(
+                                          "${provider.data?.postDetail?.readingSubtitle}",
+                                          style: stylePTSansRegular(
+                                            fontSize: 14,
+                                            height: 1.3,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SpacerVertical(height: 10),
+                                        // if (context.watch<UserProvider>().user == null)
+                                        ThemeButtonSmall(
+                                          onPressed: () {
+                                            _onLoginClick(context);
+                                          },
+                                          text: "Login to continue",
+                                          showArrow: false,
+                                        ),
+                                        const SpacerVertical(),
+                                      ],
+                                    ),
+                                  )
+                                : provider.data?.postDetail?.balanceStatus ==
+                                            null ||
+                                        provider.data?.postDetail
+                                                ?.balanceStatus ==
+                                            false
+                                    ? Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(Icons.lock, size: 40),
+                                            const SpacerVertical(),
+                                            Text(
+                                              "${provider.data?.postDetail?.readingTitle}",
+                                              style:
+                                                  stylePTSansBold(fontSize: 18),
+                                            ),
+                                            const SpacerVertical(height: 10),
+                                            Text(
+                                              "${provider.data?.postDetail?.readingSubtitle}",
+                                              style: stylePTSansRegular(
+                                                fontSize: 14,
+                                                height: 1.3,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            const SpacerVertical(height: 10),
+                                            ThemeButtonSmall(
+                                              onPressed: () {
+                                                Share.share(
+                                                  "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                                                );
+                                              },
+                                              text: "Refer Now",
+                                              showArrow: false,
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(Icons.lock, size: 40),
+                                            const SpacerVertical(),
+                                            Text(
+                                              "${provider.data?.postDetail?.readingTitle}",
+                                              style:
+                                                  stylePTSansBold(fontSize: 18),
+                                            ),
+                                            const SpacerVertical(height: 10),
+                                            Text(
+                                              "${provider.data?.postDetail?.readingSubtitle}",
+                                              style: stylePTSansRegular(
+                                                fontSize: 14,
+                                                height: 1.3,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            const SpacerVertical(height: 10),
+                                            ThemeButtonSmall(
+                                              // onPressed: () =>
+                                              //     _onViewBlogClick(context),
+                                              onPressed: () =>
+                                                  _onViewNewsClick(context),
+                                              text: "View News",
+                                              showArrow: false,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                          ),
+                        ],
+                      ),
+
                     // CommonShare(
                     //   visible: controllerProvider.isVisible,
                     //   linkShare: provider.data?.postDetail?.slug ?? "",
