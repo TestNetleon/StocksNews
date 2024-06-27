@@ -34,7 +34,7 @@ void main() async {
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
 
     Timer(const Duration(seconds: 10), () {
-      Preference.setIsFirstOpen(false);
+      // Preference.setIsFirstOpen(false);
     });
   } catch (e) {
     Utils().showLog('Error initializing Firebase: $e');

@@ -61,13 +61,13 @@ class ArticleFeedback extends StatelessWidget {
                     // const SpacerHorizontal(width: 30),
                     ItemArticleLike(
                       icon: Icons.sentiment_neutral_sharp,
-                      label: " Sort of ",
+                      label: " Just Okay ",
                       onTap: () => onSubmit("sort_of"),
                     ),
                     // const SpacerHorizontal(width: 15),
                     ItemArticleLike(
                       icon: Icons.thumb_up,
-                      label: "Absolutely",
+                      label: "AMAZING",
                       onTap: () => onSubmit("absolutely"),
                     ),
                   ],
