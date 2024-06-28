@@ -13,7 +13,6 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-
 class BlogProviderNew extends ChangeNotifier {
   BlogsRes? _data;
   String? _error;
@@ -65,13 +64,15 @@ class BlogProviderNew extends ChangeNotifier {
     setTabStatus(Status.loading);
     try {
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
 
       ApiResponse response = await apiRequest(
         url: Apis.blogCategory,
         request: request,
         showProgress: showProgress,
+        removeForceLogin: true,
       );
       if (response.status) {
         _tabs = blogTabResFromJson(jsonEncode(response.data));

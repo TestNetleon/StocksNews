@@ -98,9 +98,12 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
   }) async {
     // setStatus(Status.loading);
     _isGraphLoading = Status.loading;
+    notifyListeners();
+
     try {
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "companySlug": companySlug,
         "search": searchTransaction,
         "txn_type": keyTxnTypeCP,
@@ -111,11 +114,15 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
         url: Apis.insiderTradingGraph,
         showProgress: showProgress,
         request: request,
+        removeForceLogin: true,
       );
       if (response.status) {
-        chartDates = insiderCompanyGraphFromJson(jsonEncode(response.data)).chartDates;
-        chartPurchase = insiderCompanyGraphFromJson(jsonEncode(response.data)).chartPurchase;
-        chartSale = insiderCompanyGraphFromJson(jsonEncode(response.data)).chartSale;
+        chartDates =
+            insiderCompanyGraphFromJson(jsonEncode(response.data)).chartDates;
+        chartPurchase = insiderCompanyGraphFromJson(jsonEncode(response.data))
+            .chartPurchase;
+        chartSale =
+            insiderCompanyGraphFromJson(jsonEncode(response.data)).chartSale;
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         chartDates = null;
@@ -124,6 +131,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
       }
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
+      notifyListeners();
     } catch (e) {
       chartDates = null;
       chartPurchase = null;
@@ -131,6 +139,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
       Utils().showLog(e.toString());
       // setStatus(Status.loaded);
       _isGraphLoading = Status.loaded;
+      notifyListeners();
     }
   }
 
@@ -157,6 +166,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
         url: Apis.insiderInsiderGraph,
         showProgress: showProgress,
         request: request,
+        removeForceLogin: true,
       );
       if (response.status) {
         chartDatesInsider =
@@ -179,7 +189,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
       chartDatesInsider = null;
       chartPurchaseInsider = null;
       chartSaleInsider = null;
-      Utils().showLog(e.toString());
+      Utils().showLog("Error ------$e");
       // setStatus(Status.loaded);
       _isGraphLoadingInsider = Status.loaded;
       notifyListeners();
@@ -427,6 +437,8 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
 
       setStatus(Status.loaded);
     } catch (e) {
+      Utils().showLog("Error -----$e");
+
       if (reportingSlug == "") {
         if (_pageCompany == 1) {
           _companyData = null;

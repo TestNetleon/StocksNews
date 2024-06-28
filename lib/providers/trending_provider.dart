@@ -103,6 +103,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.createAlert,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (up) {
@@ -153,6 +154,7 @@ class TrendingProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.addWatchlist,
         request: request,
         showProgress: false,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (up) {

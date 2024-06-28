@@ -76,21 +76,11 @@ class IndicesProvider extends ChangeNotifier {
 
   void tabChange(index) {
     if (selectedIndex != index) {
-      // if (tabs?[index].key == "DOW30") {
-      //   selectedIndex = index;
-      //   notifyListeners();
-      //   getIndicesData(showProgress: true, dowThirtyStocks: true);
-      // } else if (tabs?[index].key == "SP500") {
-      //   selectedIndex = index;
-      //   notifyListeners();
-      //   getIndicesData(showProgress: true, sPFiftyStocks: true);
-      // } else {
       selectedIndex = index - 2;
       _filterParams = null;
       notifyListeners();
       getIndicesData(showProgress: false);
     }
-    // }
   }
 
 //----------Filter ------------------
@@ -178,6 +168,7 @@ class IndicesProvider extends ChangeNotifier {
         request: request,
         showProgress: false,
         onRefresh: onRefresh,
+        removeForceLogin: true,
       );
 
       if (response.status) {
@@ -275,6 +266,7 @@ class IndicesProvider extends ChangeNotifier {
             request,
         showProgress: false,
         onRefresh: onRefreshIndicesData,
+        removeForceLogin: true,
       );
       if (response.status) {
         _extra = response.extra is Extra ? response.extra : null;

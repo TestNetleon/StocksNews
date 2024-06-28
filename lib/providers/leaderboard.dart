@@ -97,7 +97,7 @@ class LeaderBoardProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getReferData() async {
+  Future getReferData({checkAppUpdate = true}) async {
     verified = 0;
     unVerified = 0;
     setStatus(Status.loading);
@@ -110,6 +110,7 @@ class LeaderBoardProvider extends ChangeNotifier {
         url: Apis.referralList,
         formData: request,
         showProgress: false,
+        checkAppUpdate: checkAppUpdate,
       );
       if (response.status) {
         _data = affiliateReferResFromJson(jsonEncode(response.data));

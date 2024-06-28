@@ -193,6 +193,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.drawerData,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _drawerData = drawerDataResFromJson(jsonEncode(response.data));
@@ -250,6 +251,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.login,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -325,6 +327,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.sendAppleOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -393,6 +396,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.googleLogin,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -440,7 +444,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             );
           }
         }
-        if ((_user?.phone == null || _user?.phone == "")) {
+        if ((_user?.phone == null || _user?.phone == "") &&
+            _user?.signupStatus == false) {
           referLogin();
         }
       } else {
@@ -490,6 +495,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.appleLogin,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -531,7 +537,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           }
         }
 
-        if ((_user?.phone == null || _user?.phone == "")) {
+        if ((_user?.phone == null || _user?.phone == "") &&
+            _user?.signupStatus == false) {
           referLogin();
         }
       } else {
@@ -568,6 +575,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.signup,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -614,6 +622,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.resendOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       // showErrorMessage(
@@ -632,6 +641,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.signupResendOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       // showErrorMessage(
@@ -656,6 +666,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.verifySignupOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -711,6 +722,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.verifyLoginOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -776,6 +788,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.logout,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -809,6 +822,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.deleteUser,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -853,6 +867,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: verifyOTP ? Apis.updateProfileEmail : Apis.updateProfile,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -901,6 +916,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updateProfile,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -923,6 +939,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updateProfileOTP,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         setStatus(Status.loaded);
@@ -950,6 +967,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.referLogin,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         //
@@ -978,6 +996,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkPhone,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _refer = referSuccessResFromJson(jsonEncode(response.data));
@@ -1017,6 +1036,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updateEmailOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (resendButtonClick == false) {
@@ -1046,6 +1066,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updatePhoneOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (resendButtonClick == false) {
@@ -1074,6 +1095,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkEmailOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _emailClickText = "Edit";
@@ -1103,6 +1125,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkUpdatePhoneOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _phoneClickText = "Edit";
@@ -1141,6 +1164,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkPhoneNo,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         //

@@ -428,6 +428,7 @@ Future saveFCMapi({String? value, String? address}) async {
       showProgress: false,
       showErrorOnFull: false,
       checkAppUpdate: false,
+      removeForceLogin: true,
     );
 
     if (response.status) {

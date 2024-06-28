@@ -94,6 +94,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.getTickets,
         request: request,
         showProgress: false,
+        removeForceLogin: true,
       );
 
       if (response.status) {
@@ -131,6 +132,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.sendTicket,
         request: request,
         showProgress: false,
+        removeForceLogin: true,
       );
       if (response.status) {
         messageController.text = "";
@@ -147,6 +149,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
           url: Apis.getTickets,
           request: requestList,
           showProgress: false,
+          removeForceLogin: true,
         );
 
         if (responseList.status) {
@@ -167,6 +170,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
             url: Apis.ticketDetail,
             request: requestDetail,
             showProgress: showProgressChatMessage,
+            removeForceLogin: true,
           );
 
           if (responseDetail.status) {
@@ -202,6 +206,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.ticketReply,
         request: request,
         showProgress: false,
+        removeForceLogin: true,
       );
       if (response.status) {
         setSlug(slug, ticketId);
@@ -240,6 +245,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.ticketDetail,
         request: request,
         showProgress: showProgressChatMessage,
+        removeForceLogin: true,
       );
 
       if (response.status) {
