@@ -112,7 +112,7 @@
 	</array> -->
 	<key>FirebaseDynamicLinksCustomDomains</key>
 	<array>
-		<string>https://app.stocks.news</string>
+		<!-- <string>https://app.stocks.news</string> -->
 		<string>https://stocksnews.page.link</string>
 	</array>
 
