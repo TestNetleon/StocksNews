@@ -302,36 +302,39 @@ void showAppUpdateDialog(Extra extra) {
   showGeneralDialog(
     barrierColor: Colors.black.withOpacity(0.5),
     transitionBuilder: (context, a1, a2, widget) {
-      return SafeArea(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Transform.scale(
-            scale: a1.value,
-            child: Opacity(
-              opacity: a1.value,
-              child: Stack(
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.transparent,
+      return PopScope(
+        canPop: false,
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                opacity: a1.value,
+                child: Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.transparent,
+                      ),
                     ),
-                  ),
-                  Dialog(
-                    insetPadding: EdgeInsets.symmetric(
-                      horizontal:
-                          ScreenUtil().screenWidth * (isPhone ? .1 : .2),
+                    Dialog(
+                      insetPadding: EdgeInsets.symmetric(
+                        horizontal:
+                            ScreenUtil().screenWidth * (isPhone ? .1 : .2),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      child: AppUpdateContent(extra: extra),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    child: AppUpdateContent(extra: extra),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
