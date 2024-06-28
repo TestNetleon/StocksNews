@@ -105,6 +105,8 @@ class IndicesProvider extends ChangeNotifier {
             filterParams?.industry != null ||
             filterParams?.price != "" ||
             filterParams?.market_cap != null ||
+            filterParams?.marketRanks != null ||
+            filterParams?.analystConsensusParams != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
@@ -246,6 +248,8 @@ class IndicesProvider extends ChangeNotifier {
         "isFund": _filterParams?.isFund ?? "",
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.key ?? "",
+        "marketRank": _filterParams?.marketRanks?.key ?? "",
+        "analystConsensus": _filterParams?.analystConsensusParams?.key ?? "",
       };
       // Map requestDowThirty = {
       //   "token":

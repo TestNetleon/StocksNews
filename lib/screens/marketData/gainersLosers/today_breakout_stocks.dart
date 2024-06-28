@@ -138,6 +138,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
             isSort: provider.isSortingApplied(),
             onTapFilter: _onFilterClick,
             onTapSorting: () => onSortingClick(
+              breakOutType: true,
               selected: provider.filterParams?.sorting,
               onTap: (sortingKey) {
                 Navigator.pop(navigatorKey.currentContext!);

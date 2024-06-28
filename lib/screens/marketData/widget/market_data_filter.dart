@@ -71,20 +71,26 @@ class _MarketDataFilterBottomSheetState
           .map((item) => item.trim())
           .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        FiltersDataItem item = FiltersDataItem(
-            key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','));
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
 
-        if (filterParams == null) {
-          filterParams = FilteredParams(exchange_name: item);
+          if (filterParams == null) {
+            filterParams = FilteredParams(exchange_name: item);
+          } else {
+            filterParams?.exchange_name = item;
+          }
         } else {
-          filterParams?.exchange_name = item;
+          filterParams?.exchange_name = null;
         }
 
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -133,20 +139,26 @@ class _MarketDataFilterBottomSheetState
           .map((item) => item.trim())
           .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        FiltersDataItem item = FiltersDataItem(
-            key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','));
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
 
-        if (filterParams == null) {
-          filterParams = FilteredParams(sector: item);
+          if (filterParams == null) {
+            filterParams = FilteredParams(sector: item);
+          } else {
+            filterParams?.sector = item;
+          }
         } else {
-          filterParams?.sector = item;
+          filterParams?.sector = null;
         }
 
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -199,20 +211,26 @@ class _MarketDataFilterBottomSheetState
           .map((item) => item.trim())
           .toList(),
       onSelected: (List<FiltersDataItem> selected) {
-        FiltersDataItem item = FiltersDataItem(
-            key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','));
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
 
-        if (filterParams == null) {
-          filterParams = FilteredParams(industry: item);
+          if (filterParams == null) {
+            filterParams = FilteredParams(industry: item);
+          } else {
+            filterParams?.industry = item;
+          }
         } else {
-          filterParams?.industry = item;
+          filterParams?.industry = null;
         }
 
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -309,7 +327,9 @@ class _MarketDataFilterBottomSheetState
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -480,11 +500,107 @@ class _MarketDataFilterBottomSheetState
             filterParams?.sector == null &&
             filterParams?.industry == null &&
             filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null &&
             filterParams?.timePeriod == null) {
           filterParams = null;
         }
 
         Utils().showLog('selected ===== ${filterParams?.timePeriod?.key}');
+        setState(() {});
+      },
+    );
+  }
+
+  void _showAnalystConsensusPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.analystConsensus == null) {
+      popUpAlert(
+        message: "Analyst Consensus not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggable(
+      title: "Select Analyst Consensus",
+      items: provider.data!.analystConsensus!,
+      selected: filterParams?.analystConsensusParams?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
+      onSelected: (List<FiltersDataItem> selected) {
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
+
+          if (filterParams == null) {
+            filterParams = FilteredParams(analystConsensusParams: item);
+          } else {
+            filterParams?.analystConsensusParams = item;
+          }
+        } else {
+          filterParams?.analystConsensusParams = null;
+        }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null) {
+          filterParams = null;
+        }
+
+        Utils().showLog(
+            'selected ===== ${filterParams?.analystConsensusParams?.key}');
+        setState(() {});
+      },
+    );
+  }
+
+  void _showMarketRankPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.marketRank == null) {
+      popUpAlert(
+        message: "Market Rank not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggable(
+      title: "Select Market Rank",
+      items: provider.data!.marketRank!,
+      selected: filterParams?.marketRanks?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
+      onSelected: (List<FiltersDataItem> selected) {
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
+
+          if (filterParams == null) {
+            filterParams = FilteredParams(marketRanks: item);
+          } else {
+            filterParams?.marketRanks = item;
+          }
+        } else {
+          filterParams?.marketRanks = null;
+        }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
+          filterParams = null;
+        }
+
+        Utils().showLog('selected ===== ${filterParams?.marketRanks?.key}');
         setState(() {});
       },
     );
@@ -564,6 +680,39 @@ class _MarketDataFilterBottomSheetState
               ],
             ),
           ),
+          // new filter
+          const SpacerVertical(height: 12),
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText: filterParams?.marketRanks != null
+                        ? filterParams?.marketRanks?.value ?? ""
+                        : "All Market Ranks",
+                    label: "Market Ranks",
+                    onTap: () => _showMarketRankPicker(context),
+                    controller: TextEditingController(),
+                  ),
+                ),
+                const SpacerHorizontal(width: 10),
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText:
+                        filterParams?.analystConsensusParams?.value != null
+                            ? filterParams?.analystConsensusParams?.value ?? ""
+                            : "All Analyst Consensus",
+                    label: "Analyst Consensus",
+                    onTap: () => _showAnalystConsensusPicker(context),
+                    controller: TextEditingController(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // new filter
+
           Visibility(
               visible: widget.showTimePeriod,
               child: const SpacerVertical(height: 12)),

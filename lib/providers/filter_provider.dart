@@ -60,10 +60,11 @@ class FilteredParams {
   FiltersDataItem? exchange_name;
   FiltersDataItem? sector;
   FiltersDataItem? industry;
+  FiltersDataItem? analystConsensusParams;
+  FiltersDataItem? marketRanks;
   String price;
   FiltersDataItem? market_cap;
   FiltersDataItem? timePeriod;
-
   String beta;
   String dividend;
   String isEtf;
@@ -76,6 +77,8 @@ class FilteredParams {
     this.price = "",
     this.industry,
     this.market_cap,
+    this.analystConsensusParams,
+    this.marketRanks,
     this.timePeriod,
     this.beta = "",
     this.dividend = "",

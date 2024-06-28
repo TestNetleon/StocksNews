@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
@@ -39,12 +40,17 @@ class _Dow30StocksState extends State<Dow30Stocks> {
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
+    FilteredParams? filterParams = context.read<Dow30Provider>().filterParams;
+
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
       title: "Filter DOW 30 Stocks",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: filterParams,
+      ),
     );
   }
 
@@ -55,6 +61,9 @@ class _Dow30StocksState extends State<Dow30Stocks> {
   @override
   Widget build(BuildContext context) {
     Dow30Provider provider = context.watch<Dow30Provider>();
+    Utils().showLog(
+        'selected  Api ===== ${context.read<Dow30Provider>().filterParams?.sorting}');
+
     return Stack(
       children: [
         Padding(

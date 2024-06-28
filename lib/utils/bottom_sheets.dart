@@ -192,7 +192,6 @@ class BaseBottomSheets {
                 Expanded(
                   child: FilterMultiSelectListing(
                     scrollController: scrollController,
-                    // label: "Select Industry",
                     items: items!,
                     selectedData: selected,
                     onSelected: onSelected,

@@ -47,6 +47,8 @@ class UnusualTradingVolumeProvider extends ChangeNotifier
             filterParams?.industry != null ||
             filterParams?.price != "" ||
             filterParams?.market_cap != null ||
+            filterParams?.marketRanks != null ||
+            filterParams?.analystConsensusParams != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
@@ -147,6 +149,8 @@ class UnusualTradingVolumeProvider extends ChangeNotifier
         "sector": _filterParams?.sector?.key ?? "",
         "industry": _filterParams?.industry?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
+        "marketRank": _filterParams?.marketRanks?.key ?? "",
+        "analystConsensus": _filterParams?.analystConsensusParams?.key ?? "",
       };
 
       ApiResponse response = await apiRequest(

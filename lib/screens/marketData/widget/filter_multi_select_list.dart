@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
+import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -95,9 +98,29 @@ class _FilterMultiSelectListingState extends State<FilterMultiSelectListing> {
                           });
                         },
                       ),
-                      Text(
-                        item.value ?? "",
-                        style: stylePTSansRegular(fontSize: 15),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (widget.items !=
+                              context.read<FilterProvider>().data!.marketRank!)
+                            Text(
+                              item.value ?? "",
+                              style: stylePTSansRegular(fontSize: 15),
+                            ),
+                          if (widget.items ==
+                              context.read<FilterProvider>().data!.marketRank!)
+                            RatingBarIndicator(
+                              rating: double.parse("${item.value ?? 0}"),
+                              itemBuilder: (context, index) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              itemCount: 5,
+                              itemSize: 18,
+                              direction: Axis.horizontal,
+                              unratedColor: ThemeColors.greyBorder,
+                            ),
+                        ],
                       ),
                     ],
                   ),
