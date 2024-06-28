@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:stocks_news_new/firebase_options.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
@@ -33,7 +34,7 @@ void main() async {
     FirebaseInAppMessaging.instance.setAutomaticDataCollectionEnabled(true);
 
     Timer(const Duration(seconds: 10), () {
-      // Preference.setIsFirstOpen(false);
+      Preference.setIsFirstOpen(false);
     });
   } catch (e) {
     Utils().showLog('Error initializing Firebase: $e');

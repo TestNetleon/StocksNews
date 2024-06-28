@@ -39,12 +39,16 @@ class _Dow30StocksState extends State<Dow30Stocks> {
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
+    Dow30Provider dov30provider = context.read<Dow30Provider>();
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
     BaseBottomSheets().gradientBottomSheet(
       title: "Filter DOW 30 Stocks",
-      child: MarketDataFilterBottomSheet(onFiltered: _onFiltered),
+      child: MarketDataFilterBottomSheet(
+        onFiltered: _onFiltered,
+        filterParam: dov30provider.filterParams,
+      ),
     );
   }
 
