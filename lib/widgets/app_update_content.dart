@@ -137,7 +137,12 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
                       margin: const EdgeInsets.only(top: 20),
                       alignment: Alignment.center,
                       child: ThemeButtonSmall(
-                        onPressed: _onUpdateClick,
+                        // onPressed: _onUpdateClick,
+                        onPressed: () {
+                          Navigator.pop(context);
+                          isAppUpdating = false;
+                        },
+
                         text: "Update Now",
                         showArrow: false,
                         fontBold: true,

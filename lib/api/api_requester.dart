@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
@@ -129,6 +131,8 @@ Future<ApiResponse> apiRequest({
       if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
+
+        _checkForNewVersion(res.extra);
         // MaintenanceDialog? maintenanceDialog = MaintenanceDialog(
         //     title: "App Under Maintenance",
         //     description:
@@ -160,6 +164,23 @@ Future<ApiResponse> apiRequest({
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
     return ApiResponse(status: false, message: Const.errSomethingWrong);
+  }
+}
+
+void _checkForNewVersion(Extra extra) async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  // String versionName = packageInfo.version;
+  String buildCode = packageInfo.buildNumber;
+  if ((Platform.isAndroid &&
+          (extra.androidBuildCode ?? 0) > int.parse(buildCode)) &&
+      !isAppUpdating) {
+    isAppUpdating = true;
+    showAppUpdateDialog(extra);
+  } else if ((Platform.isIOS &&
+          (extra.iOSBuildCode ?? 0) > int.parse(buildCode)) &&
+      !isAppUpdating) {
+    isAppUpdating = true;
+    showAppUpdateDialog(extra);
   }
 }
 
