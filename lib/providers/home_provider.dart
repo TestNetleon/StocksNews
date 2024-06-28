@@ -257,7 +257,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
 
         if (_extra != null) {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
-          _checkForNewVersion(response.extra as Extra);
+          // _checkForNewVersion(response.extra as Extra);
         }
 
         notifyListeners();

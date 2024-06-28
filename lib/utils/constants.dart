@@ -42,6 +42,7 @@ enum SocialTrendingType { now, recently, cap }
 bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
+bool isAppUpdating = false;
 String apiKeyFMP = "";
 bool popHome = false;
 Uri? deepLinkData;

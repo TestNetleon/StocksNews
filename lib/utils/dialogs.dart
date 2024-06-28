@@ -339,7 +339,7 @@ void showAppUpdateDialog(Extra extra) {
       );
     },
     transitionDuration: const Duration(milliseconds: 200),
-    barrierDismissible: true,
+    barrierDismissible: false,
     barrierLabel: '',
     context: navigatorKey.currentContext!,
     pageBuilder: (context, animation1, animation2) {
@@ -445,7 +445,7 @@ void showMaintenanceDialog({title, description, onClick, log}) {
       );
     },
     transitionDuration: const Duration(milliseconds: 200),
-    barrierDismissible: false,
+    barrierDismissible: true,
     barrierLabel: '',
     context: navigatorKey.currentContext!,
     pageBuilder: (context, animation1, animation2) {
