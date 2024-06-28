@@ -48,40 +48,88 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (Platform.isIOS) {
+        _handleIOSDeeplinks();
+      }
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
     });
   }
 
+// -------- IOS Native Deeplinks STARTED ---------------
+  void _handleIOSDeeplinks() async {
+    platform.setMethodCallHandler((MethodCall call) async {
+      if (call.method == 'onDynamicLink') {
+        String? link = call.arguments['link'];
+        // Handle the dynamic link in Flutter
+        // print('Received dynamic link: $link');
+        // Preference.saveDataList(
+        //   DeeplinkData(
+        //     from: "platform.setMethodCallHandler _handleIOSDeeplinks",
+        //   ),
+        // );
+
+        if (link != null) {
+          onDeepLinking = true;
+          _handleReferralLink(Uri.parse(link));
+        }
+      }
+    });
+
+    final String? initialLink = await platform.invokeMethod('getInitialLink');
+    if (initialLink != null) {
+      print('Initial dynamic link: $initialLink');
+      DeeplinkEnum type = containsSpecificPath(Uri.parse(initialLink));
+      // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+      onDeepLinking =
+          (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+              ? false
+              : true;
+
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "platform.setMethodCallHandler getInitialLink",
+      //   ),
+      // );
+      handleDeepLinkNavigation(uri: Uri.parse(initialLink));
+    }
+  }
+// -------- Initial Deeplinks ENDED ---------------
+
 // -------- Initial Deeplinks For Referral STARTED ---------------
   void getInitialReferralsIfAny() async {
-    if (Platform.isIOS) {
-      platform.setMethodCallHandler((MethodCall call) async {
-        if (call.method == 'onDynamicLink') {
-          String? link = call.arguments['link'];
-          // Handle the dynamic link in Flutter
-          // print('Received dynamic link: $link');
-          if (link != null) {
-            _handleReferralLink(Uri.parse(link));
-          }
-        }
-      });
+    // if (Platform.isIOS) {
+    //   platform.setMethodCallHandler((MethodCall call) async {
+    //     if (call.method == 'onDynamicLink') {
+    //       String? link = call.arguments['link'];
+    //       // Handle the dynamic link in Flutter
+    //       // print('Received dynamic link: $link');
+    //       if (link != null) {
+    //               Preference.saveDataList(
+    //     DeeplinkData(
+    //       from: "platform.setMethodCallHandler getInitialLink",
+    //     ),
+    //   );
+    //         _handleReferralLink(Uri.parse(link));
+    //       }
+    //     }
+    //   });
 
-      final String? initialLink = await platform.invokeMethod('getInitialLink');
-      if (initialLink != null) {
-        print('Initial dynamic link: $initialLink');
-        DeeplinkEnum type = containsSpecificPath(Uri.parse(initialLink));
-        // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
-        onDeepLinking =
-            (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
-                ? false
-                : true;
-        handleDeepLinkNavigation(uri: Uri.parse(initialLink));
-      }
+    //   final String? initialLink = await platform.invokeMethod('getInitialLink');
+    //   if (initialLink != null) {
+    //     print('Initial dynamic link: $initialLink');
+    //     DeeplinkEnum type = containsSpecificPath(Uri.parse(initialLink));
+    //     // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+    //     onDeepLinking =
+    //         (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+    //             ? false
+    //             : true;
+    //     handleDeepLinkNavigation(uri: Uri.parse(initialLink));
+    //   }
 
-      return;
-    }
+    //   return;
+    // }
 
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
@@ -127,6 +175,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _handleReferralLink(Uri deepLink) async {
+    // Preference.saveDataList(
+    //   DeeplinkData(
+    //     from: "** _handleReferralLink " "\n" " ${deepLink.toString()} ",
+    //   ),
+    // );
+
     String? referralCode = deepLink.queryParameters['code'];
     if (referralCode == null || referralCode == '') {
       referralCode = deepLink.queryParameters['referrer'];
@@ -168,6 +222,7 @@ class _MyAppState extends State<MyApp> {
         parameters: {'referral_code': referralCode},
       );
     }
+    onDeepLinking = false;
   }
   // -------- Initial Deeplinks For Referral Ended ---------------
 
@@ -205,8 +260,13 @@ class _MyAppState extends State<MyApp> {
           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
               ? false
               : true;
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** getInitialLink " "\n" " ${initialUri.toString()}",
+      //   ),
+      // );
       handleDeepLinkNavigation(uri: initialUri);
-      Timer(const Duration(milliseconds: 20), () {
+      Timer(const Duration(milliseconds: 200), () {
         _initialDeepLinks = false;
       });
     }
@@ -223,18 +283,16 @@ class _MyAppState extends State<MyApp> {
 
       if (onDeepLinking || _initialDeepLinks) return;
 
-      if (event != null) {
-        final Uri deepLink = event;
-        if (deepLink.path.contains("page.link") ||
-            deepLink.path.contains("/install") ||
-            deepLink.path.contains("?code=") ||
-            deepLink.path.contains("?referrer=") ||
-            deepLink.path.contains("?ref=") ||
-            deepLink.path.contains("?referral_code=")) {
-          // onDeepLinking = true;
-          await _handleReferralLink(deepLink);
-          return;
-        }
+      final Uri deepLink = event;
+      if (deepLink.path.contains("page.link") ||
+          deepLink.path.contains("/install") ||
+          deepLink.path.contains("?code=") ||
+          deepLink.path.contains("?referrer=") ||
+          deepLink.path.contains("?ref=") ||
+          deepLink.path.contains("?referral_code=")) {
+        // onDeepLinking = true;
+        await _handleReferralLink(deepLink);
+        return;
       }
 
       DeeplinkEnum type = containsSpecificPath(event);
@@ -243,6 +301,13 @@ class _MyAppState extends State<MyApp> {
           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
               ? false
               : true;
+
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** startListeningForDeepLinks " "\n" " ${event.toString()} ",
+      //   ),
+      // );
+
       handleDeepLinkNavigation(uri: event);
     });
   }

@@ -113,16 +113,13 @@ class Preference {
   //----------- For Testing Only ---------------
 
   // static const String dataListKey = 'data_list';
-
   // static Future<void> saveDataList(DeeplinkData data) async {
-  //   if (!kDebugMode) return;
+  //   // if (!kDebugMode) return;
   //   SharedPreferences preferences = await SharedPreferences.getInstance();
   //   // List<String> jsonDataList =
   //   //     dataList.map((data) => json.encode(data.toJson())).toList();
   //   // preferences.setStringList(dataListKey, jsonDataList);
-
   //   List<String>? jsonDataList = preferences.getStringList(dataListKey);
-
   //   List<String> updatedJsonDataList;
   //   if (jsonDataList == null) {
   //     updatedJsonDataList = [json.encode(data.toJson())];
@@ -130,23 +127,18 @@ class Preference {
   //     updatedJsonDataList = List.from(jsonDataList);
   //     updatedJsonDataList.add(json.encode(data.toJson()));
   //   }
-
   //   preferences.setStringList(dataListKey, updatedJsonDataList);
   // }
-
   // static Future<void> saveClearDataList() async {
   //   SharedPreferences preferences = await SharedPreferences.getInstance();
   //   preferences.remove(dataListKey);
   // }
-
   // static Future<List<DeeplinkData>> getDataList() async {
   //   SharedPreferences preferences = await SharedPreferences.getInstance();
   //   List<String>? jsonDataList = preferences.getStringList(dataListKey);
-
   //   if (jsonDataList == null) {
   //     return [];
   //   }
-
   //   List<DeeplinkData> dataList = jsonDataList
   //       .map((jsonData) => DeeplinkData.fromJson(json.decode(jsonData)))
   //       .toList();

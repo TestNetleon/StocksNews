@@ -51,6 +51,7 @@ Future<ApiResponse> apiRequest({
   Duration timeoutDuration = const Duration(seconds: 40),
   onRefresh,
   showErrorOnFull = true,
+  checkAppUpdate = true,
 }) async {
   Map<String, String> headers = getHeaders();
   if (header != null) headers.addAll(header);
@@ -131,8 +132,9 @@ Future<ApiResponse> apiRequest({
       if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
-
-        _checkForNewVersion(res.extra);
+        if (checkAppUpdate) {
+          _checkForNewVersion(res.extra);
+        }
         // MaintenanceDialog? maintenanceDialog = MaintenanceDialog(
         //     title: "App Under Maintenance",
         //     description:

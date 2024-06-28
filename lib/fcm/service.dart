@@ -72,6 +72,7 @@ class FirebaseApi {
     String? type = payload["type"];
     String? slug = payload['slug'];
     String? notificationId = payload['notification_id'];
+    isAppUpdating = false;
     try {
       if (type == NotificationType.dashboard.name) {
         if (whenAppKilled) return null;
@@ -426,6 +427,7 @@ Future saveFCMapi({String? value, String? address}) async {
       request: request,
       showProgress: false,
       showErrorOnFull: false,
+      checkAppUpdate: false,
     );
 
     if (response.status) {
