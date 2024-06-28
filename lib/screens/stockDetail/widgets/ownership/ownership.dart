@@ -97,6 +97,9 @@ class _SdOwnershipState extends State<SdOwnership> {
                       top: top,
                       textRed: "${top?.value ?? "N/A"}".contains('-'),
                       gridRed: "${top?.value ?? "N/A"}".contains('-'),
+                      otherColor: (top?.other ?? "N/A").contains('-')
+                          ? ThemeColors.sos
+                          : ThemeColors.accent,
                     );
                   },
                 ),

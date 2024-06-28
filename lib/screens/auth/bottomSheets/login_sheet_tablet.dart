@@ -95,7 +95,12 @@ class _LoginBottomState extends State<LoginBottom> {
       "username": _controller.text.toLowerCase(),
       "type": "email",
     };
-    provider.login(request, state: widget.state, dontPop: widget.dontPop);
+    provider.login(
+      request,
+      state: widget.state,
+      dontPop: widget.dontPop,
+      email: _controller.text,
+    );
   }
 
   void _handleSignIn() async {

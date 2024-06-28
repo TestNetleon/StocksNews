@@ -43,6 +43,7 @@ bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
 bool isAppUpdating = false;
+bool updateProfile = false;
 String apiKeyFMP = "";
 bool popHome = false;
 Uri? deepLinkData;

@@ -67,7 +67,6 @@ class _MyAppState extends State<MyApp> {
           }
         }
       });
-
       final String? initialLink = await platform.invokeMethod('getInitialLink');
       if (initialLink != null) {
         print('Initial dynamic link: $initialLink');
@@ -79,15 +78,11 @@ class _MyAppState extends State<MyApp> {
                 : true;
         handleDeepLinkNavigation(uri: Uri.parse(initialLink));
       }
-
       return;
     }
-
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
-
     Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
-
     if (initialLink != null) {
       final Uri deepLink = initialLink.link;
       if (deepLink.path.contains("page.link") ||

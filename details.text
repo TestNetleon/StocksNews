@@ -195,44 +195,6 @@ https://app.stocks.news/earning
 ===================================
 
 
-2. Privacy Policy Popup like Motley Fool and do what is required for basic name, email, location and analytics 
-
-
-6. SMS (OTP) verification  with firebase
-
-7. Print when last price updated  
-
-10. Latest news under stock detail should show news posted by stocks.news or other other of our website
-
-11. Set login page design on click of my profile
-
-17. Mentioned in story in blog
-
-18. Add filter and sorting into most bullish and most bearish section and they work differently
-
-19. Dividends and earnings wale page ke sorting wale filter kuch alag hone chiye
-
-20. if user is not registered and he tries to login then send him to register with prefilled email id
-
-21. Add logo and other information on middle page like paytm to personalize that screen
-
-22. Pupular stocks wale page ke buttom me declaimer wala section lagao footer me
-- IT HAS PAGINATION
-
-23. Login ka case if user is doing login or signup to know in case of aff
-
-24. Revert back first 4 screens and show register popup
-
-========================
-
 1. Stock Alert & Featured List data correction
-2. remove price from key stat 
-3. share s small key stat 
-4. optimize stock analysis, tech analysis 
-5. negative value in earning color 
-6. dividend it's krni h 
-7. insider trades me buy and sell ke color 
-8. niche ki line grid ki acc to value
-9. enter in chat help desk
-10. 7:02 tk purana graph dikhega 
+
 11. agar email registered nahi h pehle login pe bhrne pe to automatic signup pe bhejna h with filled email

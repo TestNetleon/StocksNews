@@ -8,12 +8,14 @@ class SdTopCard extends StatelessWidget {
   final SdTopRes? top;
   final bool textRed;
   final bool gridRed;
+  final Color otherColor;
 
   const SdTopCard({
     super.key,
     this.top,
     this.textRed = false,
     this.gridRed = false,
+    this.otherColor = ThemeColors.white,
   });
 
   @override
@@ -59,7 +61,7 @@ class SdTopCard extends StatelessWidget {
                 visible: top?.other != null && top?.other != '',
                 child: Text(
                   top?.other ?? "N/A",
-                  style: stylePTSansRegular(fontSize: 12),
+                  style: stylePTSansRegular(fontSize: 12, color: otherColor),
                 ),
               ),
             ],

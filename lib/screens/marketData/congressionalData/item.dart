@@ -31,7 +31,7 @@ class CongressionalItem extends StatelessWidget {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (_) => CongressionalDetail(slug: data?.symbol),
+        builder: (_) => CongressionalDetail(slug: data?.slug),
       ),
     );
   }

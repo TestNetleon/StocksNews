@@ -34,6 +34,7 @@ import 'aggree_conditions.dart';
 signupSheet({
   String? state,
   String? dontPop,
+  String? email,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -51,6 +52,7 @@ signupSheet({
       return SignUpBottom(
         state: state,
         dntPop: dontPop,
+        email: email,
       );
     },
   );
@@ -59,8 +61,8 @@ signupSheet({
 class SignUpBottom extends StatefulWidget {
   final String? dntPop;
   final String? state;
-
-  const SignUpBottom({super.key, this.dntPop, this.state});
+  final String? email;
+  const SignUpBottom({super.key, this.dntPop, this.state, this.email});
 
   @override
   State<SignUpBottom> createState() => _SignUpBottomState();
@@ -73,6 +75,10 @@ class _SignUpBottomState extends State<SignUpBottom> {
   @override
   void initState() {
     super.initState();
+
+    if (widget.email != null && widget.email != '') {
+      _controller.text = widget.email ?? "";
+    }
 
     Utils().showLog(
         "---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
