@@ -347,6 +347,7 @@ enum DeeplinkEnum {
   insiderTrades,
   trendingIndustries,
   sentiments,
+  helpdesk,
 
   //below add for Market data only else add above
   gainerLoser,
@@ -385,6 +386,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
   } else if (uri.path.contains('/sign-up')) {
     // return 'signUp';
     return DeeplinkEnum.signup;
+  } else if (uri.path.contains('/page/contact-us')) {
+    // return 'page';
+    return DeeplinkEnum.helpdesk;
   } else if (uri.path.contains('/page/')) {
     // return 'page';
     return DeeplinkEnum.page;
@@ -413,7 +417,7 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
   } else if (uri.path.contains('/insider-trading')) {
     // return 'insider';
     return DeeplinkEnum.insiderTrades;
-  } else if (uri.path.contains(' /social-sentiment')) {
+  } else if (uri.path.contains('/social-sentiment')) {
     // return 'sentiments';
     return DeeplinkEnum.sentiments;
   } else if (uri.path.contains('/market-data/high-pe-ratio-stocks') ||

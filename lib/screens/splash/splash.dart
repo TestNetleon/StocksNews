@@ -40,6 +40,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getAppVersion();
       _startProcess();
+      // Preference.saveDataList(DeeplinkData(from: "Splash Loaded"));
     });
   }
 
@@ -111,6 +112,16 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       popHome = true;
       return;
     }
+    // Preference.saveDataList(
+    //   DeeplinkData(
+    //     from: "Navigating from Splash"
+    //         "\n"
+    //         " OnDeepLinking = $onDeepLinking "
+    //         "\n"
+    //         " PopHome = $popHome",
+    //   ),
+    // );
+    // isAppUpdating = false;
 
     // Navigator.pushReplacement(
     //   navigatorKey.currentContext!,

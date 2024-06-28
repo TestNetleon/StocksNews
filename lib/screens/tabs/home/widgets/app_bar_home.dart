@@ -236,6 +236,20 @@ class _AppBarHomeState extends State<AppBarHome> {
                 ],
               )
             : const SizedBox(),
+
+        // TODO MUST REMOVE IN LIVE BUILD
+        // IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       navigatorKey.currentContext!,
+        //       MaterialPageRoute(builder: (_) => const NavigationDemo()),
+        //     );
+        //   },
+        //   icon: const Icon(
+        //     Icons.navigation_outlined,
+        //     color: ThemeColors.white,
+        //   ),
+        // ),
       ],
     );
   }

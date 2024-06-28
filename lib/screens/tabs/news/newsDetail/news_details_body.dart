@@ -1094,12 +1094,8 @@ class ListAlignment extends StatelessWidget {
 }
 
 iOSNavigate(event) {
-  log("1");
   DeeplinkEnum type = containsSpecificPath(event);
-  log("2");
-
   String slug = extractLastPathComponent(event);
-  log("3");
 
   handleNavigation(
     uri: event,
@@ -1107,85 +1103,4 @@ iOSNavigate(event) {
     type: type,
     setPopHome: false,
   );
-  log("4");
 }
-
-// pushNavigation({DeeplinkEnum? type, required Uri uri, String? slug}) async {
-//   Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-//   // String slugForTicker = extractSymbolValue(uri);
-//   // Utils().showLog("slug for ticker $slugForTicker");
-//   bool userPresent = false;
-
-//   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-//   if (await provider.checkForUser()) {
-//     userPresent = true;
-//   }
-//   Utils().showLog("----$userPresent---");
-//   if (type == DeeplinkEnum.blogDetail) {
-//     // if (type == "blog") {
-//     Navigator.push(
-//         navigatorKey.currentContext!,
-//         MaterialPageRoute(
-//             builder: (context) => BlogDetail(
-//                   // id: "",
-//                   slug: slug,
-//                 )));
-//     // } else if (type == "news") {
-//   }
-//   if (type == DeeplinkEnum.newsDetail) {
-//     Navigator.push(
-//       navigatorKey.currentContext!,
-//       MaterialPageRoute(
-//         builder: (context) => NewsDetails(
-//           slug: slug,
-//         ),
-//       ),
-//     );
-//     // } else if (type == "stock_detail") {
-//   }
-//   if (type == DeeplinkEnum.stocksDetail) {
-//     Navigator.push(
-//         navigatorKey.currentContext!,
-//         MaterialPageRoute(
-//             builder: (context) => StockDetail(symbol: slug ?? "")));
-//     // } else if (type == "login") {
-//   }
-//   if (type == DeeplinkEnum.login) {
-//     if (userPresent) {
-//       Navigator.popUntil(
-//           navigatorKey.currentContext!, (route) => route.isFirst);
-//       Navigator.pushReplacement(
-//         navigatorKey.currentContext!,
-//         MaterialPageRoute(builder: (_) => const Tabs()),
-//       );
-//     } else {
-//       loginSheet();
-//     }
-//     // } else if (type == "signUp") {
-//   }
-//   if (type == DeeplinkEnum.signup) {
-//     if (userPresent) {
-//       Navigator.popUntil(
-//           navigatorKey.currentContext!, (route) => route.isFirst);
-//       Navigator.pushReplacement(
-//         navigatorKey.currentContext!,
-//         MaterialPageRoute(builder: (_) => const Tabs()),
-//       );
-//     } else {
-//       signupSheet();
-//     }
-//     // } else if (type == "dashboard") {
-//   }
-//   if (type == DeeplinkEnum.dashboard) {
-//     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-//     Navigator.pushReplacement(
-//       navigatorKey.currentContext!,
-//       MaterialPageRoute(builder: (_) => const Tabs()),
-//     );
-
-//     Utils().showLog("--goto dashboard---");
-//   } else {
-//     Utils().showLog("Else case");
-//     launchUrl(uri);
-//   }
-// }
