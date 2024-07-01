@@ -64,7 +64,7 @@ class IndicesData extends StatelessWidget {
 
     return provider.tabLoading
         ? const Loading()
-        : CustomTabContainerNEW(
+        : CommonTabContainer(
             onChange: (index) {
               if (index != 0 && index != 1) {
                 provider.tabChange(index);

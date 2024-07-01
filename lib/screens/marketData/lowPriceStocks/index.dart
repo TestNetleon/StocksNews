@@ -58,7 +58,7 @@ class LowPriceStocksData extends StatelessWidget {
     LowPriceStocksProvider provider = context.watch<LowPriceStocksProvider>();
     List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
-    return CustomTabContainerNEW(
+    return CommonTabContainer(
       onChange: (index) {
         provider.resetFilter();
         provider.tabChange(index);

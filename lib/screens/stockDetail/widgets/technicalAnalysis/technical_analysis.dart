@@ -80,8 +80,9 @@ class _SdTechnicalState extends State<SdTechnical> {
               thickness: 2,
             ),
             Expanded(
-              child: CustomTabContainerNEW(
-                tabsPadding: const EdgeInsets.only(bottom: 10),
+              child: CommonTabContainer(
+                tabPaddingNew: false,
+                padding: const EdgeInsets.only(bottom: 10),
                 scrollable: true,
                 onChange: (index) {
                   onChange(index);

@@ -20,7 +20,7 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: CustomTabContainerNEW(
+      body: CommonTabContainer(
         scrollable: true,
         // tabsPadding: EdgeInsets.only(bottom: 10.sp),
         tabs: ["High Beta Stocks", "Low Beta Stocks", "Negative Beta Stocks"],

@@ -28,11 +28,9 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
         isPopback: true,
         canSearch: true,
       ),
-      body: CustomTabContainerNEW(
+      body: CommonTabContainer(
         scrollable: true,
-        tabsPadding: EdgeInsets.zero,
         tabs: ["Today's Gainers", "Today's Losers", "Today's Breakout Stocks"],
-        // onChange: (index) => onChange(index),
         widgets: [
           TodaysTopGainer(),
           TodaysTopLoser(),

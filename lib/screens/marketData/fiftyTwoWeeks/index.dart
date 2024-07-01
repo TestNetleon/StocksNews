@@ -19,7 +19,7 @@ class FiftyTwoWeeksIndex extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: CustomTabContainerNEW(
+      body: CommonTabContainer(
         scrollable: false,
         // tabsPadding: EdgeInsets.only(bottom: 10.sp),
         tabs: ["52 Week Highs", "52 Week Lows"],

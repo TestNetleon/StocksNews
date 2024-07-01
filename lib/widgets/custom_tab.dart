@@ -51,12 +51,15 @@ class CustomTabNEW extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: stylePTSansBold(
-        fontSize: 13,
-        color: selectedIndex == index ? ThemeColors.accent : Colors.white,
-        // index == selectedIndex ? ThemeColors.border : ThemeColors.primary,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        label,
+        style: stylePTSansBold(
+          fontSize: 13,
+          color: Colors.white,
+          // index == selectedIndex ? ThemeColors.border : ThemeColors.primary,
+        ),
       ),
     );
   }
