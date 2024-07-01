@@ -8,13 +8,12 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
-class DividendsProvider extends ChangeNotifier with AuthProviderBase {
+class DividendsProvider extends ChangeNotifier {
   Status _status = Status.ideal;
   // ************* GAP DOWN **************** //
   List<DividendsRes>? _data;
@@ -100,37 +99,6 @@ class DividendsProvider extends ChangeNotifier with AuthProviderBase {
 
     getDividendsStocks();
   }
-
-  // void exchangeFilter(String item) {
-  //   _filterParams!.exchange_name!.remove(item);
-  //   if (_filterParams!.exchange_name!.isEmpty) {
-  //     _filterParams!.exchange_name = null;
-  //   }
-  //   _page = 1;
-  //   notifyListeners();
-  //   getDividendsStocks();
-  // }
-
-  // void sectorFilter(String item) {
-  //   _filterParams!.sector!.remove(item);
-  //   if (_filterParams!.sector!.isEmpty) {
-  //     _filterParams!.sector = null;
-  //   }
-  //   _page = 1;
-
-  //   notifyListeners();
-  //   getDividendsStocks();
-  // }
-
-  // void industryFilter(String item) {
-  //   _filterParams!.industry!.remove(item);
-  //   if (_filterParams!.industry!.isEmpty) {
-  //     _filterParams!.industry = null;
-  //   }
-  //   _page = 1;
-  //   notifyListeners();
-  //   getDividendsStocks();
-  // }
 
   void setStatus(status) {
     _status = status;

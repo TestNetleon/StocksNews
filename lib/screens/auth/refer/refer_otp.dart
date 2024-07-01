@@ -1,30 +1,28 @@
 import 'dart:async';
+import 'dart:developer';
+
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:sms_autofill/sms_autofill.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
+
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
 
-import '../../../widgets/custom/alert_popup.dart';
-import 'edit_email.dart';
+import '../../../../api/api_response.dart';
+import 'reffer_success.dart';
 
-otpSignupSheet({
-  String? state,
-  String? dontPop,
-  required String email,
-  String? referCode,
-}) async {
+referOTP({required String phone, String appSignature = ''}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: RoundedRectangleBorder(
@@ -37,35 +35,58 @@ otpSignupSheet({
     isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return OTPSignupBottom(
-        email: email,
-        referCode: referCode,
+      return OTPLoginBottomRefer(
+        phone: phone,
+        appSignature: appSignature,
       );
     },
   );
 }
 
-class OTPSignupBottom extends StatefulWidget {
-  final String email;
-  final String? referCode;
-//
-  const OTPSignupBottom({
+class OTPLoginBottomRefer extends StatefulWidget {
+  final String phone;
+  final String appSignature;
+
+  const OTPLoginBottomRefer({
     super.key,
-    required this.email,
-    this.referCode,
+    required this.phone,
+    this.appSignature = '',
   });
 
   @override
-  State<OTPSignupBottom> createState() => _OTPSignupBottomState();
+  State<OTPLoginBottomRefer> createState() => _OTPLoginBottomReferState();
 }
 
-class _OTPSignupBottomState extends State<OTPSignupBottom> {
+class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   final TextEditingController _controller = TextEditingController();
-
   int startTiming = 30;
+  final FocusNode _otpFocusNode = FocusNode();
+
   Timer? _timer;
+  @override
+  void initState() {
+    super.initState();
+    _listenCode();
+    _startTime();
+    _otpFocusNode.requestFocus();
+  }
+
+  Future<void> _listenCode() async {
+    try {
+      log("trying to listen");
+      await SmsAutoFill().listenForCode();
+      SmsAutoFill().code.listen((event) {
+        _controller.text = event;
+        Utils().showLog('Listen $event');
+        // setState(() {});
+      });
+    } catch (e) {
+      Utils().showLog('Error while listening OTP $e');
+    }
+  }
 
   void _startTime() {
+    startTiming = 30;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         startTiming = startTiming - 1;
@@ -79,72 +100,87 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _startTime();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _timer?.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   SmsAutoFill().unregisterListener();
+  //   // _controller.dispose();
+  //   _timer?.cancel();
+  //   super.dispose();
+  // }
 
   void _onVeryClick() async {
     if (_controller.text.isEmpty) {
       popUpAlert(
-          message: "Please enter a valid OTP.",
-          title: "Alert",
-          icon: Images.alertPopGIF);
+        message: "Please enter a valid OTP.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
     } else {
-      closeKeyboard();
       UserProvider provider = context.read<UserProvider>();
-
-      String? fcmToken = await Preference.getFcmToken();
-      String? address = await Preference.getLocation();
-      String? referralCode = await Preference.getReferral();
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String versionName = packageInfo.version;
-      String buildNumber = packageInfo.buildNumber;
-      bool granted = await Permission.notification.isGranted;
+      HomeProvider homeProvider = context.read<HomeProvider>();
 
       Map request = {
-        "username": widget.email,
-        "otp": _controller.text,
-        "type": "email",
-        "fcm_token": fcmToken ?? "",
-        "platform": Platform.operatingSystem,
-        "address": address ?? "",
-        "build_version": versionName,
-        "build_code": buildNumber,
-        "fcm_permission": "$granted",
-        "referral_code": referralCode ?? widget.referCode ?? "",
+        'token': provider.user?.token,
+        'phone': widget.phone,
+        'otp': _controller.text,
+        'platform': Platform.operatingSystem,
       };
+      try {
+        ApiResponse response = await provider.verifyReferLogin(request);
+        if (response.status) {
+          closeKeyboard();
+          provider.updateUser(phone: widget.phone);
+          Extra extra = response.extra;
 
-      provider.verifySignupOtp(request);
+          homeProvider.updateReferShare(extra.referral?.shareText);
+          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          Navigator.pop(navigatorKey.currentContext!);
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   ReferAFriend.path,
+          // );
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const ReferSuccess(),
+            ),
+          );
+        }
+      } catch (e) {
+        //
+      }
     }
   }
 
-  void _onResendOtpClick() {
-    closeKeyboard();
+  void _onResendOtpClick() async {
+    _startTime();
     _controller.text = '';
-
+    setState(() {});
     UserProvider provider = context.read<UserProvider>();
     Map request = {
-      "username": widget.email,
-      "type": "email",
+      "phone": widget.phone,
+      "phone_hash": widget.appSignature,
+      "platform": Platform.operatingSystem,
+      "token": provider.user?.token ?? "",
     };
-    provider.signupResendOtp(request);
+
+    try {
+      _listenCode();
+      ApiResponse response = await provider.referLoginApi(request);
+      if (response.status) {
+        _otpFocusNode.requestFocus();
+
+        // popUpAlert(message: response.message ?? "", title: "title");
+      }
+    } catch (e) {
+      //
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        closeKeyboard();
-      },
+      onTap: () => closeKeyboard(),
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: BoxDecoration(
@@ -154,8 +190,6 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
           gradient: const RadialGradient(
             center: Alignment.bottomCenter,
             radius: 0.6,
-            // transform: GradientRotation(radians),
-            // tileMode: TileMode.decal,
             stops: [
               0.0,
               0.9,
@@ -172,6 +206,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
           ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // SizedBox(
             //   width: MediaQuery.of(context).size.width * .45,
@@ -199,70 +234,38 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
             ),
             const SpacerVertical(height: 30),
             Image.asset(
-              Images.otpSuccessGIT,
+              Images.otpVerify,
               height: 95.sp,
               width: 95.sp,
             ),
             Padding(
               padding: const EdgeInsets.all(Dimen.authScreenPadding),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // const SpacerVertical(height: 50),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "OTP VERIFICATION",
-                      style: stylePTSansBold(fontSize: 22),
-                    ),
+                  Text(
+                    "VERIFICATION OTP SENT",
+                    style: stylePTSansBold(fontSize: 22),
+                  ),
+                  const SpacerVertical(height: 4),
+                  Text(
+                    'We have sent the verification code \nto your phone number ${widget.phone}',
+                    textAlign: TextAlign.center,
+                    style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),
                   const SpacerVertical(height: 8),
-                  // Text(
-                  //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
-                  //   style: stylePTSansRegular(
-                  //     fontSize: 14,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
-                  EditEmail(email: widget.email),
+
                   const SpacerVertical(),
-                  // Text(
-                  //   "Verification Code",
-                  //   style: stylePTSansRegular(fontSize: 14),
-                  // ),
-                  // const SpacerVertical(height: 5),
-                  // Stack(
-                  //   alignment: Alignment.center,
-                  //   children: [
-                  //     ThemeInputField(
-                  //       controller: _controller,
-                  //       placeholder: "",
-                  //       // keyboardType: TextInputType.phone,
-                  //       inputFormatters: [mobilrNumberAllow],
-                  //       maxLength: 4,
-                  //     ),
-                  //     Container(
-                  //       margin: EdgeInsets.only(right: 8.sp),
-                  //       alignment: Alignment.centerRight,
-                  //       child: TextButton(
-                  //         onPressed: _onResendOtpClick,
-                  //         child: Text(
-                  //           "Resend",
-                  //           style: stylePTSansBold(
-                  //             fontSize: 14,
-                  //             color: ThemeColors.accent,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+
                   CommonPinput(
+                    focusNode: _otpFocusNode,
                     controller: _controller,
                     onCompleted: (p0) {
                       _onVeryClick();
                     },
                   ),
+
                   startTiming == 30
                       ? Container(
                           margin: EdgeInsets.only(
@@ -275,10 +278,18 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                             child: RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                text: "Resend OTP",
-                                style: stylePTSansBold(
-                                    fontSize: 15, color: ThemeColors.accent),
-                              ),
+                                  text: "Didn't receive the OTP? ",
+                                  style: stylePTSansBold(
+                                      fontSize: 15,
+                                      color: ThemeColors.greyText),
+                                  children: [
+                                    TextSpan(
+                                      text: "Resend OTP",
+                                      style: stylePTSansBold(
+                                          fontSize: 15,
+                                          color: ThemeColors.accent),
+                                    ),
+                                  ]),
                             ),
                           ),
                         )
@@ -306,16 +317,8 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
                             ),
                           ),
                         ),
+
                   const SpacerVertical(),
-                  ThemeButton(
-                    onPressed: _onVeryClick,
-                    text: "Verify and Log in",
-                  ),
-                  const SpacerVertical(),
-                  EditEmailClick(
-                    email: widget.email,
-                    fromLoginOTP: false,
-                  ),
                 ],
               ),
             ),

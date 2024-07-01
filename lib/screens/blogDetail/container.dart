@@ -10,8 +10,8 @@ import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
@@ -225,18 +225,44 @@ class BlogDetailContainer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Positioned(
+                  //   bottom: 6.sp,
+                  //   right: 0,
+                  //   child: FloatingActionButton(
+                  //     backgroundColor: ThemeColors.accent,
+                  //     child: const Icon(Icons.share),
+                  //     onPressed: () {
+                  //       commonShare(
+                  //         title: provider.blogsDetail?.name ?? "",
+                  //         url: provider.blogsDetail?.slug ?? "",
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   Positioned(
-                    bottom: 6.sp,
-                    right: 0,
-                    child: FloatingActionButton(
-                      backgroundColor: ThemeColors.accent,
-                      child: const Icon(Icons.share),
+                    bottom: 6,
+                    right: 6,
+                    // child: FloatingActionButton(
+                    //   backgroundColor: ThemeColors.accent,
+                    //   child: const Icon(Icons.share),
+                    //   onPressed: () {
+                    //     commonShare(
+                    //       title: provider.data?.postDetail?.title ?? "",
+                    //       url: provider.data?.postDetail?.slug ?? "",
+                    //     );
+                    //   },
+                    // ),
+
+                    child: ThemeButtonSmall(
                       onPressed: () {
                         commonShare(
                           title: provider.blogsDetail?.name ?? "",
                           url: provider.blogsDetail?.slug ?? "",
                         );
                       },
+                      text: "Share Story",
+                      fontBold: true,
+                      icon: Icons.share,
                     ),
                   ),
                 ],

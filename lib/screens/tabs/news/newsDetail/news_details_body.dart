@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
@@ -28,8 +29,7 @@ import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
-import '../../../auth/bottomSheets/login_sheet.dart';
-import '../../../auth/bottomSheets/refer/refer_code.dart';
+import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import 'mentioned_by.dart';
@@ -568,17 +568,29 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                       ),
                     ),
                     Positioned(
-                      bottom: 6.sp,
-                      right: 0,
-                      child: FloatingActionButton(
-                        backgroundColor: ThemeColors.accent,
-                        child: const Icon(Icons.share),
+                      bottom: 6,
+                      right: 10,
+                      // child: FloatingActionButton(
+                      //   backgroundColor: ThemeColors.accent,
+                      //   child: const Icon(Icons.share),
+                      //   onPressed: () {
+                      //     commonShare(
+                      //       title: provider.data?.postDetail?.title ?? "",
+                      //       url: provider.data?.postDetail?.slug ?? "",
+                      //     );
+                      //   },
+                      // ),
+
+                      child: ThemeButtonSmall(
                         onPressed: () {
                           commonShare(
                             title: provider.data?.postDetail?.title ?? "",
                             url: provider.data?.postDetail?.slug ?? "",
                           );
                         },
+                        text: "Share Story",
+                        fontBold: true,
+                        icon: Icons.share,
                       ),
                     ),
                     if ((provider.data?.postDetail?.readingStatus == false) &&

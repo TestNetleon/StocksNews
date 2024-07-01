@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -12,7 +10,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/aggree_conditions.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -28,13 +28,8 @@ import 'package:stocks_news_new/widgets/theme_input_field.dart';
 import 'package:validators/validators.dart';
 
 import '../../../widgets/custom/alert_popup.dart';
-import 'aggree_conditions.dart';
-import 'signup_sheet.dart';
 
-loginSheet({
-  String? state,
-  String? dontPop,
-}) async {
+loginSheet() async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: RoundedRectangleBorder(
@@ -47,22 +42,13 @@ loginSheet({
     isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return LoginBottom(
-        dontPop: dontPop,
-        state: state,
-      );
+      return const LoginBottom();
     },
   );
 }
 
 class LoginBottom extends StatefulWidget {
-  final String? state;
-  final String? dontPop;
-  const LoginBottom({
-    super.key,
-    this.state,
-    this.dontPop,
-  });
+  const LoginBottom({super.key});
 
   @override
   State<LoginBottom> createState() => _LoginBottomState();
@@ -70,18 +56,11 @@ class LoginBottom extends StatefulWidget {
 
 class _LoginBottomState extends State<LoginBottom> {
   final TextEditingController _controller = TextEditingController(
-    text: kDebugMode ? "utkarshsinghdhakad@gmail.com" : "",
-    // text: kDebugMode ? "chetan@netleon.com" : "",
+    // text: kDebugMode ? "utkarshsinghdhakad@gmail.com" : "",
+    text: kDebugMode ? "chetan@netleon.com" : "",
   );
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-  @override
-  void initState() {
-    super.initState();
-    Utils().showLog(
-        "---State is ${widget.state}, ---Dont pop up is${widget.dontPop}---");
-  }
 
   void _onLoginClick() {
     closeKeyboard();
@@ -100,12 +79,7 @@ class _LoginBottomState extends State<LoginBottom> {
       "username": _controller.text.toLowerCase(),
       "type": "email",
     };
-    provider.login(
-      request,
-      state: widget.state,
-      dontPop: widget.dontPop,
-      email: _controller.text,
-    );
+    provider.login(request, email: _controller.text);
   }
 
   void _handleSignIn() async {
@@ -125,7 +99,6 @@ class _LoginBottomState extends State<LoginBottom> {
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         bool granted = await Permission.notification.isGranted;
-
         Map request = {
           "displayName": account.displayName ?? "",
           "email": account.email,
@@ -139,15 +112,8 @@ class _LoginBottomState extends State<LoginBottom> {
           "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(
-          request,
-          state: widget.state,
-          dontPop: widget.dontPop,
-          alreadySubmitted: false,
-        );
+        provider.googleLogin(request, alreadySubmitted: false);
       }
-
-      // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
       Utils().showLog("$error");
@@ -177,12 +143,7 @@ class _LoginBottomState extends State<LoginBottom> {
         "fcm_permission": "$granted",
       };
 
-      provider.appleLogin(
-        request,
-        state: widget.state,
-        dontPop: widget.dontPop,
-        id: id,
-      );
+      provider.appleLogin(request, id: id);
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -411,14 +372,8 @@ class _LoginBottomState extends State<LoginBottom> {
                           onTap: () async {
                             Navigator.pop(context);
                             isPhone
-                                ? await signupSheet(
-                                    dontPop: widget.dontPop,
-                                    state: widget.state,
-                                  )
-                                : await signupSheetTablet(
-                                    dontPop: widget.dontPop,
-                                    state: widget.state,
-                                  );
+                                ? await signupSheet()
+                                : await signupSheetTablet();
                           },
                           child: Text(
                             " Sign up ",

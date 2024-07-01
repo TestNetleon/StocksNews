@@ -23,7 +23,6 @@ import 'package:stocks_news_new/modals/home_top_loser_res.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/ipo_res.dart';
 import 'package:stocks_news_new/modals/stock_infocus.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -31,7 +30,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class HomeProvider extends ChangeNotifier with AuthProviderBase {
+class HomeProvider extends ChangeNotifier {
   // HomeRes? _home;
   String? _error;
 //

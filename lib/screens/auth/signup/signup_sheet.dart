@@ -12,9 +12,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/aggree_conditions.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -31,13 +32,8 @@ import '../../../route/my_app.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
 import '../../../widgets/theme_input_field.dart';
-import 'aggree_conditions.dart';
 
-signupSheet({
-  String? state,
-  String? dontPop,
-  String? email,
-}) async {
+signupSheet({String? email}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     backgroundColor: ThemeColors.transparent,
@@ -51,16 +47,14 @@ signupSheet({
     ),
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return SignUpBottom(state: state, dntPop: dontPop, email: email);
+      return SignUpBottom(email: email);
     },
   );
 }
 
 class SignUpBottom extends StatefulWidget {
-  final String? dntPop;
-  final String? state;
   final String? email;
-  const SignUpBottom({super.key, this.dntPop, this.state, this.email});
+  const SignUpBottom({super.key, this.email});
 
   @override
   State<SignUpBottom> createState() => _SignUpBottomState();
@@ -77,11 +71,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
     if (widget.email != null && widget.email != '') {
       _controller.text = widget.email ?? "";
     }
-    Utils().showLog(
-        "---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
-  void _onLoginClick() async {
+  void _onSignUpClick() async {
     closeKeyboard();
 
     if (!isEmail(_controller.text)) {
@@ -165,12 +157,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(
-          request,
-          dontPop: 'true',
-          state: widget.state,
-          alreadySubmitted: false,
-        );
+        provider.googleLogin(request, alreadySubmitted: false);
       }
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -226,8 +213,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
 
       provider.appleLogin(
         request,
-        dontPop: 'true',
-        state: widget.state,
         id: id,
         code: code,
         alreadySubmitted: true,
@@ -344,7 +329,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                   const SpacerVertical(height: Dimen.itemSpacing),
                   ThemeButton(
                     text: "Create account",
-                    onPressed: _onLoginClick,
+                    onPressed: _onSignUpClick,
                   ),
                   const SpacerVertical(),
                   Column(
@@ -478,10 +463,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         ),
                       ),
                       const SpacerVertical(),
-                      const AgreeConditions(
-                        fromLogin: false,
-                      ),
-
+                      const AgreeConditions(fromLogin: false),
                       // Visibility(
                       //     visible: Platform.isIOS,
                       //     child: Container(
@@ -530,15 +512,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
-                        isPhone
-                            ? loginSheet(
-                                dontPop: widget.dntPop,
-                                state: widget.state,
-                              )
-                            : loginSheetTablet(
-                                dontPop: widget.dntPop,
-                                state: widget.state,
-                              );
+                        isPhone ? loginSheet() : loginSheetTablet();
                         //  Utils().showLog("${widget.dntPop}");
                         // if (widget.dntPop != null) {
                         //   // Navigator.pushReplacement(

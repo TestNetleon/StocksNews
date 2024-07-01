@@ -19,9 +19,7 @@ class HomeTrendingRes {
   final List<Top>? gainers;
   final List<Top>? losers;
   final List<News>? trendingNews;
-
   final TextRes? text;
-
   HomeTrendingRes({
     required this.trending,
     required this.gainers,
