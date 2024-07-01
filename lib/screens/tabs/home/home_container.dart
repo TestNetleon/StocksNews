@@ -55,9 +55,7 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // const InAppPurchaseUI(),
               const HomeTopNewsSlider(),
-
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,
                 child: const Padding(
@@ -66,10 +64,6 @@ class HomeContainer extends StatelessWidget {
                   child: ReferApp(),
                 ),
               ),
-              // const Padding(
-              //   padding: EdgeInsets.only(top: Dimen.padding),
-              //   child: PlaidHome(),
-              // ),
               const SpacerVertical(height: Dimen.padding),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
@@ -110,117 +104,61 @@ class HomeContainer extends StatelessWidget {
                         child: const PlaidHome(),
                       ),
                     ),
-
                     HomePartialLoading(
                       loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
                       onRefresh: provider.refreshWithCheck,
                       child: const HomeInnerTabs(),
                     ),
-
                     Visibility(
-                        visible: !provider.isLoadingTrending &&
-                            (provider.homeTrendingRes?.trendingNews
-                                        ?.isNotEmpty ==
-                                    true &&
-                                provider.homeTrendingRes?.trendingNews != null),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: ScreenTitle(
-                                title:
-                                    provider.homeTrendingRes?.text?.news ?? "",
-                              ),
+                      visible: !provider.isLoadingTrending &&
+                          (provider.homeTrendingRes?.trendingNews?.isNotEmpty ==
+                                  true &&
+                              provider.homeTrendingRes?.trendingNews != null),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: ScreenTitle(
+                              title: provider.homeTrendingRes?.text?.news ?? "",
                             ),
-                            ListView.separated(
-                              itemCount: provider
-                                      .homeTrendingRes?.trendingNews?.length ??
-                                  0,
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: EdgeInsets.only(top: 12.sp),
-                              itemBuilder: (context, index) {
-                                News? data = provider
-                                    .homeTrendingRes?.trendingNews?[index];
-                                return NewsItem(
-                                  news: News(
-                                    title: data?.title ?? "",
-                                    image: data?.image ?? "",
-                                    authors: data?.authors,
-                                    postDateString: data?.postDateString,
-                                    slug: data?.slug,
-                                  ),
-                                  showCategory: false,
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return const Divider(
-                                  color: ThemeColors.greyBorder,
-                                  height: 15,
-                                );
-                              },
-                            ),
-                          ],
-                        )),
-
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingIpo,
-                    //   error: !provider.isLoadingIpo && provider.ipoRes == null
-                    //       ? HomeError.ipo
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const IpoIndex(),
-                    // ),
-                    // Visibility(
-                    //   visible: provider.focusRes != null,
-                    //   child: HomePartialLoading(
-                    //     loading: provider.isLoadingStockFocus,
-                    //     error: null,
-                    //     onRefresh: provider.refreshWithCheck,
-                    //     child: const StocksInFocus(),
-                    //   ),
-                    // ),
-                    // const SpacerVertical(height: 10),
-                    // const HomeBanner(),
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingSentiment,
-                    //   error: !provider.isLoadingSentiment &&
-                    //           provider.homeSentimentRes == null
-                    //       ? HomeError.sentiment
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const SentimentsGraph(),
-                    // ),
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingInsider,
-                    //   error: !provider.isLoadingInsider &&
-                    //           provider.homeInsiderRes == null
-                    //       ? provider.homeInsiderRes?.news.isEmpty == true
-                    //           ? HomeError.news
-                    //           : provider.homeInsiderRes?.recentMentions
-                    //                       ?.isEmpty ==
-                    //                   true
-                    //               ? HomeError.mentions
-                    //               : HomeError.insiderTrading
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const Column(
-                    //     children: [
-                    //       MostRecentMentions(),
-                    //       // InsiderSocialTabs(),
-                    //       // SpacerVertical(),
-                    //       // HomeNewsItem(),
-                    //       // SpacerVertical(),
-                    //     ],
-                    //   ),
-                    // ),
+                          ),
+                          ListView.separated(
+                            itemCount: provider
+                                    .homeTrendingRes?.trendingNews?.length ??
+                                0,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: EdgeInsets.only(top: 12.sp),
+                            itemBuilder: (context, index) {
+                              News? data = provider
+                                  .homeTrendingRes?.trendingNews?[index];
+                              return NewsItem(
+                                news: News(
+                                  title: data?.title ?? "",
+                                  image: data?.image ?? "",
+                                  authors: data?.authors,
+                                  postDateString: data?.postDateString,
+                                  slug: data?.slug,
+                                ),
+                                showCategory: false,
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const Divider(
+                                color: ThemeColors.greyBorder,
+                                height: 15,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-
               if (provider.extra?.disclaimer != null)
                 DisclaimerWidget(
                   data: provider.extra!.disclaimer!,

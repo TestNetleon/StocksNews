@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -15,10 +14,9 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
-import '../../../../../modals/refer.dart';
-import '../../../../../providers/home_provider.dart';
-import '../../../../../route/my_app.dart';
-import '../../../../../widgets/custom/toast.dart';
+import '../../../../modals/refer.dart';
+import '../../../../providers/home_provider.dart';
+import '../../../../route/my_app.dart';
 
 class ReferSuccess extends StatefulWidget {
   const ReferSuccess({super.key});

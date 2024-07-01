@@ -9,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/signup/edit_email.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -19,11 +20,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import 'edit_email.dart';
-
 appleOtpLoginSheet({
-  String? state,
-  String? dontPop,
   String? id,
   String? email,
   String? code,
@@ -42,8 +39,6 @@ appleOtpLoginSheet({
     context: navigatorKey.currentContext!,
     builder: (context) {
       return OTPLoginBottom(
-        dontPop: dontPop,
-        state: state,
         id: id,
         email: email,
         code: code,
@@ -148,12 +143,10 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         // "referral_code": referralCode ?? widget.code ?? "",
       };
 
-      provider.appleLogin(request,
-          state: widget.state,
-          dontPop: "",
-          alreadySubmitted: widget.alreadySubmitted ?? false
-          // code:
-          );
+      provider.appleLogin(
+        request,
+        alreadySubmitted: widget.alreadySubmitted ?? false,
+      );
     }
   }
 

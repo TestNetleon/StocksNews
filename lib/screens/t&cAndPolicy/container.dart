@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/providers/terms_policy_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';

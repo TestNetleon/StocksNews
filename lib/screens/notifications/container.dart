@@ -7,9 +7,9 @@ import 'package:stocks_news_new/modals/notification_res.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/notification_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
-import 'package:stocks_news_new/screens/drawer/base_drawer_copy.dart';
 import 'package:stocks_news_new/screens/notifications/item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -22,8 +22,6 @@ import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-
-import '../auth/bottomSheets/login_sheet.dart';
 
 class NotificationsContainer extends StatefulWidget {
   static const String path = "Notifications";

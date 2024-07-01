@@ -13,7 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
 import 'package:stocks_news_new/route/routes.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/splash/splash.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/preference.dart';

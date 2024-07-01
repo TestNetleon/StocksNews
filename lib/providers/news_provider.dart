@@ -10,7 +10,6 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/news_res.dart';
 import 'package:stocks_news_new/modals/stock_header_news.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -18,7 +17,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/news_tab_category_res.dart';
 
-class NewsProvider extends ChangeNotifier with AuthProviderBase {
+class NewsProvider extends ChangeNotifier {
   NewsRes? _data;
   String? _error;
   Status _status = Status.ideal;
@@ -98,34 +97,9 @@ class NewsProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     }
   }
-
-  Future logoutUser(request) async {
-    try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
-        request: request,
-        showProgress: true,
-      );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
-      } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(
-        //   message: res.message,
-        // );
-      }
-    } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
-    }
-  }
 }
 
-class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
+class FeaturedNewsProvider extends ChangeNotifier {
   NewsRes? _data;
   String? _error;
   Status _status = Status.ideal;
@@ -201,31 +175,6 @@ class FeaturedNewsProvider extends ChangeNotifier with AuthProviderBase {
       setStatus(Status.loaded);
     }
   }
-
-  Future logoutUser(request) async {
-    try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
-        request: request,
-        showProgress: true,
-      );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
-      } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(
-        //   message: res.message,
-        // );
-      }
-    } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
-    }
-  }
 }
 
 class HeaderNewsProvider extends ChangeNotifier {
@@ -279,7 +228,7 @@ class HeaderNewsProvider extends ChangeNotifier {
   }
 }
 
-class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
+class NewsCategoryProvider extends ChangeNotifier {
   NewsRes? _data;
   String? _error;
   Status _status = Status.ideal;
@@ -537,7 +486,7 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   }
 }
 
-class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
+class NewsTypeProvider extends ChangeNotifier {
   NewsRes? _data;
   String? _error;
   Status _status = Status.ideal;
@@ -630,31 +579,6 @@ class NewsTypeProvider extends ChangeNotifier with AuthProviderBase {
       _data = null;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
-    }
-  }
-
-  Future logoutUser(request) async {
-    try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
-        request: request,
-        showProgress: true,
-      );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
-      } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(
-        //   message: res.message,
-        // );
-      }
-    } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
     }
   }
 }

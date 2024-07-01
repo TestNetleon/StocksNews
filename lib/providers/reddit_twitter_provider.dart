@@ -6,13 +6,12 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/reddit_twitter_res.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
+class RedditTwitterProvider extends ChangeNotifier {
   String? _error;
   Status _status = Status.ideal;
   SocialSentimentsRes? _socialSentimentRes;
@@ -147,31 +146,6 @@ class RedditTwitterProvider extends ChangeNotifier with AuthProviderBase {
       _socialSentimentRes = null;
 
       // showErrorMessage(message: Const.errSomethingWrong);
-    }
-  }
-
-  Future logoutUser(request) async {
-    try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
-        request: request,
-        showProgress: true,
-      );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
-      } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(
-        //   message: res.message,
-        // );
-      }
-    } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
     }
   }
 }

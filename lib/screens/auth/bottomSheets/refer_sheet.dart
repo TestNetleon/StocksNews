@@ -20,8 +20,6 @@ import '../../../utils/validations.dart';
 import '../../../widgets/theme_input_field.dart';
 
 referSheet({
-  String? state,
-  String? dontPop,
   required Function(String? code) onReferral,
 }) async {
   await showModalBottomSheet(
@@ -40,11 +38,7 @@ referSheet({
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        child: ReferBottomSheet(
-          state: state,
-          dntPop: dontPop,
-          onReferral: onReferral,
-        ),
+        child: ReferBottomSheet(onReferral: onReferral),
       );
     },
     isDismissible: false,
@@ -53,14 +47,10 @@ referSheet({
 }
 
 class ReferBottomSheet extends StatefulWidget {
-  final String? dntPop;
-  final String? state;
   final Function(String? code) onReferral;
 
   const ReferBottomSheet({
     super.key,
-    this.dntPop,
-    this.state,
     required this.onReferral,
   });
 
@@ -211,7 +201,7 @@ class _ReferBottomSheetState extends State<ReferBottomSheet> {
                     alignment: Alignment.center,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                         widget.onReferral(null);
                       },
                       child: Text(

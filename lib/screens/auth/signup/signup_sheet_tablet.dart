@@ -10,9 +10,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -29,7 +29,7 @@ import '../../../route/my_app.dart';
 import '../../../utils/utils.dart';
 import '../../../utils/validations.dart';
 import '../../../widgets/theme_input_field.dart';
-import 'aggree_conditions.dart';
+import '../bottomSheets/aggree_conditions.dart';
 
 signupSheetTablet({
   String? state,
@@ -83,7 +83,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
-  void _onLoginClick() async {
+  void _onSignUpClick() async {
     closeKeyboard();
     if (!isEmail(_controller.text)) {
       popUpAlert(
@@ -118,18 +118,17 @@ class _SignUpBottomState extends State<SignUpBottom> {
     try {
       GoogleSignInAccount? account = await _googleSignIn.signIn();
 
-      String? referralCode = await Preference.getReferral();
-
-      if (referralCode != null && referralCode != "") {
-        _handleGoogleLogin(account);
-      } else {
-        referSheet(
-          // email: _controller.text.toLowerCase(),
-          onReferral: (code) {
-            _handleGoogleLogin(account, code: code);
-          },
-        );
-      }
+      // String? referralCode = await Preference.getReferral();
+      // if (referralCode != null && referralCode != "") {
+      _handleGoogleLogin(account);
+      // } else {
+      //   referSheet(
+      //     // email: _controller.text.toLowerCase(),
+      //     onReferral: (code) {
+      //       _handleGoogleLogin(account, code: code);
+      //     },
+      //   );
+      // }
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
       print(error);
@@ -165,7 +164,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
           // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(request, dontPop: 'true', state: widget.state);
+        provider.googleLogin(request, alreadySubmitted: false);
       }
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -219,12 +218,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "referral_code": referralCode ?? code ?? "",
       };
 
-      provider.appleLogin(
-        request,
-        dontPop: 'true',
-        state: widget.state,
-        id: id,
-      );
+      provider.appleLogin(request, id: id);
 
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
@@ -318,7 +312,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         const SpacerVertical(height: Dimen.itemSpacing),
                         ThemeButton(
                           text: "Create account",
-                          onPressed: _onLoginClick,
+                          onPressed: _onSignUpClick,
                         ),
                         const SpacerVertical(),
                         Column(
@@ -458,15 +452,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
-                              isPhone
-                                  ? loginSheet(
-                                      dontPop: widget.dntPop,
-                                      state: widget.state,
-                                    )
-                                  : loginSheetTablet(
-                                      dontPop: widget.dntPop,
-                                      state: widget.state,
-                                    );
+                              isPhone ? loginSheet() : loginSheetTablet();
                             },
                             child: RichText(
                               text: TextSpan(

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -13,7 +12,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/highlow_pe_res.dart';
 
-class HighLowPeProvider extends ChangeNotifier with AuthProviderBase {
+class HighLowPeProvider extends ChangeNotifier {
   List<HIghLowPeRes>? _data;
   List<HIghLowPeRes>? get data => _data;
 

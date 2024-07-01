@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:async';
 import 'dart:convert';
 
@@ -12,24 +10,17 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/drawer_data_res.dart';
 import 'package:stocks_news_new/modals/refer.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
-import 'package:stocks_news_new/providers/alert_provider.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
-import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
-import 'package:stocks_news_new/providers/notification_provider.dart';
-import 'package:stocks_news_new/providers/watchlist_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/apple_otp_sheet_login.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_login.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/otp_sheet_login.dart';
+import 'package:stocks_news_new/screens/auth/signup/otp_sheet_signup.dart';
+import 'package:stocks_news_new/screens/auth/signup/apple_otp_sheet_login.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/utils/preference.dart';
@@ -40,8 +31,7 @@ import '../fcm/dynamic_links.service.dart';
 import '../utils/dialogs.dart';
 import '../widgets/ios_emailerror.dart';
 
-//
-class UserProvider extends ChangeNotifier with AuthProviderBase {
+class UserProvider extends ChangeNotifier {
   UserRes? _user;
   Status _status = Status.loaded;
   Status get status => _status;
@@ -219,19 +209,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  void logout() async {
-    showConfirmAlertDialog(
-      context: navigatorKey.currentContext,
-      message: "Do you want to logout?",
-      onclick: () => handleSessionOut(),
-    );
-    // Preference.logout();
-    // _user = null;
-    // notifyListeners();
-    // Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
-    // Navigator.pushReplacement(navigatorKey.currentContext!, Login.path);
-  }
-
   void clearUser() async {
     _user = null;
     navigatorKey.currentContext!.read<LeaderBoardProvider>().clearData();
@@ -240,8 +217,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   Future login(
     request, {
-    String? state,
-    String? dontPop,
     bool editEmail = false,
     String? email,
     String? id,
@@ -256,32 +231,15 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       setStatus(Status.loaded);
       if (response.status) {
-        // _user = UserRes.fromJson(response.data);
-        // Navigator.push(navigatorKey.currentContext!, OTPLogin.path);
-        // Navigator.push(
-        //   navigatorKey.currentContext!,
-        //   createRoute(OTPLogin(
-        //     state: state,
-        //     dontPop: dontPop,
-        //   )),
-        // );
         if (editEmail) {
           Navigator.pop(navigatorKey.currentContext!);
-          // showErrorMessage(message: response.message, snackbar: false);
         } else {
-          otpLoginSheet(
-              state: state,
-              dontPop: dontPop,
-              id: id,
-              userName: response.data['username']);
+          otpLoginSheet(id: id, userName: response.data['username']);
         }
       } else {
         if (editEmail) {
-          // showErrorMessage(message: response.message, snackbar: false);
-
           Navigator.pop(navigatorKey.currentContext!);
         }
-        // showErrorMessage(message: response.message);
         if (response.message ==
             "This email address is not registered with stocks.news.") {
           popUpAlert(
@@ -292,7 +250,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             onTap: () {
               Navigator.pop(navigatorKey.currentContext!);
               Navigator.pop(navigatorKey.currentContext!);
-
               signupSheet(email: email);
             },
           );
@@ -315,8 +272,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   Future sendEmailOTP(
     request, {
-    String? state,
-    String? dontPop,
     bool editEmail = false,
     String? id,
     String? email,
@@ -339,8 +294,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // } else {
         if (showOtp) {
           appleOtpLoginSheet(
-            state: state,
-            dontPop: "",
             id: id,
             email: email,
             code: code,
@@ -380,22 +333,20 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   Future googleLogin(
     request, {
-    String? state,
-    String? dontPop,
     bool alreadySubmitted = true,
   }) async {
     setStatus(Status.loading);
-    CompareStocksProvider compareProvider =
-        navigatorKey.currentContext!.read<CompareStocksProvider>();
+    // CompareStocksProvider compareProvider =
+    //     navigatorKey.currentContext!.read<CompareStocksProvider>();
 
-    AlertProvider alertProvider =
-        navigatorKey.currentContext!.read<AlertProvider>();
+    // AlertProvider alertProvider =
+    //     navigatorKey.currentContext!.read<AlertProvider>();
 
-    WatchlistProvider watchlistProvider =
-        navigatorKey.currentContext!.read<WatchlistProvider>();
+    // WatchlistProvider watchlistProvider =
+    //     navigatorKey.currentContext!.read<WatchlistProvider>();
 
-    NotificationProvider notificationProvider =
-        navigatorKey.currentContext!.read<NotificationProvider>();
+    // NotificationProvider notificationProvider =
+    //     navigatorKey.currentContext!.read<NotificationProvider>();
 
     if (request["fcm_token"].isEmpty) {
       String? fcm = await FirebaseMessaging.instance.getToken();
@@ -421,63 +372,71 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         //     navigatorKey.currentContext!, (route) => route.isFirst);
         // Navigator.pushAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-        if (dontPop == null) {
-          Navigator.pop(navigatorKey.currentContext!);
+        // if (dontPop == null) {
+        //   Navigator.pop(navigatorKey.currentContext!);
 
-          if (state == "compare") {
-            await compareProvider.getCompareStock();
-          } else if (state == "alert") {
-            await alertProvider.getAlerts(showProgress: false);
-          } else if (state == "watchList") {
-            await watchlistProvider.getData(showProgress: false);
-          } else if (state == "notification") {
-            await notificationProvider.getData(showProgress: false);
-          }
-        } else {
-          // kDebugMode ? Preference.setShowIntro(true) : null;
-          Preference.setShowIntro(false);
-          // Navigator.pushAndRemoveUntil(
-          //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+        //   if (state == "compare") {
+        //     await compareProvider.getCompareStock();
+        //   } else if (state == "alert") {
+        //     await alertProvider.getAlerts(showProgress: false);
+        //   } else if (state == "watchList") {
+        //     await watchlistProvider.getData(showProgress: false);
+        //   } else if (state == "notification") {
+        //     await notificationProvider.getData(showProgress: false);
+        //   }
+        // } else {
+        // kDebugMode ? Preference.setShowIntro(true) : null;
+        Preference.setShowIntro(false);
+        // Navigator.pushAndRemoveUntil(
+        //     navigatorKey.currentContext!, Tabs.path, (route) => false);
 
-          if (_user?.signupStatus ?? false) {
-            shareUri = await DynamicLinkService.instance
-                .getDynamicLink(_user?.referralCode);
-
-            String? referralCode = await Preference.getReferral();
-            if (alreadySubmitted) {
-              // (referralCode != null || referralCode != "") &&
-              // Only for Sign up
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-              );
-            } else {
-              // Only For Login
-              referSheet(
-                onReferral: (code) {
-                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
-                },
-              );
-            }
-
-            // Navigator.push(
-            //   navigatorKey.currentContext!,
-            //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            // );
-          } else {
-            navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-            Navigator.popUntil(
-                navigatorKey.currentContext!, (route) => route.isFirst);
-            Navigator.pushReplacement(
+        if (_user?.signupStatus ?? false) {
+          shareUri = await DynamicLinkService.instance
+              .getDynamicLink(_user?.referralCode);
+          String? referralCode = await Preference.getReferral();
+          if (alreadySubmitted) {
+            // (referralCode != null || referralCode != "") &&
+            // Only for Sign up
+            Navigator.push(
               navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const Tabs()),
+              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            );
+          } else {
+            // Only For Login
+            referSheet(
+              onReferral: (code) {
+                if (code == null || code == "") {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                  );
+                } else {
+                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
+                }
+              },
             );
           }
+
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+          // );
+        } else {
+          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          Navigator.pop(navigatorKey.currentContext!);
+          // Navigator.popUntil(
+          //     navigatorKey.currentContext!, (route) => route.isFirst);
+          // Navigator.pushReplacement(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(builder: (_) => const Tabs()),
+          // );
         }
-        if ((_user?.phone == null || _user?.phone == "") &&
-            _user?.signupStatus == false) {
-          referLogin();
-        }
+        // }
+        // if ((_user?.phone == null || _user?.phone == "") &&
+        //     _user?.signupStatus == false) {
+        //   referLogin();
+        // }
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -498,25 +457,23 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
 
   Future appleLogin(
     request, {
-    String? state,
-    String? dontPop,
     String? id,
     String? code,
     bool alreadySubmitted = false,
   }) async {
     setStatus(Status.loading);
 
-    CompareStocksProvider compareProvider =
-        navigatorKey.currentContext!.read<CompareStocksProvider>();
+    // CompareStocksProvider compareProvider =
+    //     navigatorKey.currentContext!.read<CompareStocksProvider>();
 
-    AlertProvider alertProvider =
-        navigatorKey.currentContext!.read<AlertProvider>();
+    // AlertProvider alertProvider =
+    //     navigatorKey.currentContext!.read<AlertProvider>();
 
-    WatchlistProvider watchlistProvider =
-        navigatorKey.currentContext!.read<WatchlistProvider>();
+    // WatchlistProvider watchlistProvider =
+    //     navigatorKey.currentContext!.read<WatchlistProvider>();
 
-    NotificationProvider notificationProvider =
-        navigatorKey.currentContext!.read<NotificationProvider>();
+    // NotificationProvider notificationProvider =
+    //     navigatorKey.currentContext!.read<NotificationProvider>();
 
     if (request["fcm_token"].isEmpty) {
       String? fcm = await FirebaseMessaging.instance.getToken();
@@ -537,63 +494,70 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         Preference.saveUser(response.data);
         shareUri = await DynamicLinkService.instance
             .getDynamicLink(_user?.referralCode);
-        if (dontPop == null) {
-          Navigator.pop(navigatorKey.currentContext!);
-          if (state == "compare") {
-            await compareProvider.getCompareStock();
-          } else if (state == "alert") {
-            await alertProvider.getAlerts(showProgress: false);
-          } else if (state == "watchList") {
-            await watchlistProvider.getData(showProgress: false);
-          } else if (state == "notification") {
-            await notificationProvider.getData(showProgress: false);
+        // if (dontPop == null) {
+        //   Navigator.pop(navigatorKey.currentContext!);
+        //   if (state == "compare") {
+        //     await compareProvider.getCompareStock();
+        //   } else if (state == "alert") {
+        //     await alertProvider.getAlerts(showProgress: false);
+        //   } else if (state == "watchList") {
+        //     await watchlistProvider.getData(showProgress: false);
+        //   } else if (state == "notification") {
+        //     await notificationProvider.getData(showProgress: false);
+        //   }
+        // } else {
+        Preference.setShowIntro(false);
+
+        if (_user?.signupStatus ?? false) {
+          shareUri = await DynamicLinkService.instance
+              .getDynamicLink(_user?.referralCode);
+
+          String? referralCode = await Preference.getReferral();
+          if (alreadySubmitted) {
+            // (referralCode != null || referralCode != "") &&
+            // Only for Sign up
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            );
+          } else {
+            // Only For Login
+            referSheet(
+              onReferral: (code) {
+                if (code == null || code == "") {
+                  Navigator.pop(navigatorKey.currentContext!);
+                  Navigator.push(
+                    navigatorKey.currentContext!,
+                    MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                  );
+                } else {
+                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
+                }
+              },
+            );
           }
         } else {
-          Preference.setShowIntro(false);
-
-          if (_user?.signupStatus ?? false) {
-            shareUri = await DynamicLinkService.instance
-                .getDynamicLink(_user?.referralCode);
-
-            String? referralCode = await Preference.getReferral();
-            if (alreadySubmitted) {
-              // (referralCode != null || referralCode != "") &&
-              // Only for Sign up
-              Navigator.push(
-                navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-              );
-            } else {
-              // Only For Login
-              referSheet(
-                onReferral: (code) {
-                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
-                },
-              );
-            }
-          } else {
-            navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-            Navigator.popUntil(
-              navigatorKey.currentContext!,
-              (route) => route.isFirst,
-            );
-            Navigator.pushReplacement(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const Tabs()),
-            );
-          }
+          navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
+          Navigator.pop(navigatorKey.currentContext!);
+          // Navigator.popUntil(
+          //   navigatorKey.currentContext!,
+          //   (route) => route.isFirst,
+          // );
+          // Navigator.pushReplacement(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(builder: (_) => const Tabs()),
+          // );
         }
+        // }
 
-        if ((_user?.phone == null || _user?.phone == "") &&
-            _user?.signupStatus == false) {
-          referLogin();
-        }
+        // if ((_user?.phone == null || _user?.phone == "") &&
+        //     _user?.signupStatus == false) {
+        //   referLogin();
+        // }
       } else {
         // showErrorMessage(message: response.message);
         if (response.message == "Invalid email address") {
           showIosEmailError(
-            state: state,
-            dontPop: dontPop,
             id: id,
             code: code,
             alreadySubmitted: alreadySubmitted,
@@ -635,6 +599,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       setStatus(Status.loaded);
       if (response.status) {
+        Navigator.pop(navigatorKey.currentContext!);
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const SignUpSuccess()),
@@ -657,11 +622,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future signup(
-    request, {
-    bool editEmail = false,
-    String? referCode,
-  }) async {
+  Future signup(request, {bool editEmail = false, String? referCode}) async {
     setStatus(Status.loading);
     try {
       ApiResponse response = await apiRequest(
@@ -714,13 +675,19 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   Future resendOtp(request) async {
     setStatus(Status.loading);
     try {
-      ApiResponse response = await apiRequest(
+      // ApiResponse response =
+      await apiRequest(
         url: Apis.resendOtp,
         request: request,
         showProgress: true,
         removeForceLogin: true,
       );
       setStatus(Status.loaded);
+      // if (response.status) {
+      //   popUpAlert(message: response.message ?? "", title: "Success");
+      // } else {
+      //   popUpAlert(message: response.message ?? "", title: "Alert");
+      // }
       // showErrorMessage(
       //   message: response.message,
       //   type: response.status ? SnackbarType.info : SnackbarType.error,
@@ -733,7 +700,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
   Future signupResendOtp(request) async {
     setStatus(Status.loading);
     try {
-      ApiResponse response = await apiRequest(
+      // ApiResponse response =
+      await apiRequest(
         url: Apis.signupResendOtp,
         request: request,
         showProgress: true,
@@ -794,19 +762,19 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future verifyLoginOtp(request, {String? state, String? dontPop}) async {
+  Future verifyLoginOtp(request) async {
     setStatus(Status.loading);
-    CompareStocksProvider compareProvider =
-        navigatorKey.currentContext!.read<CompareStocksProvider>();
+    // CompareStocksProvider compareProvider =
+    //     navigatorKey.currentContext!.read<CompareStocksProvider>();
 
-    AlertProvider alertProvider =
-        navigatorKey.currentContext!.read<AlertProvider>();
+    // AlertProvider alertProvider =
+    //     navigatorKey.currentContext!.read<AlertProvider>();
 
-    WatchlistProvider watchlistProvider =
-        navigatorKey.currentContext!.read<WatchlistProvider>();
+    // WatchlistProvider watchlistProvider =
+    //     navigatorKey.currentContext!.read<WatchlistProvider>();
 
-    NotificationProvider notificationProvider =
-        navigatorKey.currentContext!.read<NotificationProvider>();
+    // NotificationProvider notificationProvider =
+    //     navigatorKey.currentContext!.read<NotificationProvider>();
 
     if (request["fcm_token"].isEmpty) {
       String? fcm = await FirebaseMessaging.instance.getToken();
@@ -827,34 +795,34 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance
             .getDynamicLink(_user?.referralCode);
-        if (dontPop == null) {
-          if (state == "compare") {
-            await compareProvider.getCompareStock();
-          } else if (state == "alert") {
-            await alertProvider.getAlerts(showProgress: false);
-          } else if (state == "watchList") {
-            await watchlistProvider.getData(showProgress: false);
-          } else if (state == "notification") {
-            await notificationProvider.getData(showProgress: false);
-          }
-
-          Navigator.pop(navigatorKey.currentContext!);
-          Navigator.pop(navigatorKey.currentContext!);
-        } else {
-          // kDebugMode ? Preference.setShowIntro(true) : null;
-          Preference.setShowIntro(false);
-          Navigator.popUntil(
-              navigatorKey.currentContext!, (route) => route.isFirst);
-          Navigator.pushReplacement(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const Tabs()),
-          );
-        }
-
+        // if (dontPop == null) {
+        //   // if (state == "compare") {
+        //   //   await compareProvider.getCompareStock();
+        //   // } else if (state == "alert") {
+        //   //   await alertProvider.getAlerts(showProgress: false);
+        //   // } else if (state == "watchList") {
+        //   //   await watchlistProvider.getData(showProgress: false);
+        //   // } else if (state == "notification") {
+        //   //   await notificationProvider.getData(showProgress: false);
+        //   // }
+        Navigator.pop(navigatorKey.currentContext!);
+        Navigator.pop(navigatorKey.currentContext!);
+        // } else {
+        // kDebugMode ? Preference.setShowIntro(true) : null;
+        Preference.setShowIntro(false);
+        // Navigator.popUntil(
+        //   navigatorKey.currentContext!,
+        //   (route) => route.isFirst,
+        // );
+        // Navigator.pushReplacement(
+        //   navigatorKey.currentContext!,
+        //   MaterialPageRoute(builder: (_) => const Tabs()),
+        // );
+        // }
         notifyListeners();
-        if ((_user?.phone == null || _user?.phone == "")) {
-          referLogin();
-        }
+        // if ((_user?.phone == null || _user?.phone == "")) {
+        //   referLogin();
+        // }
       } else {
         // showErrorMessage(message: response.message);
         popUpAlert(
@@ -884,15 +852,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (res.status) {
         setStatus(Status.loaded);
-        // handleSessionOut();
         if (pop) Navigator.pop(navigatorKey.currentContext!);
         Navigator.pop(navigatorKey.currentContext!);
-        // Navigator.pushReplacement(navigatorKey.currentContext!, Tabs.path);
         Preference.logout();
         clearUser();
         provider.setTotalsAlerts(0);
         provider.setTotalsWatchList(0);
-
         // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
@@ -918,8 +883,15 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
       );
       if (res.status) {
         setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
+
+        Navigator.popUntil(
+            navigatorKey.currentContext!, (route) => route.isFirst);
+        Preference.logout();
+        navigatorKey.currentContext!.read<UserProvider>().clearUser();
+        HomeProvider provider =
+            navigatorKey.currentContext!.read<HomeProvider>();
+        provider.setTotalsAlerts(0);
+        provider.setTotalsWatchList(0);
       } else {
         setStatus(Status.loaded);
         // showErrorMessage(

@@ -14,8 +14,6 @@ import '../providers/user_provider.dart';
 import '../utils/dialogs.dart';
 
 void showIosEmailError({
-  String? state,
-  String? dontPop,
   String? id,
   String? code,
   alreadySubmitted,
@@ -24,8 +22,6 @@ void showIosEmailError({
     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
     context: navigatorKey.currentContext!,
     content: IOSemailError(
-      state: state,
-      dontPop: dontPop,
       id: id,
       code: code,
       alreadySubmitted: alreadySubmitted,
@@ -119,8 +115,6 @@ class _IOSemailErrorState extends State<IOSemailError> {
               Navigator.pop(context);
               provider.sendEmailOTP(
                 request,
-                state: widget.state,
-                dontPop: widget.dontPop,
                 id: widget.id,
                 email: controller.text.toLowerCase(),
                 showOtp: true,
