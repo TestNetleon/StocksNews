@@ -47,8 +47,6 @@ class NotificationsItem extends StatelessWidget {
           MaterialPageRoute(builder: (_) => const Tabs()),
         );
       } else if (slug != '' && type == NotificationType.ticketDetail.name) {
-        Utils().showLog("----Navigating  servoce12 ...");
-
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
@@ -172,7 +170,16 @@ class NotificationsItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(5.sp),
       child: Container(
         decoration: BoxDecoration(
-            color: ThemeColors.greyBorder.withOpacity(0.6),
+            border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 23, 23, 23),
+                // ThemeColors.greyBorder,
+                Color.fromARGB(255, 39, 39, 39),
+              ],
+            ),
             borderRadius: BorderRadius.circular(5.sp)),
         child: Padding(
           padding: EdgeInsets.fromLTRB(13.sp, 13.sp, 13.sp, 13.sp),

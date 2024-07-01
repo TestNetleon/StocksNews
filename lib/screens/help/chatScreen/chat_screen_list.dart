@@ -129,13 +129,15 @@ class _ChatScreenListState extends State<ChatScreenList> {
                                   ),
                                 ),
                                 Stack(
+                                  alignment: Alignment.centerRight,
                                   children: [
                                     ThemeInputField(
                                       contentPadding: const EdgeInsets.fromLTRB(
                                           10, 10, 30, 10),
                                       controller: provider.messageController,
                                       placeholder: "Message",
-                                      keyboardType: TextInputType.text,
+                                      keyboardType: TextInputType.multiline,
+                                      textInputAction: TextInputAction.newline,
                                       inputFormatters: [
                                         allSpecialSymbolsRemove
                                       ],

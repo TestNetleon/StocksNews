@@ -100,8 +100,7 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
     _isGraphLoading = Status.loading;
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "companySlug": companySlug,
         "search": searchTransaction,
         "txn_type": keyTxnTypeCP,
@@ -114,12 +113,9 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
         request: request,
       );
       if (response.status) {
-        chartDates =
-            insiderCompanyGraphFromJson(jsonEncode(response.data)).chartDates;
-        chartPurchase = insiderCompanyGraphFromJson(jsonEncode(response.data))
-            .chartPurchase;
-        chartSale =
-            insiderCompanyGraphFromJson(jsonEncode(response.data)).chartSale;
+        chartDates = insiderCompanyGraphFromJson(jsonEncode(response.data)).chartDates;
+        chartPurchase = insiderCompanyGraphFromJson(jsonEncode(response.data)).chartPurchase;
+        chartSale = insiderCompanyGraphFromJson(jsonEncode(response.data)).chartSale;
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         chartDates = null;

@@ -250,7 +250,6 @@ class NewsItem extends StatelessWidget {
           //     // Image.network(news!.image, fit: BoxFit.cover),
           //   ),
           // ),
-
           CachedNetworkImagesWidget(
             news?.image ?? "",
             width: 100,

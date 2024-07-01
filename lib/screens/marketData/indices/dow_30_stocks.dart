@@ -40,8 +40,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
 
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
-    FilteredParams? filterParams = context.read<Dow30Provider>().filterParams;
-
+    Dow30Provider dov30provider = context.read<Dow30Provider>();
     if (provider.data == null) {
       await context.read<FilterProvider>().getFilterData();
     }
@@ -49,7 +48,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
       title: "Filter DOW 30 Stocks",
       child: MarketDataFilterBottomSheet(
         onFiltered: _onFiltered,
-        filterParam: filterParams,
+        filterParam: dov30provider.filterParams,
       ),
     );
   }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class SdSecFilingItem extends StatelessWidget {
@@ -24,11 +23,20 @@ class SdSecFilingItem extends StatelessWidget {
     return GestureDetector(
       onTap: onCardTapped,
       child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimen.radius.r),
-          border: Border.all(color: ThemeColors.greyBorder),
+          border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 23, 23, 23),
+              // ThemeColors.greyBorder,
+              Color.fromARGB(255, 39, 39, 39),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(5),
         ),
-        padding: EdgeInsets.all(Dimen.itemSpacing.sp),
         child: Column(
           children: [
             Row(
@@ -40,14 +48,14 @@ class SdSecFilingItem extends StatelessWidget {
                     style: stylePTSansBold(fontSize: 14),
                   ),
                 ),
-                const SpacerVertical(height: 5),
+                const SpacerHorizontal(width: 5),
                 Text(
                   data?.fillingDate ?? "",
-                  style: stylePTSansBold(fontSize: 14),
+                  style: stylePTSansRegular(fontSize: 14),
                 ),
               ],
             ),
-            const SpacerVertical(height: 5),
+            const SpacerVertical(height: 8),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -57,10 +65,10 @@ class SdSecFilingItem extends StatelessWidget {
                     style: stylePTSansBold(fontSize: 14),
                   ),
                 ),
-                const SpacerVertical(height: 5),
+                const SpacerHorizontal(width: 5),
                 Text(
                   data?.acceptedDate ?? "",
-                  style: stylePTSansBold(fontSize: 14),
+                  style: stylePTSansRegular(fontSize: 14),
                 ),
               ],
             ),
@@ -80,8 +88,8 @@ class SdSecFilingItem extends StatelessWidget {
                     vertical: 5,
                   ),
                   child: Text(
-                    "View Detail",
-                    style: styleGeorgiaRegular(),
+                    "View",
+                    style: styleGeorgiaRegular(fontSize: 13),
                   ),
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -569,6 +570,9 @@ void handleNavigation({
   String from = "",
   bool setPopHome = true,
 }) async {
+  if (type != DeeplinkEnum.login && type != DeeplinkEnum.signup) {
+    isAppUpdating = false;
+  }
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
 
   // String slugForTicker = extractLastPathComponent(uri);
@@ -726,7 +730,11 @@ void handleNavigation({
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs(index: 3)),
     );
-
+  } else if (type == DeeplinkEnum.helpdesk) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const HelpDesk()),
+    );
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {
     Navigator.push(
@@ -827,7 +835,7 @@ void handleNavigation({
       MaterialPageRoute(builder: (_) => const Tabs()),
     );
   }
-  Timer(const Duration(seconds: 2), () {
+  Timer(const Duration(seconds: 4), () {
     onDeepLinking = false;
   });
 }

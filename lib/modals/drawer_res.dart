@@ -65,7 +65,6 @@ List<DrawerRes> drawerItems = [
   DrawerRes(iconData: Icons.featured_play_list_outlined, text: "What We Do"),
   DrawerRes(iconData: Icons.mail_outline_sharp, text: "Contact Us"),
   DrawerRes(iconData: Icons.help_outline_rounded, text: "FAQs"),
-
   // DrawerRes(iconData: Icons.edit_note_rounded, text: "Terms and Conditions"),
   // DrawerRes(iconData: Icons.policy_outlined, text: "Privacy Policy"),
   // DrawerRes(iconData: Icons.warning_amber_rounded, text: "Disclaimer"),

@@ -97,11 +97,10 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                     SdTopRes? top = provider.sdInsiderTradeRes?.top?[index];
                     return SdTopCard(
                       top: top,
-                      colorValue: top?.value == null
-                          ? null
-                          : "${top!.value}".contains('-')
-                              ? Colors.red
-                              : Colors.green,
+                      textRed:
+                          (top?.key ?? "N/A").toLowerCase().contains('selling'),
+                      gridRed:
+                          (top?.key ?? "N/A").toLowerCase().contains('selling'),
                     );
                   },
                 ),

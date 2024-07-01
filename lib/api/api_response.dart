@@ -43,6 +43,7 @@ class ApiResponse {
 }
 
 class Extra {
+  final List<String>? feebackType;
   final String? search;
   final int? notificationCount;
   final List<KeyValueElement>? exchangeShortName;
@@ -75,6 +76,9 @@ class Extra {
   final bool? showPortfolio;
   final ReferralRes? referral;
   final num? received;
+  final num? balance;
+  final num? spent;
+
   final num? pending;
   final String? affiliateReferText;
   final HowItWorkRes? howItWork;
@@ -87,6 +91,7 @@ class Extra {
   final int? selfRank;
 
   Extra({
+    this.feebackType,
     this.search,
     this.selfRank,
     this.profileText,
@@ -102,6 +107,8 @@ class Extra {
     this.affiliateReferText,
     this.type,
     this.received,
+    this.balance,
+    this.spent,
     this.pending,
     this.cap,
     this.sector,
@@ -134,6 +141,9 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        feebackType: json["feeback_type"] == null
+            ? []
+            : List<String>.from(json["feeback_type"]!.map((x) => x)),
         selfRank: json["self_rank"],
         profileText: json["profile_text"] == null
             ? null
@@ -141,6 +151,8 @@ class Extra {
         verifyIdentity: json['verify_identity_text'],
         earnCondition: json['earn_condition'],
         received: json['total_points_received'],
+        balance: json['total_balance'],
+        spent: json['total_spent'],
         suspendMsg: json['referral_status_message'],
         nudgeText: json["nudge_text"],
         referLogin: json["refer_login"] == null
@@ -217,6 +229,9 @@ class Extra {
       );
 
   Map<String, dynamic> toJson() => {
+        "feeback_type": feebackType == null
+            ? []
+            : List<dynamic>.from(feebackType!.map((x) => x)),
         "search": search,
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
@@ -224,6 +239,8 @@ class Extra {
         "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,
+        "total_balance": balance,
+        "total_spent": spent,
         "total_points_pending": pending,
         'referral_status_message': suspendMsg,
         "profile_text": profileText?.toJson(),

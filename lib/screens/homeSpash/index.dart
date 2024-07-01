@@ -67,6 +67,13 @@ class _HomeSplashState extends State<HomeSplash> {
     RemoteMessage? value = await FirebaseMessaging.instance.getInitialMessage();
 
     if (value == null) {
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** getInitialLink "
+      //         "\n"
+      //         " FirebaseMessaging.instance.getInitialMessage",
+      //   ),
+      // );
       if (onDeepLinking) {
         popHome = true;
         return;
@@ -80,6 +87,13 @@ class _HomeSplashState extends State<HomeSplash> {
         MaterialPageRoute(builder: (_) => const Tabs()),
       );
     } else {
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** getInitialLink "
+      //         "\n"
+      //         " FirebaseMessaging.instance.getInitialMessage  else",
+      //   ),
+      // );
       if (onDeepLinking) {
         popHome = true;
         return;

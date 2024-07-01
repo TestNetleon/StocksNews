@@ -36,14 +36,28 @@ class NewsDetailProvider extends ChangeNotifier with AuthProviderBase {
     String? slug,
     inAppMsgId,
     notificationId,
+    pointsDeducted,
   }) async {
     setStatus(Status.loading);
     try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "slug": slug ?? "",
-      };
+      Map request = pointsDeducted != null
+          ? {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "slug": slug ?? "",
+              "point_deduction": "$pointsDeducted",
+            }
+          : {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "slug": slug ?? "",
+            };
       if (inAppMsgId != null) {
         request.addAll({"in_app_id": inAppMsgId!});
       }

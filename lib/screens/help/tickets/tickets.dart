@@ -153,7 +153,6 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class Tickets extends StatelessWidget {
   static const String path = "Tickets";
@@ -277,7 +276,9 @@ class Tickets extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
                   child: Text(
-                    "Great, the complaint box is empty",
+                    provider.isLoading
+                        ? "Loading your complaint box"
+                        : "Great, the complaint box is empty",
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(
                         color: ThemeColors.greyText, fontSize: 20),
@@ -324,7 +325,7 @@ class Tickets extends StatelessWidget {
             ],
           ),
         ),
-        const SpacerVertical(),
+        // const SpacerVertical(),
       ],
     );
   }

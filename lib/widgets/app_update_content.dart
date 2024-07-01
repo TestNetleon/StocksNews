@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
-class AppUpdateContent extends StatelessWidget {
+import '../utils/utils.dart';
+
+class AppUpdateContent extends StatefulWidget {
   const AppUpdateContent({
     super.key,
     required this.extra,
@@ -17,14 +19,57 @@ class AppUpdateContent extends StatelessWidget {
 
   final Extra extra;
 
-  void _onUpdateClick() {
-    if (Platform.isAndroid) {
-      openUrl("https://play.google.com/store/apps/details?id=com.stocks.news");
-    } else {
-      openUrl("https://apps.apple.com/us/app/stocks-news/id6476615803");
-    }
+  @override
+  State<AppUpdateContent> createState() => _AppUpdateContentState();
+}
+
+class _AppUpdateContentState extends State<AppUpdateContent> {
+  //--------In-App Update --------------
+  void _checkForUpdate() {
+    InAppUpdate.checkForUpdate().then((updateInfo) {
+      if (updateInfo.updateAvailability == UpdateAvailability.updateAvailable) {
+        if (updateInfo.flexibleUpdateAllowed) {
+          // Perform flexible update
+          InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
+            if (appUpdateResult == AppUpdateResult.success) {
+              InAppUpdate.completeFlexibleUpdate();
+              _showUpdateSuccessDialog();
+            }
+          });
+        } else if (updateInfo.immediateUpdateAllowed) {
+          // Perform immediate update
+          InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+            if (appUpdateResult == AppUpdateResult.success) {
+              _showUpdateSuccessDialog();
+            }
+          });
+        }
+      }
+    });
   }
 
+  void _showUpdateSuccessDialog() {
+    showDialog(
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Update Successful'),
+          content:
+              const Text('The app has been updated to the latest version.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+      context: context,
+    );
+  }
+
+  // -------- Initial Deeplinks For Referral Started ---------------
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -61,7 +106,7 @@ class AppUpdateContent extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            extra.appUpdateTitle ?? "",
+                            widget.extra.appUpdateTitle ?? "",
                             style: stylePTSansBold(
                               color: Colors.black,
                               fontSize: 18,
@@ -69,7 +114,7 @@ class AppUpdateContent extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "V${Platform.isAndroid ? extra.androidBuildVersion : extra.iOSBuildVersion}",
+                          "V${Platform.isAndroid ? widget.extra.androidBuildVersion : widget.extra.iOSBuildVersion}",
                           style: stylePTSansBold(
                             color: const Color.fromARGB(255, 2, 80, 12),
                             fontSize: 18,
@@ -80,7 +125,7 @@ class AppUpdateContent extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 5.sp),
                       child: HtmlWidget(
-                        extra.appUpdateMsg ?? "",
+                        widget.extra.appUpdateMsg ?? "",
                         textStyle: styleGeorgiaRegular(
                           fontSize: 14,
                           height: 1.5,
@@ -93,6 +138,11 @@ class AppUpdateContent extends StatelessWidget {
                       alignment: Alignment.center,
                       child: ThemeButtonSmall(
                         onPressed: _onUpdateClick,
+                        // onPressed: () {
+                        //   Navigator.pop(context);
+                        //   isAppUpdating = false;
+                        // },
+
                         text: "Update Now",
                         showArrow: false,
                         fontBold: true,
@@ -122,5 +172,13 @@ class AppUpdateContent extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _onUpdateClick() {
+    if (Platform.isAndroid) {
+      openUrl("https://play.google.com/store/apps/details?id=com.stocks.news");
+    } else {
+      openUrl("https://apps.apple.com/us/app/stocks-news/id6476615803");
+    }
   }
 }

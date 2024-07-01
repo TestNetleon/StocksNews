@@ -27,6 +27,7 @@ enum NotificationType {
   nudgeFriend,
   ticketDetail,
   referRegistration,
+  appUpdate,
 }
 
 enum BlogsType { blog, author, category, tag }
@@ -41,6 +42,8 @@ enum SocialTrendingType { now, recently, cap }
 bool isPhone = true;
 bool isAppInForeground = false;
 bool isShowingError = false;
+bool isAppUpdating = false;
+bool updateProfile = false;
 String apiKeyFMP = "";
 bool popHome = false;
 Uri? deepLinkData;
@@ -88,6 +91,7 @@ class Images {
   static const String starAffiliate = "assets/images/star.png";
   static const String profileBg = "assets/images/profile_bg1.png";
   static const String rankAffiliate = "assets/images/award.png";
+  static const String transaction = "assets/images/transaction.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -114,7 +118,6 @@ class Images {
   static const String referE = "assets/images/refer_e.png";
   static const String referS = "assets/images/refer_s.png";
   static const String referF = "assets/images/refer_f.png";
-
   static const String line = "assets/images/line.png";
 
   //GIF
@@ -137,7 +140,6 @@ class Images {
   static const String referSuccess = "assets/images/success.gif";
   static const String kingGIF = "assets/images/king.gif";
   static const String receiveGIF = "assets/images/receive.gif";
-
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
   static const String start3 = "assets/images/3rd_page.png";
@@ -345,6 +347,7 @@ enum DeeplinkEnum {
   insiderTrades,
   trendingIndustries,
   sentiments,
+  helpdesk,
 
   //below add for Market data only else add above
   gainerLoser,
@@ -383,6 +386,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
   } else if (uri.path.contains('/sign-up')) {
     // return 'signUp';
     return DeeplinkEnum.signup;
+  } else if (uri.path.contains('/page/contact-us')) {
+    // return 'page';
+    return DeeplinkEnum.helpdesk;
   } else if (uri.path.contains('/page/')) {
     // return 'page';
     return DeeplinkEnum.page;
@@ -411,7 +417,7 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
   } else if (uri.path.contains('/insider-trading')) {
     // return 'insider';
     return DeeplinkEnum.insiderTrades;
-  } else if (uri.path.contains(' /social-sentiment')) {
+  } else if (uri.path.contains('/social-sentiment')) {
     // return 'sentiments';
     return DeeplinkEnum.sentiments;
   } else if (uri.path.contains('/market-data/high-pe-ratio-stocks') ||

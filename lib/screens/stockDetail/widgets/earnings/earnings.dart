@@ -88,7 +88,11 @@ class _SdEarningsState extends State<SdEarnings> {
                   paddingVerticle: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.earnings?.top?[index];
-                    return SdTopCard(top: top);
+                    return SdTopCard(
+                      top: top,
+                      textRed: "${top?.value ?? "N/A"}".contains('-'),
+                      gridRed: "${top?.value ?? "N/A"}".contains('-'),
+                    );
                   },
                 ),
                 const SpacerVertical(height: 20),

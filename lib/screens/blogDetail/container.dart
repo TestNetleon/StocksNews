@@ -11,6 +11,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
@@ -27,6 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
+import 'blog_mention_by.dart';
 
 //
 class BlogDetailContainer extends StatelessWidget {
@@ -66,6 +68,20 @@ class BlogDetailContainer extends StatelessWidget {
     }
   }
 
+  Future _onReferClick(BuildContext context) async {
+    UserProvider userProvider = context.read<UserProvider>();
+
+    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+      await referLogin();
+    } else {
+      if (userProvider.user != null) {
+        await Share.share(
+          "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+        );
+      }
+    }
+  }
+
   void _onViewBlogClick(context) async {
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
     await provider.getBlogDetailData(slug: slug, point_deduction: true);
@@ -79,7 +95,6 @@ class BlogDetailContainer extends StatelessWidget {
         2.2;
 
     BlogProvider provider = context.watch<BlogProvider>();
-
     return Stack(
       children: [
         Padding(
@@ -110,6 +125,7 @@ class BlogDetailContainer extends StatelessWidget {
                           provider.blogsDetail?.name ?? "",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
+
                         const SpacerVertical(height: 5),
                         // Padding(
                         //   padding: EdgeInsets.only(bottom: 15.sp),
@@ -134,6 +150,7 @@ class BlogDetailContainer extends StatelessWidget {
                         //     // fit: BoxFit.contain,
                         //   ),
                         // ),
+
                         CachedNetworkImagesWidget(
                           provider.blogsDetail?.image ?? "",
                           height: ScreenUtil().screenHeight * 0.27,
@@ -151,6 +168,11 @@ class BlogDetailContainer extends StatelessWidget {
                             blog: true,
                           ),
                         ),
+                        SpacerVertical(height: Dimen.itemSpacing.sp),
+                        //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
+                        //New Blog Tickers Widget
+                        const BlogDetailMentionBy(),
+
                         SpacerVertical(height: Dimen.itemSpacing.sp),
                         // const BlogDetailAuthor(),
                         // const SpacerVertical(height: 5),
@@ -174,6 +196,7 @@ class BlogDetailContainer extends StatelessWidget {
                             }
                             return a;
                           },
+
                           // customWidgetBuilder: (element) {
                           //   if (element.localName == 'img') {
                           //     final src = element.attributes['src'];
@@ -191,6 +214,7 @@ class BlogDetailContainer extends StatelessWidget {
                         ),
                         if (provider.blogsDetail?.feedbackMsg != null)
                           ArticleFeedback(
+                            feebackType: provider.extra?.feebackType,
                             title: provider.blogsDetail?.feedbackMsg,
                             submitMessage:
                                 provider.blogsDetail?.feedbackExistMsg,
@@ -314,10 +338,8 @@ class BlogDetailContainer extends StatelessWidget {
                                 ),
                                 const SpacerVertical(height: 10),
                                 ThemeButtonSmall(
-                                  onPressed: () {
-                                    Share.share(
-                                      "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                                    );
+                                  onPressed: () async {
+                                    await _onReferClick(context);
                                   },
                                   text: "Refer Now",
                                   showArrow: false,

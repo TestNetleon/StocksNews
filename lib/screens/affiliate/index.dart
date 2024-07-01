@@ -22,8 +22,9 @@ class ReferAFriend extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
         tabs: [
           Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: const Text("Refer a friend")),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: const Text("Refer a friend"),
+          ),
           Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: const Text("Leaderboard")),

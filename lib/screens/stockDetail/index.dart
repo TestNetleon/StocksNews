@@ -10,13 +10,11 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/news/news.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/secFiling/sd_sec_filing.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/socialActivities/social_activities.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-
 import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
@@ -109,7 +107,6 @@ class _StockDetailState extends State<StockDetail> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
@@ -139,7 +136,7 @@ class _StockDetailState extends State<StockDetail> {
                   SdAnalysis(symbol: widget.symbol),
                   SdTechnical(symbol: widget.symbol),
                   SdForecast(symbol: widget.symbol),
-                  SdSocialActivities(symbol: widget.symbol),
+                  // SdSocialActivities(symbol: widget.symbol),
                   SdNews(symbol: widget.symbol),
                   SdEarnings(symbol: widget.symbol),
                   SdDividends(symbol: widget.symbol),

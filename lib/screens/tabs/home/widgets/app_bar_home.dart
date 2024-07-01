@@ -142,8 +142,9 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //   MaterialPageRoute(builder: (_) => const Tabs(index: 0)),
                 // );
 
-                Navigator.popUntil(
-                    navigatorKey.currentContext!, (route) => route.isFirst);
+                Navigator.popUntil(navigatorKey.currentContext!, (route) {
+                  return route.isFirst;
+                });
                 Navigator.pushReplacement(
                   navigatorKey.currentContext!,
                   MaterialPageRoute(builder: (_) => const Tabs()),
@@ -235,6 +236,20 @@ class _AppBarHomeState extends State<AppBarHome> {
                 ],
               )
             : const SizedBox(),
+
+        // TODO MUST REMOVE IN LIVE BUILD
+        // IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       navigatorKey.currentContext!,
+        //       MaterialPageRoute(builder: (_) => const NavigationDemo()),
+        //     );
+        //   },
+        //   icon: const Icon(
+        //     Icons.navigation_outlined,
+        //     color: ThemeColors.white,
+        //   ),
+        // ),
       ],
     );
   }

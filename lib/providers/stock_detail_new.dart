@@ -287,6 +287,9 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
+
+        _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
+
         _extra = (response.extra is Extra ? response.extra as Extra : null);
 
         if (_tabRes != null) {
@@ -919,6 +922,8 @@ class StockDetailProviderNew extends ChangeNotifier {
           .reduce((a, b) => a > b ? a : b),
       lineBarsData: [
         LineChartBarData(
+          preventCurveOverShooting: true,
+
           spots: spots,
           // color: (_data?.keyStats?.previousCloseNUM ?? 0) > spots.last.y
           //     ? ThemeColors.sos
@@ -1030,7 +1035,11 @@ class StockDetailProviderNew extends ChangeNotifier {
   Future getOwnershipData({String? symbol}) async {
     setStatusOwnership(Status.loading);
     try {
-      Map request = {"symbol": symbol ?? ""};
+      Map request = {
+        "symbol": symbol ?? "",
+        'sort': "ownership",
+        'direction': "desc",
+      };
 
       ApiResponse response = await apiRequest(
         url: Apis.detailOwnership,

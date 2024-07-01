@@ -29,6 +29,9 @@ class BlogProvider extends ChangeNotifier with AuthProviderBase {
   // BlogsRes? categoryRes;
   // BlogsRes? tagsRes;
 
+  BlogsDetailRes? _blog;
+  BlogsDetailRes? get newBlog => _blog;
+
   List<BlogItemRes>? blogData;
   List<BlogItemRes>? authorsData;
   // List<BlogItemRes>? categoryData;

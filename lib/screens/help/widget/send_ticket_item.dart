@@ -35,10 +35,12 @@ class SendTicketItem extends StatelessWidget {
           Container(
             constraints: const BoxConstraints(maxHeight: 400),
             decoration: const BoxDecoration(
-                color: ThemeColors.primaryLight,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
+              color: ThemeColors.primaryLight,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
             padding: const EdgeInsets.all(20),
             child: const SingleChildScrollView(
               child: Column(
@@ -58,12 +60,15 @@ class SendTicketItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 20,
+                ),
                 child: Row(
                   children: [
                     Expanded(
                       child: Stack(
+                        alignment: Alignment.centerRight,
                         children: [
                           ThemeInputField(
                             contentPadding:
@@ -80,9 +85,10 @@ class SendTicketItem extends StatelessWidget {
                           Positioned(
                             right: 0,
                             child: IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () => _onSendTicketClick(),
-                                color: ThemeColors.accent),
+                              icon: const Icon(Icons.send),
+                              onPressed: () => _onSendTicketClick(),
+                              color: ThemeColors.accent,
+                            ),
                           ),
                         ],
                       ),

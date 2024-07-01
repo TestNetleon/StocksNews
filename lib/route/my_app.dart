@@ -1,12 +1,14 @@
 // ignore_for_file: unused_element
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/dummy.dart';
@@ -34,6 +36,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _initialDeepLinks = false;
+  static const platform = MethodChannel('app.stocks.new/dynamic_link');
+
   @override
   void dispose() {
     super.dispose();
@@ -44,16 +48,92 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (Platform.isIOS) {
+        _handleIOSDeeplinks();
+      }
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
     });
   }
 
-  // -------- Initial Deeplinks For Referral Started ---------------
+// -------- IOS Native Deeplinks STARTED ---------------
+  void _handleIOSDeeplinks() async {
+    platform.setMethodCallHandler((MethodCall call) async {
+      if (call.method == 'onDynamicLink') {
+        String? link = call.arguments['link'];
+        // Handle the dynamic link in Flutter
+        // print('Received dynamic link: $link');
+        // Preference.saveDataList(
+        //   DeeplinkData(
+        //     from: "platform.setMethodCallHandler _handleIOSDeeplinks",
+        //   ),
+        // );
+
+        if (link != null) {
+          onDeepLinking = true;
+          _handleReferralLink(Uri.parse(link));
+        }
+      }
+    });
+
+    final String? initialLink = await platform.invokeMethod('getInitialLink');
+    if (initialLink != null) {
+      print('Initial dynamic link: $initialLink');
+      DeeplinkEnum type = containsSpecificPath(Uri.parse(initialLink));
+      // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+      onDeepLinking =
+          (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+              ? false
+              : true;
+
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "platform.setMethodCallHandler getInitialLink",
+      //   ),
+      // );
+      handleDeepLinkNavigation(uri: Uri.parse(initialLink));
+    }
+  }
+// -------- Initial Deeplinks ENDED ---------------
+
+// -------- Initial Deeplinks For Referral STARTED ---------------
   void getInitialReferralsIfAny() async {
+    // if (Platform.isIOS) {
+    //   platform.setMethodCallHandler((MethodCall call) async {
+    //     if (call.method == 'onDynamicLink') {
+    //       String? link = call.arguments['link'];
+    //       // Handle the dynamic link in Flutter
+    //       // print('Received dynamic link: $link');
+    //       if (link != null) {
+    //               Preference.saveDataList(
+    //     DeeplinkData(
+    //       from: "platform.setMethodCallHandler getInitialLink",
+    //     ),
+    //   );
+    //         _handleReferralLink(Uri.parse(link));
+    //       }
+    //     }
+    //   });
+
+    //   final String? initialLink = await platform.invokeMethod('getInitialLink');
+    //   if (initialLink != null) {
+    //     print('Initial dynamic link: $initialLink');
+    //     DeeplinkEnum type = containsSpecificPath(Uri.parse(initialLink));
+    //     // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
+    //     onDeepLinking =
+    //         (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
+    //             ? false
+    //             : true;
+    //     handleDeepLinkNavigation(uri: Uri.parse(initialLink));
+    //   }
+
+    //   return;
+    // }
+
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
+    Utils().showLog(" FirebaseDynamicLinks.instance.getInitialLink CALLED");
     if (initialLink != null) {
       final Uri deepLink = initialLink.link;
       if (deepLink.path.contains("page.link") ||
@@ -62,46 +142,113 @@ class _MyAppState extends State<MyApp> {
           deepLink.path.contains("?referrer=") ||
           deepLink.path.contains("?ref=") ||
           deepLink.path.contains("?referral_code=")) {
-        // onDeepLinking = true;
-
-        String? referralCode = deepLink.queryParameters['code'];
-        if (referralCode == null || referralCode == '') {
-          referralCode = deepLink.queryParameters['referrer'];
-        }
-        if (referralCode == null || referralCode == '') {
-          referralCode = deepLink.queryParameters['ref'];
-        }
-        if (referralCode == null || referralCode == '') {
-          referralCode = deepLink.queryParameters['referral_code'];
-        }
-        bool isFirstOpen = await Preference.isFirstOpen();
-        String? code = await Preference.getReferral();
-
-        if (referralCode != null &&
-            referralCode != "" &&
-            code == null &&
-            isFirstOpen) {
-          Preference.saveReferral(referralCode);
-          Timer(const Duration(seconds: 4), () {
-            if (navigatorKey.currentContext!.read<UserProvider>().user ==
-                null) {
-              signupSheet();
-              // onDeepLinking = false;
-            }
-          });
-          FirebaseAnalytics.instance.logEvent(
-            name: 'referrals',
-            parameters: {'referral_code': referralCode},
-          );
-        }
+        _initialDeepLinks = true;
+        await _handleReferralLink(deepLink);
+        Timer(const Duration(seconds: 2), () {
+          _initialDeepLinks = false;
+        });
       }
     }
+
+    // FirebaseDynamicLinks.instance.onLink.listen(
+    //   (pendingDynamicLinkData) {
+    //     if (pendingDynamicLinkData != null) {
+    //       final Uri deepLink = pendingDynamicLinkData.link;
+    //       // if (deepLink != null) {
+    //       if (deepLink.path.contains("page.link") ||
+    //           deepLink.path.contains("/install") ||
+    //           deepLink.path.contains("?code=") ||
+    //           deepLink.path.contains("?referrer=") ||
+    //           deepLink.path.contains("?ref=") ||
+    //           deepLink.path.contains("?referral_code=")) {
+    //         _initialDeepLinks = true;
+    //         _handleReferralLink(deepLink);
+    //         Timer(const Duration(seconds: 2), () {
+    //           _initialDeepLinks = false;
+    //         });
+    //       }
+    //     }
+    //   },
+    // );
+  }
+
+  Future<void> _handleReferralLink(Uri deepLink) async {
+    // Preference.saveDataList(
+    //   DeeplinkData(
+    //     from: "** _handleReferralLink " "\n" " ${deepLink.toString()} ",
+    //   ),
+    // );
+
+    String? referralCode = deepLink.queryParameters['code'];
+    if (referralCode == null || referralCode == '') {
+      referralCode = deepLink.queryParameters['referrer'];
+    }
+    if (referralCode == null || referralCode == '') {
+      referralCode = deepLink.queryParameters['ref'];
+    }
+    if (referralCode == null || referralCode == '') {
+      referralCode = deepLink.queryParameters['referral_code'];
+    }
+
+    // popUpAlert(message: "Referral code = $referralCode", title: "RECEIVED");
+    bool isFirstOpen = await Preference.isFirstOpen();
+    String? code = await Preference.getReferral();
+
+    Utils().showLog(
+        "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen");
+
+    // popUpAlert(
+    //   message:
+    //       "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen",
+    //   title: "title",
+    // );
+
+    if (referralCode != null &&
+        referralCode != "" &&
+        code == null &&
+        isFirstOpen) {
+      Preference.saveReferral(referralCode);
+      // Preference.setIsFirstOpen(false);
+      Timer(const Duration(seconds: 4), () {
+        if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+          signupSheet();
+          // onDeepLinking = false;
+        }
+      });
+      FirebaseAnalytics.instance.logEvent(
+        name: 'referrals',
+        parameters: {'referral_code': referralCode},
+      );
+    }
+    onDeepLinking = false;
   }
   // -------- Initial Deeplinks For Referral Ended ---------------
 
   // -------- Initial Deeplinks when App Opened Started ---------------
   void getInitialDeeplinkWhenAppOpen() async {
     Uri? initialUri = await _appLinks.getInitialLink();
+    Utils().showLog(" _appLinks.getInitialLink CALLED");
+
+    // if (initialUri != null) {
+    //   popUpAlert(
+    //     message: "GetInitialDeeplinkWhenAppOpen = $initialUri ",
+    //     title: "title",
+    //   );
+    // }
+
+    if (initialUri != null) {
+      final Uri deepLink = initialUri;
+      if (deepLink.path.contains("page.link") ||
+          deepLink.path.contains("/install") ||
+          deepLink.path.contains("?code=") ||
+          deepLink.path.contains("?referrer=") ||
+          deepLink.path.contains("?ref=") ||
+          deepLink.path.contains("?referral_code=")) {
+        // onDeepLinking = true;
+        await _handleReferralLink(deepLink);
+        return;
+      }
+    }
 
     if (initialUri != null) {
       DeeplinkEnum type = containsSpecificPath(initialUri);
@@ -111,8 +258,13 @@ class _MyAppState extends State<MyApp> {
           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
               ? false
               : true;
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** getInitialLink " "\n" " ${initialUri.toString()}",
+      //   ),
+      // );
       handleDeepLinkNavigation(uri: initialUri);
-      Timer(const Duration(milliseconds: 500), () {
+      Timer(const Duration(milliseconds: 200), () {
         _initialDeepLinks = false;
       });
     }
@@ -121,10 +273,25 @@ class _MyAppState extends State<MyApp> {
 
   // -------- Listen for incoming deeplinks Started ---------------
   void startListeningForDeepLinks() {
-    _appLinks.uriLinkStream.listen((event) {
-      if (event.toString().contains("app.stocks.news://")) return;
+    _appLinks.uriLinkStream.listen((event) async {
+      // if (event.toString().contains("app.stocks.news://")) return;
+
+      Utils().showLog(
+          " startListeningForDeepLinks CALLED $event $onDeepLinking $_initialDeepLinks");
 
       if (onDeepLinking || _initialDeepLinks) return;
+
+      final Uri deepLink = event;
+      if (deepLink.path.contains("page.link") ||
+          deepLink.path.contains("/install") ||
+          deepLink.path.contains("?code=") ||
+          deepLink.path.contains("?referrer=") ||
+          deepLink.path.contains("?ref=") ||
+          deepLink.path.contains("?referral_code=")) {
+        // onDeepLinking = true;
+        await _handleReferralLink(deepLink);
+        return;
+      }
 
       DeeplinkEnum type = containsSpecificPath(event);
       // onDeepLinking = (type == "login" || type == "signUp") ? false : true;
@@ -132,6 +299,13 @@ class _MyAppState extends State<MyApp> {
           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)
               ? false
               : true;
+
+      // Preference.saveDataList(
+      //   DeeplinkData(
+      //     from: "** startListeningForDeepLinks " "\n" " ${event.toString()} ",
+      //   ),
+      // );
+
       handleDeepLinkNavigation(uri: event);
     });
   }
@@ -150,6 +324,7 @@ class _MyAppState extends State<MyApp> {
             theme: lightTheme,
             home: child,
             routes: Routes.routes,
+            // onGenerateRoute: Routes.getRouteGenerate,
           ),
         );
       },

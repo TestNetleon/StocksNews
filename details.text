@@ -78,104 +78,6 @@ Subject Public Key Algorithm: 2048-bit RSA key
 
 Bitly App ID: Ao1seSO8XNS 
 
---------20-05-24--------
-1. notification sound android (D)
-2. notification sound android (ND)
-3. image home 
-4. Stock Alerts text (D)
-5. audio alert/watchList add (D)
-
---- 
-1. force update API
-2. text changes for single and multiple data
-3. iOS error pop up detail changes (ND)
-4. if url passed open Dashboard
-
-5. Please wait while we are processing
-6. remove something went wrong on aap API
-7. contact us alert
-8. text in watchlist (remove text )
-
-- review app
-- WatchList page Change
-
--------------------
-1. portfolio on drawer
-2. bar graph
-3. detail page date view change
-4. date on notification
-5. safe area check
-6. Ticker notification
-7. stock alert home
-8. penny stock data changes
-9. filter check with empty condition
-10. profile save success message
-11. vibration issue
-12. plaid integration changes on drawer
-13. change% inside bracket
-14. old data on stock detail graph page
-15. sync your portfolio on Start screen 
-16. delete button change
-------------------------
-
-=====PLAID HOLDINGS RES ==============
-holdings
-  {
-      account_id: 1kX6k356rXImaPzVANm7ux6RdN7rm3Cp9qBnJ,
-      cost_basis: 1.5,
-      institution_price: 2.11,
-      institution_price_as_of: 2021-05-25,
-      institution_price_datetime: null,
-      institution_value: 2.11,
-      iso_currency_code: USD,
-      quantity: 1,
-      security_id: KDwjlXj1Rqt58dVvmzRguxJybmyQL8FgeWWAy,
-      unofficial_currency_code: null,
-      vested_quantity: null,
-      vested_value: null
-    }
-------------------------------------------
-
-items
-  {
-    available_products: [
-      assets,
-      auth,
-      balance,
-      signal,
-      identity,
-      identity_match,
-      income_verification,
-      recurring_transactions,
-      transactions,
-      transfer
-    ],
-    billed_products: [
-      investments
-    ],
-    consent_expiration_time: null,
-    consented_products: [
-      identity,
-      investments,
-      processor_identity
-    ],
-    error: null,
-    institution_id: ins_54,
-    item_id: gyjMyZdMwjTrR1VmJ6rEsPB1EjDodDtgvKMZj,
-    products: [
-      investments
-    ],
-    update_type: background,
-    webhook: 
-  }
----------------------------------------
-
-
-
-
-
-
-
 
 
 
@@ -278,25 +180,8 @@ https://app.stocks.news/earning
 
 
 
-Today's Target - Stocks.news
-
-5. Notification click redirection - UTKARSH
-6. Stock Individual pages - UTKARSH
-7. Author section integration below news - UTKARSH
-
-1. Market Data page integration 
-2. Privacy Policy Popup like Motley Fool and do what is required for basic name, email, location and analytics 
-3. Affiliate integration
-4. Rating popup in Android 
-8. Open about section when we click on profile image 
-9. SMS (OTP) verification
-10. Congressional data we should be able to click on persons name and see what they have been buying and selling - Or at least have filter to do that
-11. On Portfolio should be able to click on stock and open up stock details page -  also give option to disconnect account 
-12. Print when last price updated 
-13. error on splash
 
 
-1: custom read more text read visiable one line set text 
 
 
 ////
@@ -309,62 +194,7 @@ Today's Target - Stocks.news
 
 ===================================
 
-1. Market Data page integration 
-- DONE
 
-2. Privacy Policy Popup like Motley Fool and do what is required for basic name, email, location and analytics 
+1. Stock Alert & Featured List data correction
 
-3. Affiliate integration 
-- DONE
-
-4. Notification click redirection 
-- DONE TILL NOW
-
-5. Stock Individual pages 
-- DONE
-
-6. SMS (OTP) verification  with firebase
-
-7. Print when last price updated  
-
-8. Write in affiliate popup that earn points to unlock features of app
-- DONE
-
-9. Notification if anyone joined with my refer link
-**
-
-10. Latest news under stock detail should show news posted by stocks.news or other other of our website
-
-11. Set login page design on click of my profile
-
-12. Give option into profile section to update phone
-- DONE
-
-13. Top gainers me logo ko clickable banao
-- DONE
-
-14. Hide dividends menu in case of company like TSLA   
-- DONE (Message added in case of not sharing dividends)
-
-15. Create support system like airtel
-- 
-
-16. Change design of my account section
-- DONE
-
-17. Mentioned in story in blog
-
-18. Add filter and sorting into most bullish and most bearish section and they work differently
-
-19. Dividends and earnings wale page ke sorting wale filter kuch alag hone chiye
-
-20. if user is not registered and he tries to login then send him to register with prefilled email id
-
-21. Add logo and other information on middle page like paytm to personalize that screen
-
-22. Pupular stocks wale page ke buttom me declaimer wala section lagao footer me
-- IT HAS PAGINATION
-
-23. Login ka case if user is doing login or signup to know in case of aff
-
-24. Revert back first 4 screens and show register popup
+11. agar email registered nahi h pehle login pe bhrne pe to automatic signup pe bhejna h with filled email

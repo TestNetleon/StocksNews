@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
@@ -22,7 +26,10 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/custom/required_login.dart';
 
+import '../screens/auth/bottomSheets/login_sheet.dart';
+import '../screens/auth/bottomSheets/login_sheet_tablet.dart';
 import '../screens/stockDetail/index.dart';
 
 String? validAuthToken;
@@ -49,6 +56,7 @@ Future<ApiResponse> apiRequest({
   Duration timeoutDuration = const Duration(seconds: 40),
   onRefresh,
   showErrorOnFull = true,
+  checkAppUpdate = true,
 }) async {
   Map<String, String> headers = getHeaders();
   if (header != null) headers.addAll(header);
@@ -91,19 +99,16 @@ Future<ApiResponse> apiRequest({
 
       if (formData.files.isNotEmpty) {
         for (var file in formData.files) {
-          request.files.add(await http.MultipartFile.fromPath(
-              file.key, file.value as String));
+          request.files.add(
+            await http.MultipartFile.fromPath(file.key, file.value as String),
+          );
         }
       }
       var streamedResponse = await request.send();
       response = await http.Response.fromStream(streamedResponse);
     } else {
       response = await http
-          .post(
-            Uri.parse(baseUrl + url),
-            body: request,
-            headers: headers,
-          )
+          .post(Uri.parse(baseUrl + url), body: request, headers: headers)
           .timeout(timeoutDuration);
     }
 
@@ -132,6 +137,9 @@ Future<ApiResponse> apiRequest({
       if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
+        if (checkAppUpdate) {
+          _checkForNewVersion(res.extra);
+        }
         // MaintenanceDialog? maintenanceDialog = MaintenanceDialog(
         //     title: "App Under Maintenance",
         //     description:
@@ -155,20 +163,48 @@ Future<ApiResponse> apiRequest({
       Utils().showLog('Status Code Error ${response.statusCode}');
       if (showProgress) closeGlobalProgressDialog();
       if (!isShowingError && showErrorOnFull) {}
-      return ApiResponse(
-        status: false,
-        message: Const.errSomethingWrong,
-      );
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   } catch (e) {
     Utils().showLog('Catch error => ${e.toString()}');
     Utils().showLog(e.toString());
     if (showProgress) closeGlobalProgressDialog();
     if (!isShowingError && showErrorOnFull) {}
-    return ApiResponse(
-      status: false,
-      message: Const.errSomethingWrong,
-    );
+    return ApiResponse(status: false, message: Const.errSomethingWrong);
+  }
+}
+
+void _checkForNewVersion(Extra extra) async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  String buildCode = packageInfo.buildNumber;
+  if ((Platform.isAndroid &&
+          (extra.androidBuildCode ?? 0) > int.parse(buildCode)) &&
+      !isAppUpdating) {
+    isAppUpdating = true;
+    showAppUpdateDialog(extra);
+  } else if ((Platform.isIOS &&
+          (extra.iOSBuildCode ?? 0) > int.parse(buildCode)) &&
+      !isAppUpdating) {
+    isAppUpdating = true;
+    showAppUpdateDialog(extra);
+  } else if (!updateProfile && extra.maintenance == null) {
+    _checkLogin();
+  }
+}
+
+Future _checkLogin() async {
+  updateProfile = true;
+
+  UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+  if (provider.user == null) {
+    isPhone ? await loginSheet() : await loginSheetTablet();
+  } else {
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      requiredLogin();
+    } else {
+      //
+    }
   }
 }
 

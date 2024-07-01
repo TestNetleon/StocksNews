@@ -93,7 +93,14 @@ class _SdOwnershipState extends State<SdOwnership> {
                   paddingVerticle: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.ownershipRes?.top?[index];
-                    return SdTopCard(top: top);
+                    return SdTopCard(
+                      top: top,
+                      textRed: "${top?.value ?? "N/A"}".contains('-'),
+                      gridRed: "${top?.value ?? "N/A"}".contains('-'),
+                      otherColor: (top?.other ?? "N/A").contains('-')
+                          ? ThemeColors.sos
+                          : ThemeColors.accent,
+                    );
                   },
                 ),
                 const SpacerVertical(height: 20),

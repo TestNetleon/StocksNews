@@ -40,6 +40,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getAppVersion();
       _startProcess();
+      // Preference.saveDataList(DeeplinkData(from: "Splash Loaded"));
     });
   }
 
@@ -58,7 +59,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     } catch (e) {
       //
       // popUpAlert(message: "$e", title: "Error");
-
       // Navigator.pushAndRemoveUntil(context, Tabs.path, (route) => false);
     }
 
@@ -112,6 +112,16 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       popHome = true;
       return;
     }
+    // Preference.saveDataList(
+    //   DeeplinkData(
+    //     from: "Navigating from Splash"
+    //         "\n"
+    //         " OnDeepLinking = $onDeepLinking "
+    //         "\n"
+    //         " PopHome = $popHome",
+    //   ),
+    // );
+    // isAppUpdating = false;
 
     // Navigator.pushReplacement(
     //   navigatorKey.currentContext!,
@@ -169,7 +179,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         request: request,
         showProgress: false,
       );
-
       if (response.status) {
         welcome = welcomeResFromJson(jsonEncode(response.data));
         setState(() {});
