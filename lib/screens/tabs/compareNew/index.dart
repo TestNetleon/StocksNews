@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/tabs/compareNew/container.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -9,8 +11,6 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import '../../../providers/user_provider.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/login_error.dart';
-import '../../auth/bottomSheets/login_sheet.dart';
-import '../../auth/bottomSheets/login_sheet_tablet.dart';
 import 'addScreen/add_stock.dart';
 
 class CompareNew extends StatelessWidget {

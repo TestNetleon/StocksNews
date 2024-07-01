@@ -1,28 +1,29 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:sms_autofill/sms_autofill.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/signup/edit_email.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-import '../../../../../api/api_response.dart';
-import 'reffer_success.dart';
-
-referOTP({required String phone, String appSignature = ''}) async {
+otpLoginSheet({
+  String? id,
+  required String userName,
+}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: RoundedRectangleBorder(
@@ -35,58 +36,31 @@ referOTP({required String phone, String appSignature = ''}) async {
     isScrollControlled: true,
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return OTPLoginBottomRefer(
-        phone: phone,
-        appSignature: appSignature,
+      return OTPLoginBottom(
+        id: id,
+        userName: userName,
       );
     },
   );
 }
 
-class OTPLoginBottomRefer extends StatefulWidget {
-  final String phone;
-  final String appSignature;
+class OTPLoginBottom extends StatefulWidget {
+  final String? id;
+  final String userName;
 
-  const OTPLoginBottomRefer({
-    super.key,
-    required this.phone,
-    this.appSignature = '',
-  });
+  const OTPLoginBottom({super.key, this.id, required this.userName});
 
   @override
-  State<OTPLoginBottomRefer> createState() => _OTPLoginBottomReferState();
+  State<OTPLoginBottom> createState() => _OTPLoginBottomState();
 }
 
-class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
+class _OTPLoginBottomState extends State<OTPLoginBottom> {
   final TextEditingController _controller = TextEditingController();
+
   int startTiming = 30;
-  final FocusNode _otpFocusNode = FocusNode();
-
   Timer? _timer;
-  @override
-  void initState() {
-    super.initState();
-    _listenCode();
-    _startTime();
-    _otpFocusNode.requestFocus();
-  }
-
-  Future<void> _listenCode() async {
-    try {
-      log("trying to listen");
-      await SmsAutoFill().listenForCode();
-      SmsAutoFill().code.listen((event) {
-        _controller.text = event;
-        Utils().showLog('Listen $event');
-        // setState(() {});
-      });
-    } catch (e) {
-      Utils().showLog('Error while listening OTP $e');
-    }
-  }
 
   void _startTime() {
-    startTiming = 30;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         startTiming = startTiming - 1;
@@ -100,13 +74,23 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   SmsAutoFill().unregisterListener();
-  //   // _controller.dispose();
-  //   _timer?.cancel();
-  //   super.dispose();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   UserRes? user = context.read<UserProvider>().user;
+    //   _controller.text = "${user?.otp}";
+    // });
+
+    _startTime();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
 
   void _onVeryClick() async {
     if (_controller.text.isEmpty) {
@@ -117,76 +101,55 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
       );
     } else {
       UserProvider provider = context.read<UserProvider>();
-      HomeProvider homeProvider = context.read<HomeProvider>();
+      String? fcmToken = await Preference.getFcmToken();
+      String? address = await Preference.getLocation();
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String versionName = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+      bool granted = await Permission.notification.isGranted;
 
       Map request = {
-        'token': provider.user?.token,
-        'phone': widget.phone,
-        'otp': _controller.text,
-        'platform': Platform.operatingSystem,
+        "username": widget.userName,
+        "type": "email",
+        "otp": _controller.text,
+        "fcm_token": fcmToken ?? "",
+        "platform": Platform.operatingSystem,
+        "address": address ?? "",
+        "build_version": versionName,
+        "build_code": buildNumber,
+        "fcm_permission": "$granted",
+        "apple_id": widget.id ?? "",
       };
-      try {
-        ApiResponse response = await provider.verifyReferLogin(request);
-        if (response.status) {
-          closeKeyboard();
-          provider.updateUser(phone: widget.phone);
-          Extra extra = response.extra;
 
-          homeProvider.updateReferShare(extra.referral?.shareText);
-          // navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-          Navigator.pop(navigatorKey.currentContext!);
-          // Navigator.push(
-          //   navigatorKey.currentContext!,
-          //   ReferAFriend.path,
-          // );
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const ReferSuccess(),
-            ),
-          );
-        }
-      } catch (e) {
-        //
-      }
+      provider.verifyLoginOtp(request);
     }
   }
 
-  void _onResendOtpClick() async {
+  void _onResendOtpClick() {
     _startTime();
     _controller.text = '';
     setState(() {});
     UserProvider provider = context.read<UserProvider>();
     Map request = {
-      "phone": widget.phone,
-      "phone_hash": widget.appSignature,
-      "platform": Platform.operatingSystem,
-      "token": provider.user?.token ?? "",
+      "username": widget.userName,
+      "type": "email",
     };
-
-    try {
-      _listenCode();
-      ApiResponse response = await provider.referLoginApi(request);
-      if (response.status) {
-        _otpFocusNode.requestFocus();
-
-        // popUpAlert(message: response.message ?? "", title: "title");
-      }
-    } catch (e) {
-      //
-    }
+    provider.resendOtp(request);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => closeKeyboard(),
+      onTap: () {
+        closeKeyboard();
+      },
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10.sp),
-              topRight: Radius.circular(10.sp)),
+            topLeft: Radius.circular(10.sp),
+            topRight: Radius.circular(10.sp),
+          ),
           gradient: const RadialGradient(
             center: Alignment.bottomCenter,
             radius: 0.6,
@@ -196,7 +159,6 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
             ],
             colors: [
               Color.fromARGB(255, 0, 93, 12),
-              // ThemeColors.accent.withOpacity(0.1),
               Colors.black,
             ],
           ),
@@ -234,7 +196,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
             ),
             const SpacerVertical(height: 30),
             Image.asset(
-              Images.otpVerify,
+              Images.otpSuccessGIT,
               height: 95.sp,
               width: 95.sp,
             ),
@@ -248,24 +210,22 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                     "VERIFICATION OTP SENT",
                     style: stylePTSansBold(fontSize: 22),
                   ),
-                  const SpacerVertical(height: 4),
-                  Text(
-                    'We have sent the verification code \nto your phone number ${widget.phone}',
-                    textAlign: TextAlign.center,
-                    style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
-                  ),
                   const SpacerVertical(height: 8),
-
+                  // Text(
+                  //   "Please enter the 4-digit verification code that was sent to ${provider.user?.username}. The code is valid for 10 minutes.",
+                  //   style: stylePTSansRegular(
+                  //     fontSize: 14,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
+                  EditEmail(email: widget.userName),
                   const SpacerVertical(),
-
                   CommonPinput(
-                    focusNode: _otpFocusNode,
                     controller: _controller,
                     onCompleted: (p0) {
                       _onVeryClick();
                     },
                   ),
-
                   startTiming == 30
                       ? Container(
                           margin: EdgeInsets.only(
@@ -278,18 +238,10 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                             child: RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                  text: "Didn't receive the OTP? ",
-                                  style: stylePTSansBold(
-                                      fontSize: 15,
-                                      color: ThemeColors.greyText),
-                                  children: [
-                                    TextSpan(
-                                      text: "Resend OTP",
-                                      style: stylePTSansBold(
-                                          fontSize: 15,
-                                          color: ThemeColors.accent),
-                                    ),
-                                  ]),
+                                text: "Resend OTP",
+                                style: stylePTSansBold(
+                                    fontSize: 15, color: ThemeColors.accent),
+                              ),
                             ),
                           ),
                         )
@@ -319,6 +271,8 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                         ),
 
                   const SpacerVertical(),
+                  const SpacerVertical(),
+                  EditEmailClick(email: widget.userName),
                 ],
               ),
             ),

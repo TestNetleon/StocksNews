@@ -10,6 +10,8 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
@@ -26,8 +28,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/required_login.dart';
 
-import '../screens/auth/bottomSheets/login_sheet.dart';
-import '../screens/auth/bottomSheets/login_sheet_tablet.dart';
 import '../screens/stockDetail/index.dart';
 
 String? validAuthToken;
@@ -59,13 +59,14 @@ Future<ApiResponse> apiRequest({
 }) async {
   Map<String, String> headers = getHeaders();
   if (header != null) headers.addAll(header);
-
   String? fcmToken = fcmTokenGlobal;
   fcmToken ??= await Preference.getFcmToken();
+
   if (fcmToken != null) {
     Map<String, String> fcmHeaders = {"fcmToken": fcmToken};
     headers.addAll(fcmHeaders);
   }
+
   if (appVersion != null) {
     Map<String, String> versionHeader = {"appVersion": "$appVersion"};
     headers.addAll(versionHeader);

@@ -4,13 +4,12 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class NotificationProvider extends ChangeNotifier with AuthProviderBase {
+class NotificationProvider extends ChangeNotifier {
   NotificationsRes? _data;
   String? _error;
   Status _status = Status.ideal;
@@ -84,29 +83,6 @@ class NotificationProvider extends ChangeNotifier with AuthProviderBase {
 
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
-    }
-  }
-
-  Future logoutUser(request) async {
-    try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
-        request: request,
-        showProgress: true,
-      );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
-      } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(message: res.message);
-      }
-    } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
     }
   }
 }

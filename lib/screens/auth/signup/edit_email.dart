@@ -236,12 +236,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
         "username": _controller.text.toLowerCase(),
         "type": "email",
       };
-      provider.login(
-        request,
-        state: widget.state,
-        dontPop: widget.dontPop,
-        editEmail: true,
-      );
+      provider.login(request, editEmail: true);
     } else {
       Map request = {"username": _controller.text.toLowerCase()};
 

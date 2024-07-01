@@ -4,7 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -15,8 +16,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../../utils/preference.dart';
 import '../../widgets/custom/alert_popup.dart';
-import '../auth/bottomSheets/refer/refer_code.dart';
-import '../auth/bottomSheets/signup_sheet.dart';
+import '../auth/refer/refer_code.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
@@ -283,7 +283,7 @@ class _HomeSplashState extends State<HomeSplash> {
 // import 'package:stocks_news_new/utils/utils.dart';
 // import 'package:stocks_news_new/widgets/base_container.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
-// import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
+// import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 // import 'package:stocks_news_new/screens/blogDetail/index.dart';
 // import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';

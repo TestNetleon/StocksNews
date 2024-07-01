@@ -9,14 +9,12 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/modals/insider_company_graph.dart';
 import 'package:stocks_news_new/modals/insider_trading_res.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class InsiderTradingDetailsProvider extends ChangeNotifier
-    with AuthProviderBase {
+class InsiderTradingDetailsProvider extends ChangeNotifier {
   String? _error;
 //
   // int _openIndex = -1;
@@ -449,29 +447,6 @@ class InsiderTradingDetailsProvider extends ChangeNotifier
         }
       }
       setStatus(Status.loaded);
-    }
-  }
-
-  Future logoutUser(request) async {
-    try {
-      ApiResponse res = await apiRequest(
-        url: Apis.logout,
-        request: request,
-        showProgress: true,
-      );
-      if (res.status) {
-        setStatus(Status.loaded);
-        handleSessionOut();
-        // showErrorMessage(message: res.message, type: SnackbarType.info);
-      } else {
-        setStatus(Status.loaded);
-        // showErrorMessage(message: res.message);
-      }
-    } catch (e) {
-      setStatus(Status.loaded);
-      // showErrorMessage(
-      //   message: kDebugMode ? e.toString() : Const.errSomethingWrong,
-      // );
     }
   }
 }

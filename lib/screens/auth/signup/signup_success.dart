@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -60,6 +62,12 @@ class SignUpSuccess extends StatelessWidget {
                         builder: (_) => const Tabs(showRef: true),
                       ),
                     );
+                    Timer(const Duration(seconds: 1), () {
+                      navigatorKey.currentContext!
+                          .read<UserProvider>()
+                          .user
+                          ?.signupStatus = false;
+                    });
                   },
                   text: "Get Start",
                   // textStyle: stylePTSansBold(),

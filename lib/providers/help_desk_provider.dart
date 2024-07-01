@@ -13,14 +13,13 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/api/image_service.dart';
 import 'package:stocks_news_new/modals/help_desk_chat_res.dart';
 import 'package:stocks_news_new/modals/help_desk_res.dart';
-import 'package:stocks_news_new/providers/auth_provider_base.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
+class HelpDeskProvider extends ChangeNotifier {
   Status _status = Status.ideal;
 
   int _page = 1;

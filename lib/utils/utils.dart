@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
@@ -28,8 +29,6 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../providers/user_provider.dart';
 import '../route/my_app.dart';
-import '../screens/auth/bottomSheets/login_sheet.dart';
-import '../screens/auth/bottomSheets/signup_sheet.dart';
 import '../screens/blogDetail/index.dart';
 import '../screens/stockDetail/index.dart';
 import '../screens/tabs/news/newsDetail/new_detail.dart';
@@ -45,7 +44,8 @@ class Utils {
   void showLog(data) {
     if (kDebugMode) {
       print("==================");
-      log("$data");
+      // log("$data");
+      print("$data");
       print("==================");
     }
   }

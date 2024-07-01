@@ -20,9 +20,9 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/affiliate/index.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen.dart';
@@ -129,7 +129,6 @@ class FirebaseApi {
             title: "Alert",
             icon: Images.alertPopGIF,
           );
-
           return;
         }
         isPhone ? signupSheet() : signupSheetTablet();
