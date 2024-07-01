@@ -45,25 +45,20 @@ class _RequiredLoginSheetState extends State<RequiredLoginSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 50),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
         gradient: RadialGradient(
           center: Alignment.bottomCenter,
           radius: 0.6,
-          stops: [
-            0.0,
-            0.9,
-          ],
-          colors: [
-            Color.fromARGB(255, 0, 93, 12),
-            Colors.black,
-          ],
+          stops: [0.0, 0.9],
+          colors: [Color.fromARGB(255, 0, 93, 12), Colors.black],
         ),
         color: ThemeColors.background,
-        border: Border(
-          top: BorderSide(color: ThemeColors.greyBorder),
-        ),
+        border: Border(top: BorderSide(color: ThemeColors.greyBorder)),
       ),
       child: SingleChildScrollView(
         child: Column(

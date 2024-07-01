@@ -188,6 +188,7 @@ class LowPriceStocksProvider extends ChangeNotifier {
         request: request,
         showProgress: showProgress,
         onRefresh: onRefresh,
+        removeForceLogin: true,
       );
       if (response.status) {
         _tabs = lowPriceStocksTabResFromJson(jsonEncode(response.data));

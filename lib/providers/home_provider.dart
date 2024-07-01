@@ -288,6 +288,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
+        removeForceLogin: true,
       );
       if (response.status) {
         _homeTrendingRes = HomeTrendingRes.fromJson(response.data);
@@ -330,6 +331,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
+        removeForceLogin: true,
       );
 
       if (response.status) {
@@ -370,6 +372,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
+        removeForceLogin: true,
       );
       if (response.status) {
         _homeTopLosersRes = HomeTopLosersRes.fromJson(response.data);
@@ -406,6 +409,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
+        removeForceLogin: true,
       );
 
       if (response.status) {
@@ -452,6 +456,7 @@ class HomeProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
         onRefresh: () => refreshData(null),
+        removeForceLogin: true,
       );
 
       if (response.status) {

@@ -225,8 +225,6 @@ class BlogDetailContainer extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  //TODO: Add condition here
                   Positioned(
                     bottom: 6.sp,
                     right: 0,

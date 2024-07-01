@@ -110,6 +110,10 @@ class Preference {
     preferences.setString("@referral", token);
   }
 
+  static void clearReferral(token) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("@referral");
+  }
   //----------- For Testing Only ---------------
 
   // static const String dataListKey = 'data_list';

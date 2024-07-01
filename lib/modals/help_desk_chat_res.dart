@@ -42,12 +42,15 @@ class HelpDeskChatRes {
 class Log {
   final String? id;
   final String? reply;
+  final String? replyHTML;
+
   final int? replyFrom;
   final String? replyTime;
 
   Log({
     this.id,
     this.reply,
+    this.replyHTML,
     this.replyFrom,
     this.replyTime,
   });
@@ -55,6 +58,7 @@ class Log {
   factory Log.fromJson(Map<String, dynamic> json) => Log(
         id: json["_id"],
         reply: json["reply"],
+        replyHTML: json["reply_html"],
         replyFrom: json["reply_from"],
         replyTime: json["reply_date"],
       );
@@ -62,6 +66,7 @@ class Log {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "reply": reply,
+        "reply_html": replyHTML,
         "reply_from": replyFrom,
         "reply_date": replyTime,
       };

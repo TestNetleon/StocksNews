@@ -213,6 +213,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         url: Apis.createAlert,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _tabRes?.isAlertAdded = 1;
@@ -247,6 +248,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         url: Apis.addWatchlist,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _tabRes?.isWatchListAdded = 1;
@@ -727,6 +729,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         url: Apis.detailOverview,
         request: request,
         showProgress: false,
+        removeForceLogin: true,
       );
 
       if (response.status) {
@@ -989,6 +992,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         url: Apis.newsAlertGraphData,
         request: request,
         showProgress: showProgress,
+        removeForceLogin: true,
       );
 
       if (response.status) {

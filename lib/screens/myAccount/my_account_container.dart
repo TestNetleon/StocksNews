@@ -101,7 +101,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
 
   _callAPI() {
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    provider.getReferData();
+    provider.getReferData(checkAppUpdate: false);
   }
 
   void _updateUser() {

@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/help/chatScreen/chat_screen_item.dart';
@@ -13,6 +18,9 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
+import '../../../utils/bottom_sheets.dart';
+import '../../myAccount/widgets/select_type.dart';
+
 class ChatScreenList extends StatefulWidget {
   final String? slug;
   final String? ticketId;
@@ -24,22 +32,69 @@ class ChatScreenList extends StatefulWidget {
 }
 
 class _ChatScreenListState extends State<ChatScreenList> {
+  bool show = true;
+  final ScrollController _scrollController =
+      ScrollController(); // Step 1: ScrollController
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       HelpDeskProvider provider = context.read<HelpDeskProvider>();
-
+      Timer(const Duration(seconds: 5), () {
+        show = false;
+        setState(() {});
+      });
       provider.setSlug(widget.slug, widget.ticketId ?? "");
       if (widget.ticketId != "" && widget.slug != "0") {
         provider.getHelpDeskChatScreen(loaderChatMessage: "0");
       }
     });
+    // _scrollToBottom();
   }
 
   @override
   void dispose() {
+    _scrollController.dispose(); // Step 6: Dispose ScrollController
     super.dispose();
+  }
+
+  void _scrollToBottom() {
+    // Step 4: Scroll to the bottom of the list
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+
+  final picker = ImagePicker();
+  File? _image;
+
+  void _selectOption() {
+    BaseBottomSheets().gradientBottomSheet(
+        child: MyAccountImageType(
+      onCamera: () => _pickImage(source: ImageSource.camera),
+      onGallery: () => _pickImage(),
+    ));
+  }
+
+  Future _pickImage({ImageSource? source}) async {
+    Navigator.pop(navigatorKey.currentContext!);
+    closeKeyboard();
+    try {
+      XFile? pickedFile =
+          await picker.pickImage(source: source ?? ImageSource.gallery);
+      if (pickedFile != null) {
+        File file = File(pickedFile.path);
+        _image = file;
+        setState(() {});
+      }
+
+      Utils().showLog("${pickedFile?.name}");
+    } catch (e) {
+      Utils().showLog("Error => $e");
+    }
   }
 
   @override
@@ -66,6 +121,8 @@ class _ChatScreenListState extends State<ChatScreenList> {
                           onRefresh: () => provider.getHelpDeskChatScreen(),
                           child: SingleChildScrollView(
                             physics: const AlwaysScrollableScrollPhysics(),
+                            reverse: true,
+                            controller: _scrollController,
                             child: Column(
                               children: [
                                 Visibility(
@@ -116,9 +173,12 @@ class _ChatScreenListState extends State<ChatScreenList> {
                         children: [
                           Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Visibility(
-                                  visible: provider.chatData?.closeMsg != null,
+                                  visible:
+                                      provider.chatData?.closeMsg != null &&
+                                          show,
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
                                     child: Text(
@@ -128,12 +188,49 @@ class _ChatScreenListState extends State<ChatScreenList> {
                                     ),
                                   ),
                                 ),
+                                Visibility(
+                                  visible: _image != null,
+                                  child: Stack(
+                                    alignment: Alignment.topRight,
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 10, right: 10),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10),
+                                        child: Image.file(
+                                          height: 100,
+                                          width: 100,
+                                          fit: BoxFit.cover,
+                                          File(
+                                            _image?.path ?? "",
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          _image = null;
+                                          setState(() {});
+                                        },
+                                        child: const CircleAvatar(
+                                          radius: 11,
+                                          backgroundColor: ThemeColors.sos,
+                                          child: Icon(
+                                            Icons.close,
+                                            size: 15,
+                                            color: ThemeColors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Stack(
                                   alignment: Alignment.centerRight,
                                   children: [
                                     ThemeInputField(
                                       contentPadding: const EdgeInsets.fromLTRB(
-                                          10, 10, 30, 10),
+                                          10, 10, 80, 10),
                                       controller: provider.messageController,
                                       placeholder: "Message",
                                       keyboardType: TextInputType.multiline,
@@ -143,17 +240,32 @@ class _ChatScreenListState extends State<ChatScreenList> {
                                       ],
                                       minLines: 1,
                                       maxLines: 4,
-                                      maxLength: 200,
+                                      maxLength: 500,
                                       textCapitalization:
                                           TextCapitalization.none,
                                     ),
                                     Positioned(
                                       right: 0,
-                                      child: IconButton(
-                                          icon: const Icon(Icons.send),
-                                          onPressed: () =>
-                                              _onReplyTicketClick(),
-                                          color: ThemeColors.accent),
+                                      child: Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              closeKeyboard();
+
+                                              _selectOption();
+                                            },
+                                            child: const Icon(
+                                              Icons.attach_file,
+                                              color: ThemeColors.greyBorder,
+                                            ),
+                                          ),
+                                          IconButton(
+                                              icon: const Icon(Icons.send),
+                                              onPressed: () =>
+                                                  _onReplyTicketClick(),
+                                              color: ThemeColors.accent),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -169,16 +281,24 @@ class _ChatScreenListState extends State<ChatScreenList> {
           );
   }
 
-  void _onReplyTicketClick() {
+  Future _onReplyTicketClick() async {
     HelpDeskProvider provider =
         navigatorKey.currentContext!.read<HelpDeskProvider>();
 
     closeKeyboard();
 
-    if (isEmpty(provider.messageController.text)) {
+    if (isEmpty(provider.messageController.text) && _image == null) {
       return;
     }
 
-    provider.replyTicket();
+    try {
+      ApiResponse res = await provider.replyTicketNew(image: _image);
+      if (res.status) {
+        _image = null;
+        setState(() {});
+      }
+    } catch (e) {
+      //
+    }
   }
 }

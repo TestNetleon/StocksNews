@@ -100,6 +100,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.createAlert,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (_selectedIndex == 0 || _selectedIndex == 1) {
@@ -153,6 +154,7 @@ class TopTrendingProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.addWatchlist,
         request: request,
         showProgress: false,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (_selectedIndex == 0 || _selectedIndex == 1) {

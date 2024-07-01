@@ -39,7 +39,11 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
-            Dimen.itemSpacing, Dimen.itemSpacing, Dimen.itemSpacing, 0),
+          Dimen.itemSpacing,
+          Dimen.itemSpacing,
+          Dimen.itemSpacing,
+          0,
+        ),
         child: Column(
           children: [
             const ScreenTitle(title: "Featured Stocks"),

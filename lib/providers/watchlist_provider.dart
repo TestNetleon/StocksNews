@@ -368,6 +368,7 @@ class WatchlistProvider extends ChangeNotifier with AuthProviderBase {
         request: request,
         showProgress: false,
         onRefresh: onRefresh,
+        removeForceLogin: true,
       );
       if (response.status) {
         await _player.play(AssetSource(AudioFiles.alertWeathlist));

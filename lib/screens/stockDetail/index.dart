@@ -47,9 +47,9 @@ class _StockDetailState extends State<StockDetail> {
   @override
   void initState() {
     super.initState();
-    _addSocket();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
+      _addSocket();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stock Detail"},
@@ -61,7 +61,7 @@ class _StockDetailState extends State<StockDetail> {
     context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
   }
 
-  late WebSocketService _webSocketService;
+  WebSocketService? _webSocketService;
   String? tickerPrice;
   num? tickerChange;
   num? tickerPercentage;
@@ -76,9 +76,9 @@ class _StockDetailState extends State<StockDetail> {
         apiKey: apiKeyFMP,
         ticker: widget.symbol,
       );
-      _webSocketService.connect();
+      _webSocketService?.connect();
 
-      _webSocketService.onDataReceived =
+      _webSocketService?.onDataReceived =
           (price, change, percentage, changeString) {
         setState(() {
           tickerPrice = price;
@@ -100,7 +100,7 @@ class _StockDetailState extends State<StockDetail> {
 
   @override
   void dispose() {
-    _webSocketService.disconnect();
+    _webSocketService?.disconnect();
     super.dispose();
   }
 

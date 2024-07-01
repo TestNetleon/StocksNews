@@ -284,6 +284,7 @@ class AlertProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.deleteAlertlist,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
 
       if (response.status) {

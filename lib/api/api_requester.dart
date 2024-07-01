@@ -8,10 +8,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
-import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
@@ -57,6 +55,7 @@ Future<ApiResponse> apiRequest({
   onRefresh,
   showErrorOnFull = true,
   checkAppUpdate = true,
+  removeForceLogin = false,
 }) async {
   Map<String, String> headers = getHeaders();
   if (header != null) headers.addAll(header);
@@ -97,10 +96,18 @@ Future<ApiResponse> apiRequest({
       request.headers.addAll(headers);
       request.fields.addAll(Map.fromEntries(formData.fields));
 
-      if (formData.files.isNotEmpty) {
-        for (var file in formData.files) {
+      // Add files
+      for (var file in formData.files) {
+        if (file.value is String) {
           request.files.add(
             await http.MultipartFile.fromPath(file.key, file.value as String),
+          );
+        } else if (file.value is List<int>) {
+          request.files.add(
+            http.MultipartFile.fromBytes(
+              file.key,
+              file.value as List<int>,
+            ),
           );
         }
       }
@@ -138,7 +145,10 @@ Future<ApiResponse> apiRequest({
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
         if (checkAppUpdate) {
-          _checkForNewVersion(res.extra);
+          _checkForNewVersion(
+            res.extra,
+            removeForceLogin: removeForceLogin,
+          );
         }
         // MaintenanceDialog? maintenanceDialog = MaintenanceDialog(
         //     title: "App Under Maintenance",
@@ -174,7 +184,7 @@ Future<ApiResponse> apiRequest({
   }
 }
 
-void _checkForNewVersion(Extra extra) async {
+void _checkForNewVersion(Extra extra, {removeForceLogin = false}) async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String buildCode = packageInfo.buildNumber;
   if ((Platform.isAndroid &&
@@ -187,14 +197,13 @@ void _checkForNewVersion(Extra extra) async {
       !isAppUpdating) {
     isAppUpdating = true;
     showAppUpdateDialog(extra);
-  } else if (!updateProfile && extra.maintenance == null) {
-    _checkLogin();
   }
+  // else if (!removeForceLogin) {
+  //   _checkLogin();
+  // }
 }
 
 Future _checkLogin() async {
-  updateProfile = true;
-
   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
   if (provider.user == null) {

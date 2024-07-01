@@ -36,7 +36,10 @@ target 'Runner' do
 #  target 'RunnerTests' do
 #    inherit! :search_paths
 #  end
+  # pod 'BranchSDK'
 end
+
+pod 'RevenueCat'
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

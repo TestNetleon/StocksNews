@@ -99,7 +99,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
 
                   if (index == 0)
                     // StateItemNEW(label: "Day Low", value: keyStats?.dayLow),
-                    Container(
+                    SizedBox(
                         width: double.infinity,
                         child: stockDOverviewItem(
                             title: "Day Low", value: keyStats?.dayLow)),

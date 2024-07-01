@@ -24,6 +24,7 @@ import 'package:stocks_news_new/screens/auth/bottomSheets/apple_otp_sheet_login.
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_login.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/otp_sheet_signup.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
@@ -193,6 +194,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.drawerData,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _drawerData = drawerDataResFromJson(jsonEncode(response.data));
@@ -250,6 +252,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.login,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -318,6 +321,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     String? id,
     String? email,
     bool showOtp = false,
+    String? code,
+    bool? alreadySubmitted,
   }) async {
     setStatus(Status.loading);
     try {
@@ -325,6 +330,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.sendAppleOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -334,9 +340,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         if (showOtp) {
           appleOtpLoginSheet(
             state: state,
-            dontPop: dontPop,
+            dontPop: "",
             id: id,
             email: email,
+            code: code,
+            alreadySubmitted: alreadySubmitted,
           );
         } else {
           popUpAlert(
@@ -354,9 +362,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         // }
         // showErrorMessage(message: response.message);
         popUpAlert(
-            message: "${response.message}",
-            title: "Alert",
-            icon: Images.alertPopGIF);
+          message: "${response.message}",
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
       }
     } catch (e) {
       Utils().showLog(e.toString());
@@ -369,7 +378,12 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future googleLogin(request, {String? state, String? dontPop}) async {
+  Future googleLogin(
+    request, {
+    String? state,
+    String? dontPop,
+    bool alreadySubmitted = true,
+  }) async {
     setStatus(Status.loading);
     CompareStocksProvider compareProvider =
         navigatorKey.currentContext!.read<CompareStocksProvider>();
@@ -393,6 +407,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.googleLogin,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -423,13 +438,32 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           Preference.setShowIntro(false);
           // Navigator.pushAndRemoveUntil(
           //     navigatorKey.currentContext!, Tabs.path, (route) => false);
+
           if (_user?.signupStatus ?? false) {
             shareUri = await DynamicLinkService.instance
                 .getDynamicLink(_user?.referralCode);
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            );
+
+            String? referralCode = await Preference.getReferral();
+            if (alreadySubmitted) {
+              // (referralCode != null || referralCode != "") &&
+              // Only for Sign up
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              );
+            } else {
+              // Only For Login
+              referSheet(
+                onReferral: (code) {
+                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
+                },
+              );
+            }
+
+            // Navigator.push(
+            //   navigatorKey.currentContext!,
+            //   MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+            // );
           } else {
             navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
             Navigator.popUntil(
@@ -440,7 +474,8 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
             );
           }
         }
-        if ((_user?.phone == null || _user?.phone == "")) {
+        if ((_user?.phone == null || _user?.phone == "") &&
+            _user?.signupStatus == false) {
           referLogin();
         }
       } else {
@@ -466,8 +501,11 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     String? state,
     String? dontPop,
     String? id,
+    String? code,
+    bool alreadySubmitted = false,
   }) async {
     setStatus(Status.loading);
+
     CompareStocksProvider compareProvider =
         navigatorKey.currentContext!.read<CompareStocksProvider>();
 
@@ -490,7 +528,9 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.appleLogin,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
+
       setStatus(Status.loaded);
       if (response.status) {
         _user = UserRes.fromJson(response.data);
@@ -514,10 +554,23 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           if (_user?.signupStatus ?? false) {
             shareUri = await DynamicLinkService.instance
                 .getDynamicLink(_user?.referralCode);
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-            );
+
+            String? referralCode = await Preference.getReferral();
+            if (alreadySubmitted) {
+              // (referralCode != null || referralCode != "") &&
+              // Only for Sign up
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              );
+            } else {
+              // Only For Login
+              referSheet(
+                onReferral: (code) {
+                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
+                },
+              );
+            }
           } else {
             navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
             Navigator.popUntil(
@@ -531,14 +584,20 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           }
         }
 
-        if ((_user?.phone == null || _user?.phone == "")) {
+        if ((_user?.phone == null || _user?.phone == "") &&
+            _user?.signupStatus == false) {
           referLogin();
         }
       } else {
         // showErrorMessage(message: response.message);
         if (response.message == "Invalid email address") {
-          Utils().showLog("Apple ID => $id");
-          showIosEmailError(state: state, dontPop: dontPop, id: id);
+          showIosEmailError(
+            state: state,
+            dontPop: dontPop,
+            id: id,
+            code: code,
+            alreadySubmitted: alreadySubmitted,
+          );
         } else {
           popUpAlert(
             message: response.message ?? Const.errSomethingWrong,
@@ -558,9 +617,50 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
+  Future updateReferralCodeOnlyForApple({
+    required String? code,
+  }) async {
+    setStatus(Status.loading);
+
+    Map request = {
+      "token": _user?.token ?? "",
+      "referral_code": code ?? "",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.updateReferral,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      setStatus(Status.loaded);
+      if (response.status) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+        );
+      } else {
+        popUpAlert(
+          message: response.message ?? Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      }
+      setStatus(Status.loaded);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      popUpAlert(
+          message: Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF);
+      setStatus(Status.loaded);
+    }
+  }
+
   Future signup(
     request, {
     bool editEmail = false,
+    String? referCode,
   }) async {
     setStatus(Status.loading);
     try {
@@ -568,6 +668,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.signup,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -583,7 +684,10 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           //     title: "Alert",
           //     icon: Images.otpSuccessGIT);
         } else {
-          otpSignupSheet(email: response.data['username']);
+          otpSignupSheet(
+            email: response.data['username'],
+            referCode: referCode,
+          );
         }
       } else {
         if (editEmail) {
@@ -614,6 +718,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.resendOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       // showErrorMessage(
@@ -632,6 +737,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.signupResendOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       // showErrorMessage(
@@ -656,6 +762,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.verifySignupOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -711,6 +818,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.verifyLoginOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       setStatus(Status.loaded);
       if (response.status) {
@@ -729,10 +837,6 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
           } else if (state == "notification") {
             await notificationProvider.getData(showProgress: false);
           }
-
-          // Navigator.push(navigatorKey.currentContext!, Tabs.path);
-          // Navigator.pushAndRemoveUntil(
-          //     navigatorKey.currentContext!, Tabs.path, (route) => false);
 
           Navigator.pop(navigatorKey.currentContext!);
           Navigator.pop(navigatorKey.currentContext!);
@@ -776,6 +880,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.logout,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -809,6 +914,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.deleteUser,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -853,6 +959,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: verifyOTP ? Apis.updateProfileEmail : Apis.updateProfile,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -901,6 +1008,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updateProfile,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (res.status) {
         setStatus(Status.loaded);
@@ -923,6 +1031,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updateProfileOTP,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         setStatus(Status.loaded);
@@ -950,6 +1059,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.referLogin,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         //
@@ -978,6 +1088,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkPhone,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _refer = referSuccessResFromJson(jsonEncode(response.data));
@@ -1017,6 +1128,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updateEmailOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (resendButtonClick == false) {
@@ -1046,6 +1158,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.updatePhoneOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         if (resendButtonClick == false) {
@@ -1074,6 +1187,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkEmailOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _emailClickText = "Edit";
@@ -1103,6 +1217,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkUpdatePhoneOtp,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         _phoneClickText = "Edit";
@@ -1141,6 +1256,7 @@ class UserProvider extends ChangeNotifier with AuthProviderBase {
         url: Apis.checkPhoneNo,
         request: request,
         showProgress: true,
+        removeForceLogin: true,
       );
       if (response.status) {
         //

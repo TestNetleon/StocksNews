@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -55,12 +57,13 @@ class InsiderDetailsType extends StatelessWidget {
 class CompanyDetailsBase extends StatefulWidget {
   final String? companySlug, reportingSlug, companyName, reportingName;
 
-  const CompanyDetailsBase(
-      {super.key,
-      this.companySlug,
-      this.reportingSlug,
-      this.companyName,
-      this.reportingName});
+  const CompanyDetailsBase({
+    super.key,
+    this.companySlug,
+    this.reportingSlug,
+    this.companyName,
+    this.reportingName,
+  });
 
   @override
   State<CompanyDetailsBase> createState() => _CompanyDetailsBaseState();
@@ -118,6 +121,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
   Widget build(BuildContext context) {
     InsiderTradingDetailsProvider provider =
         context.watch<InsiderTradingDetailsProvider>();
+
     return BaseContainer(
       drawer: const BaseDrawer(),
       appBar: AppBarHome(
@@ -139,9 +143,10 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Visibility(
-              visible: widget.companyName != "" && widget.reportingName == "",
+              visible: widget.companyName != "" &&
+                  (widget.reportingSlug == "" || widget.reportingSlug == null),
               child: ScreenTitle(
-                title: "Insider Trading - ${widget.companyName}",
+                title: "Insider Trading - ${widget.companyName ?? ""}",
                 subTitle: provider.textRes?.subTitle,
                 optionalWidget: GestureDetector(
                   onTap: () => _filterClick(
@@ -156,9 +161,10 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
               ),
             ),
             Visibility(
-              visible: widget.reportingName != "",
+              visible:
+                  widget.reportingName != "" && widget.reportingName != null,
               child: ScreenTitle(
-                title: "Insider Trading - ${widget.reportingName}",
+                title: "Insider Trading - ${widget.reportingName ?? ""}",
                 subTitle: provider.textResI?.subTitle,
                 optionalWidget: GestureDetector(
                   onTap: () => _filterClick(
@@ -197,7 +203,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
             const SpacerVertical(height: 10),
 
             Expanded(
-              child: widget.reportingSlug == ""
+              child: widget.reportingSlug == "" || widget.reportingSlug == null
                   ? InsiderCompanyContainer(
                       companySlug: widget.companySlug,
                     )

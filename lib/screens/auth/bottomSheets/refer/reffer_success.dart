@@ -111,12 +111,16 @@ class _ReferSuccessState extends State<ReferSuccess> {
                                     padding: const EdgeInsets.fromLTRB(
                                         10, 10, 10, 10),
                                     decoration: const BoxDecoration(
-                                        color: ThemeColors.greyBorder,
-                                        // borderRadius: BorderRadius.all(
-                                        //     Radius.circular(4)),
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(4),
-                                            topLeft: Radius.circular(4))),
+                                      color: ThemeColors.greyBorder,
+                                      // borderRadius: BorderRadius.all(
+                                      //     Radius.circular(4)),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(4),
+                                        topLeft: Radius.circular(4),
+                                        bottomRight: Radius.circular(4),
+                                        topRight: Radius.circular(4),
+                                      ),
+                                    ),
                                     child: Text(
                                       "${shareUri ?? ""}",
                                       maxLines: 1,
@@ -125,41 +129,45 @@ class _ReferSuccessState extends State<ReferSuccess> {
                                     ),
                                   ),
                                 ),
-                                InkWell(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4)),
-                                  onTap: () {
-                                    try {
-                                      Clipboard.setData(ClipboardData(
-                                          text: shareUri.toString()));
-                                      CommonToast.show(message: "Copied");
-                                    } catch (e) {
-                                      CommonToast.show(message: "$e");
-                                    }
-                                  },
-                                  child: Ink(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 8.9),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 69, 69, 69),
-                                      // borderRadius: BorderRadius.all(
-                                      //     Radius.circular(4)),
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(4),
-                                          topRight: Radius.circular(4)),
-                                    ),
-                                    // child: Text(
-                                    //   "Copy",
-                                    //   maxLines: 1,
-                                    //   overflow: TextOverflow.ellipsis,
-                                    //   style: stylePTSansBold(),
-                                    // ),
-                                    child: const Icon(
-                                      Icons.copy,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ),
+                                // InkWell(
+                                //   borderRadius: const BorderRadius.all(
+                                //     Radius.circular(4),
+                                //   ),
+                                //   onTap: () {
+                                //     Share.share(
+                                //       "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                                //     );
+                                //     // try {
+                                //     //   Clipboard.setData(ClipboardData(
+                                //     //       text: shareUri.toString()));
+                                //     //   CommonToast.show(message: "Copied");
+                                //     // } catch (e) {
+                                //     //   CommonToast.show(message: "$e");
+                                //     // }
+                                //   },
+                                //   child: Ink(
+                                //     padding: const EdgeInsets.symmetric(
+                                //         horizontal: 15, vertical: 8.9),
+                                //     decoration: const BoxDecoration(
+                                //       color: Color.fromARGB(255, 69, 69, 69),
+                                //       // borderRadius: BorderRadius.all(
+                                //       //     Radius.circular(4)),
+                                //       borderRadius: BorderRadius.only(
+                                //           bottomRight: Radius.circular(4),
+                                //           topRight: Radius.circular(4)),
+                                //     ),
+                                //     // child: Text(
+                                //     //   "Copy",
+                                //     //   maxLines: 1,
+                                //     //   overflow: TextOverflow.ellipsis,
+                                //     //   style: stylePTSansBold(),
+                                //     // ),
+                                //     child: const Icon(
+                                //       Icons.copy,
+                                //       size: 20,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ],

@@ -62,6 +62,7 @@ class TrendingIndustriesProvider extends ChangeNotifier {
         url: Apis.trendingIndustryChart,
         showProgress: showProgress,
         request: request,
+        removeForceLogin: true,
       );
       if (response.status) {
         labels = trendingIndustriesGraphResFromJson(jsonEncode(response.data))

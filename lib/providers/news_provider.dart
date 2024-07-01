@@ -319,11 +319,13 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
   }
 
   void tabChange(index, String? id) {
-    selectedIndex = index;
-    notifyListeners();
-    if (id == null) return;
-    if (_newsData[id]?.data != null || _newsData[id]?.error != null) return;
-    getNewsData(id: id);
+    if (selectedIndex != index) {
+      selectedIndex = index;
+      notifyListeners();
+      if (id == null) return;
+      if (_newsData[id]?.data != null || _newsData[id]?.error != null) return;
+      getNewsData(id: id);
+    }
   }
 
   Future getTabsData({showProgress = false}) async {
@@ -331,12 +333,14 @@ class NewsCategoryProvider extends ChangeNotifier with AuthProviderBase {
     setTabStatus(Status.loading);
     try {
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.newsTab,
         request: request,
         showProgress: showProgress,
+        removeForceLogin: true,
       );
       if (response.status) {
         _tabs = nesCategoryTabResFromJson(jsonEncode(response.data));
