@@ -89,6 +89,7 @@ class Extra {
   final String? suspendMsg;
   final ProfileText? profileText;
   final int? selfRank;
+  final String? referText;
 
   Extra({
     this.feebackType,
@@ -137,6 +138,7 @@ class Extra {
     this.user,
     this.referral,
     this.earnCondition,
+    this.referText,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -226,6 +228,7 @@ class Extra {
         referral: json["referral"] == null
             ? null
             : ReferralRes.fromJson(json["referral"]),
+        referText: json["refer_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -289,6 +292,7 @@ class Extra {
         "message": messageObject?.toJson(),
         "user": user?.toJson(),
         "referral": referral?.toJson(),
+        "refer_text": referText,
       };
 }
 

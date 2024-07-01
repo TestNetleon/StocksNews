@@ -12,6 +12,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -33,6 +34,7 @@ import 'aggree_conditions.dart';
 signupSheetTablet({
   String? state,
   String? dontPop,
+  String? email,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -50,6 +52,7 @@ signupSheetTablet({
       return SignUpBottom(
         state: state,
         dntPop: dontPop,
+        email: email,
       );
     },
   );
@@ -58,8 +61,9 @@ signupSheetTablet({
 class SignUpBottom extends StatefulWidget {
   final String? dntPop;
   final String? state;
+  final String? email;
 
-  const SignUpBottom({super.key, this.dntPop, this.state});
+  const SignUpBottom({super.key, this.dntPop, this.state, this.email});
 
   @override
   State<SignUpBottom> createState() => _SignUpBottomState();
@@ -72,14 +76,15 @@ class _SignUpBottomState extends State<SignUpBottom> {
   @override
   void initState() {
     super.initState();
-
+    if (widget.email != null && widget.email != '') {
+      _controller.text = widget.email ?? "";
+    }
     Utils().showLog(
         "---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
-  void _onLoginClick() {
+  void _onLoginClick() async {
     closeKeyboard();
-
     if (!isEmail(_controller.text)) {
       popUpAlert(
         message: "Please enter valid email address.",
@@ -88,12 +93,21 @@ class _SignUpBottomState extends State<SignUpBottom> {
       );
       return;
     }
-
-    UserProvider provider = context.read<UserProvider>();
-
-    Map request = {"username": _controller.text.toLowerCase()};
-
-    provider.signup(request);
+    String? referralCode = await Preference.getReferral();
+    if (referralCode != null && referralCode != "") {
+      UserProvider provider = context.read<UserProvider>();
+      Map request = {"username": _controller.text.toLowerCase()};
+      provider.signup(request);
+    } else {
+      referSheet(
+        // email: _controller.text.toLowerCase(),
+        onReferral: (code) {
+          UserProvider provider = context.read<UserProvider>();
+          Map request = {"username": _controller.text.toLowerCase()};
+          provider.signup(request, referCode: code);
+        },
+      );
+    }
   }
 
   void _handleSignIn() async {
@@ -102,17 +116,39 @@ class _SignUpBottomState extends State<SignUpBottom> {
     }
 
     try {
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+
+      String? referralCode = await Preference.getReferral();
+
+      if (referralCode != null && referralCode != "") {
+        _handleGoogleLogin(account);
+      } else {
+        referSheet(
+          // email: _controller.text.toLowerCase(),
+          onReferral: (code) {
+            _handleGoogleLogin(account, code: code);
+          },
+        );
+      }
+    } catch (error) {
+      popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
+      print(error);
+    }
+  }
+
+  void _handleGoogleLogin(GoogleSignInAccount? account, {String? code}) async {
+    try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
 
-      GoogleSignInAccount? account = await _googleSignIn.signIn();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      String? referralCode = await Preference.getReferral();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
+
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         bool granted = await Permission.notification.isGranted;
-
         Map request = {
           "displayName": account.displayName ?? "",
           "email": account.email,
@@ -124,12 +160,14 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "build_version": versionName,
           "build_code": buildNumber,
           "fcm_permission": "$granted",
+          //  "referral_code": "$referralCode",
+          "referral_code": referralCode ?? code ?? "",
+          // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, dontPop: 'true', state: widget.state);
       }
     } catch (error) {
-      print("Error in Signed In *******");
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
       print(error);
     }
@@ -141,10 +179,26 @@ class _SignUpBottomState extends State<SignUpBottom> {
     super.dispose();
   }
 
-  void _handleSignInApple(id, displayName, email) async {
+  void _handleApple(id, displayName, email) async {
+    String? referralCode = await Preference.getReferral();
+
+    if (referralCode != null && referralCode != "") {
+      _handleAppleSignIn(id, displayName, email);
+    } else {
+      referSheet(
+        // email: _controller.text.toLowerCase(),
+        onReferral: (code) {
+          _handleAppleSignIn(id, displayName, email, code: code);
+        },
+      );
+    }
+  }
+
+  void _handleAppleSignIn(id, displayName, email, {String? code}) async {
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
+      String? referralCode = await Preference.getReferral();
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
@@ -161,8 +215,17 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
+        // "referral_code": "$referralCode",
+        "referral_code": referralCode ?? code ?? "",
       };
-      provider.appleLogin(request, dontPop: 'true', state: widget.state);
+
+      provider.appleLogin(
+        request,
+        dontPop: 'true',
+        state: widget.state,
+        id: id,
+      );
+
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -333,7 +396,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                                           AppleIDAuthorizationScopes.fullName,
                                         ],
                                       );
-                                      _handleSignInApple(
+                                      _handleApple(
                                         credential.userIdentifier,
                                         credential.givenName != null
                                             ? "${credential.givenName} ${credential.familyName}"

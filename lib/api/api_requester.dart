@@ -189,9 +189,10 @@ void _checkForNewVersion(Extra extra, {removeForceLogin = false}) async {
       !isAppUpdating) {
     isAppUpdating = true;
     showAppUpdateDialog(extra);
-  } else if (!removeForceLogin) {
-    _checkLogin();
   }
+  // else if (!removeForceLogin) {
+  //   _checkLogin();
+  // }
 }
 
 Future _checkLogin() async {

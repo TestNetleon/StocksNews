@@ -159,6 +159,8 @@ class Apis {
   static const sendTicket = "/send-ticket";
   static const ticketDetail = "/ticket-detail";
   static const ticketReply = "/ticket-reply";
+
+  static const updateReferral = "/update-referral-code";
 }
 
 //

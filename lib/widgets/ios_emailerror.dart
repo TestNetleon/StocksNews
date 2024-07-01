@@ -17,11 +17,19 @@ void showIosEmailError({
   String? state,
   String? dontPop,
   String? id,
+  String? code,
+  alreadySubmitted,
 }) {
   showPlatformBottomSheet(
     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
     context: navigatorKey.currentContext!,
-    content: IOSemailError(state: state, dontPop: dontPop, id: id),
+    content: IOSemailError(
+      state: state,
+      dontPop: dontPop,
+      id: id,
+      code: code,
+      alreadySubmitted: alreadySubmitted,
+    ),
   );
 }
 
@@ -30,12 +38,16 @@ class IOSemailError extends StatefulWidget {
   final String? state;
   final String? dontPop;
   final String? id;
+  final String? code;
+  final bool? alreadySubmitted;
   const IOSemailError({
     super.key,
     this.onPress,
     this.state,
     this.dontPop,
     this.id,
+    this.code,
+    this.alreadySubmitted,
   });
 
   @override
@@ -112,6 +124,8 @@ class _IOSemailErrorState extends State<IOSemailError> {
                 id: widget.id,
                 email: controller.text.toLowerCase(),
                 showOtp: true,
+                code: widget.code,
+                alreadySubmitted: widget.alreadySubmitted,
               );
             },
           ),

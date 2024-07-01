@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/howit_work.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/suspend.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/trasnsaction.dart';
@@ -50,6 +51,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
 
     return BaseUiContainer(
       hasData: true,
@@ -69,8 +71,10 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
               children: [
                 const ReferFriendSuspend(),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
                   margin: const EdgeInsets.symmetric(horizontal: Dimen.padding),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -96,6 +100,44 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                         style: stylePTSansRegular(color: ThemeColors.greyText),
                       ),
                       const SpacerVertical(height: 15),
+                      GestureDetector(
+                        onTap: () {
+                          Share.share(
+                            "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                          decoration: const BoxDecoration(
+                            // color: ThemeColors.greyBorder,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(4),
+                              topLeft: Radius.circular(4),
+                              bottomRight: Radius.circular(4),
+                              topRight: Radius.circular(4),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Referral Code  -  ${userProvider.user?.referralCode}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: stylePTSansBold(),
+                              ),
+                              // const SpacerHorizontal(width: 15),
+                              // Text(
+                              //   "${userProvider.user?.referralCode}",
+                              //   maxLines: 1,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   style: stylePTSansRegular(),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SpacerVertical(height: 15),
                       Row(
                         children: [
                           Expanded(
@@ -107,6 +149,8 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(4),
                                   topLeft: Radius.circular(4),
+                                  bottomRight: Radius.circular(4),
+                                  topRight: Radius.circular(4),
                                 ),
                               ),
                               child: Text(
@@ -117,33 +161,33 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                               ),
                             ),
                           ),
-                          InkWell(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4)),
-                            onTap: () {
-                              try {
-                                Clipboard.setData(
-                                    ClipboardData(text: shareUri.toString()));
-                                CommonToast.show(message: "Copied");
-                              } catch (e) {
-                                CommonToast.show(message: "$e");
-                              }
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 8.9),
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 69, 69, 69),
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(4),
-                                    topRight: Radius.circular(4)),
-                              ),
-                              child: const Icon(
-                                Icons.copy,
-                                size: 20,
-                              ),
-                            ),
-                          ),
+                          // InkWell(
+                          //   borderRadius:
+                          //       const BorderRadius.all(Radius.circular(4)),
+                          //   onTap: () {
+                          //     try {
+                          //       Clipboard.setData(
+                          //           ClipboardData(text: shareUri.toString()));
+                          //       CommonToast.show(message: "Copied");
+                          //     } catch (e) {
+                          //       CommonToast.show(message: "$e");
+                          //     }
+                          //   },
+                          //   child: Container(
+                          //     padding: const EdgeInsets.symmetric(
+                          //         horizontal: 15, vertical: 8.9),
+                          //     decoration: const BoxDecoration(
+                          //       color: Color.fromARGB(255, 69, 69, 69),
+                          //       borderRadius: BorderRadius.only(
+                          //           bottomRight: Radius.circular(4),
+                          //           topRight: Radius.circular(4)),
+                          //     ),
+                          //     child: const Icon(
+                          //       Icons.copy,
+                          //       size: 20,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SpacerVertical(height: 15),
@@ -163,6 +207,14 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                           ],
                         ),
                         onPressed: () {
+                          // comment this and uncomment below
+                          // DynamicLinkService.instance
+                          //     .createDynamicLinkFromBranchIO(navigatorKey
+                          //             .currentContext!
+                          //             .read<UserProvider>()
+                          //             .user
+                          //             ?.referralCode ??
+                          //         "");
                           Share.share(
                             "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
                           );

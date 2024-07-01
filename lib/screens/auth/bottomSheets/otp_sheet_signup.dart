@@ -23,6 +23,7 @@ otpSignupSheet({
   String? state,
   String? dontPop,
   required String email,
+  String? referCode,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -38,6 +39,7 @@ otpSignupSheet({
     builder: (context) {
       return OTPSignupBottom(
         email: email,
+        referCode: referCode,
       );
     },
   );
@@ -45,8 +47,13 @@ otpSignupSheet({
 
 class OTPSignupBottom extends StatefulWidget {
   final String email;
+  final String? referCode;
 //
-  const OTPSignupBottom({super.key, required this.email});
+  const OTPSignupBottom({
+    super.key,
+    required this.email,
+    this.referCode,
+  });
 
   @override
   State<OTPSignupBottom> createState() => _OTPSignupBottomState();
@@ -113,7 +120,7 @@ class _OTPSignupBottomState extends State<OTPSignupBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
-        "referral_code": "$referralCode",
+        "referral_code": referralCode ?? widget.referCode ?? "",
       };
 
       provider.verifySignupOtp(request);

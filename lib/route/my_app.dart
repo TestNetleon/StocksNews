@@ -21,6 +21,7 @@ import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+// import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 
 final _appLinks = AppLinks();
 //
@@ -50,12 +51,42 @@ class _MyAppState extends State<MyApp> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (Platform.isIOS) {
         _handleIOSDeeplinks();
+        // _handleBranchIOSDeeplinks();
       }
       getInitialReferralsIfAny();
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
     });
   }
+
+// -------- Branch.io Deeplinks STARTED ---------------
+  // void _handleBranchIOSDeeplinks() async {
+  //   try {
+  //     await FlutterBranchSdk.init(
+  //       disableTracking: false,
+  //       enableLogging: true,
+  //       useTestKey: true,
+  //     );
+  //     FlutterBranchSdk.validateSDKIntegration();
+  //     // StreamSubscription<Map> streamSubscription =
+  //     FlutterBranchSdk.listSession().listen((data) {
+  //       log("FlutterBranchSdk.listSession = ${data.toString()} ");
+  //       if (data.containsKey("+clicked_branch_link") &&
+  //           data["+clicked_branch_link"] == true) {
+  //         //Link clicked. Add logic to get link data and route user to correct screen
+  //         print('Custom string: ${data["custom_string"]}');
+  //       }
+  //     }, onError: (error) {
+  //       PlatformException platformException = error as PlatformException;
+  //       print(
+  //         'InitSession error: ${platformException.code} - ${platformException.message}',
+  //       );
+  //     });
+  //   } catch (e) {
+  //     print('Error initializing Branch SDK: $e');
+  //   }
+  // }
+// -------- Branch.io Deeplinks ENDED ---------------
 
 // -------- IOS Native Deeplinks STARTED ---------------
   void _handleIOSDeeplinks() async {
@@ -196,23 +227,14 @@ class _MyAppState extends State<MyApp> {
 
     Utils().showLog(
         "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen");
-
-    // popUpAlert(
-    //   message:
-    //       "referralCode = $referralCode && referralCode = $referralCode && code = $code && isFirstOpen = $isFirstOpen",
-    //   title: "title",
-    // );
-
     if (referralCode != null &&
         referralCode != "" &&
         code == null &&
         isFirstOpen) {
       Preference.saveReferral(referralCode);
-      // Preference.setIsFirstOpen(false);
       Timer(const Duration(seconds: 4), () {
         if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
           signupSheet();
-          // onDeepLinking = false;
         }
       });
       FirebaseAnalytics.instance.logEvent(

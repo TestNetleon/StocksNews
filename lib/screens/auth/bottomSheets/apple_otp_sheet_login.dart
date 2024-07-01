@@ -26,6 +26,8 @@ appleOtpLoginSheet({
   String? dontPop,
   String? id,
   String? email,
+  String? code,
+  bool? alreadySubmitted,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -44,6 +46,8 @@ appleOtpLoginSheet({
         state: state,
         id: id,
         email: email,
+        code: code,
+        alreadySubmitted: alreadySubmitted,
       );
     },
   );
@@ -54,6 +58,8 @@ class OTPLoginBottom extends StatefulWidget {
   final String? dontPop;
   final String? id;
   final String? email;
+  final String? code;
+  final bool? alreadySubmitted;
 
   const OTPLoginBottom({
     super.key,
@@ -61,6 +67,8 @@ class OTPLoginBottom extends StatefulWidget {
     this.dontPop,
     this.id,
     this.email,
+    this.code,
+    this.alreadySubmitted,
   });
 
   @override
@@ -137,13 +145,15 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
         "fcm_permission": "$granted",
         "otp": _controller.text,
         "referral_code": "$referralCode",
+        // "referral_code": referralCode ?? widget.code ?? "",
       };
 
-      provider.appleLogin(
-        request,
-        state: widget.state,
-        dontPop: widget.dontPop,
-      );
+      provider.appleLogin(request,
+          state: widget.state,
+          dontPop: "",
+          alreadySubmitted: widget.alreadySubmitted ?? false
+          // code:
+          );
     }
   }
 
