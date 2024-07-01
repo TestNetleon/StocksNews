@@ -163,9 +163,19 @@ class BreakOutStocksItem extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  InnerRowItem(
-                    label: "50-Day",
-                    value: data.the50Day,
+                  Visibility(
+                    visible: data.the50Day != null,
+                    child: InnerRowItem(
+                      label: "50-Day",
+                      value: data.the50Day,
+                    ),
+                  ),
+                  Visibility(
+                    visible: data.the200Day != null,
+                    child: InnerRowItem(
+                      label: "200-Day",
+                      value: data.the200Day,
+                    ),
                   ),
                   InnerRowItem(
                     label: "Percent Moving Average",

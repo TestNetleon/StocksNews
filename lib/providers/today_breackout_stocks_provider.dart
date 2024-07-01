@@ -44,6 +44,9 @@ class TodayBreakoutStockProvider extends ChangeNotifier with AuthProviderBase {
             filterParams?.industry != null ||
             filterParams?.price != "" ||
             filterParams?.market_cap != null ||
+            filterParams?.marketRanks != null ||
+            filterParams?.analystConsensusParams != null ||
+            filterParams?.timePeriod != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
@@ -154,6 +157,15 @@ class TodayBreakoutStockProvider extends ChangeNotifier with AuthProviderBase {
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
+        "TimePeriod": _filterParams?.timePeriod?.key ??
+            navigatorKey.currentContext!
+                .read<FilterProvider>()
+                .data
+                ?.timePeriod?[0]
+                .key ??
+            "",
+        "marketRank": _filterParams?.marketRanks?.key ?? "",
+        "analystConsensus": _filterParams?.analystConsensusParams?.key ?? "",
       };
 
       ApiResponse response = await apiRequest(

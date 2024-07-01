@@ -9,6 +9,7 @@ import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/errorScreens/app_maintenance.dart';
 import 'package:stocks_news_new/screens/errorScreens/server_error.dart';
+import 'package:stocks_news_new/screens/marketData/widget/extra_sorting_list.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -44,6 +45,8 @@ void closeGlobalProgressDialog() {
 }
 
 void onSortingClick({
+  breakOutType = false,
+  volumeType = false,
   required void Function(String)? onTap,
   required String? selected,
   required void Function()? onResetClick,
@@ -56,38 +59,66 @@ void onSortingClick({
     BaseBottomSheets().gradientBottomSheet(
       title: "SORT BY",
       onResetClick: onResetClick,
-      child: ListView.separated(
-        shrinkWrap: true,
-        itemCount: provider.data?.sorting?.length ?? 0,
-        itemBuilder: (context, index) {
-          FiltersData? data = context.watch<FilterProvider>().data;
-          if (data == null) {
-            return const SizedBox();
-          }
-          return GestureDetector(
-            onTap: () {
-              if (onTap == null) {
-                return;
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListView.separated(
+            shrinkWrap: true,
+            itemCount: provider.data?.sorting?.length ?? 0,
+            itemBuilder: (context, index) {
+              FiltersData? data = context.watch<FilterProvider>().data;
+              if (data == null) {
+                return const SizedBox();
               }
-              onTap(provider.data?.sorting?[index].key ?? "");
-            },
-            child: Padding(
-              padding: EdgeInsets.only(left: 10.sp),
-              child: Text(
-                data.sorting![index].value ?? "",
-                // sortingArrayList[index].value,
-                style: stylePTSansBold(
-                  color: selected == provider.data?.sorting?[index].key
-                      ? ThemeColors.accent
-                      : Colors.white,
+              return GestureDetector(
+                onTap: () {
+                  if (onTap == null) {
+                    return;
+                  }
+                  onTap(provider.data?.sorting?[index].key ?? "");
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10.sp),
+                  child: Text(
+                    data.sorting?[index].value ?? "",
+                    // sortingArrayList[index].value,
+                    style: stylePTSansBold(
+                      color: selected == provider.data?.sorting?[index].key
+                          ? ThemeColors.accent
+                          : Colors.white,
+                    ),
+                  ),
                 ),
-              ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+          ),
+          if (breakOutType && provider.data?.breakOutType != null)
+            ExtraSortingList(
+              onTap: (value) {
+                if (onTap == null) {
+                  return;
+                }
+                onTap(value);
+              },
+              selected: selected,
+              list: provider.data?.breakOutType,
             ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider();
-        },
+          if (volumeType && provider.data?.volumeType != null)
+            ExtraSortingList(
+              onTap: (value) {
+                if (onTap == null) {
+                  return;
+                }
+                onTap(value);
+              },
+              selected: selected,
+              list: provider.data?.volumeType,
+            )
+        ],
       ),
     );
   }

@@ -19,6 +19,8 @@ class BreakoutStocksRes {
   final dynamic priceChange;
   final dynamic percentageChange;
   final dynamic the50Day;
+  final dynamic the200Day;
+
   final dynamic percentageMovingAverage;
   final dynamic volume;
   final dynamic avgVolume;
@@ -31,6 +33,7 @@ class BreakoutStocksRes {
     this.priceChange,
     this.percentageChange,
     this.the50Day,
+    this.the200Day,
     this.percentageMovingAverage,
     this.volume,
     this.avgVolume,
@@ -45,6 +48,7 @@ class BreakoutStocksRes {
         priceChange: json["price_change"],
         percentageChange: json["percentage_change"],
         the50Day: json["50-Day"],
+        the200Day: json["200-Day"],
         percentageMovingAverage: json["percentageMovingAverage"],
         volume: json["volume"],
         avgVolume: json["avgVolume"],
@@ -58,6 +62,7 @@ class BreakoutStocksRes {
         "price_change": priceChange,
         "percentage_change": percentageChange,
         "50-Day": the50Day,
+        "200-Day": the200Day,
         "percentageMovingAverage": percentageMovingAverage,
         "volume": volume,
         "avgVolume": avgVolume,

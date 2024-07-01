@@ -41,6 +41,8 @@ class GapUpProvider extends ChangeNotifier with AuthProviderBase {
             filterParams?.price != "" ||
             filterParams?.market_cap != null ||
             filterParams?.beta != "" ||
+            filterParams?.marketRanks != null ||
+            filterParams?.analystConsensusParams != null ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
             filterParams?.isFund != "" ||
@@ -156,6 +158,8 @@ class GapUpProvider extends ChangeNotifier with AuthProviderBase {
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
+        "marketRank": _filterParams?.marketRanks?.key ?? "",
+        "analystConsensus": _filterParams?.analystConsensusParams?.key ?? "",
       };
 
       ApiResponse response = await apiRequest(

@@ -183,6 +183,8 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
             filterParams?.industry != null ||
             filterParams?.price != "" ||
             filterParams?.market_cap != null ||
+            filterParams?.marketRanks != null ||
+            filterParams?.analystConsensusParams != null ||
             filterParams?.beta != "" ||
             filterParams?.dividend != "" ||
             filterParams?.isEtf != "" ||
@@ -290,6 +292,8 @@ class MostActiveProvider extends ChangeNotifier with AuthProviderBase {
         "isActivelyTrading": _filterParams?.isActivelyTrading ?? "",
         "sector": _filterParams?.sector?.key ?? "",
         "sortBy": _filterParams?.sorting ?? "",
+        "marketRank": _filterParams?.marketRanks?.key ?? "",
+        "analystConsensus": _filterParams?.analystConsensusParams?.key ?? "",
       };
 
       ApiResponse response = await apiRequest(

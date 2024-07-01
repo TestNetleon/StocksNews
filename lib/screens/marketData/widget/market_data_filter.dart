@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/filters_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter_textfiled.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -18,12 +19,12 @@ class MarketDataFilterBottomSheet extends StatefulWidget {
     required this.onFiltered,
     this.filterParam,
     this.showExchange = true,
-    this.sortBy = false,
+    this.showTimePeriod = false,
     super.key,
   });
   final FilteredParams? filterParam;
   final Function(FilteredParams?) onFiltered;
-  final bool showExchange, sortBy;
+  final bool showExchange, showTimePeriod;
 
   @override
   State<MarketDataFilterBottomSheet> createState() =>
@@ -72,9 +73,9 @@ class _MarketDataFilterBottomSheetState
       onSelected: (List<FiltersDataItem> selected) {
         if (selected.isNotEmpty) {
           FiltersDataItem item = FiltersDataItem(
-            key: selected.map((item) => item.key).join(','),
-            value: selected.map((item) => item.value).join(','),
-          );
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
+
           if (filterParams == null) {
             filterParams = FilteredParams(exchange_name: item);
           } else {
@@ -87,7 +88,9 @@ class _MarketDataFilterBottomSheetState
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -149,10 +152,13 @@ class _MarketDataFilterBottomSheetState
         } else {
           filterParams?.sector = null;
         }
+
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -222,7 +228,9 @@ class _MarketDataFilterBottomSheetState
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -319,7 +327,9 @@ class _MarketDataFilterBottomSheetState
         if (filterParams?.exchange_name == null &&
             filterParams?.sector == null &&
             filterParams?.industry == null &&
-            filterParams?.market_cap == null) {
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
           filterParams = null;
         }
 
@@ -463,6 +473,138 @@ class _MarketDataFilterBottomSheetState
   //     ),
   //   );
   // }
+  void _showTimePeriodPiker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.timePeriod == null) {
+      popUpAlert(
+        message: "Time Period data not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggableSingleSelected(
+      title: "Select Time Period",
+      items: provider.data!.timePeriod!,
+      selected: filterParams?.timePeriod?.value,
+      onSelected: (selected) {
+        Utils().showLog('selected ===== ${selected?.value}, ${selected?.key} ');
+
+        if (filterParams == null) {
+          filterParams = FilteredParams(timePeriod: selected);
+        } else {
+          filterParams?.timePeriod = selected;
+        }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null &&
+            filterParams?.timePeriod == null) {
+          filterParams = null;
+        }
+
+        Utils().showLog('selected ===== ${filterParams?.timePeriod?.key}');
+        setState(() {});
+      },
+    );
+  }
+
+  void _showAnalystConsensusPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.analystConsensus == null) {
+      popUpAlert(
+        message: "Analyst Consensus not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggable(
+      title: "Select Analyst Consensus",
+      items: provider.data!.analystConsensus!,
+      selected: filterParams?.analystConsensusParams?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
+      onSelected: (List<FiltersDataItem> selected) {
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
+
+          if (filterParams == null) {
+            filterParams = FilteredParams(analystConsensusParams: item);
+          } else {
+            filterParams?.analystConsensusParams = item;
+          }
+        } else {
+          filterParams?.analystConsensusParams = null;
+        }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null) {
+          filterParams = null;
+        }
+
+        Utils().showLog(
+            'selected ===== ${filterParams?.analystConsensusParams?.key}');
+        setState(() {});
+      },
+    );
+  }
+
+  void _showMarketRankPicker(BuildContext context) {
+    FilterProvider provider = context.read<FilterProvider>();
+    if (provider.data == null || provider.data?.marketRank == null) {
+      popUpAlert(
+        message: "Market Rank not available.",
+        title: "Data Empty",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
+    BaseBottomSheets().gradientBottomSheetDraggable(
+      title: "Select Market Rank",
+      items: provider.data!.marketRank!,
+      selected: filterParams?.marketRanks?.value
+          ?.split(',')
+          .map((item) => item.trim())
+          .toList(),
+      onSelected: (List<FiltersDataItem> selected) {
+        if (selected.isNotEmpty) {
+          FiltersDataItem item = FiltersDataItem(
+              key: selected.map((item) => item.key).join(','),
+              value: selected.map((item) => item.value).join(','));
+
+          if (filterParams == null) {
+            filterParams = FilteredParams(marketRanks: item);
+          } else {
+            filterParams?.marketRanks = item;
+          }
+        } else {
+          filterParams?.marketRanks = null;
+        }
+
+        if (filterParams?.exchange_name == null &&
+            filterParams?.sector == null &&
+            filterParams?.industry == null &&
+            filterParams?.market_cap == null &&
+            filterParams?.analystConsensusParams == null &&
+            filterParams?.marketRanks == null) {
+          filterParams = null;
+        }
+
+        Utils().showLog('selected ===== ${filterParams?.marketRanks?.key}');
+        setState(() {});
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -538,29 +680,75 @@ class _MarketDataFilterBottomSheetState
               ],
             ),
           ),
-          const SpacerVertical(height: 20),
-          // IntrinsicHeight(
-          //   child: Row(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Expanded(
-          //         child: MarketDataTextFiledClickable(
-          //             hintText: "Sort By",
-          //             label: "Sort By",
-          //             onTap: () => _showPricePicker(context),
-          //             controller: provider.priceController),
-          //       ),
-          //       // const SpacerHorizontal(width: 10),
-          //       // Expanded(
-          //       //   child: MarketDataTextFiledClickable(
-          //       //       hintText: "All Beta",
-          //       //       label: "Beta",
-          //       //       onTap: () => _showBetaPicker(context),
-          //       //       controller: provider.betaController),
-          //       // ),
-          //     ],
-          //   ),
-          // ),
+          // new filter
+          const SpacerVertical(height: 12),
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText: filterParams?.marketRanks != null
+                        ? filterParams?.marketRanks?.value ?? ""
+                        : "All Market Ranks",
+                    label: "Market Ranks",
+                    onTap: () => _showMarketRankPicker(context),
+                    controller: TextEditingController(),
+                  ),
+                ),
+                const SpacerHorizontal(width: 10),
+                Expanded(
+                  child: MarketDataTextFiledClickable(
+                    hintText:
+                        filterParams?.analystConsensusParams?.value != null
+                            ? filterParams?.analystConsensusParams?.value ?? ""
+                            : "All Analyst Consensus",
+                    label: "Analyst Consensus",
+                    onTap: () => _showAnalystConsensusPicker(context),
+                    controller: TextEditingController(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // new filter
+
+          Visibility(
+              visible: widget.showTimePeriod,
+              child: const SpacerVertical(height: 12)),
+          IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Visibility(
+                  visible: widget.showTimePeriod,
+                  child: Expanded(
+                    child: MarketDataTextFiledClickable(
+                      hintText: filterParams?.timePeriod?.value != null
+                          ? filterParams?.timePeriod?.value ?? ""
+                          : navigatorKey.currentContext!
+                                  .watch<FilterProvider>()
+                                  .data
+                                  ?.timePeriod?[0]
+                                  .value ??
+                              "Time Period",
+                      label: "Time Period",
+                      onTap: () => _showTimePeriodPiker(context),
+                      controller: TextEditingController(),
+                    ),
+                  ),
+                ),
+                // const SpacerHorizontal(width: 10),
+                // Expanded(
+                //   child: MarketDataTextFiledClickable(
+                //       hintText: "All Beta",
+                //       label: "Beta",
+                //       onTap: () => _showBetaPicker(context),
+                //       controller: provider.betaController),
+                // ),
+              ],
+            ),
+          ),
           // const SpacerVertical(height: 20),
           // IntrinsicHeight(
           //   child: Row(

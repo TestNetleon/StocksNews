@@ -143,6 +143,7 @@ class _MostActiveStocksState extends State<MostActiveStocks> {
               isSort: provider.isSortingApplied(),
               onTapFilter: _onFilterClick,
               onTapSorting: () => onSortingClick(
+                volumeType: true,
                 selected:
                     context.read<MostActiveProvider>().filterParams?.sorting,
                 onTap: (sortingKey) {

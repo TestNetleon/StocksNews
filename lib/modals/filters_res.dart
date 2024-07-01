@@ -11,6 +11,11 @@ class FiltersData {
   final List<FiltersDataItem>? exchange;
   final List<FiltersDataItem>? marketCap;
   final List<FiltersDataItem>? sorting;
+  final List<FiltersDataItem>? timePeriod;
+  final List<FiltersDataItem>? breakOutType;
+  final List<FiltersDataItem>? volumeType;
+  final List<FiltersDataItem>? analystConsensus;
+  final List<FiltersDataItem>? marketRank;
 
   FiltersData({
     required this.industries,
@@ -18,6 +23,11 @@ class FiltersData {
     required this.exchange,
     required this.marketCap,
     required this.sorting,
+    required this.timePeriod,
+    this.breakOutType,
+    this.volumeType,
+    required this.analystConsensus,
+    required this.marketRank,
   });
 
   factory FiltersData.fromJson(Map<String, dynamic> json) => FiltersData(
@@ -41,6 +51,26 @@ class FiltersData {
             ? null
             : List<FiltersDataItem>.from(
                 json["sorting"].map((x) => FiltersDataItem.fromJson(x))),
+        timePeriod: json["TimePeriod"] == null
+            ? null
+            : List<FiltersDataItem>.from(
+                json["TimePeriod"].map((x) => FiltersDataItem.fromJson(x))),
+        breakOutType: json["breakOutType"] == null
+            ? null
+            : List<FiltersDataItem>.from(
+                json["breakOutType"].map((x) => FiltersDataItem.fromJson(x))),
+        volumeType: json["volumeType"] == null
+            ? null
+            : List<FiltersDataItem>.from(
+                json["volumeType"].map((x) => FiltersDataItem.fromJson(x))),
+        analystConsensus: json["analystConsensus"] == null
+            ? null
+            : List<FiltersDataItem>.from(json["analystConsensus"]
+                .map((x) => FiltersDataItem.fromJson(x))),
+        marketRank: json["marketRank"] == null
+            ? null
+            : List<FiltersDataItem>.from(
+                json["marketRank"].map((x) => FiltersDataItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +89,21 @@ class FiltersData {
         "sorting": sorting == null
             ? null
             : List<dynamic>.from(sorting!.map((x) => x.toJson())),
+        "TimePeriod": timePeriod == null
+            ? null
+            : List<dynamic>.from(timePeriod!.map((x) => x.toJson())),
+        "breakOutType": breakOutType == null
+            ? null
+            : List<dynamic>.from(breakOutType!.map((x) => x.toJson())),
+        "volumeType": volumeType == null
+            ? null
+            : List<dynamic>.from(volumeType!.map((x) => x.toJson())),
+        "analystConsensus": analystConsensus == null
+            ? null
+            : List<dynamic>.from(analystConsensus!.map((x) => x.toJson())),
+        "marketRank": marketRank == null
+            ? null
+            : List<dynamic>.from(marketRank!.map((x) => x.toJson())),
       };
 }
 
