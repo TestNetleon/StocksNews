@@ -96,10 +96,18 @@ Future<ApiResponse> apiRequest({
       request.headers.addAll(headers);
       request.fields.addAll(Map.fromEntries(formData.fields));
 
-      if (formData.files.isNotEmpty) {
-        for (var file in formData.files) {
+      // Add files
+      for (var file in formData.files) {
+        if (file.value is String) {
           request.files.add(
             await http.MultipartFile.fromPath(file.key, file.value as String),
+          );
+        } else if (file.value is List<int>) {
+          request.files.add(
+            http.MultipartFile.fromBytes(
+              file.key,
+              file.value as List<int>,
+            ),
           );
         }
       }
@@ -189,9 +197,11 @@ void _checkForNewVersion(Extra extra, {removeForceLogin = false}) async {
       !isAppUpdating) {
     isAppUpdating = true;
     showAppUpdateDialog(extra);
-  } else if (!removeForceLogin) {
-    _checkLogin();
   }
+
+  //  else if (!removeForceLogin) {
+  //   _checkLogin();
+  // }
 }
 
 Future _checkLogin() async {

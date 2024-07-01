@@ -58,7 +58,7 @@ List<String> hexColors = [
 ];
 
 FilteringTextInputFormatter allSpecialSymbolsRemove =
-    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 \w\s\n]'));
+    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 -.//:<> \w\s\n]'));
 // FilteringTextInputFormatter dotSpecialSymbolsallow =
 //     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\.]'));
 FilteringTextInputFormatter dotSpecialSymbolsallow =

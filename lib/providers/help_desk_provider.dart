@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_final_fields
 
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/api/image_service.dart';
 import 'package:stocks_news_new/modals/help_desk_chat_res.dart';
 import 'package:stocks_news_new/modals/help_desk_res.dart';
 import 'package:stocks_news_new/providers/auth_provider_base.dart';
@@ -36,6 +40,7 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
 
   TextEditingController reasonController = TextEditingController();
   TextEditingController messageController = TextEditingController();
+
   String _slug = "1";
   String get slug => _slug;
   String _ticketId = "1";
@@ -192,22 +197,26 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
     }
   }
 
-  Future replyTicket() async {
+  Future<void> replyTicket({File? image}) async {
     showGlobalProgressDialog();
+    notifyListeners();
+
     try {
-      Map request = {
+      final formData = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "ticket_id": ticketId,
         "message": messageController.text.toString().trim(),
-      };
+        // "image": multipartFile,
+      });
 
       ApiResponse response = await apiRequest(
         url: Apis.ticketReply,
-        request: request,
-        showProgress: false,
+        showProgress: true,
         removeForceLogin: true,
+        formData: formData,
       );
+
       if (response.status) {
         setSlug(slug, ticketId);
         notifyListeners();
@@ -215,10 +224,102 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
         getHelpDeskChatScreen();
         messageController.text = "";
       }
+
+      closeGlobalProgressDialog();
       notifyListeners();
-      closeGlobalProgressDialog();
     } catch (e) {
+      Utils().showLog("Error in replyTicket: $e");
       closeGlobalProgressDialog();
+      notifyListeners();
+    }
+  }
+
+  String _formatMessage(String message) {
+    // Regular expression to detect URLs
+    try {
+      final RegExp regex = RegExp(
+        r"(https?:\/\/\S+)",
+        caseSensitive: false,
+        multiLine: true,
+      );
+
+      // Replace URLs with clickable links
+      String formattedMessage = message.replaceAllMapped(regex, (match) {
+        String url = match.group(0)!;
+        return '<a href="$url">$url</a>';
+      });
+      return formattedMessage;
+    } catch (e) {
+      Utils().showLog("-----$e");
+    }
+
+    return "";
+  }
+
+  Future replyTicketNew({
+    String url = Apis.ticketReply,
+    Map<String, dynamic>? header,
+    baseUrl = Apis.baseUrl,
+    File? image,
+  }) async {
+    showGlobalProgressDialog();
+    try {
+      Utils().showLog("URL  =  $baseUrl$url");
+      Utils().showLog("HEADERS  =  ${getHeaders().toString()}");
+      final messageText = messageController.text.replaceAll("\n", "<br>");
+      String mainFormattedMsg = _formatMessage(messageText);
+      Map<String, dynamic> headers = getHeaders();
+      if (header != null) headers.addAll(header);
+      dio.options.headers = headers;
+      Uint8List? result;
+      MultipartFile? multipartFile;
+
+      if (image != null) {
+        result = await testCompressAndGetFile(image);
+
+        if (result != null) {
+          multipartFile = MultipartFile.fromBytes(
+            result,
+            filename: image.path.substring(image.path.lastIndexOf("/") + 1),
+          );
+        }
+      } else {
+        Utils().showLog("null image");
+      }
+
+      final request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "ticket_id": ticketId,
+        "message": mainFormattedMsg,
+        "image": multipartFile,
+      });
+      Response response = await dio.post((baseUrl + url),
+          data: request, options: Options(headers: headers));
+      closeGlobalProgressDialog();
+      if (response.statusCode == 200) {
+        if (response.data != null) {
+          setSlug(slug, ticketId);
+          notifyListeners();
+          getHelpDeskChatScreen();
+          messageController.text = "";
+        } else {
+          //
+        }
+
+        return ApiResponse(status: true);
+      } else {
+        return ApiResponse(status: false);
+      }
+    } on DioException catch (e) {
+      Utils().showLog("dio e $e");
+      closeGlobalProgressDialog();
+
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
+    } catch (e) {
+      Utils().showLog("catch e$e");
+      closeGlobalProgressDialog();
+      return ApiResponse(status: false, message: Const.errSomethingWrong);
     }
   }
 
@@ -260,9 +361,12 @@ class HelpDeskProvider extends ChangeNotifier with AuthProviderBase {
       _showProgressChatMessage = false;
 
       setStatus(Status.loaded);
+
+      return ApiResponse(status: response.status);
     } catch (e) {
       // _chatData = null;
       setStatus(Status.loaded);
+      return ApiResponse(status: false);
     }
   }
 }

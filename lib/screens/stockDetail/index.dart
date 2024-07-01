@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +50,6 @@ class _StockDetailState extends State<StockDetail> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callApi();
       _addSocket();
-
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
         parameters: {'screen_name': "Stock Detail"},

@@ -106,6 +106,8 @@ dependencies:
   firebase_dynamic_links: ^5.4.17
   fluttertoast: ^8.2.5
   firebase_auth: ^4.17.8
+  purchases_flutter: ^6.29.4
+  purchases_ui_flutter: ^6.29.4
 
 dev_dependencies:
   flutter_test:

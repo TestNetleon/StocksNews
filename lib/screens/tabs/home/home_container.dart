@@ -55,6 +55,7 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              // const InAppPurchaseUI(),
               const HomeTopNewsSlider(),
 
               Visibility(
@@ -79,7 +80,7 @@ class HomeContainer extends StatelessWidget {
                             provider.homeTrendingRes?.popular == null ||
                             provider.homeTrendingRes == null) &&
                         provider.statusTrending != Status.loading))
-                    const StockInBuzz(),
+                      const StockInBuzz(),
                     const HomeMyAlerts(),
                     Visibility(
                       visible: provider.extra?.showPortfolio ?? false,
@@ -134,12 +135,15 @@ class HomeContainer extends StatelessWidget {
                               ),
                             ),
                             ListView.separated(
-                              itemCount: provider.homeTrendingRes?.trendingNews?.length ?? 0,
+                              itemCount: provider
+                                      .homeTrendingRes?.trendingNews?.length ??
+                                  0,
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               padding: EdgeInsets.only(top: 12.sp),
                               itemBuilder: (context, index) {
-                                News? data = provider.homeTrendingRes?.trendingNews?[index];
+                                News? data = provider
+                                    .homeTrendingRes?.trendingNews?[index];
                                 return NewsItem(
                                   news: News(
                                     title: data?.title ?? "",
