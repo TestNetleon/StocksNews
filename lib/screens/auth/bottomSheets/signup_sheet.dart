@@ -3,6 +3,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,6 +14,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/bottomSheets/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
 // import 'package:stocks_news_new/screens/auth/otp/otp_login.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -49,11 +51,7 @@ signupSheet({
     ),
     context: navigatorKey.currentContext!,
     builder: (context) {
-      return SignUpBottom(
-        state: state,
-        dntPop: dontPop,
-        email: email,
-      );
+      return SignUpBottom(state: state, dntPop: dontPop, email: email);
     },
   );
 }
@@ -69,22 +67,21 @@ class SignUpBottom extends StatefulWidget {
 }
 
 class _SignUpBottomState extends State<SignUpBottom> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller =
+      TextEditingController(text: kDebugMode ? "chetan@netleon.com" : "");
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   void initState() {
     super.initState();
-
     if (widget.email != null && widget.email != '') {
       _controller.text = widget.email ?? "";
     }
-
     Utils().showLog(
         "---State is--- ${widget.state}, ---Don't pop up is${widget.dntPop}---");
   }
 
-  void _onLoginClick() {
+  void _onLoginClick() async {
     closeKeyboard();
 
     if (!isEmail(_controller.text)) {
@@ -96,11 +93,21 @@ class _SignUpBottomState extends State<SignUpBottom> {
       return;
     }
 
-    UserProvider provider = context.read<UserProvider>();
-
-    Map request = {"username": _controller.text.toLowerCase()};
-
-    provider.signup(request);
+    String? referralCode = await Preference.getReferral();
+    if (referralCode != null && referralCode != "") {
+      UserProvider provider = context.read<UserProvider>();
+      Map request = {"username": _controller.text.toLowerCase()};
+      provider.signup(request);
+    } else {
+      referSheet(
+        // email: _controller.text.toLowerCase(),
+        onReferral: (code) {
+          UserProvider provider = context.read<UserProvider>();
+          Map request = {"username": _controller.text.toLowerCase()};
+          provider.signup(request, referCode: code);
+        },
+      );
+    }
   }
 
   void _handleSignIn() async {
@@ -109,11 +116,31 @@ class _SignUpBottomState extends State<SignUpBottom> {
     }
 
     try {
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+
+      // String? referralCode = await Preference.getReferral();
+
+      _handleGoogleLogin(account);
+      // if (referralCode != null && referralCode != "") {
+      //   _handleGoogleLogin(account);
+      // } else {
+      //   referSheet(
+      //     onReferral: (code) {
+      //       _handleGoogleLogin(account, code: code);
+      //     },
+      //   );
+      // }
+    } catch (error) {
+      popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
+      print(error);
+    }
+  }
+
+  void _handleGoogleLogin(GoogleSignInAccount? account, {String? code}) async {
+    try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
 
-      GoogleSignInAccount? account = await _googleSignIn.signIn();
-      print(account.toString());
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String? referralCode = await Preference.getReferral();
       String versionName = packageInfo.version;
@@ -122,7 +149,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         bool granted = await Permission.notification.isGranted;
-
         Map request = {
           "displayName": account.displayName ?? "",
           "email": account.email,
@@ -134,11 +160,17 @@ class _SignUpBottomState extends State<SignUpBottom> {
           "build_version": versionName,
           "build_code": buildNumber,
           "fcm_permission": "$granted",
-          "referral_code": "$referralCode",
+          //  "referral_code": "$referralCode",
+          "referral_code": referralCode ?? code ?? "",
           // "referral_code": "8FELPC",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(request, dontPop: 'true', state: widget.state);
+        provider.googleLogin(
+          request,
+          dontPop: 'true',
+          state: widget.state,
+          alreadySubmitted: false,
+        );
       }
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -152,7 +184,22 @@ class _SignUpBottomState extends State<SignUpBottom> {
     super.dispose();
   }
 
-  void _handleSignInApple(id, displayName, email) async {
+  void _handleApple(id, displayName, email) async {
+    String? referralCode = await Preference.getReferral();
+
+    if (referralCode != null && referralCode != "") {
+      _handleAppleSignIn(id, displayName, email);
+    } else {
+      referSheet(
+        // email: _controller.text.toLowerCase(),
+        onReferral: (code) {
+          _handleAppleSignIn(id, displayName, email, code: code);
+        },
+      );
+    }
+  }
+
+  void _handleAppleSignIn(id, displayName, email, {String? code}) async {
     try {
       String? fcmToken = await Preference.getFcmToken();
       String? address = await Preference.getLocation();
@@ -173,7 +220,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
         "build_version": versionName,
         "build_code": buildNumber,
         "fcm_permission": "$granted",
-        "referral_code": "$referralCode",
+        // "referral_code": "$referralCode",
+        "referral_code": referralCode ?? code ?? "",
       };
 
       provider.appleLogin(
@@ -181,7 +229,10 @@ class _SignUpBottomState extends State<SignUpBottom> {
         dontPop: 'true',
         state: widget.state,
         id: id,
+        code: code,
+        alreadySubmitted: true,
       );
+
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
     } catch (error) {
       popUpAlert(message: "$error", title: "Alert", icon: Images.alertPopGIF);
@@ -232,7 +283,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
               ),
             ),
             const SpacerVertical(height: 70),
-
             Container(
               width: MediaQuery.of(context).size.width * .45,
               constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
@@ -242,7 +292,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
               ),
             ),
             const SpacerVertical(height: 10),
-
             // Container(
             //   padding: EdgeInsets.symmetric(vertical: 12.sp),
             //   width: MediaQuery.of(context).size.width * .45,
@@ -322,7 +371,6 @@ class _SignUpBottomState extends State<SignUpBottom> {
                         ],
                       ),
                       const SpacerVertical(),
-
                       const SpacerVertical(height: 5),
                       ThemeButton(
                         onPressed: () async {
@@ -379,7 +427,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
                                 log("Apple ***** =>  ${credential.state}");
                                 log("Apple ***** =>  ${credential.userIdentifier}");
 
-                                _handleSignInApple(
+                                _handleApple(
                                   credential.userIdentifier,
                                   credential.givenName != null
                                       ? "${credential.givenName} ${credential.familyName}"

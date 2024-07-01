@@ -12,6 +12,10 @@
 	<array>
 		<string>applinks:app.stocks.news</string>
 		<string>applinks:stocksnews.page.link</string>
+		<!-- <string>applinks:2tchl.app.link</string>
+		<string>applinks:2tchl-alternate.app.link</string>
+		<string>applinks:2tchl.test-app.link</string>
+		<string>applinks:2tchl-alternate.test-app.link</string> -->
 	</array>
 </dict>
 </plist>

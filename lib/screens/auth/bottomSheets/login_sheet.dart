@@ -139,8 +139,12 @@ class _LoginBottomState extends State<LoginBottom> {
           "fcm_permission": "$granted",
           // "serverAuthCode": account?.serverAuthCode,
         };
-        provider.googleLogin(request,
-            state: widget.state, dontPop: widget.dontPop);
+        provider.googleLogin(
+          request,
+          state: widget.state,
+          dontPop: widget.dontPop,
+          alreadySubmitted: false,
+        );
       }
 
       // GoogleSignInAccount:{displayName: Netleon Family, email: testnetleon@gmail.com, id: 110041963646228833065, photoUrl: https://lh3.googleusercontent.com/a/ACg8ocJocVZ9k-umOKg7MEzLfpG4d_GBrUFYY8o84_r3Am95dA, serverAuthCode: null}
