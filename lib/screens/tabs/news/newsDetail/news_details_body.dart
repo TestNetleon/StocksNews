@@ -568,17 +568,29 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                       ),
                     ),
                     Positioned(
-                      bottom: 6.sp,
-                      right: 0,
-                      child: FloatingActionButton(
-                        backgroundColor: ThemeColors.accent,
-                        child: const Icon(Icons.share),
+                      bottom: 6,
+                      right: 10,
+                      // child: FloatingActionButton(
+                      //   backgroundColor: ThemeColors.accent,
+                      //   child: const Icon(Icons.share),
+                      //   onPressed: () {
+                      //     commonShare(
+                      //       title: provider.data?.postDetail?.title ?? "",
+                      //       url: provider.data?.postDetail?.slug ?? "",
+                      //     );
+                      //   },
+                      // ),
+
+                      child: ThemeButtonSmall(
                         onPressed: () {
                           commonShare(
                             title: provider.data?.postDetail?.title ?? "",
                             url: provider.data?.postDetail?.slug ?? "",
                           );
                         },
+                        text: "Share Story",
+                        fontBold: true,
+                        icon: Icons.share,
                       ),
                     ),
                     if ((provider.data?.postDetail?.readingStatus == false) &&

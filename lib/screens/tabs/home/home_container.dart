@@ -23,6 +23,7 @@ import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
+import 'widgets/topPlaid/index.dart';
 
 class HomeContainer extends StatelessWidget {
   const HomeContainer({super.key});
@@ -81,6 +82,10 @@ class HomeContainer extends StatelessWidget {
                             provider.homeTrendingRes == null) &&
                         provider.statusTrending != Status.loading))
                       const StockInBuzz(),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: Dimen.padding),
+                      child: TopPlaidIndex(),
+                    ),
                     const HomeMyAlerts(),
                     Visibility(
                       visible: provider.extra?.showPortfolio ?? false,
@@ -110,14 +115,12 @@ class HomeContainer extends StatelessWidget {
                         child: const PlaidHome(),
                       ),
                     ),
-
                     HomePartialLoading(
                       loadingWidget: const Loading(),
                       loading: provider.isLoadingTrending,
                       onRefresh: provider.refreshWithCheck,
                       child: const HomeInnerTabs(),
                     ),
-
                     Visibility(
                         visible: !provider.isLoadingTrending &&
                             (provider.homeTrendingRes?.trendingNews
@@ -165,58 +168,6 @@ class HomeContainer extends StatelessWidget {
                             ),
                           ],
                         )),
-
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingIpo,
-                    //   error: !provider.isLoadingIpo && provider.ipoRes == null
-                    //       ? HomeError.ipo
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const IpoIndex(),
-                    // ),
-                    // Visibility(
-                    //   visible: provider.focusRes != null,
-                    //   child: HomePartialLoading(
-                    //     loading: provider.isLoadingStockFocus,
-                    //     error: null,
-                    //     onRefresh: provider.refreshWithCheck,
-                    //     child: const StocksInFocus(),
-                    //   ),
-                    // ),
-                    // const SpacerVertical(height: 10),
-                    // const HomeBanner(),
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingSentiment,
-                    //   error: !provider.isLoadingSentiment &&
-                    //           provider.homeSentimentRes == null
-                    //       ? HomeError.sentiment
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const SentimentsGraph(),
-                    // ),
-                    // HomePartialLoading(
-                    //   loading: provider.isLoadingInsider,
-                    //   error: !provider.isLoadingInsider &&
-                    //           provider.homeInsiderRes == null
-                    //       ? provider.homeInsiderRes?.news.isEmpty == true
-                    //           ? HomeError.news
-                    //           : provider.homeInsiderRes?.recentMentions
-                    //                       ?.isEmpty ==
-                    //                   true
-                    //               ? HomeError.mentions
-                    //               : HomeError.insiderTrading
-                    //       : null,
-                    //   onRefresh: provider.refreshWithCheck,
-                    //   child: const Column(
-                    //     children: [
-                    //       MostRecentMentions(),
-                    //       // InsiderSocialTabs(),
-                    //       // SpacerVertical(),
-                    //       // HomeNewsItem(),
-                    //       // SpacerVertical(),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

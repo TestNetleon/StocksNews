@@ -225,18 +225,44 @@ class BlogDetailContainer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Positioned(
+                  //   bottom: 6.sp,
+                  //   right: 0,
+                  //   child: FloatingActionButton(
+                  //     backgroundColor: ThemeColors.accent,
+                  //     child: const Icon(Icons.share),
+                  //     onPressed: () {
+                  //       commonShare(
+                  //         title: provider.blogsDetail?.name ?? "",
+                  //         url: provider.blogsDetail?.slug ?? "",
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   Positioned(
-                    bottom: 6.sp,
-                    right: 0,
-                    child: FloatingActionButton(
-                      backgroundColor: ThemeColors.accent,
-                      child: const Icon(Icons.share),
+                    bottom: 6,
+                    right: 6,
+                    // child: FloatingActionButton(
+                    //   backgroundColor: ThemeColors.accent,
+                    //   child: const Icon(Icons.share),
+                    //   onPressed: () {
+                    //     commonShare(
+                    //       title: provider.data?.postDetail?.title ?? "",
+                    //       url: provider.data?.postDetail?.slug ?? "",
+                    //     );
+                    //   },
+                    // ),
+
+                    child: ThemeButtonSmall(
                       onPressed: () {
                         commonShare(
                           title: provider.blogsDetail?.name ?? "",
                           url: provider.blogsDetail?.slug ?? "",
                         );
                       },
+                      text: "Share Story",
+                      fontBold: true,
+                      icon: Icons.share,
                     ),
                   ),
                 ],

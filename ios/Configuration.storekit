@@ -1,5 +1,5 @@
 {
-  "identifier" : "93BF8EAB",
+  "identifier" : "ADE76EF8",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -7,10 +7,9 @@
 
   ],
   "settings" : {
-    "_applicationInternalID" : "6476615803",
-    "_developerTeamID" : "NPUHL9S742",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 741340737.85437906,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -60,11 +59,77 @@
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "393031EF",
+      "localizations" : [
 
+      ],
+      "name" : "Subscription",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "F6AF4BB1",
+          "introductoryOffer" : {
+            "internalID" : "2ECBE3E9",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "month_only",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly",
+          "subscriptionGroupID" : "393031EF",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "5BC58DA5",
+          "introductoryOffer" : {
+            "internalID" : "0523B484",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P2W"
+          },
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "annual_only",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Annual",
+          "subscriptionGroupID" : "393031EF",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
   ],
   "subscriptionOffersKeyPair" : {
-    "id" : "38B4F0CC",
-    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgPrY9aXnxMYGnDkJZTedsyUmV9LLExCbLOs+ItocJ2QCgCgYIKoZIzj0DAQehRANCAAQ0yMD54BFLJQa4aicD2zUUjbaM7vv2ESvzDcjBqhpH2whnNFyGmTgb0wITLUUR4m1GR4u5nYZGTu37MIXK8tlL"
+    "id" : "441EB776",
+    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgxX4MK/R3gaed15ryB89+Bcn4i0pmqP9sLu7Xo5Hx0fmgCgYIKoZIzj0DAQehRANCAASRVaxG4kh6MVh1JvQv/7q5BgRN+hTZgof6dWm8TKiXmEhOJrjNthfIOwwgSTd6CBQtrH1XAXYtQnJubCRw+/o3"
   },
   "version" : {
     "major" : 3,
