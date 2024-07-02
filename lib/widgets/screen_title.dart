@@ -54,11 +54,11 @@ class ScreenTitle extends StatelessWidget {
                           ? HtmlWidget(
                               title ?? "",
                               textStyle:
-                                  style ?? styleGeorgiaBold(fontSize: 17),
+                                  style ?? styleGeorgiaBold(fontSize: 25),
                             )
                           : Text(
                               title ?? "",
-                              style: style ?? styleGeorgiaBold(fontSize: 17),
+                              style: style ?? styleGeorgiaBold(fontSize: 25),
                             ),
                     ),
                     Visibility(
@@ -94,7 +94,7 @@ class ScreenTitle extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title ?? "",
-                          style: style ?? styleGeorgiaBold(fontSize: 17),
+                          style: style ?? styleGeorgiaBold(fontSize: 25),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -105,11 +105,11 @@ class ScreenTitle extends StatelessWidget {
                 child: htmlTitle
                     ? HtmlWidget(
                         title ?? "",
-                        textStyle: style ?? styleGeorgiaBold(fontSize: 17),
+                        textStyle: style ?? styleGeorgiaBold(fontSize: 25),
                       )
                     : Text(
                         title ?? "",
-                        style: style ?? styleGeorgiaBold(fontSize: 17),
+                        style: style ?? styleGeorgiaBold(fontSize: 25),
                       ),
               ),
             ),
@@ -162,18 +162,23 @@ class ScreenTitle extends StatelessWidget {
                       // ),
                     ),
                   ),
-          Visibility(
-            visible: divider,
-            child: Padding(
-              padding: dividerPadding ??
-                  const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-              child: const Divider(
-                color: ThemeColors.accent,
-                height: 2,
-                thickness: 2,
-              ),
-            ),
-          ),
+          Padding(
+            padding: dividerPadding ??
+                const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+            child: const SizedBox(),
+          )
+          // Visibility(  //   dividerVisible
+          //   visible: divider,
+          //   child: Padding(
+          //     padding: dividerPadding ??
+          //         const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+          //     child: const Divider(
+          //       color: ThemeColors.accent,
+          //       height: 2,
+          //       thickness: 2,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

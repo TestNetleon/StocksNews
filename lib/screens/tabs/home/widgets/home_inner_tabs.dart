@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -13,6 +16,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/view_more_widget.dart';
+import 'package:vibration/vibration.dart';
 
 class HomeInnerTabs extends StatefulWidget {
   const HomeInnerTabs({super.key});
@@ -31,77 +35,119 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SpacerVertical(height: isPhone ? 0 : 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // CustomTabLabel(
-            //   "Trending",
-            //   coloredLetters: const ['T'],
-            //   selected: _selectedIndex == 0,
-            //   onTap: () {
-            //     setState(() {
-            //       _selectedIndex = 0;
-            //     });
-            //   },
-            // ),
-            // VerticalDivider(
-            //   color: ThemeColors.accent,
-            //   width: 1.sp,
-            //   thickness: 1.sp,
-            // ),
-            // CustomTabLabel(
-            //   "Top Gainers",
-            //   coloredLetters: const ['G'],
-            //   selected: _selectedIndex == 1,
-            //   onTap: () {
-            //     setState(() {
-            //       _selectedIndex = 1;
-            //     });
-            //   },
-            // ),
-            // VerticalDivider(
-            //   color: ThemeColors.accent,
-            //   width: 1.sp,
-            //   thickness: 1.sp,
-            // ),
-            // CustomTabLabel(
-            //   "Top Losers",
-            //   coloredLetters: const ['L'],
-            //   selected: _selectedIndex == 2,
-            //   onTap: () {
-            //     setState(() {
-            //       _selectedIndex = 2;
-            //     });
-            //   },
-            // ),
-            CustomTabHome(
-              label: "Trending",
-              selected: _selectedIndex == 0,
-              onTap: () {
-                setState(() {
-                  _selectedIndex = 0;
-                });
-              },
-            ),
-            CustomTabHome(
-              label: "Top Gainers",
-              selected: _selectedIndex == 1,
-              onTap: () {
-                setState(() {
-                  _selectedIndex = 1;
-                });
-              },
-            ),
-            CustomTabHome(
-              label: "Top Losers",
-              selected: _selectedIndex == 2,
-              onTap: () {
-                setState(() {
-                  _selectedIndex = 2;
-                });
-              },
-            ),
-          ],
+        Container(
+          padding: const EdgeInsets.all(5),
+          // margin: widget.padding,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 21, 21, 21),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // CustomTabLabel(
+              //   "Trending",
+              //   coloredLetters: const ['T'],
+              //   selected: _selectedIndex == 0,
+              //   onTap: () {
+              //     setState(() {
+              //       _selectedIndex = 0;
+              //     });
+              //   },
+              // ),
+              // VerticalDivider(
+              //   color: ThemeColors.accent,
+              //   width: 1.sp,
+              //   thickness: 1.sp,
+              // ),
+              // CustomTabLabel(
+              //   "Top Gainers",
+              //   coloredLetters: const ['G'],
+              //   selected: _selectedIndex == 1,
+              //   onTap: () {
+              //     setState(() {
+              //       _selectedIndex = 1;
+              //     });
+              //   },
+              // ),
+              // VerticalDivider(
+              //   color: ThemeColors.accent,
+              //   width: 1.sp,
+              //   thickness: 1.sp,
+              // ),
+              // CustomTabLabel(
+              //   "Top Losers",
+              //   coloredLetters: const ['L'],
+              //   selected: _selectedIndex == 2,
+              //   onTap: () {
+              //     setState(() {
+              //       _selectedIndex = 2;
+              //     });
+              //   },
+              // ),
+
+              CustomTabHome(
+                label: "Trending",
+                selected: _selectedIndex == 0,
+                onTap: () async {
+                  try {
+                    if (Platform.isAndroid) {
+                      bool isVibe = await Vibration.hasVibrator() ?? false;
+                      if (isVibe) {
+                        Vibration.vibrate(
+                            pattern: [50, 50, 79, 55], intensities: [1, 10]);
+                      }
+                    } else {
+                      HapticFeedback.lightImpact();
+                    }
+                  } catch (e) {}
+                  setState(() {
+                    _selectedIndex = 0;
+                  });
+                },
+              ),
+              CustomTabHome(
+                label: "Top Gainers",
+                selected: _selectedIndex == 1,
+                onTap: () async {
+                  try {
+                    if (Platform.isAndroid) {
+                      bool isVibe = await Vibration.hasVibrator() ?? false;
+                      if (isVibe) {
+                        Vibration.vibrate(
+                            pattern: [50, 50, 79, 55], intensities: [1, 10]);
+                      }
+                    } else {
+                      HapticFeedback.lightImpact();
+                    }
+                  } catch (e) {}
+                  setState(() {
+                    _selectedIndex = 1;
+                  });
+                },
+              ),
+              CustomTabHome(
+                label: "Top Losers",
+                selected: _selectedIndex == 2,
+                onTap: () async {
+                  try {
+                    if (Platform.isAndroid) {
+                      bool isVibe = await Vibration.hasVibrator() ?? false;
+                      if (isVibe) {
+                        Vibration.vibrate(
+                            pattern: [50, 50, 79, 55], intensities: [1, 10]);
+                      }
+                    } else {
+                      HapticFeedback.lightImpact();
+                    }
+                  } catch (e) {}
+                  setState(() {
+                    _selectedIndex = 2;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
 
         provider.topLoading

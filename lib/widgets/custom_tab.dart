@@ -39,15 +39,15 @@ class CustomTab extends StatelessWidget {
 
 class CustomTabNEW extends StatelessWidget {
   const CustomTabNEW({
-    required this.index,
+    this.index,
     required this.label,
-    required this.selectedIndex,
+    this.selectedIndex,
     super.key,
   });
 
-  final int index;
+  final int? index;
   final String label;
-  final int selectedIndex;
+  final int? selectedIndex;
 //
   @override
   Widget build(BuildContext context) {
