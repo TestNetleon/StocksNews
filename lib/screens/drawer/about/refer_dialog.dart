@@ -8,7 +8,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../api/api_response.dart';
 import '../../../widgets/screen_title.dart';
 import '../../affiliate/referFriend/howit_work.dart';

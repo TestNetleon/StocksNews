@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:purchases_ui_flutter/paywall_result.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -13,11 +12,13 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../../../providers/leaderboard.dart';
 import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/custom/alert_popup.dart';
 import '../../../widgets/theme_button.dart';
+import '../../myAccount/widgets/my-account_header.dart';
 import 'profile_image.dart';
 
 class UserCard extends StatefulWidget {
@@ -32,8 +33,29 @@ class _UserCardState extends State<UserCard> {
   PurchasesConfiguration? configuration;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _callAPI();
+    });
+  }
+
+  _callAPI() {
+    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+    provider.getReferData(checkAppUpdate: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     UserProvider userProvider = context.watch<UserProvider>();
+    // LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
+
+    // bool verified = userProvider.user?.name != null &&
+    //     (userProvider.user?.displayName != null &&
+    //         userProvider.user?.displayName != '') &&
+    //     (userProvider.user?.email != null && userProvider.user?.email != '') &&
+    //     (userProvider.user?.phone != null && userProvider.user?.phone != '');
 
     return Column(
       children: [
@@ -51,8 +73,9 @@ class _UserCardState extends State<UserCard> {
                     onTap: widget.onTap,
                     child: ProfileImage(
                       url: userProvider.user?.image,
-                      cameraSize: 12,
                       showCameraIcon: false,
+                      imageSize: 70,
+                      roundImage: false,
                     ),
                   ),
                   const SpacerHorizontal(width: 10),
@@ -80,6 +103,10 @@ class _UserCardState extends State<UserCard> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5),
+                            child: MyVerifiedCard(),
+                          ),
                         ],
                       ),
                     ),
@@ -95,7 +122,7 @@ class _UserCardState extends State<UserCard> {
                 children: [
                   Text(
                     "Current Plan",
-                    style: stylePTSansRegular(),
+                    style: stylePTSansBold(fontSize: 18),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -183,11 +210,11 @@ class _UserCardState extends State<UserCard> {
                           children: [
                             Text(
                               "Upgrade to",
-                              style: styleGeorgiaBold(fontSize: 30),
+                              style: styleGeorgiaBold(fontSize: 40),
                             ),
                             Text(
                               "Premium Plans",
-                              style: styleGeorgiaBold(fontSize: 30),
+                              style: styleGeorgiaBold(fontSize: 40),
                             ),
                           ],
                         ),
@@ -209,7 +236,7 @@ class _UserCardState extends State<UserCard> {
                     ),
                     const SpacerHorizontal(width: 5),
                     ThemeButtonSmall(
-                      text: "Upgrade",
+                      text: "UPGRADE",
                       onPressed: () {
                         _initPlatformState();
                         Scaffold.of(context).closeDrawer();
@@ -217,7 +244,7 @@ class _UserCardState extends State<UserCard> {
                       icon: Icons.upgrade,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
-                    )
+                    ),
                   ],
                 ),
               ),
