@@ -42,12 +42,12 @@ bool isEven(index) {
 
 class Utils {
   void showLog(data) {
-    if (kDebugMode) {
-      print("==================");
-      // log("$data");
-      print("$data");
-      print("==================");
-    }
+    // if (kDebugMode) {
+    print("==================");
+    // log("$data");
+    log("$data");
+    print("==================");
+    // }
   }
 }
 
@@ -98,6 +98,36 @@ String formatDateTimeAgo(DateTime dateTime) {
     return DateFormat.yMMMd().format(dateTime);
   }
 }
+
+String convertToReadableValue(double value) {
+  String suffix = '';
+  double formattedValue = value;
+
+  if (value.abs() >= 1e9) {
+    formattedValue = value / 1e9;
+    suffix = 'B';
+  } else if (value.abs() >= 1e6) {
+    formattedValue = value / 1e6;
+    suffix = 'M';
+  }
+
+  String formattedString = formattedValue.toStringAsFixed(1);
+  if (value < 0) {
+    return '-\$${formattedString.substring(1)}$suffix';
+  } else {
+    return '\$$formattedString$suffix';
+  }
+}
+
+// String convertDollarValue(double amount) {
+//   if (amount >= 1000000000) {
+//     return "\$${(amount / 1000000000).toStringAsFixed(2)} B";
+//   } else if (amount >= 1000000) {
+//     return "\$${(amount / 1000000).toStringAsFixed(2)} M";
+//   } else {
+//     return "\$${amount.toStringAsFixed(2)}";
+//   }
+// }
 
 void showSnackbar({
   required context,

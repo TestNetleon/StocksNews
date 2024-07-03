@@ -38,9 +38,9 @@ class SdFinancialTabs extends StatelessWidget {
                         color: isSelected
                             ? ThemeColors.accent
                             : ThemeColors.greyBorder.withOpacity(0.4),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        )),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Text(
@@ -52,11 +52,11 @@ class SdFinancialTabs extends StatelessWidget {
               }),
             ),
           ),
-          Container(
-            height: 1,
-            width: double.infinity,
-            color: ThemeColors.accent,
-          )
+          // Container(
+          //   height: 1,
+          //   width: double.infinity,
+          //   color: ThemeColors.accent,
+          // )
         ],
       ),
     );

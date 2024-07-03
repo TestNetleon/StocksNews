@@ -12,6 +12,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/mergers_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
@@ -1301,8 +1302,8 @@ class StockDetailProviderNew extends ChangeNotifier {
   List<dynamic>? _sdFinancialArray;
   List<dynamic>? get sdFinancialArray => _sdFinancialArray;
 
-  // SdFinancialRes? _sdFinancialRes;
-  // SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
+  SdFinancialRes? _sdFinancialChartRes;
+  SdFinancialRes? get sdFinancialChartRes => _sdFinancialChartRes;
 
   // Map<String, dynamic>? _sdFinancialMap;
   // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
@@ -1368,6 +1369,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool showProgress = false,
     bool tabProgress = false,
   }) async {
+    _sdFinancialChartRes?.chart = null;
+    notifyListeners();
     if (reset) {
       typeIndex = 0;
       periodIndex = 0;
@@ -1393,7 +1396,8 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
 
       if (response.status) {
-        // _sdFinancialRes = sdFinancialResFromJson(jsonEncode(response.data));
+        _sdFinancialChartRes =
+            sdFinancialResFromJson(jsonEncode(response.data));
 
         // List<dynamic> financeStatementData = response.data['finance_statement'];
 

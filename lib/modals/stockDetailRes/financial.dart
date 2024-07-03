@@ -7,9 +7,11 @@ String sdFinancialResToJson(SdFinancialRes data) => json.encode(data.toJson());
 
 class SdFinancialRes {
   final List<FinanceStatement>? financeStatement;
+  List<Chart>? chart;
 
   SdFinancialRes({
     this.financeStatement,
+    this.chart,
   });
 
   factory SdFinancialRes.fromJson(Map<String, dynamic> json) => SdFinancialRes(
@@ -17,12 +19,62 @@ class SdFinancialRes {
             ? []
             : List<FinanceStatement>.from(json["finance_statement"]!
                 .map((x) => FinanceStatement.fromJson(x))),
+        chart: json["chart"] == null
+            ? []
+            : List<Chart>.from(json["chart"]!.map((x) => Chart.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "finance_statement": financeStatement == null
             ? []
             : List<dynamic>.from(financeStatement!.map((x) => x.toJson())),
+        "chart": chart == null
+            ? []
+            : List<dynamic>.from(chart!.map((x) => x.toJson())),
+      };
+}
+
+class Chart {
+  final String? period;
+  final int? revenue;
+  final int? netIncome;
+  final int? totalAssets;
+  final int? totalLiabilities;
+  final int? operatingCashFlow1;
+  final int? operatingCashFlow2;
+  final int? operatingCashFlow3;
+
+  Chart({
+    this.period,
+    this.revenue,
+    this.netIncome,
+    this.totalAssets,
+    this.totalLiabilities,
+    this.operatingCashFlow1,
+    this.operatingCashFlow2,
+    this.operatingCashFlow3,
+  });
+
+  factory Chart.fromJson(Map<String, dynamic> json) => Chart(
+        period: json["Period"],
+        revenue: json["Revenue"],
+        netIncome: json["Net Income"],
+        totalAssets: json["Total Assets"],
+        totalLiabilities: json["Total Liabilities"],
+        operatingCashFlow1: json["Operating Cash Flow"],
+        operatingCashFlow2: json["Investing Cash Flow"],
+        operatingCashFlow3: json["Financing Cash Flow"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Period": period,
+        "Revenue": revenue,
+        "Net Income": netIncome,
+        "Total Assets": totalAssets,
+        "Total Liabilities": totalLiabilities,
+        "Operating Cash Flow": operatingCashFlow1,
+        "Investing Cash Flow": operatingCashFlow2,
+        "Financing Cash Flow": operatingCashFlow3,
       };
 }
 
