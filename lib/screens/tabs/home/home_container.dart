@@ -19,7 +19,6 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
-import '../../inAppPurchase/purchase.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -58,9 +57,9 @@ class HomeContainer extends StatelessWidget {
           child: Column(
             children: [
               // Image.asset(
-              //   "assets/images/OTPF.gif",
-              //   height: 300,
-              //   width: 300,
+              //   "assets/images/progressF.gif",
+              //   height: 100,
+              //   width: 100,
               // ),
               // const InAppPurchaseUI(),
               const HomeTopNewsSlider(),
