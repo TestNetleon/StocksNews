@@ -35,11 +35,6 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
 
-    if (provider.mostPurchasedView?.isEmpty == true ||
-        provider.mostPurchasedView == null) {
-      return const SizedBox();
-    }
-
     return BaseContainer(
       appBar: const AppBarHome(
         canSearch: true,
@@ -226,9 +221,9 @@ class TopPlaidItemView extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: [0.2, 0.55],
+            stops: [0.1, 0.55],
             colors: [
-              Color.fromARGB(255, 19, 57, 0),
+              Color.fromARGB(255, 16, 46, 0),
               // ThemeColors.greyBorder,
               Color.fromARGB(255, 0, 0, 0),
             ],

@@ -128,14 +128,6 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = context.watch<UserProvider>();
-    LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
-
-    bool verified = userProvider.user?.name != null &&
-        (userProvider.user?.displayName != null &&
-            userProvider.user?.displayName != '') &&
-        (userProvider.user?.email != null && userProvider.user?.email != '') &&
-        (userProvider.user?.phone != null && userProvider.user?.phone != '');
 
     return Stack(
       children: [
@@ -194,176 +186,131 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                     //         fontSize: 14, color: ThemeColors.greyText),
                     //   ),
                     // ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 13),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Container(
-                          //   padding: const EdgeInsets.all(.2),
-                          //   decoration: BoxDecoration(
-                          //     color: Colors.white,
-                          //     borderRadius: BorderRadius.circular(5),
-                          //   ),
-                          //   child: Container(
-                          //     decoration: BoxDecoration(
-                          //       color: ThemeColors.primaryLight,
-                          //       borderRadius: BorderRadius.circular(5),
-                          //     ),
-                          //     child: Padding(
-                          //       padding:
-                          //           const EdgeInsets.fromLTRB(17, 5, 20, 5),
-                          //       // child: Row(
-                          //       //   mainAxisSize: MainAxisSize.min,
-                          //       //   children: [
-                          //       //     const Icon(
-                          //       //       Icons.verified,
-                          //       //       size: 18,
-                          //       //       color: ThemeColors.accent,
-                          //       //     ),
-                          //       //     const SpacerHorizontal(width: 5),
-                          //       //     Text(
-                          //       //       "Verified",
-                          //       //       style: stylePTSansRegular(
-                          //       //           fontSize: 14,
-                          //       //           color: ThemeColors.greyText),
-                          //       //     ),
-                          //       //   ],
-                          //       // ),
-                          //       child: Column(
-                          //         mainAxisSize: MainAxisSize.min,
-                          //         children: [
-                          //           const Icon(
-                          //             Icons.verified,
-                          //             size: 18,
-                          //             color: ThemeColors.accent,
-                          //           ),
-                          //           const SpacerVertical(height: 5),
-                          //           Text(
-                          //             "Verified",
-                          //             style: stylePTSansRegular(
-                          //                 fontSize: 14,
-                          //                 color: ThemeColors.greyText),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-
-                          Flexible(
-                            child: InkWell(
-                              onTap: () {
-                                popUpAlert(
-                                  padding: const EdgeInsets.all(10),
-                                  message: !verified
-                                      ? homeProvider
-                                              .extra?.profileText?.unVerified ??
-                                          "Unverified users are those who have not confirmed their name, email, display name, or mobile number."
-                                      : homeProvider
-                                              .extra?.profileText?.verified ??
-                                          "Verified users are those who have confirmed their name, email, display name, and mobile number.",
-                                  title: verified ? "Verified" : "Unverified",
-                                  iconWidget: Icon(
-                                    Icons.verified,
-                                    size: 80,
-                                    color: verified
-                                        ? ThemeColors.accent
-                                        : ThemeColors.sos,
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.verified,
-                                    size: 18,
-                                    color: verified
-                                        ? ThemeColors.accent
-                                        : ThemeColors.sos,
-                                  ),
-                                  const SpacerVertical(height: 5),
-                                  Text(
-                                    verified ? "Verified" : "Unverified",
-                                    style: stylePTSansBold(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          const SpacerHorizontal(width: 10),
-                          Flexible(
-                            child: InkWell(
-                              onTap: () {
-                                popUpAlert(
-                                  padding: const EdgeInsets.all(10),
-                                  message: homeProvider
-                                          .extra?.profileText?.points ??
-                                      "Points are earned by referring the app to friends and family who join and verify their contact information, with the referring user receiving points for each verified referral.",
-                                  title: "Points",
-                                  icon: Images.starAffiliate,
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    Images.starAffiliate,
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  const SpacerVertical(height: 5),
-                                  Text(
-                                    "Points - ${leaderProvider.extra?.received ?? 0}",
-                                    style: stylePTSansBold(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SpacerHorizontal(width: 10),
-                          Flexible(
-                            child: InkWell(
-                              onTap: () {
-                                popUpAlert(
-                                  padding: const EdgeInsets.all(10),
-                                  message: homeProvider
-                                          .extra?.profileText?.rank ??
-                                      "Rank is the position a user holds on the leaderboard of the affiliate program.",
-                                  title: "Rank",
-                                  icon: Images.rankAffiliate,
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    Images.rankAffiliate,
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  const SpacerVertical(height: 5),
-                                  Text(
-                                    verified
-                                        ? "Rank - ${leaderProvider.extra?.selfRank ?? 0}"
-                                        : "Rank - N/A",
-                                    style: stylePTSansBold(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 13),
+                      child: MyVerifiedCard(),
                     ),
                   ],
                 ),
               ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MyVerifiedCard extends StatelessWidget {
+  const MyVerifiedCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    LeaderBoardProvider leaderProvider = context.watch<LeaderBoardProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
+
+    bool verified = userProvider.user?.name != null &&
+        (userProvider.user?.displayName != null &&
+            userProvider.user?.displayName != '') &&
+        (userProvider.user?.email != null && userProvider.user?.email != '') &&
+        (userProvider.user?.phone != null && userProvider.user?.phone != '');
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(
+          child: InkWell(
+            onTap: () {
+              popUpAlert(
+                padding: const EdgeInsets.all(10),
+                message: !verified
+                    ? homeProvider.extra?.profileText?.unVerified ??
+                        "Unverified users are those who have not confirmed their name, email, display name, or mobile number."
+                    : homeProvider.extra?.profileText?.verified ??
+                        "Verified users are those who have confirmed their name, email, display name, and mobile number.",
+                title: verified ? "Verified" : "Unverified",
+                iconWidget: Icon(
+                  Icons.verified,
+                  size: 80,
+                  color: verified ? ThemeColors.accent : ThemeColors.sos,
+                ),
+              );
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.verified,
+                  size: 18,
+                  color: verified ? ThemeColors.accent : ThemeColors.sos,
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  verified ? "Verified" : "Unverified",
+                  style: stylePTSansBold(
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SpacerHorizontal(width: 10),
+        Flexible(
+          child: InkWell(
+            onTap: () {
+              popUpAlert(
+                padding: const EdgeInsets.all(10),
+                message: homeProvider.extra?.profileText?.points ??
+                    "Points are earned by referring the app to friends and family who join and verify their contact information, with the referring user receiving points for each verified referral.",
+                title: "Points",
+                icon: Images.starAffiliate,
+              );
+            },
+            child: Column(
+              children: [
+                Image.asset(
+                  Images.starAffiliate,
+                  height: 20,
+                  width: 20,
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  "Points - ${leaderProvider.extra?.received ?? 0}",
+                  style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SpacerHorizontal(width: 10),
+        Flexible(
+          child: InkWell(
+            onTap: () {
+              popUpAlert(
+                padding: const EdgeInsets.all(10),
+                message: homeProvider.extra?.profileText?.rank ??
+                    "Rank is the position a user holds on the leaderboard of the affiliate program.",
+                title: "Rank",
+                icon: Images.rankAffiliate,
+              );
+            },
+            child: Column(
+              children: [
+                Image.asset(
+                  Images.rankAffiliate,
+                  height: 20,
+                  width: 20,
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  verified
+                      ? "Rank - ${leaderProvider.extra?.selfRank ?? 0}"
+                      : "Rank - N/A",
+                  style: stylePTSansBold(color: Colors.white, fontSize: 14),
+                ),
+              ],
             ),
           ),
         ),
