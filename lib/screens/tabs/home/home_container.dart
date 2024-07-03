@@ -19,6 +19,7 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
+import '../../inAppPurchase/purchase.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -56,6 +57,12 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              // Image.asset(
+              //   "assets/images/OTPF.gif",
+              //   height: 300,
+              //   width: 300,
+              // ),
+              const InAppPurchaseUI(),
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,
@@ -76,10 +83,7 @@ class HomeContainer extends StatelessWidget {
                             provider.homeTrendingRes == null) &&
                         provider.statusTrending != Status.loading))
                       const StockInBuzz(),
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: Dimen.padding),
-                      child: TopPlaidIndex(),
-                    ),
+                    const TopPlaidIndex(),
                     const HomeMyAlerts(),
                     Visibility(
                       visible: provider.extra?.showPortfolio ?? false,

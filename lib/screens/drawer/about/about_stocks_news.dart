@@ -17,6 +17,7 @@ import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_lists.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
@@ -166,16 +167,24 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                 text: "About Stocks.News",
               ),
               const SpacerVertical(height: 30),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.sp),
-                  child: Image.asset(
-                    Images.stockIcon,
-                    height: 60,
-                    width: 60,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Tabs()),
+                      (route) => false);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.sp),
+                    child: Image.asset(
+                      Images.stockIcon,
+                      height: 60,
+                      width: 60,
+                    ),
                   ),
                 ),
               ),

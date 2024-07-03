@@ -45,7 +45,7 @@ class Utils {
     if (kDebugMode) {
       print("==================");
       // log("$data");
-      print("$data");
+      log("$data");
       print("==================");
     }
   }
