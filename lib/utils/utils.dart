@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
@@ -97,6 +100,35 @@ String formatDateTimeAgo(DateTime dateTime) {
     Utils().showLog("DATE = ${difference.inDays}");
     return DateFormat.yMMMd().format(dateTime);
   }
+}
+
+List<SdTopRes>? convertMultipleStringListsToSdTopResLists() {
+  StockDetailProviderNew provider =
+      navigatorKey.currentContext!.read<StockDetailProviderNew>();
+  SdFinancialRes? data = provider.sdFinancialChartRes;
+
+  // Ensure data and financeStatement are not null
+  if (data == null || data.financeStatement == null) {
+    return null;
+  }
+
+  // Initialize a list to hold the converted SdTopRes objects
+  List<SdTopRes> convertedList = [];
+
+  // Iterate over each period in the financeStatement list
+  for (var period in data.financeStatement!) {
+    // Assuming period is an object with period and value properties
+    SdTopRes convertedPeriod = SdTopRes(
+      key: period.period,
+      value: period.period,
+    );
+
+    convertedList.add(convertedPeriod);
+  }
+
+  Utils().showLog("Converted list: $convertedList");
+
+  return convertedList;
 }
 
 String convertToReadableValue(double value) {

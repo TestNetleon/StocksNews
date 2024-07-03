@@ -452,9 +452,7 @@ class _SdFinancialState extends State<SdFinancial> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-      // if (provider.sdFinancialRes == null) {
-      //   _callApi();
-      // }
+
       if (provider.sdFinancialArray == null) {
         _callApi();
       }
@@ -583,6 +581,7 @@ class _SdFinancialState extends State<SdFinancial> {
                   SizedBox(height: 200, child: BarChartSample(data: data)),
                 if (data?.chart?[0].operatingCashFlow1 != null)
                   SizedBox(height: 200, child: BarChartThreeLine(data: data)),
+                const SpacerVertical(height: 15),
                 Visibility(
                   visible: provider.extraFinancial?.period != null,
                   child: SdFinancialTabs(
@@ -592,6 +591,188 @@ class _SdFinancialState extends State<SdFinancial> {
                     selectedIndex: provider.periodIndex,
                   ),
                 ),
+                Visibility(
+                  visible: provider.extraFinancial?.period != null,
+                  child: SdFinancialTabs(
+                    tabs: convertMultipleStringListsToSdTopResLists(),
+                    onChange: (index) => provider.changePeriodTypeIndexVoid(
+                      index,
+                    ),
+                    selectedIndex: provider.changePeriodTypeIndex,
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "${data?.financeStatement?[provider.changePeriodTypeIndex].period}",
+                      style: stylePTSansRegular(
+                        fontSize: 14,
+                        color: ThemeColors.greyBorder,
+                      ),
+                    ),
+                    const SpacerHorizontal(width: 20),
+                    Text(
+                      "Y/Y\nChange",
+                      style: stylePTSansRegular(
+                        fontSize: 14,
+                        color: ThemeColors.greyBorder,
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  color: ThemeColors.greyBorder,
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      provider.typeValue != null &&
+                              provider.typeValue == "income-statement"
+                          ? "Revenue"
+                          : provider.typeValue != null &&
+                                  provider.typeValue ==
+                                      "balance-sheet-statement"
+                              ? "Total Assets"
+                              : "Operating Cash Flow",
+                      style: stylePTSansRegular(fontSize: 14),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          provider.typeValue != null &&
+                                  provider.typeValue == "income-statement"
+                              ? "${data?.financeStatement?[provider.changePeriodTypeIndex].revenue}"
+                              : provider.typeValue != null &&
+                                      provider.typeValue ==
+                                          "balance-sheet-statement"
+                                  ? "${data?.financeStatement?[provider.changePeriodTypeIndex].totalAssets}"
+                                  : "${data?.financeStatement?[provider.changePeriodTypeIndex].operatingCashFlow}",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
+                        const SpacerHorizontal(width: 20),
+                        Text(
+                          provider.typeValue != null &&
+                                  provider.typeValue == "income-statement"
+                              ? "${data?.financeStatement?[provider.changePeriodTypeIndex].revenueChangePercentage}"
+                              : provider.typeValue != null &&
+                                      provider.typeValue ==
+                                          "balance-sheet-statement"
+                                  ? "${data?.financeStatement?[provider.changePeriodTypeIndex].totalAssetsChangePercentage}"
+                                  : "${data?.financeStatement?[provider.changePeriodTypeIndex].operatingCashFlowChangePercentage}",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const Divider(
+                  color: ThemeColors.greyBorder,
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      provider.typeValue != null &&
+                              provider.typeValue == "income-statement"
+                          ? "Net Income"
+                          : provider.typeValue != null &&
+                                  provider.typeValue ==
+                                      "balance-sheet-statement"
+                              ? "Total Liabilities"
+                              : "Investing Cash Flow",
+                      style: stylePTSansRegular(fontSize: 14),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          provider.typeValue != null &&
+                                  provider.typeValue == "income-statement"
+                              ? "${data?.financeStatement?[provider.changePeriodTypeIndex].netIncome}"
+                              : provider.typeValue != null &&
+                                      provider.typeValue ==
+                                          "balance-sheet-statement"
+                                  ? "${data?.financeStatement?[provider.changePeriodTypeIndex].totalLiabilities}"
+                                  : "${data?.financeStatement?[provider.changePeriodTypeIndex].operatingCashFlow}",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
+                        const SpacerHorizontal(width: 20),
+                        Text(
+                          provider.typeValue != null &&
+                                  provider.typeValue == "income-statement"
+                              ? "${data?.financeStatement?[provider.changePeriodTypeIndex].investingCashFlow}"
+                              : provider.typeValue != null &&
+                                      provider.typeValue ==
+                                          "balance-sheet-statement"
+                                  ? "${data?.financeStatement?[provider.changePeriodTypeIndex].totalLiabilitiesChangePercentage}"
+                                  : "${data?.financeStatement?[provider.changePeriodTypeIndex].investingCashFlowChangePercentage}",
+                          style: stylePTSansRegular(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                if (data?.financeStatement?[provider.changePeriodTypeIndex]
+                        .financingCashFlow !=
+                    null)
+                  const Divider(
+                    color: ThemeColors.greyBorder,
+                    height: 15,
+                  ),
+                if (data?.financeStatement?[provider.changePeriodTypeIndex]
+                        .financingCashFlow !=
+                    null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Financing Cash Flow",
+                        style: stylePTSansRegular(fontSize: 14),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            provider.typeValue != null &&
+                                    provider.typeValue ==
+                                        "cash-flow-statement" &&
+                                    data
+                                            ?.financeStatement?[
+                                                provider.changePeriodTypeIndex]
+                                            .financingCashFlow !=
+                                        null
+                                ? "${data?.financeStatement?[provider.changePeriodTypeIndex].financingCashFlow}"
+                                : "",
+                            style: stylePTSansRegular(fontSize: 14),
+                          ),
+                          const SpacerHorizontal(width: 20),
+                          Text(
+                            provider.typeValue != null &&
+                                    provider.typeValue ==
+                                        "cash-flow-statement" &&
+                                    data
+                                            ?.financeStatement?[
+                                                provider.changePeriodTypeIndex]
+                                            .financingCashFlow !=
+                                        null
+                                ? "${data?.financeStatement?[provider.changePeriodTypeIndex].financingCashFlowChangePercentage}"
+                                : "",
+                            style: stylePTSansRegular(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),
                     shrinkWrap: true,
