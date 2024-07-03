@@ -327,7 +327,7 @@ class BarChartSampleState extends State<BarChartSample> {
 
   @override
   Widget build(BuildContext context) {
-    intFunction();
+    // intFunction();
     double positiveInterval = maxAbsValue / 5; // Example positive interval
     double negativeInterval = minAbsValue / 5;
 

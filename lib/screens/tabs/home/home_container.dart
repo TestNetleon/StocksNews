@@ -62,7 +62,7 @@ class HomeContainer extends StatelessWidget {
               //   height: 300,
               //   width: 300,
               // ),
-              const InAppPurchaseUI(),
+              // const InAppPurchaseUI(),
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,

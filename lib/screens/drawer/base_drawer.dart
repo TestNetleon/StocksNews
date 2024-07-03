@@ -138,15 +138,32 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          userProvider.user?.name?.isNotEmpty ==
-                                                  true
-                                              ? "${userProvider.user?.name}"
-                                              : "Hello",
-                                          style: stylePTSansBold(),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Icon(
+                                              Icons.verified,
+                                              size: 18,
+                                              color: ThemeColors.accent,
+                                            ),
+                                            const SpacerHorizontal(width: 5),
+                                            Flexible(
+                                              child: Text(
+                                                (userProvider.user?.name
+                                                                ?.isNotEmpty ==
+                                                            true
+                                                        ? "${userProvider.user?.name}"
+                                                        : "Hello")
+                                                    .capitalizeWords(),
+                                                style: stylePTSansBold(),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                        const SpacerVertical(height: 3),
                                         Text(
                                           userProvider.user?.email
                                                       ?.isNotEmpty ==

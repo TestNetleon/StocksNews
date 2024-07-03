@@ -1399,6 +1399,8 @@ class StockDetailProviderNew extends ChangeNotifier {
         _sdFinancialChartRes =
             sdFinancialResFromJson(jsonEncode(response.data));
 
+        // _sdFinancialChartRes?.chart?.sublist(0, 5);
+
         // List<dynamic> financeStatementData = response.data['finance_statement'];
 
         // for (var item in financeStatementData) {
