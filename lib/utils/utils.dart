@@ -42,21 +42,12 @@ bool isEven(index) {
 
 class Utils {
   void showLog(data) {
-<<<<<<< HEAD
     // if (kDebugMode) {
     print("==================");
     // log("$data");
     log("$data");
     print("==================");
     // }
-=======
-    if (kDebugMode) {
-      print("==================");
-      // log("$data");
-      log("$data");
-      print("==================");
-    }
->>>>>>> 0b911da4650a1e4d5d6d7921ff54738f2984fe96
   }
 }
 
