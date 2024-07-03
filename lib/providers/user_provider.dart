@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -114,7 +113,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void keyboardVisiblity(BuildContext context) {
+  void keyboardVisibility(BuildContext context) {
     final bottomInset = View.of(context).viewInsets.bottom;
     isKeyboardVisible = bottomInset > 0;
     notifyListeners();
@@ -132,8 +131,9 @@ class UserProvider extends ChangeNotifier {
     _user = user;
     _status = Status.loaded;
     Preference.saveUser(_user);
-    shareUri =
-        await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
+    shareUri = await DynamicLinkService.instance.getDynamicLink();
+    // shareUri =
+    //     await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
     notifyListeners();
   }
 
@@ -154,8 +154,9 @@ class UserProvider extends ChangeNotifier {
     if (referralUrl != null) _user?.referralUrl = referralUrl;
 
     Preference.saveUser(_user);
-    shareUri =
-        await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
+    shareUri = await DynamicLinkService.instance.getDynamicLink();
+    // shareUri =
+    //     await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
     Utils().showLog("Updating user..");
     notifyListeners();
   }
@@ -336,22 +337,6 @@ class UserProvider extends ChangeNotifier {
     bool alreadySubmitted = true,
   }) async {
     setStatus(Status.loading);
-    // CompareStocksProvider compareProvider =
-    //     navigatorKey.currentContext!.read<CompareStocksProvider>();
-
-    // AlertProvider alertProvider =
-    //     navigatorKey.currentContext!.read<AlertProvider>();
-
-    // WatchlistProvider watchlistProvider =
-    //     navigatorKey.currentContext!.read<WatchlistProvider>();
-
-    // NotificationProvider notificationProvider =
-    //     navigatorKey.currentContext!.read<NotificationProvider>();
-
-    if (request["fcm_token"].isEmpty) {
-      String? fcm = await FirebaseMessaging.instance.getToken();
-      request["fcm_token"] = fcm ?? "";
-    }
 
     try {
       ApiResponse response = await apiRequest(
@@ -364,58 +349,47 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
-
-        shareUri = await DynamicLinkService.instance
-            .getDynamicLink(_user?.referralCode);
-
-        // Navigator.popUntil(
-        //     navigatorKey.currentContext!, (route) => route.isFirst);
-        // Navigator.pushAndRemoveUntil(
-        //     navigatorKey.currentContext!, Tabs.path, (route) => false);
-        // if (dontPop == null) {
-        //   Navigator.pop(navigatorKey.currentContext!);
-
-        //   if (state == "compare") {
-        //     await compareProvider.getCompareStock();
-        //   } else if (state == "alert") {
-        //     await alertProvider.getAlerts(showProgress: false);
-        //   } else if (state == "watchList") {
-        //     await watchlistProvider.getData(showProgress: false);
-        //   } else if (state == "notification") {
-        //     await notificationProvider.getData(showProgress: false);
-        //   }
-        // } else {
-        // kDebugMode ? Preference.setShowIntro(true) : null;
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
         Preference.setShowIntro(false);
         // Navigator.pushAndRemoveUntil(
         //     navigatorKey.currentContext!, Tabs.path, (route) => false);
 
         if (_user?.signupStatus ?? false) {
-          shareUri = await DynamicLinkService.instance
-              .getDynamicLink(_user?.referralCode);
+          shareUri = await DynamicLinkService.instance.getDynamicLink();
+          // shareUri = await DynamicLinkService.instance
+          //     .getDynamicLink(_user?.referralCode);
           String? referralCode = await Preference.getReferral();
-          if (alreadySubmitted) {
-            // (referralCode != null || referralCode != "") &&
-            // Only for Sign up
+          // if (alreadySubmitted) {
+          if (referralCode != null && referralCode != "") {
+            // Sign up from referral link
+            Preference.clearReferral();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const SignUpSuccess()),
             );
           } else {
-            // Only For Login
-            referSheet(
-              onReferral: (code) {
-                if (code == null || code == "") {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  Navigator.push(
-                    navigatorKey.currentContext!,
-                    MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                  );
-                } else {
-                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
-                }
-              },
-            );
+            // Sign up but not from referral link
+
+            if (await Preference.isReferInput()) {
+              referSheet(
+                onReferral: (code) {
+                  if (code == null || code == "") {
+                    Navigator.pop(navigatorKey.currentContext!);
+                    Navigator.push(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                    );
+                  } else {
+                    updateReferralCodeOnlyForApple(code: referralCode ?? code);
+                  }
+                },
+              );
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              );
+            }
           }
 
           // Navigator.push(
@@ -463,23 +437,6 @@ class UserProvider extends ChangeNotifier {
   }) async {
     setStatus(Status.loading);
 
-    // CompareStocksProvider compareProvider =
-    //     navigatorKey.currentContext!.read<CompareStocksProvider>();
-
-    // AlertProvider alertProvider =
-    //     navigatorKey.currentContext!.read<AlertProvider>();
-
-    // WatchlistProvider watchlistProvider =
-    //     navigatorKey.currentContext!.read<WatchlistProvider>();
-
-    // NotificationProvider notificationProvider =
-    //     navigatorKey.currentContext!.read<NotificationProvider>();
-
-    if (request["fcm_token"].isEmpty) {
-      String? fcm = await FirebaseMessaging.instance.getToken();
-      request["fcm_token"] = fcm ?? "";
-    }
-
     try {
       ApiResponse response = await apiRequest(
         url: Apis.appleLogin,
@@ -492,49 +449,44 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
-        shareUri = await DynamicLinkService.instance
-            .getDynamicLink(_user?.referralCode);
-        // if (dontPop == null) {
-        //   Navigator.pop(navigatorKey.currentContext!);
-        //   if (state == "compare") {
-        //     await compareProvider.getCompareStock();
-        //   } else if (state == "alert") {
-        //     await alertProvider.getAlerts(showProgress: false);
-        //   } else if (state == "watchList") {
-        //     await watchlistProvider.getData(showProgress: false);
-        //   } else if (state == "notification") {
-        //     await notificationProvider.getData(showProgress: false);
-        //   }
-        // } else {
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
+        // shareUri = await DynamicLinkService.instance
+        //     .getDynamicLink(_user?.referralCode);
+
         Preference.setShowIntro(false);
 
         if (_user?.signupStatus ?? false) {
-          shareUri = await DynamicLinkService.instance
-              .getDynamicLink(_user?.referralCode);
-
           String? referralCode = await Preference.getReferral();
-          if (alreadySubmitted) {
-            // (referralCode != null || referralCode != "") &&
-            // Only for Sign up
+          // if (alreadySubmitted) {
+          if (referralCode != null && referralCode != "") {
+            // Sign up from referral link
+            Preference.clearReferral();
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const SignUpSuccess()),
             );
           } else {
-            // Only For Login
-            referSheet(
-              onReferral: (code) {
-                if (code == null || code == "") {
-                  Navigator.pop(navigatorKey.currentContext!);
-                  Navigator.push(
-                    navigatorKey.currentContext!,
-                    MaterialPageRoute(builder: (_) => const SignUpSuccess()),
-                  );
-                } else {
-                  updateReferralCodeOnlyForApple(code: referralCode ?? code);
-                }
-              },
-            );
+            // Sign up but not from referral link
+            if (await Preference.isReferInput()) {
+              referSheet(
+                onReferral: (code) {
+                  if (code == null || code == "") {
+                    Navigator.pop(navigatorKey.currentContext!);
+                    Navigator.push(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                    );
+                  } else {
+                    updateReferralCodeOnlyForApple(code: referralCode ?? code);
+                  }
+                },
+              );
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+              );
+            }
           }
         } else {
           navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
@@ -720,11 +672,6 @@ class UserProvider extends ChangeNotifier {
   Future verifySignupOtp(request) async {
     setStatus(Status.loading);
 
-    if (request["fcm_token"].isEmpty) {
-      String? fcm = await FirebaseMessaging.instance.getToken();
-      request["fcm_token"] = fcm ?? "";
-    }
-
     try {
       ApiResponse response = await apiRequest(
         url: Apis.verifySignupOtp,
@@ -737,8 +684,11 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         Preference.setShowIntro(false);
-        shareUri = await DynamicLinkService.instance
-            .getDynamicLink(_user?.referralCode);
+        Preference.clearReferral();
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
+
+        // shareUri = await DynamicLinkService.instance
+        //     .getDynamicLink(_user?.referralCode);
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const SignUpSuccess()),
@@ -764,22 +714,6 @@ class UserProvider extends ChangeNotifier {
 
   Future verifyLoginOtp(request) async {
     setStatus(Status.loading);
-    // CompareStocksProvider compareProvider =
-    //     navigatorKey.currentContext!.read<CompareStocksProvider>();
-
-    // AlertProvider alertProvider =
-    //     navigatorKey.currentContext!.read<AlertProvider>();
-
-    // WatchlistProvider watchlistProvider =
-    //     navigatorKey.currentContext!.read<WatchlistProvider>();
-
-    // NotificationProvider notificationProvider =
-    //     navigatorKey.currentContext!.read<NotificationProvider>();
-
-    if (request["fcm_token"].isEmpty) {
-      String? fcm = await FirebaseMessaging.instance.getToken();
-      request["fcm_token"] = fcm ?? "";
-    }
 
     try {
       ApiResponse response = await apiRequest(
@@ -793,8 +727,9 @@ class UserProvider extends ChangeNotifier {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
         navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
-        shareUri = await DynamicLinkService.instance
-            .getDynamicLink(_user?.referralCode);
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
+        // shareUri = await DynamicLinkService.instance
+        //     .getDynamicLink(_user?.referralCode);
         // if (dontPop == null) {
         //   // if (state == "compare") {
         //   //   await compareProvider.getCompareStock();
@@ -1068,9 +1003,9 @@ class UserProvider extends ChangeNotifier {
           referralCode: _refer?.referralCode,
           referralUrl: _refer?.referralUrl,
         );
-
-        shareUri = await DynamicLinkService.instance
-            .getDynamicLink(_user?.referralCode);
+        shareUri = await DynamicLinkService.instance.getDynamicLink();
+        // shareUri = await DynamicLinkService.instance
+        //     .getDynamicLink(_user?.referralCode);
       } else {
         //
         popUpAlert(

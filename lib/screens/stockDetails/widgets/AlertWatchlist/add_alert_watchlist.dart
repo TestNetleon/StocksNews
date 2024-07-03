@@ -186,7 +186,8 @@ class AddToAlertWatchlist extends StatelessWidget {
     // );
 
     showPlatformBottomSheet(
-      backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+      // backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+      backgroundColor: ThemeColors.bottomsheetGradient,
       context: context,
       showClose: false,
       content: AlertPopup(

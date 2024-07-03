@@ -94,7 +94,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
       return;
     }
     String? referralCode = await Preference.getReferral();
-    if (referralCode != null && referralCode != "") {
+    bool isReferInput = await Preference.isReferInput();
+    if ((referralCode != null && referralCode != "") || !isReferInput) {
+      // if (referralCode != null && referralCode != "") {
       UserProvider provider = context.read<UserProvider>();
       Map request = {"username": _controller.text.toLowerCase()};
       provider.signup(request);
@@ -180,8 +182,9 @@ class _SignUpBottomState extends State<SignUpBottom> {
 
   void _handleApple(id, displayName, email) async {
     String? referralCode = await Preference.getReferral();
-
-    if (referralCode != null && referralCode != "") {
+    bool isReferInput = await Preference.isReferInput();
+    if ((referralCode != null && referralCode != "") || !isReferInput) {
+      // if (referralCode != null && referralCode != "") {
       _handleAppleSignIn(id, displayName, email);
     } else {
       referSheet(
@@ -238,20 +241,25 @@ class _SignUpBottomState extends State<SignUpBottom> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.sp),
               topRight: Radius.circular(10.sp)),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 0.6,
-            // transform: GradientRotation(radians),
-            // tileMode: TileMode.decal,
-            stops: [
-              0.0,
-              0.9,
-            ],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              // ThemeColors.accent.withOpacity(0.1),
-              Colors.black,
-            ],
+          // gradient: const RadialGradient(
+          //   center: Alignment.bottomCenter,
+          //   radius: 0.6,
+          //   // transform: GradientRotation(radians),
+          //   // tileMode: TileMode.decal,
+          //   stops: [
+          //     0.0,
+          //     0.9,
+          //   ],
+          //   colors: [
+          //     Color.fromARGB(255, 0, 93, 12),
+          //     // ThemeColors.accent.withOpacity(0.1),
+          //     Colors.black,
+          //   ],
+          // ),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ThemeColors.bottomsheetGradient, Colors.black],
           ),
           color: ThemeColors.background,
           border: const Border(
@@ -275,15 +283,15 @@ class _SignUpBottomState extends State<SignUpBottom> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // SpacerVertical(height: 20.sp),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .45,
-                    // constraints:
-                    //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-                    child: Image.asset(
-                      Images.logo,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * .45,
+                  //   // constraints:
+                  //   //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+                  //   child: Image.asset(
+                  //     Images.logo,
+                  //     fit: BoxFit.contain,
+                  //   ),
+                  // ),
                   const SpacerVertical(height: 10),
 
                   // Container(

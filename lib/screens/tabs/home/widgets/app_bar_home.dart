@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +7,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/route/navigation_observer.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -57,6 +60,12 @@ class _AppBarHomeState extends State<AppBarHome> {
       leading: widget.isPopback
           ? IconButton(
               onPressed: () {
+                // final navObserver = Provider.of<CustomNavigatorObserver>(
+                //     context,
+                //     listen: false);
+
+                // log("ROUT COUNT =>  ${CustomNavigatorObserver().stackCount}");
+
                 // if (popHome || deepLinkData != null) {
                 //   Navigator.pushAndRemoveUntil(
                 //       context, Tabs.path, (route) => false);
@@ -81,16 +90,21 @@ class _AppBarHomeState extends State<AppBarHome> {
                 //     MaterialPageRoute(builder: (_) => const Splash()),
                 //   );
                 // }
-                Utils().showLog("----${Navigator.canPop(context)}");
-                Utils().showLog("----${navigatorKey.currentState?.canPop()}");
                 if (popHome) {
-                  Navigator.popUntil(
-                      navigatorKey.currentContext!, (route) => route.isFirst);
-                  Navigator.pushReplacement(
-                    navigatorKey.currentContext!,
-                    MaterialPageRoute(builder: (_) => const Tabs()),
-                  );
-                  popHome = false;
+                  // final navObserver = Provider.of<CustomNavigatorObserver>(
+                  //     context,
+                  //     listen: false);
+                  if (CustomNavigatorObserver().stackCount > 2) {
+                    Navigator.pop(navigatorKey.currentContext!);
+                  } else {
+                    Navigator.popUntil(
+                        navigatorKey.currentContext!, (route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const Tabs()),
+                    );
+                    popHome = false;
+                  }
                 } else {
                   // navigatorKey.currentContext!
                   //     .read<SearchProvider>()

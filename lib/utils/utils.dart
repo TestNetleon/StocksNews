@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -591,7 +590,6 @@ void handleNavigation({
   Utils().showLog("----$userPresent---");
 
   // if (type == "blog") {
-
   if (type == DeeplinkEnum.blogDetail) {
     if (fromBackground) {
       Navigator.pushReplacement(
@@ -647,7 +645,9 @@ void handleNavigation({
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
+          navigatorKey.currentContext!,
+          (route) => route.isFirst,
+        );
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
@@ -663,7 +663,9 @@ void handleNavigation({
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
+          navigatorKey.currentContext!,
+          (route) => route.isFirst,
+        );
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),

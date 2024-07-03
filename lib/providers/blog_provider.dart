@@ -10,6 +10,7 @@ import 'package:stocks_news_new/modals/blogs_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 
@@ -216,6 +217,7 @@ class BlogProvider extends ChangeNotifier {
       if (response.status) {
         _blogsDetail = BlogsDetailRes.fromJson(response.data);
         _extra = (response.extra is Extra ? response.extra as Extra : null);
+        Preference.saveReferInput(_extra?.affiliateInput == 1);
       } else {
         _blogsDetail = null;
         _error = response.message;

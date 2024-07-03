@@ -155,19 +155,26 @@ class _ReferLoginState extends State<ReferLogin> {
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-          gradient: RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 0.6,
-            stops: [
-              0.0,
-              0.9,
-            ],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              Colors.black,
-            ],
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
           ),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ThemeColors.bottomsheetGradient, Colors.black],
+          ),
+          // gradient: RadialGradient(
+          //   center: Alignment.bottomCenter,
+          //   radius: 0.6,
+          //   stops: [
+          //     0.0,
+          //     0.9,
+          //   ],
+          //   colors: [
+          //     Color.fromARGB(255, 0, 93, 12),
+          //     Colors.black,
+          //   ],
+          // ),
           color: ThemeColors.background,
           border: Border(
             top: BorderSide(color: ThemeColors.greyBorder),
@@ -190,16 +197,16 @@ class _ReferLoginState extends State<ReferLogin> {
                     color: ThemeColors.greyBorder,
                   ),
                 ),
-                const SpacerVertical(height: 70),
-                Container(
-                  width: MediaQuery.of(context).size.width * .45,
-                  constraints:
-                      BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-                  child: Image.asset(
-                    Images.logo,
-                    fit: BoxFit.contain,
-                  ),
-                ),
+                // const SpacerVertical(height: 70),
+                // Container(
+                //   width: MediaQuery.of(context).size.width * .45,
+                //   constraints:
+                //       BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+                //   child: Image.asset(
+                //     Images.logo,
+                //     fit: BoxFit.contain,
+                //   ),
+                // ),
                 const SpacerVertical(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(Dimen.authScreenPadding),

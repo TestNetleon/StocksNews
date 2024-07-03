@@ -260,7 +260,8 @@ Future<dynamic> showConfirmAlertDialog(
 void showPlatformBottomSheet({
   required BuildContext context,
   required Widget content,
-  Color backgroundColor = ThemeColors.primaryLight,
+  Color? backgroundColor,
+  // = ThemeColors.primaryLight,
   bool? enableDrag,
   showClose = true,
   EdgeInsets? padding,
@@ -275,13 +276,15 @@ void showPlatformBottomSheet({
       side: const BorderSide(color: ThemeColors.greyBorder),
     ),
     context: context,
-    backgroundColor: backgroundColor,
+    backgroundColor: backgroundColor ?? ThemeColors.bottomsheetGradient,
     isScrollControlled: true,
     enableDrag: enableDrag ?? true,
     builder: (BuildContext ctx) {
-      return Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      return Container(
+        color: ThemeColors.bottomsheetGradient,
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
         child: BottomSheetContainerPlain(
           showClose: showClose,
           padding: padding,

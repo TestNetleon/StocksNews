@@ -93,9 +93,6 @@ class AgreeConditions extends StatelessWidget {
             ),
           ),
         );
-
-        Utils().showLog("clicked url---$url");
-
         return true;
       },
       fromLogin ? provider.loginTxt ?? "" : provider.signUpTxt ?? "",
