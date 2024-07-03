@@ -100,7 +100,7 @@ class TopPlaidItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 12, 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
         onTap: () {

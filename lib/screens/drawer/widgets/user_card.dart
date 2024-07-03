@@ -262,9 +262,10 @@ class _UserCardState extends State<UserCard> {
       // configuration =
       //     PurchasesConfiguration("goog_frHKXAaNeqxuVOxSDomgxquiJhy");
       popUpAlert(
-          message: "waiting for initialize..",
-          title: "Alert",
-          icon: Images.alertPopGIF);
+        message: "waiting for initialize..",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
     } else if (Platform.isIOS) {
       configuration =
           PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC");
