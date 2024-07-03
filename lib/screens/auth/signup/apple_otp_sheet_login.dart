@@ -170,22 +170,29 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
       constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.sp), topRight: Radius.circular(10.sp)),
-        gradient: const RadialGradient(
-          center: Alignment.bottomCenter,
-          radius: 0.6,
-          // transform: GradientRotation(radians),
-          // tileMode: TileMode.decal,
-          stops: [
-            0.0,
-            0.9,
-          ],
-          colors: [
-            Color.fromARGB(255, 0, 93, 12),
-            // ThemeColors.accent.withOpacity(0.1),
-            Colors.black,
-          ],
+          topLeft: Radius.circular(10.sp),
+          topRight: Radius.circular(10.sp),
         ),
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [ThemeColors.bottomsheetGradient, Colors.black],
+        ),
+        // gradient: const RadialGradient(
+        //   center: Alignment.bottomCenter,
+        //   radius: 0.6,
+        //   // transform: GradientRotation(radians),
+        //   // tileMode: TileMode.decal,
+        //   stops: [
+        //     0.0,
+        //     0.9,
+        //   ],
+        //   colors: [
+        //     Color.fromARGB(255, 0, 93, 12),
+        //     // ThemeColors.accent.withOpacity(0.1),
+        //     Colors.black,
+        //   ],
+        // ),
         color: ThemeColors.background,
         border: const Border(
           top: BorderSide(color: ThemeColors.greyBorder),
@@ -207,15 +214,15 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
               color: ThemeColors.greyBorder,
             ),
           ),
-          const SpacerVertical(height: 16),
-          Container(
-            width: MediaQuery.of(context).size.width * .45,
-            constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-            child: Image.asset(
-              Images.logo,
-              fit: BoxFit.contain,
-            ),
-          ),
+          // const SpacerVertical(height: 16),
+          // Container(
+          //   width: MediaQuery.of(context).size.width * .45,
+          //   constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+          //   child: Image.asset(
+          //     Images.logo,
+          //     fit: BoxFit.contain,
+          //   ),
+          // ),
           const SpacerVertical(height: 30),
           Image.asset(
             Images.otpSuccessGIT,

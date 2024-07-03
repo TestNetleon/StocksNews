@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -17,6 +16,7 @@ import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_lists.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
@@ -134,21 +134,14 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
     if (provider.user == null) {
-      log("1");
       isPhone ? await loginSheet() : await loginSheetTablet();
-      log("2");
     }
-    if (provider.user == null) {
-      log("3");
-      return;
-    }
-    log("4");
+    if (provider.user == null) return;
 
     await Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const HelpDesk()),
     );
-    log("5");
   }
 
   @override
@@ -166,16 +159,24 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                 text: "About Stocks.News",
               ),
               const SpacerVertical(height: 30),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.sp),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.sp),
-                  child: Image.asset(
-                    Images.stockIcon,
-                    height: 60,
-                    width: 60,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Tabs()),
+                      (route) => false);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.sp),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.sp),
+                    child: Image.asset(
+                      Images.stockIcon,
+                      height: 60,
+                      width: 60,
+                    ),
                   ),
                 ),
               ),

@@ -1,13 +1,30 @@
 {
-  "identifier" : "ADE76EF8",
+  "identifier" : "368A7E39",
   "nonRenewingSubscriptions" : [
 
   ],
   "products" : [
-
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6505101430",
+      "localizations" : [
+        {
+          "description" : "Monthly Subscription",
+          "displayName" : "Monthly Subscription",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "monthly_subscription",
+      "referenceName" : "Monthly Subscription",
+      "type" : "Consumable"
+    }
   ],
   "settings" : {
+    "_applicationInternalID" : "6476615803",
+    "_developerTeamID" : "NPUHL9S742",
     "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 741610726.71177304,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -60,11 +77,11 @@
   },
   "subscriptionGroups" : [
     {
-      "id" : "393031EF",
+      "id" : "21505749",
       "localizations" : [
 
       ],
-      "name" : "Subscription",
+      "name" : "pro",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -75,34 +92,46 @@
           ],
           "displayPrice" : "0.99",
           "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6505089930",
+          "introductoryOffer" : null,
+          "localizations" : [
+
+          ],
+          "productID" : "annual_subs",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Annual",
+          "subscriptionGroupID" : "21505749",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "F6AF4BB1",
-          "introductoryOffer" : {
-            "displayPrice" : "0.99",
-            "internalID" : "2ECBE3E9",
-            "paymentMode" : "free",
-            "subscriptionPeriod" : "P1W"
-          },
+          "internalID" : "6505089763",
+          "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "",
-              "displayName" : "",
+              "description" : "This is a monthly plan.",
+              "displayName" : "Monthly Plan",
               "locale" : "en_US"
             }
           ],
-          "productID" : "month_only",
+          "productID" : "monthly_subs",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
-          "subscriptionGroupID" : "393031EF",
+          "subscriptionGroupID" : "21505749",
           "type" : "RecurringSubscription"
         }
       ]
     }
   ],
-  "subscriptionOffersKeyPair" : {
-    "id" : "441EB776",
-    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgxX4MK/R3gaed15ryB89+Bcn4i0pmqP9sLu7Xo5Hx0fmgCgYIKoZIzj0DAQehRANCAASRVaxG4kh6MVh1JvQv/7q5BgRN+hTZgof6dWm8TKiXmEhOJrjNthfIOwwgSTd6CBQtrH1XAXYtQnJubCRw+/o3"
-  },
   "version" : {
     "major" : 3,
     "minor" : 0

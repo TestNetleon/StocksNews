@@ -19,6 +19,7 @@ class ThemeButton extends StatelessWidget {
     this.margin,
     this.child,
     this.textAlign = TextAlign.center,
+    this.textUppercase = false,
     super.key,
   });
 
@@ -33,6 +34,7 @@ class ThemeButton extends StatelessWidget {
   final EdgeInsets? padding, margin;
   final TextAlign? textAlign;
   final Widget? child;
+  final bool textUppercase;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class ThemeButton extends StatelessWidget {
         child: child ??
             Text(
               textAlign: textAlign,
-              text,
+              textUppercase ? text.toUpperCase() : text,
               style: fontBold
                   ? stylePTSansBold(
                       fontSize: textSize,

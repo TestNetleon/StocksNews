@@ -22,8 +22,8 @@ class HomeTrendingRes {
   final TextRes? text;
   HomeTrendingRes({
     required this.trending,
-    required this.gainers,
-    required this.losers,
+    this.gainers,
+    this.losers,
     required this.popular,
     this.text,
     this.trendingNews,

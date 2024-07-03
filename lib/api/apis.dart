@@ -47,6 +47,7 @@ class Apis {
   static const fiftyTwoWeekLows = "/week-lows";
   static const homeSlider = "/home-slider";
   static const homeSentiment = "/home-sentiment";
+  static const mostPurchased = "/most-purchased-stocks";
   // static const homeTrending = "/home-trending"; //Deprecated
   static const homeTrending = "/home-trending-v2";
   static const homeTopGainerLoser = "/home-popular-gainer-loser";

@@ -7,6 +7,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import '../../../api/api_response.dart';
 import '../../../widgets/screen_title.dart';
@@ -102,9 +103,10 @@ class ReferDialog extends StatelessWidget {
                   ],
                 ),
                 const SpacerVertical(height: 10),
-                ThemeButtonSmall(
+                ThemeButton(
                   color: const Color.fromARGB(255, 7, 127, 23),
-                  text: "Generate Affiliate Link",
+                  // text: "Generate Affiliate Link",
+                  text: "GENERATE AFFILIATE LINK",
                   onPressed: () {
                     Navigator.pop(context);
                     referLogin();

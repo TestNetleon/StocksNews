@@ -26,18 +26,6 @@ class ReferSuccess extends StatefulWidget {
 }
 
 class _ReferSuccessState extends State<ReferSuccess> {
-  // Uri? shareUri;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-  //     ReferSuccessRes? referData = context.read<UserProvider>().refer;
-  //     shareUri = await DynamicLinkService.instance
-  //         .getDynamicLink(referData?.referralCode);
-  //     setState(() {});
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     ReferSuccessRes? referData = context.watch<UserProvider>().refer;

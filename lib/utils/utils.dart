@@ -42,12 +42,21 @@ bool isEven(index) {
 
 class Utils {
   void showLog(data) {
+<<<<<<< HEAD
     // if (kDebugMode) {
     print("==================");
     // log("$data");
     log("$data");
     print("==================");
     // }
+=======
+    if (kDebugMode) {
+      print("==================");
+      // log("$data");
+      log("$data");
+      print("==================");
+    }
+>>>>>>> 0b911da4650a1e4d5d6d7921ff54738f2984fe96
   }
 }
 
@@ -621,7 +630,6 @@ void handleNavigation({
   Utils().showLog("----$userPresent---");
 
   // if (type == "blog") {
-
   if (type == DeeplinkEnum.blogDetail) {
     if (fromBackground) {
       Navigator.pushReplacement(
@@ -677,7 +685,9 @@ void handleNavigation({
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
+          navigatorKey.currentContext!,
+          (route) => route.isFirst,
+        );
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
@@ -693,7 +703,9 @@ void handleNavigation({
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
+          navigatorKey.currentContext!,
+          (route) => route.isFirst,
+        );
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),

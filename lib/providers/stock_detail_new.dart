@@ -22,6 +22,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/apis.dart';
@@ -290,10 +291,9 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
-
         _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
-
         _extra = (response.extra is Extra ? response.extra as Extra : null);
+        Preference.saveReferInput(_extra?.affiliateInput == 1);
 
         if (_tabRes != null) {
           // getPlaidPortfolioData(name: _tabs[selectedTab]);
