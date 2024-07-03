@@ -119,6 +119,7 @@ class Images {
   static const String referS = "assets/images/refer_s.png";
   static const String referF = "assets/images/refer_f.png";
   static const String line = "assets/images/line.png";
+  static const String upgrade = "assets/images/upgrade.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";

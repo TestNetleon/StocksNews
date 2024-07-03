@@ -14,6 +14,7 @@ import 'package:stocks_news_new/screens/barChart/bar_chart_item.dart';
 import 'package:stocks_news_new/screens/drawer/about/about_stocks_news.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/user_card.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -27,7 +28,6 @@ import '../../widgets/theme_button_small.dart';
 import '../alerts/alerts.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
-import 'widgets/profile_image.dart';
 // import '../t&cAndPolicy/tc_policy.dart';
 
 class BaseDrawer extends StatefulWidget {
@@ -105,65 +105,14 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           ),
                           Visibility(
                             visible: userProvider.user != null,
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    easeOutBuilder(
-                                      context,
-                                      child: AboutStocksNews(
-                                          version: version ?? ""),
-                                    );
-                                  },
-                                  child: ProfileImage(
-                                    url: userProvider.user?.image,
-                                    cameraSize: 12,
-                                    showCameraIcon: false,
-                                  ),
-                                ),
-                                const SpacerHorizontal(width: 10),
-                                Expanded(
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    onTap: () {
-                                      easeOutBuilder(
-                                        context,
-                                        child: AboutStocksNews(
-                                          version: version ?? "",
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          userProvider.user?.name?.isNotEmpty ==
-                                                  true
-                                              ? "${userProvider.user?.name}"
-                                              : "Hello",
-                                          style: stylePTSansBold(),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          userProvider.user?.email
-                                                      ?.isNotEmpty ==
-                                                  true
-                                              ? "${userProvider.user?.email}"
-                                              : "",
-                                          style: stylePTSansRegular(
-                                              color: ThemeColors.greyText,
-                                              fontSize: 12),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: UserCard(
+                              onTap: () {
+                                easeOutBuilder(
+                                  context,
+                                  child:
+                                      AboutStocksNews(version: version ?? ""),
+                                );
+                              },
                             ),
                           ),
                           Visibility(
@@ -373,7 +322,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               Navigator.push(
                                 navigatorKey.currentContext!,
                                 MaterialPageRoute(
-                                  builder: (_) => BarChartSample(),
+                                  builder: (_) => const BarChartSample(),
                                 ),
                               );
                             },
