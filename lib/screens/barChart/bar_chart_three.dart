@@ -217,6 +217,8 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
             ? minAbsValueItem
             : minNetFin)
         : 0;
+    Utils().showLog(
+        "------$minAbsValue, $minAbsValueItem,$minRevenue, ${charts?.isNotEmpty == true}");
 
     final maxAbsValueItem = (maxRevenue.abs() > maxNetIncome.abs())
         ? maxRevenue.abs()
@@ -266,44 +268,88 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
                     interval: maxAbsValue / 5,
                     getTitlesWidget: (value, meta) {
                       // if (charts?[0].operatingCashFlow1 == null) {
-                      //   String formattedValue = convertToReadableValue(value);
+                      String formattedValue = convertToReadableValue(value);
+                      return Text(
+                        formattedValue,
+                        style: stylePTSansBold(fontSize: 9.sp),
+                      );
+                      // }
+
+                      // if (value == 0) {
+                      //   String formattedValue = convertToReadableValue(0.0);
                       //   return Text(
                       //     formattedValue,
                       //     style: stylePTSansBold(fontSize: 9.sp),
                       //   );
+                      //   // Return '0' for the axis origin
+                      // } else if (value > 0) {
+                      //   int index = (value / positiveInterval).ceil();
+                      //   String formattedValue = convertToReadableValue(
+                      //       double.parse(
+                      //           '+${index * positiveInterval.toInt()}'));
+                      //   return Text(
+                      //     formattedValue,
+                      //     style: stylePTSansBold(fontSize: 9.sp),
+                      //   );
+                      // } else {
+                      //   int index = (value >= 0 || negativeInterval == 0)
+                      //       ? 0
+                      //       : (value / negativeInterval).floor();
+                      //   String formattedValue = convertToReadableValue(
+                      //       double.parse(
+                      //           '${index * negativeInterval.toInt()}'));
+                      //   return Text(
+                      //     formattedValue,
+                      //     style: stylePTSansBold(fontSize: 9.sp),
+                      //   ); // Negative values below axis
                       // }
-
-                      if (value == 0) {
-                        String formattedValue = convertToReadableValue(0.0);
-                        return Text(
-                          formattedValue,
-                          style: stylePTSansBold(fontSize: 9.sp),
-                        );
-                        // Return '0' for the axis origin
-                      } else if (value > 0) {
-                        int index = (value / positiveInterval).ceil();
-                        String formattedValue = convertToReadableValue(
-                            double.parse(
-                                '+${index * positiveInterval.toInt()}'));
-                        return Text(
-                          formattedValue,
-                          style: stylePTSansBold(fontSize: 9.sp),
-                        );
-                      } else {
-                        int index = (value == 0 || negativeInterval == 0)
-                            ? 0
-                            : (value / negativeInterval).floor();
-                        String formattedValue = convertToReadableValue(
-                            double.parse(
-                                '${index * negativeInterval.toInt()}'));
-                        return Text(
-                          formattedValue,
-                          style: stylePTSansBold(fontSize: 9.sp),
-                        ); // Negative values below axis
-                      }
                     },
                   ),
                 ),
+                //  rightTitles: AxisTitles(
+                //   sideTitles: SideTitles(
+                //     reservedSize: 42,
+                //     showTitles: true,
+                //     interval: maxAbsValue /
+                //         5, // Default value to avoid division by zero
+                //     getTitlesWidget: (value, meta) {
+                //       if (widget.data?.chart?[4].operatingCashFlow1 == null) {
+                //         String formattedValue = convertToReadableValue(value);
+                //         return Text(
+                //           formattedValue,
+                //           style: stylePTSansBold(fontSize: 9.sp),
+                //         );
+                //       }
+
+                //       if (value == 0) {
+                //         String formattedValue = convertToReadableValue(0.0);
+                //         return Text(
+                //           formattedValue,
+                //           style: stylePTSansBold(fontSize: 9.sp),
+                //         );
+                //         // Return '0' for the axis origin
+                //       } else if (value > 0) {
+                //         int index = (value / positiveInterval).ceil();
+                //         String formattedValue = convertToReadableValue(
+                //             double.parse(
+                //                 '+${index * positiveInterval.toInt()}'));
+                //         return Text(
+                //           formattedValue,
+                //           style: stylePTSansBold(fontSize: 9.sp),
+                //         );
+                //       } else {
+                // int index = (value / negativeInterval).floor();
+                // String formattedValue = convertToReadableValue(
+                //     double.parse(
+                //         '${index * negativeInterval.toInt()}'));
+                // return Text(
+                //   formattedValue,
+                //   style: stylePTSansBold(fontSize: 9.sp),
+                // ); // Negative values below axis
+                //       }
+                //     },
+                //   ),
+                // ),
 
                 // rightTitles: AxisTitles(
                 //   sideTitles: SideTitles(
