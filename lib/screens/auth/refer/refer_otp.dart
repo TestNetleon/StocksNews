@@ -10,6 +10,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
@@ -20,7 +21,6 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../api/api_response.dart';
-import 'reffer_success.dart';
 
 referOTP({required String phone, String appSignature = ''}) async {
   await showModalBottomSheet(
@@ -139,10 +139,17 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
           //   navigatorKey.currentContext!,
           //   ReferAFriend.path,
           // );
+          // Navigator.push(
+          //   navigatorKey.currentContext!,
+          //   MaterialPageRoute(
+          //     builder: (context) => const ReferSuccess(),
+          //   ),
+          // );
+
           Navigator.push(
             navigatorKey.currentContext!,
             MaterialPageRoute(
-              builder: (context) => const ReferSuccess(),
+              builder: (_) => const ReferAFriend(),
             ),
           );
         }
@@ -185,21 +192,27 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10.sp),
-              topRight: Radius.circular(10.sp)),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 0.6,
-            stops: [
-              0.0,
-              0.9,
-            ],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              // ThemeColors.accent.withOpacity(0.1),
-              Colors.black,
-            ],
+            topLeft: Radius.circular(10.sp),
+            topRight: Radius.circular(10.sp),
           ),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ThemeColors.bottomsheetGradient, Colors.black],
+          ),
+          // gradient: const RadialGradient(
+          //   center: Alignment.bottomCenter,
+          //   radius: 0.6,
+          //   stops: [
+          //     0.0,
+          //     0.9,
+          //   ],
+          //   colors: [
+          //     Color.fromARGB(255, 0, 93, 12),
+          //     // ThemeColors.accent.withOpacity(0.1),
+          //     Colors.black,
+          //   ],
+          // ),
           color: ThemeColors.background,
           border: const Border(
             top: BorderSide(color: ThemeColors.greyBorder),

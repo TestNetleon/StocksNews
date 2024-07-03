@@ -90,6 +90,7 @@ class Extra {
   final ProfileText? profileText;
   final int? selfRank;
   final String? referText;
+  final int? affiliateInput;
 
   Extra({
     this.feebackType,
@@ -139,6 +140,7 @@ class Extra {
     this.referral,
     this.earnCondition,
     this.referText,
+    this.affiliateInput,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -229,6 +231,7 @@ class Extra {
             ? null
             : ReferralRes.fromJson(json["referral"]),
         referText: json["refer_text"],
+        affiliateInput: json["affiliate_input"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -293,6 +296,7 @@ class Extra {
         "user": user?.toJson(),
         "referral": referral?.toJson(),
         "refer_text": referText,
+        "affiliate_input": affiliateInput,
       };
 }
 

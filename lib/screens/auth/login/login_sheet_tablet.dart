@@ -97,6 +97,9 @@ class _LoginBottomState extends State<LoginBottom> {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String versionName = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
+
+      String? referralCode = await Preference.getReferral();
+
       if (account != null) {
         UserProvider provider = context.read<UserProvider>();
         bool granted = await Permission.notification.isGranted;
@@ -112,6 +115,7 @@ class _LoginBottomState extends State<LoginBottom> {
           "build_version": versionName,
           "build_code": buildNumber,
           "fcm_permission": "$granted",
+          "referral_code": referralCode ?? "",
           // "serverAuthCode": account?.serverAuthCode,
         };
         provider.googleLogin(request, alreadySubmitted: false);
@@ -171,23 +175,29 @@ class _LoginBottomState extends State<LoginBottom> {
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10.sp),
-              topRight: Radius.circular(10.sp)),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 0.6,
-            // transform: GradientRotation(radians),
-            // tileMode: TileMode.decal,
-            stops: [
-              0.0,
-              0.9,
-            ],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              // ThemeColors.accent.withOpacity(0.1),
-              Colors.black,
-            ],
+            topLeft: Radius.circular(10.sp),
+            topRight: Radius.circular(10.sp),
           ),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ThemeColors.bottomsheetGradient, Colors.black],
+          ),
+          // gradient: const RadialGradient(
+          //   center: Alignment.bottomCenter,
+          //   radius: 0.6,
+          //   // transform: GradientRotation(radians),
+          //   // tileMode: TileMode.decal,
+          //   stops: [
+          //     0.0,
+          //     0.9,
+          //   ],
+          //   colors: [
+          //     Color.fromARGB(255, 0, 93, 12),
+          //     // ThemeColors.accent.withOpacity(0.1),
+          //     Colors.black,
+          //   ],
+          // ),
           color: ThemeColors.background,
           border: const Border(
             top: BorderSide(color: ThemeColors.greyBorder),
@@ -210,15 +220,15 @@ class _LoginBottomState extends State<LoginBottom> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // SpacerVertical(height: 20.sp),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .45,
-                    // constraints:
-                    //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-                    child: Image.asset(
-                      Images.logo,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: MediaQuery.of(context).size.width * .45,
+                  //   // constraints:
+                  //   //     BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+                  //   child: Image.asset(
+                  //     Images.logo,
+                  //     fit: BoxFit.contain,
+                  //   ),
+                  // ),
                   SpacerVertical(height: 10.sp),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.7,

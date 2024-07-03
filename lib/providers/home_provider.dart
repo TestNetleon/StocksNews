@@ -236,6 +236,7 @@ class HomeProvider extends ChangeNotifier {
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
+        Preference.saveReferInput(_extra?.affiliateInput == 1);
 
         loginTxt = _extra?.loginText;
         signUpTxt = _extra?.signUpText;
