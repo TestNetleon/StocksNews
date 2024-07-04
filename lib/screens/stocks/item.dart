@@ -29,50 +29,80 @@ class StocksItemAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () => _onTap(context),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(0.sp),
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        width: 43,
-                        height: 43,
-                        child: ThemeImageView(url: data?.image ?? ""),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: ThemeColors.background,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () => _onTap(context),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(0.sp),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 48,
+                    height: 48,
+                    child: ThemeImageView(url: data?.image ?? ""),
+                  ),
+                ),
+              ),
+              const SpacerHorizontal(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: () => _onTap(context),
+                      child: Text(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        data?.symbol ?? "",
+                        style: stylePTSansRegular(
+                          fontSize: 18,
+                          color: ThemeColors.white,
+                        ),
                       ),
                     ),
+                    const SpacerVertical(height: 5),
+                    Text(
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      data?.name ?? "",
+                      style: stylePTSansRegular(
+                        fontSize: 12,
+                        color: ThemeColors.greyText,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SpacerHorizontal(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    data?.price ?? "",
+                    style: stylePTSansBold(fontSize: 18),
                   ),
-                  const SpacerHorizontal(width: 3),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  const SpacerVertical(height: 2),
+                  RichText(
+                    textAlign: TextAlign.end,
+                    text: TextSpan(
                       children: [
-                        InkWell(
-                          onTap: () => _onTap(context),
-                          child: Text(
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            data?.symbol ?? "",
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.white,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          data?.name ?? "",
+                        TextSpan(
+                          text:
+                              "${data?.displayChange} (${data?.changesPercentage?.toCurrency()}%)",
                           style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
+                            fontSize: 14,
+                            color: (data?.changesPercentage ?? 0) > 0
+                                ? Colors.green
+                                : Colors.red,
                           ),
                         ),
                       ],
@@ -80,157 +110,62 @@ class StocksItemAll extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            // const SpacerHorizontal(width: 10),
-            // Expanded(
-            //   child: Text(
-            //     maxLines: 1,
-            //     data?.exchangeShortName ?? "",
-            //     style: stylePTSansRegular(
-            //       fontSize: 12,
-            //       color: ThemeColors.white,
-            //     ),
-            //   ),
-            // ),
-            const SpacerHorizontal(width: 10),
-            Expanded(
+              const SpacerHorizontal(width: 10),
+              InkWell(
+                onTap: () =>
+                    provider.open(provider.openIndex == index ? -1 : index),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: ThemeColors.accent,
+                  ),
+                  margin: EdgeInsets.only(left: 8.sp),
+                  padding: const EdgeInsets.all(3),
+                  child: Icon(
+                    provider.openIndex == index
+                        ? Icons.arrow_upward_rounded
+                        : Icons.arrow_downward_rounded,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 150),
+            child: Container(
+              height: provider.openIndex == index ? null : 0,
+              margin: EdgeInsets.only(
+                top: provider.openIndex == index ? 10.sp : 0,
+                bottom: provider.openIndex == index ? 10.sp : 0,
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   maxLines: 2,
-                  //   "${data?.price}",
-                  //   overflow: TextOverflow.ellipsis,
-                  //   style: stylePTSansRegular(
-                  //       fontSize: 12, color: ThemeColors.white),
-                  // ),
-                  Text(data?.price ?? "", style: stylePTSansBold(fontSize: 14)),
-                  const SpacerVertical(height: 2),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: RichText(
-                          textAlign: TextAlign.end,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    "${data?.displayChange} (${data?.changesPercentage?.toCurrency()}%)",
-                                style: stylePTSansRegular(
-                                  fontSize: 11,
-                                  color: (data?.changesPercentage ?? 0) > 0
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Flexible(
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       // Row(
-                      //       //   children: [
-                      //       //     Icon(
-                      //       //       (data?.change ?? 0) > 0
-                      //       //           ? Icons.arrow_upward
-                      //       //           : Icons.arrow_downward,
-                      //       //       size: 15,
-                      //       //       color: (data?.change ?? 0) > 0
-                      //       //           ? ThemeColors.accent
-                      //       //           : Colors.red,
-                      //       //     ),
-                      //       //     Flexible(
-                      //       //       child: Text(
-                      //       //         maxLines: 2,
-                      //       //         "${data?.change?.toCurrency()} (${data?.changesPercentage?.toCurrency()}%)",
-                      //       //         style: stylePTSansRegular(
-                      //       //           fontSize: 12,
-                      //       //           color: (data?.change ?? 0) > 0
-                      //       //               ? ThemeColors.accent
-                      //       //               : Colors.red,
-                      //       //         ),
-                      //       //       ),
-                      //       //     ),
-                      //       //   ],
-                      //       // ),
-
-                      //       // Text(
-                      //       //   maxLines: 2,
-                      //       //   "${data?.changesPercentage?.toCurrency()}%",
-                      //       //   style: stylePTSansRegular(
-                      //       //     fontSize: 12,
-                      //       //     color: (data?.changesPercentage ?? 0) > 0
-                      //       //         ? ThemeColors.accent
-                      //       //         : Colors.red,
-                      //       //   ),
-                      //       // ),
-                      //     ],
-                      //   ),
-                      // ),
-                      InkWell(
-                        onTap: () => provider
-                            .open(provider.openIndex == index ? -1 : index),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: ThemeColors.accent,
-                          ),
-                          margin: EdgeInsets.only(left: 8.sp),
-                          padding: const EdgeInsets.all(3),
-                          child: Icon(
-                            provider.openIndex == index
-                                ? Icons.arrow_upward_rounded
-                                : Icons.arrow_downward_rounded,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ],
+                  InnerRowItem(
+                    label: "Exchange",
+                    value: data?.exchangeShortName,
+                  ),
+                  InnerRowItem(
+                    label: "Last Close",
+                    value: data?.previousClose,
+                  ),
+                  InnerRowItem(
+                    label: "Open",
+                    value: data?.open,
+                  ),
+                  InnerRowItem(
+                    label: "Day High",
+                    value: data?.dayHigh,
+                  ),
+                  InnerRowItem(
+                    label: "Day Low",
+                    value: data?.dayLow,
                   ),
                 ],
               ),
-            )
-          ],
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 150),
-          child: Container(
-            height: provider.openIndex == index ? null : 0,
-            margin: EdgeInsets.only(
-              top: provider.openIndex == index ? 10.sp : 0,
-              bottom: provider.openIndex == index ? 10.sp : 0,
-            ),
-            child: Column(
-              children: [
-                InnerRowItem(
-                  label: "Exchange",
-                  value: data?.exchangeShortName,
-                ),
-                InnerRowItem(
-                  label: "Last Close",
-                  value: data?.previousClose,
-                ),
-                InnerRowItem(
-                  label: "Open",
-                  value: data?.open,
-                ),
-                InnerRowItem(
-                  label: "Day High",
-                  value: data?.dayHigh,
-                ),
-                InnerRowItem(
-                  label: "Day Low",
-                  value: data?.dayLow,
-                ),
-              ],
             ),
           ),
-        ),
-        const SpacerVertical(height: Dimen.itemSpacing),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -7,13 +7,13 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -75,21 +75,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
               MarketDataHeader(
                 provider: provider,
                 onFilterClick: _onFilterClick,
-                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               ),
-              // HtmlTitle(
-              //   subTitle: provider.extra?.subTitle ?? "",
-              //   onFilterClick: _onFilterClick,
-              //   // margin: const EdgeInsets.only(top: 10, bottom: 10),
-              //   hasFilter: provider.filterParams != null,
-              // ),
-              // if (provider.filterParams != null)
-              //   FilterUiValues(
-              //     params: provider.filterParams,
-              //     onDeleteExchange: (exchange) {
-              //       provider.exchangeFilter(exchange);
-              //     },
-              //   ),
               Expanded(
                 child: BaseUiContainer(
                   error: provider.error,
@@ -104,7 +90,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                     onLoadMore: () async =>
                         await provider.getData(loadMore: true),
                     child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.only(bottom: 10),
                       itemBuilder: (context, index) {
                         Result? data = provider.data?[index];
                         if (data == null) {
@@ -113,10 +99,7 @@ class _Dow30StocksState extends State<Dow30Stocks> {
                         return IndicesItem(data: data, index: index);
                       },
                       separatorBuilder: (context, index) {
-                        return const Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 16,
-                        );
+                        return const SpacerVertical(height: 12);
                       },
                       itemCount: provider.data?.length ?? 0,
                     ),

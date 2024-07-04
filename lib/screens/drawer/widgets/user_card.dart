@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -16,7 +17,7 @@ import '../../../providers/leaderboard.dart';
 import '../../../route/my_app.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/utils.dart';
-import '../../../widgets/custom/alert_popup.dart';
+
 import '../../../widgets/theme_button.dart';
 import '../../myAccount/widgets/my-account_header.dart';
 import 'profile_image.dart';
@@ -258,23 +259,30 @@ class _UserCardState extends State<UserCard> {
   Future<void> _initPlatformState() async {
     Purchases.setLogLevel(LogLevel.debug);
 
+    UserRes? userRes = context.read<UserProvider>().user;
+    Utils().showLog("${userRes?.userId}");
+
     if (Platform.isAndroid) {
-      // configuration =
-      //     PurchasesConfiguration("goog_frHKXAaNeqxuVOxSDomgxquiJhy");
-      popUpAlert(
-        message: "waiting for initialize..",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
+      configuration = PurchasesConfiguration("goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
+        ..appUserID = userRes?.userId ?? "";
+      // popUpAlert(
+      //   message: "waiting for initialize..",
+      //   title: "Alert",
+      //   icon: Images.alertPopGIF,
+      // );
     } else if (Platform.isIOS) {
-      configuration =
-          PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC");
+      configuration = PurchasesConfiguration("appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+        ..appUserID = userRes?.userId ?? "";
     }
 
     if (configuration != null) {
       await Purchases.configure(configuration!);
       PaywallResult result = await RevenueCatUI.presentPaywall();
       Utils().showLog("$result");
+
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      Utils().showLog("Customer-->${customerInfo.managementURL}");
+
       await _result(result);
     }
   }
@@ -284,18 +292,18 @@ class _UserCardState extends State<UserCard> {
       case PaywallResult.cancelled:
         break;
       case PaywallResult.error:
-        popUpAlert(
-          message: Const.errSomethingWrong,
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
+        // popUpAlert(
+        //   message: Const.errSomethingWrong,
+        //   title: "Alert",
+        //   icon: Images.alertPopGIF,
+        // );
         break;
       case PaywallResult.notPresented:
-        popUpAlert(
-          message: "Paywall Not Presented",
-          title: "Alert",
-          icon: Images.alertPopGIF,
-        );
+        // popUpAlert(
+        //   message: "Paywall Not Presented",
+        //   title: "Alert",
+        //   icon: Images.alertPopGIF,
+        // );
         break;
       case PaywallResult.purchased:
         await _purchaseSuccess();

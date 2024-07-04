@@ -1,5 +1,5 @@
 {
-  "identifier" : "368A7E39",
+  "identifier" : "1A860A33",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -24,7 +24,7 @@
     "_applicationInternalID" : "6476615803",
     "_developerTeamID" : "NPUHL9S742",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 741610726.71177304,
+    "_lastSynchronizedDate" : 741785763.05280399,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -127,6 +127,90 @@
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
           "subscriptionGroupID" : "21505749",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    },
+    {
+      "id" : "21506635",
+      "localizations" : [
+
+      ],
+      "name" : "Stocks.News Subscription",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "9.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6505136163",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "$9.99 per month with 10 Points",
+              "displayName" : "10 Points per Month",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "10Points",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Bronze",
+          "subscriptionGroupID" : "21506635",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "99.0",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6505136597",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "$99 per month with 150 Points",
+              "displayName" : "150 Points per Month",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "150Points",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Gold",
+          "subscriptionGroupID" : "21506635",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6505136509",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "$29.99 per month with 30 Points",
+              "displayName" : "30 Points per Month",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "30Points",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Silver",
+          "subscriptionGroupID" : "21506635",
           "type" : "RecurringSubscription"
         }
       ]

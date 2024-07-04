@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -13,15 +15,23 @@ class StockDetailAnalystData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AnalystRecom? anaRes =
-        context.watch<StockDetailProviderNew>().overviewRes?.analystRecom;
+    MorningStar? morningStar =
+        context.watch<StockDetailProviderNew>().overviewRes?.morningStart;
+
+    int value = morningStar?.quantEconomicMoatLabel == "Narrow"
+        ? 70
+        : morningStar?.quantEconomicMoatLabel == "Wide"
+            ? 99
+            : 0;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-              color: ThemeColors.greyBorder.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(8)),
+            color: ThemeColors.greyBorder.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -33,10 +43,38 @@ class StockDetailAnalystData extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${anaRes?.buyPercent ?? 'N/A'}% analysts say buy",
-                      style: stylePTSansBold(
-                          color: ThemeColors.accent, fontSize: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Quant star rating ",
+                          style: stylePTSansBold(
+                            color: ThemeColors.accent,
+                            fontSize: 18,
+                          ),
+                        ),
+                        RatingBar.builder(
+                          initialRating: double.tryParse(
+                                  "${morningStar?.quantStarRating}") ??
+                              0.0,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          ignoreGestures: true,
+                          itemSize: 20,
+                          unratedColor: ThemeColors.greyBorder,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 0.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: ThemeColors.accent,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        )
+                      ],
                     ),
                     // const SpacerVertical(height: 5),
                     // Text(
@@ -50,7 +88,7 @@ class StockDetailAnalystData extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
-                    flex: anaRes?.buyPercent ?? 1,
+                    flex: 1,
                     child: Container(
                       height: 30,
                       decoration: const BoxDecoration(
@@ -64,7 +102,7 @@ class StockDetailAnalystData extends StatelessWidget {
                   ),
                   const SpacerHorizontal(width: 2),
                   Flexible(
-                    flex: anaRes?.holdPercent ?? 1,
+                    flex: 1,
                     child: Container(
                       height: 30,
                       decoration: const BoxDecoration(
@@ -74,7 +112,7 @@ class StockDetailAnalystData extends StatelessWidget {
                   ),
                   const SpacerHorizontal(width: 2),
                   Flexible(
-                    flex: anaRes?.sellPercent ?? 1,
+                    flex: 1,
                     child: Container(
                       height: 30,
                       decoration: const BoxDecoration(
@@ -89,66 +127,66 @@ class StockDetailAnalystData extends StatelessWidget {
                 ],
               ),
               const SpacerVertical(height: 5),
-              Row(
-                children: [
-                  Flexible(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Buy ${anaRes?.buyPercent ?? "N/A"}%",
-                        style: stylePTSansRegular(
-                          color: ThemeColors.accent,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Hold ${anaRes?.holdPercent ?? "N/A"}%",
-                        style: stylePTSansRegular(
-                          color: const Color.fromARGB(255, 255, 191, 52),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "Sell ${anaRes?.sellPercent ?? "N/A"}%",
-                        style: stylePTSansRegular(
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Flexible(
+              //       child: Align(
+              //         alignment: Alignment.centerLeft,
+              //         child: Text(
+              //           "Buy ${anaRes?.buyPercent ?? "N/A"}%",
+              //           style: stylePTSansRegular(
+              //             color: ThemeColors.accent,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Flexible(
+              //       child: Align(
+              //         alignment: Alignment.center,
+              //         child: Text(
+              //           "Hold ${anaRes?.holdPercent ?? "N/A"}%",
+              //           style: stylePTSansRegular(
+              //             color: const Color.fromARGB(255, 255, 191, 52),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Flexible(
+              //       child: Align(
+              //         alignment: Alignment.centerRight,
+              //         child: Text(
+              //           "Sell ${anaRes?.sellPercent ?? "N/A"}%",
+              //           style: stylePTSansRegular(
+              //             color: Colors.orange,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const SpacerVertical(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.person_outline_rounded,
-                          size: 18,
-                          color: ThemeColors.greyBorder,
-                        ),
-                        const SpacerHorizontal(width: 5),
-                        Flexible(
-                          child: Text(
-                            "${anaRes?.totalAnalysis ?? "N/A"} analysts",
-                            style: stylePTSansRegular(fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Flexible(
+                  //   child: Row(
+                  //     children: [
+                  //       const Icon(
+                  //         Icons.person_outline_rounded,
+                  //         size: 18,
+                  //         color: ThemeColors.greyBorder,
+                  //       ),
+                  //       const SpacerHorizontal(width: 5),
+                  //       Flexible(
+                  //         child: Text(
+                  //           "${anaRes?.totalAnalysis ?? "N/A"} analysts",
+                  //           style: stylePTSansRegular(fontSize: 12),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Flexible(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -161,7 +199,7 @@ class StockDetailAnalystData extends StatelessWidget {
                         const SpacerHorizontal(width: 5),
                         Flexible(
                           child: Text(
-                            "Updated on ${anaRes?.lastUpdate ?? "N/A"}",
+                            "Updated on ${morningStar?.updatedAt ?? "N/A"}",
                             style: stylePTSansRegular(fontSize: 12),
                           ),
                         ),
@@ -172,9 +210,11 @@ class StockDetailAnalystData extends StatelessWidget {
               ),
               const SpacerVertical(height: 20),
               Text(
-                "Source: ${anaRes?.source ?? "N/A"}",
+                "Source: morningstar.com",
                 style: stylePTSansRegular(
-                    fontSize: 12, color: ThemeColors.greyText),
+                  fontSize: 12,
+                  color: ThemeColors.greyText,
+                ),
               )
             ],
           ),
