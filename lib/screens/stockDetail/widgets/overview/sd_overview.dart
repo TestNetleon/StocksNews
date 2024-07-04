@@ -76,13 +76,9 @@ class _SdOverviewState extends State<SdOverview> {
                 const SpacerVertical(height: 4),
                 const SdTopWidgetRange(),
                 const SpacerVertical(height: 4),
-                SdOverviewChart(
-                  symbol: widget.symbol ?? "",
-                ),
+                SdOverviewChart(symbol: widget.symbol ?? ""),
                 const Padding(
-                  padding: EdgeInsets.only(
-                    bottom: Dimen.padding,
-                  ),
+                  padding: EdgeInsets.only(bottom: Dimen.padding),
                   child: StockDetailAnalystData(),
                 ),
                 const SpacerVertical(height: 4),

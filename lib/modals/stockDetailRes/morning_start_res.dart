@@ -24,6 +24,7 @@ class MorningStar {
   final dynamic updatedAt;
   final dynamic createdAt;
   final dynamic pdfUrl;
+  final dynamic updated;
 
   MorningStar({
     required this.id,
@@ -51,6 +52,7 @@ class MorningStar {
     required this.updatedAt,
     required this.createdAt,
     required this.pdfUrl,
+    required this.updated,
   });
 
   factory MorningStar.fromJson(Map<String, dynamic> json) => MorningStar(
@@ -59,29 +61,27 @@ class MorningStar {
         symbol: json["symbol"],
         shareClassId: json["share_class_id"],
         quantStarRating: json["QuantStarRating"],
-        quantStarRatingDate: DateTime.parse(json["QuantStarRatingDate"]),
+        quantStarRatingDate: json["QuantStarRatingDate"],
         quantEconomicMoatLabel: json["QuantEconomicMoatLabel"],
-        quantEconomicMoatDate: DateTime.parse(json["QuantEconomicMoatDate"]),
+        quantEconomicMoatDate: json["QuantEconomicMoatDate"],
         priceOverQuantFairValue: json["PriceOverQuantFairValue"],
-        priceOverQuantFairValueDate:
-            DateTime.parse(json["PriceOverQuantFairValueDate"]),
+        priceOverQuantFairValueDate: json["PriceOverQuantFairValueDate"],
         quantValuation: json["QuantValuation"],
         quantFairValue: json["QuantFairValue"],
-        quantFairValueDate: DateTime.parse(json["QuantFairValueDate"]),
+        quantFairValueDate: json["QuantFairValueDate"],
         quantFairValueUncertaintyLabel: json["QuantFairValueUncertaintyLabel"],
-        quantFairValueUncertaintyDate:
-            DateTime.parse(json["QuantFairValueUncertaintyDate"]),
+        quantFairValueUncertaintyDate: json["QuantFairValueUncertaintyDate"],
         oneStarPrice: json["OneStarPrice"],
-        oneStarPriceDate: DateTime.parse(json["OneStarPriceDate"]),
+        oneStarPriceDate: json["OneStarPriceDate"],
         fiveStarPrice: json["FiveStarPrice"],
-        fiveStarPriceDate: DateTime.parse(json["FiveStarPriceDate"]),
+        fiveStarPriceDate: json["FiveStarPriceDate"],
         quantFinancialHealthLabel: json["QuantFinancialHealthLabel"],
-        quantFinancialHealthDate:
-            DateTime.parse(json["QuantFinancialHealthDate"]),
+        quantFinancialHealthDate: json["QuantFinancialHealthDate"],
         pdfStatus: json["pdf_status"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"],
+        createdAt: json["created_at"],
         pdfUrl: json["pdf_url"],
+        updated: json["updated"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -110,5 +110,6 @@ class MorningStar {
         "updated_at": updatedAt,
         "created_at": createdAt,
         "pdf_url": pdfUrl,
+        "updated": updated,
       };
 }
