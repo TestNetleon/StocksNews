@@ -622,6 +622,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _forecastRes = sdAnalystForecastResFromJson(jsonEncode(response.data));
+        Utils().showLog("length ---- ${_forecastRes?.chartData?.length}");
         _extraForecast =
             (response.extra is Extra ? response.extra as Extra : null);
       } else {
