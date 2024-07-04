@@ -4,10 +4,9 @@ import 'package:stocks_news_new/modals/most_purchased.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../widgets/cache_network_image.dart';
 import '../../../../../widgets/spacer_horizontal.dart';
 import 'view_all.dart';
 
@@ -24,7 +23,8 @@ class TopPlaidIndex extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: Dimen.padding),
+      // padding: const EdgeInsets.only(bottom: Dimen.padding),
+      padding: const EdgeInsets.only(bottom: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,16 +73,31 @@ class TopPlaidIndex extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: List.generate(
+              children:
+                  // List.generate(
+                  //   4,
+                  //   (index) {
+                  //     MostPurchasedRes? data = provider.mostPurchased?[index];
+                  //     if (data == null) {
+                  //       return const SizedBox();
+                  //     }
+                  //     return SizedBox(
+                  //       width: 200,
+                  //       child: Text(
+                  //         "data",
+                  //         style: styleGeorgiaRegular(),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+                  List.generate(
                 provider.mostPurchased?.length ?? 0,
                 (index) {
                   MostPurchasedRes? data = provider.mostPurchased?[index];
                   if (data == null) {
                     return const SizedBox();
                   }
-                  return TopPlaidItem(
-                    data: data,
-                  );
+                  return TopPlaidItem(data: data);
                 },
               ),
             ),
@@ -100,7 +115,8 @@ class TopPlaidItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 12, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+      // padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
         onTap: () {

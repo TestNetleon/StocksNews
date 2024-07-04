@@ -47,6 +47,7 @@ class ThemeColors {
   static const accent = Color(0xFF35BA46);
   static const darkGreen = Color(0xFF269238);
   static const ratingIconColor = Color(0xFFfec107);
+  static const themeGreen = Color(0xFF14b24a);
 
   static const gredientColor = Color.fromARGB(78, 0, 0, 0);
 

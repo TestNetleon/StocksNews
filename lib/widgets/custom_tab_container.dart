@@ -279,6 +279,7 @@ class CommonTabContainer extends StatefulWidget {
     this.onChange,
     this.showDivider = false,
     this.scrollable = false,
+    this.physics,
     super.key,
   });
 //
@@ -291,6 +292,7 @@ class CommonTabContainer extends StatefulWidget {
   final bool scrollable;
   final List<Widget> widgets;
   final bool showDivider;
+  final ScrollPhysics? physics;
   final Function(int index)? onChange;
 
   @override
@@ -352,11 +354,11 @@ class _CommonTabContainerState extends State<CommonTabContainer>
                 ? const EdgeInsets.symmetric(horizontal: Dimen.padding)
                 : EdgeInsets.zero,
             child: Container(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(2),
               // margin: widget.padding,
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 21, 21, 21),
-                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 30, 30, 30),
+                borderRadius: BorderRadius.circular(4),
               ),
               child: TabBar(
                 controller: _controller,
@@ -366,8 +368,8 @@ class _CommonTabContainerState extends State<CommonTabContainer>
                   });
                 },
                 indicator: BoxDecoration(
-                  color: const Color.fromARGB(255, 0, 82, 4),
-                  borderRadius: BorderRadius.circular(8),
+                  color: ThemeColors.themeGreen,
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 isScrollable: widget.scrollable,
                 tabs: [
@@ -384,10 +386,12 @@ class _CommonTabContainerState extends State<CommonTabContainer>
           ),
           const SpacerVertical(height: 10),
           Visibility(
-              visible: widget.showDivider,
-              child: Divider(color: ThemeColors.border, height: 10.sp)),
+            visible: widget.showDivider,
+            child: Divider(color: ThemeColors.border, height: 10.sp),
+          ),
           Expanded(
             child: TabBarView(
+              physics: widget.physics,
               controller: _controller,
               children: widget.widgets,
             ),

@@ -207,3 +207,8 @@ There's a problem with your configuration. None of the products registered in th
 More information: https://rev.cat/why-are-offerings-empty
 ERROR: 😿‼️ There is an issue with your configuration. Check the underlying error for more details. There's a problem with your configuration. None of the products registered in the RevenueCat dashboard could be fetched from App Store Connect (or the StoreKit Configuration file if one is being used). 
 More information: https://rev.cat/why-are-offerings-empty
+
+
+
+
+refresh all onlogin

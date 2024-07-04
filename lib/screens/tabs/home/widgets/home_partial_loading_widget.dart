@@ -34,7 +34,7 @@ class HomePartialLoading extends StatelessWidget {
               placeHolder ??
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                margin: EdgeInsets.all(20.sp),
+                margin: EdgeInsets.all(0.sp),
                 child: const CircularProgressIndicator(
                   color: ThemeColors.accent,
                 ),
@@ -48,7 +48,7 @@ class HomePartialLoading extends StatelessWidget {
         if (!loading && error == null)
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            margin: EdgeInsets.only(top: isPhone ? 20.sp : 5.sp),
+            margin: EdgeInsets.only(top: isPhone ? 0 : 5.sp),
             child: child,
           ),
       ],

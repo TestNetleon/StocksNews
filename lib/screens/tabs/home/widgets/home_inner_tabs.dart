@@ -31,61 +31,36 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+
+    // return CommonTabContainer(
+    //   onChange: (index) {},
+    //   padding: const EdgeInsets.only(bottom: 10),
+    //   physics: const NeverScrollableScrollPhysics(),
+    //   scrollable: true,
+    //   tabs: ["Trending", "Top Gainers", "Top Losers"],
+    //   widgets: [
+    //     const HomeTrending(),
+    //     const HomeTopGainer(),
+    //     const HomeTopLoser(),
+    //   ],
+    // );
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         SpacerVertical(height: isPhone ? 0 : 5),
         Container(
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(2),
           // margin: widget.padding,
+          width: double.infinity,
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 21, 21, 21),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(4),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // CustomTabLabel(
-              //   "Trending",
-              //   coloredLetters: const ['T'],
-              //   selected: _selectedIndex == 0,
-              //   onTap: () {
-              //     setState(() {
-              //       _selectedIndex = 0;
-              //     });
-              //   },
-              // ),
-              // VerticalDivider(
-              //   color: ThemeColors.accent,
-              //   width: 1.sp,
-              //   thickness: 1.sp,
-              // ),
-              // CustomTabLabel(
-              //   "Top Gainers",
-              //   coloredLetters: const ['G'],
-              //   selected: _selectedIndex == 1,
-              //   onTap: () {
-              //     setState(() {
-              //       _selectedIndex = 1;
-              //     });
-              //   },
-              // ),
-              // VerticalDivider(
-              //   color: ThemeColors.accent,
-              //   width: 1.sp,
-              //   thickness: 1.sp,
-              // ),
-              // CustomTabLabel(
-              //   "Top Losers",
-              //   coloredLetters: const ['L'],
-              //   selected: _selectedIndex == 2,
-              //   onTap: () {
-              //     setState(() {
-              //       _selectedIndex = 2;
-              //     });
-              //   },
-              // ),
-
               CustomTabHome(
                 label: "Trending",
                 selected: _selectedIndex == 0,
