@@ -6,15 +6,13 @@ import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/mega_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/micro_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/small_cap.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class TrendingByMarketCap extends StatefulWidget {
   const TrendingByMarketCap({super.key});
@@ -52,21 +50,17 @@ class _TrendingByMarketCapState extends State<TrendingByMarketCap> {
               : SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(
                     Dimen.padding,
-                    Dimen.padding,
+                    0,
                     Dimen.padding,
                     0,
                   ),
                   child: Column(
                     children: [
-                      const SpacerVertical(height: 10),
                       Visibility(
                         visible: !isEmpty(provider.textTop?.now),
-                        child: Text(
-                          provider.textTop?.now ?? "",
-                          style: stylePTSansRegular(
-                            fontSize: 13,
-                            color: ThemeColors.greyText,
-                          ),
+                        child: ScreenTitle(
+                          subTitle: provider.textTop?.now ?? "",
+                          dividerPadding: EdgeInsets.zero,
                         ),
                       ),
                       const MegaCapListView(),

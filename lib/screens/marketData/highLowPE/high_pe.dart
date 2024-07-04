@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/highlow_pe_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
@@ -8,9 +7,9 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -79,24 +78,10 @@ class _HighPeStocksState extends State<HighPeStocks> {
               MarketDataHeader(
                 provider: provider,
                 onFilterClick: _onFilterClick,
-                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               ),
-              // HtmlTitle(
-              //   subTitle: provider.extra?.subTitle ?? "",
-              //   onFilterClick: _onFilterClick,
-              //   hasFilter: provider.filterParams != null,
-              // ),
-              // if (provider.filterParams != null)
-              //   FilterUiValues(
-              //     params: provider.filterParams,
-              //     onDeleteExchange: (exchange) {
-              //       provider.exchangeFilter(exchange);
-              //     },
-              //   ),
               Expanded(
                 child: BaseUiContainer(
                   error: provider.error,
-                  // hasData: up != null && up.isNotEmpty,
                   hasData: !provider.isLoading &&
                       provider.data != null &&
                       provider.data?.isNotEmpty == true,
@@ -112,15 +97,14 @@ class _HighPeStocksState extends State<HighPeStocks> {
                     child: ListView.separated(
                       padding: const EdgeInsets.only(
                         bottom: Dimen.padding,
-                        top: Dimen.padding,
+                        top: 0,
                       ),
                       itemBuilder: (context, index) {
                         HIghLowPeRes? high = provider.data?[index];
                         return HighLowPEItem(index: index, data: high);
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                            color: ThemeColors.greyBorder, height: 20.sp);
+                        return const SpacerVertical(height: 12);
                       },
                       itemCount: provider.data?.length ?? 0,
                     ),

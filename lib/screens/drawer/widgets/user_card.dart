@@ -277,7 +277,6 @@ class _UserCardState extends State<UserCard> {
 
     if (configuration != null) {
       await Purchases.configure(configuration!);
-
       PaywallResult result = await RevenueCatUI.presentPaywall();
       Utils().showLog("$result");
 
@@ -306,14 +305,11 @@ class _UserCardState extends State<UserCard> {
         //   icon: Images.alertPopGIF,
         // );
         break;
-
       case PaywallResult.purchased:
         await _purchaseSuccess();
         break;
-
       case PaywallResult.restored:
         break;
-
       default:
     }
   }

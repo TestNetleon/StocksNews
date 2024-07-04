@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class EarningsList extends StatefulWidget {
   const EarningsList({super.key});
@@ -76,7 +77,10 @@ class _EarningsListState extends State<EarningsList> {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-              left: Dimen.padding, right: Dimen.padding, bottom: 40),
+            left: Dimen.padding,
+            right: Dimen.padding,
+            bottom: 40,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -87,8 +91,6 @@ class _EarningsListState extends State<EarningsList> {
                   subTitleHtml: true,
                   subTitle: provider.extra?.subTitle,
                   provider: provider,
-                  // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-                  // onFilterClick: _onFilterClick,
                 ),
               Expanded(
                 child: BaseUiContainer(
@@ -104,9 +106,7 @@ class _EarningsListState extends State<EarningsList> {
                     onLoadMore: () async =>
                         provider.getEarningsStocks(loadMore: true),
                     child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Dimen.padding,
-                      ),
+                      padding: const EdgeInsets.only(top: Dimen.padding),
                       itemBuilder: (context, index) {
                         if (provider.data == null || provider.data!.isEmpty) {
                           return const SizedBox();
@@ -123,10 +123,7 @@ class _EarningsListState extends State<EarningsList> {
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 20.sp,
-                        );
+                        return const SpacerVertical(height: 12);
                       },
                       itemCount: provider.data?.length ?? 0,
                     ),

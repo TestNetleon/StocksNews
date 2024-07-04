@@ -18,6 +18,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
 //
@@ -48,7 +49,7 @@ class StocksContainer extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
@@ -57,6 +58,7 @@ class StocksContainer extends StatelessWidget {
             ScreenTitle(
               title: "Stocks",
               subTitle: provider.textRes?.subTitle,
+              dividerPadding: const EdgeInsets.only(bottom: 12),
               optionalWidget: GestureDetector(
                 onTap: _filterClick,
                 child: const Icon(
@@ -91,11 +93,7 @@ class StocksContainer extends StatelessWidget {
                     itemCount: provider.data?.length ?? 0,
                     padding: EdgeInsets.symmetric(vertical: 10.sp),
                     separatorBuilder: (context, index) {
-                      // return const SpacerVertical(height: 10);
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 12.sp,
-                      );
+                      return const SpacerVertical(height: 12);
                     },
                     itemBuilder: (context, index) {
                       AllStocks? data = provider.data?[index];
@@ -121,17 +119,15 @@ class StocksContainer extends StatelessWidget {
                                   ),
                                 ),
                                 const SpacerHorizontal(width: 24),
-                                Expanded(
-                                  child: AutoSizeText(
-                                    maxLines: 1,
-                                    "PRICE",
-                                    style: stylePTSansRegular(
-                                      fontSize: 12,
-                                      color: ThemeColors.greyText,
-                                    ),
+                                AutoSizeText(
+                                  maxLines: 1,
+                                  "PRICE",
+                                  style: stylePTSansRegular(
+                                    fontSize: 12,
+                                    color: ThemeColors.greyText,
                                   ),
                                 ),
-                                const SpacerHorizontal(width: 10),
+                                const SpacerHorizontal(width: 52),
                               ],
                             ),
                             Divider(

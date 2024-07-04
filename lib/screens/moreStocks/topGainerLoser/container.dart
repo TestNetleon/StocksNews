@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/colors.dart';
 import 'item.dart';
@@ -58,26 +59,28 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
       drawer: const BaseDrawer(resetIndex: true),
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding.sp, 0, Dimen.padding.sp, 0),
         child: Column(
           children: [
             if (provider.extraUpGainers?.title != null)
               ScreenTitle(
-                title: widget.type == StocksType.gainers
-                    ? "Today’s Top Gainers"
-                    : widget.type == StocksType.losers
-                        ? "Today’s Top Losers"
-                        : data?.length == 1
-                            ? "Popular Stock"
-                            : provider.extraUpGainers?.title ??
-                                "Popular Stocks",
-                subTitle: widget.type == StocksType.gainers ||
-                        widget.type == StocksType.losers
-                    ? ""
-                    : provider.extraUpGainers?.subTitle,
-                subTitleHtml: true,
-              ),
+                  title: widget.type == StocksType.gainers
+                      ? "Today’s Top Gainers"
+                      : widget.type == StocksType.losers
+                          ? "Today’s Top Losers"
+                          : data?.length == 1
+                              ? "Popular Stock"
+                              : provider.extraUpGainers?.title ??
+                                  "Popular Stocks",
+                  subTitle: widget.type == StocksType.gainers ||
+                          widget.type == StocksType.losers
+                      ? ""
+                      : provider.extraUpGainers?.subTitle,
+                  subTitleHtml: true,
+                  dividerPadding: (widget.type == StocksType.gainers ||
+                          widget.type == StocksType.losers)
+                      ? const EdgeInsets.only(top: 12)
+                      : null),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,
@@ -104,10 +107,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 12.sp,
-                      );
+                      return const SpacerVertical(height: 12);
                     },
                     itemCount: data?.length ?? 0,
                   ),

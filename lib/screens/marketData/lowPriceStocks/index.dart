@@ -64,7 +64,6 @@ class LowPriceStocksData extends StatelessWidget {
         provider.tabChange(index);
       },
       scrollable: true,
-      // tabsPadding: EdgeInsets.only(bottom: 10.sp),
       tabs: List.generate(
         tabs?.length ?? 0,
         (index) => "${tabs?[index].key}",
@@ -72,56 +71,7 @@ class LowPriceStocksData extends StatelessWidget {
       widgets: List.generate(
         tabs?.length ?? 0,
         (index) => LowPriceStocksList(index: index),
-        // (index) => _getWidgets(provider),
       ),
     );
   }
-
-  // Widget _getWidgets(LowPriceStocksProvider provider) {
-  //   return BaseUiContainer(
-  //     error: provider.error,
-  //     hasData: !provider.isLoading && provider.data != null,
-  //     isLoading: provider.isLoading,
-  //     showPreparingText: true,
-  //     onRefresh: () {
-  //       provider.getLowPriceData();
-  //     },
-  //     child: RefreshControl(
-  //       onRefresh: () async => provider.getLowPriceData(),
-  //       canLoadMore: provider.canLoadMore,
-  //       onLoadMore: () async => provider.getLowPriceData(loadMore: true),
-  //       child: ListView.separated(
-  //         padding: const EdgeInsets.symmetric(vertical: 10),
-  //         itemBuilder: (context, index) {
-  //           LowPriceStocksRes? data = provider.data?[index];
-  //           if (data == null) {
-  //             return const SizedBox();
-  //           }
-  //           return Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               index == 0
-  //                   ? HtmlTitle(
-  //                       subTitle: provider.subTitle,
-  //                     )
-  //                   : const SizedBox(),
-  //               provider.typeIndex == 1
-  //                   ? SaleOnStocksItem(
-  //                       data: data,
-  //                     )
-  //                   : LowPriceStocksItem(data: data),
-  //             ],
-  //           );
-  //         },
-  //         separatorBuilder: (context, index) {
-  //           return const Divider(
-  //             color: ThemeColors.greyBorder,
-  //             height: 16,
-  //           );
-  //         },
-  //         itemCount: provider.data?.length ?? 0,
-  //       ),
-  //     ),
-  //   );
-  // }
 }

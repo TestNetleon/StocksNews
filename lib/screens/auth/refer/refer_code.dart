@@ -1,4 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +13,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -63,7 +67,7 @@ class _ReferLoginState extends State<ReferLogin> {
   TextEditingController displayName = TextEditingController(text: "");
 
   String appSignature = "";
-  TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
+  final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
 
   @override
   void initState() {
@@ -118,6 +122,34 @@ class _ReferLoginState extends State<ReferLogin> {
         icon: Images.alertPopGIF,
       );
     } else {
+      // showGlobalProgressDialog();
+      // await FirebaseAuth.instance.verifyPhoneNumber(
+      //   phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+      //   verificationCompleted: (PhoneAuthCredential credential) {
+      //     closeGlobalProgressDialog();
+      //   },
+      //   verificationFailed: (FirebaseAuthException e) {
+      //     closeGlobalProgressDialog();
+      //     log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+      //     popUpAlert(
+      //       message: e.message ?? Const.errSomethingWrong,
+      //       title: "Alert",
+      //       icon: Images.alertPopGIF,
+      //     );
+      //   },
+      //   codeSent: (String verificationId, int? resendToken) {
+      //     closeGlobalProgressDialog();
+      //     referOTP(
+      //       name: name.text,
+      //       displayName: displayName.text,
+      //       phone: mobile.text,
+      //       appSignature: appSignature,
+      //       verificationId: verificationId,
+      //     );
+      //   },
+      //   codeAutoRetrievalTimeout: (String verificationId) {},
+      // );
+
       UserProvider provider = context.read<UserProvider>();
       Map request = {
         "token": provider.user?.token ?? "",
@@ -127,7 +159,6 @@ class _ReferLoginState extends State<ReferLogin> {
         "phone_hash": appSignature,
         "platform": Platform.operatingSystem,
       };
-
       try {
         ApiResponse response = await provider.referLoginApi(request);
         if (response.status) {
@@ -136,6 +167,8 @@ class _ReferLoginState extends State<ReferLogin> {
           referOTP(
             phone: mobile.text,
             appSignature: appSignature,
+            verificationId: "",
+            displayName: "",
           );
         }
       } catch (e) {
@@ -318,7 +351,9 @@ class _ReferLoginState extends State<ReferLogin> {
                               Flexible(
                                 child: ThemeInputField(
                                   style: stylePTSansBold(
-                                      color: Colors.black, fontSize: 18),
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
                                   borderRadiusOnly: const BorderRadius.only(
                                     topRight: Radius.circular(4),
                                     bottomRight: Radius.circular(4),
@@ -408,6 +443,7 @@ class _ReferLoginState extends State<ReferLogin> {
                       ThemeButton(
                         text: "Send OTP",
                         onPressed: checkBox ? _referLogin : null,
+                        textUppercase: true,
                       ),
                       const SpacerVertical(
                         height: 200,

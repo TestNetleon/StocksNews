@@ -623,6 +623,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
       if (response.status) {
         _forecastRes = sdAnalystForecastResFromJson(jsonEncode(response.data));
+        Utils().showLog("length ---- ${_forecastRes?.chartData?.length}");
         _extraForecast =
             (response.extra is Extra ? response.extra as Extra : null);
       } else {
@@ -1325,6 +1326,11 @@ class StockDetailProviderNew extends ChangeNotifier {
   int typeIndex = 0;
   int periodIndex = 0;
 
+  String? _typeValue;
+  String? get typeValue => _typeValue;
+
+  int changePeriodTypeIndex = 0;
+
   void changeTabType(index, {String? symbol}) {
     if (typeIndex != index) {
       typeIndex = index;
@@ -1351,6 +1357,13 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  void changePeriodTypeIndexVoid(index) {
+    if (changePeriodTypeIndex != index) {
+      changePeriodTypeIndex = index;
+      notifyListeners();
+    }
+  }
+
   void setStatusFinancial(status) {
     _statusFinancial = status;
     notifyListeners();
@@ -1370,6 +1383,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool tabProgress = false,
   }) async {
     _sdFinancialChartRes?.chart = null;
+    _typeValue = null;
     notifyListeners();
     if (reset) {
       typeIndex = 0;
@@ -1396,6 +1410,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
 
       if (response.status) {
+        _typeValue = type;
         _sdFinancialChartRes =
             sdFinancialResFromJson(jsonEncode(response.data));
 

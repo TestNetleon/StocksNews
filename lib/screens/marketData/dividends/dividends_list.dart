@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
@@ -10,8 +9,8 @@ import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -25,16 +24,6 @@ class DividendsList extends StatefulWidget {
 }
 
 class _DividendsListState extends State<DividendsList> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     if (context.read<DividendsProvider>().data != null) {
-  //       return;
-  //     }
-  //     context.read<DividendsProvider>().getDividendsStocks();
-  //   });
-  // }
   @override
   void initState() {
     super.initState();
@@ -88,15 +77,7 @@ class _DividendsListState extends State<DividendsList> {
                   subTitleHtml: true,
                   subTitle: provider.extra?.subTitle,
                   provider: provider,
-                  // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-                  // onFilterClick: _onFilterClick,
                 ),
-              // ScreenTitle(
-              //   htmlTitle: true,
-              //   title: provider.extraUp?.title ?? "Dividend Announcements",
-              //   subTitleHtml: true,
-              //   subTitle: provider.extraUp?.subTitle,
-              // ),
               Expanded(
                 child: BaseUiContainer(
                   error: provider.error,
@@ -111,9 +92,7 @@ class _DividendsListState extends State<DividendsList> {
                     onLoadMore: () async =>
                         provider.getDividendsStocks(loadMore: true),
                     child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Dimen.padding,
-                      ),
+                      padding: const EdgeInsets.only(top: Dimen.padding),
                       itemBuilder: (context, index) {
                         if (data == null || data.isEmpty) {
                           return const SizedBox();
@@ -121,10 +100,7 @@ class _DividendsListState extends State<DividendsList> {
                         return DividendsItem(data: data[index], index: index);
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 20.sp,
-                        );
+                        return const SpacerVertical(height: 12);
                       },
                       // itemCount: up?.length ?? 0,
                       itemCount: data?.length ?? 0,

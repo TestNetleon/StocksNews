@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingRecentlyListView extends StatefulWidget {
@@ -55,22 +53,25 @@ class _TrendingRecentlyListViewState extends State<TrendingRecentlyListView> {
               : SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(
                     Dimen.padding,
-                    Dimen.padding,
+                    0,
                     Dimen.padding,
                     0,
                   ),
                   child: Column(
                     children: [
-                      const SpacerVertical(height: 10),
                       Visibility(
                         visible: !isEmpty(provider.textTop?.recently),
-                        child: HtmlWidget(
-                          provider.textTop?.recently ?? "",
-                          textStyle: stylePTSansRegular(
-                            fontSize: 13,
-                            color: ThemeColors.greyText,
-                          ),
+                        child: ScreenTitle(
+                          subTitle: provider.textTop?.now ?? "",
+                          dividerPadding: EdgeInsets.zero,
                         ),
+                        // HtmlWidget(
+                        //   provider.textTop?.recently ?? "",
+                        //   textStyle: stylePTSansRegular(
+                        //     fontSize: 13,
+                        //     color: ThemeColors.greyText,
+                        //   ),
+                        // ),
                       ),
                       ListView.separated(
                         shrinkWrap: true,
@@ -89,11 +90,11 @@ class _TrendingRecentlyListViewState extends State<TrendingRecentlyListView> {
                           );
                         },
                         separatorBuilder: (context, index) {
-                          // return const SpacerVertical(height: 10);
-                          return Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 20.sp,
-                          );
+                          return const SpacerVertical(height: 12);
+                          // return Divider(
+                          //   color: ThemeColors.greyBorder,
+                          //   height: 20.sp,
+                          // );
                         },
                         itemCount: dataList?.length ?? 0,
                       ),

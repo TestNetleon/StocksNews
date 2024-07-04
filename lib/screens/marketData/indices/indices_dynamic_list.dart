@@ -7,12 +7,12 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -24,19 +24,6 @@ class IndicesDynamicStocks extends StatefulWidget {
 }
 
 class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     IndicesProvider provider = context.read<IndicesProvider>();
-  //     if (provider.data != null) {
-  //       return;
-  //     }
-  //     provider.resetFilter();
-  //     provider.getData();
-  //   });
-  // }
-
   void _onFilterClick() async {
     FilterProvider provider = context.read<FilterProvider>();
     IndicesProvider dataProvider = context.read<IndicesProvider>();
@@ -65,24 +52,6 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // MarketDataHeader(
-            //   provider: provider,
-            //   onFilterClick: _onFilterClick,
-            //   // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-            // ),
-            // HtmlTitle(
-            //   subTitle: provider.extra?.subTitle ?? "",
-            //   onFilterClick: _onFilterClick,
-            //   // margin: const EdgeInsets.only(top: 10, bottom: 10),
-            //   hasFilter: provider.filterParams != null,
-            // ),
-            // if (provider.filterParams != null)
-            //   FilterUiValues(
-            //     params: provider.filterParams,
-            //     onDeleteExchange: (exchange) {
-            //       provider.exchangeFilter(exchange);
-            //     },
-            //   ),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,
@@ -100,9 +69,6 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                       HtmlTitle(
                         subTitle: provider.extra?.subTitle ?? "",
                         hasFilter: false,
-
-                        // onFilterClick: _onFilterClick,
-                        // margin: const EdgeInsets.only(top: 10, bottom: 10),
                       ),
                       Expanded(
                         child: RefreshControl(
@@ -111,7 +77,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                           onLoadMore: () async =>
                               provider.getIndicesData(loadMore: true),
                           child: ListView.separated(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.only(bottom: 10),
                             itemBuilder: (context, index) {
                               IndicesRes? data = provider.data?[index];
                               if (data == null) {
@@ -132,10 +98,7 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
                               if (provider.data == null) {
                                 return const SizedBox();
                               }
-                              return const Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 16,
-                              );
+                              return const SpacerVertical(height: 12);
                             },
                             itemCount:
                                 provider.typeDowThirty || provider.typeSpFifty

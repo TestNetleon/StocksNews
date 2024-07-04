@@ -175,6 +175,8 @@ class Dimen {
   static const int narrationLength = 500;
   static const double itemSpacing = 12;
   static const double radius = 10;
+
+  static const double homeSpacing = 30;
 }
 
 class Fonts {

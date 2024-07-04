@@ -26,9 +26,10 @@ class HtmlTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: hasFilter
-          ? const EdgeInsets.only(bottom: 0, top: 10)
-          : const EdgeInsets.only(bottom: 10, top: 10),
+      margin: const EdgeInsets.only(bottom: 10, top: 0),
+      // margin: hasFilter
+      //     ? const EdgeInsets.only(bottom: 0, top: 10)
+      //     : const EdgeInsets.only(bottom: 10, top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

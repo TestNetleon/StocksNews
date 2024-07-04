@@ -2,10 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/analysis_res.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/analyst_forecast.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/forecast/recommanded_chart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/forecast/stock_rating.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -87,6 +89,9 @@ class _SdForecastState extends State<SdForecast> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //forcasting chart
+                      const RecommandedForcastingChart(),
+                      const SpacerVertical(height: 20),
                       const ScreenTitle(
                         title: "Recent Analyst Forecasts and Stock Ratings",
                       ),
@@ -97,7 +102,6 @@ class _SdForecastState extends State<SdForecast> {
                         itemBuilder: (context, index) {
                           AnalystForecast? data =
                               provider.forecastRes?.analystForecasts?[index];
-
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -176,7 +180,6 @@ class _SdForecastState extends State<SdForecast> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           FaQsRes? data = provider.forecastRes?.faq?[index];
-
                           return SdFaqCard(
                             data: data,
                             index: index,

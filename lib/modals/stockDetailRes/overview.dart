@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
+
 import '../stock_details_res.dart';
 import 'earnings.dart';
 
@@ -17,6 +19,7 @@ class SdOverviewRes {
   final List<SdTopRes>? priceTarget;
   final List<SdTopRes>? profit;
   final AnalystRecom? analystRecom;
+  final MorningStar? morningStart;
 
   SdOverviewRes({
     this.companyInfo,
@@ -26,6 +29,7 @@ class SdOverviewRes {
     this.top,
     this.analystRecom,
     this.profit,
+    this.morningStart,
   });
 
   factory SdOverviewRes.fromJson(Map<String, dynamic> json) => SdOverviewRes(
@@ -54,6 +58,9 @@ class SdOverviewRes {
         stockScore: json["stock_score"] == null
             ? null
             : StockScore.fromJson(json["stock_score"]),
+        morningStart: json["morning_star"] == null
+            ? null
+            : MorningStar.fromJson(json["morning_star"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,6 +78,7 @@ class SdOverviewRes {
         "profitability": profit == null
             ? []
             : List<dynamic>.from(profit!.map((x) => x.toJson())),
+        "morning_star": morningStart?.toJson(),
       };
 }
 

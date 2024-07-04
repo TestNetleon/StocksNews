@@ -5,7 +5,9 @@ import 'package:stocks_news_new/modals/alerts_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/screens/alerts/alert_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/widgets/common_stock_item.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class AlertContainer extends StatelessWidget {
   const AlertContainer({super.key});
@@ -24,17 +26,26 @@ class AlertContainer extends StatelessWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           AlertData data = provider.data![index];
-          return AlertsItem(
-            data: data,
-            index: index,
+          // return AlertsItem(
+          //   data: data,
+          //   index: index,
+          // );
+          return CommonStockItem(
+            change: "${data.changes}",
+            changesPercentage: data.changesPercentage,
+            image: data.image,
+            name: data.name,
+            price: data.price,
+            symbol: data.symbol,
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          // return const SpacerVertical(height: 12);
-          return const Divider(
-            color: ThemeColors.greyBorder,
-            height: 16,
-          );
+          return const SpacerVertical(height: 12);
+          // return const SizedBox();
+          // return const Divider(
+          //   color: ThemeColors.greyBorder,
+          //   height: 16,
+          // );
         },
       ),
     );

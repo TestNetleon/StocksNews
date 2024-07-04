@@ -124,7 +124,7 @@ class _StockDetailState extends State<StockDetail> {
                   provider.setOpenIndex(-1);
                 },
                 padding: const EdgeInsets.only(bottom: 10),
-                // physics: const NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 scrollable: true,
                 tabs: List.generate(
                   provider.tabRes?.tabs?.length ?? 0,
