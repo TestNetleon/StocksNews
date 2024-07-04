@@ -474,6 +474,8 @@ class _SdFinancialState extends State<SdFinancial> {
     SdFinancialRes? data = provider.sdFinancialChartRes;
     // Utils().showLog(' data111113: ${data?.chart?[0].totalAssets}');
 
+    List<FinanceStatement>? financeStatements = data?.financeStatement;
+
     return BaseUiContainer(
       hasData:
           !provider.isLoadingFinancial && provider.sdFinancialArray != null,
@@ -1010,28 +1012,58 @@ class _SdFinancialState extends State<SdFinancial> {
                       ),
                     )),
                 const SpacerVertical(height: 15),
-                // tabel data
-                ListView.separated(
-                    padding: const EdgeInsets.only(top: 0, bottom: 15),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: ThemeColors.greyBorder.withOpacity(0.3),
-                        ),
-                        child: FinancialTableItem(
-                          index: index,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 15);
-                    },
-                    itemCount: provider.sdFinancialArray?.length ?? 0),
 
-                const SpacerVertical(height: 15),
+                // if (financeStatements != null)
+                //   SingleChildScrollView(
+                //     child: Table(
+                //       border: TableBorder.all(
+                //         color: ThemeColors.greyBorder,
+                //         width: 2,
+                //       ),
+                //       children: [
+                //         ...financeStatements.map((statement) {
+                //           Map<String, dynamic>? dataMap =
+                //               provider.sdFinancialArray?[0];
+                //           return TableRow(
+                //             children: financeStatements
+                //                 .map((entry) => TableCell(
+                //                       child: Padding(
+                //                         padding: const EdgeInsets.all(8.0),
+                //                         child: Center(
+                //                           child: Text(
+                //                             "${entry.period ?? 'N/A'}",
+                //                             style: stylePTSansRegular(
+                //                                 fontSize: 12),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     ))
+                //                 .toList(),
+                //           );
+                //         }).toList(),
+                //       ],
+                //     ),
+                //   ),
+                // // tabel data
+                // ListView.separated(
+                //   padding: const EdgeInsets.only(top: 0, bottom: 15),
+                //   shrinkWrap: true,
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   itemBuilder: (context, index) {
+                //     return Container(
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(5),
+                //         color: ThemeColors.greyBorder.withOpacity(0.3),
+                //       ),
+                //       child: FinancialTableItem(index: index),
+                //     );
+                //   },
+                //   separatorBuilder: (context, index) {
+                //     return const SpacerVertical(height: 15);
+                //   },
+                //   itemCount: provider.sdFinancialArray?.length ?? 0,
+                // ),
+                // const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),
                     shrinkWrap: true,

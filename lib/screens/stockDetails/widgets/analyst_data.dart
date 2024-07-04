@@ -5,6 +5,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/custom_cliper.dart';
@@ -322,7 +323,7 @@ class StockDetailAnalystData extends StatelessWidget {
                     // const SpacerVertical(height: 10),
                     const Divider(color: ThemeColors.divider),
                     ItemRow(
-                      label: "Fair value uncertainty label",
+                      label: "Fair value uncertainty",
                       value: "${morningStar?.quantFairValueUncertaintyLabel}",
                       valueColor: Colors.red,
                     ),
@@ -491,7 +492,8 @@ class StockDetailAnalystData extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Icon(Icons.picture_as_pdf_outlined, size: 30),
+                      // const Icon(Icons.picture_as_pdf_outlined, size: 30),
+                      Image.asset(Images.downloadFile)
                     ],
                   ),
                 ),
