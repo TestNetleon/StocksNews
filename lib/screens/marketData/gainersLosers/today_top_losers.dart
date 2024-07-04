@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
@@ -7,9 +6,9 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/gainers_losers_res.dart';
 import '../../../utils/constants.dart';
@@ -111,14 +110,10 @@ class _TodaysTopLoserState extends State<TodaysTopLoser> {
                         return GainerLoserItem(
                           data: gainers![index],
                           index: index,
-                          // marketData: true,
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 12.sp,
-                        );
+                        return const SpacerVertical(height: 12);
                       },
                       itemCount: gainers?.length ?? 0,
                     ),

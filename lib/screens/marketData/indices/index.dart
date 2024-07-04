@@ -92,8 +92,8 @@ class IndicesData extends StatelessWidget {
                     Snp500Stocks(),
                   ]
                 : [
-                    Dow30Stocks(),
-                    Snp500Stocks(),
+                    const Dow30Stocks(),
+                    const Snp500Stocks(),
                     ...(provider.tabs!
                         .map((tab) => const IndicesDynamicStocks())
                         .toList()),

@@ -9,12 +9,12 @@ import 'package:stocks_news_new/screens/marketData/lowPriceStocks/item_sale_on_s
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import 'item.dart';
 
@@ -77,21 +77,7 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
               MarketDataHeader(
                 provider: provider,
                 onFilterClick: _onFilterClick,
-                // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
               ),
-              // HtmlTitle(
-              //   subTitle: provider.subTitle ?? "",
-              //   onFilterClick: _onFilterClick,
-              //   // margin: const EdgeInsets.only(top: 10, bottom: 10),
-              //   hasFilter: provider.filterParams != null,
-              // ),
-              // if (provider.filterParams != null)
-              //   FilterUiValues(
-              //     params: provider.filterParams,
-              //     onDeleteExchange: (exchange) {
-              //       provider.exchangeFilter(exchange);
-              //     },
-              //   ),
               Expanded(
                 child: BaseUiContainer(
                   error: provider.error,
@@ -107,7 +93,7 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
                     onLoadMore: () async =>
                         provider.getLowPriceData(loadMore: true),
                     child: ListView.separated(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp),
+                      padding: EdgeInsets.only(bottom: 10.sp),
                       itemBuilder: (context, index) {
                         LowPriceStocksRes? data = provider.data?[index];
                         if (data == null) {
@@ -116,28 +102,9 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
                         return provider.typeIndex == 1
                             ? SaleOnStocksItem(data: data)
                             : LowPriceStocksItem(data: data);
-
-                        // return Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     index == 0
-                        //         ? HtmlTitle(
-                        //             subTitle: provider.subTitle,
-                        //           )
-                        //         : const SizedBox(),
-                        //     provider.typeIndex == 1
-                        //         ? SaleOnStocksItem(
-                        //             data: data,
-                        //           )
-                        //         : LowPriceStocksItem(data: data),
-                        //   ],
-                        // );
                       },
                       separatorBuilder: (context, index) {
-                        return const Divider(
-                          color: ThemeColors.greyBorder,
-                          height: 16,
-                        );
+                        return const SpacerVertical(height: 12);
                       },
                       itemCount: provider.data?.length ?? 0,
                     ),

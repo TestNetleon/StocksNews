@@ -133,97 +133,104 @@ class SaleOnStocksItem extends StatelessWidget {
       onTap: () {
         _openBottomSheet();
       },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () => _onTap(context),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0),
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                width: 43,
-                height: 43,
-                // child: ThemeImageView(
-                //   url: "${data?.image}",
-                // ),
-                child: CachedNetworkImagesWidget(
-                  data.image,
-                  placeHolder: Images.placeholder,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: ThemeColors.background,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: () => _onTap(context),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  width: 48,
+                  height: 48,
+                  // child: ThemeImageView(
+                  //   url: "${data?.image}",
+                  // ),
+                  child: CachedNetworkImagesWidget(
+                    data.image,
+                    placeHolder: Images.placeholder,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SpacerHorizontal(width: 12),
-          Expanded(
-            child: InkWell(
-              onTap: () => _onTap(context),
+            const SpacerHorizontal(width: 12),
+            Expanded(
+              child: InkWell(
+                onTap: () => _onTap(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.symbol ?? "",
+                      style: stylePTSansBold(fontSize: 18),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SpacerVertical(height: 5),
+                    Text(
+                      data.name ?? "",
+                      style: stylePTSansRegular(
+                        color: ThemeColors.greyText,
+                        fontSize: 12,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SpacerHorizontal(width: 10),
+            Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    data.symbol ?? "",
-                    style: stylePTSansBold(fontSize: 14),
+                    data.price ?? "",
+                    style: stylePTSansBold(fontSize: 18),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
-                  Text(
-                    data.name ?? "",
-                    style: stylePTSansRegular(
-                      color: ThemeColors.greyText,
-                      fontSize: 12,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if ((data.percentageChange ?? 0) > 0)
+                        const Icon(
+                          Icons.arrow_upward_outlined,
+                          color: ThemeColors.accent,
+                          size: 12,
+                        ),
+                      if ((data.percentageChange ?? 0) < 0)
+                        const Icon(
+                          Icons.arrow_downward,
+                          color: Colors.red,
+                          size: 12,
+                        ),
+                      Text(
+                        "${data.priceChange} (${data.percentageChange}%)",
+                        style: stylePTSansRegular(
+                          fontSize: 14,
+                          color: (data.percentageChange ?? 0) > 0
+                              ? ThemeColors.accent
+                              : Colors.red,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ),
-          const SpacerHorizontal(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  data.price ?? "",
-                  style: stylePTSansBold(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SpacerVertical(height: 5),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if ((data.percentageChange ?? 0) > 0)
-                      const Icon(
-                        Icons.arrow_upward_outlined,
-                        color: ThemeColors.accent,
-                        size: 12,
-                      ),
-                    if ((data.percentageChange ?? 0) < 0)
-                      const Icon(
-                        Icons.arrow_downward,
-                        color: Colors.red,
-                        size: 12,
-                      ),
-                    Text(
-                      "${data.priceChange} (${data.percentageChange}%)",
-                      style: stylePTSansRegular(
-                        fontSize: 12,
-                        color: (data.percentageChange ?? 0) > 0
-                            ? ThemeColors.accent
-                            : Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
