@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/stocks_item_trending.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -33,10 +32,7 @@ class HomeTrending extends StatelessWidget {
             return StocksItemTrending(trending: trending);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 20.sp,
-            );
+            return const SpacerVertical(height: 12);
           },
         ),
         // Divider(

@@ -471,7 +471,7 @@ class _SdFinancialState extends State<SdFinancial> {
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     SdFinancialRes? data = provider.sdFinancialChartRes;
-    Utils().showLog(' data111113: ${data?.chart?[0].totalAssets}');
+    // Utils().showLog(' data111113: ${data?.chart?[0].totalAssets}');
 
     return BaseUiContainer(
       hasData:
@@ -1023,8 +1023,9 @@ class _SdFinancialState extends State<SdFinancial> {
 
                       return Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: ThemeColors.greyBorder.withOpacity(0.3)),
+                          borderRadius: BorderRadius.circular(5),
+                          color: ThemeColors.greyBorder.withOpacity(0.3),
+                        ),
                         child: SdFinancialItem(
                           data: data,
                           index: index,

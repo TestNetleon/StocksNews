@@ -19,7 +19,7 @@ class PlaidHomeContainer extends StatelessWidget {
         if (provider.homePortfolio?.top != null &&
             provider.homePortfolio?.bottom == null)
           const Padding(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.only(bottom: 0),
             child: PlaidHomeGetStarted(),
           ),
 

@@ -54,9 +54,9 @@ class _SdOverviewChartState extends State<SdOverviewChart> {
               margin: EdgeInsets.symmetric(vertical: 10.sp),
               height: constraints.maxWidth * 0.8,
               child: LineChart(
+                provider.avgData(showDate: _selectedIndex != 4),
                 duration: const Duration(milliseconds: 150),
                 curve: Curves.linear,
-                provider.avgData(showDate: _selectedIndex != 4),
               ),
             ),
             const SpacerVertical(height: 5),

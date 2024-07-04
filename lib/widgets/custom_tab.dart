@@ -24,7 +24,7 @@ class CustomTab extends StatelessWidget {
         color: selectedIndex == index
             ? ThemeColors.accent
             : ThemeColors.primaryLight,
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         lable,
@@ -52,7 +52,7 @@ class CustomTabNEW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Text(
         label,
         style: stylePTSansBold(

@@ -13,7 +13,6 @@ import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
@@ -65,15 +64,24 @@ class HomeContainer extends StatelessWidget {
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      Dimen.padding, 20, Dimen.padding, Dimen.padding),
-                  child: ReferApp(),
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(
+                    Dimen.padding,
+                    Dimen.homeSpacing,
+                    Dimen.padding,
+                    0,
+                  ),
+                  // color: Colors.red,
+                  child: const ReferApp(),
                 ),
               ),
-              const SpacerVertical(height: Dimen.padding),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
+              // const SpacerVertical(height: Dimen.padding),
+              Container(
+                margin: EdgeInsets.only(
+                  left: Dimen.padding.sp,
+                  right: Dimen.padding.sp,
+                ),
+                // color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -81,87 +89,112 @@ class HomeContainer extends StatelessWidget {
                             provider.homeTrendingRes?.popular == null ||
                             provider.homeTrendingRes == null) &&
                         provider.statusTrending != Status.loading))
-                      const StockInBuzz(),
-                    const TopPlaidIndex(),
-                    const HomeMyAlerts(),
+                      Container(
+                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        child: const StockInBuzz(),
+                      ),
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                      child: const TopPlaidIndex(),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                      child: const HomeMyAlerts(),
+                    ),
                     Visibility(
                       visible: provider.extra?.showPortfolio ?? false,
-                      child: HomePartialLoading(
-                        loading: provider.isLoadingPortfolio,
-                        loadingWidget: Container(
-                          height: 110,
-                          margin: const EdgeInsets.fromLTRB(
-                              0, 20, 0, Dimen.padding),
-                          width: double.infinity,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Color.fromARGB(255, 23, 23, 23),
-                                Color.fromARGB(255, 48, 48, 48),
-                              ],
+                      child: Container(
+                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        // color: Colors.red,
+                        child: HomePartialLoading(
+                          loading: provider.isLoadingPortfolio,
+                          loadingWidget: Container(
+                            height: 110,
+                            // margin: const EdgeInsets.fromLTRB(
+                            //   0,
+                            //   20,
+                            //   0,
+                            //   Dimen.padding,
+                            // ),
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Color.fromARGB(255, 23, 23, 23),
+                                  Color.fromARGB(255, 48, 48, 48),
+                                ],
+                              ),
+                              // color: Colors.black,
                             ),
-                            // color: Colors.black,
                           ),
+                          onRefresh: () {
+                            provider.getHomePortfolio();
+                          },
+                          child: const PlaidHome(),
                         ),
-                        onRefresh: () {
-                          provider.getHomePortfolio();
-                        },
-                        child: const PlaidHome(),
                       ),
                     ),
-                    HomePartialLoading(
-                      loadingWidget: const Loading(),
-                      loading: provider.isLoadingTrending,
-                      onRefresh: provider.refreshWithCheck,
-                      child: const HomeInnerTabs(),
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                      child: HomePartialLoading(
+                        loadingWidget: const Loading(),
+                        loading: provider.isLoadingTrending,
+                        onRefresh: provider.refreshWithCheck,
+                        child: const HomeInnerTabs(),
+                      ),
                     ),
                     Visibility(
                       visible: !provider.isLoadingTrending &&
                           (provider.homeTrendingRes?.trendingNews?.isNotEmpty ==
                                   true &&
                               provider.homeTrendingRes?.trendingNews != null),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: ScreenTitle(
-                              title: provider.homeTrendingRes?.text?.news ?? "",
+                      child: Container(
+                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 0),
+                              child: ScreenTitle(
+                                title:
+                                    provider.homeTrendingRes?.text?.news ?? "",
+                              ),
                             ),
-                          ),
-                          ListView.separated(
-                            itemCount: provider
-                                    .homeTrendingRes?.trendingNews?.length ??
-                                0,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            padding: EdgeInsets.only(top: 12.sp),
-                            itemBuilder: (context, index) {
-                              News? data = provider
-                                  .homeTrendingRes?.trendingNews?[index];
-                              return NewsItem(
-                                news: News(
-                                  title: data?.title ?? "",
-                                  image: data?.image ?? "",
-                                  authors: data?.authors,
-                                  postDateString: data?.postDateString,
-                                  slug: data?.slug,
-                                ),
-                                showCategory: false,
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 15,
-                              );
-                            },
-                          ),
-                        ],
+                            ListView.separated(
+                              itemCount: provider
+                                      .homeTrendingRes?.trendingNews?.length ??
+                                  0,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.only(top: 12.sp),
+                              itemBuilder: (context, index) {
+                                News? data = provider
+                                    .homeTrendingRes?.trendingNews?[index];
+                                return NewsItem(
+                                  news: News(
+                                    title: data?.title ?? "",
+                                    image: data?.image ?? "",
+                                    authors: data?.authors,
+                                    postDateString: data?.postDateString,
+                                    slug: data?.slug,
+                                  ),
+                                  showCategory: false,
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 15,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

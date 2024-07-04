@@ -50,7 +50,7 @@ class NanoCapListView extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return const SpacerVertical(height: 10);
+                  return const SpacerVertical(height: 12);
                 },
                 itemCount: provider.nanoCap?.length ?? 0),
       ],

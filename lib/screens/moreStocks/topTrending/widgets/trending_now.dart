@@ -5,13 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/validations.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
+import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingNowListView extends StatefulWidget {
@@ -59,21 +58,17 @@ class _TrendingNowListViewState extends State<TrendingNowListView> {
               : SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(
                     Dimen.padding,
-                    Dimen.padding,
+                    0,
                     Dimen.padding,
                     0,
                   ),
                   child: Column(
                     children: [
-                      const SpacerVertical(height: 10),
                       Visibility(
                         visible: !isEmpty(provider.textTop?.now),
-                        child: Text(
-                          provider.textTop?.now ?? "",
-                          style: stylePTSansRegular(
-                            fontSize: 13,
-                            color: ThemeColors.greyText,
-                          ),
+                        child: ScreenTitle(
+                          subTitle: provider.textTop?.now ?? "",
+                          dividerPadding: EdgeInsets.zero,
                         ),
                       ),
                       ListView.separated(
@@ -93,11 +88,11 @@ class _TrendingNowListViewState extends State<TrendingNowListView> {
                           );
                         },
                         separatorBuilder: (context, index) {
-                          // return const SpacerVertical(height: 10);
-                          return Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 20.sp,
-                          );
+                          return const SpacerVertical(height: 12);
+                          // return Divider(
+                          //   color: ThemeColors.greyBorder,
+                          //   height: 20.sp,
+                          // );
                         },
                         itemCount: dataList?.length ?? 0,
                       ),

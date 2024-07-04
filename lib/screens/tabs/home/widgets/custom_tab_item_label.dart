@@ -131,7 +131,7 @@ class CustomTabHome extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return Expanded(
       child: InkWell(
         onTap: onTap,
         child: Container(
@@ -139,8 +139,9 @@ class CustomTabHome extends StatelessWidget {
             color: selected
                 ? const Color.fromARGB(255, 0, 82, 4)
                 : const Color.fromARGB(255, 21, 21, 21),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(4),
           ),
+          alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
           child: CustomTabNEW(
             label: label,
