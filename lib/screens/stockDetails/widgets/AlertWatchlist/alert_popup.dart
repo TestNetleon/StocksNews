@@ -67,15 +67,20 @@ class _AlertPopupState extends State<AlertPopup> {
     return Container(
       padding: EdgeInsets.all(18.sp),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            Color.fromARGB(255, 23, 23, 23),
-            // ThemeColors.greyBorder,
-            Color.fromARGB(255, 48, 48, 48),
-          ],
+          colors: [ThemeColors.bottomsheetGradient, Colors.black],
         ),
+        // gradient: LinearGradient(
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        //   colors: [
+        //     Color.fromARGB(255, 23, 23, 23),
+        //     // ThemeColors.greyBorder,
+        //     Color.fromARGB(255, 48, 48, 48),
+        //   ],
+        // ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +158,7 @@ class _AlertPopupState extends State<AlertPopup> {
                   }
                 : () => _showAlertPopup(context),
             text: "Add to Alert",
+            textUppercase: true,
             textColor: selectedOne == false && selectedTwo == false
                 ? ThemeColors.background
                 : ThemeColors.white,

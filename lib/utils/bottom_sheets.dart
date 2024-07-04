@@ -42,11 +42,16 @@ class BaseBottomSheets {
             gradient: const LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 23, 23, 23),
-                Color.fromARGB(255, 48, 48, 48),
-              ],
+              colors: [ThemeColors.bottomsheetGradient, Colors.black],
             ),
+            // gradient: const LinearGradient(
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   colors: [
+            //     Color.fromARGB(255, 23, 23, 23),
+            //     Color.fromARGB(255, 48, 48, 48),
+            //   ],
+            // ),
           ),
           constraints: BoxConstraints(
             maxHeight: ScreenUtil().screenHeight * .9,
@@ -163,13 +168,18 @@ class BaseBottomSheets {
               border: Border(
                 top: BorderSide(color: ThemeColors.greyBorder.withOpacity(0.4)),
               ),
+              // gradient: const LinearGradient(
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              //   colors: [
+              //     Color.fromARGB(255, 23, 23, 23),
+              //     Color.fromARGB(255, 48, 48, 48),
+              //   ],
+              // ),
               gradient: const LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Color.fromARGB(255, 23, 23, 23),
-                  Color.fromARGB(255, 48, 48, 48),
-                ],
+                colors: [ThemeColors.bottomsheetGradient, Colors.black],
               ),
             ),
             child: Column(
@@ -330,13 +340,18 @@ class BaseBottomSheets {
                     top: BorderSide(
                         color: ThemeColors.greyBorder.withOpacity(0.4)),
                   ),
+                  // gradient: const LinearGradient(
+                  //   begin: Alignment.topCenter,
+                  //   end: Alignment.bottomCenter,
+                  //   colors: [
+                  //     Color.fromARGB(255, 23, 23, 23),
+                  //     Color.fromARGB(255, 48, 48, 48),
+                  //   ],
+                  // ),
                   gradient: const LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 23, 23, 23),
-                      Color.fromARGB(255, 48, 48, 48),
-                    ],
+                    colors: [ThemeColors.bottomsheetGradient, Colors.black],
                   ),
                 ),
                 // height: 100,

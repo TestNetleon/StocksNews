@@ -44,6 +44,12 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     });
   }
 
+  @override
+  void dispose() {
+    splashLoaded = true;
+    super.dispose();
+  }
+
   void _startProcess() async {
     // _callAPI();
     try {
@@ -108,6 +114,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   Future _navigateToRequiredScreen() async {
+    if (popHome) return;
     if (onDeepLinking) {
       popHome = true;
       return;

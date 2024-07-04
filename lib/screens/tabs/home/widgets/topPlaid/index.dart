@@ -1,75 +1,148 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/most_purchased.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import '../../../../../widgets/cache_network_image.dart';
 import '../../../../../widgets/spacer_horizontal.dart';
+import 'view_all.dart';
 
 class TopPlaidIndex extends StatelessWidget {
   const TopPlaidIndex({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Most purchased by Stocks.News users",
-          style: stylePTSansBold(),
-        ),
-        // CustomGridView(
-        //   paddingHorizontal: 0,
-        //   itemSpace: 8,
-        //   paddingVerticle: 8,
-        //   length: 4,
-        //   getChild: (index) {
-        //     return const TopPlaidItem();
-        //   },
-        // ),
+    HomeProvider provider = context.watch<HomeProvider>();
 
-        SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(
-              4,
-              (index) {
-                return TopPlaidItem();
-              },
+    if (provider.mostPurchased?.isEmpty == true ||
+        provider.mostPurchased == null) {
+      return const SizedBox();
+    }
+
+    return Padding(
+      // padding: const EdgeInsets.only(bottom: Dimen.padding),
+      padding: const EdgeInsets.only(bottom: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Text(
+          //   provider.extraMostPopular?.title ??
+          //       "Most purchased by Stocks.News users ",
+          //   style: stylePTSansBold(),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  provider.extraMostPopular?.title ??
+                      "Most purchased by Stocks.News users ",
+                  style: stylePTSansBold(),
+                ),
+              ),
+              const SpacerHorizontal(width: 5),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TopPlaidIndexView(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      "View All",
+                      style: stylePTSansBold(fontSize: 12),
+                    ),
+                    const SpacerHorizontal(width: 5),
+                    const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children:
+                  // List.generate(
+                  //   4,
+                  //   (index) {
+                  //     MostPurchasedRes? data = provider.mostPurchased?[index];
+                  //     if (data == null) {
+                  //       return const SizedBox();
+                  //     }
+                  //     return SizedBox(
+                  //       width: 200,
+                  //       child: Text(
+                  //         "data",
+                  //         style: styleGeorgiaRegular(),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+                  List.generate(
+                provider.mostPurchased?.length ?? 0,
+                (index) {
+                  MostPurchasedRes? data = provider.mostPurchased?[index];
+                  if (data == null) {
+                    return const SizedBox();
+                  }
+                  return TopPlaidItem(data: data);
+                },
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 class TopPlaidItem extends StatelessWidget {
-  const TopPlaidItem({super.key});
+  final MostPurchasedRes? data;
+  const TopPlaidItem({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+      // padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StockDetail(symbol: data?.symbol ?? ""),
+            ),
+          );
+        },
         child: Container(
           width: 200,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(
-            color: Colors.transparent,
+            // color: Colors.transparent,
             border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),
-            // gradient: const LinearGradient(
-            //   begin: Alignment.topCenter,
-            //   end: Alignment.bottomCenter,
-            //   colors: [
-            //     Color.fromARGB(255, 23, 23, 23),
-            //     // ThemeColors.greyBorder,
-            //     Color.fromARGB(255, 39, 39, 39),
-            //   ],
-            // ),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.2, 0.55],
+              colors: [
+                Color.fromARGB(255, 14, 41, 0),
+                // ThemeColors.greyBorder,
+                Color.fromARGB(255, 0, 0, 0),
+              ],
+            ),
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(
@@ -78,21 +151,17 @@ class TopPlaidItem extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const ClipRRect(
+                  ClipRRect(
                     child: SizedBox(
                       width: 43,
                       height: 43,
-                      child: CachedNetworkImagesWidget(
-                        "",
-                        placeHolder: Images.placeholder,
-                      ),
+                      child: CachedNetworkImagesWidget(data?.image),
                     ),
                   ),
                   const SpacerHorizontal(width: 12),
                   Expanded(
                     child: Text(
-                      // "data.symbol",
-                      "SYMBOL",
+                      data?.symbol ?? '',
                       style: stylePTSansBold(fontSize: 14),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -102,8 +171,7 @@ class TopPlaidItem extends StatelessWidget {
               ),
               const SpacerVertical(height: 8),
               Text(
-                // "${data.name}",
-                "company name",
+                data?.name ?? '',
                 style: stylePTSansRegular(
                   color: ThemeColors.greyText,
                   fontSize: 12,
@@ -113,22 +181,19 @@ class TopPlaidItem extends StatelessWidget {
               ),
               const SpacerVertical(height: 8),
               Text(
-                // "${data.price}",
-                "\$1.54",
+                data?.price ?? '',
                 style: stylePTSansBold(fontSize: 18),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               const SpacerVertical(height: 5),
               Text(
-                // "${data.displayChange} (${data.changesPercentage}%)",
-                "1.33 (2.11%)",
+                "${data?.change ?? ""} (${data?.changesPercentage ?? ""}%)",
                 style: stylePTSansRegular(
                   fontSize: 12,
-                  // color: data.changesPercentage > 0
-                  //     ? ThemeColors.accent
-                  //     : Colors.red,
-                  color: Colors.red,
+                  color: (data?.changesPercentage ?? 0) > 0
+                      ? ThemeColors.accent
+                      : Colors.red,
                 ),
               ),
             ],

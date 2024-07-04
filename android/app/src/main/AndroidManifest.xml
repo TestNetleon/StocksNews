@@ -42,7 +42,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="stocksnews.page.link" />
+                <data android:scheme="https" android:host="stocksnews.page.link" />
                 <data android:scheme="https" android:host="app.stocks.news" />
                 <data android:scheme="https" />
             </intent-filter>
@@ -68,7 +68,6 @@
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package="com.stocks.news">
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
-
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
         <intent>

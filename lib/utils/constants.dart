@@ -119,6 +119,7 @@ class Images {
   static const String referS = "assets/images/refer_s.png";
   static const String referF = "assets/images/refer_f.png";
   static const String line = "assets/images/line.png";
+  static const String upgrade = "assets/images/upgrade.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
@@ -174,6 +175,8 @@ class Dimen {
   static const int narrationLength = 500;
   static const double itemSpacing = 12;
   static const double radius = 10;
+
+  static const double homeSpacing = 30;
 }
 
 class Fonts {

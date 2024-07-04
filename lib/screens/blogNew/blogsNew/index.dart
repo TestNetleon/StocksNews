@@ -57,12 +57,13 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
   }
 
   Widget _getWidget(BlogProviderNew provider) {
-    return CustomTabContainerNEW(
+    return CommonTabContainer(
+      tabPaddingNew: false,
       onChange: (index) {
         provider.tabChange(index, provider.tabs![index].id);
       },
       scrollable: provider.tabs?.length == 2 ? false : true,
-      tabsPadding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10),
       tabs: List.generate(
         provider.tabs?.length ?? 0,
         (index) => "${provider.tabs?[index].name}",

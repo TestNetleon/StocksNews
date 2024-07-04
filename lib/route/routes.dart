@@ -162,10 +162,7 @@ class Routes {
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
+        return SlideTransition(position: offsetAnimation, child: child);
       },
     );
   }
@@ -449,7 +446,7 @@ class Routes {
     String slug = extractLastPathComponent(uri);
 
     Utils().showLog("GENERATED ROUT DeepLinking ***=> $type  $slug");
-    popHome = true;
+    popHome = false;
 
     Timer(const Duration(seconds: 5), () {
       onDeepLinking = false;

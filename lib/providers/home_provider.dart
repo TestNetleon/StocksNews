@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,8 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+
+import '../modals/most_purchased.dart';
 
 class HomeProvider extends ChangeNotifier {
   // HomeRes? _home;
@@ -158,6 +161,7 @@ class HomeProvider extends ChangeNotifier {
     _getLastMarketOpen();
     getHomeSlider();
     getHomeAlerts();
+    getMostPurchased(home: "home");
     getHomeTrendingData(); //ADD AGAIN AFTER BACKEND MERGING
     _homeTopGainerRes = null;
     _homeTopLosersRes = null;
@@ -232,6 +236,7 @@ class HomeProvider extends ChangeNotifier {
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
+        Preference.saveReferInput(_extra?.affiliateInput == 1);
 
         loginTxt = _extra?.loginText;
         signUpTxt = _extra?.signUpText;
@@ -788,6 +793,80 @@ class HomeProvider extends ChangeNotifier {
       );
     } catch (e) {
       if (kDebugMode) print(e.toString());
+    }
+  }
+
+//Most Purchased Stocks
+
+  String? _errorMostPurchased;
+  String? get errorMostPurchased =>
+      _errorMostPurchased ?? Const.errSomethingWrong;
+
+  Status _statusMostPurchased = Status.ideal;
+  Status get status => _statusMostPurchased;
+
+  bool get isLoadingMostPurchased =>
+      _statusMostPurchased == Status.loading ||
+      _statusMostPurchased == Status.ideal;
+
+  Extra? _extraMostPopular;
+  Extra? get extraMostPopular => _extraMostPopular;
+
+  List<MostPurchasedRes>? _mostPurchased;
+  List<MostPurchasedRes>? get mostPurchased => _mostPurchased;
+
+  List<MostPurchasedRes>? _mostPurchasedView;
+  List<MostPurchasedRes>? get mostPurchasedView => _mostPurchasedView;
+
+  void setStatusMostPurchased(status) {
+    _statusMostPurchased = status;
+    notifyListeners();
+  }
+
+  Future getMostPurchased({String? home}) async {
+    setStatusMostPurchased(Status.loading);
+
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "type": home ?? ""
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.mostPurchased,
+        formData: request,
+        showProgress: false,
+      );
+      if (response.status) {
+        if (home != null) {
+          _mostPurchased = mostPurchasedResFromJson(jsonEncode(response.data));
+        } else {
+          _mostPurchasedView =
+              mostPurchasedResFromJson(jsonEncode(response.data));
+        }
+      } else {
+        if (home != null) {
+          _mostPurchased = null;
+        } else {
+          _mostPurchasedView = null;
+        }
+
+        _errorMostPurchased = response.message;
+      }
+      _extraMostPopular =
+          (response.extra is Extra ? response.extra as Extra : null);
+
+      setStatusMostPurchased(Status.loaded);
+    } catch (e) {
+      if (home != null) {
+        _mostPurchased = null;
+      } else {
+        _mostPurchasedView = null;
+      }
+
+      _errorMostPurchased = Const.errSomethingWrong;
+      Utils().showLog(e.toString());
+      setStatusMostPurchased(Status.loaded);
     }
   }
 }

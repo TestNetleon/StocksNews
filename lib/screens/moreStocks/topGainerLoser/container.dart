@@ -13,6 +13,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/colors.dart';
 import 'item.dart';
@@ -104,10 +105,7 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return Divider(
-                        color: ThemeColors.greyBorder,
-                        height: 12.sp,
-                      );
+                      return const SpacerVertical(height: 12);
                     },
                     itemCount: data?.length ?? 0,
                   ),

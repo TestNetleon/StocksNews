@@ -12,6 +12,7 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/chart.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/competitor.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/mergers_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/overview_graph.dart';
@@ -21,6 +22,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/utils/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/apis.dart';
@@ -289,10 +291,9 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
-
         _tabRes?.tabs?.removeWhere((tab) => tab.name == "Social Activities");
-
         _extra = (response.extra is Extra ? response.extra as Extra : null);
+        Preference.saveReferInput(_extra?.affiliateInput == 1);
 
         if (_tabRes != null) {
           // getPlaidPortfolioData(name: _tabs[selectedTab]);
@@ -1302,8 +1303,8 @@ class StockDetailProviderNew extends ChangeNotifier {
   List<dynamic>? _sdFinancialArray;
   List<dynamic>? get sdFinancialArray => _sdFinancialArray;
 
-  // SdFinancialRes? _sdFinancialRes;
-  // SdFinancialRes? get sdFinancialRes => _sdFinancialRes;
+  SdFinancialRes? _sdFinancialChartRes;
+  SdFinancialRes? get sdFinancialChartRes => _sdFinancialChartRes;
 
   // Map<String, dynamic>? _sdFinancialMap;
   // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
@@ -1324,6 +1325,11 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   int typeIndex = 0;
   int periodIndex = 0;
+
+  String? _typeValue;
+  String? get typeValue => _typeValue;
+
+  int changePeriodTypeIndex = 0;
 
   void changeTabType(index, {String? symbol}) {
     if (typeIndex != index) {
@@ -1351,6 +1357,13 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  void changePeriodTypeIndexVoid(index) {
+    if (changePeriodTypeIndex != index) {
+      changePeriodTypeIndex = index;
+      notifyListeners();
+    }
+  }
+
   void setStatusFinancial(status) {
     _statusFinancial = status;
     notifyListeners();
@@ -1369,6 +1382,9 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool showProgress = false,
     bool tabProgress = false,
   }) async {
+    _sdFinancialChartRes?.chart = null;
+    _typeValue = null;
+    notifyListeners();
     if (reset) {
       typeIndex = 0;
       periodIndex = 0;
@@ -1394,7 +1410,11 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
 
       if (response.status) {
-        // _sdFinancialRes = sdFinancialResFromJson(jsonEncode(response.data));
+        _typeValue = type;
+        _sdFinancialChartRes =
+            sdFinancialResFromJson(jsonEncode(response.data));
+
+        // _sdFinancialChartRes?.chart?.sublist(0, 5);
 
         // List<dynamic> financeStatementData = response.data['finance_statement'];
 

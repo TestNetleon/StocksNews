@@ -11,6 +11,7 @@ class ProfileImage extends StatelessWidget {
   final String? url;
   final IconData? icon;
   final bool showCameraIcon;
+  final bool roundImage;
 
   const ProfileImage({
     super.key,
@@ -20,6 +21,7 @@ class ProfileImage extends StatelessWidget {
     this.url,
     this.icon,
     this.showCameraIcon = true,
+    this.roundImage = true,
   });
 //
   @override
@@ -28,21 +30,29 @@ class ProfileImage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(right: 4),
-          child: ClipOval(
-            // child: ThemeImageView(
-            //   url: url ?? "",
-            //   height: imageSize,
-            //   width: imageSize,
-            //   placeholder: Images.userPlaceholder,
-            // ),
-            child: CachedNetworkImagesWidget(
-              url,
-              height: imageSize,
-              width: imageSize,
-              showLoading: true,
-              placeHolder: Images.userPlaceholder,
-            ),
-          ),
+          child: roundImage
+              ? ClipOval(
+                  child: CachedNetworkImagesWidget(
+                    url,
+                    height: imageSize,
+                    width: imageSize,
+                    showLoading: true,
+                    placeHolder: Images.userPlaceholder,
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ThemeColors.white, width: 3),
+                  ),
+                  // padding: EdgeInsets.all(3),
+                  child: CachedNetworkImagesWidget(
+                    url,
+                    height: imageSize,
+                    width: imageSize,
+                    showLoading: true,
+                    placeHolder: Images.userPlaceholder,
+                  ),
+                ),
         ),
         Positioned(
           bottom: 3.sp,

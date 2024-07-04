@@ -47,6 +47,7 @@ class ThemeColors {
   static const accent = Color(0xFF35BA46);
   static const darkGreen = Color(0xFF269238);
   static const ratingIconColor = Color(0xFFfec107);
+  static const themeGreen = Color(0xFF14b24a);
 
   static const gredientColor = Color.fromARGB(78, 0, 0, 0);
 
@@ -66,7 +67,7 @@ class ThemeColors {
   static const sos = Colors.red;
   static const blue = Color.fromARGB(255, 33, 222, 243);
   static const white = Colors.white;
-
+  static const bottomsheetGradient = Color.fromARGB(255, 0, 35, 5);
   static const buttonLightRed = Color.fromARGB(255, 252, 193, 189);
   static const buttonLightGreen = Color.fromARGB(255, 231, 253, 232);
   static const buttonBlue = Colors.blue;

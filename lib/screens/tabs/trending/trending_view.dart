@@ -46,8 +46,9 @@ class _TrendingViewState extends State<TrendingView> {
 
     return provider.isLoadingBullish && provider.mostBullish == null
         ? const Loading()
-        : CustomTabContainerNEW(
-            scrollable: true,
+        : CommonTabContainer(
+            scrollable: provider.tabs.length > 2 ? true : false,
+            tabPaddingNew: provider.tabs.length > 2 ? false : true,
             // initialIndex: widget.index,
             tabs: List.generate(
               provider.tabs.length,

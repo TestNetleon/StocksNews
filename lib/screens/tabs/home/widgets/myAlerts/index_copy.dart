@@ -133,7 +133,7 @@ class HomeMyAlerts extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return const SpacerHorizontal(width: 12);
+                  return const SpacerHorizontal(width: 10);
                 },
                 itemCount: homeAlert?.length ?? 5,
               ),
@@ -167,7 +167,8 @@ class AddAlert extends StatelessWidget {
               Navigator.push(
                 navigatorKey.currentContext!,
                 MaterialPageRoute(
-                    builder: (_) => StockDetail(symbol: data!.symbol)),
+                  builder: (_) => StockDetail(symbol: data!.symbol),
+                ),
               );
             },
             child: HomeMyAlertItem(data: data!),

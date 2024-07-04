@@ -105,14 +105,24 @@ class Preference {
     return preferences.getString("@referral");
   }
 
-  static void saveReferral(token) async {
+  static void saveReferral(code) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("@referral", token);
+    preferences.setString("@referral", code);
   }
 
-  static void clearReferral(token) async {
+  static void clearReferral() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove("@referral");
+  }
+
+  static Future<bool> isReferInput() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getBool("@referralInput") ?? false;
+  }
+
+  static void saveReferInput(bool? value) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setBool("@referralInput", value ?? true);
   }
   //----------- For Testing Only ---------------
 

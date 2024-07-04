@@ -69,7 +69,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   @override
   void didChangeMetrics() {
     UserProvider provider = context.read<UserProvider>();
-    provider.keyboardVisiblity(context);
+    provider.keyboardVisibility(context);
   }
 
   @override
@@ -167,7 +167,6 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     //   displayName: displayController.text.trim(),
     //   email: nameController.text.trim(),
     // );
-
     //   return;
     // }
     {
@@ -220,7 +219,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         builder: (context) {
           return Padding(
             padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
             child: MyAccountOTP(
               otp: otp,
               name: nameController.text,
@@ -473,7 +473,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           ),
         ),
         const SpacerVertical(height: 20),
-        ThemeButton(onPressed: _onTap, text: "Update Profile"),
+        ThemeButton(
+          onPressed: _onTap,
+          text: "Update Profile",
+          textUppercase: true,
+        ),
         const SpacerVertical(height: 20),
         const Divider(color: ThemeColors.divider, thickness: 1),
         const SpacerVertical(height: 16),

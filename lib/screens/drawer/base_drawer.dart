@@ -12,7 +12,7 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/drawer/about/about_stocks_news.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
-import 'package:stocks_news_new/screens/drawer/widgets/drawer_top_new.dart';
+import 'package:stocks_news_new/screens/drawer/widgets/user_card.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -26,7 +26,6 @@ import '../../widgets/theme_button_small.dart';
 import '../alerts/alerts.dart';
 import '../watchlist/watchlist.dart';
 import 'widgets/drawer_lists.dart';
-import 'widgets/profile_image.dart';
 // import '../t&cAndPolicy/tc_policy.dart';
 
 class BaseDrawer extends StatefulWidget {
@@ -67,7 +66,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const DrawerTopNew(),
+                  // const DrawerTopNew(),
+                  const SpacerVertical(height: 10),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -104,65 +104,14 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           ),
                           Visibility(
                             visible: userProvider.user != null,
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    easeOutBuilder(
-                                      context,
-                                      child: AboutStocksNews(
-                                          version: version ?? ""),
-                                    );
-                                  },
-                                  child: ProfileImage(
-                                    url: userProvider.user?.image,
-                                    cameraSize: 12,
-                                    showCameraIcon: false,
-                                  ),
-                                ),
-                                const SpacerHorizontal(width: 10),
-                                Expanded(
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    onTap: () {
-                                      easeOutBuilder(
-                                        context,
-                                        child: AboutStocksNews(
-                                          version: version ?? "",
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          userProvider.user?.name?.isNotEmpty ==
-                                                  true
-                                              ? "${userProvider.user?.name}"
-                                              : "Hello",
-                                          style: stylePTSansBold(),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          userProvider.user?.email
-                                                      ?.isNotEmpty ==
-                                                  true
-                                              ? "${userProvider.user?.email}"
-                                              : "",
-                                          style: stylePTSansRegular(
-                                              color: ThemeColors.greyText,
-                                              fontSize: 12),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: UserCard(
+                              onTap: () {
+                                easeOutBuilder(
+                                  context,
+                                  child:
+                                      AboutStocksNews(version: version ?? ""),
+                                );
+                              },
                             ),
                           ),
                           Visibility(
@@ -367,6 +316,42 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
                           const SpacerVertical(height: 20),
+                          // InkWell(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //       navigatorKey.currentContext!,
+                          //       MaterialPageRoute(
+                          //         builder: (_) => const BarChartSample(),
+                          //       ),
+                          //     );
+                          //   },
+                          //   borderRadius: BorderRadius.circular(4.sp),
+                          //   child: Ink(
+                          //     decoration: BoxDecoration(
+                          //       color: ThemeColors.greyBorder.withOpacity(0.2),
+                          //       borderRadius: BorderRadius.circular(4.sp),
+                          //     ),
+                          //     padding: const EdgeInsets.symmetric(
+                          //       horizontal: 10,
+                          //       vertical: 10,
+                          //     ),
+                          //     child: Row(
+                          //       children: [
+                          //         Image.asset(
+                          //           Images.info,
+                          //           height: 20,
+                          //           width: 20,
+                          //           color: ThemeColors.white,
+                          //         ),
+                          //         const SpacerHorizontal(width: 8),
+                          //         Text(
+                          //           "Pie Chart",
+                          //           style: stylePTSansRegular(fontSize: 13),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

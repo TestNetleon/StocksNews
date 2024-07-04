@@ -32,10 +32,7 @@ class SignUpSuccess extends StatelessWidget {
             child: Column(
               children: [
                 const SpacerVertical(height: 16),
-                Image.asset(
-                  Images.referSuccess,
-                  // width: ScreenUtil().screenWidth * .5,
-                ),
+                Image.asset(Images.referSuccess),
                 const SpacerVertical(),
                 Text(
                   userProvider.user?.signUpSuccessful ?? "SUCCESS",
@@ -69,7 +66,8 @@ class SignUpSuccess extends StatelessWidget {
                           ?.signupStatus = false;
                     });
                   },
-                  text: "Get Start",
+                  // text: "Get Start",
+                  text: "GET START",
                   // textStyle: stylePTSansBold(),
                 ),
               ],

@@ -35,12 +35,13 @@ class News extends StatelessWidget {
           Dimen.padding.sp,
           0,
         ),
-        child: CustomTabContainerNEW(
+        child: CommonTabContainer(
+          tabPaddingNew: false,
           onChange: (index) {
             provider.tabChange(index, provider.tabs![index].id);
           },
           scrollable: provider.tabs?.length == 2 ? false : true,
-          tabsPadding: EdgeInsets.only(bottom: 10.sp),
+          padding: EdgeInsets.only(bottom: 10.sp),
           tabs: List.generate(
             provider.tabs?.length ?? 0,
             (index) => "${provider.tabs?[index].name}",

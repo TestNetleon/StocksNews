@@ -76,8 +76,9 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                   children: [
                     const ScreenTitle(title: "What We Do"),
                     Expanded(
-                      child: CustomTabContainerNEW(
-                        tabsPadding: REdgeInsets.only(bottom: 10.sp),
+                      child: CommonTabContainer(
+                        tabPaddingNew: false,
+                        padding: REdgeInsets.only(bottom: 10.sp),
                         onChange: (index) => provider.onTapChange(index),
                         scrollable: true,
                         tabs: List.generate(provider.data?.length ?? 0,

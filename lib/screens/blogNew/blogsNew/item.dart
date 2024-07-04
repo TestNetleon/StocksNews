@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/blogs_res.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
-import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -30,22 +29,26 @@ class BlogItemNew extends StatelessWidget {
 
     for (var detail in data) {
       widgets.add(
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (_) => Blog(
-                  type: BlogsType.author,
-                  id: detail.id!,
-                ),
-              ),
-            );
-          },
-          child: Text(
-            "${detail.name}",
-            style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
-          ),
+        // InkWell(
+        //   onTap: () {
+        //     Navigator.push(
+        //       navigatorKey.currentContext!,
+        //       MaterialPageRoute(
+        //         builder: (_) => Blog(
+        //           type: BlogsType.author,
+        //           id: detail.id!,
+        //         ),
+        //       ),
+        //     );
+        //   },
+        //   child: Text(
+        //     "${detail.name}",
+        //     style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
+        //   ),
+        // ),
+        Text(
+          "${detail.name}",
+          style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
         ),
       );
       if (detail != data.last) {

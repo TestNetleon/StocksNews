@@ -119,11 +119,11 @@ class _StockDetailState extends State<StockDetail> {
         child: Column(
           children: [
             Expanded(
-              child: CustomTabContainerNEW(
+              child: CommonTabContainer(
                 onChange: (index) {
                   provider.setOpenIndex(-1);
                 },
-                tabsPadding: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 physics: const NeverScrollableScrollPhysics(),
                 scrollable: true,
                 tabs: List.generate(

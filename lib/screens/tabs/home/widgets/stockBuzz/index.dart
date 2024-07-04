@@ -102,7 +102,7 @@ class StockInBuzz extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return const SpacerHorizontal(width: 15);
+                  return const SpacerHorizontal(width: 12);
                 },
                 itemCount: popular?.length ?? 5,
               ),

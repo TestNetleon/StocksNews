@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 
@@ -50,11 +49,11 @@ class MarketDataTitle extends StatelessWidget {
                           ? HtmlWidget(
                               title ?? "",
                               textStyle:
-                                  style ?? styleGeorgiaBold(fontSize: 17),
+                                  style ?? styleGeorgiaBold(fontSize: 25),
                             )
                           : Text(
                               title ?? "",
-                              style: style ?? styleGeorgiaBold(fontSize: 17),
+                              style: style ?? styleGeorgiaBold(fontSize: 25),
                             ),
                     Visibility(
                       visible: subTitle != null && subTitle != "",
@@ -118,22 +117,22 @@ class MarketDataTitle extends StatelessWidget {
               )
             ],
           ),
-          Visibility(
-            visible: divider,
-            child: Padding(
-              padding: dividerPadding ??
-                  const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-              // (provider.filterParams != null
-              //     ? const EdgeInsets.only(
-              //         top: Dimen.itemSpacing, bottom: Dimen.itemSpacing / 3)
-              //     : const EdgeInsets.only(top: Dimen.itemSpacing)),
-              child: const Divider(
-                color: ThemeColors.accent,
-                height: 2,
-                thickness: 2,
-              ),
-            ),
-          ),
+          // Visibility( //   dividerVisible
+          //   visible: divider,
+          //   child: Padding(
+          //     padding: dividerPadding ??
+          //         const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+          //     // (provider.filterParams != null
+          //     //     ? const EdgeInsets.only(
+          //     //         top: Dimen.itemSpacing, bottom: Dimen.itemSpacing / 3)
+          //     //     : const EdgeInsets.only(top: Dimen.itemSpacing)),
+          //     child: const Divider(
+          //       color: ThemeColors.accent,
+          //       height: 2,
+          //       thickness: 2,
+          //     ),
+          //   ),
+          // ),
           // if (provider.filterParams != null)
           //   FilterUiValues(
           //     params: provider.filterParams,

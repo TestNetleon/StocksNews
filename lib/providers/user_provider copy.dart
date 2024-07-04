@@ -123,7 +123,7 @@
 //     notifyListeners();
 //   }
 
-//   void keyboardVisiblity(BuildContext context) {
+//   void keyboardVisibility(BuildContext context) {
 //     final bottomInset = View.of(context).viewInsets.bottom;
 //     isKeyboardVisible = bottomInset > 0;
 //     notifyListeners();

@@ -158,8 +158,14 @@ class _EditEmailClickState extends State<EditEmailClick> {
             padding: const EdgeInsets.only(bottom: 30),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.sp),
-                  topRight: Radius.circular(10.sp)),
+                topLeft: Radius.circular(10.sp),
+                topRight: Radius.circular(10.sp),
+              ),
+              gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [ThemeColors.bottomsheetGradient, Colors.black],
+              ),
               color: ThemeColors.background,
               border: const Border(
                 top: BorderSide(color: ThemeColors.greyBorder),

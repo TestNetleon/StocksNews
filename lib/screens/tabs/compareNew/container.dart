@@ -100,10 +100,10 @@ class CompareStockNewContainer extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: CustomTabContainerNEW(
-              physics: const NeverScrollableScrollPhysics(),
+            child: CommonTabContainer(
+              // physics: const NeverScrollableScrollPhysics(),
               scrollable: true,
-              tabsPadding: const EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 0,
                 vertical: 10,
               ),

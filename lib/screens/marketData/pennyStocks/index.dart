@@ -25,9 +25,9 @@ class PennyStocks extends StatelessWidget {
         isPopback: true,
         canSearch: true,
       ),
-      body: CustomTabContainerNEW(
+      body: CommonTabContainer(
         scrollable: true,
-        tabsPadding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
         tabs: [
           "Most Active Penny Stocks",
           "Most Popular Penny Stocks",

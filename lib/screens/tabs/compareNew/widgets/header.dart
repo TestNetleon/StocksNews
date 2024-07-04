@@ -156,6 +156,7 @@ class CompareNewHeader extends StatelessWidget {
   //         return const CompareStocksPopup();
   //       });
   // }
+
   _showBottomSheet() {
     showModalBottomSheet(
       useSafeArea: true,

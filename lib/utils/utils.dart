@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
@@ -42,12 +45,12 @@ bool isEven(index) {
 
 class Utils {
   void showLog(data) {
-    if (kDebugMode) {
-      print("==================");
-      // log("$data");
-      print("$data");
-      print("==================");
-    }
+    // if (kDebugMode) {
+    print("==================");
+    // log("$data");
+    log("$data");
+    print("==================");
+    // }
   }
 }
 
@@ -98,6 +101,102 @@ String formatDateTimeAgo(DateTime dateTime) {
     return DateFormat.yMMMd().format(dateTime);
   }
 }
+
+List<SdTopRes>? convertMultipleStringListsToSdTopResLists() {
+  StockDetailProviderNew provider =
+      navigatorKey.currentContext!.read<StockDetailProviderNew>();
+  SdFinancialRes? data = provider.sdFinancialChartRes;
+
+  // Ensure data and financeStatement are not null
+  if (data == null || data.financeStatement == null) {
+    return null;
+  }
+
+  // Initialize a list to hold the converted SdTopRes objects
+  List<SdTopRes> convertedList = [];
+
+  // Iterate over each period in the financeStatement list
+  for (var period in data.financeStatement!) {
+    // Assuming period is an object with period and value properties
+    if (period.period != null) {
+      String cleanedPeriod = period.period!.replaceAll('-20', '');
+
+      SdTopRes convertedPeriod = SdTopRes(
+        key: cleanedPeriod,
+        value: cleanedPeriod,
+      );
+
+      convertedList.add(convertedPeriod);
+    }
+  }
+
+  Utils().showLog("Converted list: $convertedList");
+
+  return convertedList;
+}
+
+bool containsMinusSymbol(String input) {
+  return input.contains('-');
+}
+
+// List<SdTopRes>? convertMultipleStringListsToSdTopResLists() {
+//   StockDetailProviderNew provider =
+//       navigatorKey.currentContext!.read<StockDetailProviderNew>();
+//   SdFinancialRes? data = provider.sdFinancialChartRes;
+
+//   // Ensure data and financeStatement are not null
+//   if (data == null || data.financeStatement == null) {
+//     return null;
+//   }
+
+//   // Initialize a list to hold the converted SdTopRes objects
+//   List<SdTopRes> convertedList = [];
+
+//   // Iterate over each period in the financeStatement list
+//   for (var period in data.financeStatement!) {
+//     // Assuming period is an object with period and value properties
+//     SdTopRes convertedPeriod = SdTopRes(
+//       key: period.period,
+//       value: period.period,
+//     );
+
+//     convertedList.add(convertedPeriod);
+//   }
+
+//   Utils().showLog("Converted list: $convertedList");
+
+//   return convertedList;
+// }
+
+String convertToReadableValue(double value) {
+  String suffix = '';
+  double formattedValue = value;
+
+  if (value.abs() >= 1e9) {
+    formattedValue = value / 1e9;
+    suffix = 'B';
+  } else if (value.abs() >= 1e6) {
+    formattedValue = value / 1e6;
+    suffix = 'M';
+  }
+
+  String formattedString = formattedValue.toStringAsFixed(1);
+  if (value < 0) {
+    return '-\$${formattedString.substring(1)}$suffix';
+  } else {
+    return '\$$formattedString$suffix';
+  }
+}
+
+// String convertDollarValue(double amount) {
+//   if (amount >= 1000000000) {
+//     return "\$${(amount / 1000000000).toStringAsFixed(2)} B";
+//   } else if (amount >= 1000000) {
+//     return "\$${(amount / 1000000).toStringAsFixed(2)} M";
+//   } else {
+//     return "\$${amount.toStringAsFixed(2)}";
+//   }
+// }
 
 void showSnackbar({
   required context,
@@ -591,7 +690,6 @@ void handleNavigation({
   Utils().showLog("----$userPresent---");
 
   // if (type == "blog") {
-
   if (type == DeeplinkEnum.blogDetail) {
     if (fromBackground) {
       Navigator.pushReplacement(
@@ -647,7 +745,9 @@ void handleNavigation({
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
+          navigatorKey.currentContext!,
+          (route) => route.isFirst,
+        );
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
@@ -663,7 +763,9 @@ void handleNavigation({
     if (userPresent) {
       if (fromBackground) {
         Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
+          navigatorKey.currentContext!,
+          (route) => route.isFirst,
+        );
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),

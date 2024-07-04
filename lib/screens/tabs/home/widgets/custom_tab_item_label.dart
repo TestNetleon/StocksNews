@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom_tab.dart';
 
 class CustomTabLabel extends StatelessWidget {
   final String text;
@@ -129,27 +131,20 @@ class CustomTabHome extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return Expanded(
       child: InkWell(
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            border: selected
-                ? Border(
-                    bottom: BorderSide(
-                      color: ThemeColors.accent,
-                      width: 1.sp,
-                    ),
-                  )
-                : null,
+            color: selected
+                ? const Color.fromARGB(255, 0, 82, 4)
+                : const Color.fromARGB(255, 21, 21, 21),
+            borderRadius: BorderRadius.circular(4),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 5.sp),
-          child: Text(
-            label,
-            style: stylePTSansBold(
-              color: selected ? ThemeColors.accent : Colors.white,
-              // index == selectedIndex ? ThemeColors.border : ThemeColors.primary,
-            ),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
+          child: CustomTabNEW(
+            label: label,
           ),
         ),
       ),

@@ -47,7 +47,7 @@ class TopTrendingContainer extends StatelessWidget {
         padding: EdgeInsets.zero,
         // padding: EdgeInsets.fromLTRB(
         //     Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
-        child: CustomTabContainerNEW(
+        child: CommonTabContainer(
           scrollable: true,
           // onChange: (index) =>
           //     provider.onTabChanged(index: index, showProgress: false),
@@ -55,7 +55,7 @@ class TopTrendingContainer extends StatelessWidget {
             tabs.length,
             (index) => tabs[index].tabName,
           ),
-          tabsPadding: EdgeInsets.symmetric(horizontal: 0.sp),
+          padding: EdgeInsets.symmetric(horizontal: 0.sp),
           widgets: const [
             TrendingNowListView(),
             TrendingRecentlyListView(),

@@ -78,6 +78,7 @@
           "groupNumber" : 1,
           "internalID" : "F6AF4BB1",
           "introductoryOffer" : {
+            "displayPrice" : "0.99",
             "internalID" : "2ECBE3E9",
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -92,35 +93,6 @@
           "productID" : "month_only",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
-          "subscriptionGroupID" : "393031EF",
-          "type" : "RecurringSubscription"
-        },
-        {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "2",
-          "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "5BC58DA5",
-          "introductoryOffer" : {
-            "internalID" : "0523B484",
-            "paymentMode" : "free",
-            "subscriptionPeriod" : "P2W"
-          },
-          "localizations" : [
-            {
-              "description" : "",
-              "displayName" : "",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "annual_only",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Annual",
           "subscriptionGroupID" : "393031EF",
           "type" : "RecurringSubscription"
         }

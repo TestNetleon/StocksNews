@@ -3,10 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_trending_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/stocks_item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/common_stock_item.dart';
 import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -62,13 +61,18 @@ class _HomeTopGainerState extends State<HomeTopGainer> {
             padding: EdgeInsets.only(top: 12.sp),
             itemBuilder: (context, index) {
               Top top = provider.homeTopGainerRes!.gainers![index];
-              return StocksItem(top: top, gainer: true);
+              // return StocksItem(top: top, gainer: true);
+              return CommonStockItem(
+                change: top.displayChange,
+                changesPercentage: top.changesPercentage,
+                image: top.image,
+                name: top.name,
+                price: top.price,
+                symbol: top.symbol,
+              );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                color: ThemeColors.greyBorder,
-                height: 20.sp,
-              );
+              return const SpacerVertical(height: 12);
             },
           ),
         ],

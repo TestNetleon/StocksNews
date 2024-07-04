@@ -52,21 +52,28 @@ class AffiliateReferItem extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-        gradient: RadialGradient(
-          center: Alignment.bottomCenter,
-          radius: 0.6,
-          // transform: GradientRotation(radians),
-          // tileMode: TileMode.decal,
-          stops: [
-            0.0,
-            0.9,
-          ],
-          colors: [
-            Colors.black,
-            Colors.black,
-          ],
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
         ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [ThemeColors.bottomsheetGradient, Colors.black],
+        ),
+        // gradient: RadialGradient(
+        //   center: Alignment.bottomCenter,
+        //   radius: 0.6,
+        //   // transform: GradientRotation(radians),
+        //   // tileMode: TileMode.decal,
+        //   stops: [
+        //     0.0,
+        //     0.9,
+        //   ],
+        //   colors: [
+        //     Colors.black,
+        //     Colors.black,
+        //   ],
+        // ),
         color: ThemeColors.background,
         border: Border(
           top: BorderSide(color: ThemeColors.greyBorder),

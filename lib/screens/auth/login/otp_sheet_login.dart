@@ -150,17 +150,10 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
             topLeft: Radius.circular(10.sp),
             topRight: Radius.circular(10.sp),
           ),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 0.6,
-            stops: [
-              0.0,
-              0.9,
-            ],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              Colors.black,
-            ],
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ThemeColors.bottomsheetGradient, Colors.black],
           ),
           color: ThemeColors.background,
           border: const Border(
@@ -174,7 +167,6 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
             //   width: MediaQuery.of(context).size.width * .45,
             //   child: Image.asset(Images.logo),
             // ),
-
             Container(
               height: 6.sp,
               width: 50.sp,
@@ -184,16 +176,15 @@ class _OTPLoginBottomState extends State<OTPLoginBottom> {
                 color: ThemeColors.greyBorder,
               ),
             ),
-            const SpacerVertical(height: 70),
-
-            Container(
-              width: MediaQuery.of(context).size.width * .45,
-              constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-              child: Image.asset(
-                Images.logo,
-                fit: BoxFit.contain,
-              ),
-            ),
+            // const SpacerVertical(height: 70),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * .45,
+            //   constraints: BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
+            //   child: Image.asset(
+            //     Images.logo,
+            //     fit: BoxFit.contain,
+            //   ),
+            // ),
             const SpacerVertical(height: 30),
             Image.asset(
               Images.otpSuccessGIT,

@@ -7,9 +7,11 @@ String sdFinancialResToJson(SdFinancialRes data) => json.encode(data.toJson());
 
 class SdFinancialRes {
   final List<FinanceStatement>? financeStatement;
+  List<Chart>? chart;
 
   SdFinancialRes({
     this.financeStatement,
+    this.chart,
   });
 
   factory SdFinancialRes.fromJson(Map<String, dynamic> json) => SdFinancialRes(
@@ -17,12 +19,62 @@ class SdFinancialRes {
             ? []
             : List<FinanceStatement>.from(json["finance_statement"]!
                 .map((x) => FinanceStatement.fromJson(x))),
+        chart: json["chart"] == null
+            ? []
+            : List<Chart>.from(json["chart"]!.map((x) => Chart.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "finance_statement": financeStatement == null
             ? []
             : List<dynamic>.from(financeStatement!.map((x) => x.toJson())),
+        "chart": chart == null
+            ? []
+            : List<dynamic>.from(chart!.map((x) => x.toJson())),
+      };
+}
+
+class Chart {
+  final String? period;
+  final int? revenue;
+  final int? netIncome;
+  final int? totalAssets;
+  final int? totalLiabilities;
+  final int? operatingCashFlow1;
+  final int? operatingCashFlow2;
+  final int? operatingCashFlow3;
+
+  Chart({
+    this.period,
+    this.revenue,
+    this.netIncome,
+    this.totalAssets,
+    this.totalLiabilities,
+    this.operatingCashFlow1,
+    this.operatingCashFlow2,
+    this.operatingCashFlow3,
+  });
+
+  factory Chart.fromJson(Map<String, dynamic> json) => Chart(
+        period: json["Period"],
+        revenue: json["Revenue"],
+        netIncome: json["Net Income"],
+        totalAssets: json["Total Assets"],
+        totalLiabilities: json["Total Liabilities"],
+        operatingCashFlow1: json["Operating Cash Flow"],
+        operatingCashFlow2: json["Investing Cash Flow"],
+        operatingCashFlow3: json["Financing Cash Flow"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "Period": period,
+        "Revenue": revenue,
+        "Net Income": netIncome,
+        "Total Assets": totalAssets,
+        "Total Liabilities": totalLiabilities,
+        "Operating Cash Flow": operatingCashFlow1,
+        "Investing Cash Flow": operatingCashFlow2,
+        "Financing Cash Flow": operatingCashFlow3,
       };
 }
 
@@ -58,6 +110,20 @@ class FinanceStatement {
   final String? weightedAverageSharesOut;
   final String? weightedAverageSharesOutDiluted;
   final String? link;
+  final String? revenue;
+  final String? totalAssets;
+  final String? totalLiabilities;
+  final String? revenueChangePercentage;
+  final String? totalAssetsChangePercentage;
+  final String? totalLiabilitiesChangePercentage;
+  final String? netIncomeChangePercentage;
+
+  final String? operatingCashFlow;
+  final String? investingCashFlow;
+  final String? financingCashFlow;
+  final String? operatingCashFlowChangePercentage;
+  final String? investingCashFlowChangePercentage;
+  final String? financingCashFlowChangePercentage;
 
   FinanceStatement({
     this.period,
@@ -91,6 +157,19 @@ class FinanceStatement {
     this.weightedAverageSharesOut,
     this.weightedAverageSharesOutDiluted,
     this.link,
+    this.revenue,
+    this.totalAssets,
+    this.totalLiabilities,
+    this.revenueChangePercentage,
+    this.totalAssetsChangePercentage,
+    this.totalLiabilitiesChangePercentage,
+    this.netIncomeChangePercentage,
+    this.operatingCashFlow,
+    this.investingCashFlow,
+    this.financingCashFlow,
+    this.operatingCashFlowChangePercentage,
+    this.investingCashFlowChangePercentage,
+    this.financingCashFlowChangePercentage,
   });
 
   factory FinanceStatement.fromJson(Map<String, dynamic> json) =>
@@ -130,6 +209,23 @@ class FinanceStatement {
         weightedAverageSharesOutDiluted:
             json["Weighted Average Shares Out Diluted"],
         link: json["Link"],
+        revenue: json["Revenue"],
+        totalAssets: json["Total Assets"],
+        totalLiabilities: json["Total Liabilities"],
+        revenueChangePercentage: json["Revenue Change Percentage"],
+        totalAssetsChangePercentage: json["Total Assets Change Percentage"],
+        totalLiabilitiesChangePercentage:
+            json["Total Liabilities Change Percentage"],
+        netIncomeChangePercentage: json["Net Income Change Percentage"],
+        operatingCashFlow: json["Operating Cash Flow"],
+        investingCashFlow: json["Investing Cash Flow"],
+        financingCashFlow: json["Financing Cash Flow"],
+        operatingCashFlowChangePercentage:
+            json["Operating Cash Flow Change Percentage"],
+        investingCashFlowChangePercentage:
+            json["Investing Cash Flow Change Percentage"],
+        financingCashFlowChangePercentage:
+            json["Financing Cash Flow Change Percentage"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -165,6 +261,22 @@ class FinanceStatement {
         "Weighted Average Shares Out": weightedAverageSharesOut,
         "Weighted Average Shares Out Diluted": weightedAverageSharesOutDiluted,
         "Link": link,
+        "Revenue": revenue,
+        "Total Assets": totalAssets,
+        "Total Liabilities": totalLiabilities,
+        "Revenue Change Percentage": revenueChangePercentage,
+        "Total Assets Change Percentage": totalAssetsChangePercentage,
+        "Total Liabilities Change Percentage": totalLiabilitiesChangePercentage,
+        "Net Income Change Percentage": netIncomeChangePercentage,
+        "Operating Cash Flow": operatingCashFlow,
+        "Investing Cash Flow": investingCashFlow,
+        "Financing Cash Flow": financingCashFlow,
+        "Operating Cash Flow Change Percentage":
+            operatingCashFlowChangePercentage,
+        "Investing Cash Flow Change Percentage":
+            investingCashFlowChangePercentage,
+        "Financing Cash Flow Change Percentage":
+            financingCashFlowChangePercentage,
       };
   Map<String, dynamic> toMap() => {
         "Period": period,
@@ -199,5 +311,21 @@ class FinanceStatement {
         "Weighted Average Shares Out": weightedAverageSharesOut,
         "Weighted Average Shares Out Diluted": weightedAverageSharesOutDiluted,
         "Link": link,
+        "Revenue": revenue,
+        "Total Assets": totalAssets,
+        "Total Liabilities": totalLiabilities,
+        "Revenue Change Percentage": revenueChangePercentage,
+        "Total Assets Change Percentage": totalAssetsChangePercentage,
+        "Total Liabilities Change Percentage": totalLiabilitiesChangePercentage,
+        "Net Income Change Percentage": netIncomeChangePercentage,
+        "Operating Cash Flow": operatingCashFlow,
+        "Investing Cash Flow": investingCashFlow,
+        "Financing Cash Flow": financingCashFlow,
+        "Operating Cash Flow Change Percentage":
+            operatingCashFlowChangePercentage,
+        "Investing Cash Flow Change Percentage":
+            investingCashFlowChangePercentage,
+        "Financing Cash Flow Change Percentage":
+            financingCashFlowChangePercentage,
       };
 }

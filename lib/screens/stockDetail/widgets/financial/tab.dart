@@ -20,6 +20,7 @@ class SdFinancialTabs extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 30),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -38,25 +39,25 @@ class SdFinancialTabs extends StatelessWidget {
                         color: isSelected
                             ? ThemeColors.accent
                             : ThemeColors.greyBorder.withOpacity(0.4),
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(5),
+                        )),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Text(
                       tabs?[index].key ?? "N/A",
-                      style: styleGeorgiaBold(),
+                      style: styleGeorgiaBold(fontSize: 12),
                     ),
                   ),
                 );
               }),
             ),
           ),
-          Container(
-            height: 1,
-            width: double.infinity,
-            color: ThemeColors.accent,
-          )
+          // Container(
+          //   height: 1,
+          //   width: double.infinity,
+          //   color: ThemeColors.accent,
+          // )
         ],
       ),
     );
