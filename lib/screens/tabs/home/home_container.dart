@@ -9,11 +9,13 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index_copy.da
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
@@ -62,6 +64,14 @@ class HomeContainer extends StatelessWidget {
               //   width: 100,
               // ),
               // const InAppPurchaseUI(),
+
+              ThemeButton(
+                text: "Subscription",
+                onPressed: () {
+                  openUrl("https://apps.apple.com/account/subscriptions");
+                },
+              ),
+
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,
