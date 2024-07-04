@@ -24,8 +24,10 @@ class UserRes {
   String? referralUrl;
   String? displayName;
   bool? signupStatus;
+  int? subscriptionPurchased;
 
   UserRes({
+    this.subscriptionPurchased = 0,
     this.email,
     this.phone,
     this.roleId,
@@ -54,6 +56,7 @@ class UserRes {
         roleId: json["role_id"],
         emailOtp: json["email_otp"],
         phoneOtp: json["phone_otp"],
+        subscriptionPurchased: json["subscription_purchased"],
         username: json["username"],
         otp: json["otp"],
         token: json["token"],
@@ -73,6 +76,7 @@ class UserRes {
         "phone": phone,
         "_id": userId,
         "role_id": roleId,
+        "subscription_purchased": subscriptionPurchased,
         "email_otp": emailOtp,
         "phone_otp": phoneOtp,
         "username": username,

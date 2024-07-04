@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../utils/colors.dart';
+
+import '../../../widgets/theme_button.dart';
+
+class SubscriptionPurchased extends StatelessWidget {
+  const SubscriptionPurchased({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [ThemeColors.bottomsheetGradient, Colors.black],
+        ),
+        color: ThemeColors.background,
+        border: Border(
+          top: BorderSide(color: ThemeColors.greyBorder),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 6.sp,
+              width: 50.sp,
+              margin: EdgeInsets.only(top: 8.sp),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.sp),
+                color: ThemeColors.greyBorder,
+              ),
+            ),
+            Image.asset(
+              Images.referSuccess,
+              height: 250,
+              width: 300,
+            ),
+            Text(
+              "Payment successfully completed",
+              textAlign: TextAlign.center,
+              style: stylePTSansBold(fontSize: 35),
+            ),
+            const SpacerVertical(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "Congratulations, Explore Stocks.News without limits.",
+                textAlign: TextAlign.center,
+                style: stylePTSansRegular(
+                    fontSize: 20, color: ThemeColors.greyText),
+              ),
+            ),
+            const SpacerVertical(height: 70),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ThemeButton(
+                text: "GO TO HOME",
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
