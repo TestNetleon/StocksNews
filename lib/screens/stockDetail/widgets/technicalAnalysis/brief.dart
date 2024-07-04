@@ -17,8 +17,7 @@ class SdTechnicalAnalysisBrief extends StatelessWidget {
     return Column(
       children: [
         Visibility(
-          visible: res?.technicalIndicatorArr.isNotEmpty == true &&
-              res?.movingAverageArr.isNotEmpty == true,
+          visible: res?.technicalIndicatorArr.isNotEmpty == true && res?.movingAverageArr.isNotEmpty == true,
           child: Padding(
             padding: EdgeInsets.only(top: 10.sp),
             child: const SummaryBlock(),
@@ -200,11 +199,10 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<TechnicalIndicatorArr>? data =
-        context.watch<StockDetailProviderNew>().techRes?.technicalIndicatorArr;
+    List<TechnicalIndicatorArr>? data = context.watch<StockDetailProviderNew>().techRes?.technicalIndicatorArr;
 
-    MovingAverage? technicalIndicator =
-        context.watch<StockDetailProviderNew>().techRes?.technicalIndicator;
+    MovingAverage? technicalIndicator = context.watch<StockDetailProviderNew>().techRes?.technicalIndicator;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -313,7 +311,6 @@ class TechnicalIndicatorsBlock extends StatelessWidget {
                   ],
                 );
               }
-
               return Row(
                 children: [
                   SizedBox(

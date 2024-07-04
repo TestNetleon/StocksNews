@@ -36,10 +36,9 @@ class SdTechnicalAnalystSummary extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: constraints.maxWidth * .6,
+              width:  constraints.maxWidth * .6,
               height: constraints.maxWidth / 3,
-              child:
-                  TechnicalAnalysisGaugeItem(value: value.indicater.toDouble()),
+              child: TechnicalAnalysisGaugeItem(value: value.indicater.toDouble()),
             ),
             Positioned(
               bottom: 0,

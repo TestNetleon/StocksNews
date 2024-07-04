@@ -68,18 +68,18 @@ class SdStocksRating extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        data?.upDown > 0
+                        (data?.upDown ?? 0) > 0
                             ? Icon(
                                 Icons.arrow_upward,
                                 size: 14,
-                                color: data?.upDown > 0
+                                color: (data?.upDown ?? 0) > 0
                                     ? Colors.green
                                     : Colors.red,
                               )
                             : Icon(
                                 Icons.arrow_downward_rounded,
                                 size: 14,
-                                color: data?.upDown > 0
+                                color: (data?.upDown ?? 0) > 0
                                     ? Colors.green
                                     : Colors.red,
                               ),
@@ -87,7 +87,9 @@ class SdStocksRating extends StatelessWidget {
                           "${data?.upDown ?? ""}%",
                           style: stylePTSansBold(
                             fontSize: 14,
-                            color: data?.upDown > 0 ? Colors.green : Colors.red,
+                            color: (data?.upDown ?? 0) > 0
+                                ? Colors.green
+                                : Colors.red,
                           ),
                         ),
                         InkWell(

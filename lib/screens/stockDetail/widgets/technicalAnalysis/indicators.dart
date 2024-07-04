@@ -14,8 +14,7 @@ class SdTechnicalAnalystIndicators extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    MovingAverage? value =
-        context.watch<StockDetailProviderNew>().techRes?.technicalIndicator;
+    MovingAverage? value = context.watch<StockDetailProviderNew>().techRes?.technicalIndicator;
     if (value == null) return const SizedBox();
     return Column(
       children: [
@@ -28,7 +27,6 @@ class SdTechnicalAnalystIndicators extends StatelessWidget {
         //     height: constraints.maxWidth / 3,
         //     child:
         //         TechnicalAnalysisGaugeItem(value: value.indicater.toDouble())),
-
         const SpacerVertical(height: 10),
         Stack(
           alignment: Alignment.center,
@@ -43,8 +41,7 @@ class SdTechnicalAnalystIndicators extends StatelessWidget {
             SizedBox(
               width: constraints.maxWidth * .5,
               height: constraints.maxWidth / 3,
-              child:
-                  TechnicalAnalysisGaugeItem(value: value.indicater.toDouble()),
+              child: TechnicalAnalysisGaugeItem(value: value.indicater.toDouble()),
             ),
             Positioned(
               bottom: 0,
