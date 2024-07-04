@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/ownership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -21,7 +22,8 @@ class SdOwnershipItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +179,27 @@ class SdOwnershipItem extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
+        const SpacerVertical(height: 10),
+        LinearPercentIndicator(
+          padding: EdgeInsets.zero,
+          backgroundColor: Colors.white,
+          width: MediaQuery.of(context).size.width - 32,
+          animation: true,
+          lineHeight: 12.0,
+          animationDuration: 2000,
+          percent: double.parse(data!.ownership.replaceAll('%', '')) / 100,
+          linearStrokeCap: LinearStrokeCap.round,
+          animateFromLastPercent: true,
+          center: Text(
+            data!.ownership,
+            style: TextStyle(fontSize: 10.0),
+          ),
+          isRTL: false,
+          barRadius: Radius.elliptical(5, 8),
+          progressColor: Colors.green,
+          maskFilter: MaskFilter.blur(BlurStyle.solid, 3),
+        ),
       ],
     );
   }

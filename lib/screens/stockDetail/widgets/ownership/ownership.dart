@@ -118,8 +118,7 @@ class _SdOwnershipState extends State<SdOwnership> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          OwnershipList? data =
-                              provider.ownershipRes?.ownershipList?[index];
+                          OwnershipList? data = provider.ownershipRes?.ownershipList?[index];
                           if (index == 0) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
