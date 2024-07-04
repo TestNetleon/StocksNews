@@ -418,6 +418,7 @@ import 'package:stocks_news_new/screens/barChart/bar_chart_item.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_three.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/financial/widget/financial_tabel.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/financial/widget/financial_table_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -1009,7 +1010,27 @@ class _SdFinancialState extends State<SdFinancial> {
                       ),
                     )),
                 const SpacerVertical(height: 15),
-                const FinancialTable(),
+                // tabel data
+                ListView.separated(
+                    padding: const EdgeInsets.only(top: 0, bottom: 15),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: ThemeColors.greyBorder.withOpacity(0.3),
+                        ),
+                        child: FinancialTableItem(
+                          index: index,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SpacerVertical(height: 15);
+                    },
+                    itemCount: provider.sdFinancialArray?.length ?? 0),
+
                 const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),
