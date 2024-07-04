@@ -31,6 +31,7 @@ class BarChartSampleState extends State<BarChartSample> {
   int minAbsValue = 0;
 
   bool valueNegative = true;
+  List<Chart>? charts;
 
   @override
   void initState() {
@@ -39,59 +40,51 @@ class BarChartSampleState extends State<BarChartSample> {
   }
 
   void intFunction() {
+    charts = widget.data?.chart?.sublist(0, 5);
+
     setState(() {});
-    if (widget.data?.chart?[4].revenue != null) {
+    if (charts?[4].revenue != null) {
       BarChartGroupData barGroup1 = makeGroupData(
         0,
-        (widget.data?.chart?[4].revenue == null ||
-                (widget.data?.chart![4].revenue ?? 0) < 0)
+        (charts?[4].revenue == null || (charts![4].revenue ?? 0) < 0)
             ? 0.0
-            : double.parse("${widget.data?.chart?[4].revenue}"),
-        widget.data?.chart?[4].netIncome == null ||
-                (widget.data?.chart![4].netIncome ?? 0) < 0
+            : double.parse("${charts?[4].revenue}"),
+        charts?[4].netIncome == null || (charts![4].netIncome ?? 0) < 0
             ? 0.0
-            : double.parse("${widget.data?.chart![4].netIncome}"),
+            : double.parse("${charts![4].netIncome}"),
       );
       BarChartGroupData barGroup2 = makeGroupData(
           1,
-          widget.data?.chart?[3].revenue == null ||
-                  (widget.data?.chart![3].revenue ?? 0) < 0
+          charts?[3].revenue == null || (charts![3].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[3].revenue}"),
-          widget.data?.chart?[3].netIncome == null ||
-                  (widget.data?.chart![3].netIncome ?? 0) < 0
+              : double.parse("${charts?[3].revenue}"),
+          charts?[3].netIncome == null || (charts![3].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![3].netIncome}"));
+              : double.parse("${charts![3].netIncome}"));
       BarChartGroupData barGroup3 = makeGroupData(
           2,
-          widget.data?.chart?[2].revenue == null ||
-                  (widget.data?.chart![2].revenue ?? 0) < 0
+          charts?[2].revenue == null || (charts![2].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[2].revenue}"),
-          widget.data?.chart?[2].netIncome == null ||
-                  (widget.data?.chart![2].netIncome ?? 0) < 0
+              : double.parse("${charts?[2].revenue}"),
+          charts?[2].netIncome == null || (charts![2].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![2].netIncome}"));
+              : double.parse("${charts![2].netIncome}"));
       BarChartGroupData barGroup4 = makeGroupData(
           3,
-          widget.data?.chart?[1].revenue == null ||
-                  (widget.data?.chart![1].revenue ?? 0) < 0
+          charts?[1].revenue == null || (charts![1].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[1].revenue}"),
-          widget.data?.chart?[1].netIncome == null ||
-                  (widget.data?.chart![1].netIncome ?? 0) < 0
+              : double.parse("${charts?[1].revenue}"),
+          charts?[1].netIncome == null || (charts![1].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![1].netIncome}"));
+              : double.parse("${charts![1].netIncome}"));
       BarChartGroupData barGroup5 = makeGroupData(
           4,
-          widget.data?.chart?[0].revenue == null ||
-                  (widget.data?.chart![0].revenue ?? 0) < 0
+          charts?[0].revenue == null || (charts![0].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[0].revenue}"),
-          widget.data?.chart?[0].netIncome == null ||
-                  (widget.data?.chart![0].netIncome ?? 0) < 0
+              : double.parse("${charts?[0].revenue}"),
+          charts?[0].netIncome == null || (charts![0].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![0].netIncome}"));
+              : double.parse("${charts![0].netIncome}"));
       final items = [
         barGroup1,
         barGroup2,
@@ -102,70 +95,65 @@ class BarChartSampleState extends State<BarChartSample> {
       rawBarGroups = items;
 
       showingBarGroups = rawBarGroups;
-      final maxRevenue = widget.data?.chart?.isNotEmpty == true
+      final maxRevenue = charts?.isNotEmpty == true
           ? widget.data!.chart!
               .map((e) => e.revenue)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
-      final maxNetIncome = widget.data?.chart?.isNotEmpty == true
-          ? widget.data?.chart
+      final maxNetIncome = charts?.isNotEmpty == true
+          ? charts
               ?.map((e) => e.netIncome)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
       maxAbsValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
       setState(() {});
     }
-    if (widget.data?.chart?[4].totalAssets != null) {
+    if (charts?[4].totalAssets != null) {
       BarChartGroupData barGroup1 = makeGroupData(
           0,
-          (widget.data?.chart?[4].totalAssets == null ||
-                  (widget.data?.chart?[4].totalAssets ?? 0) < 0)
+          (charts?[4].totalAssets == null || (charts?[4].totalAssets ?? 0) < 0)
               ? 0.0
-              : double.parse("${widget.data?.chart?[4].totalAssets}"),
-          widget.data?.chart?[4].totalLiabilities == null ||
-                  (widget.data?.chart?[4].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[4].totalAssets}"),
+          charts?[4].totalLiabilities == null ||
+                  (charts?[4].totalLiabilities ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![4].totalLiabilities}"));
+              : double.parse("${charts![4].totalLiabilities}"));
       BarChartGroupData barGroup2 = makeGroupData(
           1,
-          widget.data?.chart?[3].totalAssets == null ||
-                  (widget.data?.chart?[3].totalAssets ?? 0) < 0
+          charts?[3].totalAssets == null || (charts?[3].totalAssets ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[3].totalAssets}"),
-          widget.data?.chart?[3].totalLiabilities == null ||
-                  (widget.data?.chart?[3].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[3].totalAssets}"),
+          charts?[3].totalLiabilities == null ||
+                  (charts?[3].totalLiabilities ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![3].totalLiabilities}"));
+              : double.parse("${charts![3].totalLiabilities}"));
       BarChartGroupData barGroup3 = makeGroupData(
           2,
-          widget.data?.chart?[2].totalAssets == null ||
-                  (widget.data?.chart?[2].totalAssets ?? 0) < 0
+          charts?[2].totalAssets == null || (charts?[2].totalAssets ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[2].totalAssets}"),
-          widget.data?.chart?[2].totalLiabilities == null ||
-                  (widget.data?.chart?[2].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[2].totalAssets}"),
+          charts?[2].totalLiabilities == null ||
+                  (charts?[2].totalLiabilities ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![2].totalLiabilities}"));
+              : double.parse("${charts![2].totalLiabilities}"));
       BarChartGroupData barGroup4 = makeGroupData(
           3,
-          widget.data?.chart?[1].totalAssets == null ||
-                  (widget.data?.chart?[1].totalAssets ?? 0) < 0
+          charts?[1].totalAssets == null || (charts?[1].totalAssets ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[1].totalAssets}"),
-          widget.data?.chart?[1].totalLiabilities == null ||
-                  (widget.data?.chart?[1].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[1].totalAssets}"),
+          charts?[1].totalLiabilities == null ||
+                  (charts?[1].totalLiabilities ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![1].totalLiabilities}"));
+              : double.parse("${charts![1].totalLiabilities}"));
       BarChartGroupData barGroup5 = makeGroupData(
           4,
-          widget.data?.chart?[0].totalAssets == null ||
-                  (widget.data?.chart?[0].totalAssets ?? 0) < 0
+          charts?[0].totalAssets == null || (charts?[0].totalAssets ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart?[0].totalAssets}"),
-          widget.data?.chart?[0].totalLiabilities == null ||
-                  (widget.data?.chart?[0].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[0].totalAssets}"),
+          charts?[0].totalLiabilities == null ||
+                  (charts?[0].totalLiabilities ?? 0) < 0
               ? 0.0
-              : double.parse("${widget.data?.chart![0].totalLiabilities}"));
+              : double.parse("${charts![0].totalLiabilities}"));
       final items = [
         barGroup1,
         barGroup2,
@@ -176,60 +164,60 @@ class BarChartSampleState extends State<BarChartSample> {
       rawBarGroups = items;
 
       showingBarGroups = rawBarGroups;
-      final maxRevenue = widget.data?.chart?.isNotEmpty == true
+      final maxRevenue = charts?.isNotEmpty == true
           ? widget.data!.chart!
               .map((e) => e.totalAssets)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
-      final maxNetIncome = widget.data?.chart?.isNotEmpty == true
-          ? widget.data?.chart
+      final maxNetIncome = charts?.isNotEmpty == true
+          ? charts
               ?.map((e) => e.totalLiabilities)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
       maxAbsValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
       setState(() {});
     }
-    if (widget.data?.chart?[4].operatingCashFlow1 != null) {
+    if (charts?[4].operatingCashFlow1 != null) {
       BarChartGroupData barGroup1 = makeGroupData(
           0,
-          (widget.data?.chart?[4].operatingCashFlow1 == null)
+          (charts?[4].operatingCashFlow1 == null)
               ? 0.0
-              : double.parse("${widget.data?.chart?[4].operatingCashFlow1}"),
-          widget.data?.chart?[4].operatingCashFlow2 == null
+              : double.parse("${charts?[4].operatingCashFlow1}"),
+          charts?[4].operatingCashFlow2 == null
               ? 0.0
-              : double.parse("${widget.data?.chart![4].operatingCashFlow2}"));
+              : double.parse("${charts![4].operatingCashFlow2}"));
       BarChartGroupData barGroup2 = makeGroupData(
           1,
-          widget.data?.chart?[3].operatingCashFlow1 == null
+          charts?[3].operatingCashFlow1 == null
               ? 0.0
-              : double.parse("${widget.data?.chart?[3].operatingCashFlow1}"),
-          widget.data?.chart?[3].operatingCashFlow2 == null
+              : double.parse("${charts?[3].operatingCashFlow1}"),
+          charts?[3].operatingCashFlow2 == null
               ? 0.0
-              : double.parse("${widget.data?.chart![3].operatingCashFlow2}"));
+              : double.parse("${charts![3].operatingCashFlow2}"));
       BarChartGroupData barGroup3 = makeGroupData(
           2,
-          widget.data?.chart?[2].operatingCashFlow1 == null
+          charts?[2].operatingCashFlow1 == null
               ? 0.0
-              : double.parse("${widget.data?.chart?[2].operatingCashFlow1}"),
-          widget.data?.chart?[2].operatingCashFlow2 == null
+              : double.parse("${charts?[2].operatingCashFlow1}"),
+          charts?[2].operatingCashFlow2 == null
               ? 0.0
-              : double.parse("${widget.data?.chart![2].operatingCashFlow2}"));
+              : double.parse("${charts![2].operatingCashFlow2}"));
       BarChartGroupData barGroup4 = makeGroupData(
           3,
-          widget.data?.chart?[1].operatingCashFlow1 == null
+          charts?[1].operatingCashFlow1 == null
               ? 0.0
-              : double.parse("${widget.data?.chart?[1].operatingCashFlow1}"),
-          widget.data?.chart?[1].operatingCashFlow2 == null
+              : double.parse("${charts?[1].operatingCashFlow1}"),
+          charts?[1].operatingCashFlow2 == null
               ? 0.0
-              : double.parse("${widget.data?.chart![1].operatingCashFlow2}"));
+              : double.parse("${charts![1].operatingCashFlow2}"));
       BarChartGroupData barGroup5 = makeGroupData(
           4,
-          widget.data?.chart?[0].operatingCashFlow1 == null
+          charts?[0].operatingCashFlow1 == null
               ? 0.0
-              : double.parse("${widget.data?.chart?[0].operatingCashFlow1}"),
-          widget.data?.chart?[0].operatingCashFlow2 == null
+              : double.parse("${charts?[0].operatingCashFlow1}"),
+          charts?[0].operatingCashFlow2 == null
               ? 0.0
-              : double.parse("${widget.data?.chart![0].operatingCashFlow2}"));
+              : double.parse("${charts![0].operatingCashFlow2}"));
       final items = [
         barGroup1,
         barGroup2,
@@ -240,52 +228,52 @@ class BarChartSampleState extends State<BarChartSample> {
       rawBarGroups = items;
 
       showingBarGroups = rawBarGroups;
-      // final maxRevenue = widget.data?.chart?.isNotEmpty == true
+      // final maxRevenue = charts?.isNotEmpty == true
       //     ? widget.data!.chart!
       //         .map((e) => e.operatingCashFlow1)
       //         .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
       //     : 0;
-      // final maxNetIncome = widget.data?.chart?.isNotEmpty == true
-      //     ? widget.data?.chart
+      // final maxNetIncome = charts?.isNotEmpty == true
+      //     ? charts
       //         ?.map((e) => e.operatingCashFlow2)
       //         .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
       //     : 0;
       // maxValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
 
-      // final minRevenue = widget.data?.chart?.isNotEmpty == true
+      // final minRevenue = charts?.isNotEmpty == true
       //     ? widget.data!.chart!
       //         .map((e) => e.operatingCashFlow1)
       //         .reduce((a, b) => a!.abs() < b!.abs() ? a : b)
       //     : 0;
 
-      // final minNetIncome = widget.data?.chart?.isNotEmpty == true
-      //     ? widget.data?.chart
+      // final minNetIncome = charts?.isNotEmpty == true
+      //     ? charts
       //         ?.map((e) => e.operatingCashFlow2)
       //         .reduce((a, b) => a!.abs() < b!.abs() ? a : b)
       //     : 0;
 
       // minValue = (minRevenue! < minNetIncome!) ? minRevenue : minNetIncome;
-      final maxRevenue = widget.data?.chart?.isNotEmpty == true
+      final maxRevenue = charts?.isNotEmpty == true
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow1)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
-      final maxNetIncome = widget.data?.chart?.isNotEmpty == true
-          ? widget.data?.chart
+      final maxNetIncome = charts?.isNotEmpty == true
+          ? charts
               ?.map((e) => e.operatingCashFlow2)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
       maxValue =
           (maxRevenue!.abs() > maxNetIncome!.abs()) ? maxRevenue : maxNetIncome;
 
-      // final minRevenue = widget.data?.chart?.isNotEmpty == true
+      // final minRevenue = charts?.isNotEmpty == true
       //     ? widget.data!.chart!
       //         .map((e) => e.operatingCashFlow1)
       //         .where((e) => e != null)
       //         .reduce((a, b) => a!.abs() < b!.abs() ? a : b)
       //     : 0;
-      // final minNetIncome = widget.data?.chart?.isNotEmpty == true
-      //     ? widget.data?.chart
+      // final minNetIncome = charts?.isNotEmpty == true
+      //     ? charts
       //         ?.map((e) => e.operatingCashFlow2)
       //         .where((e) => e != null)
       //         .reduce((a, b) => a!.abs() < b!.abs() ? a : b)
@@ -298,7 +286,7 @@ class BarChartSampleState extends State<BarChartSample> {
       //         ? minRevenue.abs()
       //         : minNetIncome.abs())
       //     : 0;
-      final minRevenue = widget.data?.chart?.isNotEmpty == true
+      final minRevenue = charts?.isNotEmpty == true
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow1)
               .where((e) => e != null && e < 0) // Filter only negative values
@@ -306,7 +294,7 @@ class BarChartSampleState extends State<BarChartSample> {
                   (a, b) => a! < b! ? a : b) // Find the minimum negative value
           : null;
 
-      final minNetIncome = widget.data?.chart?.isNotEmpty == true
+      final minNetIncome = charts?.isNotEmpty == true
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow2)
               .where((e) => e != null && e < 0) // Filter only negative values
@@ -331,12 +319,12 @@ class BarChartSampleState extends State<BarChartSample> {
     double positiveInterval = maxAbsValue / 5; // Example positive interval
     double negativeInterval = minAbsValue / 5;
 
-    return widget.data?.chart == null
+    return charts == null
         ? const SizedBox()
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
-              minY: widget.data?.chart?[0].operatingCashFlow1 == null
+              minY: charts?[0].operatingCashFlow1 == null
                   ? null
                   : -double.parse("$maxAbsValue"),
               titlesData: FlTitlesData(
@@ -361,7 +349,7 @@ class BarChartSampleState extends State<BarChartSample> {
                     interval: maxAbsValue /
                         5, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
-                      if (widget.data?.chart?[4].operatingCashFlow1 == null) {
+                      if (charts?[4].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);
                         return Text(
                           formattedValue,
@@ -425,11 +413,11 @@ class BarChartSampleState extends State<BarChartSample> {
 
   Widget bottomTitles(double value, TitleMeta meta) {
     final titles = <String>[
-      widget.data?.chart?[4].period ?? "",
-      widget.data?.chart?[3].period ?? "",
-      widget.data?.chart?[2].period ?? "",
-      widget.data?.chart?[1].period ?? "",
-      widget.data?.chart?[0].period ?? "",
+      charts?[4].period ?? "",
+      charts?[3].period ?? "",
+      charts?[2].period ?? "",
+      charts?[1].period ?? "",
+      charts?[0].period ?? "",
     ];
 
     final Widget text = Text(

@@ -388,6 +388,7 @@ class _CommonTabContainerState extends State<CommonTabContainer>
               child: Divider(color: ThemeColors.border, height: 10.sp)),
           Expanded(
             child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: _controller,
               children: widget.widgets,
             ),
