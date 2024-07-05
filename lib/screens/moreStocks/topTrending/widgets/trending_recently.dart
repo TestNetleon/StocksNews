@@ -83,6 +83,7 @@ class _TrendingRecentlyListViewState extends State<TrendingRecentlyListView> {
                             return const SizedBox();
                           }
                           return TopTrendingItem(
+                            type: "Recently",
                             index: index,
                             data: data,
                             alertAdded: data.isAlertAdded == 1,

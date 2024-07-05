@@ -13,7 +13,7 @@ import '../utils/utils.dart';
 import 'success.dart';
 
 class RevenueCatService {
-  static Future<void> initializeSubscription() async {
+  static Future initializeSubscription() async {
     Purchases.setLogLevel(LogLevel.debug);
 
     UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;

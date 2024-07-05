@@ -16,14 +16,12 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/service/ask_subscription.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-
+import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
-
 import '../../../../utils/dialogs.dart';
 import 'alert_popup.dart';
 import 'button.dart';
@@ -48,9 +46,17 @@ class AddToAlertWatchlist extends StatelessWidget {
 
   Future _subscribe() async {
     // await RevenueCatService.initializeSubscription();
-    await navigatorKey.currentContext!
-        .read<UserProvider>()
-        .updateUser(subscriptionPurchased: 1);
+
+    await popUpAlert(
+      message: "setting your subscription",
+      title: "NEW",
+      onTap: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+        await navigatorKey.currentContext!
+            .read<UserProvider>()
+            .updateUser(subscriptionPurchased: 1);
+      },
+    );
   }
 
   @override
@@ -71,11 +77,11 @@ class AddToAlertWatchlist extends StatelessWidget {
             backgroundColor: alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.add_alert_outlined,
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
-            // onTap: () {
-            //   askToSubscribe();
-            // },
+
             onTap: () {
-              if (userProvider.user != null && userProvider.user?.subscriptionPurchased == 1) { 
+              //Condition - User present and membership purchased
+              if (userProvider.user != null &&
+                  userProvider.user?.subscriptionPurchased == 1) {
                 _vibrate();
                 alertOn == 0
                     ? _showAlertPopup(navigatorKey.currentContext!, symbol)
@@ -218,9 +224,9 @@ class AddToAlertWatchlist extends StatelessWidget {
             iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: () async {
+              //Condition - User present and membership purchased
               if (userProvider.user != null &&
                   userProvider.user?.subscriptionPurchased == 1) {
-                // log('message');
                 _vibrate();
                 watchlistOn == 0
                     ? await context
@@ -234,6 +240,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                 return;
               }
 
+              // Subscription popUp
               askToSubscribe(
                 onPressed: userProvider.user == null
                     ? () async {

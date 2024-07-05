@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
@@ -12,6 +16,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
@@ -20,11 +25,12 @@ import '../../../utils/dialogs.dart';
 import '../../stockDetail/index.dart';
 
 //
-class TopTrendingItem extends StatelessWidget {
+class TopTrendingItem extends StatefulWidget {
   final int index;
   final TopTrendingDataRes data;
   final bool alertAdded;
   final bool watchlistAdded;
+  final String type;
 
   const TopTrendingItem({
     super.key,
@@ -32,7 +38,24 @@ class TopTrendingItem extends StatelessWidget {
     required this.index,
     this.alertAdded = false,
     this.watchlistAdded = false,
+    this.type = "Cap",
   });
+
+  @override
+  State<TopTrendingItem> createState() => _TopTrendingItemState();
+}
+
+class _TopTrendingItemState extends State<TopTrendingItem> {
+  bool userPresent = false;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userPresent = context.read<UserProvider>().user != null;
+      Utils().showLog("USER PRESENT $userPresent");
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +75,7 @@ class TopTrendingItem extends StatelessWidget {
                     Navigator.push(
                       navigatorKey.currentContext!,
                       MaterialPageRoute(
-                        builder: (_) => StockDetail(symbol: data.symbol),
+                        builder: (_) => StockDetail(symbol: widget.data.symbol),
                       ),
                     );
                   },
@@ -64,7 +87,7 @@ class TopTrendingItem extends StatelessWidget {
                           padding: const EdgeInsets.all(5),
                           width: 48,
                           height: 48,
-                          child: ThemeImageView(url: data.image ?? ""),
+                          child: ThemeImageView(url: widget.data.image ?? ""),
                         ),
                       ),
                       const SpacerHorizontal(width: 12),
@@ -73,14 +96,14 @@ class TopTrendingItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              data.symbol,
+                              widget.data.symbol,
                               style: stylePTSansBold(fontSize: 18),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SpacerVertical(height: 5),
                             Text(
-                              data.name,
+                              widget.data.name,
                               style: stylePTSansBold(
                                 color: ThemeColors.greyText,
                                 fontSize: 12,
@@ -93,7 +116,7 @@ class TopTrendingItem extends StatelessWidget {
                               children: [
                                 Text(
                                   textAlign: TextAlign.end,
-                                  "Mentions: ${data.sentiment}",
+                                  "Mentions: ${widget.data.sentiment}",
                                   style: stylePTSansBold(fontSize: 12),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -109,8 +132,9 @@ class TopTrendingItem extends StatelessWidget {
                                       WidgetSpan(
                                         child: Padding(
                                           padding: EdgeInsets.zero,
-                                          child: (data.sentiment ?? 0) >
-                                                  (data.lastSentiment ?? 0)
+                                          child: (widget.data.sentiment ?? 0) >
+                                                  (widget.data.lastSentiment ??
+                                                      0)
                                               ? Icon(
                                                   Icons.arrow_drop_up,
                                                   color: ThemeColors.accent,
@@ -124,7 +148,7 @@ class TopTrendingItem extends StatelessWidget {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: "${data.rank})",
+                                        text: "${widget.data.rank})",
                                         style: stylePTSansBold(fontSize: 12),
                                       ),
                                     ],
@@ -144,7 +168,7 @@ class TopTrendingItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    data.price ?? "",
+                    widget.data.price ?? "",
                     style: stylePTSansBold(fontSize: 18),
                     maxLines: 2,
                     textAlign: TextAlign.end,
@@ -152,11 +176,11 @@ class TopTrendingItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    "${data.change?.toCurrency()} (${data.changePercentage?.toCurrency()}%)",
+                    "${widget.data.change?.toCurrency()} (${widget.data.changePercentage?.toCurrency()}%)",
                     style: stylePTSansBold(
-                      color: data.change == 0
+                      color: widget.data.change == 0
                           ? ThemeColors.white
-                          : (data.change ?? 0) > 0
+                          : (widget.data.change ?? 0) > 0
                               ? ThemeColors.accent
                               : ThemeColors.sos,
                       fontSize: 14,
@@ -169,12 +193,13 @@ class TopTrendingItem extends StatelessWidget {
               ),
               const SpacerHorizontal(width: 4),
               PopUpMenuButtonCommon(
-                symbol: data.symbol,
+                symbol: widget.data.symbol,
                 onClickAlert: () => _alertElse(context),
                 onClickWatchlist: () => _watchlistElse(context),
-                watchlistString:
-                    watchlistAdded ? 'Watchlist Added' : 'Add to Watchlist',
-                alertString: alertAdded ? 'Alert Added' : 'Add to Alert',
+                watchlistString: widget.watchlistAdded
+                    ? 'Watchlist Added'
+                    : 'Add to Watchlist',
+                alertString: widget.alertAdded ? 'Alert Added' : 'Add to Alert',
               ),
             ],
           ),
@@ -184,6 +209,7 @@ class TopTrendingItem extends StatelessWidget {
   }
 
   void _showAlertPopup(BuildContext context) {
+    log("message");
     showPlatformBottomSheet(
       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
       context: context,
@@ -191,8 +217,8 @@ class TopTrendingItem extends StatelessWidget {
       content: AlertPopup(
         fromTopStock: true,
         insetPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
-        symbol: data.symbol,
-        index: index,
+        symbol: widget.data.symbol,
+        index: widget.index,
       ),
     );
 
@@ -226,8 +252,8 @@ class TopTrendingItem extends StatelessWidget {
 
   void _addToWatchlist(BuildContext context) {
     context.read<TopTrendingProvider>().addToWishList(
-          symbol: data.symbol,
-          index: index,
+          symbol: widget.data.symbol,
+          index: widget.index,
         );
   }
 
@@ -245,19 +271,164 @@ class TopTrendingItem extends StatelessWidget {
     );
   }
 
-  void _alertElse(BuildContext context) {
-    if (alertAdded) {
+  Future _alertElse(BuildContext context) async {
+    if (widget.alertAdded) {
       _navigateToAlert(context);
     } else {
-      _showAlertPopup(context);
+      if (userPresent) {
+        log("set HERE");
+        _showAlertPopup(navigatorKey.currentContext!);
+        return;
+      }
+
+      try {
+        if (widget.type == 'Cap') {
+          ApiResponse res =
+              await context.read<TopTrendingProvider>().getCapData();
+          if (res.status) {
+            num alrtOn = navigatorKey.currentContext!
+                    .read<TopTrendingProvider>()
+                    .capData?[widget.index]
+                    .isAlertAdded ??
+                0;
+
+            if (alrtOn == 0) {
+              _showAlertPopup(navigatorKey.currentContext!);
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const Alerts()),
+              );
+            }
+          }
+        } else if (widget.type == 'Recent') {
+          ApiResponse res = await context
+              .read<TopTrendingProvider>()
+              .getNowRecentlyData(type: "recently");
+          if (res.status) {
+            num alrtOn = navigatorKey.currentContext!
+                    .read<TopTrendingProvider>()
+                    .data?[widget.index]
+                    .isAlertAdded ??
+                0;
+
+            if (alrtOn == 0) {
+              _showAlertPopup(navigatorKey.currentContext!);
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const Alerts()),
+              );
+            }
+          }
+        } else {
+          log("else");
+          ApiResponse res = await context
+              .read<TopTrendingProvider>()
+              .getNowRecentlyData(type: "now");
+          log("-----${res.status}");
+          if (res.status) {
+            num alrtOn = navigatorKey.currentContext!
+                    .read<TopTrendingProvider>()
+                    .data?[widget.index]
+                    .isAlertAdded ??
+                0;
+            if (alrtOn == 0) {
+              _showAlertPopup(navigatorKey.currentContext!);
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const Alerts()),
+              );
+            }
+          }
+        }
+      } catch (e) {
+        //
+        log("ERROR -> $e");
+      }
     }
   }
 
-  void _watchlistElse(BuildContext context) {
-    if (watchlistAdded) {
+  Future _watchlistElse(BuildContext context) async {
+    if (widget.watchlistAdded) {
       _navigateToWatchlist(context);
     } else {
-      _addToWatchlist(context);
+      if (userPresent) {
+        log("set HERE");
+        // _showAlertPopup(navigatorKey.currentContext!);
+        _addToWatchlist(context);
+        return;
+      }
+      Utils().showLog("Screen type is ${widget.type}");
+      try {
+        if (widget.type == 'Cap') {
+          ApiResponse res =
+              await context.read<TopTrendingProvider>().getCapData();
+          if (res.status) {
+            num watchOn = navigatorKey.currentContext!
+                    .read<TopTrendingProvider>()
+                    .capData?[widget.index]
+                    .isWatchlistAdded ??
+                0;
+
+            if (watchOn == 0) {
+              _addToWatchlist(context);
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const WatchList()),
+              );
+            }
+          }
+        } else if (widget.type == 'Recent') {
+          ApiResponse res = await context
+              .read<TopTrendingProvider>()
+              .getNowRecentlyData(type: "recently");
+          if (res.status) {
+            num watchOn = navigatorKey.currentContext!
+                    .read<TopTrendingProvider>()
+                    .data?[widget.index]
+                    .isWatchlistAdded ??
+                0;
+
+            if (watchOn == 0) {
+              _addToWatchlist(context);
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const WatchList()),
+              );
+            }
+          }
+        } else if (widget.type == "Now") {
+          log("else");
+          ApiResponse res = await context
+              .read<TopTrendingProvider>()
+              .getNowRecentlyData(type: "now");
+          log("-----${res.status}");
+          if (res.status) {
+            num watchOn = navigatorKey.currentContext!
+                    .read<TopTrendingProvider>()
+                    .data?[widget.index]
+                    .isWatchlistAdded ??
+                0;
+            if (watchOn == 0) {
+              _addToWatchlist(context);
+            } else {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => const Alerts()),
+              );
+            }
+          }
+        }
+      } catch (e) {
+        //
+        log("ERROR -> $e");
+      }
+
+      // _addToWatchlist(context);
     }
   }
 }

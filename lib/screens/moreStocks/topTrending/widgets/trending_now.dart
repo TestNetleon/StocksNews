@@ -81,6 +81,7 @@ class _TrendingNowListViewState extends State<TrendingNowListView> {
                             return const SizedBox();
                           }
                           return TopTrendingItem(
+                            type: "Now",
                             index: index,
                             data: data,
                             alertAdded: data.isAlertAdded == 1,
