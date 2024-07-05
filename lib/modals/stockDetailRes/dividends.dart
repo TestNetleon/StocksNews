@@ -17,11 +17,13 @@ class SdDividendsRes {
   final List<DividendHistory>? dividendHistory;
   final List<FaQsRes>? faq;
   final String? dividendMessage;
+  final List<DividendCharts>? chartInfo;
 
   SdDividendsRes({
     this.top,
     this.dividendHistory,
     this.faq,
+    this.chartInfo,
     this.dividendMessage,
   });
 
@@ -38,6 +40,10 @@ class SdDividendsRes {
             ? []
             : List<FaQsRes>.from(json["faq"]!.map((x) => FaQsRes.fromJson(x))),
         dividendMessage: json["dividend_message"],
+        chartInfo: json["chartInfo"] == null
+            ? []
+            : List<DividendCharts>.from(
+                json["chartInfo"]!.map((x) => DividendCharts.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +55,9 @@ class SdDividendsRes {
         "faq":
             faq == null ? [] : List<dynamic>.from(faq!.map((x) => x.toJson())),
         "dividend_message": dividendMessage,
+        "chartInfo": chartInfo == null
+            ? []
+            : List<dynamic>.from(chartInfo!.map((x) => x.toJson())),
       };
 }
 
@@ -86,5 +95,33 @@ class DividendHistory {
         "exDividendDate": exDividendDate,
         "recordDate": recordDate,
         "payableDate": payableDate,
+      };
+}
+
+class DividendCharts {
+  final String? label;
+  final String? amount;
+  final String? payableDate;
+  final String? chartInfoYield;
+
+  DividendCharts({
+    this.label,
+    this.amount,
+    this.payableDate,
+    this.chartInfoYield,
+  });
+
+  factory DividendCharts.fromJson(Map<String, dynamic> json) => DividendCharts(
+        label: json["label"],
+        amount: json["amount"],
+        payableDate: json["payableDate"],
+        chartInfoYield: json["yield"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "label": label,
+        "amount": amount,
+        "payableDate": payableDate,
+        "yield": chartInfoYield,
       };
 }
