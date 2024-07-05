@@ -137,7 +137,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUser({
+  Future updateUser({
     String? image,
     String? name,
     String? email,

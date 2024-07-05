@@ -16,6 +16,7 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/service/ask_subscription.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -45,6 +46,13 @@ class AddToAlertWatchlist extends StatelessWidget {
     }
   }
 
+  Future _subscribe() async {
+    // await RevenueCatService.initializeSubscription();
+    await navigatorKey.currentContext!
+        .read<UserProvider>()
+        .updateUser(subscriptionPurchased: 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     String? symbol =
@@ -67,67 +75,148 @@ class AddToAlertWatchlist extends StatelessWidget {
             // onTap: () {
             //   askToSubscribe();
             // },
+            onTap: () {
+              if (userProvider.user != null &&
+                  userProvider.user?.subscriptionPurchased == 1) {
+                // log('message');
+                _vibrate();
 
-            onTap: userProvider.user == null
-                ? () async {
-                    _vibrate();
-                    isPhone ? await loginSheet() : await loginSheetTablet();
-                    if (context.read<UserProvider>().user == null) {
-                      return;
-                    }
-                    log("-----GET TAB CALLING");
-                    ApiResponse res = await context
-                        .read<StockDetailProviderNew>()
-                        .getTabData(symbol: symbol);
-                    try {
-                      if (res.status) {
-                        num alrtOn = navigatorKey.currentContext!
-                                .read<StockDetailProviderNew>()
-                                .tabRes
-                                ?.isAlertAdded ??
-                            0;
-                        if (alrtOn == 0) {
-                          await Future.delayed(
-                              const Duration(milliseconds: 200));
-                          if (userProvider.user?.subscriptionPurchased == 0) {
-                            await askToSubscribe();
-                          }
-                          if (userProvider.user?.subscriptionPurchased == 1) {
-                            await _showAlertPopup(
-                                navigatorKey.currentContext!, symbol);
-                          }
-                        } else {
-                          Navigator.push(
-                            navigatorKey.currentContext!,
-                            MaterialPageRoute(builder: (_) => const Alerts()),
-                          );
-                        }
-                      }
-                    } catch (e) {
-                      Utils().showLog("----$e-----");
-                    }
-                  }
-                : alertOn == 0
+                alertOn == 0
+                    ? _showAlertPopup(navigatorKey.currentContext!, symbol)
+                    : Navigator.push(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(builder: (_) => const Alerts()),
+                      );
+
+                return;
+              }
+
+              askToSubscribe(
+                onPressed: userProvider.user == null
                     ? () async {
-                        _vibrate();
-                        if (userProvider.user?.subscriptionPurchased == 0) {
-                          await askToSubscribe();
+                        log("message");
+                        Navigator.pop(context);
+                        isPhone ? await loginSheet() : await loginSheetTablet();
+                        if (context.read<UserProvider>().user == null) {
+                          return;
                         }
-                        if (userProvider.user?.subscriptionPurchased == 1) {
-                          await _showAlertPopup(
-                              navigatorKey.currentContext!, symbol);
+                        log("-----GET TAB CALLING");
+                        ApiResponse res = await context
+                            .read<StockDetailProviderNew>()
+                            .getTabData(symbol: symbol);
+                        try {
+                          if (res.status) {
+                            num alrtOn = navigatorKey.currentContext!
+                                    .read<StockDetailProviderNew>()
+                                    .tabRes
+                                    ?.isAlertAdded ??
+                                0;
+                            if (alrtOn == 0) {
+                              await Future.delayed(
+                                  const Duration(milliseconds: 200));
+                              if (userProvider.user?.subscriptionPurchased ==
+                                  0) {
+                                await _subscribe();
+                              }
+                              if (userProvider.user?.subscriptionPurchased ==
+                                  1) {
+                                await _showAlertPopup(
+                                    navigatorKey.currentContext!, symbol);
+                              }
+                            } else {
+                              Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (_) => const Alerts()),
+                              );
+                            }
+                          }
+                        } catch (e) {
+                          Utils().showLog("----$e-----");
                         }
-
-                        // await askToSubscribe();
-                        // await _showAlertPopup(
-                        //     navigatorKey.currentContext!, symbol);
                       }
-                    : () {
-                        Navigator.push(
-                          navigatorKey.currentContext!,
-                          MaterialPageRoute(builder: (_) => const Alerts()),
-                        );
-                      },
+                    : alertOn == 0
+                        ? () async {
+                            Navigator.pop(context);
+
+                            _vibrate();
+                            if (userProvider.user?.subscriptionPurchased == 0) {
+                              await _subscribe();
+                            }
+                            if (userProvider.user?.subscriptionPurchased == 1) {
+                              await _showAlertPopup(
+                                  navigatorKey.currentContext!, symbol);
+                            }
+                          }
+                        : () {
+                            Navigator.push(
+                              navigatorKey.currentContext!,
+                              MaterialPageRoute(builder: (_) => const Alerts()),
+                            );
+                          },
+              );
+            },
+
+            // onTap: userProvider.user == null
+            //     ? () async {
+            //         _vibrate();
+            //         isPhone ? await loginSheet() : await loginSheetTablet();
+            //         if (context.read<UserProvider>().user == null) {
+            //           return;
+            //         }
+            //         log("-----GET TAB CALLING");
+            //         ApiResponse res = await context
+            //             .read<StockDetailProviderNew>()
+            //             .getTabData(symbol: symbol);
+            //         try {
+            //           if (res.status) {
+            //             num alrtOn = navigatorKey.currentContext!
+            //                     .read<StockDetailProviderNew>()
+            //                     .tabRes
+            //                     ?.isAlertAdded ??
+            //                 0;
+            //             if (alrtOn == 0) {
+            //               await Future.delayed(
+            //                   const Duration(milliseconds: 200));
+            //               if (userProvider.user?.subscriptionPurchased == 0) {
+            //                 await askToSubscribe();
+            //               }
+            //               if (userProvider.user?.subscriptionPurchased == 1) {
+            //                 await _showAlertPopup(
+            //                     navigatorKey.currentContext!, symbol);
+            //               }
+            //             } else {
+            //               Navigator.push(
+            //                 navigatorKey.currentContext!,
+            //                 MaterialPageRoute(builder: (_) => const Alerts()),
+            //               );
+            //             }
+            //           }
+            //         } catch (e) {
+            //           Utils().showLog("----$e-----");
+            //         }
+            //       }
+            //     : alertOn == 0
+            //         ? () async {
+            //             _vibrate();
+            //             if (userProvider.user?.subscriptionPurchased == 0) {
+            //               await askToSubscribe();
+            //             }
+            //             if (userProvider.user?.subscriptionPurchased == 1) {
+            //               await _showAlertPopup(
+            //                   navigatorKey.currentContext!, symbol);
+            //             }
+
+            //             // await askToSubscribe();
+            //             // await _showAlertPopup(
+            //             //     navigatorKey.currentContext!, symbol);
+            //           }
+            //         : () {
+            //             Navigator.push(
+            //               navigatorKey.currentContext!,
+            //               MaterialPageRoute(builder: (_) => const Alerts()),
+            //             );
+            //           },
           ),
           const SpacerHorizontal(width: 10),
           AlertWatchlistButton(
@@ -135,77 +224,243 @@ class AddToAlertWatchlist extends StatelessWidget {
                 watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
-            onTap: userProvider.user == null
-                ? () async {
-                    _vibrate();
-                    isPhone ? await loginSheet() : await loginSheetTablet();
-                    if (context.read<UserProvider>().user == null) {
-                      return;
-                    }
-                    ApiResponse res = await context
+            onTap: () async {
+              if (userProvider.user != null &&
+                  userProvider.user?.subscriptionPurchased == 1) {
+                // log('message');
+                _vibrate();
+                watchlistOn == 0
+                    ? await context
                         .read<StockDetailProviderNew>()
-                        .getTabData(symbol: symbol);
-                    try {
-                      if (res.status) {
-                        num wlistOn = navigatorKey.currentContext!
-                                .read<StockDetailProviderNew>()
-                                .tabRes
-                                ?.isWatchListAdded ??
-                            0;
-                        if (wlistOn == 0) {
-                          log("-----GET TAB CALLING");
+                        .addToWishList()
+                    : Navigator.push(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(builder: (_) => const Alerts()),
+                      );
 
-                          if (userProvider.user?.subscriptionPurchased == 0) {
-                            await askToSubscribe();
-                          }
-                          if (userProvider.user?.subscriptionPurchased == 1) {
-                            await context
-                                .read<StockDetailProviderNew>()
-                                .addToWishList();
-                          }
-                          // await askToSubscribe();
+                return;
+              }
 
-                          // await context
-                          //     .read<StockDetailProviderNew>()
-                          //     .addToWishList();
-                        } else {
-                          Navigator.push(
-                            navigatorKey.currentContext!,
-                            MaterialPageRoute(
-                              builder: (_) => const WatchList(),
-                            ),
-                          );
-                        }
-                      }
-                    } catch (e) {
-                      Utils().showLog("----$e-----");
-                    }
-                  }
-                : watchlistOn == 0
+              askToSubscribe(
+                onPressed: userProvider.user == null
                     ? () async {
-                        _vibrate();
-                        // await askToSubscribe();
+                        Navigator.pop(context);
 
-                        // await context
-                        //     .read<StockDetailProviderNew>()
-                        //     .addToWishList();
-                        if (userProvider.user?.subscriptionPurchased == 0) {
-                          await askToSubscribe();
+                        _vibrate();
+                        isPhone ? await loginSheet() : await loginSheetTablet();
+                        if (context.read<UserProvider>().user == null) {
+                          return;
                         }
-                        if (userProvider.user?.subscriptionPurchased == 1) {
-                          await context
-                              .read<StockDetailProviderNew>()
-                              .addToWishList();
+                        ApiResponse res = await context
+                            .read<StockDetailProviderNew>()
+                            .getTabData(symbol: symbol);
+                        try {
+                          if (res.status) {
+                            num wlistOn = navigatorKey.currentContext!
+                                    .read<StockDetailProviderNew>()
+                                    .tabRes
+                                    ?.isWatchListAdded ??
+                                0;
+                            if (wlistOn == 0) {
+                              log("-----GET TAB CALLING");
+
+                              if (userProvider.user?.subscriptionPurchased ==
+                                  0) {
+                                await _subscribe();
+                              }
+                              if (userProvider.user?.subscriptionPurchased ==
+                                  1) {
+                                await context
+                                    .read<StockDetailProviderNew>()
+                                    .addToWishList();
+                              }
+                              // await askToSubscribe();
+
+                              // await context
+                              //     .read<StockDetailProviderNew>()
+                              //     .addToWishList();
+                            } else {
+                              Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                  builder: (_) => const WatchList(),
+                                ),
+                              );
+                            }
+                          }
+                        } catch (e) {
+                          Utils().showLog("----$e-----");
                         }
                       }
-                    : () {
-                        Navigator.push(
-                          navigatorKey.currentContext!,
-                          MaterialPageRoute(
-                            builder: (_) => const WatchList(),
-                          ),
-                        );
-                      },
+                    : watchlistOn == 0
+                        ? () async {
+                            Navigator.pop(context);
+
+                            _vibrate();
+
+                            if (userProvider.user?.subscriptionPurchased == 0) {
+                              await _subscribe();
+                            }
+                            if (userProvider.user?.subscriptionPurchased == 1) {
+                              await context
+                                  .read<StockDetailProviderNew>()
+                                  .addToWishList();
+                            }
+                          }
+                        : () {
+                            Navigator.push(
+                              navigatorKey.currentContext!,
+                              MaterialPageRoute(
+                                builder: (_) => const WatchList(),
+                              ),
+                            );
+                          },
+              );
+
+              // onTap: userProvider.user == null
+              //             ? () async {
+              //                 _vibrate();
+              //                 isPhone ? await loginSheet() : await loginSheetTablet();
+              //                 if (context.read<UserProvider>().user == null) {
+              //                   return;
+              //                 }
+              //                 ApiResponse res = await context
+              //                     .read<StockDetailProviderNew>()
+              //                     .getTabData(symbol: symbol);
+              //                 try {
+              //                   if (res.status) {
+              //                     num wlistOn = navigatorKey.currentContext!
+              //                             .read<StockDetailProviderNew>()
+              //                             .tabRes
+              //                             ?.isWatchListAdded ??
+              //                         0;
+              //                     if (wlistOn == 0) {
+              //                       log("-----GET TAB CALLING");
+
+              //                       if (userProvider.user?.subscriptionPurchased == 0) {
+              //                         await askToSubscribe();
+              //                       }
+              //                       if (userProvider.user?.subscriptionPurchased == 1) {
+              //                         await context
+              //                             .read<StockDetailProviderNew>()
+              //                             .addToWishList();
+              //                       }
+              //                       // await askToSubscribe();
+
+              //                       // await context
+              //                       //     .read<StockDetailProviderNew>()
+              //                       //     .addToWishList();
+              //                     } else {
+              //                       Navigator.push(
+              //                         navigatorKey.currentContext!,
+              //                         MaterialPageRoute(
+              //                           builder: (_) => const WatchList(),
+              //                         ),
+              //                       );
+              //                     }
+              //                   }
+              //                 } catch (e) {
+              //                   Utils().showLog("----$e-----");
+              //                 }
+              //               }
+              //             : watchlistOn == 0
+              //                 ? () async {
+              //                     _vibrate();
+              //                     // await askToSubscribe();
+
+              //                     // await context
+              //                     //     .read<StockDetailProviderNew>()
+              //                     //     .addToWishList();
+              //                     if (userProvider.user?.subscriptionPurchased == 0) {
+              //                       await askToSubscribe();
+              //                     }
+              //                     if (userProvider.user?.subscriptionPurchased == 1) {
+              //                       await context
+              //                           .read<StockDetailProviderNew>()
+              //                           .addToWishList();
+              //                     }
+              //                   }
+              //                 : () {
+              //                     Navigator.push(
+              //                       navigatorKey.currentContext!,
+              //                       MaterialPageRoute(
+              //                         builder: (_) => const WatchList(),
+              //                       ),
+              //                     );
+              //                   };
+            },
+
+            // onTap: userProvider.user == null
+            //     ? () async {
+            //         _vibrate();
+            //         isPhone ? await loginSheet() : await loginSheetTablet();
+            //         if (context.read<UserProvider>().user == null) {
+            //           return;
+            //         }
+            //         ApiResponse res = await context
+            //             .read<StockDetailProviderNew>()
+            //             .getTabData(symbol: symbol);
+            //         try {
+            //           if (res.status) {
+            //             num wlistOn = navigatorKey.currentContext!
+            //                     .read<StockDetailProviderNew>()
+            //                     .tabRes
+            //                     ?.isWatchListAdded ??
+            //                 0;
+            //             if (wlistOn == 0) {
+            //               log("-----GET TAB CALLING");
+
+            //               if (userProvider.user?.subscriptionPurchased == 0) {
+            //                 await askToSubscribe();
+            //               }
+            //               if (userProvider.user?.subscriptionPurchased == 1) {
+            //                 await context
+            //                     .read<StockDetailProviderNew>()
+            //                     .addToWishList();
+            //               }
+            //               // await askToSubscribe();
+
+            //               // await context
+            //               //     .read<StockDetailProviderNew>()
+            //               //     .addToWishList();
+            //             } else {
+            //               Navigator.push(
+            //                 navigatorKey.currentContext!,
+            //                 MaterialPageRoute(
+            //                   builder: (_) => const WatchList(),
+            //                 ),
+            //               );
+            //             }
+            //           }
+            //         } catch (e) {
+            //           Utils().showLog("----$e-----");
+            //         }
+            //       }
+            //     : watchlistOn == 0
+            //         ? () async {
+            //             _vibrate();
+            //             // await askToSubscribe();
+
+            //             // await context
+            //             //     .read<StockDetailProviderNew>()
+            //             //     .addToWishList();
+            //             if (userProvider.user?.subscriptionPurchased == 0) {
+            //               await askToSubscribe();
+            //             }
+            //             if (userProvider.user?.subscriptionPurchased == 1) {
+            //               await context
+            //                   .read<StockDetailProviderNew>()
+            //                   .addToWishList();
+            //             }
+            //           }
+            //         : () {
+            //             Navigator.push(
+            //               navigatorKey.currentContext!,
+            //               MaterialPageRoute(
+            //                 builder: (_) => const WatchList(),
+            //               ),
+            //             );
+            //           },
           ),
         ],
       ),
