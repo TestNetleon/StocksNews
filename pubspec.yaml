@@ -108,6 +108,8 @@ dependencies:
   firebase_auth: ^4.17.8
   purchases_flutter: ^6.29.4
   purchases_ui_flutter: ^6.29.4
+  flutter_animation_progress_bar: ^2.3.1
+  dotted_border: ^2.1.0
   # flutter_keyboard_visibility: ^6.0.0
   # flutter_branch_sdk: ^7.1.0
 

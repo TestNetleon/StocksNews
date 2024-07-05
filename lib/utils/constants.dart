@@ -157,6 +157,7 @@ class Images {
   static const appRating = "assets/images/app_rating.png";
   static const tickFeedback = "assets/images/tick_feedback.png";
   static const String downloadFile = "assets/images/download_file.png";
+  static const refer = "assets/images/refer.png";
 }
 
 class AudioFiles {
