@@ -68,29 +68,24 @@ class AddToAlertWatchlist extends StatelessWidget {
       child: Row(
         children: [
           AlertWatchlistButton(
-            backgroundColor:
-                alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
+            backgroundColor: alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.add_alert_outlined,
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
             // onTap: () {
             //   askToSubscribe();
             // },
             onTap: () {
-              if (userProvider.user != null &&
-                  userProvider.user?.subscriptionPurchased == 1) {
+              if (userProvider.user != null && userProvider.user?.subscriptionPurchased == 1) {
                 // log('message');
                 _vibrate();
-
                 alertOn == 0
                     ? _showAlertPopup(navigatorKey.currentContext!, symbol)
                     : Navigator.push(
                         navigatorKey.currentContext!,
                         MaterialPageRoute(builder: (_) => const Alerts()),
                       );
-
                 return;
               }
-
               askToSubscribe(
                 onPressed: userProvider.user == null
                     ? () async {
@@ -220,8 +215,7 @@ class AddToAlertWatchlist extends StatelessWidget {
           ),
           const SpacerHorizontal(width: 10),
           AlertWatchlistButton(
-            backgroundColor:
-                watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
+            backgroundColor: watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: () async {
@@ -245,7 +239,6 @@ class AddToAlertWatchlist extends StatelessWidget {
                 onPressed: userProvider.user == null
                     ? () async {
                         Navigator.pop(context);
-
                         _vibrate();
                         isPhone ? await loginSheet() : await loginSheetTablet();
                         if (context.read<UserProvider>().user == null) {

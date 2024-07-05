@@ -389,14 +389,22 @@ class MostBullishItem extends StatelessWidget {
 
 //---------------- Copy Data ---------------------
 
+// import 'dart:developer';
+// import 'dart:io';
+
 // import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:provider/provider.dart';
+// import 'package:stocks_news_new/api/api_response.dart';
 // import 'package:stocks_news_new/modals/trending_res.dart';
+// import 'package:stocks_news_new/providers/stock_detail_new.dart';
 // import 'package:stocks_news_new/providers/trending_provider.dart';
 // import 'package:stocks_news_new/providers/user_provider.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
 // import 'package:stocks_news_new/screens/alerts/alerts.dart';
+// import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+// import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 // import 'package:stocks_news_new/screens/stockDetail/index.dart';
 // import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
 // import 'package:stocks_news_new/screens/tabs/trending/menuButton/popup_menu.dart';
@@ -406,8 +414,10 @@ class MostBullishItem extends StatelessWidget {
 // import 'package:stocks_news_new/utils/constants.dart';
 
 // import 'package:stocks_news_new/utils/theme.dart';
+// import 'package:stocks_news_new/utils/utils.dart';
 // import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 // import 'package:stocks_news_new/widgets/theme_image_view.dart';
+// import 'package:vibration/vibration.dart';
 
 // import '../../../../utils/dialogs.dart';
 
@@ -433,7 +443,14 @@ class MostBullishItem extends StatelessWidget {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     UserProvider provider = context.watch<UserProvider>();
+//     String? symbol =
+//         context.watch<StockDetailProviderNew>().tabRes?.keyStats?.symbol ?? "";
+//     num alertOn =
+//         context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
+//     num watchlistOn =
+//         context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
+//     UserProvider userProvider = context.watch<UserProvider>();
+
 //     return LayoutBuilder(builder: (BuildContext ctx, BoxConstraints ctrt) {
 //       return InkWell(
 //         onTap: () {
@@ -557,13 +574,11 @@ class MostBullishItem extends StatelessWidget {
 //                         child: Text(
 //                           // "\$201.99",
 //                           textAlign: TextAlign.end,
-
 //                           "${data.mention}",
 //                           style: stylePTSansBold(fontSize: 11),
 //                           maxLines: 1,
 //                           overflow: TextOverflow.ellipsis,
 //                         ),
-
 //                         // child: Text(
 //                         //   "${data.changes.toCurrency()}%",
 //                         //   style: stylePTSansRegular(
@@ -660,12 +675,7 @@ class MostBullishItem extends StatelessWidget {
 //             // )
 //             PopUpMenuButtonCommon(
 //               symbol: data.symbol,
-//               onClickAlert: () async {
-//                 if (provider.user == null ||
-//                     provider.user?.subscriptionPurchased == 0) {
-//                   await askToSubscribe();
-//                 }
-//               },
+//               onClickAlert: () => _alertElse(context),
 //               onClickWatchlist: () => _watchlistElse(context),
 //               watchlistString: up
 //                   ? watlistForBullish == 1
@@ -688,7 +698,28 @@ class MostBullishItem extends StatelessWidget {
 //     });
 //   }
 
-//   void _showAlertPopup(BuildContext context) {
+//   Future _subscribe() async {
+//     // await RevenueCatService.initializeSubscription();
+//     await navigatorKey.currentContext!
+//         .read<UserProvider>()
+//         .updateUser(subscriptionPurchased: 1);
+//   }
+
+//   void _vibrate() async {
+//     if (Platform.isAndroid) {
+//       bool isVibe = await Vibration.hasVibrator() ?? false;
+//       if (isVibe) {
+//         // Vibration.vibrate(pattern: [0, 500], intensities: [255, 255]);
+//         Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+//       } else {
+//         Utils().showLog("$isVibe");
+//       }
+//     } else {
+//       HapticFeedback.lightImpact();
+//     }
+//   }
+
+//   void _showAlertPopup({required BuildContext context, String? symbol}) {
 //     showPlatformBottomSheet(
 //       backgroundColor: const Color.fromARGB(255, 23, 23, 23),
 //       context: context,
@@ -738,10 +769,6 @@ class MostBullishItem extends StatelessWidget {
 //         );
 //   }
 
-//   void _navigateToAddSubscription(BuildContext context) {
-//     askToSubscribe();
-//   }
-
 //   void _navigateToAlert(BuildContext context) {
 //     Navigator.push(
 //       navigatorKey.currentContext!,
@@ -759,15 +786,15 @@ class MostBullishItem extends StatelessWidget {
 //   void _alertElse(BuildContext context) {
 //     if (up) {
 //       if (alertForBullish == 1) {
-//         askToSubscribe();
-//       } else {
-//         _showAlertPopup(context);
-//       }
-//     } else {
-//       if (alertForBearish == 1) {
 //         _navigateToAlert(context);
 //       } else {
-//         _showAlertPopup(context);
+//         _showAlertPopup(context: context);
+//       }
+//     } else {
+//       if (alertForBearish == 0) {
+//         _navigateToAlert(context);
+//       } else {
+//         _showAlertPopup(context: context);
 //       }
 //     }
 //   }
