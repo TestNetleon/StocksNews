@@ -10,7 +10,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../widgets/screen_title.dart';
 import '../route/my_app.dart';
 
-Future askToSubscribe() async {
+Future askToSubscribe({void Function()? onPressed}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -29,9 +29,12 @@ Future askToSubscribe() async {
       return Stack(
         alignment: Alignment.topCenter,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: SingleChildScrollView(child: AskToSubscribeDialog()),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: SingleChildScrollView(
+                child: AskToSubscribeDialog(
+              onPressed: onPressed,
+            )),
           ),
           Image.asset(
             Images.kingGIF,
@@ -46,7 +49,8 @@ Future askToSubscribe() async {
 }
 
 class AskToSubscribeDialog extends StatelessWidget {
-  const AskToSubscribeDialog({super.key});
+  final Function()? onPressed;
+  const AskToSubscribeDialog({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -139,13 +143,7 @@ class AskToSubscribeDialog extends StatelessWidget {
                   color: const Color.fromARGB(255, 7, 127, 23),
                   // text: "Generate Affiliate Link",
                   text: "Upgrade your membership",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // RevenueCatService.initializeSubscription();
-                    context
-                        .read<UserProvider>()
-                        .updateUser(subscriptionPurchased: 1);
-                  },
+                  onPressed: onPressed,
                 ),
 
                 SpacerVertical(height: ScreenUtil().bottomBarHeight),
