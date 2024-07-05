@@ -5,13 +5,10 @@ import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/custom/custom_cliper.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 class StockDetailAnalystData extends StatelessWidget {
   const StockDetailAnalystData({super.key});
@@ -480,7 +477,7 @@ class StockDetailAnalystData extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Download Quantitative Research Report",
+                              "View Quantitative Research Report",
                               style: stylePTSansBold(),
                             ),
                             const SpacerVertical(height: 5),
@@ -491,7 +488,12 @@ class StockDetailAnalystData extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Icon(Icons.picture_as_pdf_outlined, size: 30),
+                      // const Icon(Icons.picture_as_pdf_outlined, size: 30),
+                      Image.asset(
+                        Images.downloadFile,
+                        height: 30,
+                        width: 30,
+                      )
                     ],
                   ),
                 ),
