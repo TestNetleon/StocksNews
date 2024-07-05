@@ -64,7 +64,6 @@ class AddToAlertWatchlist extends StatelessWidget {
             // onTap: () {
             //   askToSubscribe();
             // },
-
             onTap: userProvider.user == null
                 ? () async {
                     _vibrate();
