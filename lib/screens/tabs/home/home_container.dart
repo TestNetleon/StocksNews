@@ -61,6 +61,14 @@ class HomeContainer extends StatelessWidget {
               //   width: 100,
               // ),
               // const InAppPurchaseUI(),
+
+              // ThemeButton(
+              //   text: "Subscription",
+              //   onPressed: () {
+              //     openUrl("https://apps.apple.com/account/subscriptions");
+              //   },
+              // ),
+
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,

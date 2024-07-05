@@ -63,6 +63,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                 alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.add_alert_outlined,
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
+            // onTap: () {
+            //   askToSubscribe();
+            // },
+
             onTap: userProvider.user == null
                 ? () async {
                     _vibrate();

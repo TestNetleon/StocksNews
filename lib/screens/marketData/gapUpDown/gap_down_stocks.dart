@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/gap_up_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
@@ -9,9 +8,9 @@ import 'package:stocks_news_new/screens/marketData/gapUpDown/item.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/market_data_header.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/constants.dart';
 import '../../../widgets/base_ui_container.dart';
@@ -117,8 +116,9 @@ class _GapDownStocksState extends State<GapDownStocks> {
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                            color: ThemeColors.greyBorder, height: 20.sp);
+                        return const SpacerVertical(height: 12);
+                        // return Divider(
+                        //     color: ThemeColors.greyBorder, height: 20.sp);
                       },
                       itemCount: data?.length ?? 0,
                     ),

@@ -59,26 +59,28 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
       drawer: const BaseDrawer(resetIndex: true),
       appBar: const AppBarHome(isPopback: true, canSearch: true),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding.sp, 0, Dimen.padding.sp, 0),
         child: Column(
           children: [
             if (provider.extraUpGainers?.title != null)
               ScreenTitle(
-                title: widget.type == StocksType.gainers
-                    ? "Today’s Top Gainers"
-                    : widget.type == StocksType.losers
-                        ? "Today’s Top Losers"
-                        : data?.length == 1
-                            ? "Popular Stock"
-                            : provider.extraUpGainers?.title ??
-                                "Popular Stocks",
-                subTitle: widget.type == StocksType.gainers ||
-                        widget.type == StocksType.losers
-                    ? ""
-                    : provider.extraUpGainers?.subTitle,
-                subTitleHtml: true,
-              ),
+                  title: widget.type == StocksType.gainers
+                      ? "Today’s Top Gainers"
+                      : widget.type == StocksType.losers
+                          ? "Today’s Top Losers"
+                          : data?.length == 1
+                              ? "Popular Stock"
+                              : provider.extraUpGainers?.title ??
+                                  "Popular Stocks",
+                  subTitle: widget.type == StocksType.gainers ||
+                          widget.type == StocksType.losers
+                      ? ""
+                      : provider.extraUpGainers?.subTitle,
+                  subTitleHtml: true,
+                  dividerPadding: (widget.type == StocksType.gainers ||
+                          widget.type == StocksType.losers)
+                      ? const EdgeInsets.only(top: 12)
+                      : null),
             Expanded(
               child: BaseUiContainer(
                 error: provider.error,

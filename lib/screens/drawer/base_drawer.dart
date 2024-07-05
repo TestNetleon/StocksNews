@@ -147,6 +147,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
 
+                          // MembershipButton(),
+
                           Divider(color: ThemeColors.greyBorder, height: 40.sp),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
