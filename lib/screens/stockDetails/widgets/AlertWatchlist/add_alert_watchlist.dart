@@ -108,17 +108,14 @@ class AddToAlertWatchlist extends StatelessWidget {
                   ((purchased || subscription?.purchased == 1) &&
                       (isPresentAlert || isPresentAlertE))) {
                 _vibrate();
-
                 alertOn == 0
                     ? _showAlertPopup(navigatorKey.currentContext!, symbol)
                     : Navigator.push(
                         navigatorKey.currentContext!,
                         MaterialPageRoute(builder: (_) => const Alerts()),
                       );
-
                 return;
               }
-
               askToSubscribe(
                 onPressed: userProvider.user == null
                     ? () async {
