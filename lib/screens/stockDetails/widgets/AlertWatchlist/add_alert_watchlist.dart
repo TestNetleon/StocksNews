@@ -46,12 +46,9 @@ class AddToAlertWatchlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? symbol =
-        context.watch<StockDetailProviderNew>().tabRes?.keyStats?.symbol ?? "";
-    num alertOn =
-        context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
-    num watchlistOn =
-        context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
+    String? symbol = context.watch<StockDetailProviderNew>().tabRes?.keyStats?.symbol ?? "";
+    num alertOn = context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
+    num watchlistOn = context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
     UserProvider userProvider = context.watch<UserProvider>();
 
     return Padding(
@@ -75,19 +72,12 @@ class AddToAlertWatchlist extends StatelessWidget {
                       return;
                     }
                     log("-----GET TAB CALLING");
-                    ApiResponse res = await context
-                        .read<StockDetailProviderNew>()
-                        .getTabData(symbol: symbol);
+                    ApiResponse res = await context.read<StockDetailProviderNew>().getTabData(symbol: symbol);
                     try {
                       if (res.status) {
-                        num alrtOn = navigatorKey.currentContext!
-                                .read<StockDetailProviderNew>()
-                                .tabRes
-                                ?.isAlertAdded ??
-                            0;
+                        num alrtOn = navigatorKey.currentContext! .read<StockDetailProviderNew>() .tabRes ?.isAlertAdded ?? 0;
                         if (alrtOn == 0) {
-                          await Future.delayed(
-                              const Duration(milliseconds: 200));
+                          await Future.delayed(const Duration(milliseconds: 200));
                           _showAlertPopup(navigatorKey.currentContext!, symbol);
                         } else {
                           Navigator.push(
@@ -114,8 +104,7 @@ class AddToAlertWatchlist extends StatelessWidget {
           ),
           const SpacerHorizontal(width: 10),
           AlertWatchlistButton(
-            backgroundColor:
-                watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
+            backgroundColor: watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: userProvider.user == null

@@ -97,7 +97,6 @@ class _TabsState extends State<Tabs> {
         selectedItemColor: ThemeColors.accent,
         // backgroundColor: ThemeColors.tabBack,
         backgroundColor: ThemeColors.transparent,
-
         showUnselectedLabels: true,
         showSelectedLabels: true,
         currentIndex: _selectedIndex,
