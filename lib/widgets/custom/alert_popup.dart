@@ -5,7 +5,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-void popUpAlert({
+Future popUpAlert({
   required String message,
   required String title,
   EdgeInsets? padding,
@@ -18,8 +18,8 @@ void popUpAlert({
   bool showOk = true,
   Widget? iconWidget,
   TextAlign? messageTextAlign = TextAlign.center,
-}) {
-  showDialog(
+}) async {
+  await showDialog(
     context: navigatorKey.currentContext!,
     barrierColor: ThemeColors.transparentDark,
     builder: (context) {

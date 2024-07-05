@@ -603,19 +603,16 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
 
       final minRevenue = (charts?.isNotEmpty == true &&
               widget.data?.chart != null &&
-              widget.data!.chart!.any((e) =>
-                  e.operatingCashFlow1 != null && e.operatingCashFlow1! < 0))
+              widget.data!.chart!.any((e) =>  e.operatingCashFlow1 != null && e.operatingCashFlow1! < 0))
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow1)
               .where((e) => e != null && e < 0) // Filter only negative values
-              .reduce(
-                  (a, b) => a! < b! ? a : b) // Find the minimum negative value
+              .reduce((a, b) => a! < b! ? a : b) // Find the minimum negative value
           : null;
 
       final minNetIncome = (charts?.isNotEmpty == true &&
               widget.data?.chart != null &&
-              widget.data!.chart!.any((e) =>
-                  e.operatingCashFlow2 != null && e.operatingCashFlow2! < 0))
+              widget.data!.chart!.any((e) => e.operatingCashFlow2 != null && e.operatingCashFlow2! < 0))
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow2)
               .where((e) => e != null && e! < 0) // Filter only negative values

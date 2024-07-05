@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -8,7 +7,7 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../widgets/screen_title.dart';
 import '../route/my_app.dart';
 
-Future askToSubscribe() async {
+Future askToSubscribe({void Function()? onPressed}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -27,9 +26,12 @@ Future askToSubscribe() async {
       return Stack(
         alignment: Alignment.topCenter,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: SingleChildScrollView(child: AskToSubscribeDialog()),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: SingleChildScrollView(
+                child: AskToSubscribeDialog(
+              onPressed: onPressed,
+            )),
           ),
           Image.asset(
             Images.kingGIF,
@@ -44,7 +46,8 @@ Future askToSubscribe() async {
 }
 
 class AskToSubscribeDialog extends StatelessWidget {
-  const AskToSubscribeDialog({super.key});
+  final Function()? onPressed;
+  const AskToSubscribeDialog({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +65,19 @@ class AskToSubscribeDialog extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
+            Color.fromARGB(255, 248, 244, 4),
             Color.fromARGB(255, 103, 98, 1),
-            Color.fromARGB(255, 174, 172, 0),
           ],
         ),
       ),
       child: Stack(
         children: [
-          Image.asset(
-            Images.referBack,
-            color: const Color.fromARGB(150, 81, 81, 81),
-            fit: BoxFit.cover,
-            height: 550,
-          ),
+          // Image.asset(
+          //   Images.referBack,
+          //   color: const Color.fromARGB(150, 81, 81, 81),
+          //   fit: BoxFit.cover,
+          //   height: 550,
+          // ),
           // const Align(
           //   alignment: Alignment.center,
           //   child: Padding(
@@ -98,7 +101,7 @@ class AskToSubscribeDialog extends StatelessWidget {
                 // const SpacerVertical(height: 20),
                 const SpacerVertical(height: 15),
                 Text(
-                  "provider.extra?.referral?.message",
+                  "Subscribe",
                   style: styleGeorgiaRegular(),
                   textAlign: TextAlign.center,
                 ),
@@ -107,7 +110,7 @@ class AskToSubscribeDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ScreenTitle(
-                      title: " provider.extra?.howItWork?.title",
+                      title: " SUBSCRIBE",
                     ),
                     // ListView.separated(
                     //   shrinkWrap: true,
@@ -136,11 +139,8 @@ class AskToSubscribeDialog extends StatelessWidget {
                 ThemeButton(
                   color: const Color.fromARGB(255, 7, 127, 23),
                   // text: "Generate Affiliate Link",
-                  text: "GENERATE AFFILIATE LINK",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    referLogin();
-                  },
+                  text: "Upgrade your membership",
+                  onPressed: onPressed,
                 ),
 
                 SpacerVertical(height: ScreenUtil().bottomBarHeight),

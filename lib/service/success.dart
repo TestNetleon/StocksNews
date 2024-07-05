@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -8,8 +11,21 @@ import '../../../utils/colors.dart';
 
 import '../../../widgets/theme_button.dart';
 
-class SubscriptionPurchased extends StatelessWidget {
+class SubscriptionPurchased extends StatefulWidget {
   const SubscriptionPurchased({super.key});
+
+  @override
+  State<SubscriptionPurchased> createState() => _SubscriptionPurchasedState();
+}
+
+class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeProvider>().getHomeSlider();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +84,11 @@ class SubscriptionPurchased extends StatelessWidget {
               child: ThemeButton(
                 text: "GO TO HOME",
                 onPressed: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Tabs()),
+                      (routes) => false);
                 },
               ),
             )

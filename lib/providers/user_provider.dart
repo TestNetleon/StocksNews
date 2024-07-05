@@ -55,6 +55,9 @@ class UserProvider extends ChangeNotifier {
   bool emailVerified = false;
   bool phoneVerified = false;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   resetVerification() {
     emailVerified = false;
     phoneVerified = false;
@@ -137,7 +140,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUser({
+  Future updateUser({
     String? image,
     String? name,
     String? email,
@@ -353,6 +356,7 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         Preference.setShowIntro(false);
         // Navigator.pushAndRemoveUntil(
@@ -422,6 +426,8 @@ class UserProvider extends ChangeNotifier {
             title: "Alert",
             icon: Images.alertPopGIF);
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+
       setStatus(Status.loaded);
     } catch (e) {
       Utils().showLog(e.toString());
@@ -526,6 +532,8 @@ class UserProvider extends ChangeNotifier {
           );
         }
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+
       setStatus(Status.loaded);
     } catch (e) {
       Utils().showLog(e.toString());
@@ -706,6 +714,7 @@ class UserProvider extends ChangeNotifier {
             title: "Alert",
             icon: Images.alertPopGIF);
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
@@ -769,6 +778,7 @@ class UserProvider extends ChangeNotifier {
             title: "Alert",
             icon: Images.alertPopGIF);
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
     } catch (e) {
       Utils().showLog(e.toString());
       popUpAlert(
