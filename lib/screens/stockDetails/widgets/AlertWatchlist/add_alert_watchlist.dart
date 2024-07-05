@@ -309,9 +309,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                               if (wlistOn == 0) {
                                 log("-----GET TAB CALLING");
 
-                                if (((!purchased ||
-                                        subscription?.purchased == 0) &&
-                                    (!isPresentAlert || !isPresentAlertE))) {
+                                if (((!purchased || subscription?.purchased == 0) && (!isPresentAlert || !isPresentAlertE))) {
                                   await _subscribe();
                                 }
                                 if (((purchased ||

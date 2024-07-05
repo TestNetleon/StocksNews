@@ -144,7 +144,8 @@ class TrendingProvider extends ChangeNotifier {
     showGlobalProgressDialog();
 
     Map request = {
-      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": symbol
     };
     try {
@@ -265,12 +266,14 @@ class TrendingProvider extends ChangeNotifier {
       }
       _statusBearish = Status.loaded;
       notifyListeners();
+      return ApiResponse(status: response.status);
     } catch (e) {
       _mostBearish = null;
 
       Utils().showLog(e.toString());
       _statusBearish = Status.loaded;
       notifyListeners();
+      return ApiResponse(status: false);
     }
   }
 
