@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -77,8 +78,15 @@ class AddToAlertWatchlist extends StatelessWidget {
                       if (res.status) {
                         num alrtOn = navigatorKey.currentContext! .read<StockDetailProviderNew>() .tabRes ?.isAlertAdded ?? 0;
                         if (alrtOn == 0) {
-                          await Future.delayed(const Duration(milliseconds: 200));
-                          _showAlertPopup(navigatorKey.currentContext!, symbol);
+                          await Future.delayed(
+                              const Duration(milliseconds: 200));
+                          if (userProvider.user?.subscriptionPurchased == 0) {
+                            await askToSubscribe();
+                          }
+                          if (userProvider.user?.subscriptionPurchased == 1) {
+                            await _showAlertPopup(
+                                navigatorKey.currentContext!, symbol);
+                          }
                         } else {
                           Navigator.push(
                             navigatorKey.currentContext!,
@@ -91,9 +99,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                     }
                   }
                 : alertOn == 0
-                    ? () {
+                    ? () async {
                         _vibrate();
-                        _showAlertPopup(navigatorKey.currentContext!, symbol);
+                        if (userProvider.user?.subscriptionPurchased == 0) {
+                          await askToSubscribe();
+                        }
+                        if (userProvider.user?.subscriptionPurchased == 1) {
+                          await _showAlertPopup(
+                              navigatorKey.currentContext!, symbol);
+                        }
+
+                        // await askToSubscribe();
+                        // await _showAlertPopup(
+                        //     navigatorKey.currentContext!, symbol);
                       }
                     : () {
                         Navigator.push(
@@ -127,9 +145,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                         if (wlistOn == 0) {
                           log("-----GET TAB CALLING");
 
-                          await context
-                              .read<StockDetailProviderNew>()
-                              .addToWishList();
+                          if (userProvider.user?.subscriptionPurchased == 0) {
+                            await askToSubscribe();
+                          }
+                          if (userProvider.user?.subscriptionPurchased == 1) {
+                            await context
+                                .read<StockDetailProviderNew>()
+                                .addToWishList();
+                          }
+                          // await askToSubscribe();
+
+                          // await context
+                          //     .read<StockDetailProviderNew>()
+                          //     .addToWishList();
                         } else {
                           Navigator.push(
                             navigatorKey.currentContext!,
@@ -146,10 +174,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                 : watchlistOn == 0
                     ? () async {
                         _vibrate();
+                        // await askToSubscribe();
 
-                        await context
-                            .read<StockDetailProviderNew>()
-                            .addToWishList();
+                        // await context
+                        //     .read<StockDetailProviderNew>()
+                        //     .addToWishList();
+                        if (userProvider.user?.subscriptionPurchased == 0) {
+                          await askToSubscribe();
+                        }
+                        if (userProvider.user?.subscriptionPurchased == 1) {
+                          await context
+                              .read<StockDetailProviderNew>()
+                              .addToWishList();
+                        }
                       }
                     : () {
                         Navigator.push(
@@ -165,7 +202,7 @@ class AddToAlertWatchlist extends StatelessWidget {
     );
   }
 
-  void _showAlertPopup(BuildContext context, String symbol) {
+  Future _showAlertPopup(BuildContext context, String symbol) async {
     // Navigator.push(
     //   context,
     //   createRoute(
