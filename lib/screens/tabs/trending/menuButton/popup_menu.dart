@@ -45,13 +45,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
         PopupMenuItem<AddType>(
           onTap: provider.user == null
               ? () async {
-                  // await Navigator.push(
-                  //   context,
-                  //   createRoute(const Login()),
-                  // );
-
                   isPhone ? await loginSheet() : await loginSheetTablet();
-
                   if (context.read<UserProvider>().user == null) {
                     return;
                   }
@@ -90,15 +84,9 @@ class PopUpMenuButtonCommon extends StatelessWidget {
         ),
         const PopupMenuDivider(height: 0),
         PopupMenuItem<AddType>(
-          onTap: provider.user == null
-              // ? () => _login(context)
-              ? () async {
-                  // await Navigator.push(
-                  //   context,
-                  //   createRoute(const Login()),
-                  // );
+          onTap: provider.user == null        
+              ? () async {                
                   isPhone ? await loginSheet() : await loginSheetTablet();
-
                   if (context.read<UserProvider>().user == null) {
                     return;
                   }

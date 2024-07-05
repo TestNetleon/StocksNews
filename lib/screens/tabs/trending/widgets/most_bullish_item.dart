@@ -141,6 +141,7 @@ class MostBullishItem extends StatelessWidget {
             //   ),
             //   textAlign: TextAlign.center,
             // ),
+
             const SpacerHorizontal(width: 2),
             Expanded(
               child: Column(
@@ -359,7 +360,8 @@ class MostBullishItem extends StatelessWidget {
       if (alertForBullish == 1) {
         _navigateToAlert(context);
       } else {
-        _showAlertPopup(context);
+        
+        // _showAlertPopup(context);
       }
     } else {
       if (alertForBearish == 1) {

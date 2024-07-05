@@ -75,8 +75,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             //   askToSubscribe();
             // },
             onTap: () {
-              if (userProvider.user != null && userProvider.user?.subscriptionPurchased == 1) {
-                // log('message');
+              if (userProvider.user != null && userProvider.user?.subscriptionPurchased == 1) { 
                 _vibrate();
                 alertOn == 0
                     ? _showAlertPopup(navigatorKey.currentContext!, symbol)
@@ -93,7 +92,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                         Navigator.pop(context);
                         isPhone ? await loginSheet() : await loginSheetTablet();
                         if (context.read<UserProvider>().user == null) {
-                          return;
+                         return;
                         }
                         log("-----GET TAB CALLING");
                         ApiResponse res = await context
