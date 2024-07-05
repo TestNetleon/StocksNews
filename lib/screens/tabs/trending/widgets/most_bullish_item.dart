@@ -267,6 +267,8 @@ class MostBullishItem extends StatelessWidget {
             //   ],
             // )
             PopUpMenuButtonCommon(
+              subscription:
+                  context.read<TrendingProvider>().extra?.subscription,
               symbol: data.symbol,
               onClickAlert: () => _alertElse(context),
               onClickWatchlist: () => _watchlistElse(context),
@@ -360,7 +362,6 @@ class MostBullishItem extends StatelessWidget {
       if (alertForBullish == 1) {
         _navigateToAlert(context);
       } else {
-        
         // _showAlertPopup(context);
       }
     } else {

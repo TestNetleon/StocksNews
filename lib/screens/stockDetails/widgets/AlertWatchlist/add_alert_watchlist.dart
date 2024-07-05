@@ -22,6 +22,7 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
+import '../../../../providers/home_provider.dart';
 import '../../../../service/revenue_cat.dart';
 import '../../../../utils/dialogs.dart';
 import 'alert_popup.dart';
@@ -71,10 +72,11 @@ class AddToAlertWatchlist extends StatelessWidget {
     num watchlistOn =
         context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
     UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
-    bool purchased = userProvider.extra?.subscription?.purchased == 1;
+    bool purchased = homeProvider.extra?.subscription?.purchased == 1;
 
-    bool isPresentAlert = userProvider.extra?.subscription?.permissions
+    bool isPresentAlert = homeProvider.extra?.subscription?.permissions
             ?.any((element) => element == "add-alert") ??
         false;
 
@@ -82,7 +84,7 @@ class AddToAlertWatchlist extends StatelessWidget {
         subscription?.permissions?.any((element) => element == "add-alert") ??
             false;
 
-    bool isPresentWatchlist = userProvider.extra?.subscription?.permissions
+    bool isPresentWatchlist = homeProvider.extra?.subscription?.permissions
             ?.any((element) => element == "add-alert") ??
         false;
 
@@ -270,7 +272,7 @@ class AddToAlertWatchlist extends StatelessWidget {
               //Condition - User present and membership purchased
               if (userProvider.user != null &&
                   ((purchased || subscription?.purchased == 1) &&
-                      (isPresentAlert || isPresentAlertE))) {
+                      (isPresentWatchlist || isPresentWatchlistE))) {
                 _vibrate();
                 watchlistOn == 0
                     ? await context
@@ -312,12 +314,14 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                                 if (((!purchased ||
                                         subscription?.purchased == 0) &&
-                                    (!isPresentAlert || !isPresentAlertE))) {
+                                    (!isPresentWatchlist ||
+                                        !isPresentWatchlistE))) {
                                   await _subscribe();
                                 }
                                 if (((purchased ||
                                         subscription?.purchased == 1) &&
-                                    (isPresentAlert || isPresentAlertE))) {
+                                    (isPresentWatchlist ||
+                                        isPresentWatchlistE))) {
                                   await context
                                       .read<StockDetailProviderNew>()
                                       .addToWishList();
@@ -348,12 +352,14 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                               if (((!purchased ||
                                       subscription?.purchased == 0) &&
-                                  (!isPresentAlert || !isPresentAlertE))) {
+                                  (!isPresentWatchlist ||
+                                      !isPresentWatchlistE))) {
                                 await _subscribe();
                               }
                               if (((purchased ||
                                       subscription?.purchased == 1) &&
-                                  (isPresentAlert || isPresentAlertE))) {
+                                  (isPresentWatchlist ||
+                                      isPresentWatchlistE))) {
                                 await context
                                     .read<StockDetailProviderNew>()
                                     .addToWishList();
@@ -375,12 +381,14 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                               if (((!purchased ||
                                       subscription?.purchased == 0) &&
-                                  (!isPresentAlert || !isPresentAlertE))) {
+                                  (!isPresentWatchlist ||
+                                      !isPresentWatchlistE))) {
                                 await _subscribe();
                               }
                               if (((purchased ||
                                       subscription?.purchased == 1) &&
-                                  (isPresentAlert || isPresentAlertE))) {
+                                  (isPresentWatchlist ||
+                                      isPresentWatchlistE))) {
                                 Navigator.push(
                                   navigatorKey.currentContext!,
                                   MaterialPageRoute(

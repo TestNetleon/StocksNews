@@ -144,7 +144,8 @@ class TrendingProvider extends ChangeNotifier {
     showGlobalProgressDialog();
 
     Map request = {
-      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": symbol
     };
     try {
