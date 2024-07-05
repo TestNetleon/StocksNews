@@ -5,12 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import 'package:provider/provider.dart';
+
+import '../../../../route/my_app.dart';
+import '../../../../widgets/custom/alert_popup.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
@@ -26,6 +30,21 @@ class PopUpMenuButtonCommon extends StatelessWidget {
     required this.alertString,
     required this.watchlistString,
   });
+
+  Future _subscribe() async {
+    // await RevenueCatService.initializeSubscription();
+
+    await popUpAlert(
+      message: "setting your subscription",
+      title: "NEW",
+      onTap: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+        await navigatorKey.currentContext!
+            .read<UserProvider>()
+            .updateUser(subscriptionPurchased: 1);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +62,46 @@ class PopUpMenuButtonCommon extends StatelessWidget {
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<AddType>>[
         PopupMenuItem<AddType>(
-          onTap: provider.user == null
-              ? () async {
-                  // await Navigator.push(
-                  //   context,
-                  //   createRoute(const Login()),
-                  // );
+          // onTap: provider.user == null
+          //     ? () async {
+          //         isPhone ? await loginSheet() : await loginSheetTablet();
 
+          //         if (context.read<UserProvider>().user == null) {
+          //           return;
+          //         }
+          //         onClickAlert();
+          //       }
+          //     : () => onClickAlert(),
+
+          onTap: () async {
+            if (provider.user != null &&
+                provider.user?.subscriptionPurchased == 1) {
+              await onClickAlert();
+
+              return;
+            }
+
+            askToSubscribe(
+              onPressed: () async {
+                Navigator.pop(context);
+
+                if (provider.user == null) {
                   isPhone ? await loginSheet() : await loginSheetTablet();
-
-                  if (context.read<UserProvider>().user == null) {
-                    return;
-                  }
-                  onClickAlert();
                 }
-              : () => onClickAlert(),
+                if (provider.user == null) {
+                  return;
+                }
+                if (provider.user?.subscriptionPurchased == 0) {
+                  await _subscribe();
+                }
+
+                if (provider.user?.subscriptionPurchased == 1) {
+                  await onClickAlert();
+                }
+              },
+            );
+          },
+
           value: AddType.alert,
           child: Row(
             children: [
@@ -90,21 +134,51 @@ class PopUpMenuButtonCommon extends StatelessWidget {
         ),
         const PopupMenuDivider(height: 0),
         PopupMenuItem<AddType>(
-          onTap: provider.user == null
-              // ? () => _login(context)
-              ? () async {
-                  // await Navigator.push(
-                  //   context,
-                  //   createRoute(const Login()),
-                  // );
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+          // onTap: provider.user == null
+          //     // ? () => _login(context)
+          //     ? () async {
+          //         // await Navigator.push(
+          //         //   context,
+          //         //   createRoute(const Login()),
+          //         // );
+          //         isPhone ? await loginSheet() : await loginSheetTablet();
 
-                  if (context.read<UserProvider>().user == null) {
-                    return;
-                  }
-                  onClickWatchlist();
+          //         if (context.read<UserProvider>().user == null) {
+          //           return;
+          //         }
+          //         onClickWatchlist();
+          //       }
+          //     : () => onClickWatchlist(),
+
+          onTap: () async {
+            if (provider.user != null &&
+                provider.user?.subscriptionPurchased == 1) {
+              await onClickWatchlist();
+
+              return;
+            }
+
+            askToSubscribe(
+              onPressed: () async {
+                Navigator.pop(context);
+
+                if (provider.user == null) {
+                  isPhone ? await loginSheet() : await loginSheetTablet();
                 }
-              : () => onClickWatchlist(),
+                if (provider.user == null) {
+                  return;
+                }
+                if (provider.user?.subscriptionPurchased == 0) {
+                  await _subscribe();
+                }
+
+                if (provider.user?.subscriptionPurchased == 1) {
+                  await onClickWatchlist();
+                }
+              },
+            );
+          },
+
           value: AddType.watchlist,
           child: Row(
             children: [

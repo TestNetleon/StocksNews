@@ -281,11 +281,13 @@ class TopTrendingProvider extends ChangeNotifier {
       }
 
       setStatus(Status.loaded);
+      return ApiResponse(status: response.status);
     } catch (e) {
       _res = null;
       _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
+      return ApiResponse(status: false);
     }
   }
 
@@ -322,6 +324,8 @@ class TopTrendingProvider extends ChangeNotifier {
       } else {
         setAdd(Status.loaded);
       }
+
+      return ApiResponse(status: response.status);
     } catch (e) {
       _capData = null;
       _error = Const.errSomethingWrong;
@@ -332,6 +336,7 @@ class TopTrendingProvider extends ChangeNotifier {
       } else {
         setAdd(Status.loaded);
       }
+      return ApiResponse(status: false);
     }
   }
 }
