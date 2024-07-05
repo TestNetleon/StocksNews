@@ -89,7 +89,13 @@ class AddToAlertWatchlist extends StatelessWidget {
                         if (alrtOn == 0) {
                           await Future.delayed(
                               const Duration(milliseconds: 200));
-                          _showAlertPopup(navigatorKey.currentContext!, symbol);
+                          if (userProvider.user?.subscriptionPurchased == 0) {
+                            await askToSubscribe();
+                          }
+                          if (userProvider.user?.subscriptionPurchased == 1) {
+                            await _showAlertPopup(
+                                navigatorKey.currentContext!, symbol);
+                          }
                         } else {
                           Navigator.push(
                             navigatorKey.currentContext!,
@@ -102,10 +108,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                     }
                   }
                 : alertOn == 0
-                    ? () {
+                    ? () async {
                         _vibrate();
-                        askToSubscribe();
-                        // _showAlertPopup(navigatorKey.currentContext!, symbol);
+                        if (userProvider.user?.subscriptionPurchased == 0) {
+                          await askToSubscribe();
+                        }
+                        if (userProvider.user?.subscriptionPurchased == 1) {
+                          await _showAlertPopup(
+                              navigatorKey.currentContext!, symbol);
+                        }
+
+                        // await askToSubscribe();
+                        // await _showAlertPopup(
+                        //     navigatorKey.currentContext!, symbol);
                       }
                     : () {
                         Navigator.push(
@@ -140,9 +155,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                         if (wlistOn == 0) {
                           log("-----GET TAB CALLING");
 
-                          await context
-                              .read<StockDetailProviderNew>()
-                              .addToWishList();
+                          if (userProvider.user?.subscriptionPurchased == 0) {
+                            await askToSubscribe();
+                          }
+                          if (userProvider.user?.subscriptionPurchased == 1) {
+                            await context
+                                .read<StockDetailProviderNew>()
+                                .addToWishList();
+                          }
+                          // await askToSubscribe();
+
+                          // await context
+                          //     .read<StockDetailProviderNew>()
+                          //     .addToWishList();
                         } else {
                           Navigator.push(
                             navigatorKey.currentContext!,
@@ -159,10 +184,19 @@ class AddToAlertWatchlist extends StatelessWidget {
                 : watchlistOn == 0
                     ? () async {
                         _vibrate();
+                        // await askToSubscribe();
 
-                        await context
-                            .read<StockDetailProviderNew>()
-                            .addToWishList();
+                        // await context
+                        //     .read<StockDetailProviderNew>()
+                        //     .addToWishList();
+                        if (userProvider.user?.subscriptionPurchased == 0) {
+                          await askToSubscribe();
+                        }
+                        if (userProvider.user?.subscriptionPurchased == 1) {
+                          await context
+                              .read<StockDetailProviderNew>()
+                              .addToWishList();
+                        }
                       }
                     : () {
                         Navigator.push(
@@ -178,7 +212,7 @@ class AddToAlertWatchlist extends StatelessWidget {
     );
   }
 
-  void _showAlertPopup(BuildContext context, String symbol) {
+  Future _showAlertPopup(BuildContext context, String symbol) async {
     // Navigator.push(
     //   context,
     //   createRoute(

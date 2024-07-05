@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -139,7 +141,10 @@ class AskToSubscribeDialog extends StatelessWidget {
                   text: "Upgrade your membership",
                   onPressed: () {
                     Navigator.pop(context);
-                    RevenueCatService.initializeSubscription();
+                    // RevenueCatService.initializeSubscription();
+                    context
+                        .read<UserProvider>()
+                        .updateUser(subscriptionPurchased: 1);
                   },
                 ),
 
