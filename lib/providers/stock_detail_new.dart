@@ -397,8 +397,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusDividends(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -411,7 +410,6 @@ class StockDetailProviderNew extends ChangeNotifier {
         _extraDividends =
             (response.extra is Extra ? response.extra as Extra : null);
       } else {
-        //
         _dividends = null;
         _errorDividends = response.message;
       }

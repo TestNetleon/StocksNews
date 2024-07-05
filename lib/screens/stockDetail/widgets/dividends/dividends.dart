@@ -7,6 +7,8 @@ import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_overtime_charts.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_payment_barchart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/sd_dividends_history.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
@@ -94,6 +96,18 @@ class _SdDividendsState extends State<SdDividends> {
                         },
                       ),
                       const SpacerVertical(height: 20),
+                      // ListView.builder(
+                      //   padding: const EdgeInsets.only(top: 0, bottom: 20),
+                      //   shrinkWrap: true,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   itemBuilder: (BuildContext context, int index) {
+                      //     DividendCharts? data = provider.dividends?.chartInfo?[index];
+                      //     return  DividendOvertimeCharts(data: data,);
+                      //   },
+                      // ),
+                      const SpacerVertical(height: 20),
+                      DividendPaymentBarchart(),
+                      const SpacerVertical(height: 20),
                       Visibility(
                         visible:
                             provider.dividends?.dividendHistory?.isNotEmpty ==
@@ -114,7 +128,6 @@ class _SdDividendsState extends State<SdDividends> {
                                 itemBuilder: (context, index) {
                                   DividendHistory? data = provider
                                       .dividends?.dividendHistory?[index];
-
                                   return Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -201,7 +214,6 @@ class _SdDividendsState extends State<SdDividends> {
                                 itemBuilder: (context, index) {
                                   FaQsRes? data =
                                       provider.dividends?.faq?[index];
-
                                   return SdFaqCard(
                                     data: data,
                                     index: index,
