@@ -22,13 +22,16 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
+import '../../../../service/revenue_cat.dart';
 import '../../../../utils/dialogs.dart';
 import 'alert_popup.dart';
 import 'button.dart';
 
 //
 class AddToAlertWatchlist extends StatelessWidget {
-  const AddToAlertWatchlist({super.key});
+  final Subscription? subscription;
+
+  const AddToAlertWatchlist({super.key, this.subscription});
 
   void _vibrate() async {
     if (Platform.isAndroid) {
@@ -45,18 +48,18 @@ class AddToAlertWatchlist extends StatelessWidget {
   }
 
   Future _subscribe() async {
-    // await RevenueCatService.initializeSubscription();
+    await RevenueCatService.initializeSubscription();
 
-    await popUpAlert(
-      message: "setting your subscription",
-      title: "NEW",
-      onTap: () async {
-        Navigator.pop(navigatorKey.currentContext!);
-        await navigatorKey.currentContext!
-            .read<UserProvider>()
-            .updateUser(subscriptionPurchased: 1);
-      },
-    );
+    // await popUpAlert(
+    //   message: "setting your subscription",
+    //   title: "NEW",
+    //   onTap: () async {
+    //     Navigator.pop(navigatorKey.currentContext!);
+    //     await navigatorKey.currentContext!
+    //         .read<UserProvider>()
+    //         .updateUser(subscriptionPurchased: 1);
+    //   },
+    // );
   }
 
   @override
@@ -69,6 +72,25 @@ class AddToAlertWatchlist extends StatelessWidget {
         context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
     UserProvider userProvider = context.watch<UserProvider>();
 
+    bool purchased = userProvider.extra?.subscription?.purchased == 1;
+
+    bool isPresentAlert = userProvider.extra?.subscription?.permissions
+            ?.any((element) => element == "add-alert") ??
+        false;
+
+    bool isPresentAlertE =
+        subscription?.permissions?.any((element) => element == "add-alert") ??
+            false;
+
+    bool isPresentWatchlist = userProvider.extra?.subscription?.permissions
+            ?.any((element) => element == "add-alert") ??
+        false;
+
+    bool isPresentWatchlistE = subscription?.permissions
+            ?.any((element) => element == "add-watchlist") ??
+        false;
+
+    log("$purchased, $isPresentAlert");
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.sp),
       child: Row(
@@ -81,8 +103,10 @@ class AddToAlertWatchlist extends StatelessWidget {
 
             onTap: () {
               //Condition - User present and membership purchased
+
               if (userProvider.user != null &&
-                  userProvider.user?.subscriptionPurchased == 1) {
+                  ((purchased || subscription?.purchased == 1) &&
+                      (isPresentAlert || isPresentAlertE))) {
                 _vibrate();
                 alertOn == 0
                     ? _showAlertPopup(navigatorKey.currentContext!, symbol)
@@ -115,12 +139,14 @@ class AddToAlertWatchlist extends StatelessWidget {
                             if (alrtOn == 0) {
                               await Future.delayed(
                                   const Duration(milliseconds: 200));
-                              if (userProvider.user?.subscriptionPurchased ==
-                                  0) {
+                              if (((!purchased ||
+                                      subscription?.purchased == 0) &&
+                                  (!isPresentAlert || !isPresentAlertE))) {
                                 await _subscribe();
                               }
-                              if (userProvider.user?.subscriptionPurchased ==
-                                  1) {
+                              if (((purchased ||
+                                      subscription?.purchased == 1) &&
+                                  (isPresentAlert || isPresentAlertE))) {
                                 await _showAlertPopup(
                                     navigatorKey.currentContext!, symbol);
                               }
@@ -141,19 +167,34 @@ class AddToAlertWatchlist extends StatelessWidget {
                             Navigator.pop(context);
 
                             _vibrate();
-                            if (userProvider.user?.subscriptionPurchased == 0) {
+                            if (((!purchased || subscription?.purchased == 0) &&
+                                (!isPresentAlert || !isPresentAlertE))) {
                               await _subscribe();
                             }
-                            if (userProvider.user?.subscriptionPurchased == 1) {
+                            if (((purchased || subscription?.purchased == 1) &&
+                                (isPresentAlert || isPresentAlertE))) {
                               await _showAlertPopup(
                                   navigatorKey.currentContext!, symbol);
                             }
                           }
-                        : () {
-                            Navigator.push(
-                              navigatorKey.currentContext!,
-                              MaterialPageRoute(builder: (_) => const Alerts()),
-                            );
+                        : () async {
+                            Navigator.pop(context);
+                            _vibrate();
+                            if (((!purchased || subscription?.purchased == 0) &&
+                                (!isPresentAlert || !isPresentAlertE))) {
+                              await _subscribe();
+                            }
+                            if (((purchased || subscription?.purchased == 1) &&
+                                (isPresentAlert || isPresentAlertE))) {
+                              // await _showAlertPopup(
+                              //     navigatorKey.currentContext!, symbol);
+
+                              Navigator.push(
+                                navigatorKey.currentContext!,
+                                MaterialPageRoute(
+                                    builder: (_) => const Alerts()),
+                              );
+                            }
                           },
               );
             },
@@ -227,7 +268,8 @@ class AddToAlertWatchlist extends StatelessWidget {
             onTap: () async {
               //Condition - User present and membership purchased
               if (userProvider.user != null &&
-                  userProvider.user?.subscriptionPurchased == 1) {
+                  ((purchased || subscription?.purchased == 1) &&
+                      (isPresentAlert || isPresentAlertE))) {
                 _vibrate();
                 watchlistOn == 0
                     ? await context
@@ -243,79 +285,109 @@ class AddToAlertWatchlist extends StatelessWidget {
 
               // Subscription popUp
               askToSubscribe(
-                onPressed: userProvider.user == null
-                    ? () async {
-                        Navigator.pop(context);
-                        _vibrate();
-                        isPhone ? await loginSheet() : await loginSheetTablet();
-                        if (context.read<UserProvider>().user == null) {
-                          return;
-                        }
-                        ApiResponse res = await context
-                            .read<StockDetailProviderNew>()
-                            .getTabData(symbol: symbol);
-                        try {
-                          if (res.status) {
-                            num wlistOn = navigatorKey.currentContext!
-                                    .read<StockDetailProviderNew>()
-                                    .tabRes
-                                    ?.isWatchListAdded ??
-                                0;
-                            if (wlistOn == 0) {
-                              log("-----GET TAB CALLING");
+                  onPressed: userProvider.user == null
+                      ? () async {
+                          Navigator.pop(context);
 
-                              if (userProvider.user?.subscriptionPurchased ==
-                                  0) {
+                          _vibrate();
+                          isPhone
+                              ? await loginSheet()
+                              : await loginSheetTablet();
+                          if (context.read<UserProvider>().user == null) {
+                            return;
+                          }
+                          ApiResponse res = await context
+                              .read<StockDetailProviderNew>()
+                              .getTabData(symbol: symbol);
+                          try {
+                            if (res.status) {
+                              num wlistOn = navigatorKey.currentContext!
+                                      .read<StockDetailProviderNew>()
+                                      .tabRes
+                                      ?.isWatchListAdded ??
+                                  0;
+                              if (wlistOn == 0) {
+                                log("-----GET TAB CALLING");
+
+                                if (((!purchased ||
+                                        subscription?.purchased == 0) &&
+                                    (!isPresentAlert || !isPresentAlertE))) {
+                                  await _subscribe();
+                                }
+                                if (((purchased ||
+                                        subscription?.purchased == 1) &&
+                                    (isPresentAlert || isPresentAlertE))) {
+                                  await context
+                                      .read<StockDetailProviderNew>()
+                                      .addToWishList();
+                                }
+                                // await askToSubscribe();
+
+                                // await context
+                                //     .read<StockDetailProviderNew>()
+                                //     .addToWishList();
+                              } else {
+                                Navigator.push(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                    builder: (_) => const WatchList(),
+                                  ),
+                                );
+                              }
+                            }
+                          } catch (e) {
+                            Utils().showLog("----$e-----");
+                          }
+                        }
+                      : watchlistOn == 0
+                          ? () async {
+                              Navigator.pop(context);
+
+                              _vibrate();
+
+                              if (((!purchased ||
+                                      subscription?.purchased == 0) &&
+                                  (!isPresentAlert || !isPresentAlertE))) {
                                 await _subscribe();
                               }
-                              if (userProvider.user?.subscriptionPurchased ==
-                                  1) {
+                              if (((purchased ||
+                                      subscription?.purchased == 1) &&
+                                  (isPresentAlert || isPresentAlertE))) {
                                 await context
                                     .read<StockDetailProviderNew>()
                                     .addToWishList();
                               }
-                              // await askToSubscribe();
-
-                              // await context
-                              //     .read<StockDetailProviderNew>()
-                              //     .addToWishList();
-                            } else {
-                              Navigator.push(
-                                navigatorKey.currentContext!,
-                                MaterialPageRoute(
-                                  builder: (_) => const WatchList(),
-                                ),
-                              );
                             }
-                          }
-                        } catch (e) {
-                          Utils().showLog("----$e-----");
-                        }
-                      }
-                    : watchlistOn == 0
-                        ? () async {
-                            Navigator.pop(context);
+                          // : () {
+                          //     Navigator.push(
+                          //       navigatorKey.currentContext!,
+                          //       MaterialPageRoute(
+                          //         builder: (_) => const WatchList(),
+                          //       ),
+                          //     );
+                          //   },
 
-                            _vibrate();
+                          : () async {
+                              Navigator.pop(context);
 
-                            if (userProvider.user?.subscriptionPurchased == 0) {
-                              await _subscribe();
-                            }
-                            if (userProvider.user?.subscriptionPurchased == 1) {
-                              await context
-                                  .read<StockDetailProviderNew>()
-                                  .addToWishList();
-                            }
-                          }
-                        : () {
-                            Navigator.push(
-                              navigatorKey.currentContext!,
-                              MaterialPageRoute(
-                                builder: (_) => const WatchList(),
-                              ),
-                            );
-                          },
-              );
+                              _vibrate();
+
+                              if (((!purchased ||
+                                      subscription?.purchased == 0) &&
+                                  (!isPresentAlert || !isPresentAlertE))) {
+                                await _subscribe();
+                              }
+                              if (((purchased ||
+                                      subscription?.purchased == 1) &&
+                                  (isPresentAlert || isPresentAlertE))) {
+                                Navigator.push(
+                                  navigatorKey.currentContext!,
+                                  MaterialPageRoute(
+                                    builder: (_) => const WatchList(),
+                                  ),
+                                );
+                              }
+                            });
 
               // onTap: userProvider.user == null
               //             ? () async {
