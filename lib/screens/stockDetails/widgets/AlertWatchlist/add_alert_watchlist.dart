@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -103,7 +104,8 @@ class AddToAlertWatchlist extends StatelessWidget {
                 : alertOn == 0
                     ? () {
                         _vibrate();
-                        _showAlertPopup(navigatorKey.currentContext!, symbol);
+                        askToSubscribe();
+                        // _showAlertPopup(navigatorKey.currentContext!, symbol);
                       }
                     : () {
                         Navigator.push(
