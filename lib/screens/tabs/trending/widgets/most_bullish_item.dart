@@ -141,7 +141,6 @@ class MostBullishItem extends StatelessWidget {
             //   ),
             //   textAlign: TextAlign.center,
             // ),
-
             const SpacerHorizontal(width: 2),
             Expanded(
               child: Column(
@@ -360,8 +359,7 @@ class MostBullishItem extends StatelessWidget {
       if (alertForBullish == 1) {
         _navigateToAlert(context);
       } else {
-        
-        // _showAlertPopup(context);
+        _showAlertPopup(context);
       }
     } else {
       if (alertForBearish == 1) {
@@ -424,7 +422,7 @@ class MostBullishItem extends StatelessWidget {
 // import '../../../../utils/dialogs.dart';
 
 // //
-// class MostBullishItem extends StatelessWidget {
+// class MostBullishItem extends StatefulWidget {
 //   final bool up;
 //   final MostBullishData data;
 //   final int index;
@@ -444,8 +442,26 @@ class MostBullishItem extends StatelessWidget {
 //   });
 
 //   @override
+//   State<MostBullishItem> createState() => _MostBullishItemState();
+// }
+
+// class _MostBullishItemState extends State<MostBullishItem> {
+//   bool userPresent = false;
+//   @override
+//   void initState() {
+//     super.initState();
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       userPresent = context.read<UserProvider>().user != null;
+//       Utils().showLog("USER PRESENT $userPresent");
+//       setState(() {});
+//     });
+//   }
+
+  
+
+//   @override
 //   Widget build(BuildContext context) {
-//     String? symbol =
+//      String? symbol =
 //         context.watch<StockDetailProviderNew>().tabRes?.keyStats?.symbol ?? "";
 //     num alertOn =
 //         context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
@@ -458,7 +474,8 @@ class MostBullishItem extends StatelessWidget {
 //         onTap: () {
 //           Navigator.push(
 //             navigatorKey.currentContext!,
-//             MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
+//             MaterialPageRoute(
+//                 builder: (_) => StockDetail(symbol: widget.data.symbol)),
 //           );
 //         },
 //         child: Row(
@@ -469,7 +486,7 @@ class MostBullishItem extends StatelessWidget {
 //                 Navigator.push(
 //                   context,
 //                   MaterialPageRoute(
-//                     builder: (_) => StockDetail(symbol: data.symbol),
+//                     builder: (_) => StockDetail(symbol: widget.data.symbol),
 //                   ),
 //                 );
 //               },
@@ -479,7 +496,7 @@ class MostBullishItem extends StatelessWidget {
 //                   padding: const EdgeInsets.all(5),
 //                   width: 43,
 //                   height: 43,
-//                   child: ThemeImageView(url: data.image ?? ""),
+//                   child: ThemeImageView(url: widget.data.image ?? ""),
 //                 ),
 //               ),
 //             ),
@@ -492,12 +509,12 @@ class MostBullishItem extends StatelessWidget {
 //                   Navigator.push(
 //                     context,
 //                     MaterialPageRoute(
-//                       builder: (_) => StockDetail(symbol: data.symbol),
+//                       builder: (_) => StockDetail(symbol: widget.data.symbol),
 //                     ),
 //                   );
 //                 },
 //                 child: Text(
-//                   data.symbol,
+//                   widget.data.symbol,
 //                   style: stylePTSansBold(fontSize: 14),
 //                 ),
 //               ),
@@ -564,7 +581,7 @@ class MostBullishItem extends StatelessWidget {
 //                       Expanded(
 //                         child: Text(
 //                           // "\$201.99",
-//                           data.price ?? "",
+//                           widget.data.price ?? "",
 //                           style: stylePTSansBold(fontSize: 13),
 //                           maxLines: 1,
 //                           textAlign: TextAlign.end,
@@ -576,7 +593,7 @@ class MostBullishItem extends StatelessWidget {
 //                         child: Text(
 //                           // "\$201.99",
 //                           textAlign: TextAlign.end,
-//                           "${data.mention}",
+//                           "${widget.data.mention}",
 //                           style: stylePTSansBold(fontSize: 11),
 //                           maxLines: 1,
 //                           overflow: TextOverflow.ellipsis,
@@ -612,11 +629,11 @@ class MostBullishItem extends StatelessWidget {
 //                         // ),
 
 //                         child: Text(
-//                           "${data.displayChange} (${data.changesPercentage}%)",
+//                           "${widget.data.displayChange} (${widget.data.changesPercentage}%)",
 //                           style: stylePTSansRegular(
-//                             color: data.changesPercentage == 0
+//                             color: widget.data.changesPercentage == 0
 //                                 ? Colors.white
-//                                 : data.changesPercentage > 0
+//                                 : widget.data.changesPercentage > 0
 //                                     ? ThemeColors.accent
 //                                     : Colors.red,
 //                             fontSize: 11,
@@ -629,11 +646,11 @@ class MostBullishItem extends StatelessWidget {
 //                       const SpacerHorizontal(width: 4),
 //                       Expanded(
 //                         child: Text(
-//                           "(${data.mentionChange.toCurrency()}%)",
+//                           "(${widget.data.mentionChange.toCurrency()}%)",
 //                           style: stylePTSansRegular(
-//                             color: data.mentionChange == 0
+//                             color: widget.data.mentionChange == 0
 //                                 ? Colors.white
-//                                 : data.mentionChange > 0
+//                                 : widget.data.mentionChange > 0
 //                                     ? ThemeColors.accent
 //                                     : Colors.red,
 //                             fontSize: 11,
@@ -676,21 +693,122 @@ class MostBullishItem extends StatelessWidget {
 //             //   ],
 //             // )
 //             PopUpMenuButtonCommon(
-//               symbol: data.symbol,
+//               symbol: widget.data.symbol,
 //               onClickAlert: () => _alertElse(context),
+//               // onClickAlert: () async {
+//               //   if (userProvider.user != null &&
+//               //       userProvider.user?.subscriptionPurchased == 1) {
+//               //     _vibrate();
+//               //     widget.alertForBullish == 0
+//               //         ? _showAlertPopup(
+//               //             context: navigatorKey.currentContext!, symbol: symbol)
+//               //         : Navigator.push(
+//               //             navigatorKey.currentContext!,
+//               //             MaterialPageRoute(builder: (_) => const Alerts()),
+//               //           );
+//               //     return;
+//               //   }
+//               //   askToSubscribe(
+//               //     onPressed: userProvider.user == null
+//               //         ? () async {
+//               //             Navigator.pop(context);
+//               //             _vibrate();
+//               //             isPhone
+//               //                 ? await loginSheet()
+//               //                 : await loginSheetTablet();
+//               //             if (context.read<UserProvider>().user == null) {
+//               //               return;
+//               //             }
+
+//               //             if (userPresent) {
+//               //               log("set HERE");
+//               //               _showAlertPopup(
+//               //                   context: navigatorKey.currentContext!);
+//               //               return;
+//               //             }
+
+                    
+//               //             ApiResponse res = await context
+//               //                 .read<StockDetailProviderNew>()
+//               //                 .getTabData(symbol: symbol);
+//               //             try {
+//               //               if (res.status) {
+//               //                 final alertForBullish = navigatorKey.currentContext!.read<StockDetailProviderNew>().tabRes?.isAlertAdded ??0;
+//               //                 if (alertForBullish == 0) {
+//               //                   await Future.delayed(
+//               //                       const Duration(milliseconds: 200));
+//               //                   if (userProvider.user?.subscriptionPurchased == 0) {
+//               //                     await _subscribe();
+//               //                   }
+//               //                   if (userProvider.user?.subscriptionPurchased == 1) {
+//               //                     if (alertForBullish == 0) {
+//               //                       _showAlertPopup(
+//               //                           symbol: symbol,
+//               //                           context: navigatorKey.currentContext!);
+//               //                     } else if (alertForBullish == 1) {
+//               //                         Navigator.push(
+//               //                         navigatorKey.currentContext!,
+//               //                         MaterialPageRoute(
+//               //                             builder: (_) => const Alerts()),
+//               //                       );
+//               //                     }
+//               //                   }
+//               //                 } else {
+//               //                   Navigator.push(
+//               //                     navigatorKey.currentContext!,
+//               //                     MaterialPageRoute(
+//               //                         builder: (_) => const Alerts()),
+//               //                   );
+//               //                 }
+//               //               }
+//               //             } catch (e) {
+//               //               Utils().showLog("----$e-----");
+//               //             }
+//               //           }
+//               //         : widget.alertForBullish == 0
+//               //             ? () async {
+//               //                 Navigator.pop(context);
+//               //                 _vibrate();
+//               //                 if (userProvider.user?.subscriptionPurchased ==
+//               //                     0) {
+//               //                   await _subscribe();
+//               //                 }
+//               //                 if (userProvider.user?.subscriptionPurchased ==
+//               //                     1) {
+//               //                   _showAlertPopup(
+//               //                       symbol: symbol,
+//               //                       context: navigatorKey.currentContext!);
+//               //                 }
+//               //                 if (widget.alertForBullish == 1) {
+//               //                   Navigator.push(
+//               //                     navigatorKey.currentContext!,
+//               //                     MaterialPageRoute(
+//               //                         builder: (_) => const Alerts()),
+//               //                   );
+//               //                 }
+//               //               }
+//               //             : () {
+//               //                 Navigator.push(
+//               //                   navigatorKey.currentContext!,
+//               //                   MaterialPageRoute(
+//               //                       builder: (_) => const Alerts()),
+//               //                 );
+//               //               },
+//               //   );
+//               // },
 //               onClickWatchlist: () => _watchlistElse(context),
-//               watchlistString: up
-//                   ? watlistForBullish == 1
+//               watchlistString: widget.up
+//                   ? widget.watlistForBullish == 1
 //                       ? 'Watchlist Added'
 //                       : 'Add to Watchlist'
-//                   : watlistForBearish == 1
+//                   : widget.watlistForBearish == 1
 //                       ? 'Watchlist Added'
 //                       : 'Add to Watchlist',
-//               alertString: up
-//                   ? alertForBullish == 1
+//               alertString: widget.up
+//                   ? widget.alertForBullish == 1
 //                       ? 'Alert Added'
 //                       : 'Add to Alert'
-//                   : alertForBearish == 1
+//                   : widget.alertForBearish == 1
 //                       ? 'Alert Added'
 //                       : 'Add to Alert',
 //             ),
@@ -728,9 +846,9 @@ class MostBullishItem extends StatelessWidget {
 //       showClose: false,
 //       content: AlertPopup(
 //         insetPadding: EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
-//         symbol: data.symbol,
-//         up: up,
-//         index: index,
+//         symbol: widget.data.symbol,
+//         up: widget.up,
+//         index: widget.index,
 //         fromTrending: true,
 //       ),
 //     );
@@ -765,9 +883,9 @@ class MostBullishItem extends StatelessWidget {
 
 //   void _addToWatchlist(BuildContext context) {
 //     context.read<TrendingProvider>().addToWishList(
-//           symbol: data.symbol,
-//           index: index,
-//           up: up,
+//           symbol: widget.data.symbol,
+//           index: widget.index,
+//           up: widget.up,
 //         );
 //   }
 
@@ -785,15 +903,28 @@ class MostBullishItem extends StatelessWidget {
 //     );
 //   }
 
-//   void _alertElse(BuildContext context) {
-//     if (up) {
-//       if (alertForBullish == 1) {
+//   Future<void> _alertElse(BuildContext context) async {
+    
+//     if (widget.up) {
+//       if (widget.alertForBullish == 1) {
 //         _navigateToAlert(context);
 //       } else {
-//         _showAlertPopup(context: context);
+//            if (userPresent) {
+//         log("set HERE");
+//         _showAlertPopup(context: navigatorKey.currentContext!);
+//         return;
+//       }
+
+//        try{
+//             ApiResponse res = await context.read<StockDetailProviderNew>()
+//               .getTabData(symbol: symbol);
+//        }
+//        catch(e){
+//         log("ERROR -> $e");
+//        }
 //       }
 //     } else {
-//       if (alertForBearish == 0) {
+//       if (widget.alertForBearish == 0) {
 //         _navigateToAlert(context);
 //       } else {
 //         _showAlertPopup(context: context);
@@ -802,14 +933,14 @@ class MostBullishItem extends StatelessWidget {
 //   }
 
 //   void _watchlistElse(BuildContext context) {
-//     if (up) {
-//       if (watlistForBullish == 1) {
+//     if (widget.up) {
+//       if (widget.watlistForBullish == 1) {
 //         _navigateToWatchlist(context);
 //       } else {
 //         _addToWatchlist(context);
 //       }
 //     } else {
-//       if (watlistForBearish == 1) {
+//       if (widget.watlistForBearish == 1) {
 //         _navigateToWatchlist(context);
 //       } else {
 //         _addToWatchlist(context);

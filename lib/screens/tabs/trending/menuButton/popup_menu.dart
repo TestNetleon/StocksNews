@@ -77,7 +77,6 @@ class PopUpMenuButtonCommon extends StatelessWidget {
             if (provider.user != null &&
                 provider.user?.subscriptionPurchased == 1) {
               await onClickAlert();
-
               return;
             }
 

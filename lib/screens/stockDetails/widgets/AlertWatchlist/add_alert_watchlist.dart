@@ -74,7 +74,8 @@ class AddToAlertWatchlist extends StatelessWidget {
       child: Row(
         children: [
           AlertWatchlistButton(
-            backgroundColor: alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
+            backgroundColor:
+                alertOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.add_alert_outlined,
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
 
@@ -98,7 +99,7 @@ class AddToAlertWatchlist extends StatelessWidget {
                         Navigator.pop(context);
                         isPhone ? await loginSheet() : await loginSheetTablet();
                         if (context.read<UserProvider>().user == null) {
-                         return;
+                          return;
                         }
                         log("-----GET TAB CALLING");
                         ApiResponse res = await context
@@ -206,7 +207,6 @@ class AddToAlertWatchlist extends StatelessWidget {
             //               await _showAlertPopup(
             //                   navigatorKey.currentContext!, symbol);
             //             }
-
             //             // await askToSubscribe();
             //             // await _showAlertPopup(
             //             //     navigatorKey.currentContext!, symbol);
@@ -220,7 +220,8 @@ class AddToAlertWatchlist extends StatelessWidget {
           ),
           const SpacerHorizontal(width: 10),
           AlertWatchlistButton(
-            backgroundColor: watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
+            backgroundColor:
+                watchlistOn == 0 ? ThemeColors.accent : ThemeColors.background,
             iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: () async {
@@ -335,7 +336,6 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                         0;
               //                     if (wlistOn == 0) {
               //                       log("-----GET TAB CALLING");
-
               //                       if (userProvider.user?.subscriptionPurchased == 0) {
               //                         await askToSubscribe();
               //                       }
@@ -345,7 +345,6 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                             .addToWishList();
               //                       }
               //                       // await askToSubscribe();
-
               //                       // await context
               //                       //     .read<StockDetailProviderNew>()
               //                       //     .addToWishList();
@@ -366,7 +365,6 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                 ? () async {
               //                     _vibrate();
               //                     // await askToSubscribe();
-
               //                     // await context
               //                     //     .read<StockDetailProviderNew>()
               //                     //     .addToWishList();
@@ -388,7 +386,6 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                     );
               //                   };
             },
-
             // onTap: userProvider.user == null
             //     ? () async {
             //         _vibrate();
@@ -408,7 +405,6 @@ class AddToAlertWatchlist extends StatelessWidget {
             //                 0;
             //             if (wlistOn == 0) {
             //               log("-----GET TAB CALLING");
-
             //               if (userProvider.user?.subscriptionPurchased == 0) {
             //                 await askToSubscribe();
             //               }
@@ -418,7 +414,6 @@ class AddToAlertWatchlist extends StatelessWidget {
             //                     .addToWishList();
             //               }
             //               // await askToSubscribe();
-
             //               // await context
             //               //     .read<StockDetailProviderNew>()
             //               //     .addToWishList();
@@ -439,7 +434,6 @@ class AddToAlertWatchlist extends StatelessWidget {
             //         ? () async {
             //             _vibrate();
             //             // await askToSubscribe();
-
             //             // await context
             //             //     .read<StockDetailProviderNew>()
             //             //     .addToWishList();
@@ -489,7 +483,6 @@ class AddToAlertWatchlist extends StatelessWidget {
         symbol: symbol,
       ),
     );
-
     // showDialog(
     //     context: context,
     //     builder: (context) {
