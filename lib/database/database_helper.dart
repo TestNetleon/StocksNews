@@ -101,7 +101,7 @@ class DatabaseHelper {
     }
   }
 
-  Future<bool> fetchLoginDialogData(screen) async {
+  Future<bool> fetchLoginDialogData(String screen) async {
     final db = await instance.database;
 
     final result = await db.query(
@@ -112,7 +112,6 @@ class DatabaseHelper {
 
     if (result.isNotEmpty) {
       LoginVisibility visible = LoginVisibility.fromJson(result.first);
-
       if (visible.status == 1 &&
           ((isToday(visible) && visible.count < visible.maxCount) ||
               !isToday(visible))) {
@@ -129,7 +128,6 @@ class DatabaseHelper {
 
     DateTime parsedDate = DateTime.parse(visible.lastVisible);
 
-    // Compare dates ignoring time
     bool isSameDay = today.year == parsedDate.year &&
         today.month == parsedDate.month &&
         today.day == parsedDate.day;
@@ -137,34 +135,24 @@ class DatabaseHelper {
     return isSameDay;
   }
 
-  Future<void> update(int screen) async {
+  Future<void> update(String screen) async {
     final Database db = await instance.database;
 
-    // DateTime today = DateTime.now();
-    // String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(today);
+    final result = await db.query(
+      dbLoginVisibilityTable,
+      where: '$screenName = ?',
+      whereArgs: [screen],
+    );
+
+    LoginVisibility object = LoginVisibility.fromJson(result.first);
 
     await db.update(
       dbLoginVisibilityTable,
-      {visibleCount: 1},
-      where: '$screen = ?',
+      {visibleCount: object.count + 1},
+      where: '$screenName = ?',
       whereArgs: [screen],
     );
   }
-
-  // Future<LoginVisibility?> getLoginVisibilityByScreen(
-  //     {required String screen}) async {
-  //   final db = await database;
-  //   List<Map<String, dynamic>> videoDataMap = await db.query(
-  //     dbLoginVisibilityTable,
-  //     where: '$screenName = ?',
-  //     whereArgs: [screen],
-  //   );
-  //   if (videoDataMap.isNotEmpty) {
-  //     return LoginVisibility.fromJson(videoDataMap.first);
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   Future<List<LoginVisibility>> getAllData() async {
     final Database db = await instance.database;
@@ -181,25 +169,13 @@ class DatabaseHelper {
     });
   }
 
-  Future<void> markViewed(int screen) async {
+  Future<void> resetVisibilityCount() async {
     final Database db = await instance.database;
-
-    // Update isAnswered in the questions table
-    await db.update(
-      dbLoginVisibilityTable,
-      {visibleCount: 1},
-      where: '$screen = ?',
-      whereArgs: [screen],
-    );
-
-    // Retrieve the updated ExamData from the database
-    // final updatedExamData =
-    //     await getExamDataByQuestionBankId(exmId, questionBId);
-    // return updatedExamData;
+    await db.update(dbLoginVisibilityTable, {visibleCount: 0});
   }
 
-  Future<void> clearAllData() async {
-    final Database db = await database;
-    await db.delete(dbLoginVisibilityTable);
-  }
+  // Future<void> clearAllData() async {
+  //   final Database db = await database;
+  //   await db.delete(dbLoginVisibilityTable);
+  // }
 }

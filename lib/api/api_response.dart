@@ -76,6 +76,7 @@ class Extra {
   final bool? showPortfolio;
   final ReferralRes? referral;
   final num? received;
+  final num? totalActivityPoints;
   final num? balance;
   final num? spent;
   // final Subscription? subscription;
@@ -144,6 +145,7 @@ class Extra {
     this.referText,
     this.affiliateInput,
     this.loginDialogRes,
+    this.totalActivityPoints,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -241,6 +243,7 @@ class Extra {
         loginDialogRes: json["login_dialog"] == null
             ? null
             : LoginDialogRes.fromJson(json["login_dialog"]),
+        totalActivityPoints: json["total_activity_points"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -308,6 +311,7 @@ class Extra {
         "refer_text": referText,
         "affiliate_input": affiliateInput,
         "login_dialog": loginDialogRes?.toJson(),
+        "total_activity_points": totalActivityPoints,
       };
 }
 

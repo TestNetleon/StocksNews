@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -29,17 +35,52 @@ class _BlogDetailState extends State<BlogDetail> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BlogProvider>().getBlogDetailData(
-            // blogId: widget.id ?? "",
-            slug: widget.slug,
-            inAppMsgId: widget.inAppMsgId,
-            notificationId: widget.notificationId,
-          );
+      _getInitialData();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
-        parameters: {'screen_name': 'My Account'},
+        parameters: {'screen_name': 'Blog Details'},
       );
     });
+  }
+
+  void _getInitialData() async {
+    BlogProvider blogProvider = context.read<BlogProvider>();
+    UserProvider userProvider = context.read<UserProvider>();
+
+    await blogProvider.getBlogDetailData(
+      slug: widget.slug,
+      inAppMsgId: widget.inAppMsgId,
+      notificationId: widget.notificationId,
+    );
+
+    if (blogProvider.blogsDetail?.readingStatus == false) {
+      return;
+    }
+
+    if (userProvider.user == null) {
+      DatabaseHelper helper = DatabaseHelper();
+      bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
+      if (visible) {
+        Timer(const Duration(seconds: 3), () {
+          if (mounted) {
+            helper.update(BlogDetail.path);
+            loginSheet();
+          }
+        });
+      }
+    } else if (userProvider.user != null && userProvider.phoneVerified) {
+      DatabaseHelper helper = DatabaseHelper();
+      bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
+      if (visible) {
+        Timer(const Duration(seconds: 3), () {
+          if (mounted) {
+            helper.update(BlogDetail.path);
+            referLogin();
+          }
+        });
+      }
+      //
+    }
   }
 
   @override
