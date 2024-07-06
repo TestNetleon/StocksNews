@@ -1,89 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/utils/theme.dart'; // Adjust based on your actual import path
 
-class FinancialTableItem extends StatefulWidget {
+class FinancialTableItem extends StatelessWidget {
   const FinancialTableItem({super.key});
 
   @override
-  State<FinancialTableItem> createState() => _FinancialTableItemState();
-}
-
-class _FinancialTableItemState extends State<FinancialTableItem> {
-  @override
   Widget build(BuildContext context) {
-    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    final financialData =
+        Provider.of<StockDetailProviderNew>(context).sdFinancialArray;
 
-    if (provider.sdFinancialArray == null ||
-        provider.sdFinancialArray!.isEmpty) {
-      return Center(
-        child: Text(
-          'No data available',
-          style: stylePTSansRegular(),
-        ),
-      );
-    }
-
-    return ListView.separated(
-        padding: const EdgeInsets.only(top: 0, bottom: 15),
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          Map<String, dynamic>? data = provider.sdFinancialArray?[index];
-
-          return SingleChildScrollView(
+    return financialData != null
+        ? SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: ThemeColors.greyBorder.withOpacity(0.3),
-              ),
-              child: DataTable(
-                border: TableBorder.all(color: Colors.white),
-                columns: _createColumns(data),
-                rows: _createRows(data),
-              ),
+            child: DataTable(
+              border: TableBorder.all(color: Colors.white),
+              columnSpacing: 20,
+              columns: _createColumns(financialData.first),
+              rows: financialData.map((data) => _createRows(data)).toList(),
             ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const SpacerVertical(height: 0);
-        },
-        itemCount: provider.sdFinancialArray?.length ?? 0);
+          )
+        : const Center(child: CircularProgressIndicator());
   }
 
-  List<DataColumn> _createColumns(Map<String, dynamic>? data) {
-    if (data == null || data.isEmpty) return [];
-
+  List<DataColumn> _createColumns(Map<String, dynamic> data) {
     return data.keys.map((key) {
       return DataColumn(
         label: Text(
-          "$key",
+          key,
           style: stylePTSansRegular(),
         ),
       );
     }).toList();
   }
 
-  List<DataRow> _createRows(Map<String, dynamic>? data) {
-    if (data == null || data.isEmpty) return [];
+  DataRow _createRows(Map<String, dynamic> data) {
+    return DataRow(
+      cells: data.values.map((value) {
+        return DataCell(
+          Text(
+            value.toString(),
+            style: stylePTSansRegular(),
+          ),
+        );
+      }).toList(),
+    );
+  }
 
-    return [
-      DataRow(
-        cells: data.values.map((value) {
-          return DataCell(
-            Text(
-              "$value",
-              style: stylePTSansRegular(),
-            ),
-          );
-        }).toList(),
-      ),
-    ];
+  TextStyle stylePTSansRegular() {
+    return stylePTSansBold(); // Example style
   }
 }

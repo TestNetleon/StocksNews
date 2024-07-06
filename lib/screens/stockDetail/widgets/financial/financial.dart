@@ -587,8 +587,8 @@ class _SdFinancialState extends State<SdFinancial> {
                     ),
                   ),
                 ),
-                // const SpacerVertical(height: 15),
-                // FinancialTableItem(),
+                const SpacerVertical(height: 15),
+                FinancialTableItem(),
                 const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),
