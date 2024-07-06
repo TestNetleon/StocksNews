@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -26,7 +25,9 @@ class MembershipItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                data?.displayName?.capitalize() ?? "N?A",
+                data?.displayName == null || data?.displayName == ''
+                    ? "N/A"
+                    : data?.displayName ?? "N?A",
                 style: styleGeorgiaBold(fontSize: 17),
               ),
               Text(
