@@ -90,8 +90,7 @@ class TrendingProvider extends ChangeNotifier {
   }) async {
     setStatus(Status.loading);
     Map request = {
-      "token":
-          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": symbol,
       "alert_name": alertName,
       "sentiment_spike": selectedOne ? "yes" : "no",
@@ -107,7 +106,6 @@ class TrendingProvider extends ChangeNotifier {
       if (response.status) {
         if (up) {
           //
-
           _mostBullish?.mostBullish?[index].isAlertAdded = 1;
         } else {
           //
@@ -211,8 +209,7 @@ class TrendingProvider extends ChangeNotifier {
     notifyListeners();
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
 
       ApiResponse response = await apiRequest(
@@ -250,8 +247,7 @@ class TrendingProvider extends ChangeNotifier {
     notifyListeners();
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         'symbols_list': _mostBullish?.trendingSymbolList ?? "",
       };
       ApiResponse response = await apiRequest(
@@ -283,8 +279,7 @@ class TrendingProvider extends ChangeNotifier {
     notifyListeners();
     try {
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.trendingNews,

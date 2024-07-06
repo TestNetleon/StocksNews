@@ -63,7 +63,6 @@ class _SdOverviewChartState extends State<SdOverviewChart> {
             CupertinoSlidingSegmentedControl<int>(
               groupValue: _selectedIndex,
               thumbColor: ThemeColors.greyBorder.withOpacity(0.4),
-              // thumbColor: ThemeColors.white,
               padding: const EdgeInsets.all(4),
               backgroundColor: const Color.fromARGB(255, 28, 28, 28),
               onValueChanged: (int? index) {

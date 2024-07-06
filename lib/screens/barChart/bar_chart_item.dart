@@ -346,8 +346,7 @@ class BarChartSampleState extends State<BarChartSample> {
                   sideTitles: SideTitles(
                     reservedSize: 52,
                     showTitles: true,
-                    interval: maxAbsValue /
-                        5, // Default value to avoid division by zero
+                    interval: maxAbsValue / 5, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
                       if (charts?[4].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);

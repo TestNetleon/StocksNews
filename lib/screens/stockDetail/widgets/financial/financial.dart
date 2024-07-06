@@ -62,8 +62,7 @@ class _SdFinancialState extends State<SdFinancial> {
     // Utils().showLog(' data111113: ${data?.chart?[0].totalAssets}');
 
     return BaseUiContainer(
-      hasData:
-          !provider.isLoadingFinancial && provider.sdFinancialArray != null,
+      hasData:!provider.isLoadingFinancial && provider.sdFinancialArray != null,
       isLoading: provider.isLoadingFinancial,
       showPreparingText: true,
       error: provider.errorFinancial,

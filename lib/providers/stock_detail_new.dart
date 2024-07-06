@@ -404,8 +404,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         _dividends = sdDividendsResFromJson(jsonEncode(response.data));
-        _extraDividends =
-            (response.extra is Extra ? response.extra as Extra : null);
+        _extraDividends = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _dividends = null;
         _errorDividends = response.message;
@@ -414,7 +413,6 @@ class StockDetailProviderNew extends ChangeNotifier {
     } catch (e) {
       _dividends = null;
       _errorDividends = Const.errSomethingWrong;
-
       Utils().showLog(e.toString());
       setStatusDividends(Status.loaded);
     }
@@ -979,8 +977,7 @@ class StockDetailProviderNew extends ChangeNotifier {
                           : "1hour";
 
       Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol,
         "range": newRange,
       };
