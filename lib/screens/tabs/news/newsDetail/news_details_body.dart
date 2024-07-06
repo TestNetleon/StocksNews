@@ -303,7 +303,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                       "clicked ur---$url, return value $a");
                                 } else {
                                   a = true;
-
                                   Uri uri = Uri.parse(url);
                                   iOSNavigate(uri);
                                   Utils().showLog("iOS navigation");
