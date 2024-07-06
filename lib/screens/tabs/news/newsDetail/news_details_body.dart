@@ -7,7 +7,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/database/databaseModals/login_visibility.dart';
 import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
@@ -29,7 +28,6 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
-//
 import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
