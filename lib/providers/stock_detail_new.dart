@@ -203,7 +203,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool selectedTwo = false,
   }) async {
     Map request = {
-      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": _tabRes?.keyStats?.symbol ?? "",
       "alert_name": alertName,
       "sentiment_spike": selectedOne ? "yes" : "no",
@@ -240,7 +241,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     notifyListeners();
 
     Map request = {
-      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": _tabRes?.keyStats?.symbol ?? "",
     };
     try {
@@ -278,7 +280,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusTab(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -394,7 +397,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusDividends(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -414,7 +418,6 @@ class StockDetailProviderNew extends ChangeNotifier {
     } catch (e) {
       _dividends = null;
       _errorDividends = Const.errSomethingWrong;
-
       Utils().showLog(e.toString());
       setStatusDividends(Status.loaded);
     }
@@ -699,7 +702,8 @@ class StockDetailProviderNew extends ChangeNotifier {
   Status get statusOverview => _statusOverview;
 
   bool get isLoadingOverview => _statusOverview == Status.loading;
-
+  String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
   Extra? _extraOverview;
   Extra? get extraOverview => _extraOverview;
 
@@ -713,6 +717,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   Future getOverviewData({
     String? symbol,
+    pointsDeducted,
   }) async {
     setStatusOverview(Status.loading);
     try {
@@ -1300,6 +1305,12 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   SdFinancialRes? _sdFinancialChartRes;
   SdFinancialRes? get sdFinancialChartRes => _sdFinancialChartRes;
+  SdFinancialRes? _incomeSdFinancialChartRes;
+  SdFinancialRes? get incomeSdFinancialChartRes => _incomeSdFinancialChartRes;
+  SdFinancialRes? _balanceSdFinancialChartRes;
+  SdFinancialRes? get balanceSdFinancialChartRes => _balanceSdFinancialChartRes;
+  SdFinancialRes? _cashSdFinancialChartRes;
+  SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
 
   // Map<String, dynamic>? _sdFinancialMap;
   // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
@@ -1336,6 +1347,54 @@ class StockDetailProviderNew extends ChangeNotifier {
         type: _types?[typeIndex].value,
         tabProgress: true,
       );
+    }
+  }
+
+  void changeTabTypeChartData(index, {String? symbol}) {
+    if (typeIndex != index) {
+      typeIndex = index;
+      Utils().showLog("index  $index");
+      if (index == 0 && incomeSdFinancialChartRes == null) {
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+      if (index == 1 && balanceSdFinancialChartRes == null) {
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+      if (index == 2 && cashSdFinancialChartRes == null) {
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+      if (index == 0 && incomeSdFinancialChartRes != null) {
+        _typeValue = "income-statement";
+        _sdFinancialChartRes = incomeSdFinancialChartRes;
+      }
+      if (index == 1 && balanceSdFinancialChartRes != null) {
+        _typeValue = 'balance-sheet-statement';
+        _sdFinancialChartRes = balanceSdFinancialChartRes;
+      }
+      if (index == 2 && cashSdFinancialChartRes != null) {
+        _typeValue = 'cash-flow-statement';
+        _sdFinancialChartRes = cashSdFinancialChartRes;
+      }
+
+      notifyListeners();
     }
   }
 
@@ -1408,6 +1467,17 @@ class StockDetailProviderNew extends ChangeNotifier {
         _typeValue = type;
         _sdFinancialChartRes =
             sdFinancialResFromJson(jsonEncode(response.data));
+
+        if (type == "income-statement") {
+          _incomeSdFinancialChartRes =
+              sdFinancialResFromJson(jsonEncode(response.data));
+        } else if (type == "balance-sheet-statement") {
+          _balanceSdFinancialChartRes =
+              sdFinancialResFromJson(jsonEncode(response.data));
+        } else if (type == "cash-flow-statement") {
+          _cashSdFinancialChartRes =
+              sdFinancialResFromJson(jsonEncode(response.data));
+        }
 
         // _sdFinancialChartRes?.chart?.sublist(0, 5);
 

@@ -23,7 +23,8 @@ class NewsTypeData extends StatelessWidget {
     TabsNewsHolder? newsHolder = provider.newsData[id];
     return BaseUiContainer(
       error: newsHolder?.error,
-      hasData: newsHolder?.data != null && (newsHolder?.data?.data.isNotEmpty ?? false),
+      hasData: newsHolder?.data != null &&
+          (newsHolder?.data?.data.isNotEmpty ?? false),
       isLoading: newsHolder?.loading ?? true,
       errorDispCommon: true,
       showPreparingText: true,
@@ -33,11 +34,12 @@ class NewsTypeData extends StatelessWidget {
         // onRefresh: () async {
         //   log("message");
         // },
-        canLoadMore: (newsHolder?.currentPage ?? 1) <= (newsHolder?.data?.lastPage ?? 1),
+        canLoadMore:
+            (newsHolder?.currentPage ?? 1) <= (newsHolder?.data?.lastPage ?? 1),
         onLoadMore: () async => provider.onLoadMore(),
         child: ListView.separated(
           itemCount: newsHolder?.data?.data.length ?? 0,
-          padding: EdgeInsets.only(bottom: 12.sp, top: 12.sp),
+          padding: EdgeInsets.only(bottom: 12.sp, top: 0.sp),
           itemBuilder: (context, index) {
             NewsData? newsItemData = newsHolder?.data?.data[index];
             if (index == 0) {

@@ -29,7 +29,7 @@ class SocialSentimentsGraph extends StatelessWidget {
     num? avgSent = provider.socialSentimentRes?.avgSentiment;
 
     return Container(
-      margin: EdgeInsets.only(top: isPhone ? 20.sp : 10.sp),
+      margin: EdgeInsets.only(top: isPhone ? 0.sp : 10.sp),
       decoration: BoxDecoration(
         // border: Border.all(color: ThemeColors.greyBorder),
         borderRadius: BorderRadius.circular(Dimen.radius.r),

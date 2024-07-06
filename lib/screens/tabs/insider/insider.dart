@@ -58,7 +58,7 @@ class Insider extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          isPhone ? Dimen.padding.sp : 8.sp,
+          isPhone ? 0 : 8.sp,
           Dimen.padding.sp,
           0,
         ),

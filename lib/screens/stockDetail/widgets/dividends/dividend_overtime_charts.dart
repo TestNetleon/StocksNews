@@ -1,57 +1,38 @@
 import 'dart:io';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:vibration/vibration.dart';
+import 'dart:math' as math;
 
-class DividendOvertimeCharts extends StatefulWidget {
-  final DividendCharts? data;
-  const DividendOvertimeCharts({super.key, this.data});
+class DividendOvertimeCharts extends StatelessWidget {
+  final List<DividendCharts>? charts;
+  const DividendOvertimeCharts({super.key, this.charts});
 
-  @override
-  State<DividendOvertimeCharts> createState() => _DividendOvertimeChartsState();
-}
-
-class _DividendOvertimeChartsState extends State<DividendOvertimeCharts> {
-  List<Color> gradientColors = [
-    Colors.green,
-    Colors.green,
-  ];
-  bool showAvg = false;
   @override
   Widget build(BuildContext context) {
+    double minY = getMinY(charts!);
+    double maxY = getMinY(charts!);
+
     return Stack(
       children: <Widget>[
         AspectRatio(
           aspectRatio: 1.30,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              right: 18,
-              left: 12,
-              top: 14,
-              bottom: 10,
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(18),
+              ),
             ),
-            child: LineChart(
-              showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 60,
-          height: 34,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              'avg',
-              style: TextStyle(
-                fontSize: 12,
-                color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  right: 18.0, left: 12.0, top: 24, bottom: 12),
+              child: LineChart(
+                mainData(),
               ),
             ),
           ),
@@ -61,216 +42,113 @@ class _DividendOvertimeChartsState extends State<DividendOvertimeCharts> {
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-        fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white);
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('MAR', style: style);
-        break;
-      case 4:
-        text = const Text('JUN', style: style);
-        break;
-      case 6:
-        text = const Text('SEP', style: style);
-        break;
-      case 8:
-        text = const Text('OCT', style: style);
-        break;
-      case 10:
-        text = const Text('Nov', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
-    }
-
+    final Widget text = Container(
+      width: 8.0,
+      // color: Colors.amber,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: charts?.length,
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.zero,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          final String label = charts![index].label.toString() ?? "";
+          return Text(
+            label[value.toInt()],
+            style: stylePTSansBold(
+              color: Colors.white,
+              fontSize: 8,
+              decoration: TextDecoration.none,
+            ),
+          );
+        },
+      ),
+    );
     return SideTitleWidget(
       axisSide: meta.axisSide,
+      space: 1.0,
       child: text,
     );
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-        fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white);
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = '10K';
-        break;
-      case 2:
-        text = '20K';
-        break;
-      case 3:
-        text = '30k';
-        break;
-      case 4:
-        text = '40K';
-        break;
-      case 5:
-        text = '50k';
-        break;
-      default:
-        return Container();
-    }
-
-    return Text(text, style: style, textAlign: TextAlign.left);
+    final Widget text = Container(
+      width: 8.0,
+      // color: Colors.amber,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: charts?.length,
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.zero,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          final String label = charts![index].chartInfoYield.toString() ?? "";
+          return Transform.rotate(
+            angle: -math.pi / 4,
+            child: Text(
+              label[value.toInt()],
+              style: stylePTSansBold(
+                color: Colors.white,
+                fontSize: 8,
+                decoration: TextDecoration.none,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 1.0,
+      child: text,
+    );
   }
 
   LineChartData mainData() {
+    double minY = getMinY(charts!);
+    double maxY = getMinY(charts!);
     return LineChartData(
-        gridData: FlGridData(
-          show: true,
-          drawVerticalLine: true,
-          horizontalInterval: 1,
-          verticalInterval: 1,
-          getDrawingHorizontalLine: (value) {
-            return const FlLine(
-              color: Colors.grey,
-              strokeWidth: 1,
-            );
-          },
-          // getDrawingVerticalLine: (value) {
-          //   return const FlLine(
-          //     color: Colors.grey,
-          //     strokeWidth: 1,
-          //   );
-          // },
-        ),
-        titlesData: FlTitlesData(
-          show: true,
-          rightTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          topTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 25,
-              interval: 1,
-              getTitlesWidget: bottomTitleWidgets,
-              //update it with api response
-            ),
-          ),
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              // interval: 1,
-              getTitlesWidget: leftTitleWidgets,
-              reservedSize: 35,
-            ),
-          ),
-        ),
-        borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: const Color(0xff37434d)),
-        ),
-        minX: 0,
-        maxX: 12,
-        minY: 0,
-        maxY: 6,
-        lineBarsData: [
-          LineChartBarData(
-            spots: const [
-              FlSpot(0, 3),
-              FlSpot(2.6, 2),
-              FlSpot(4.9, 5),
-              FlSpot(6.8, 3.1),
-              FlSpot(8, 4),
-              FlSpot(9.5, 3),
-              FlSpot(11, 4),
-            ],
-            isCurved: true,
-            gradient: LinearGradient(
-              colors: gradientColors,
-            ),
-            barWidth: 5,
-            isStrokeCapRound: true,
-            dotData: const FlDotData(
-              show: false,
-            ),
-            // belowBarData: BarAreaData(
-            //   show: true,
-            //   gradient: LinearGradient(
-            //     colors: gradientColors
-            //         .map((color) => color.withOpacity(0.3))
-            //         .toList(),
-            //   ),
-            // ),
-          ),
-        ],
-        lineTouchData: LineTouchData(
-          touchCallback:
-              (FlTouchEvent event, LineTouchResponse? touchResponse) async {
-            if (event is FlTapUpEvent || event is FlPanEndEvent) {
-              try {
-                if (Platform.isAndroid) {
-                  bool isVibe = await Vibration.hasVibrator() ?? false;
-                  if (isVibe) {
-                    Vibration.vibrate(
-                        pattern: [50, 50, 79, 55], intensities: [1, 10]);
-                  }
-                } else {
-                  HapticFeedback.lightImpact();
-                }
-                // ignore: empty_catches
-              } catch (e) {}
-            }
-          },
-          handleBuiltInTouches: true,
-          // touchTooltipData: LineTouchTooltipData(
-          //   tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-          // ),
-        ));
-  }
-
-  LineChartData avgData() {
-    return LineChartData(
-      lineTouchData: const LineTouchData(enabled: false),
       gridData: FlGridData(
         show: true,
-        drawHorizontalLine: true,
-        verticalInterval: 1,
-        horizontalInterval: 1,
-        getDrawingVerticalLine: (value) {
+        drawVerticalLine: true,
+        getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: Color(0xff37434d),
+            color: Color.fromARGB(100, 100, 100, 100),
             strokeWidth: 1,
           );
         },
-        getDrawingHorizontalLine: (value) {
+        getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Color(0xff37434d),
+            color: Color.fromARGB(100, 100, 100, 100),
             strokeWidth: 1,
           );
         },
       ),
       titlesData: FlTitlesData(
         show: true,
+        rightTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        topTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 22,
+            // interval: 1,
             getTitlesWidget: bottomTitleWidgets,
-            interval: 1,
+
+            //update it with api response
           ),
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
+            // interval: 1,
             getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
-            interval: 1,
+            reservedSize: 22,
           ),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
         ),
       ),
       borderData: FlBorderData(
@@ -278,49 +156,41 @@ class _DividendOvertimeChartsState extends State<DividendOvertimeCharts> {
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
+      maxX: charts!.length.toDouble() - 1,
+      minY: minY,
+      maxY: maxY,
       lineBarsData: [
         LineChartBarData(
           spots: const [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
+            FlSpot(0, 3),
+            FlSpot(2.6, 2),
+            FlSpot(4.9, 5),
+            FlSpot(6.8, 3.1),
+            FlSpot(8, 4),
+            FlSpot(9.5, 3),
+            FlSpot(11, 4),
           ],
           isCurved: true,
-          gradient: LinearGradient(
-            colors: [
-              ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                  .lerp(0.2)!,
-              ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                  .lerp(0.2)!,
-            ],
-          ),
+          color: Colors.green,
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: const FlDotData(
             show: false,
           ),
-          belowBarData: BarAreaData(
-            show: true,
-            gradient: LinearGradient(
-              colors: [
-                ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                    .lerp(0.2)!
-                    .withOpacity(0.1),
-                ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                    .lerp(0.2)!
-                    .withOpacity(0.1),
-              ],
-            ),
-          ),
         ),
       ],
     );
+  }
+
+  double getMinY(List<DividendCharts> data) {
+    return data
+        .map((e) => double.parse(e.chartInfoYield!.replaceAll('%', '')) / 100)
+        .reduce((min, value) => min < value ? min : value);
+  }
+
+  double getMaxY(List<DividendCharts> data) {
+    return data
+        .map((e) => double.parse(e.chartInfoYield!.replaceAll('%', '')) / 100)
+        .reduce((max, value) => max > value ? max : value);
   }
 }

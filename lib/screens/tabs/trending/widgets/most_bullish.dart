@@ -35,7 +35,7 @@ class MostBullish extends StatelessWidget {
         Visibility(
           visible: data?.text?.mostBullish != '',
           child: Padding(
-              padding: EdgeInsets.only(bottom: isPhone ? 20.sp : 5.sp),
+              padding: EdgeInsets.only(bottom: isPhone ? 5 : 5.sp),
               child: CustomReadMoreText(
                 text: data?.text?.mostBullish ?? "",
               )

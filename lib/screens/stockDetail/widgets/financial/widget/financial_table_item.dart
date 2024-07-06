@@ -1,79 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/utils/theme.dart'; // Adjust based on your actual import path
+import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
-class FinancialTableItem extends StatefulWidget {
-  const FinancialTableItem({Key? key}) : super(key: key);
-
-  @override
-  _FinancialTableItemState createState() => _FinancialTableItemState();
-}
-
-class _FinancialTableItemState extends State<FinancialTableItem> {
-  List<DataColumn> _columns = [];
-  List<DataRow> _rows = [];
+class FinancialTableItem extends StatelessWidget {
+  const FinancialTableItem({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _initializeData();
-  }
-
-  void _initializeData() {
+  Widget build(BuildContext context) {
     final financialData =
-        Provider.of<StockDetailProviderNew>(context, listen: false)
-            .sdFinancialArray;
+        Provider.of<StockDetailProviderNew>(context).sdFinancialArray;
 
-    if (financialData != null && financialData.isNotEmpty) {
-      _columns = _createColumns(financialData.first);
-      _rows = financialData.map((data) => _createRows(data)).toList();
+    if (financialData == null || financialData.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
     }
+
+    final List<Map<String, dynamic>> typedFinancialData =
+        List<Map<String, dynamic>>.from(financialData);
+
+    final transformedData = _transformData(typedFinancialData);
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        border: TableBorder.all(
+          color: ThemeColors.greyBorder,
+        ),
+        columnSpacing: 20,
+        columns: _createColumns(transformedData.first),
+        rows:
+            transformedData.map((data) => _createRows(context, data)).toList(),
+      ),
+    );
   }
 
   List<DataColumn> _createColumns(Map<String, dynamic> data) {
     return data.keys.map((key) {
       return DataColumn(
         label: Text(
-          key,
+          "",
           style: stylePTSansRegular(),
         ),
       );
     }).toList();
   }
 
-  DataRow _createRows(Map<String, dynamic> data) {
+  DataRow _createRows(BuildContext context, Map<String, dynamic> data) {
     return DataRow(
-      cells: data.values.map((value) {
+      cells: data.entries.map((entry) {
+        final value = entry.value;
+        final isLink =
+            value is String && Uri.tryParse(value)?.hasAbsolutePath == true;
+        Utils().showLog('Is valid URLentry: $entry');
+        Utils().showLog('Is valid URL123444: ${key == "Key"}');
+
         return DataCell(
-          Text(
-            value.toString(),
-            style: stylePTSansRegular(),
-          ),
+          isLink
+              ? InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    openUrl(entry.value);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Icon(
+                      Icons.info_rounded,
+                      color: ThemeColors.accent,
+                      size: 20,
+                    ),
+                  ),
+                )
+              : Text(
+                  value.toString(),
+                  style: stylePTSansRegular(),
+                ),
         );
       }).toList(),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<StockDetailProviderNew>(
-      builder: (context, provider, _) {
-        final financialData = provider.sdFinancialArray;
+  List<Map<String, dynamic>> _transformData(
+      List<Map<String, dynamic>> originalData) {
+    if (originalData.isEmpty) return [];
 
-        return financialData != null && financialData.isNotEmpty
-            ? SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  border: TableBorder.all(color: Colors.white),
-                  columnSpacing: 20,
-                  columns: _columns,
-                  rows: _rows,
-                ),
-              )
-            : const Center(child: CircularProgressIndicator());
-      },
-    );
+    final keys = originalData.first.keys.toList();
+    final transformedData = <Map<String, dynamic>>[];
+
+    for (var key in keys) {
+      final row = <String, dynamic>{'Key': key};
+      for (var i = 0; i < originalData.length; i++) {
+        row['Value $i'] = originalData[i][key];
+      }
+      transformedData.add(row);
+    }
+    Utils().showLog('Is valid URL122: $transformedData');
+
+    return transformedData;
   }
 
   TextStyle stylePTSansRegular() {

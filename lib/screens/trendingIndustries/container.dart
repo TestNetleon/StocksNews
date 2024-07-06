@@ -47,7 +47,7 @@ class _TrendingIndustriesContainerState
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          5,
           Dimen.padding.sp,
           0,
         ),

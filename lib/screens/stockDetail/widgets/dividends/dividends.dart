@@ -7,6 +7,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_overtime_charts.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_payment_barchart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/sd_dividends_history.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
@@ -14,6 +15,7 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
@@ -25,6 +27,7 @@ import '../../../../widgets/disclaimer_widget.dart';
 
 class SdDividends extends StatefulWidget {
   final String? symbol;
+
   const SdDividends({super.key, this.symbol});
 
   @override
@@ -60,6 +63,7 @@ class _SdDividendsState extends State<SdDividends> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+
     return BaseUiContainer(
       hasData: !provider.isLoadingDividends && provider.dividends != null,
       isLoading: provider.isLoadingDividends,
@@ -95,17 +99,10 @@ class _SdDividendsState extends State<SdDividends> {
                         },
                       ),
                       const SpacerVertical(height: 20),
-                      // ListView.builder(
-                      //   padding: const EdgeInsets.only(top: 0, bottom: 20),
-                      //   shrinkWrap: true,
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   itemBuilder: (BuildContext context, int index) {
-                      //     DividendCharts? data = provider.dividends?.chartInfo?[index];
-                      //     return  DividendOvertimeCharts(data: data,);
-                      //   },
-                      // ),
+                      // DividendOvertimeCharts(
+                      //     charts: provider.dividends?.chartInfo),
                       const SpacerVertical(height: 20),
-                      DividendPaymentBarchart(),
+                      //DividendPaymentBarchart(),
                       const SpacerVertical(height: 20),
                       Visibility(
                         visible:

@@ -6,18 +6,18 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
-class BarChartSample extends StatefulWidget {
-  const BarChartSample({this.data, super.key});
+class BarChartIncome extends StatefulWidget {
+  const BarChartIncome({this.data, super.key});
   final SdFinancialRes? data;
   final Color leftBarColor = const Color.fromARGB(255, 7, 181, 255);
   final Color rightBarColor = ThemeColors.accent;
   final Color avgColor = Colors.orange;
 
   @override
-  State<StatefulWidget> createState() => BarChartSampleState();
+  State<StatefulWidget> createState() => BarChartIncomeState();
 }
 
-class BarChartSampleState extends State<BarChartSample> {
+class BarChartIncomeState extends State<BarChartIncome> {
   final double width = 10.sp;
   final BorderRadius? radius = BorderRadius.all(Radius.circular(0.sp));
 
@@ -42,58 +42,50 @@ class BarChartSampleState extends State<BarChartSample> {
 
   void intFunction() {
     charts = widget.data?.chart?.sublist(0, 5);
-    chartsPlaceHolder = null;
 
     setState(() {});
-
-    if (charts?[4].totalAssets != null) {
-      if (charts != null) chartsPlaceHolder = charts;
-
+    if (charts?[4].revenue != null) {
       BarChartGroupData barGroup1 = makeGroupData(
-          0,
-          (charts?[4].totalAssets == null || (charts?[4].totalAssets ?? 0) < 0)
-              ? 0.0
-              : double.parse("${charts?[4].totalAssets}"),
-          charts?[4].totalLiabilities == null ||
-                  (charts?[4].totalLiabilities ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![4].totalLiabilities}"));
+        0,
+        (charts?[4].revenue == null || (charts![4].revenue ?? 0) < 0)
+            ? 0.0
+            : double.parse("${charts?[4].revenue}"),
+        charts?[4].netIncome == null || (charts![4].netIncome ?? 0) < 0
+            ? 0.0
+            : double.parse("${charts![4].netIncome}"),
+      );
       BarChartGroupData barGroup2 = makeGroupData(
           1,
-          charts?[3].totalAssets == null || (charts?[3].totalAssets ?? 0) < 0
+          charts?[3].revenue == null || (charts![3].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${charts?[3].totalAssets}"),
-          charts?[3].totalLiabilities == null ||
-                  (charts?[3].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[3].revenue}"),
+          charts?[3].netIncome == null || (charts![3].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${charts![3].totalLiabilities}"));
+              : double.parse("${charts![3].netIncome}"));
       BarChartGroupData barGroup3 = makeGroupData(
           2,
-          charts?[2].totalAssets == null || (charts?[2].totalAssets ?? 0) < 0
+          charts?[2].revenue == null || (charts![2].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${charts?[2].totalAssets}"),
-          charts?[2].totalLiabilities == null ||
-                  (charts?[2].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[2].revenue}"),
+          charts?[2].netIncome == null || (charts![2].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${charts![2].totalLiabilities}"));
+              : double.parse("${charts![2].netIncome}"));
       BarChartGroupData barGroup4 = makeGroupData(
           3,
-          charts?[1].totalAssets == null || (charts?[1].totalAssets ?? 0) < 0
+          charts?[1].revenue == null || (charts![1].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${charts?[1].totalAssets}"),
-          charts?[1].totalLiabilities == null ||
-                  (charts?[1].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[1].revenue}"),
+          charts?[1].netIncome == null || (charts![1].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${charts![1].totalLiabilities}"));
+              : double.parse("${charts![1].netIncome}"));
       BarChartGroupData barGroup5 = makeGroupData(
           4,
-          charts?[0].totalAssets == null || (charts?[0].totalAssets ?? 0) < 0
+          charts?[0].revenue == null || (charts![0].revenue ?? 0) < 0
               ? 0.0
-              : double.parse("${charts?[0].totalAssets}"),
-          charts?[0].totalLiabilities == null ||
-                  (charts?[0].totalLiabilities ?? 0) < 0
+              : double.parse("${charts?[0].revenue}"),
+          charts?[0].netIncome == null || (charts![0].netIncome ?? 0) < 0
               ? 0.0
-              : double.parse("${charts![0].totalLiabilities}"));
+              : double.parse("${charts![0].netIncome}"));
       final items = [
         barGroup1,
         barGroup2,
@@ -106,12 +98,12 @@ class BarChartSampleState extends State<BarChartSample> {
       showingBarGroups = rawBarGroups;
       final maxRevenue = charts?.isNotEmpty == true
           ? widget.data!.chart!
-              .map((e) => e.totalAssets)
+              .map((e) => e.revenue)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
       final maxNetIncome = charts?.isNotEmpty == true
           ? charts
-              ?.map((e) => e.totalLiabilities)
+              ?.map((e) => e.netIncome)
               .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
           : 0;
       maxAbsValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
@@ -125,7 +117,7 @@ class BarChartSampleState extends State<BarChartSample> {
     double positiveInterval = maxAbsValue / 5; // Example positive interval
     double negativeInterval = minAbsValue / 5;
 
-    return chartsPlaceHolder == null
+    return charts == null
         ? Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -137,9 +129,6 @@ class BarChartSampleState extends State<BarChartSample> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
-              minY: charts?[0].operatingCashFlow1 == null
-                  ? null
-                  : -double.parse("$maxAbsValue"),
               titlesData: FlTitlesData(
                 show: true,
                 leftTitles: const AxisTitles(
@@ -159,7 +148,8 @@ class BarChartSampleState extends State<BarChartSample> {
                   sideTitles: SideTitles(
                     reservedSize: 52,
                     showTitles: true,
-                    interval: maxAbsValue / 5, // Default value to avoid division by zero
+                    interval: maxAbsValue /
+                        5, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
                       if (charts?[4].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);

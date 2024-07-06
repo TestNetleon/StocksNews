@@ -68,7 +68,8 @@ class _TrendingViewState extends State<TrendingView> {
                         loading: provider.isLoadingBullish,
                         error: !provider.isLoadingBullish &&
                                 (provider.mostBullish?.mostBullish == null ||
-                                    provider.mostBullish?.mostBullish ?.isEmpty ==
+                                    provider.mostBullish?.mostBullish
+                                            ?.isEmpty ==
                                         true)
                             ? TrendingError.bullish
                             : null,
