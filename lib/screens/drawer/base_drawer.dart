@@ -57,6 +57,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
+
     return SafeArea(
       child: Stack(
         alignment: Alignment.centerRight,

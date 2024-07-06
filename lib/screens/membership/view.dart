@@ -88,12 +88,13 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
           //   color: const Color.fromARGB(255, 253, 245, 4),
           // ),
           borderRadius: BorderRadius.circular(5),
-          color: provider.user?.membership?.displayName?.toLowerCase() == "gold"
+          color: provider.user?.membership?.displayName == "Gold"
               ? const Color.fromARGB(255, 50, 48, 0)
-              : provider.user?.membership?.displayName?.toLowerCase() ==
-                      "silver"
+              : provider.user?.membership?.displayName == "Silver"
                   ? const Color.fromARGB(255, 56, 56, 56)
-                  : const Color.fromARGB(255, 50, 27, 0),
+                  : provider.user?.membership?.displayName == "Bronze"
+                      ? const Color.fromARGB(255, 50, 27, 0)
+                      : ThemeColors.background,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

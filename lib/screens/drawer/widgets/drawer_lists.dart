@@ -57,13 +57,14 @@ List<DrawerRes> marketData = [
     },
   ),
   DrawerRes(
-      iconData: Icons.precision_manufacturing_outlined,
-      icon: Images.feedback,
-      text: "Gap Up/Down Stocks",
-      onTap: () => Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const GapUpDownStocks()),
-          )),
+    iconData: Icons.precision_manufacturing_outlined,
+    icon: Images.feedback,
+    text: "Gap Up/Down Stocks",
+    onTap: () => Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const GapUpDownStocks()),
+    ),
+  ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
     icon: Images.insider,

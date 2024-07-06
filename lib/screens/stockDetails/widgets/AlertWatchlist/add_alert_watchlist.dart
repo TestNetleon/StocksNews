@@ -81,7 +81,7 @@ class AddToAlertWatchlist extends StatelessWidget {
     //         false;
 
     bool isPresentWatchlist = userProvider.user?.membership?.permissions
-            ?.any((element) => element == "add-alert") ??
+            ?.any((element) => element == "add-watchlist") ??
         false;
 
     // bool isPresentWatchlistE = subscription?.permissions

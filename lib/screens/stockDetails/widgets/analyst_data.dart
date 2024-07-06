@@ -1,16 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -18,8 +14,6 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/overview/sd_overview.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -1001,7 +995,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                     : provider.isLoadingOverview
                         ? const Loading()
                         : const SizedBox();
-        ;
       },
     );
   }

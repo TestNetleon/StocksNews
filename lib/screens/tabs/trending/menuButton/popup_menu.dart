@@ -58,7 +58,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
     //         false;
 
     bool isPresentWatchlist = provider.user?.membership?.permissions
-            ?.any((element) => element == "add-alert") ??
+            ?.any((element) => element == "add-watchlist") ??
         false;
 
     // bool isPresentWatchlistE = subscription?.permissions
@@ -183,7 +183,6 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                 if ((!purchased && !isPresentWatchlist)) {
                   await _subscribe();
                 }
-
                 if ((purchased && isPresentWatchlist)) {
                   await onClickWatchlist();
                 }

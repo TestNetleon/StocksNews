@@ -158,7 +158,7 @@ class _StockDetailState extends State<StockDetail> {
                 color: ThemeColors.background.withOpacity(0.8),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: AddToAlertWatchlist(),
+              child: const AddToAlertWatchlist(),
             ),
           ],
         ),
