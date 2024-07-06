@@ -203,7 +203,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool selectedTwo = false,
   }) async {
     Map request = {
-      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": _tabRes?.keyStats?.symbol ?? "",
       "alert_name": alertName,
       "sentiment_spike": selectedOne ? "yes" : "no",
@@ -240,7 +241,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     notifyListeners();
 
     Map request = {
-      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": _tabRes?.keyStats?.symbol ?? "",
     };
     try {
@@ -278,7 +280,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusTab(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -394,7 +397,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusDividends(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -404,7 +408,8 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         _dividends = sdDividendsResFromJson(jsonEncode(response.data));
-        _extraDividends = (response.extra is Extra ? response.extra as Extra : null);
+        _extraDividends =
+            (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _dividends = null;
         _errorDividends = response.message;
@@ -697,7 +702,8 @@ class StockDetailProviderNew extends ChangeNotifier {
   Status get statusOverview => _statusOverview;
 
   bool get isLoadingOverview => _statusOverview == Status.loading;
-
+  String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
   Extra? _extraOverview;
   Extra? get extraOverview => _extraOverview;
 
@@ -711,6 +717,7 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   Future getOverviewData({
     String? symbol,
+    pointsDeducted,
   }) async {
     setStatusOverview(Status.loading);
     try {
@@ -977,7 +984,8 @@ class StockDetailProviderNew extends ChangeNotifier {
                           : "1hour";
 
       Map request = {
-        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol,
         "range": newRange,
       };

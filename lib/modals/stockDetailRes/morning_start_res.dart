@@ -1,3 +1,5 @@
+import 'package:stocks_news_new/modals/stockDetailRes/lock_information_res.dart';
+
 class MorningStar {
   final dynamic id;
   final dynamic morningStarId;
@@ -25,6 +27,7 @@ class MorningStar {
   final dynamic createdAt;
   final dynamic pdfUrl;
   final dynamic updated;
+  final LockInformation? lockInformation;
   final dynamic description;
 
   MorningStar({
@@ -53,6 +56,7 @@ class MorningStar {
     required this.updatedAt,
     required this.createdAt,
     required this.pdfUrl,
+    this.lockInformation,
     required this.updated,
     required this.description,
   });
@@ -81,6 +85,9 @@ class MorningStar {
         quantFinancialHealthDate: json["QuantFinancialHealthDate"],
         pdfStatus: json["pdf_status"],
         updatedAt: json["updated_at"],
+        lockInformation: json["lock_information"] == null
+            ? null
+            : LockInformation.fromJson(json["lock_information"]),
         createdAt: json["created_at"],
         pdfUrl: json["pdf_url"],
         updated: json["updated"],
@@ -114,6 +121,7 @@ class MorningStar {
         "created_at": createdAt,
         "pdf_url": pdfUrl,
         "updated": updated,
+        "lock_information": lockInformation?.toJson(),
         "description": description,
       };
 }

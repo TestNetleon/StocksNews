@@ -16,6 +16,7 @@ import 'price_tag.dart';
 import 'top_widget.dart';
 
 class SdOverview extends StatefulWidget {
+  static const String path = "OverviewDetails";
   final String? symbol;
   const SdOverview({super.key, this.symbol});
 
@@ -77,9 +78,9 @@ class _SdOverviewState extends State<SdOverview> {
                 const SpacerVertical(height: 12),
                 Visibility(
                   visible: provider.overviewRes?.morningStart != null,
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(bottom: Dimen.padding),
-                    child: StockDetailAnalystData(),
+                    child: StockDetailAnalystData(symbol: widget.symbol ?? ""),
                   ),
                 ),
                 SdOverviewChart(symbol: widget.symbol ?? ""),

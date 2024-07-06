@@ -7,6 +7,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_overtime_charts.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_payment_barchart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/sd_dividends_history.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
@@ -97,7 +98,7 @@ class _SdDividendsState extends State<SdDividends> {
                           return SdTopCard(top: top);
                         },
                       ),
-                      // const SpacerVertical(height: 20),
+                      const SpacerVertical(height: 20),
                       // DividendOvertimeCharts(
                       //     charts: provider.dividends?.chartInfo),
                       const SpacerVertical(height: 20),

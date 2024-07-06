@@ -207,8 +207,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                           ),
                                         ],
                                       ),
-                                      if (data?.chart?[0].operatingCashFlow1 !=
-                                          null)
+                                      if (data?.chart?[0].operatingCashFlow1 != null)
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
