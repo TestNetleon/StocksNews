@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:stocks_news_new/database/databaseModals/login_visibility.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
@@ -102,11 +103,13 @@ class DatabaseHelper {
 
   Future<bool> fetchLoginDialogData(screen) async {
     final db = await instance.database;
+
     final result = await db.query(
       dbLoginVisibilityTable,
       where: '$screenName = ?',
       whereArgs: [screen],
     );
+
     if (result.isNotEmpty) {
       LoginVisibility visible = LoginVisibility.fromJson(result.first);
 
