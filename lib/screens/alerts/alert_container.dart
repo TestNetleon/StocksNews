@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/alerts_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
-import 'package:stocks_news_new/widgets/common_stock_item.dart';
+import 'package:stocks_news_new/screens/alerts/alert_item.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -13,7 +13,7 @@ class AlertContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AlertProvider provider = context.watch<AlertProvider>();
-//
+
     return RefreshControl(
       onRefresh: () async => provider.getAlerts(showProgress: false),
       canLoadMore: provider.canLoadMore,
@@ -24,18 +24,18 @@ class AlertContainer extends StatelessWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           AlertData data = provider.data![index];
-          // return AlertsItem(
-          //   data: data,
-          //   index: index,
-          // );
-          return CommonStockItem(
-            change: "${data.changes}",
-            changesPercentage: data.changesPercentage,
-            image: data.image,
-            name: data.name,
-            price: data.price,
-            symbol: data.symbol,
+          return AlertsItem(
+            data: data,
+            index: index,
           );
+          // return CommonStockItem(
+          //   change: "${data.changes}",
+          //   changesPercentage: data.changesPercentage,
+          //   image: data.image,
+          //   name: data.name,
+          //   price: data.price,
+          //   symbol: data.symbol,
+          // );
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SpacerVertical(height: 12);

@@ -106,75 +106,82 @@ class AlertsItem extends StatelessWidget {
             MaterialPageRoute(builder: (_) => StockDetail(symbol: data.symbol)),
           );
         },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(0.sp),
-              // child: Container(
-              //   padding: EdgeInsets.all(5.sp),
-              //   width: 43.sp,
-              //   height: 43.sp,
-              //   child: ThemeImageView(url: data.image),
-              // ),
-              child: Container(
-                width: 43.sp,
-                height: 43.sp,
-                padding: EdgeInsets.all(5.sp),
-                child: CachedNetworkImagesWidget(
-                  data.image,
-                  // width: 30,
-                  // height: 30,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+            color: ThemeColors.background,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(0.sp),
+                // child: Container(
+                //   padding: EdgeInsets.all(5.sp),
+                //   width: 43.sp,
+                //   height: 43.sp,
+                //   child: ThemeImageView(url: data.image),
+                // ),
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  padding: EdgeInsets.all(5.sp),
+                  child: CachedNetworkImagesWidget(
+                    data.image,
+                    // width: 30,
+                    // height: 30,
+                  ),
                 ),
               ),
-            ),
-            const SpacerHorizontal(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const SpacerHorizontal(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.symbol,
+                      style: stylePTSansBold(fontSize: 18),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SpacerVertical(height: 5),
+                    Text(
+                      data.name,
+                      style: stylePTSansRegular(
+                        color: ThemeColors.greyText,
+                        fontSize: 12,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              const SpacerHorizontal(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    data.symbol,
-                    style: stylePTSansBold(fontSize: 14),
+                    data.price,
+                    style: stylePTSansBold(fontSize: 18),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    data.name,
+                    "${data.displayChange} (${data.changesPercentage}%)",
                     style: stylePTSansRegular(
-                      color: ThemeColors.greyText,
-                      fontSize: 12,
+                      fontSize: 14,
+                      color: data.changesPercentage > 0
+                          ? ThemeColors.accent
+                          : Colors.red,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-            ),
-            const SpacerHorizontal(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  data.price,
-                  style: stylePTSansBold(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SpacerVertical(height: 5),
-                Text(
-                  "${data.displayChange} (${data.changesPercentage}%)",
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: data.changesPercentage > 0
-                        ? ThemeColors.accent
-                        : Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
