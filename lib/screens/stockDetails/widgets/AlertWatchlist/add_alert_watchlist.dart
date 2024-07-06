@@ -250,6 +250,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             //               await _showAlertPopup(
             //                   navigatorKey.currentContext!, symbol);
             //             }
+
             //             // await askToSubscribe();
             //             // await _showAlertPopup(
             //             //     navigatorKey.currentContext!, symbol);
@@ -416,6 +417,7 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                         0;
               //                     if (wlistOn == 0) {
               //                       log("-----GET TAB CALLING");
+
               //                       if (userProvider.user?.subscriptionPurchased == 0) {
               //                         await askToSubscribe();
               //                       }
@@ -425,6 +427,7 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                             .addToWishList();
               //                       }
               //                       // await askToSubscribe();
+
               //                       // await context
               //                       //     .read<StockDetailProviderNew>()
               //                       //     .addToWishList();
@@ -445,6 +448,7 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                 ? () async {
               //                     _vibrate();
               //                     // await askToSubscribe();
+
               //                     // await context
               //                     //     .read<StockDetailProviderNew>()
               //                     //     .addToWishList();
@@ -466,6 +470,7 @@ class AddToAlertWatchlist extends StatelessWidget {
               //                     );
               //                   };
             },
+
             // onTap: userProvider.user == null
             //     ? () async {
             //         _vibrate();
@@ -485,6 +490,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             //                 0;
             //             if (wlistOn == 0) {
             //               log("-----GET TAB CALLING");
+
             //               if (userProvider.user?.subscriptionPurchased == 0) {
             //                 await askToSubscribe();
             //               }
@@ -494,6 +500,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             //                     .addToWishList();
             //               }
             //               // await askToSubscribe();
+
             //               // await context
             //               //     .read<StockDetailProviderNew>()
             //               //     .addToWishList();
@@ -514,6 +521,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             //         ? () async {
             //             _vibrate();
             //             // await askToSubscribe();
+
             //             // await context
             //             //     .read<StockDetailProviderNew>()
             //             //     .addToWishList();
@@ -563,6 +571,7 @@ class AddToAlertWatchlist extends StatelessWidget {
         symbol: symbol,
       ),
     );
+
     // showDialog(
     //     context: context,
     //     builder: (context) {
