@@ -193,8 +193,6 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
               ),
               const SpacerHorizontal(width: 4),
               PopUpMenuButtonCommon(
-                subscription:
-                    context.read<TopTrendingProvider>().extra?.subscription,
                 symbol: widget.data.symbol,
                 onClickAlert: () => _alertElse(context),
                 onClickWatchlist: () => _watchlistElse(context),

@@ -603,13 +603,6 @@ class _MostBullishItemState extends State<MostBullishItem> {
     });
   }
 
-  Future _subscribe() async {
-    // await RevenueCatService.initializeSubscription();
-    await navigatorKey.currentContext!
-        .read<UserProvider>()
-        .updateUser(subscriptionPurchased: 1);
-  }
-
   void _vibrate() async {
     if (Platform.isAndroid) {
       bool isVibe = await Vibration.hasVibrator() ?? false;

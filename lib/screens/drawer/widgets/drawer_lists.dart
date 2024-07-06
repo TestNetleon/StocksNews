@@ -14,6 +14,7 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/membership/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
@@ -383,6 +384,16 @@ List<DrawerRes> aboutTiles = [
     },
   ),
   DrawerRes(
+    iconData: Icons.wallet_membership,
+    text: "My Membership",
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const MembershipIndex()),
+      );
+    },
+  ),
+  DrawerRes(
     iconData: Icons.person_pin_outlined,
     text: "Portfolio",
     onTap: () {
@@ -435,7 +446,6 @@ List<DrawerRes> aboutTiles = [
   //     );
   //   },
   // ),
-
   DrawerRes(
     iconData: Icons.featured_play_list_outlined,
     text: "What We Do",

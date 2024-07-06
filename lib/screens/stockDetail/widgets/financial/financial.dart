@@ -19,6 +19,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import 'item.dart';
 import 'tab.dart';
+import 'widget/financial_table_item.dart';
 
 class SdFinancial extends StatefulWidget {
   final String? symbol;

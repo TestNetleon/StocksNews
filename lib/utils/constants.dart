@@ -166,6 +166,11 @@ class Images {
 
   static const health = "assets/images/health.png";
   static const viewFile = "assets/images/view_file.png";
+  static const totalPoints = "assets/images/total_points.png";
+  static const activityPoints = "assets/images/activity_point.png";
+  static const totalPoint = "assets/images/total_point.png";
+  static const pointSpent = "assets/images/point_spent.png";
+  static const referPoint = "assets/images/refer_point.png";
 }
 
 class AudioFiles {
