@@ -145,6 +145,11 @@ class Images {
   static const String start2 = "assets/images/2nd_page.png";
   static const String start3 = "assets/images/3rd_page.png";
 
+  static const String tickS = "assets/images/tick.png";
+  static const String reportS = "assets/images/report.png";
+  static const String bellS = "assets/images/bell.png";
+  static const String diamondS = "assets/images/diamond.png";
+
   //share
   static const twitter = "assets/images/twitter_share.png";
   static const whatsapp = "assets/images/whatsapp_share.png";
@@ -158,6 +163,9 @@ class Images {
   static const tickFeedback = "assets/images/tick_feedback.png";
   static const String downloadFile = "assets/images/download_file.png";
   static const refer = "assets/images/refer.png";
+
+  static const health = "assets/images/health.png";
+  static const viewFile = "assets/images/view_file.png";
 }
 
 class AudioFiles {

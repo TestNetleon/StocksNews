@@ -203,13 +203,13 @@ TextStyle styleGeorgiaBold({
   );
 }
 
-TextStyle stylePTSansRegular({
-  color = Colors.white,
-  double fontSize = 15,
-  height = 1.2,
-  letterSpacing = 0.70,
-  decoration,
-}) {
+TextStyle stylePTSansRegular(
+    {color = Colors.white,
+    double fontSize = 15,
+    height = 1.2,
+    letterSpacing = 0.70,
+    decoration,
+    FontStyle? fontStyle}) {
   return TextStyle(
     fontSize: fontSize,
     color: color,
@@ -217,7 +217,7 @@ TextStyle stylePTSansRegular({
     fontWeight: FontWeight.normal,
     height: height,
     decoration: decoration,
-
+    fontStyle: fontStyle,
     decorationColor: color,
     // letterSpacing: letterSpacing,
   );

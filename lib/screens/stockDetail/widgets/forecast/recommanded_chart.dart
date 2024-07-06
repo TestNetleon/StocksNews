@@ -1,16 +1,12 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/analysis_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/analyst_forecast.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/linear_bar.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -29,15 +25,15 @@ class RecommandedForcastingChart extends StatelessWidget {
             color: Colors.black,
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(color: Colors.black),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                   color: Colors.black,
                   offset: Offset(0, 1),
                   spreadRadius: 2,
                   blurRadius: 2)
             ]),
-        padding: EdgeInsets.all(8.0),
-        margin: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(5.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -128,15 +124,15 @@ class RecommandedForcastingChart extends StatelessWidget {
                                     linearStrokeCap: LinearStrokeCap.round,
                                     animateFromLastPercent: true,
                                     isRTL: false,
-                                    barRadius: Radius.elliptical(5, 8),
+                                    barRadius: const Radius.elliptical(5, 8),
                                     progressColor: Colors.green,
-                                    maskFilter:
-                                        MaskFilter.blur(BlurStyle.solid, 3),
+                                    maskFilter: const MaskFilter.blur(
+                                        BlurStyle.solid, 3),
                                   ),
                                   const SpacerHorizontal(width: 2),
                                   Text(
                                     textAlign: TextAlign.start,
-                                    "${data?[index].buy}",
+                                    "${data[index].buy}",
                                     // '0.2',
                                     style: stylePTSansBold(
                                         fontSize: 12, color: Colors.white),
@@ -153,20 +149,20 @@ class RecommandedForcastingChart extends StatelessWidget {
                                     width: 50,
                                     animation: true,
                                     lineHeight: 12.0,
-                                    percent: data![index].sell! / 100,
+                                    percent: data[index].sell! / 100,
                                     animationDuration: 2000,
                                     linearStrokeCap: LinearStrokeCap.round,
                                     animateFromLastPercent: true,
                                     isRTL: false,
-                                    barRadius: Radius.elliptical(5, 8),
+                                    barRadius: const Radius.elliptical(5, 8),
                                     progressColor: Colors.red,
-                                    maskFilter:
-                                        MaskFilter.blur(BlurStyle.solid, 3),
+                                    maskFilter: const MaskFilter.blur(
+                                        BlurStyle.solid, 3),
                                   ),
                                   const SpacerHorizontal(width: 2),
                                   Text(
                                     textAlign: TextAlign.start,
-                                    "${data?[index].sell}",
+                                    "${data[index].sell}",
                                     // '0.2',
                                     style: stylePTSansBold(
                                         fontSize: 12, color: Colors.white),
@@ -183,20 +179,20 @@ class RecommandedForcastingChart extends StatelessWidget {
                                     width: 50,
                                     animation: true,
                                     lineHeight: 12.0,
-                                    percent: data![index].hold! / 100,
+                                    percent: data[index].hold! / 100,
                                     animationDuration: 2000,
                                     linearStrokeCap: LinearStrokeCap.round,
                                     animateFromLastPercent: true,
                                     isRTL: false,
-                                    barRadius: Radius.elliptical(5, 8),
+                                    barRadius: const Radius.elliptical(5, 8),
                                     progressColor: Colors.yellow,
-                                    maskFilter:
-                                        MaskFilter.blur(BlurStyle.solid, 3),
+                                    maskFilter: const MaskFilter.blur(
+                                        BlurStyle.solid, 3),
                                   ),
                                   const SpacerHorizontal(width: 2),
                                   Text(
                                     textAlign: TextAlign.start,
-                                    "${data?[index].hold}",
+                                    "${data[index].hold}",
                                     // '0.2',
                                     style: stylePTSansBold(
                                         fontSize: 12, color: Colors.white),
@@ -231,20 +227,21 @@ class RecommandedForcastingChart extends StatelessWidget {
                               width: 50,
                               animation: true,
                               lineHeight: 12.0,
-                              percent: data![index].buy! / 100,
+                              percent: data[index].buy! / 100,
                               animationDuration: 2000,
                               linearStrokeCap: LinearStrokeCap.round,
                               animateFromLastPercent: true,
                               isRTL: false,
-                              barRadius: Radius.elliptical(5, 8),
+                              barRadius: const Radius.elliptical(5, 8),
                               progressColor: Colors.green,
-                              maskFilter: MaskFilter.blur(BlurStyle.solid, 3),
+                              maskFilter:
+                                  const MaskFilter.blur(BlurStyle.solid, 3),
                             ),
                             const SpacerHorizontal(width: 2),
                             Text(
                               textAlign: TextAlign.start,
                               // '0.5',
-                              "${data?[index].buy}",
+                              "${data[index].buy}",
                               style: stylePTSansBold(
                                   fontSize: 12, color: Colors.white),
                             ),
@@ -260,19 +257,20 @@ class RecommandedForcastingChart extends StatelessWidget {
                               width: 50,
                               animation: true,
                               lineHeight: 12.0,
-                              percent: data![index].sell! / 100,
+                              percent: data[index].sell! / 100,
                               animationDuration: 2000,
                               linearStrokeCap: LinearStrokeCap.round,
                               animateFromLastPercent: true,
                               isRTL: false,
-                              barRadius: Radius.elliptical(5, 8),
+                              barRadius: const Radius.elliptical(5, 8),
                               progressColor: Colors.red,
-                              maskFilter: MaskFilter.blur(BlurStyle.solid, 3),
+                              maskFilter:
+                                  const MaskFilter.blur(BlurStyle.solid, 3),
                             ),
                             const SpacerHorizontal(width: 2),
                             Text(
                               textAlign: TextAlign.start,
-                              "${data?[index].sell}",
+                              "${data[index].sell}",
                               // '0.8',
                               style: stylePTSansBold(
                                   fontSize: 12, color: Colors.white),
@@ -289,19 +287,20 @@ class RecommandedForcastingChart extends StatelessWidget {
                               width: 50,
                               animation: true,
                               lineHeight: 12.0,
-                              percent: data![index].hold! / 100,
+                              percent: data[index].hold! / 100,
                               animationDuration: 2000,
                               linearStrokeCap: LinearStrokeCap.round,
                               animateFromLastPercent: true,
                               isRTL: false,
-                              barRadius: Radius.elliptical(5, 8),
+                              barRadius: const Radius.elliptical(5, 8),
                               progressColor: Colors.yellow,
-                              maskFilter: MaskFilter.blur(BlurStyle.solid, 3),
+                              maskFilter:
+                                  const MaskFilter.blur(BlurStyle.solid, 3),
                             ),
                             const SpacerHorizontal(width: 2),
                             Text(
                               textAlign: TextAlign.start,
-                              "${data?[index].hold}",
+                              "${data[index].hold}",
                               // '0.5',
                               style: stylePTSansBold(
                                   fontSize: 12, color: Colors.white),

@@ -13,9 +13,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
 import '../../../../api/api_response.dart';
-import '../../../../route/my_app.dart';
 import '../../../../service/revenue_cat.dart';
-import '../../../../widgets/custom/alert_popup.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final Subscription? subscription;
@@ -100,7 +98,6 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                 ((purchased || subscription?.purchased == 1) &&
                     (isPresentAlert || isPresentAlertE))) {
               await onClickAlert();
-
               return;
             }
 

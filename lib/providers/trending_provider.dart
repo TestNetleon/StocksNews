@@ -235,12 +235,14 @@ class TrendingProvider extends ChangeNotifier {
       }
       _statusBullish = Status.loaded;
       notifyListeners();
+      return ApiResponse(status: response.status);
     } catch (e) {
       _mostBullish = null;
 
       Utils().showLog(e.toString());
       _statusBullish = Status.loaded;
       notifyListeners();
+      return ApiResponse(status: false);
     }
   }
 
@@ -266,12 +268,14 @@ class TrendingProvider extends ChangeNotifier {
       }
       _statusBearish = Status.loaded;
       notifyListeners();
+      return ApiResponse(status: response.status);
     } catch (e) {
       _mostBearish = null;
 
       Utils().showLog(e.toString());
       _statusBearish = Status.loaded;
       notifyListeners();
+      return ApiResponse(status: false);
     }
   }
 

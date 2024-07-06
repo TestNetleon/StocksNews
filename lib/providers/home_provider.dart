@@ -28,7 +28,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../modals/most_purchased.dart';
@@ -221,6 +221,7 @@ class HomeProvider extends ChangeNotifier {
         url: Apis.homeSlider,
         request: request,
         showProgress: false,
+        updateDatabase: true,
         onRefresh: () => refreshData(null),
       );
       if (response.status) {
@@ -237,21 +238,16 @@ class HomeProvider extends ChangeNotifier {
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
-
         loginTxt = _extra?.loginText;
         signUpTxt = _extra?.signUpText;
-
         totalAlerts = _homeSliderRes?.totalAlerts ?? 0;
         totalWatchList = _homeSliderRes?.totalWatchList ?? 0;
-
         if (_extra?.messageObject != null) {
           Preference.saveLocalDataBase(_extra?.messageObject);
         }
-
         if (_extra?.messageObject?.error != null) {
           Const.errSomethingWrong = _extra?.messageObject?.error ?? "";
           Const.loadingMessage = _extra?.messageObject?.loading ?? "";
-
           if (_extra?.user != null) {
             navigatorKey.currentContext!
                 .read<UserProvider>()
@@ -261,7 +257,6 @@ class HomeProvider extends ChangeNotifier {
 
         if (_extra != null) {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
-          // _checkForNewVersion(response.extra as Extra);
         }
 
         notifyListeners();

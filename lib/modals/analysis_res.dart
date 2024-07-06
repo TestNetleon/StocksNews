@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-AnalysisRes analysisResFromJson(String str) =>  AnalysisRes.fromJson(json.decode(str));
+AnalysisRes analysisResFromJson(String str) =>
+    AnalysisRes.fromJson(json.decode(str));
 
 String analysisResToJson(AnalysisRes data) => json.encode(data.toJson());
 
@@ -14,7 +15,6 @@ class AnalysisRes {
   final num overallPercent;
   final num setimentPercent;
   final String? text;
-  
 
   AnalysisRes({
     this.peersData,
@@ -57,8 +57,6 @@ class AnalysisRes {
         "text": text,
       };
 }
-
-
 
 class PeersDatum {
   final String symbol;

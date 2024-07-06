@@ -8,7 +8,7 @@ import 'package:vibration/vibration.dart';
 
 class DividendPaymentBarchart extends StatefulWidget {
   final DividendCharts? data;
-  DividendPaymentBarchart({super.key, this.data});
+  const DividendPaymentBarchart({super.key, this.data});
 
   @override
   State<DividendPaymentBarchart> createState() =>

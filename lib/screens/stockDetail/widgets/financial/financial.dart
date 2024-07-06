@@ -5,7 +5,6 @@ import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_item.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_three.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/financial/widget/financial_table_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -60,6 +59,8 @@ class _SdFinancialState extends State<SdFinancial> {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     SdFinancialRes? data = provider.sdFinancialChartRes;
     // Utils().showLog(' data111113: ${data?.chart?[0].totalAssets}');
+
+    // List<FinanceStatement>? financeStatements = data?.financeStatement;
 
     return BaseUiContainer(
       hasData:

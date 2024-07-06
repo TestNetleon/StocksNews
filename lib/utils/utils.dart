@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,12 +44,11 @@ bool isEven(index) {
 
 class Utils {
   void showLog(data) {
-    // if (kDebugMode) {
-    print("==================");
-    // log("$data");
-    log("$data");
-    print("==================");
-    // }
+    if (kDebugMode) {
+      print("==================");
+      print("$data");
+      print("==================");
+    }
   }
 }
 
