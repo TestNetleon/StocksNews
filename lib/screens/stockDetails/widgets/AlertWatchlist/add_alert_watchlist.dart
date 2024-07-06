@@ -19,7 +19,6 @@ import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
 import '../../../../providers/home_provider.dart';
@@ -121,13 +120,12 @@ class AddToAlertWatchlist extends StatelessWidget {
               askToSubscribe(
                 onPressed: userProvider.user == null
                     ? () async {
-                        log("message");
+                        //Ask for LOGIN
                         Navigator.pop(context);
                         isPhone ? await loginSheet() : await loginSheetTablet();
                         if (context.read<UserProvider>().user == null) {
                           return;
                         }
-                        log("-----GET TAB CALLING");
                         ApiResponse res = await context
                             .read<StockDetailProviderNew>()
                             .getTabData(symbol: symbol);
@@ -141,6 +139,8 @@ class AddToAlertWatchlist extends StatelessWidget {
                             if (alrtOn == 0) {
                               await Future.delayed(
                                   const Duration(milliseconds: 200));
+
+                              //Check if its not purchased and not having access
                               if (((!purchased ||
                                       subscription?.purchased == 0) &&
                                   (!isPresentAlert || !isPresentAlertE))) {

@@ -403,25 +403,19 @@ import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
 import 'package:stocks_news_new/screens/tabs/trending/menuButton/popup_menu.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
-import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import 'package:vibration/vibration.dart';
-
 import '../../../../utils/dialogs.dart';
 
-//
 class MostBullishItem extends StatefulWidget {
   final bool up;
   final MostBullishData data;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/earnings_res.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
@@ -10,7 +9,6 @@ import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';

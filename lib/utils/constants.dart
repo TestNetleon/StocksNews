@@ -163,6 +163,9 @@ class Images {
   static const tickFeedback = "assets/images/tick_feedback.png";
   static const String downloadFile = "assets/images/download_file.png";
   static const refer = "assets/images/refer.png";
+
+  static const health = "assets/images/health.png";
+  static const viewFile = "assets/images/view_file.png";
 }
 
 class AudioFiles {

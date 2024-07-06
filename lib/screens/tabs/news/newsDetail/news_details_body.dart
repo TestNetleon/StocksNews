@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -12,6 +15,7 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
+import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -24,7 +28,6 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
-//
 import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
@@ -51,20 +54,37 @@ class NewsDetailsBody extends StatefulWidget {
 }
 
 class _NewsDetailsBodyState extends State<NewsDetailsBody> {
-  // ScrollController? _scrollController;
-  // bool _isVisible = true;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // context.read<ScrollControllerProvider>().isVisible = true;
-      context.read<NewsDetailProvider>().getNewsDetailData(
-            showProgress: false,
-            slug: widget.slug,
-            inAppMsgId: widget.inAppMsgId,
-            notificationId: widget.notificationId,
-          );
+      _getInitialData();
     });
+  }
+
+  void _getInitialData() async {
+    DateTime today = DateTime.now();
+
+    log("Today ==>   ${today.toString()}");
+
+    NewsDetailProvider newsProvider = context.read<NewsDetailProvider>();
+    UserProvider userProvider = context.read<UserProvider>();
+    await newsProvider.getNewsDetailData(
+      showProgress: false,
+      slug: widget.slug,
+      inAppMsgId: widget.inAppMsgId,
+      notificationId: widget.notificationId,
+    );
+
+    if (userProvider.user == null) {
+      DatabaseHelper helper = DatabaseHelper();
+      bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
+      if (visible) {
+        Timer(const Duration(seconds: 3), () {
+          loginSheet();
+        });
+      }
+    }
   }
 
   void _onSubmit(value) async {
@@ -73,7 +93,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
 
     if (userProvider.user == null) {
       await loginSheet();
-
       if (context.read<UserProvider>().user != null) {
         await provider.getNewsDetailData(
           showProgress: false,
@@ -92,69 +111,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       type: value,
     );
   }
-
-  // @override
-  // void dispose() {
-  //   _scrollController?.removeListener(_scrollListener);
-  //   _scrollController?.dispose();
-  //   super.dispose();
-  // }
-
-  // void _scrollListener() {
-  //   if (_scrollController?.position.userScrollDirection ==
-  //       ScrollDirection.reverse) {
-  //     // User is scrolling up
-  //     if (_isVisible) {
-  //       setState(() {
-  //         _isVisible = false;
-  //       });
-  //     }
-  //   } else {
-  //     // User is scrolling down
-  //     if (!_isVisible) {
-  //       setState(() {
-  //         _isVisible = true;
-  //       });
-  //     }
-  //   }
-
-  //   Utils().showLog("$_isVisible");
-  // }
-
-// Function to create Text widgets from array data
-  // List<Widget> _buildTextWidgets(List<DetailListType>? data,
-  //     {required BlogsType type}) {
-  //   if (data == null || data.isEmpty) return [];
-
-  //   List<Widget> widgets = [];
-
-  //   // Iterate over the data list using forEach
-  //   for (var detail in data) {
-  //     widgets.add(
-  //       InkWell(
-  //         onTap: () {
-  //           Navigator.push(context, NewsAuthorIndex.path, arguments: {
-  //             "data": detail,
-  //             "type": type,
-  //           });
-  //         },
-  //         child: Text(
-  //           "${detail.name}",
-  //           style: stylePTSansRegular(color: ThemeColors.accent, fontSize: 13),
-  //         ),
-  //       ),
-  //     );
-  //     // Add comma if it's not the last item
-  //     if (detail != data.last) {
-  //       widgets.add(Text(
-  //         ", ",
-  //         style: stylePTSansRegular(color: ThemeColors.accent, fontSize: 13),
-  //       ));
-  //     }
-  //   }
-
-  //   return widgets;
-  // }
 
   void _onLoginClick(context) async {
     await loginSheet();

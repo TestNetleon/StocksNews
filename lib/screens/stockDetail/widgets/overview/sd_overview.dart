@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/overview/range.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/stock_score.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analyst_data.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -73,14 +72,17 @@ class _SdOverviewState extends State<SdOverview> {
                 const SdTopWidgetDetail(),
                 const SpacerVertical(height: 4),
                 const SdTopDisclaimer(),
-                const SpacerVertical(height: 4),
-                const SdTopWidgetRange(),
-                const SpacerVertical(height: 4),
-                SdOverviewChart(symbol: widget.symbol ?? ""),
-                const Padding(
-                  padding: EdgeInsets.only(bottom: Dimen.padding),
-                  child: StockDetailAnalystData(),
+                // const SpacerVertical(height: 4),
+                // const SdTopWidgetRange(),
+                const SpacerVertical(height: 12),
+                Visibility(
+                  visible: provider.overviewRes?.morningStart != null,
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: Dimen.padding),
+                    child: StockDetailAnalystData(),
+                  ),
                 ),
+                SdOverviewChart(symbol: widget.symbol ?? ""),
                 const SpacerVertical(height: 4),
                 const SdCompanyBrief(),
                 const SpacerVertical(height: 4),

@@ -38,18 +38,6 @@ class WatchlistItem extends StatelessWidget {
           const SpacerHorizontal(),
           SlidableAction(
             onPressed: (_) {
-              // showConfirmAlertDialog(
-              //   context: context,
-              //   title: "Removing Stock",
-              //   message:
-              //       "Do you want to remove this stock from your watchlist?",
-              //   okText: "Remove",
-              //   onclick: () {
-              //     context
-              //         .read<WatchlistProvider>()
-              //         .deleteItem(data.id, data.symbol);
-              //   },
-              // );
               popUpAlert(
                 cancel: true,
                 okText: "Remove",
@@ -69,33 +57,6 @@ class WatchlistItem extends StatelessWidget {
             foregroundColor: Colors.white,
             label: 'Remove',
           ),
-          // Expanded(
-          //   child: InkWell(
-          //     splashColor: Colors.black12,
-          //     onTap: (){
-          //       Utils().showLog("****");
-          //     },
-          //     child: Container(
-          //       color: Colors.red,
-          //       child: Column(
-          //         children: [
-          //           Expanded(
-          //             child: Center(
-          //               child: Padding(
-          //                 padding: EdgeInsets.symmetric(horizontal: 12.sp),
-          //                 child: Text(
-          //                   "Delete",
-          //                   style: stylePTSansBold(),
-          //                   textAlign: TextAlign.center,
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
       child: InkWell(
@@ -107,70 +68,77 @@ class WatchlistItem extends StatelessWidget {
             ),
           );
         },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25.sp),
-              child: Container(
-                padding: EdgeInsets.all(5.sp),
-                width: 43.sp,
-                height: 43.sp,
-                // child: ThemeImageView(url: data.image),
-                child: CachedNetworkImagesWidget(
-                  data.image,
-                  // width: 30,
-                  // height: 30,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+            color: ThemeColors.background,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(25.sp),
+                child: Container(
+                  padding: EdgeInsets.all(5.sp),
+                  width: 48,
+                  height: 48,
+                  // child: ThemeImageView(url: data.image),
+                  child: CachedNetworkImagesWidget(
+                    data.image,
+                    // width: 30,
+                    // height: 30,
+                  ),
                 ),
               ),
-            ),
-            const SpacerHorizontal(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const SpacerHorizontal(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.symbol,
+                      style: stylePTSansBold(fontSize: 18),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SpacerVertical(height: 5),
+                    Text(
+                      data.name,
+                      style: stylePTSansRegular(
+                        color: ThemeColors.greyText,
+                        fontSize: 12,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              const SpacerHorizontal(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    data.symbol,
-                    style: stylePTSansBold(fontSize: 14),
+                    data.price,
+                    style: stylePTSansBold(fontSize: 18),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    data.name,
+                    "${data.displayChange} (${data.changesPercentage.toCurrency()}%)",
                     style: stylePTSansRegular(
-                      color: ThemeColors.greyText,
                       fontSize: 12,
+                      color: data.changesPercentage > 0
+                          ? ThemeColors.accent
+                          : Colors.red,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-            ),
-            const SpacerHorizontal(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  data.price,
-                  style: stylePTSansBold(fontSize: 14),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SpacerVertical(height: 5),
-                Text(
-                  "${data.displayChange} (${data.changesPercentage.toCurrency()}%)",
-                  style: stylePTSansRegular(
-                    fontSize: 12,
-                    color: data.changesPercentage > 0
-                        ? ThemeColors.accent
-                        : Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

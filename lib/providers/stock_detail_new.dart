@@ -22,7 +22,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/sd_social_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 import '../api/apis.dart';
