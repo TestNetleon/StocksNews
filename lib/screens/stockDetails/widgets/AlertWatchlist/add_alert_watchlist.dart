@@ -21,7 +21,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
-import '../../../../providers/home_provider.dart';
 import '../../../../service/revenue_cat.dart';
 import '../../../../utils/dialogs.dart';
 import 'alert_popup.dart';
@@ -29,9 +28,7 @@ import 'button.dart';
 
 //
 class AddToAlertWatchlist extends StatelessWidget {
-  final Subscription? subscription;
-
-  const AddToAlertWatchlist({super.key, this.subscription});
+  const AddToAlertWatchlist({super.key});
 
   void _vibrate() async {
     if (Platform.isAndroid) {
@@ -71,25 +68,25 @@ class AddToAlertWatchlist extends StatelessWidget {
     num watchlistOn =
         context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
     UserProvider userProvider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
-    bool purchased = homeProvider.extra?.subscription?.purchased == 1;
+    bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isPresentAlert = homeProvider.extra?.subscription?.permissions
+    bool isPresentAlert = userProvider.user?.membership?.permissions
             ?.any((element) => element == "add-alert") ??
         false;
 
-    bool isPresentAlertE =
-        subscription?.permissions?.any((element) => element == "add-alert") ??
-            false;
+    // bool isPresentAlertE =
+    //     subscription?.permissions?.any((element) => element == "add-alert") ??
+    //         false;
 
-    bool isPresentWatchlist = homeProvider.extra?.subscription?.permissions
+    bool isPresentWatchlist = userProvider.user?.membership?.permissions
             ?.any((element) => element == "add-alert") ??
         false;
 
-    bool isPresentWatchlistE = subscription?.permissions
-            ?.any((element) => element == "add-watchlist") ??
-        false;
+    // bool isPresentWatchlistE = subscription?.permissions
+    //         ?.any((element) => element == "add-watchlist") ??
+    //     false;
 
     log("$purchased, $isPresentAlert");
     return Padding(
@@ -105,9 +102,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             onTap: () {
               //Condition - User present and membership purchased
 
-              if (userProvider.user != null &&
-                  ((purchased || subscription?.purchased == 1) &&
-                      (isPresentAlert || isPresentAlertE))) {
+              if (userProvider.user != null && (purchased && isPresentAlert)) {
                 _vibrate();
                 alertOn == 0
                     ? _showAlertPopup(navigatorKey.currentContext!, symbol)
@@ -141,14 +136,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                                   const Duration(milliseconds: 200));
 
                               //Check if its not purchased and not having access
-                              if (((!purchased ||
-                                      subscription?.purchased == 0) &&
-                                  (!isPresentAlert || !isPresentAlertE))) {
+                              if ((!purchased && !isPresentAlert)) {
                                 await _subscribe();
                               }
-                              if (((purchased ||
-                                      subscription?.purchased == 1) &&
-                                  (isPresentAlert || isPresentAlertE))) {
+                              if ((purchased && isPresentAlert)) {
                                 await _showAlertPopup(
                                     navigatorKey.currentContext!, symbol);
                               }
@@ -169,12 +160,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                             Navigator.pop(context);
 
                             _vibrate();
-                            if (((!purchased || subscription?.purchased == 0) &&
-                                (!isPresentAlert || !isPresentAlertE))) {
+                            if ((!purchased && !isPresentAlert)) {
                               await _subscribe();
                             }
-                            if (((purchased || subscription?.purchased == 1) &&
-                                (isPresentAlert || isPresentAlertE))) {
+                            if ((purchased && isPresentAlert)) {
                               await _showAlertPopup(
                                   navigatorKey.currentContext!, symbol);
                             }
@@ -182,12 +171,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                         : () async {
                             Navigator.pop(context);
                             _vibrate();
-                            if (((!purchased || subscription?.purchased == 0) &&
-                                (!isPresentAlert || !isPresentAlertE))) {
+                            if ((!purchased && !isPresentAlert)) {
                               await _subscribe();
                             }
-                            if (((purchased || subscription?.purchased == 1) &&
-                                (isPresentAlert || isPresentAlertE))) {
+                            if ((purchased && isPresentAlert)) {
                               // await _showAlertPopup(
                               //     navigatorKey.currentContext!, symbol);
 
@@ -271,8 +258,7 @@ class AddToAlertWatchlist extends StatelessWidget {
             onTap: () async {
               //Condition - User present and membership purchased
               if (userProvider.user != null &&
-                  ((purchased || subscription?.purchased == 1) &&
-                      (isPresentWatchlist || isPresentWatchlistE))) {
+                  (purchased && isPresentWatchlist)) {
                 _vibrate();
                 watchlistOn == 0
                     ? await context
@@ -312,16 +298,10 @@ class AddToAlertWatchlist extends StatelessWidget {
                               if (wlistOn == 0) {
                                 log("-----GET TAB CALLING");
 
-                                if (((!purchased ||
-                                        subscription?.purchased == 0) &&
-                                    (!isPresentWatchlist ||
-                                        !isPresentWatchlistE))) {
+                                if ((!purchased && !isPresentWatchlist)) {
                                   await _subscribe();
                                 }
-                                if (((purchased ||
-                                        subscription?.purchased == 1) &&
-                                    (isPresentWatchlist ||
-                                        isPresentWatchlistE))) {
+                                if ((purchased && isPresentWatchlist)) {
                                   await context
                                       .read<StockDetailProviderNew>()
                                       .addToWishList();
@@ -350,16 +330,10 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                               _vibrate();
 
-                              if (((!purchased ||
-                                      subscription?.purchased == 0) &&
-                                  (!isPresentWatchlist ||
-                                      !isPresentWatchlistE))) {
+                              if ((!purchased && !isPresentWatchlist)) {
                                 await _subscribe();
                               }
-                              if (((purchased ||
-                                      subscription?.purchased == 1) &&
-                                  (isPresentWatchlist ||
-                                      isPresentWatchlistE))) {
+                              if ((purchased && isPresentWatchlist)) {
                                 await context
                                     .read<StockDetailProviderNew>()
                                     .addToWishList();
@@ -379,16 +353,10 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                               _vibrate();
 
-                              if (((!purchased ||
-                                      subscription?.purchased == 0) &&
-                                  (!isPresentWatchlist ||
-                                      !isPresentWatchlistE))) {
+                              if (!purchased && (!isPresentWatchlist)) {
                                 await _subscribe();
                               }
-                              if (((purchased ||
-                                      subscription?.purchased == 1) &&
-                                  (isPresentWatchlist ||
-                                      isPresentWatchlistE))) {
+                              if (purchased && (isPresentWatchlist)) {
                                 Navigator.push(
                                   navigatorKey.currentContext!,
                                   MaterialPageRoute(

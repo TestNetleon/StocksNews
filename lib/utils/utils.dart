@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +47,7 @@ class Utils {
   void showLog(data) {
     if (kDebugMode) {
       print("==================");
-      print("$data");
+      log("$data");
       print("==================");
     }
   }

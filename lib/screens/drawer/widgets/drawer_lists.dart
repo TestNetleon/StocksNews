@@ -14,6 +14,7 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/membership/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
@@ -379,6 +380,16 @@ List<DrawerRes> aboutTiles = [
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => const MyAccount()),
+      );
+    },
+  ),
+  DrawerRes(
+    iconData: Icons.wallet_membership,
+    text: "My Membership",
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const MembershipIndex()),
       );
     },
   ),

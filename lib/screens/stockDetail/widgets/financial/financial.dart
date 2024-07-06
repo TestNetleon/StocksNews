@@ -17,6 +17,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import 'item.dart';
 import 'tab.dart';
+import 'widget/financial_table_item.dart';
 
 class SdFinancial extends StatefulWidget {
   final String? symbol;
@@ -589,7 +590,7 @@ class _SdFinancialState extends State<SdFinancial> {
                   ),
                 ),
                 const SpacerVertical(height: 15),
-                FinancialTableItem(),
+                const FinancialTableItem(),
                 const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),

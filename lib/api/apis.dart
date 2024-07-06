@@ -138,6 +138,8 @@ class Apis {
   static const referralLeaderBoard = "/referrals/leaderboard";
   static const checkPhoneNo = "/check-phone-no";
   static const affiliateTnx = "/referrals/txn-report";
+  static const membership = "/membership/transactions";
+  static const membershipSuccess = "/membership/success";
 
   // Stock Detail New ---
   static const stockDetailTab = "/stock-detail-topbar";

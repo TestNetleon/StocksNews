@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 
@@ -51,7 +52,10 @@ class RevenueCatService {
         // Handle not presented
         break;
       case PaywallResult.purchased:
-        await await _handlePurchaseSuccess();
+        navigatorKey.currentContext!
+            .read<MembershipProvider>()
+            .getMembershipSuccess();
+        await _handlePurchaseSuccess();
         break;
       case PaywallResult.restored:
         // Handle restore
@@ -61,8 +65,6 @@ class RevenueCatService {
   }
 
   static Future _handlePurchaseSuccess() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    provider.updateUser(subscriptionPurchased: 1);
     await showModalBottomSheet(
       useSafeArea: true,
       shape: const RoundedRectangleBorder(

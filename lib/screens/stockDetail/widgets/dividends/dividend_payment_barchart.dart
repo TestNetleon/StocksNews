@@ -63,7 +63,7 @@ class _DividendPaymentBarchartState extends State<DividendPaymentBarchart> {
                       // ignore: empty_catches
                     } catch (e) {}
                     setState(() {
-                      final x = response.spot!.touchedBarGroup.x;
+                      // final x = response.spot!.touchedBarGroup.x;
                     });
                   }
                 },

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
@@ -12,12 +11,9 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
-import '../../../../api/api_response.dart';
 import '../../../../service/revenue_cat.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
-  final Subscription? subscription;
-
   final String symbol;
   final String alertString;
   final String watchlistString;
@@ -30,7 +26,6 @@ class PopUpMenuButtonCommon extends StatelessWidget {
     required this.onClickWatchlist,
     required this.alertString,
     required this.watchlistString,
-    this.subscription,
   });
 
   Future _subscribe() async {
@@ -50,25 +45,25 @@ class PopUpMenuButtonCommon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
-    bool purchased = homeProvider.extra?.subscription?.purchased == 1;
+    bool purchased = provider.user?.membership?.purchased == 1;
 
-    bool isPresentAlert = homeProvider.extra?.subscription?.permissions
+    bool isPresentAlert = provider.user?.membership?.permissions
             ?.any((element) => element == "add-alert") ??
         false;
 
-    bool isPresentAlertE =
-        subscription?.permissions?.any((element) => element == "add-alert") ??
-            false;
+    // bool isPresentAlertE =
+    //     subscription?.permissions?.any((element) => element == "add-alert") ??
+    //         false;
 
-    bool isPresentWatchlist = homeProvider.extra?.subscription?.permissions
+    bool isPresentWatchlist = provider.user?.membership?.permissions
             ?.any((element) => element == "add-alert") ??
         false;
 
-    bool isPresentWatchlistE = subscription?.permissions
-            ?.any((element) => element == "add-watchlist") ??
-        false;
+    // bool isPresentWatchlistE = subscription?.permissions
+    //         ?.any((element) => element == "add-watchlist") ??
+    //     false;
 
     return PopupMenuButton<AddType>(
       constraints: BoxConstraints.loose(Size(200.sp, 170.sp)),
@@ -94,9 +89,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           //     : () => onClickAlert(),
 
           onTap: () async {
-            if (provider.user != null &&
-                ((purchased || subscription?.purchased == 1) &&
-                    (isPresentAlert || isPresentAlertE))) {
+            if (provider.user != null && (purchased && isPresentAlert)) {
               await onClickAlert();
               return;
             }
@@ -111,13 +104,11 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                 if (provider.user == null) {
                   return;
                 }
-                if (((!purchased || subscription?.purchased == 0) &&
-                    (!isPresentAlert || !isPresentAlertE))) {
+                if ((!purchased && !isPresentAlert)) {
                   await _subscribe();
                 }
 
-                if (((purchased || subscription?.purchased == 1) &&
-                    (isPresentAlert || isPresentAlertE))) {
+                if ((purchased && isPresentAlert)) {
                   await onClickAlert();
                 }
               },
@@ -173,9 +164,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           //     : () => onClickWatchlist(),
 
           onTap: () async {
-            if (provider.user != null &&
-                ((purchased || subscription?.purchased == 1) &&
-                    (isPresentWatchlist || isPresentWatchlistE))) {
+            if (provider.user != null && (purchased && isPresentWatchlist)) {
               await onClickWatchlist();
 
               return;
@@ -191,13 +180,11 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                 if (provider.user == null) {
                   return;
                 }
-                if (((!purchased || subscription?.purchased == 0) &&
-                    (!isPresentWatchlist || !isPresentWatchlistE))) {
+                if ((!purchased && !isPresentWatchlist)) {
                   await _subscribe();
                 }
 
-                if (((purchased || subscription?.purchased == 1) &&
-                    (isPresentWatchlist || isPresentWatchlistE))) {
+                if ((purchased && isPresentWatchlist)) {
                   await onClickWatchlist();
                 }
               },

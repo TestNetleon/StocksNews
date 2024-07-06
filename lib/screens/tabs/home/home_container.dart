@@ -60,12 +60,25 @@ class HomeContainer extends StatelessWidget {
               //   height: 100,
               //   width: 100,
               // ),
-              // const InAppPurchaseUI(),
 
               // ThemeButton(
-              //   text: "Subscription",
+              //   text: "Invoices",
               //   onPressed: () {
-              //     openUrl("https://apps.apple.com/account/subscriptions");
+              //     showModalBottomSheet(
+              //       useSafeArea: true,
+              //       shape: const RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(5),
+              //           topRight: Radius.circular(5),
+              //         ),
+              //       ),
+              //       backgroundColor: ThemeColors.transparent,
+              //       isScrollControlled: true,
+              //       context: navigatorKey.currentContext!,
+              //       builder: (context) {
+              //         return const SubscriptionPurchased();
+              //       },
+              //     );
               //   },
               // ),
 
