@@ -76,9 +76,10 @@ class Extra {
   final bool? showPortfolio;
   final ReferralRes? referral;
   final num? received;
+  final num? totalActivityPoints;
   final num? balance;
   final num? spent;
-  final Subscription? subscription;
+  // final Subscription? subscription;
   final num? pending;
   final String? affiliateReferText;
   final HowItWorkRes? howItWork;
@@ -100,7 +101,7 @@ class Extra {
     this.profileText,
     this.verifyIdentity,
     this.howItWork,
-    this.subscription,
+    // this.subscription,
     this.exchangeShortName,
     this.priceRange,
     this.transactionType,
@@ -144,6 +145,7 @@ class Extra {
     this.referText,
     this.affiliateInput,
     this.loginDialogRes,
+    this.totalActivityPoints,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -156,9 +158,9 @@ class Extra {
             ? null
             : ProfileText.fromJson(json["profile_text"]),
         verifyIdentity: json['verify_identity_text'],
-        subscription: json["subscription"] == null
-            ? null
-            : Subscription.fromJson(json["subscription"]),
+        // subscription: json["subscription"] == null
+        //     ? null
+        //     : Subscription.fromJson(json["subscription"]),
         earnCondition: json['earn_condition'],
         received: json['total_points_received'],
         balance: json['total_balance'],
@@ -241,6 +243,7 @@ class Extra {
         loginDialogRes: json["login_dialog"] == null
             ? null
             : LoginDialogRes.fromJson(json["login_dialog"]),
+        totalActivityPoints: json["total_activity_points"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -256,7 +259,7 @@ class Extra {
         'total_points_received': received,
         "total_balance": balance,
         "total_spent": spent,
-        "subscription": subscription?.toJson(),
+        // "subscription": subscription?.toJson(),
         "total_points_pending": pending,
         'referral_status_message': suspendMsg,
         "profile_text": profileText?.toJson(),
@@ -308,32 +311,33 @@ class Extra {
         "refer_text": referText,
         "affiliate_input": affiliateInput,
         "login_dialog": loginDialogRes?.toJson(),
+        "total_activity_points": totalActivityPoints,
       };
 }
 
-class Subscription {
-  final int? purchased;
-  final List<String>? permissions;
+// class Subscription {
+//   final int? purchased;
+//   final List<String>? permissions;
 
-  Subscription({
-    this.purchased,
-    this.permissions,
-  });
+//   Subscription({
+//     this.purchased,
+//     this.permissions,
+//   });
 
-  factory Subscription.fromJson(Map<String, dynamic> json) => Subscription(
-        purchased: json["purchased"],
-        permissions: json["permissions"] == null
-            ? []
-            : List<String>.from(json["permissions"]!.map((x) => x)),
-      );
+//   factory Subscription.fromJson(Map<String, dynamic> json) => Subscription(
+//         purchased: json["purchased"],
+//         permissions: json["permissions"] == null
+//             ? []
+//             : List<String>.from(json["permissions"]!.map((x) => x)),
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "purchased": purchased,
-        "permissions": permissions == null
-            ? []
-            : List<dynamic>.from(permissions!.map((x) => x)),
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "purchased": purchased,
+//         "permissions": permissions == null
+//             ? []
+//             : List<dynamic>.from(permissions!.map((x) => x)),
+//       };
+// }
 
 class ProfileText {
   final String? verified;

@@ -8,6 +8,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TrendingStories extends StatelessWidget {
   const TrendingStories({super.key});
@@ -53,6 +54,7 @@ class TrendingStories extends StatelessWidget {
               // ),
               ),
         ),
+        const SpacerVertical(height: 5),
 
         ListView.separated(
           itemCount: data?.generalNews?.length ?? 0,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -29,6 +30,7 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
 
   @override
   Widget build(BuildContext context) {
+    MembershipProvider provider = context.watch<MembershipProvider>();
     return Container(
       constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
       decoration: const BoxDecoration(
@@ -64,15 +66,24 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
               width: 300,
             ),
             Text(
-              "Payment successfully completed",
+              provider.success?.title ?? "SUCCESS",
               textAlign: TextAlign.center,
               style: stylePTSansBold(fontSize: 35),
+            ),
+            const SpacerVertical(height: 20),
+            Text(
+              provider.success?.description ??
+                  "Your membership purchase is successful. It may take 3-5 minutes to reflect.",
+              textAlign: TextAlign.center,
+              style:
+                  stylePTSansRegular(fontSize: 20, color: ThemeColors.greyText),
             ),
             const SpacerVertical(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                "Congratulations, Explore Stocks.News without limits.",
+                provider.success?.subTitle ??
+                    "Explore Stocks.News without limits.",
                 textAlign: TextAlign.center,
                 style: stylePTSansRegular(
                     fontSize: 20, color: ThemeColors.greyText),

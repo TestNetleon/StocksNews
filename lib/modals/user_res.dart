@@ -24,11 +24,13 @@ class UserRes {
   String? referralUrl;
   String? displayName;
   bool? signupStatus;
-  int? subscriptionPurchased;
+  // int? subscriptionPurchased;
+  final UserMembershipRes? membership;
 
   UserRes({
-    this.subscriptionPurchased = 0,
+    // this.subscriptionPurchased = 0,
     this.email,
+    this.membership,
     this.phone,
     this.roleId,
     this.emailOtp,
@@ -56,9 +58,12 @@ class UserRes {
         roleId: json["role_id"],
         emailOtp: json["email_otp"],
         phoneOtp: json["phone_otp"],
-        subscriptionPurchased: json["subscription_purchased"],
+        // subscriptionPurchased: json["subscription_purchased"],
         username: json["username"],
         otp: json["otp"],
+        membership: json["membership"] == null
+            ? null
+            : UserMembershipRes.fromJson(json["membership"]),
         token: json["token"],
         type: json["type"],
         image: json["image"],
@@ -76,7 +81,7 @@ class UserRes {
         "phone": phone,
         "_id": userId,
         "role_id": roleId,
-        "subscription_purchased": subscriptionPurchased,
+        // "subscription_purchased": subscriptionPurchased,
         "email_otp": emailOtp,
         "phone_otp": phoneOtp,
         "username": username,
@@ -90,6 +95,37 @@ class UserRes {
         "referral_code": referralCode,
         "referral_url": referralUrl,
         "display_name": displayName,
+        "membership": membership?.toJson(),
         "signupStatus": signupStatus,
+      };
+}
+
+class UserMembershipRes {
+  final int? purchased;
+  final String? displayName;
+
+  final List<String>? permissions;
+
+  UserMembershipRes({
+    this.purchased,
+    this.displayName,
+    this.permissions,
+  });
+
+  factory UserMembershipRes.fromJson(Map<String, dynamic> json) =>
+      UserMembershipRes(
+        purchased: json["purchased"],
+        displayName: json["display_name"],
+        permissions: json["permissions"] == null
+            ? []
+            : List<String>.from(json["permissions"]!.map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "purchased": purchased,
+        "display_name": displayName,
+        "permissions": permissions == null
+            ? []
+            : List<dynamic>.from(permissions!.map((x) => x)),
       };
 }

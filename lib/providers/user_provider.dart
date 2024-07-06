@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/drawer_data_res.dart';
 import 'package:stocks_news_new/modals/refer.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -20,6 +21,7 @@ import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_success.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/database/preference.dart';
@@ -148,7 +150,6 @@ class UserProvider extends ChangeNotifier {
     String? phone,
     String? referralCode,
     String? referralUrl,
-    int? subscriptionPurchased,
   }) async {
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
@@ -157,9 +158,7 @@ class UserProvider extends ChangeNotifier {
     if (phone != null) _user?.phone = phone;
     if (referralCode != null) _user?.referralCode = referralCode;
     if (referralUrl != null) _user?.referralUrl = referralUrl;
-    if (subscriptionPurchased != null) {
-      _user?.subscriptionPurchased = subscriptionPurchased;
-    }
+
     Preference.saveUser(_user);
     shareUri = await DynamicLinkService.instance.getDynamicLink();
     // shareUri =
@@ -169,7 +168,9 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<bool> checkForUser() async {
-    clearUser();
+    _user = null;
+    navigatorKey.currentContext!.read<LeaderBoardProvider>().clearData();
+
     final UserRes? tempUser = await Preference.getUser();
     if (tempUser != null) {
       _user = tempUser;
@@ -219,7 +220,21 @@ class UserProvider extends ChangeNotifier {
 
   void clearUser() async {
     _user = null;
+    Preference.logout();
+    // Reset some data related to user
     navigatorKey.currentContext!.read<LeaderBoardProvider>().clearData();
+    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+    provider.setTotalsAlerts(0);
+    provider.setTotalsWatchList(0);
+    // Reset login dialog visibility count
+    DatabaseHelper helper = DatabaseHelper();
+    helper.resetVisibilityCount();
+    // Back to home and refresh Home and User
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
     notifyListeners();
   }
 
@@ -790,8 +805,6 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future logoutUser(request, pop) async {
-    HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
-
     try {
       ApiResponse res = await apiRequest(
         url: Apis.logout,
@@ -801,12 +814,15 @@ class UserProvider extends ChangeNotifier {
       );
       if (res.status) {
         setStatus(Status.loaded);
-        if (pop) Navigator.pop(navigatorKey.currentContext!);
-        Navigator.pop(navigatorKey.currentContext!);
-        Preference.logout();
+        // if (pop) Navigator.pop(navigatorKey.currentContext!);
+        // Navigator.pop(navigatorKey.currentContext!);
+        // Preference.logout();
         clearUser();
-        provider.setTotalsAlerts(0);
-        provider.setTotalsWatchList(0);
+        // provider.setTotalsAlerts(0);
+        // provider.setTotalsWatchList(0);
+        // DatabaseHelper helper = DatabaseHelper();
+        // helper.resetVisibilityCount();
+
         // showErrorMessage(message: res.message, type: SnackbarType.info);
       } else {
         setStatus(Status.loaded);
@@ -832,15 +848,16 @@ class UserProvider extends ChangeNotifier {
       );
       if (res.status) {
         setStatus(Status.loaded);
-
-        Navigator.popUntil(
-            navigatorKey.currentContext!, (route) => route.isFirst);
-        Preference.logout();
-        navigatorKey.currentContext!.read<UserProvider>().clearUser();
-        HomeProvider provider =
-            navigatorKey.currentContext!.read<HomeProvider>();
-        provider.setTotalsAlerts(0);
-        provider.setTotalsWatchList(0);
+        // Navigator.popUntil(
+        //     navigatorKey.currentContext!, (route) => route.isFirst);
+        clearUser();
+        // Preference.logout();
+        // HomeProvider provider =
+        //     navigatorKey.currentContext!.read<HomeProvider>();
+        // provider.setTotalsAlerts(0);
+        // provider.setTotalsWatchList(0);
+        // DatabaseHelper helper = DatabaseHelper();
+        // helper.resetVisibilityCount();
       } else {
         setStatus(Status.loaded);
         // showErrorMessage(

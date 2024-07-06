@@ -1305,6 +1305,12 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   SdFinancialRes? _sdFinancialChartRes;
   SdFinancialRes? get sdFinancialChartRes => _sdFinancialChartRes;
+  SdFinancialRes? _incomeSdFinancialChartRes;
+  SdFinancialRes? get incomeSdFinancialChartRes => _incomeSdFinancialChartRes;
+  SdFinancialRes? _balanceSdFinancialChartRes;
+  SdFinancialRes? get balanceSdFinancialChartRes => _balanceSdFinancialChartRes;
+  SdFinancialRes? _cashSdFinancialChartRes;
+  SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
 
   // Map<String, dynamic>? _sdFinancialMap;
   // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
@@ -1341,6 +1347,54 @@ class StockDetailProviderNew extends ChangeNotifier {
         type: _types?[typeIndex].value,
         tabProgress: true,
       );
+    }
+  }
+
+  void changeTabTypeChartData(index, {String? symbol}) {
+    if (typeIndex != index) {
+      typeIndex = index;
+      Utils().showLog("index  $index");
+      if (index == 0 && incomeSdFinancialChartRes == null) {
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+      if (index == 1 && balanceSdFinancialChartRes == null) {
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+      if (index == 2 && cashSdFinancialChartRes == null) {
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+      if (index == 0 && incomeSdFinancialChartRes != null) {
+        _typeValue = "income-statement";
+        _sdFinancialChartRes = incomeSdFinancialChartRes;
+      }
+      if (index == 1 && balanceSdFinancialChartRes != null) {
+        _typeValue = 'balance-sheet-statement';
+        _sdFinancialChartRes = balanceSdFinancialChartRes;
+      }
+      if (index == 2 && cashSdFinancialChartRes != null) {
+        _typeValue = 'cash-flow-statement';
+        _sdFinancialChartRes = cashSdFinancialChartRes;
+      }
+
+      notifyListeners();
     }
   }
 
@@ -1413,6 +1467,17 @@ class StockDetailProviderNew extends ChangeNotifier {
         _typeValue = type;
         _sdFinancialChartRes =
             sdFinancialResFromJson(jsonEncode(response.data));
+
+        if (type == "income-statement") {
+          _incomeSdFinancialChartRes =
+              sdFinancialResFromJson(jsonEncode(response.data));
+        } else if (type == "balance-sheet-statement") {
+          _balanceSdFinancialChartRes =
+              sdFinancialResFromJson(jsonEncode(response.data));
+        } else if (type == "cash-flow-statement") {
+          _cashSdFinancialChartRes =
+              sdFinancialResFromJson(jsonEncode(response.data));
+        }
 
         // _sdFinancialChartRes?.chart?.sublist(0, 5);
 

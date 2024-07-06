@@ -219,6 +219,14 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                 itemBuilder: (context, index) {
                   if (index == 1) {
                     return Visibility(
+                      visible: user != null && user.membership?.purchased == 1,
+                      child: AboutTile(
+                          index: index, onTap: aboutTiles[index].onTap),
+                    );
+                  }
+
+                  if (index == 2) {
+                    return Visibility(
                       visible:
                           context.watch<HomeProvider>().extra?.showPortfolio ??
                               false,
@@ -226,7 +234,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           index: index, onTap: aboutTiles[index].onTap),
                     );
                   }
-                  if (index == 2) {
+                  if (index == 3) {
                     return Visibility(
                       visible: context
                               .watch<HomeProvider>()
@@ -243,7 +251,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                     );
                   }
 
-                  if (index == 5) {
+                  if (index == 6) {
                     return AboutTile(
                       index: index,
                       onTap: _helpDesk,

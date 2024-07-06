@@ -301,7 +301,6 @@ class CommonTabContainer extends StatefulWidget {
 
 class _CommonTabContainerState extends State<CommonTabContainer>
     with SingleTickerProviderStateMixin {
-      
   bool sync = true;
   TabController? _controller;
   int _selectedIndex = 0;

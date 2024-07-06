@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,10 +62,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
   }
 
   void _getInitialData() async {
-    DateTime today = DateTime.now();
-
-    log("Today ==>   ${today.toString()}");
-
     NewsDetailProvider newsProvider = context.read<NewsDetailProvider>();
     UserProvider userProvider = context.read<UserProvider>();
     await newsProvider.getNewsDetailData(
@@ -75,15 +70,32 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
     );
-
+    if (newsProvider.data?.postDetail?.readingStatus == false) {
+      return;
+    }
     if (userProvider.user == null) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          loginSheet();
+          if (mounted) {
+            helper.update(NewsDetails.path);
+            loginSheet();
+          }
         });
       }
+    } else if (userProvider.user != null && userProvider.phoneVerified) {
+      DatabaseHelper helper = DatabaseHelper();
+      bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
+      if (visible) {
+        Timer(const Duration(seconds: 3), () {
+          if (mounted) {
+            helper.update(NewsDetails.path);
+            referLogin();
+          }
+        });
+      }
+      //
     }
   }
 
@@ -525,17 +537,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     Positioned(
                       bottom: 6,
                       right: 10,
-                      // child: FloatingActionButton(
-                      //   backgroundColor: ThemeColors.accent,
-                      //   child: const Icon(Icons.share),
-                      //   onPressed: () {
-                      //     commonShare(
-                      //       title: provider.data?.postDetail?.title ?? "",
-                      //       url: provider.data?.postDetail?.slug ?? "",
-                      //     );
-                      //   },
-                      // ),
-
                       child: ThemeButtonSmall(
                         onPressed: () {
                           commonShare(

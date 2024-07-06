@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/membership/index.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -46,11 +49,12 @@ class _UserCardState extends State<UserCard> {
             Container(
               margin: EdgeInsets.only(
                   bottom:
-                      userProvider.user?.subscriptionPurchased == 1 ? 0 : 50),
+                      userProvider.user?.membership?.purchased == 1 ? 0 : 50),
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ThemeColors.greyBorder.withOpacity(0.2)),
+                borderRadius: BorderRadius.circular(5),
+                color: ThemeColors.greyBorder.withOpacity(0.2),
+              ),
               child: Column(
                 children: [
                   Row(
@@ -104,67 +108,93 @@ class _UserCardState extends State<UserCard> {
                     color: ThemeColors.greyBorder,
                     height: 30,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Current Plan",
-                        style: stylePTSansBold(fontSize: 18),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: ThemeColors.white,
-                          border: Border(
-                            bottom: BorderSide(
-                                color: userProvider
-                                            .user?.subscriptionPurchased ==
-                                        1
-                                    ? const Color.fromARGB(255, 253, 245, 4)
-                                    : const Color.fromARGB(255, 113, 113, 113),
-                                width: 1.2),
-                          ),
-                          gradient: LinearGradient(
-                            colors:
-                                userProvider.user?.subscriptionPurchased == 1
-                                    ? [
-                                        const Color.fromARGB(255, 242, 234, 12),
-                                        const Color.fromARGB(255, 186, 181, 53),
-                                      ]
-                                    : [
-                                        Colors.white,
-                                        Colors.grey,
-                                      ],
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 0,
-                              spreadRadius: 1,
-                              offset: const Offset(0, 1),
-                              color: userProvider.user?.subscriptionPurchased ==
-                                      1
-                                  ? const Color.fromARGB(255, 242, 234, 12)
-                                  : const Color.fromARGB(255, 156, 153, 153),
+                  InkWell(
+                    onTap: userProvider.user?.membership?.purchased == 1
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const MembershipIndex();
+                                },
+                              ),
+                            );
+                          }
+                        : null,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Current Plan",
+                          style: stylePTSansBold(fontSize: 18),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: ThemeColors.white,
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: userProvider
+                                              .user?.membership?.purchased ==
+                                          1
+                                      ? const Color.fromARGB(255, 253, 245, 4)
+                                      : const Color.fromARGB(
+                                          255, 113, 113, 113),
+                                  width: 1.2),
                             ),
-                          ],
+                            gradient: LinearGradient(
+                              colors: userProvider
+                                          .user?.membership?.purchased ==
+                                      1
+                                  ? [
+                                      const Color.fromARGB(255, 242, 234, 12),
+                                      const Color.fromARGB(255, 186, 181, 53),
+                                    ]
+                                  : [
+                                      Colors.white,
+                                      Colors.grey,
+                                    ],
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: const Offset(0, 1),
+                                color: userProvider
+                                            .user?.membership?.purchased ==
+                                        1
+                                    ? const Color.fromARGB(255, 242, 234, 12)
+                                    : const Color.fromARGB(255, 156, 153, 153),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
+                          child: userProvider.user?.membership?.purchased == 0
+                              ? Text(
+                                  "Free",
+                                  style: stylePTSansBold(color: Colors.black),
+                                )
+                              : Text(
+                                  userProvider.user?.membership?.displayName ==
+                                              null ||
+                                          userProvider.user?.membership
+                                                  ?.displayName ==
+                                              ''
+                                      ? "N/A"
+                                      : "${userProvider.user?.membership?.displayName}",
+                                  style: stylePTSansBold(color: Colors.black),
+                                ),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
-                        child: Text(
-                          userProvider.user?.subscriptionPurchased == 1
-                              ? "Premium"
-                              : "Free",
-                          style: stylePTSansBold(color: Colors.black),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
             Visibility(
-              visible: userProvider.user?.subscriptionPurchased != null &&
-                  userProvider.user?.subscriptionPurchased == 0,
+              visible: userProvider.user?.membership?.purchased != null &&
+                  userProvider.user?.membership?.purchased == 0,
               child: Positioned(
                 right: 10,
                 left: 10,
@@ -205,7 +235,12 @@ class _UserCardState extends State<UserCard> {
                                 const Color.fromARGB(255, 0, 98, 13)),
                         onPressed: () {
                           Scaffold.of(context).closeDrawer();
-                          _upgradeSubscription();
+                          askToSubscribe(
+                            onPressed: () {
+                              Navigator.pop(navigatorKey.currentContext!);
+                              _upgradeSubscription();
+                            },
+                          );
                         },
                         child: Text(
                           "UPGRADE",
