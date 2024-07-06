@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import '../../../widgets/screen_title.dart';
 import '../api/api_response.dart';
-import '../providers/home_provider.dart';
 import '../route/my_app.dart';
 import '../screens/affiliate/referFriend/howit_work.dart';
 import '../utils/colors.dart';
