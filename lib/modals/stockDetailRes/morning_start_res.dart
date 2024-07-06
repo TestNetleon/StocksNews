@@ -25,6 +25,7 @@ class MorningStar {
   final dynamic createdAt;
   final dynamic pdfUrl;
   final dynamic updated;
+  final dynamic description;
 
   MorningStar({
     required this.id,
@@ -53,6 +54,7 @@ class MorningStar {
     required this.createdAt,
     required this.pdfUrl,
     required this.updated,
+    required this.description,
   });
 
   factory MorningStar.fromJson(Map<String, dynamic> json) => MorningStar(
@@ -82,6 +84,7 @@ class MorningStar {
         createdAt: json["created_at"],
         pdfUrl: json["pdf_url"],
         updated: json["updated"],
+        description: json["description"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -111,5 +114,6 @@ class MorningStar {
         "created_at": createdAt,
         "pdf_url": pdfUrl,
         "updated": updated,
+        "description": description,
       };
 }

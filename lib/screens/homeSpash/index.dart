@@ -14,7 +14,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../../utils/preference.dart';
+import '../../database/preference.dart';
 import '../../widgets/custom/alert_popup.dart';
 import '../auth/refer/refer_code.dart';
 import '../blogDetail/index.dart';

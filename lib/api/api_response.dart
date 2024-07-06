@@ -91,6 +91,7 @@ class Extra {
   final int? selfRank;
   final String? referText;
   final int? affiliateInput;
+  final LoginDialogRes? loginDialogRes;
 
   Extra({
     this.feebackType,
@@ -141,6 +142,7 @@ class Extra {
     this.earnCondition,
     this.referText,
     this.affiliateInput,
+    this.loginDialogRes,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -232,6 +234,9 @@ class Extra {
             : ReferralRes.fromJson(json["referral"]),
         referText: json["refer_text"],
         affiliateInput: json["affiliate_input"],
+        loginDialogRes: json["login_dialog"] == null
+            ? null
+            : LoginDialogRes.fromJson(json["login_dialog"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -297,6 +302,7 @@ class Extra {
         "referral": referral?.toJson(),
         "refer_text": referText,
         "affiliate_input": affiliateInput,
+        "login_dialog": loginDialogRes?.toJson(),
       };
 }
 
@@ -469,5 +475,25 @@ class KeyValueElement {
         "key": key,
         "value": value,
         "image": image,
+      };
+}
+
+class LoginDialogRes {
+  final int count;
+  final int status;
+
+  LoginDialogRes({
+    required this.count,
+    required this.status,
+  });
+
+  factory LoginDialogRes.fromJson(Map<String, dynamic> json) => LoginDialogRes(
+        count: json["count"],
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "count": count,
+        "status": status,
       };
 }

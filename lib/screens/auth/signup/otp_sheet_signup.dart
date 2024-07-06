@@ -11,7 +11,7 @@ import 'package:stocks_news_new/screens/auth/signup/edit_email.dart';
 import 'package:stocks_news_new/screens/auth/otp/pinput.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';

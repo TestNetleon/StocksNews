@@ -3,8 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/alerts_res.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
-import 'package:stocks_news_new/screens/alerts/alert_item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/common_stock_item.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';

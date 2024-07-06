@@ -618,7 +618,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
                   e.operatingCashFlow2 != null && e.operatingCashFlow2! < 0))
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow2)
-              .where((e) => e != null && e! < 0) // Filter only negative values
+              .where((e) => e != null && e < 0) // Filter only negative values
               .reduce(
                   (a, b) => a! < b! ? a : b) // Find the minimum negative value
           : null;
@@ -628,7 +628,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
                   e.operatingCashFlow3 != null && e.operatingCashFlow3! < 0))
           ? widget.data!.chart!
               .map((e) => e.operatingCashFlow3)
-              .where((e) => e != null && e! < 0) // Filter only negative values
+              .where((e) => e != null && e < 0) // Filter only negative values
               .reduce(
                   (a, b) => a! < b! ? a : b) // Find the minimum negative value
           : null;
@@ -636,7 +636,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
       final minAbsValueItem = (minRevenue != null && minNetIncome != null)
           ? (minRevenue.abs() < minNetIncome.abs() ? minRevenue : minNetIncome)
           : 0;
-      minAbsValue = (minAbsValueItem != null && minNetFin != null)
+      minAbsValue = (minNetFin != null)
           ? (minAbsValueItem.abs() < minNetFin.abs()
               ? minAbsValueItem
               : minNetFin)
@@ -655,8 +655,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
   @override
   Widget build(BuildContext context) {
     intFunction();
-    double positiveInterval = maxAbsValue / 2; // Example positive interval
-    double negativeInterval = minAbsValue / 2;
+// Example positive interval
 
     return charts == null
         ? const SizedBox()

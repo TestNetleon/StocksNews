@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/in_app_msg_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -21,7 +22,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
 import 'package:stocks_news_new/utils/in_app_messages.dart';
-import 'package:stocks_news_new/utils/preference.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -56,6 +57,7 @@ Future<ApiResponse> apiRequest({
   showErrorOnFull = true,
   checkAppUpdate = true,
   removeForceLogin = false,
+  updateDatabase = true,
 }) async {
   Map<String, String> headers = getHeaders();
   if (header != null) headers.addAll(header);
@@ -121,7 +123,6 @@ Future<ApiResponse> apiRequest({
     }
 
     Utils().showLog("RESPONSE  =  ${response.body}");
-
     if (response.statusCode == 200) {
       if (showProgress) closeGlobalProgressDialog();
       bool session = jsonDecode(response.body)['status'] == false &&
@@ -151,10 +152,6 @@ Future<ApiResponse> apiRequest({
             removeForceLogin: removeForceLogin,
           );
         }
-        // MaintenanceDialog? maintenanceDialog = MaintenanceDialog(
-        //     title: "App Under Maintenance",
-        //     description:
-        //         "Scheduled maintenance in progress.\nWe'll be back soon. Thanks for your support!");
         // TO show in app messages only, comment this if want to hide
         // OR
         // DO NOT REMOVE THIS
@@ -166,6 +163,17 @@ Future<ApiResponse> apiRequest({
           );
         } else if (inAppMsg != null) {
           checkForInAppMessage(inAppMsg);
+        }
+
+        if (updateDatabase) {
+          Extra? extra = res.extra is Extra ? (res.extra as Extra) : null;
+          if (extra?.loginDialogRes != null) {
+            DatabaseHelper helper = DatabaseHelper();
+            helper.checkAndInsertInitialData(
+              count: extra!.loginDialogRes!.count,
+              status: extra.loginDialogRes!.status,
+            );
+          }
         }
       }
 
