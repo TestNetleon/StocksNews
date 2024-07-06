@@ -53,7 +53,7 @@ class MostBearish extends StatelessWidget {
         Visibility(
           visible: provider.mostBullish?.text?.mostBullish != '',
           child: Padding(
-              padding: EdgeInsets.only(bottom: 20.sp),
+              padding: EdgeInsets.only(bottom: 5),
               child: CustomReadMoreText(
                 text: provider.mostBullish?.text?.mostBullish ?? "",
               )

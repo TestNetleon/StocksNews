@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/screens/barChart/bar_chart_income.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_item.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_three.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/financial/widget/financial_table_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -126,9 +128,9 @@ class _SdFinancialState extends State<SdFinancial> {
                               width: double.infinity,
                               child: SdFinancialTabs(
                                 tabs: provider.extraFinancial?.type,
-                                onChange: (index) => provider.changeTabType(
-                                    index,
-                                    symbol: widget.symbol),
+                                onChange: (index) =>
+                                    provider.changeTabTypeChartData(index,
+                                        symbol: widget.symbol),
                                 selectedIndex: provider.typeIndex,
                               ),
                             ),
@@ -235,15 +237,21 @@ class _SdFinancialState extends State<SdFinancial> {
                               ),
                             ),
                           const SpacerVertical(height: 40),
-                          if (data?.chart?[0].totalAssets != null ||
-                              data?.chart?[0].revenue != null)
+                          if (provider.typeValue == "income-statement")
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: SizedBox(
+                                  height: 200,
+                                  child: BarChartIncome(data: data)),
+                            ),
+                          if (provider.typeValue == "balance-sheet-statement")
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SizedBox(
                                   height: 200,
                                   child: BarChartSample(data: data)),
                             ),
-                          if (data?.chart?[0].operatingCashFlow1 != null)
+                          if (provider.typeValue == "cash-flow-statement")
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SizedBox(
@@ -261,18 +269,20 @@ class _SdFinancialState extends State<SdFinancial> {
                               selectedIndex: provider.periodIndex,
                             ),
                           ),
-                          Visibility(
-                            visible: provider.extraFinancial?.period != null,
-                            child: SdFinancialTabs(
-                              tabs: convertMultipleStringListsToSdTopResLists(),
-                              onChange: (index) =>
-                                  provider.changePeriodTypeIndexVoid(
-                                index,
+                          if (provider.typeValue != null && data?.chart != null)
+                            Visibility(
+                              visible: provider.extraFinancial?.period != null,
+                              child: SdFinancialTabs(
+                                tabs:
+                                    convertMultipleStringListsToSdTopResLists(),
+                                onChange: (index) =>
+                                    provider.changePeriodTypeIndexVoid(
+                                  index,
+                                ),
+                                selectedIndex: provider.changePeriodTypeIndex,
                               ),
-                              selectedIndex: provider.changePeriodTypeIndex,
                             ),
-                          ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             Padding(
                               padding: const EdgeInsets.only(right: 20),
                               child: Row(
@@ -305,7 +315,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                 ],
                               ),
                             ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             const Padding(
                               padding: EdgeInsets.only(
                                   right: 20, top: 5, bottom: 15),
@@ -314,7 +324,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                 height: 15,
                               ),
                             ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             Padding(
                               padding: const EdgeInsets.only(right: 20),
                               child: Row(
@@ -400,7 +410,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                 ],
                               ),
                             ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             const Padding(
                               padding: EdgeInsets.only(
                                   right: 20, top: 15, bottom: 15),
@@ -409,7 +419,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                 height: 15,
                               ),
                             ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             Padding(
                               padding: const EdgeInsets.only(right: 20),
                               child: Row(
@@ -495,7 +505,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                 ],
                               ),
                             ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             if (data
                                     ?.financeStatement?[
                                         provider.changePeriodTypeIndex]
@@ -509,7 +519,7 @@ class _SdFinancialState extends State<SdFinancial> {
                                   height: 15,
                                 ),
                               ),
-                          if (provider.typeValue != null)
+                          if (provider.typeValue != null && data?.chart != null)
                             if (data
                                     ?.financeStatement?[
                                         provider.changePeriodTypeIndex]
@@ -589,7 +599,7 @@ class _SdFinancialState extends State<SdFinancial> {
                   ),
                 ),
                 const SpacerVertical(height: 15),
-                FinancialTableItem(),
+                const FinancialTableItem(),
                 const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),

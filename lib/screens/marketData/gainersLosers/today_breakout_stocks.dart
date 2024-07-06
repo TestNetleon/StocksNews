@@ -107,7 +107,7 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
                     child: ListView.separated(
                       padding: const EdgeInsets.only(
                         bottom: Dimen.padding,
-                        top: Dimen.padding,
+                        top: 0,
                       ),
                       itemBuilder: (context, index) {
                         return BreakOutStocksItem(
