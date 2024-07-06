@@ -79,7 +79,7 @@ class _SdOverviewState extends State<SdOverview> {
                 Visibility(
                   visible: provider.overviewRes?.morningStart != null,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: Dimen.padding),
+                    padding: const EdgeInsets.only(bottom: Dimen.padding),
                     child: StockDetailAnalystData(symbol: widget.symbol ?? ""),
                   ),
                 ),

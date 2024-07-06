@@ -6,7 +6,6 @@ import 'package:stocks_news_new/screens/barChart/bar_chart_income.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_item.dart';
 import 'package:stocks_news_new/screens/barChart/bar_chart_three.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/financial/widget/financial_table_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -19,7 +18,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import 'item.dart';
 import 'tab.dart';
-import 'widget/financial_table_item.dart';
 
 class SdFinancial extends StatefulWidget {
   final String? symbol;
@@ -209,7 +207,8 @@ class _SdFinancialState extends State<SdFinancial> {
                                           ),
                                         ],
                                       ),
-                                      if (data?.chart?[0].operatingCashFlow1 != null)
+                                      if (data?.chart?[0].operatingCashFlow1 !=
+                                          null)
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
@@ -598,8 +597,8 @@ class _SdFinancialState extends State<SdFinancial> {
                     ),
                   ),
                 ),
-                const SpacerVertical(height: 15),
-                const FinancialTableItem(),
+                // const SpacerVertical(height: 15),
+                // const FinancialTableItem(),
                 const SpacerVertical(height: 15),
                 ListView.separated(
                     padding: const EdgeInsets.only(top: 0, bottom: 15),

@@ -1,12 +1,9 @@
-import 'dart:io';
+// ignore_for_file: unused_local_variable
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
-import 'package:vibration/vibration.dart';
 import 'dart:math' as math;
 
 class DividendOvertimeCharts extends StatelessWidget {
@@ -50,9 +47,9 @@ class DividendOvertimeCharts extends StatelessWidget {
         itemCount: charts?.length,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          final String label = charts![index].label.toString() ?? "";
+          final String label = charts![index].label.toString();
           return Text(
             label[value.toInt()],
             style: stylePTSansBold(
@@ -80,9 +77,9 @@ class DividendOvertimeCharts extends StatelessWidget {
         itemCount: charts?.length,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          final String label = charts![index].chartInfoYield.toString() ?? "";
+          final String label = charts![index].chartInfoYield.toString();
           return Transform.rotate(
             angle: -math.pi / 4,
             child: Text(

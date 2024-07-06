@@ -3,7 +3,7 @@
 import 'package:flutter/foundation.dart';
 
 class Apis {
-  static const baseUrl = "https://app.stocks.news/api/v1";                    // live server
+  static const baseUrl = "https://app.stocks.news/api/v1"; // live server
 
   // static const baseUrl = kDebugMode
   //     ? "https://notification.stocks.news/api/v1"
@@ -164,6 +164,7 @@ class Apis {
   static const ticketReply = "/ticket-reply";
 
   static const updateReferral = "/update-referral-code";
+  static const userPurchase = "/user-purchase";
 }
 
 //
