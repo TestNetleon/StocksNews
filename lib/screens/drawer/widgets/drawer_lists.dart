@@ -396,6 +396,16 @@ List<DrawerRes> aboutTiles = [
     },
   ),
   DrawerRes(
+    iconData: Icons.library_books_sharp,
+    text: "Morningstar Reports",
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
+      );
+    },
+  ),
+  DrawerRes(
     iconData: Icons.person_pin_outlined,
     text: "Portfolio",
     onTap: () {
@@ -438,16 +448,7 @@ List<DrawerRes> aboutTiles = [
   //     );
   //   },
   // ),
-  DrawerRes(
-    iconData: Icons.library_books_sharp,
-    text: "Morningstar Reports",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
-      );
-    },
-  ),
+
   // DrawerRes(
   //   iconData: Icons.list_alt_rounded,
   //   text: "Mission",

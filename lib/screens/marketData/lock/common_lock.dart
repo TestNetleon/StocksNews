@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 
 import '../../../utils/colors.dart';
 import '../../../utils/theme.dart';
@@ -7,8 +8,15 @@ import '../../../widgets/spacer_vertical.dart';
 import '../../../widgets/theme_button_small.dart';
 
 class CommonLock extends StatelessWidget {
-  final Function() onPressed;
-  const CommonLock({super.key, required this.onPressed});
+  final Function() onMembershipClick;
+  final Function() onLoginClick;
+  final bool showLogin;
+  const CommonLock({
+    super.key,
+    required this.onMembershipClick,
+    required this.onLoginClick,
+    this.showLogin = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +78,24 @@ class CommonLock extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 10),
                 ThemeButtonSmall(
-                  onPressed: onPressed,
+                  onPressed: onMembershipClick,
                   text: "Become a Member",
                   showArrow: false,
                 ),
+                const SpacerVertical(height: 20),
+                GestureDetector(
+                  onTap: onLoginClick,
+                  child: Text(
+                    "Already have an account? Log in",
+                    style: stylePTSansRegular(
+                      fontSize: 16,
+                      height: 1.3,
+                      color: ThemeColors.themeGreen,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SpacerVertical(height: 10),
               ],
             ),
           ),

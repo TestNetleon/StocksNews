@@ -68,7 +68,7 @@ class _BlogDetailState extends State<BlogDetail> {
           }
         });
       }
-    } else if (userProvider.user != null && userProvider.phoneVerified) {
+    } else if (userProvider.user != null && !userProvider.phoneVerified) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {

@@ -184,7 +184,8 @@ class AskToSubscribeDialog extends StatelessWidget {
                 ThemeButton(
                   color: const Color.fromARGB(255, 7, 127, 23),
                   // text: "Generate Affiliate Link",
-                  text: "Upgrade your membership",
+                  // text: "Upgrade your membership",
+                  text: "Get a Membership",
                   onPressed: onPressed,
                 ),
 

@@ -186,7 +186,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           //     _onViewBlogClick(context),
                                           onPressed: () =>
                                               _onViewNewsClick(context),
-                                          text: "View News",
+                                          text: "View Research Report",
                                           showArrow: false,
                                         ),
                               // const SpacerVertical(),
