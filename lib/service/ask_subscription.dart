@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-import '../../../widgets/screen_title.dart';
+import '../api/api_response.dart';
 import '../route/my_app.dart';
+import '../screens/affiliate/referFriend/howit_work.dart';
+import '../utils/colors.dart';
 
-Future askToSubscribe() async {
+Future askToSubscribe({void Function()? onPressed}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -27,13 +28,16 @@ Future askToSubscribe() async {
       return Stack(
         alignment: Alignment.topCenter,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: SingleChildScrollView(child: AskToSubscribeDialog()),
+          Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: SingleChildScrollView(
+                child: AskToSubscribeDialog(
+              onPressed: onPressed,
+            )),
           ),
           Image.asset(
-            Images.kingGIF,
-            height: 70,
+            Images.diamondS,
+            height: 100,
             width: 100,
             fit: BoxFit.cover,
           ),
@@ -44,11 +48,11 @@ Future askToSubscribe() async {
 }
 
 class AskToSubscribeDialog extends StatelessWidget {
-  const AskToSubscribeDialog({super.key});
+  final Function()? onPressed;
+  const AskToSubscribeDialog({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    // HomeProvider provider = context.read<HomeProvider>();
     // UserProvider userProvider = context.read<UserProvider>();
 
     return Container(
@@ -58,12 +62,12 @@ class AskToSubscribeDialog extends StatelessWidget {
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
         ),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+        gradient: const LinearGradient(
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
           colors: [
-            Color.fromARGB(255, 103, 98, 1),
-            Color.fromARGB(255, 174, 172, 0),
+            Color.fromARGB(255, 3, 91, 14),
+            Color.fromARGB(255, 0, 55, 7),
           ],
         ),
       ),
@@ -73,7 +77,7 @@ class AskToSubscribeDialog extends StatelessWidget {
             Images.referBack,
             color: const Color.fromARGB(150, 81, 81, 81),
             fit: BoxFit.cover,
-            height: 550,
+            height: 500,
           ),
           // const Align(
           //   alignment: Alignment.center,
@@ -83,64 +87,105 @@ class AskToSubscribeDialog extends StatelessWidget {
           //   ),
           // ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 70, 16, 16),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: Image.asset(
-                    Images.stockIcon3d,
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(6),
+                //   child: Image.asset(
+                //     Images.stockIcon3d,
+                //     width: 100,
+                //     height: 100,
+                //   ),
+                // ),
                 // const SpacerVertical(height: 20),
-                const SpacerVertical(height: 15),
+                // const SpacerVertical(height: 15),
                 Text(
-                  "provider.extra?.referral?.message",
-                  style: styleGeorgiaRegular(),
-                  textAlign: TextAlign.center,
+                  "Get More with Membership!",
+                  style: stylePTSansBold(fontSize: 30),
+                  textAlign: TextAlign.start,
                 ),
-                const SpacerVertical(height: 15),
-                const Column(
+                const SpacerVertical(height: 5),
+                Text(
+                  "This feature is exclusive to premium members. Please create an account before purchasing a membership.",
+                  style: stylePTSansRegular(fontSize: 17),
+                  textAlign: TextAlign.start,
+                ),
+
+                const SpacerVertical(height: 30),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ScreenTitle(
-                      title: " provider.extra?.howItWork?.title",
-                    ),
-                    // ListView.separated(
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    //   itemBuilder: (context, index) {
-                    //     StepRes? data =
-                    //         provider.extra?.howItWork?.steps?[index];
-                    //     return HowItWorkItem(
-                    //       index: index,
-                    //       subtitle: Colors.white,
-                    //       data: data,
-                    //     );
-                    //   },
-                    //   separatorBuilder: (context, index) {
-                    //     return const Divider(
-                    //       color: ThemeColors.greyBorder,
-                    //       height: 40,
-                    //     );
-                    //   },
-                    //   itemCount: provider.extra?.howItWork?.steps?.length ?? 0,
+                    // ScreenTitle(
+                    //   title: "PURCHASE",
                     // ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      itemBuilder: (context, index) {
+                        StepRes? data;
+                        if (index == 0) {
+                          data = StepRes(
+                              title: "Add Stocks to Alerts and Watchlist",
+                              subTitle:
+                                  "Stay informed about your favorite stocks with real-time alerts and a personalized watchlist.");
+                        }
+                        if (index == 1) {
+                          data = StepRes(
+                              title: "Access Market Data",
+                              subTitle:
+                                  "Get up-to-the-minute market data to make informed investment decisions.");
+                        }
+
+                        if (index == 2) {
+                          data = StepRes(
+                              title:
+                                  "Connect Brokerage Account and Sync Portfolio",
+                              subTitle:
+                                  "Seamlessly integrate your brokerage account and keep your portfolio up to date.");
+                        }
+
+                        return HowItWorkItem(
+                          index: index,
+                          subtitle: Colors.white,
+                          data: data,
+                          icon: index == 0
+                              ? Image.asset(
+                                  Images.bellS,
+                                  height: 25,
+                                  width: 25,
+                                )
+                              : index == 1
+                                  ? Image.asset(
+                                      Images.reportS,
+                                      height: 25,
+                                      width: 25,
+                                    )
+                                  : Image.asset(
+                                      Images.tickS,
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 40,
+                        );
+                      },
+                      itemCount: 3,
+                    ),
                   ],
                 ),
                 const SpacerVertical(height: 10),
                 ThemeButton(
                   color: const Color.fromARGB(255, 7, 127, 23),
                   // text: "Generate Affiliate Link",
-                  text: "GENERATE AFFILIATE LINK",
-                  onPressed: () {
-                    Navigator.pop(context);
-                    referLogin();
-                  },
+                  text: "Upgrade your membership",
+                  onPressed: onPressed,
                 ),
 
                 SpacerVertical(height: ScreenUtil().bottomBarHeight),

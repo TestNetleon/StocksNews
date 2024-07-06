@@ -67,7 +67,7 @@ class _LoginBottomState extends State<LoginBottom> {
     closeKeyboard();
     if (!isEmail(_controller.text) && !isNumeric(_controller.text)) {
       // showErrorMessage(message: "Please enter valid email address");
-      popUpAlert(
+      popUpAlert(  
         message: "Please enter valid email address.",
         title: "Alert",
         icon: Images.alertPopGIF,
@@ -236,7 +236,6 @@ class _LoginBottomState extends State<LoginBottom> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SpacerVertical(height: Dimen.authScreenPadding),
-
                         Text(
                           "WELCOME BACK",
                           style: stylePTSansBold(fontSize: 24),

@@ -13,7 +13,7 @@ import '../utils/utils.dart';
 import 'success.dart';
 
 class RevenueCatService {
-  static Future<void> initializeSubscription() async {
+  static Future initializeSubscription() async {
     Purchases.setLogLevel(LogLevel.debug);
 
     UserRes? userRes = navigatorKey.currentContext?.read<UserProvider>().user;
@@ -40,7 +40,7 @@ class RevenueCatService {
     }
   }
 
-  static Future<void> _handlePaywallResult(PaywallResult result) async {
+  static Future _handlePaywallResult(PaywallResult result) async {
     switch (result) {
       case PaywallResult.cancelled:
         break;
@@ -51,7 +51,7 @@ class RevenueCatService {
         // Handle not presented
         break;
       case PaywallResult.purchased:
-        await _handlePurchaseSuccess();
+        await await _handlePurchaseSuccess();
         break;
       case PaywallResult.restored:
         // Handle restore
@@ -60,7 +60,7 @@ class RevenueCatService {
     }
   }
 
-  static Future<void> _handlePurchaseSuccess() async {
+  static Future _handlePurchaseSuccess() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     provider.updateUser(subscriptionPurchased: 1);
     await showModalBottomSheet(

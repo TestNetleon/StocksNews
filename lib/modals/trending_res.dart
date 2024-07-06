@@ -125,7 +125,7 @@ class MostBullishData {
   final num changes;
   final num? mention;
   final num mentionChange;
-  final String displayChange;
+  final String? displayChange;
   final num changesPercentage;
   int isAlertAdded;
   int isWatchlistAdded;
@@ -136,7 +136,7 @@ class MostBullishData {
     // required this.publishedDate,
     this.image,
     this.price,
-    required this.displayChange,
+    this.displayChange,
     required this.changesPercentage,
     required this.changes,
     this.mention,

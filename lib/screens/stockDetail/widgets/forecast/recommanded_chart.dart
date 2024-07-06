@@ -25,8 +25,8 @@ class RecommandedForcastingChart extends StatelessWidget {
             color: Colors.black,
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(color: Colors.black),
-            boxShadow: [
-              const BoxShadow(
+            boxShadow: const [
+              BoxShadow(
                   color: Colors.black,
                   offset: Offset(0, 1),
                   spreadRadius: 2,

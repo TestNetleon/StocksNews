@@ -415,6 +415,27 @@ List<DrawerRes> aboutTiles = [
       );
     },
   ),
+  // DrawerRes(
+  //   iconData: Icons.list_alt_rounded,
+  //   text: "ReferAFriendNew",
+  //   onTap: () {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(builder: (_) => const ReferFriendNew()),
+  //     );
+  //   },
+  // ),
+  // DrawerRes(
+  //   iconData: Icons.list_alt_rounded,
+  //   text: "Mission",
+  //   onTap: () {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(builder: (_) => const MissionsScreen()),
+  //     );
+  //   },
+  // ),
+
   DrawerRes(
     iconData: Icons.featured_play_list_outlined,
     text: "What We Do",

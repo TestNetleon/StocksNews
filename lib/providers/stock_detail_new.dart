@@ -203,8 +203,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool selectedTwo = false,
   }) async {
     Map request = {
-      "token":
-          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": _tabRes?.keyStats?.symbol ?? "",
       "alert_name": alertName,
       "sentiment_spike": selectedOne ? "yes" : "no",
@@ -241,8 +240,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     notifyListeners();
 
     Map request = {
-      "token":
-          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": _tabRes?.keyStats?.symbol ?? "",
     };
     try {
@@ -280,8 +278,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusTab(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -397,8 +394,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusDividends(Status.loading);
     try {
       FormData request = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "token": navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
       });
       ApiResponse response = await apiRequest(
@@ -411,7 +407,6 @@ class StockDetailProviderNew extends ChangeNotifier {
         _extraDividends =
             (response.extra is Extra ? response.extra as Extra : null);
       } else {
-        //
         _dividends = null;
         _errorDividends = response.message;
       }

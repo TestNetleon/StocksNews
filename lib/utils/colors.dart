@@ -45,6 +45,9 @@ class ThemeColors {
   static const background = Color(0xFF121212);
   // static const primaryLight = Color.fromARGB(255, 34, 34, 34);
   static const accent = Color(0xFF35BA46);
+  static const progressbackgroundColor = Color(0xFFd29650);
+  static const progressbackgroundColorDark = Color(0xFFb48245);
+
   static const darkGreen = Color(0xFF269238);
   static const ratingIconColor = Color(0xFFfec107);
   static const themeGreen = Color(0xFF14b24a);
