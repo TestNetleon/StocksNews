@@ -721,11 +721,30 @@ class StockDetailProviderNew extends ChangeNotifier {
   }) async {
     setStatusOverview(Status.loading);
     try {
-      Map request = {
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "symbol": symbol ?? "",
-      };
+      // Map request = {
+      //   "token":
+      //       navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      //   "symbol": symbol ?? "",
+      // };
+
+      Map request = pointsDeducted != null
+          ? {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "symbol": symbol ?? "",
+              "point_deduction": "$pointsDeducted",
+            }
+          : {
+              "token": navigatorKey.currentContext!
+                      .read<UserProvider>()
+                      .user
+                      ?.token ??
+                  "",
+              "symbol": symbol ?? "",
+            };
 
       ApiResponse response = await apiRequest(
         url: Apis.detailOverview,

@@ -6,7 +6,6 @@ import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/howit_work.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/suspend.dart';
-import 'package:stocks_news_new/screens/affiliate/referFriend/trasnsaction.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/widget/points_summary.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';

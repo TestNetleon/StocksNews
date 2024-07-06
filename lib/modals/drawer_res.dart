@@ -7,6 +7,7 @@ class DrawerRes {
   String text;
   int? badgeCount;
   Function()? onTap;
+  // Color? iconColor;
   DrawerRes({
     required this.iconData,
     this.isSelected = false,
@@ -15,6 +16,7 @@ class DrawerRes {
     this.showBadge = false,
     this.badgeCount,
     this.onTap,
+    // this.iconColor = Colors.white,
   });
 }
 
