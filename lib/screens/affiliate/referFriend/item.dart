@@ -153,38 +153,16 @@ class AffiliateReferItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: data?.status == 0 ? _showBottomSheet : null,
-      // onTap: () {
-      //   context.read<LeaderBoardProvider>().startNudgeTimer(index);
-      // },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 23, 23, 23),
-              // ThemeColors.greyBorder,
-              Color.fromARGB(255, 39, 39, 39),
-            ],
-          ),
+          color: ThemeColors.background,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
           children: [
             Row(
               children: [
-                // Container(
-                //   padding: const EdgeInsets.all(5),
-                //   decoration: const BoxDecoration(
-                //       color: ThemeColors.accent, shape: BoxShape.circle),
-                //   alignment: Alignment.center,
-                //   child: Text(
-                //     "$index",
-                //     style: stylePTSansBold(fontSize: 10),
-                //   ),
-                // ),
-                // SpacerHorizontal(width: index < 10 ? 10 : 5),
                 Container(
                   width: 60,
                   height: 60,
@@ -207,7 +185,7 @@ class AffiliateReferItem extends StatelessWidget {
                             data?.displayName != '',
                         child: Text(
                           data?.displayName ?? "N/A",
-                          style: stylePTSansRegular(),
+                          style: stylePTSansBold(fontSize: 18),
                         ),
                       ),
                       const SpacerVertical(height: 5),
@@ -231,8 +209,9 @@ class AffiliateReferItem extends StatelessWidget {
                                 ? ThemeColors.accent
                                 : ThemeColors.sos),
                         child: Text(
-                          data?.status == 1 ? " Verified" : "Unverified",
-                          style: stylePTSansRegular(fontSize: 10),
+                          (data?.status == 1 ? " Verified" : "Unverified")
+                              .toUpperCase(),
+                          style: stylePTSansBold(fontSize: 12),
                         ),
                       ),
                     ],
@@ -240,7 +219,7 @@ class AffiliateReferItem extends StatelessWidget {
                 ),
                 Text(
                   "${data?.points ?? 0}",
-                  style: stylePTSansRegular(),
+                  style: stylePTSansBold(fontSize: 17),
                 ),
               ],
             ),

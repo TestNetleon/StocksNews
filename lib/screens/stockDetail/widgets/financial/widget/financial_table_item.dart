@@ -3,25 +3,32 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/theme.dart'; // Adjust based on your actual import path
 
-class FinancialTableItem extends StatelessWidget {
-  const FinancialTableItem({super.key});
+class FinancialTableItem extends StatefulWidget {
+  const FinancialTableItem({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final financialData =
-        Provider.of<StockDetailProviderNew>(context).sdFinancialArray;
+  _FinancialTableItemState createState() => _FinancialTableItemState();
+}
 
-    return financialData != null
-        ? SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              border: TableBorder.all(color: Colors.white),
-              columnSpacing: 20,
-              columns: _createColumns(financialData.first),
-              rows: financialData.map((data) => _createRows(data)).toList(),
-            ),
-          )
-        : const Center(child: CircularProgressIndicator());
+class _FinancialTableItemState extends State<FinancialTableItem> {
+  List<DataColumn> _columns = [];
+  List<DataRow> _rows = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  void _initializeData() {
+    final financialData =
+        Provider.of<StockDetailProviderNew>(context, listen: false)
+            .sdFinancialArray;
+
+    if (financialData != null && financialData.isNotEmpty) {
+      _columns = _createColumns(financialData.first);
+      _rows = financialData.map((data) => _createRows(data)).toList();
+    }
   }
 
   List<DataColumn> _createColumns(Map<String, dynamic> data) {
@@ -45,6 +52,27 @@ class FinancialTableItem extends StatelessWidget {
           ),
         );
       }).toList(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<StockDetailProviderNew>(
+      builder: (context, provider, _) {
+        final financialData = provider.sdFinancialArray;
+
+        return financialData != null && financialData.isNotEmpty
+            ? SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  border: TableBorder.all(color: Colors.white),
+                  columnSpacing: 20,
+                  columns: _columns,
+                  rows: _rows,
+                ),
+              )
+            : const Center(child: CircularProgressIndicator());
+      },
     );
   }
 
