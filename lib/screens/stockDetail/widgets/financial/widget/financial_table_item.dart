@@ -22,39 +22,72 @@ class FinancialTableItem extends StatelessWidget {
 
     final transformedData = _transformData(typedFinancialData);
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        border: TableBorder.all(
-          color: ThemeColors.greyBorder,
+    return Row(
+      children: [
+        DataTable(
+          border: TableBorder.all(
+            color: ThemeColors.greyBorder,
+          ),
+          columns: [
+            DataColumn(
+              label: Text(
+                "Key",
+                style: stylePTSansRegular(),
+              ),
+            ),
+          ],
+          rows: transformedData.map((data) {
+            return DataRow(
+              cells: [
+                DataCell(
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      data['Key'].toString(),
+                      style: stylePTSansRegular(),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }).toList(),
         ),
-        columnSpacing: 20,
-        columns: _createColumns(transformedData.first),
-        rows:
-            transformedData.map((data) => _createRows(context, data)).toList(),
-      ),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              border: TableBorder.all(
+                color: ThemeColors.greyBorder,
+              ),
+              columnSpacing: 20,
+              columns: _createColumns(transformedData.first),
+              rows: transformedData
+                  .map((data) => _createValuesRows(context, data))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   List<DataColumn> _createColumns(Map<String, dynamic> data) {
-    return data.keys.map((key) {
+    return data.keys.where((key) => key != 'Key').map((key) {
       return DataColumn(
         label: Text(
-          "",
+          key,
           style: stylePTSansRegular(),
         ),
       );
     }).toList();
   }
 
-  DataRow _createRows(BuildContext context, Map<String, dynamic> data) {
+  DataRow _createValuesRows(BuildContext context, Map<String, dynamic> data) {
     return DataRow(
-      cells: data.entries.map((entry) {
+      cells: data.entries.where((entry) => entry.key != 'Key').map((entry) {
         final value = entry.value;
         final isLink =
             value is String && Uri.tryParse(value)?.hasAbsolutePath == true;
-        Utils().showLog('Is valid URLentry: $entry');
-        Utils().showLog('Is valid URL123444: ${key == "Key"}');
 
         return DataCell(
           isLink
@@ -72,9 +105,11 @@ class FinancialTableItem extends StatelessWidget {
                     ),
                   ),
                 )
-              : Text(
-                  value.toString(),
-                  style: stylePTSansRegular(),
+              : SizedBox(
+                  child: Text(
+                    value.toString(),
+                    style: stylePTSansRegular(),
+                  ),
                 ),
         );
       }).toList(),
@@ -95,12 +130,11 @@ class FinancialTableItem extends StatelessWidget {
       }
       transformedData.add(row);
     }
-    Utils().showLog('Is valid URL122: $transformedData');
 
     return transformedData;
   }
 
   TextStyle stylePTSansRegular() {
-    return stylePTSansBold(); // Example style
+    return stylePTSansBold(fontSize: 12); // Example style
   }
 }
