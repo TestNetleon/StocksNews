@@ -1,15 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/dividends_res.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends_item.dart';
+import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/md_bottom_sheet.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart';
+import 'package:stocks_news_new/screens/tabs/tabs.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../utils/constants.dart';
@@ -61,6 +72,29 @@ class _DividendsListState extends State<DividendsList> {
   Widget build(BuildContext context) {
     DividendsProvider provider = context.watch<DividendsProvider>();
     List<DividendsRes>? data = provider.data;
+
+    UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
+    bool purchased = userProvider.user?.membership?.purchased == 1;
+
+    bool isLocked = false;
+
+    if (purchased) {
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+          false;
+      isLocked = !havePermissions;
+    } else {
+      if (!isLocked) {
+        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+                element == "gap-up-stocks" || element == "gap-down-stocks") ??
+            false;
+      }
+    }
+
+    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
 
     return Stack(
       children: [
@@ -129,7 +163,12 @@ class _DividendsListState extends State<DividendsList> {
               },
             ),
           ),
-        )
+        ),
+        if (isLocked)
+          CommonLock(
+            showLogin: true,
+             isLocked: isLocked,
+          ),
       ],
     );
   }

@@ -40,6 +40,7 @@ dependencies:
   dio: ^5.3.2
   shared_preferences: ^2.2.0
   validators: ^3.0.0
+  collection:
   http: ^1.1.0
   intl: ^0.18.1
   pull_to_refresh: ^2.0.0

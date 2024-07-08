@@ -895,7 +895,7 @@
 //                                                       await _onReferClick(
 //                                                           context);
 //                                                     },
-//                                                     text: "Refer Now",
+//                                                     text: "Refer and Earn",
 //                                                     showArrow: false,
 //                                                   )
 //                                                 ],

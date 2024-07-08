@@ -65,8 +65,7 @@ class _SdFinancialState extends State<SdFinancial> {
     // List<FinanceStatement>? financeStatements = data?.financeStatement;
 
     return BaseUiContainer(
-      hasData:
-          !provider.isLoadingFinancial && provider.sdFinancialArray != null,
+      hasData:!provider.isLoadingFinancial && provider.sdFinancialArray != null,
       isLoading: provider.isLoadingFinancial,
       showPreparingText: true,
       error: provider.errorFinancial,
@@ -95,7 +94,7 @@ class _SdFinancialState extends State<SdFinancial> {
                   ),
                   color: ThemeColors.greyBorder.withOpacity(0.4),
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: BoxDecoration( 
                       borderRadius: BorderRadius.circular(10),
                       color: ThemeColors.background,
                       boxShadow: [
@@ -103,7 +102,7 @@ class _SdFinancialState extends State<SdFinancial> {
                           color: const Color.fromARGB(255, 37, 37, 37)
                               .withOpacity(1), // Shadow color
                           spreadRadius: 2,
-                          blurRadius: 5,
+                          blurRadius: 5,  
                           offset: const Offset(0, 1),
                         ),
                       ],

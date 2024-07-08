@@ -22,7 +22,11 @@ class StockScreenerScreen extends StatelessWidget {
           Dimen.padding,
           0,
         ),
-        child: StockScreenerList(),
+        child: Stack(
+          children: [
+            StockScreenerList(),
+          ],
+        ),
       ),
     );
   }
