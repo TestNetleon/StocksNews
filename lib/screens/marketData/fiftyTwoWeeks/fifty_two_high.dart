@@ -105,38 +105,30 @@ class _FiftyTwoWeeksHighsStocksState extends State<FiftyTwoWeeksHighsStocks> {
                     canLoadMore: provider.canLoadMore,
                     onLoadMore: () async =>
                         provider.getFiftyTwoWeekHigh(loadMore: true),
-                    child: Column(
-                      children: [
-                        // HtmlTitle(subTitle: provider.extra?.subTitle),
-                        Expanded(
-                          child: ListView.separated(
-                            padding: const EdgeInsets.only(
-                              bottom: Dimen.padding,
-                              top: 0,
-                            ),
-                            itemBuilder: (context, index) {
-                              if (data == null || data.isEmpty) {
-                                return const SizedBox();
-                              }
-                              return FiftyTwoWeeksItem(
-                                data: data[index],
-                                isOpen: provider.openIndex == index,
-                                onTap: () {
-                                  provider.setOpenIndex(
-                                    provider.openIndex == index ? -1 : index,
-                                  );
-                                },
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SpacerVertical(height: 12);
-                            },
-                            // itemCount: up?.length ?? 0,
-                            itemCount: data?.length ?? 0,
-                          ),
-                        ),
-                      ],
+                    child: ListView.separated(
+                      padding: const EdgeInsets.only(
+                        bottom: Dimen.padding,
+                        top: 0,
+                      ),
+                      itemBuilder: (context, index) {
+                        if (data == null || data.isEmpty) {
+                          return const SizedBox();
+                        }
+                        return FiftyTwoWeeksItem(
+                          data: data[index],
+                          isOpen: provider.openIndex == index,
+                          onTap: () {
+                            provider.setOpenIndex(
+                              provider.openIndex == index ? -1 : index,
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SpacerVertical(height: 12);
+                      },
+                      // itemCount: up?.length ?? 0,
+                      itemCount: data?.length ?? 0,
                     ),
                   ),
                 ),
