@@ -25,13 +25,11 @@ class FinancialTableItem extends StatelessWidget {
     return Row(
       children: [
         DataTable(
-          border: TableBorder.all(
-            color: ThemeColors.greyBorder,
-          ),
+          border: TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
           columns: [
             DataColumn(
               label: Text(
-                "Key",
+                "",
                 style: stylePTSansRegular(),
               ),
             ),
@@ -43,7 +41,9 @@ class FinancialTableItem extends StatelessWidget {
                   SizedBox(
                     width: 100,
                     child: Text(
-                      data['Key'].toString(),
+                      data['Key'].toString() == "Period"
+                          ? "Particulars (in Cr)"
+                          : data['Key'].toString(),
                       style: stylePTSansRegular(),
                     ),
                   ),
@@ -56,9 +56,8 @@ class FinancialTableItem extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              border: TableBorder.all(
-                color: ThemeColors.greyBorder,
-              ),
+              border:
+                  TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
               columnSpacing: 20,
               columns: _createColumns(transformedData.first),
               rows: transformedData
