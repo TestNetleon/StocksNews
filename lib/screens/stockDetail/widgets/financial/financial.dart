@@ -127,8 +127,7 @@ class _SdFinancialState extends State<SdFinancial> {
                               child: SdFinancialTabs(
                                 tabs: provider.extraFinancial?.type,
                                 onChange: (index) =>
-                                    provider.changeTabTypeChartData(index,
-                                        symbol: widget.symbol),
+                                    provider.changeTabTypeChartData(index,symbol: widget.symbol),
                                 selectedIndex: provider.typeIndex,
                               ),
                             ),

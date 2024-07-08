@@ -116,7 +116,7 @@ class DividendPaymentLineChart extends StatelessWidget {
                   String formattedDate = DateFormat("MMM d").format(date);
                   return LineTooltipItem(
                     textAlign: TextAlign.start,
-                    '${data.label} $formattedDate\n ${data.amount}',
+                    '${data.label} $formattedDate\n${data.amount}',
                     const TextStyle(color: Colors.black),
                   );
                 }).toList();
