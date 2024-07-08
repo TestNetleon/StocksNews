@@ -6,7 +6,7 @@ import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -68,18 +68,17 @@ class _BlogDetailState extends State<BlogDetail> {
           }
         });
       }
-    } else if (userProvider.user != null && !userProvider.phoneVerified) {
+    } else if (userProvider.user != null && userProvider.user?.phone == null) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
           if (mounted) {
             helper.update(BlogDetail.path);
-            referLogin();
+            verifyIdentitySheet();
           }
         });
       }
-      //
     }
   }
 
