@@ -12,6 +12,7 @@ import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
+import 'aiNews/detail.dart';
 import 'newsAuthor/index.dart';
 
 class NewsItem extends StatelessWidget {
@@ -19,8 +20,10 @@ class NewsItem extends StatelessWidget {
   final bool showCategory;
   final bool gotoDetail;
   final bool fromMoreNews;
+  final bool fromAI;
   const NewsItem({
     this.news,
+    this.fromAI = false,
     this.showCategory = true,
     this.gotoDetail = true,
     super.key,
@@ -28,6 +31,25 @@ class NewsItem extends StatelessWidget {
   });
 
   void _gotoDetail(BuildContext context) {
+    Utils().showLog("GOTO DETAIL");
+    if (fromAI && !fromMoreNews) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => NewsDetailsAI(slug: news?.slug)),
+      );
+
+      return;
+    }
+
+    if (fromAI && fromMoreNews) {
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => NewsDetailsAI(slug: news?.slug)),
+      );
+
+      return;
+    }
+
     if (fromMoreNews) {
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
@@ -267,15 +289,28 @@ class NewsItemSeparated extends StatelessWidget {
   final bool showCategory;
   final bool gotoDetail;
   final bool fromMoreNews;
+  final bool fromAI;
   const NewsItemSeparated({
     this.news,
     this.showCategory = true,
     this.gotoDetail = true,
     super.key,
     this.fromMoreNews = false,
+    this.fromAI = false,
   });
 
   void _gotoDetail(BuildContext context) {
+    if (fromAI) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => NewsDetailsAI(slug: news!.slug),
+        ),
+      );
+
+      return;
+    }
+
     if (fromMoreNews) {
       Navigator.pushReplacement(
         navigatorKey.currentContext!,

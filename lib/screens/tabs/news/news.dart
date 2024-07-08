@@ -7,6 +7,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import '../../../providers/news_provider.dart';
+import 'aiNews/container.dart';
 
 class News extends StatelessWidget {
   const News({super.key});
@@ -42,14 +43,27 @@ class News extends StatelessWidget {
           },
           scrollable: provider.tabs?.length == 2 ? false : true,
           padding: EdgeInsets.only(bottom: 10.sp),
-          tabs: List.generate(
-            provider.tabs?.length ?? 0,
-            (index) => "${provider.tabs?[index].name}",
-          ),
-          widgets: List.generate(
-            provider.tabs?.length ?? 0,
-            (index) => NewsTypeData(id: provider.tabs![index].id),
-          ),
+          // tabs: List.generate(
+          //   provider.tabs?.length ?? 0,
+          //   (index) => "${provider.tabs?[index].name}",
+          // ),
+
+          tabs: [
+            ...(provider.tabs?.map(
+                  (tab) => tab.name,
+                )) ??
+                [],
+            'AI News'
+          ],
+          // widgets: List.generate(
+          //   provider.tabs?.length ?? 0,
+          //   (index) => NewsTypeData(id: provider.tabs![index].id),
+          // ),
+
+          widgets: [
+            ...(provider.tabs!.map((tab) => NewsTypeData(id: tab.id)).toList()),
+            AINewsIndex(),
+          ],
         ),
       ),
     );

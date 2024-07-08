@@ -62,7 +62,7 @@ class _ReferLoginState extends State<ReferLogin> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   TextEditingController displayName = TextEditingController(text: "");
-  bool affiliateStatus = true;
+  int affiliateStatus = 0;
   bool numberVerified = true;
 
   String appSignature = "";
@@ -89,7 +89,7 @@ class _ReferLoginState extends State<ReferLogin> {
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
-    affiliateStatus = provider.user?.affiliateStatus ?? false;
+    affiliateStatus = provider.user?.affiliateStatus ?? 0;
     numberVerified = provider.user?.phone != null &&
         provider.user?.phone != "" &&
         provider.user?.name != null &&

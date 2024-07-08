@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/providers/ai_provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
 import 'package:stocks_news_new/providers/blog_provider.dart';
@@ -582,6 +583,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => HelpDeskProvider()),
       ChangeNotifierProvider(create: (_) => MembershipProvider()),
       ChangeNotifierProvider(create: (_) => MorningstarTxnProvider()),
+      ChangeNotifierProvider(create: (_) => AIProvider()),
     ];
   }
 }

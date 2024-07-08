@@ -245,7 +245,7 @@ class NewsCategoryProvider extends ChangeNotifier {
   bool get canLoadMore => _page < (_data?.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
 
-  bool get isLoading => _status == Status.loading || _status == Status.ideal;
+  bool get isLoading => _status == Status.loading;
   bool get tabLoading => _tabStatus == Status.loading;
 
   Map<String, TabsNewsHolder?> _newsData = {};
