@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 
+import '../../../providers/user_provider.dart';
+import '../../../route/my_app.dart';
+import '../../../service/ask_subscription.dart';
+import '../../../service/revenue_cat.dart';
 import '../../../utils/colors.dart';
+import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../../../widgets/theme_button_small.dart';
+import '../../auth/login/login_sheet_tablet.dart';
+import '../../tabs/tabs.dart';
 
 class CommonLock extends StatelessWidget {
-  final Function() onMembershipClick;
-  final Function() onLoginClick;
   final bool showLogin;
+  final bool isLocked;
   const CommonLock({
     super.key,
-    required this.onMembershipClick,
-    required this.onLoginClick,
     this.showLogin = false,
+    this.isLocked = false,
   });
 
   @override
@@ -24,6 +31,7 @@ class CommonLock extends StatelessWidget {
             ScreenUtil().bottomBarHeight -
             ScreenUtil().statusBarHeight) /
         1.3;
+    UserProvider provider = context.watch<UserProvider>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,13 +86,53 @@ class CommonLock extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 10),
                 ThemeButtonSmall(
-                  onPressed: onMembershipClick,
+                  onPressed: () {
+                    askToSubscribe(
+                      onPressed: provider.user == null
+                          ? () async {
+                              Utils().showLog("is Locked? $isLocked");
+
+                              //Ask for LOGIN
+                              Navigator.pop(context);
+                              isPhone
+                                  ? await loginSheet()
+                                  : await loginSheetTablet();
+                              if (provider.user == null) {
+                                return;
+                              }
+                              if (isLocked) {
+                                await RevenueCatService
+                                    .initializeSubscription();
+                              }
+                            }
+                          : () async {
+                              Navigator.pop(context);
+                              if (isLocked) {
+                                await RevenueCatService
+                                    .initializeSubscription();
+                              }
+                            },
+                    );
+                  },
                   text: "Become a Member",
                   showArrow: false,
                 ),
                 const SpacerVertical(height: 20),
                 GestureDetector(
-                  onTap: onLoginClick,
+                  onTap: () async {
+                    isPhone ? await loginSheet() : await loginSheetTablet();
+                    if (provider.user == null) {
+                      return;
+                    }
+                    Navigator.popUntil(
+                        navigatorKey.currentContext!, (route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(
+                        builder: (_) => const Tabs(index: 0),
+                      ),
+                    );
+                  },
                   child: Text(
                     "Already have an account? Log in",
                     style: stylePTSansRegular(
