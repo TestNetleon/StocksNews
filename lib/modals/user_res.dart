@@ -26,7 +26,7 @@ class UserRes {
   bool? signupStatus;
   // int? subscriptionPurchased;
   final UserMembershipRes? membership;
-  bool? affiliateStatus;
+  int? affiliateStatus;
 
   UserRes({
     // this.subscriptionPurchased = 0,

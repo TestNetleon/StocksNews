@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,9 +16,12 @@ import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
+import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
+import 'package:stocks_news_new/screens/myAccount/widgets/phone_otp.dart';
 
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
@@ -529,18 +534,51 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       );
       return;
     }
-    Map request = {
-      "token": provider.user?.token ?? "",
-      "phone": phone,
-      "phone_hash": appSignature,
-    };
 
-    try {
-      ApiResponse response = await provider.phoneUpdateOtp(request,
-          resendButtonClick: false, phone: phone);
-      if (response.status) {}
-    } catch (e) {
-      //
-    }
+    showGlobalProgressDialog();
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
+      verificationCompleted: (PhoneAuthCredential credential) {
+        closeGlobalProgressDialog();
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        closeGlobalProgressDialog();
+        log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+        popUpAlert(
+          message: e.message ?? Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        closeGlobalProgressDialog();
+        phoneOTP(
+          phone: phone,
+          verificationId: verificationId,
+          name: nameController.text,
+        );
+        // referOTP(
+        //   name: name.text,
+        //   displayName: displayName.text,
+        //   phone: mobile.text,
+        //   appSignature: appSignature,
+        //   verificationId: verificationId,
+        // );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+
+    // Map request = {
+    //   "token": provider.user?.token ?? "",
+    //   "phone": phone,
+    //   "phone_hash": appSignature,
+    // };
+    // try {
+    // ApiResponse response = await provider.phoneUpdateOtp(request,
+    //     resendButtonClick: false, phone: phone);
+    //   if (response.status) {}
+    // } catch (e) {
+    //   //
+    // }
   }
 }

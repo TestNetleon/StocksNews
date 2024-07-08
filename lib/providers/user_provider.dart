@@ -108,7 +108,6 @@ class UserProvider extends ChangeNotifier {
     _phoneClickText = "update";
     _phoneEditable = true;
     phoneVerified = true;
-
     notifyListeners();
   }
 
@@ -933,13 +932,22 @@ class UserProvider extends ChangeNotifier {
     required phone,
     required name,
     required displayName,
+    affiliateStatus,
   }) async {
-    Map request = {
-      "token": token ?? "",
-      "phone": phone,
-      "name": name,
-      "display_name": displayName,
-    };
+    Map request = affiliateStatus != null
+        ? {
+            "token": token ?? "",
+            "phone": phone,
+            "name": name,
+            "display_name": displayName,
+            'affiliate_status': "1",
+          }
+        : {
+            "token": token ?? "",
+            "phone": phone,
+            "name": name,
+            "display_name": displayName,
+          };
 
     try {
       ApiResponse res = await apiRequest(

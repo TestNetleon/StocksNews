@@ -24,7 +24,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../api/api_response.dart';
 
-referOTP({
+phoneOTP({
   required String phone,
   String appSignature = '',
   name = "",
@@ -262,14 +262,17 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         affiliateStatus: 1,
       );
       if (response.status) {
-        Navigator.popUntil(
-          navigatorKey.currentContext!,
-          (route) => route.isFirst,
-        );
-        Navigator.popAndPushNamed(
-          navigatorKey.currentContext!,
-          ReferAFriend.path,
-        );
+        Navigator.pop(navigatorKey.currentContext!);
+        provider.updateUser(phone: widget.phone);
+        provider.setPhoneClickText();
+        // Navigator.popUntil(
+        //   navigatorKey.currentContext!,
+        //   (route) => route.isFirst,
+        // );
+        // Navigator.popAndPushNamed(
+        //   navigatorKey.currentContext!,
+        //   ReferAFriend.path,
+        // );
       } else {
         popUpAlert(
           message: response.message ?? Const.errSomethingWrong,
