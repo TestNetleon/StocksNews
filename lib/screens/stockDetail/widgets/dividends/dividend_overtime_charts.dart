@@ -31,8 +31,8 @@ class DividendPaymentLineChart extends StatelessWidget {
     // Find the maximum amount
     double maxAmount =
         spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
-    double minAmount = 0;
-    String interval = ((maxAmount - minAmount) / 4).toStringAsFixed(3);
+    double minAmount = 0.0;
+    double interval = (maxAmount - minAmount) / 4;
 
     return AspectRatio(
       aspectRatio: 1.10,
@@ -44,9 +44,10 @@ class DividendPaymentLineChart extends StatelessWidget {
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                interval: double.parse(interval),
-                reservedSize: 35,
+                interval: double.parse(interval.toStringAsFixed(2)),
+                reservedSize: 30,
                 getTitlesWidget: (value, meta) {
+                  Utils().showLog(interval);
                   return Text(
                     '${value.toDouble()}%',
                     style: const TextStyle(
@@ -116,7 +117,7 @@ class DividendPaymentLineChart extends StatelessWidget {
                   String formattedDate = DateFormat("MMM d").format(date);
                   return LineTooltipItem(
                     textAlign: TextAlign.start,
-                    '${data.label} $formattedDate\n${data.amount}',
+                    '${data.label} $formattedDate\n ${data.amount}',
                     const TextStyle(color: Colors.black),
                   );
                 }).toList();

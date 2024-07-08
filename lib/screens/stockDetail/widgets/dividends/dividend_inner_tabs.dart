@@ -51,49 +51,45 @@ class _DividendInnerTabsState extends State<DividendInnerTabs> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                child: CustomTabHome(
-                  label: "Dividends Payments",
-                  selected: _selectedIndex == 0,
-                  onTap: () async {
-                    try {
-                      if (Platform.isAndroid) {
-                        bool isVibe = await Vibration.hasVibrator() ?? false;
-                        if (isVibe) {
-                          Vibration.vibrate(
-                              pattern: [50, 50, 79, 55], intensities: [1, 10]);
-                        }
-                      } else {
-                        HapticFeedback.lightImpact();
+              CustomTabHome(
+                label: "Dividends Payments",
+                selected: _selectedIndex == 0,
+                onTap: () async {
+                  try {
+                    if (Platform.isAndroid) {
+                      bool isVibe = await Vibration.hasVibrator() ?? false;
+                      if (isVibe) {
+                        Vibration.vibrate(
+                            pattern: [50, 50, 79, 55], intensities: [1, 10]);
                       }
-                    } catch (e) {}
-                    setState(() {
-                      _selectedIndex = 0;
-                    });
-                  },
-                ),
+                    } else {
+                      HapticFeedback.lightImpact();
+                    }
+                  } catch (e) {}
+                  setState(() {
+                    _selectedIndex = 0;
+                  });
+                },
               ),
-              Expanded(
-                child: CustomTabHome(
-                  label: "Dividend Yield Over Time",
-                  selected: _selectedIndex == 1,
-                  onTap: () async {
-                    try {
-                      if (Platform.isAndroid) {
-                        bool isVibe = await Vibration.hasVibrator() ?? false;
-                        if (isVibe) {
-                          Vibration.vibrate(
-                              pattern: [50, 50, 79, 55], intensities: [1, 10]);
-                        }
-                      } else {
-                        HapticFeedback.lightImpact();
+              CustomTabHome(
+                label: "Div. Yield Over Time",
+                selected: _selectedIndex == 1,
+                onTap: () async {
+                  try {
+                    if (Platform.isAndroid) {
+                      bool isVibe = await Vibration.hasVibrator() ?? false;
+                      if (isVibe) {
+                        Vibration.vibrate(
+                            pattern: [50, 50, 79, 55], intensities: [1, 10]);
                       }
-                    } catch (e) {}
-                    setState(() {
-                      _selectedIndex = 1;
-                    });
-                  },
-                ),
+                    } else {
+                      HapticFeedback.lightImpact();
+                    }
+                  } catch (e) {}
+                  setState(() {
+                    _selectedIndex = 1;
+                  });
+                },
               ),
             ],
           ),

@@ -100,7 +100,7 @@ class _SdDividendsState extends State<SdDividends> {
                           return SdTopCard(top: top);
                         },
                       ),
-                      const SpacerVertical(height: 20),
+                      const SpacerVertical(height: 10),
                       Container(
                         margin: const EdgeInsets.only(top: Dimen.homeSpacing),
                         child: HomePartialLoading(
