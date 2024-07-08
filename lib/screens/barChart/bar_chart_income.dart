@@ -32,7 +32,6 @@ class BarChartIncomeState extends State<BarChartIncome> {
 
   bool valueNegative = true;
   List<Chart>? charts;
-  List<Chart>? chartsPlaceHolder;
 
   @override
   void initState() {
@@ -41,74 +40,69 @@ class BarChartIncomeState extends State<BarChartIncome> {
   }
 
   void intFunction() {
-    charts = widget.data?.chart?.sublist(0, 5);
+    if ((widget.data?.chart?.length ?? 0) < 5) {
+      charts = widget.data?.chart?.sublist(0, widget.data?.chart?.length);
+    } else {
+      charts = widget.data?.chart?.sublist(0, 5);
+    }
 
     setState(() {});
-    if (charts?[4].revenue != null) {
-      BarChartGroupData barGroup1 = makeGroupData(
-        0,
-        (charts?[4].revenue == null || (charts![4].revenue ?? 0) < 0)
-            ? 0.0
-            : double.parse("${charts?[4].revenue}"),
-        charts?[4].netIncome == null || (charts![4].netIncome ?? 0) < 0
-            ? 0.0
-            : double.parse("${charts![4].netIncome}"),
-      );
-      BarChartGroupData barGroup2 = makeGroupData(
-          1,
-          charts?[3].revenue == null || (charts![3].revenue ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[3].revenue}"),
-          charts?[3].netIncome == null || (charts![3].netIncome ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![3].netIncome}"));
-      BarChartGroupData barGroup3 = makeGroupData(
-          2,
-          charts?[2].revenue == null || (charts![2].revenue ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[2].revenue}"),
-          charts?[2].netIncome == null || (charts![2].netIncome ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![2].netIncome}"));
-      BarChartGroupData barGroup4 = makeGroupData(
-          3,
-          charts?[1].revenue == null || (charts![1].revenue ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[1].revenue}"),
-          charts?[1].netIncome == null || (charts![1].netIncome ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![1].netIncome}"));
-      BarChartGroupData barGroup5 = makeGroupData(
-          4,
-          charts?[0].revenue == null || (charts![0].revenue ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[0].revenue}"),
-          charts?[0].netIncome == null || (charts![0].netIncome ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![0].netIncome}"));
-      final items = [
-        barGroup1,
-        barGroup2,
-        barGroup3,
-        barGroup4,
-        barGroup5,
-      ];
-      rawBarGroups = items;
 
-      showingBarGroups = rawBarGroups;
-      final maxRevenue = charts?.isNotEmpty == true
-          ? widget.data!.chart!
-              .map((e) => e.revenue)
-              .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
-          : 0;
-      final maxNetIncome = charts?.isNotEmpty == true
-          ? charts
-              ?.map((e) => e.netIncome)
-              .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
-          : 0;
-      maxAbsValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
-      setState(() {});
+    List<BarChartGroupData> items = [];
+
+    for (int i = charts!.length - 1; i >= 0; i--) {
+      double revenue = (charts?[i].revenue == null)
+          ? 0.0
+          : double.parse("${charts?[i].revenue}");
+      double netIncome = (charts?[i].netIncome == null)
+          ? 0.0
+          : double.parse("${charts![i].netIncome}");
+
+      BarChartGroupData barGroup = makeGroupData(i, revenue, netIncome);
+      items.add(barGroup);
     }
+
+    rawBarGroups = items;
+    showingBarGroups = rawBarGroups;
+    Utils().showLog("showingBarGroups  === $showingBarGroups");
+
+    final maxRevenue = charts?.isNotEmpty == true
+        ? charts!
+            .map((e) => e.revenue)
+            .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
+        : 0;
+    final maxNetIncome = charts?.isNotEmpty == true
+        ? charts
+            ?.map((e) => e.netIncome)
+            .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
+        : 0;
+    final minRevenue = (charts?.isNotEmpty == true &&
+            widget.data?.chart != null &&
+            widget.data!.chart!.any((e) => e.revenue != null && e.revenue! < 0))
+        ? widget.data!.chart!
+            .map((e) => e.revenue)
+            .where((e) => e != null && e < 0) // Filter only negative values
+            .reduce(
+                (a, b) => a! < b! ? a : b) // Find the minimum negative value
+        : null;
+    final minNetIncome = (charts?.isNotEmpty == true &&
+            widget.data?.chart != null &&
+            widget.data!.chart!
+                .any((e) => e.netIncome != null && e.netIncome! < 0))
+        ? widget.data!.chart!
+            .map((e) => e.netIncome)
+            .where((e) => e != null && e < 0) // Filter only negative values
+            .reduce(
+                (a, b) => a! < b! ? a : b) // Find the minimum negative value
+        : null;
+    minAbsValue = (minRevenue != null && minNetIncome != null)
+        ? (minRevenue.abs() < minNetIncome.abs() ? minRevenue : minNetIncome)
+        : 0;
+    maxAbsValue = (maxRevenue!.abs() > maxNetIncome!.abs())
+        ? maxRevenue.abs()
+        : maxNetIncome.abs();
+
+    setState(() {});
   }
 
   @override
@@ -129,6 +123,7 @@ class BarChartIncomeState extends State<BarChartIncome> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
+              minY: minAbsValue == 0 ? null : -double.parse("$maxAbsValue"),
               titlesData: FlTitlesData(
                 show: true,
                 leftTitles: const AxisTitles(
@@ -151,7 +146,7 @@ class BarChartIncomeState extends State<BarChartIncome> {
                     interval: maxAbsValue /
                         5, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
-                      if (charts?[4].operatingCashFlow1 == null) {
+                      if (charts?[0].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);
                         return Text(
                           formattedValue,
@@ -199,28 +194,40 @@ class BarChartIncomeState extends State<BarChartIncome> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>[
-      charts?[4].period ?? "",
-      charts?[3].period ?? "",
-      charts?[2].period ?? "",
-      charts?[1].period ?? "",
-      charts?[0].period ?? "",
-    ];
+    List<String> titles = <String>[];
 
-    final Widget text = Text(
-      titles[value.toInt()],
-      style: stylePTSansBold(
-        color: ThemeColors.white,
-        fontSize: 12,
-        decoration: TextDecoration.none,
-      ),
-    );
+    // Ensure 'charts' is not null and has elements
+    if (charts != null && charts!.isNotEmpty) {
+      // Iterate over 'charts' from end to start
+      for (int i = charts!.length - 1; i >= 0; i--) {
+        if (charts![i].period != null) {
+          titles.add(charts![i].period!);
+        }
+      }
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16, //margin top
-      child: text,
-    );
+      // Reverse the titles list
+      titles = titles.reversed.toList();
+    }
+
+    // Check if value is within the range of titles
+    if (value.toInt() >= 0 && value.toInt() < titles.length) {
+      final Widget text = Text(
+        titles[value.toInt()],
+        style: stylePTSansBold(
+          color: ThemeColors.white,
+          fontSize: 12,
+          decoration: TextDecoration.none,
+        ),
+      );
+
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 16, // margin top
+        child: text,
+      );
+    }
+
+    return Container();
   }
 
   BarChartGroupData makeGroupData(int x, double y1, double y2) {
@@ -239,45 +246,6 @@ class BarChartIncomeState extends State<BarChartIncome> {
           color: widget.rightBarColor,
           width: width,
           borderRadius: radius,
-        ),
-      ],
-    );
-  }
-
-  Widget makeTransactionsIcon() {
-    const width = 4.5;
-    const space = 3.5;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 42,
-          color: Colors.white.withOpacity(1),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
         ),
       ],
     );
