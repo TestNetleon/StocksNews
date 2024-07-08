@@ -64,7 +64,6 @@ class GapUpDownStocks extends StatelessWidget {
             CommonLock(
               isLocked: isLocked,
               showLogin: true,
-              isLocked: isLocked,
               // onMembershipClick: () {
               //   askToSubscribe(
               //     onPressed: provider.user == null
