@@ -45,6 +45,8 @@ class ThemeColors {
   static const background = Color(0xFF121212);
   // static const primaryLight = Color.fromARGB(255, 34, 34, 34);
   static const accent = Color(0xFF35BA46);
+  static const tableBorderColor = Color.fromARGB(255, 59, 59, 59);
+
   static const progressbackgroundColor = Color(0xFFd29650);
   static const progressbackgroundColorDark = Color(0xFFb48245);
 

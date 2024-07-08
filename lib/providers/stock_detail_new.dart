@@ -1322,6 +1322,15 @@ class StockDetailProviderNew extends ChangeNotifier {
   List<dynamic>? _sdFinancialArray;
   List<dynamic>? get sdFinancialArray => _sdFinancialArray;
 
+  List<dynamic>? _sdFinancialArrayTableIncome;
+  List<dynamic>? get sdFinancialArrayTableIncome =>
+      _sdFinancialArrayTableIncome;
+  List<dynamic>? _sdFinancialArrayTableFinancial;
+  List<dynamic>? get sdFinancialArrayTableFinancial =>
+      _sdFinancialArrayTableFinancial;
+  List<dynamic>? _sdFinancialArrayTableCash;
+  List<dynamic>? get sdFinancialArrayTableCash => _sdFinancialArrayTableCash;
+
   SdFinancialRes? _sdFinancialChartRes;
   SdFinancialRes? get sdFinancialChartRes => _sdFinancialChartRes;
   SdFinancialRes? _incomeSdFinancialChartRes;
@@ -1403,14 +1412,17 @@ class StockDetailProviderNew extends ChangeNotifier {
       if (index == 0 && incomeSdFinancialChartRes != null) {
         _typeValue = "income-statement";
         _sdFinancialChartRes = incomeSdFinancialChartRes;
+        _sdFinancialArray = _sdFinancialArrayTableIncome;
       }
       if (index == 1 && balanceSdFinancialChartRes != null) {
         _typeValue = 'balance-sheet-statement';
         _sdFinancialChartRes = balanceSdFinancialChartRes;
+        _sdFinancialArray = _sdFinancialArrayTableFinancial;
       }
       if (index == 2 && cashSdFinancialChartRes != null) {
         _typeValue = 'cash-flow-statement';
         _sdFinancialChartRes = cashSdFinancialChartRes;
+        _sdFinancialArray = _sdFinancialArrayTableCash;
       }
 
       notifyListeners();
@@ -1455,7 +1467,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     bool showProgress = false,
     bool tabProgress = false,
   }) async {
-    _sdFinancialChartRes?.chart = null;
+    _sdFinancialChartRes = null;
     _typeValue = null;
     notifyListeners();
     if (reset) {
@@ -1490,12 +1502,15 @@ class StockDetailProviderNew extends ChangeNotifier {
         if (type == "income-statement") {
           _incomeSdFinancialChartRes =
               sdFinancialResFromJson(jsonEncode(response.data));
+          _sdFinancialArrayTableIncome = response.data['finance_statement'];
         } else if (type == "balance-sheet-statement") {
           _balanceSdFinancialChartRes =
               sdFinancialResFromJson(jsonEncode(response.data));
+          _sdFinancialArrayTableFinancial = response.data['finance_statement'];
         } else if (type == "cash-flow-statement") {
           _cashSdFinancialChartRes =
               sdFinancialResFromJson(jsonEncode(response.data));
+          _sdFinancialArrayTableCash = response.data['finance_statement'];
         }
 
         // _sdFinancialChartRes?.chart?.sublist(0, 5);

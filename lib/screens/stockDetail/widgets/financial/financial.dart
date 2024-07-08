@@ -52,7 +52,7 @@ class _SdFinancialState extends State<SdFinancial> {
   _callApi({reset = false, showProgress = false}) {
     context.read<StockDetailProviderNew>().getFinancialData(
           symbol: widget.symbol,
-          reset: reset,
+          reset: true,
         );
   }
 
@@ -64,7 +64,8 @@ class _SdFinancialState extends State<SdFinancial> {
     // List<FinanceStatement>? financeStatements = data?.financeStatement;
 
     return BaseUiContainer(
-      hasData:!provider.isLoadingFinancial && provider.sdFinancialArray != null,
+      hasData:
+          !provider.isLoadingFinancial && provider.sdFinancialArray != null,
       isLoading: provider.isLoadingFinancial,
       showPreparingText: true,
       error: provider.errorFinancial,
@@ -93,7 +94,7 @@ class _SdFinancialState extends State<SdFinancial> {
                   ),
                   color: ThemeColors.greyBorder.withOpacity(0.4),
                   child: Container(
-                    decoration: BoxDecoration( 
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: ThemeColors.background,
                       boxShadow: [
@@ -101,7 +102,7 @@ class _SdFinancialState extends State<SdFinancial> {
                           color: const Color.fromARGB(255, 37, 37, 37)
                               .withOpacity(1), // Shadow color
                           spreadRadius: 2,
-                          blurRadius: 5,  
+                          blurRadius: 5,
                           offset: const Offset(0, 1),
                         ),
                       ],
@@ -234,21 +235,24 @@ class _SdFinancialState extends State<SdFinancial> {
                               ),
                             ),
                           const SpacerVertical(height: 40),
-                          if (provider.typeValue == "income-statement")
+                          if (provider.typeValue == "income-statement" &&
+                              provider.sdFinancialChartRes != null)
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SizedBox(
                                   height: 200,
                                   child: BarChartIncome(data: data)),
                             ),
-                          if (provider.typeValue == "balance-sheet-statement")
+                          if (provider.typeValue == "balance-sheet-statement" &&
+                              provider.sdFinancialChartRes != null)
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SizedBox(
                                   height: 200,
                                   child: BarChartSample(data: data)),
                             ),
-                          if (provider.typeValue == "cash-flow-statement")
+                          if (provider.typeValue == "cash-flow-statement" &&
+                              provider.sdFinancialChartRes != null)
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SizedBox(
@@ -597,32 +601,32 @@ class _SdFinancialState extends State<SdFinancial> {
                 ),
                 const SpacerVertical(height: 15),
                 const FinancialTableItem(),
-                const SpacerVertical(height: 15),
-                ListView.separated(
-                    padding: const EdgeInsets.only(top: 0, bottom: 15),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      Map<String, dynamic>? data =
-                          provider.sdFinancialArray?[index];
+                // const SpacerVertical(height: 15),
+                // ListView.separated(
+                //     padding: const EdgeInsets.only(top: 0, bottom: 15),
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemBuilder: (context, index) {
+                //       Map<String, dynamic>? data =
+                //           provider.sdFinancialArray?[index];
 
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: ThemeColors.greyBorder.withOpacity(0.3),
-                        ),
-                        child: SdFinancialItem(
-                          data: data,
-                          index: index,
-                          openIndex: openIndex,
-                          onCardTapped: changeOpenIndex,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 15);
-                    },
-                    itemCount: provider.sdFinancialArray?.length ?? 0),
+                //       return Container(
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(5),
+                //           color: ThemeColors.greyBorder.withOpacity(0.3),
+                //         ),
+                //         child: SdFinancialItem(
+                //           data: data,
+                //           index: index,
+                //           openIndex: openIndex,
+                //           onCardTapped: changeOpenIndex,
+                //         ),
+                //       );
+                //     },
+                //     separatorBuilder: (context, index) {
+                //       return const SpacerVertical(height: 15);
+                //     },
+                //     itemCount: provider.sdFinancialArray?.length ?? 0),
                 if (provider.extra?.disclaimer != null)
                   DisclaimerWidget(
                     data: provider.extra!.disclaimer!,
