@@ -71,23 +71,36 @@ class _DividendsListState extends State<DividendsList> {
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = homeProvider.extra?.membership?.permissions
+            ?.any((element) => element == "dividends") ??
+        false;
 
-    if (purchased) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    if (purchased && isLocked) {
+      bool havePermissions = userProvider.user?.membership?.permissions
+              ?.any((element) => element == "dividends") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
+    // bool isLocked = false;
+
+    // if (purchased) {
+    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    //           (element) =>
+    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //       false;
+    //   isLocked = !havePermissions;
+    // } else {
+    //   if (!isLocked) {
+    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //         false;
+    //   }
+    // }
+
+    // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
 
     return Stack(
       children: [

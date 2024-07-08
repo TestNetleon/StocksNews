@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -25,6 +26,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+
+import '../../../service/ask_subscription.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
@@ -72,6 +75,15 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     }
   }
 
+  void _membership() {
+    askToSubscribe(
+      onPressed: () {
+        Navigator.pop(context);
+        RevenueCatService.initializeSubscription();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Utils().showLog('is user logged in ${userPresent}');
@@ -117,94 +129,172 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                             false) &&
                         !provider.isLoadingOverview)
                     ? Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(15),
                         margin: const EdgeInsets.only(top: 15),
                         decoration: BoxDecoration(
-                          color: ThemeColors.background,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.lock, size: 40),
-                              const SpacerVertical(),
-                              Image.asset(
-                                Images.morningStarLogo,
-                                width: ScreenUtil().screenWidth * .5,
-                              ),
-                              const SpacerVertical(),
-                              Text(
-                                // "Quantitative Equity Research Report",
-                                "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
-                                style: stylePTSansBold(
-                                  fontSize: 18,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SpacerVertical(height: 10),
-                              Text(
-                                "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
-                                style: stylePTSansRegular(
-                                  fontSize: 14,
-                                  height: 1.3,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SpacerVertical(height: 10),
-                              context.watch<UserProvider>().user == null
-                                  ? ThemeButtonSmall(
-                                      onPressed: () {
-                                        _onLoginClick(context);
-                                      },
-                                      text: "Register/Login to continue",
-                                      showArrow: false,
-                                    )
-                                  : (provider
-                                                  .overviewRes
-                                                  ?.morningStart
-                                                  ?.lockInformation
-                                                  ?.balanceStatus ==
-                                              null ||
-                                          provider
-                                                  .overviewRes
-                                                  ?.morningStart
-                                                  ?.lockInformation
-                                                  ?.balanceStatus ==
-                                              false)
-                                      ? Column(
-                                          children: [
-                                            ThemeButtonSmall(
-                                              onPressed: () async {
-                                                await _onReferClick(context);
-                                              },
-                                              text: "Refer and Earn",
-                                              showArrow: false,
-                                            ),
-                                            ThemeButtonSmall(
-                                              onPressed: () async {
-                                                // await _onReferClick(context);
-                                              },
-                                              text:
-                                                  "Upgrade Membership for more points",
-                                              showArrow: false,
-                                            ),
-                                          ],
-                                        )
-                                      : ThemeButtonSmall(
-                                          // onPressed: () =>
-                                          //     _onViewBlogClick(context),
-                                          onPressed: () =>
-                                              _onViewNewsClick(context),
-                                          text: "View Research Report",
-                                          showArrow: false,
-                                        ),
-                              // const SpacerVertical(),
+                          // color: ThemeColors.sos,
+                          gradient: const LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              // Color.fromARGB(255, 2, 71, 12),
+                              // Color.fromARGB(255, 10, 160, 30),
+
+                              Color.fromARGB(255, 114, 10, 2),
+                              Colors.red,
                             ],
                           ),
-                        ))
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Container(
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            // margin: const EdgeInsets.only(top: 15),
+                            decoration: BoxDecoration(
+                              color: ThemeColors.background,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.lock, size: 40),
+                                  const SpacerVertical(),
+                                  Image.asset(
+                                    Images.morningStarLogo,
+                                    width: ScreenUtil().screenWidth * .5,
+                                  ),
+                                  const SpacerVertical(),
+                                  Text(
+                                    // "Quantitative Equity Research Report",
+                                    "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
+                                    style: stylePTSansBold(
+                                      fontSize: 18,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SpacerVertical(height: 10),
+
+                                  Text(
+                                    // "Quantitative Equity Research Report",
+                                    "Undervalued or Overvalued? Find out if “${widget.symbol}” has 1 star or 5 Stars Today!",
+                                    style: stylePTSansRegular(
+                                      fontSize: 14,
+                                      height: 1.3,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+
+                                  const SpacerVertical(height: 10),
+                                  Text(
+                                    "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
+                                    style: stylePTSansRegular(
+                                      fontSize: 14,
+                                      height: 1.3,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SpacerVertical(height: 10),
+                                  context.watch<UserProvider>().user == null
+                                      ? SizedBox(
+                                          width: double.infinity,
+                                          child: ThemeButtonSmall(
+                                            onPressed: () {
+                                              _onLoginClick(context);
+                                            },
+                                            text: "Register/Login to Continue",
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 11),
+                                            textSize: 15,
+                                            fontBold: true,
+                                            iconFront: true,
+                                            icon: Icons.lock,
+                                            radius: 30,
+                                          ),
+                                        )
+                                      : (provider
+                                                      .overviewRes
+                                                      ?.morningStart
+                                                      ?.lockInformation
+                                                      ?.balanceStatus ==
+                                                  null ||
+                                              provider
+                                                      .overviewRes
+                                                      ?.morningStart
+                                                      ?.lockInformation
+                                                      ?.balanceStatus ==
+                                                  false)
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                ThemeButtonSmall(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 11),
+                                                  textSize: 15,
+                                                  fontBold: true,
+                                                  iconFront: true,
+                                                  icon: Icons.earbuds_rounded,
+                                                  onPressed: () async {
+                                                    await _onReferClick(
+                                                        context);
+                                                  },
+                                                  text: "Refer and Earn",
+                                                  radius: 30,
+                                                  // showArrow: false,
+                                                ),
+                                                const SpacerVertical(
+                                                    height: 10),
+                                                ThemeButtonSmall(
+                                                  color: const Color.fromARGB(
+                                                      255, 194, 216, 51),
+                                                  textColor: Colors.black,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 11),
+                                                  textSize: 15,
+                                                  fontBold: true,
+                                                  iconFront: true,
+                                                  radius: 30,
+                                                  icon: Icons.card_membership,
+                                                  onPressed: _membership,
+                                                  textAlign: TextAlign.start,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  text:
+                                                      "Upgrade Membership for more points",
+                                                  // showArrow: false,
+                                                ),
+                                              ],
+                                            )
+                                          : Container(
+                                              width: double.infinity,
+                                              margin: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: ThemeButtonSmall(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5,
+                                                        vertical: 11),
+                                                textSize: 15,
+                                                iconFront: true,
+                                                fontBold: true,
+                                                radius: 30,
+                                                icon: Icons.visibility,
+                                                onPressed: () =>
+                                                    _onViewNewsClick(context),
+                                                text: "View Research Report",
+                                              ),
+                                            ),
+                                  // const SpacerVertical(),
+                                ],
+                              ),
+                            )),
+                      )
                     : CommonRefreshIndicator(
                         onRefresh: () async {
                           provider.getOverviewData(

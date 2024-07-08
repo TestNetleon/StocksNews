@@ -21,7 +21,8 @@ class FilterProvider extends ChangeNotifier {
 
   FiltersData? _data;
   FiltersData? get data => _data;
-
+  Extra? _extra;
+  Extra? get extra => _extra;
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -41,6 +42,7 @@ class FilterProvider extends ChangeNotifier {
       );
       if (response.status) {
         _data = filtersFromJson(jsonEncode(response.data));
+        _extra = response.extra is Extra ? response.extra : null;
       } else {
         _data = null;
         _error = response.message;

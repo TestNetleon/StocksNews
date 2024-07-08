@@ -11,7 +11,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -46,43 +45,56 @@ class StocksContainer extends StatelessWidget {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
 
     UserProvider userProvider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = provider.extra?.membership?.permissions
+            ?.any((element) => element == "stocks") ??
+        false;
 
-    if (purchased) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    if (purchased && isLocked) {
+      bool havePermissions = userProvider.user?.membership?.permissions
+              ?.any((element) => element == "stocks") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
+    // bool isLocked = false;
+
+    // if (purchased) {
+    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    //           (element) =>
+    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //       false;
+    //   isLocked = !havePermissions;
+    // } else {
+    //   if (!isLocked) {
+    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //         false;
+    //   }
+    // }
+
+    // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
         filterClick: _filterClick,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
-          0,
-          Dimen.padding.sp,
-          0,
-        ),
-        child: Stack(
-          children: [
-            Column(
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              Dimen.padding.sp,
+              0,
+              Dimen.padding.sp,
+              0,
+            ),
+            child: Column(
               children: [
                 ScreenTitle(
                   title: "Stocks",
@@ -180,13 +192,13 @@ class StocksContainer extends StatelessWidget {
                 ),
               ],
             ),
-            if (isLocked)
-              CommonLock(
-                showLogin: true,
-                isLocked: isLocked,
-              ),
-          ],
-        ),
+          ),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+            ),
+        ],
       ),
     );
   }

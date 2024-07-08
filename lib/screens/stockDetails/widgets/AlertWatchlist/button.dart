@@ -33,12 +33,12 @@ class AlertWatchlistButton extends StatelessWidget {
           children: [
             Icon(
               iconData,
-              size: 15,
+              size: 18,
             ),
             const SpacerHorizontal(width: 5),
             Text(
               name,
-              style: stylePTSansBold(fontSize: 12),
+              style: stylePTSansBold(fontSize: 14),
             ),
             Visibility(
               visible:

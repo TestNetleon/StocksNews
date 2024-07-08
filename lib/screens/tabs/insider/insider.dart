@@ -14,6 +14,10 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../../../providers/home_provider.dart';
+import '../../../providers/user_provider.dart';
+import '../../marketData/lock/common_lock.dart';
+
 //
 class Insider extends StatelessWidget {
   const Insider({super.key});
@@ -49,48 +53,76 @@ class Insider extends StatelessWidget {
       parameters: {'screen_name': "Insider Trending"},
     );
 
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
+    bool purchased = userProvider.user?.membership?.purchased == 1;
+
+    bool isLocked = homeProvider.extra?.membership?.permissions
+            ?.any((element) => element == "insider-trading") ??
+        false;
+
+    // bool isLocked = true;
+
+    if (purchased && isLocked) {
+      bool havePermissions = userProvider.user?.membership?.permissions
+              ?.any((element) => element == "insider-trading") ??
+          false;
+
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
     return BaseContainer(
       // drawer: const BaseDrawer(),
       // appBar: AppBarHome(
       //   filterClick: _filterClick,
       //   canSearch: true,
       // ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
-          isPhone ? 0 : 8.sp,
-          Dimen.padding.sp,
-          0,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            provider.isLoading
-                ? const SizedBox()
-                : ScreenTitle(
-                    title: "Insider Trading",
-                    subTitle: provider.textRes?.subTitle,
-                    optionalWidget: GestureDetector(
-                      onTap: _filterClick,
-                      child: const Icon(
-                        Icons.filter_alt,
-                        color: ThemeColors.accent,
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              Dimen.padding.sp,
+              isPhone ? 0 : 8.sp,
+              Dimen.padding.sp,
+              0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                provider.isLoading
+                    ? const SizedBox()
+                    : ScreenTitle(
+                        title: "Insider Trading",
+                        subTitle: provider.textRes?.subTitle,
+                        optionalWidget: GestureDetector(
+                          onTap: _filterClick,
+                          child: const Icon(
+                            Icons.filter_alt,
+                            color: ThemeColors.accent,
+                          ),
+                        ),
                       ),
-                    ),
+                if (provider.isLoading == false)
+                  TextInputFieldSearch(
+                    hintText: "Find by insider or company name",
+                    onSubmitted: (text) {
+                      closeKeyboard();
+                      provider.getData(search: text, clear: false);
+                    },
+                    searching: provider.isSearching,
+                    editable: true,
                   ),
-            if (provider.isLoading == false)
-              TextInputFieldSearch(
-                hintText: "Find by insider or company name",
-                onSubmitted: (text) {
-                  closeKeyboard();
-                  provider.getData(search: text, clear: false);
-                },
-                searching: provider.isSearching,
-                editable: true,
-              ),
-            const Expanded(child: InsiderContent())
-          ],
-        ),
+                const Expanded(child: InsiderContent())
+              ],
+            ),
+          ),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+            ),
+        ],
       ),
     );
   }

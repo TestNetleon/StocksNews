@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
@@ -63,27 +62,43 @@ class LowPriceStocksData extends StatelessWidget {
     List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
     UserProvider userProvider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = provider.extra?.membership?.permissions?.any((element) =>
+            element == "low-priced-stocks-under" ||
+            element == "stocks-on-sale") ??
+        false;
 
-    if (purchased) {
+    if (purchased && isLocked) {
       bool havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+                  element == "low-priced-stocks-under" ||
+                  element == "stocks-on-sale") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
+    // bool isLocked = false;
+
+    // if (purchased) {
+    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    //           (element) =>
+    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //       false;
+    //   isLocked = !havePermissions;
+    // } else {
+    //   if (!isLocked) {
+    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //         false;
+    //   }
+    // }
+
+    // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
 
     return Stack(
       children: [

@@ -21,6 +21,7 @@ class ThemeButtonSmall extends StatelessWidget {
     this.textAlign = TextAlign.center,
     super.key,
     this.iconFront = false,
+    this.mainAxisSize = MainAxisSize.min,
   });
 
   final String text;
@@ -36,6 +37,7 @@ class ThemeButtonSmall extends StatelessWidget {
   final double elevation;
   final EdgeInsets? padding, margin;
   final TextAlign? textAlign;
+  final MainAxisSize mainAxisSize;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,8 @@ class ThemeButtonSmall extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: mainAxisSize,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Visibility(
             visible: showArrow && iconFront,
