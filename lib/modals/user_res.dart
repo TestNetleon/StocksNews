@@ -107,12 +107,14 @@ class UserRes {
 class UserMembershipRes {
   final int? purchased;
   final String? displayName;
+  final String? color;
 
   final List<String>? permissions;
 
   UserMembershipRes({
     this.purchased,
     this.displayName,
+    this.color,
     this.permissions,
   });
 
@@ -120,6 +122,7 @@ class UserMembershipRes {
       UserMembershipRes(
         purchased: json["purchased"],
         displayName: json["display_name"],
+        color: json["color"],
         permissions: json["permissions"] == null
             ? []
             : List<String>.from(json["permissions"]!.map((x) => x)),
@@ -128,6 +131,7 @@ class UserMembershipRes {
   Map<String, dynamic> toJson() => {
         "purchased": purchased,
         "display_name": displayName,
+        "color": color,
         "permissions": permissions == null
             ? []
             : List<dynamic>.from(permissions!.map((x) => x)),

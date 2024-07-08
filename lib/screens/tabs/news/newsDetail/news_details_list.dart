@@ -6,12 +6,14 @@ import 'package:stocks_news_new/screens/tabs/news/news_item.dart';
 
 class NewsDetailList extends StatelessWidget {
   final PostDetail? moreNewsData;
-  const NewsDetailList({super.key, this.moreNewsData});
+  final bool fromAI;
+  const NewsDetailList({super.key, this.moreNewsData, this.fromAI = false});
 //
   @override
   Widget build(BuildContext context) {
     return NewsItem(
       fromMoreNews: true,
+      fromAI: fromAI,
       showCategory: moreNewsData?.authors?.isEmpty == true,
       news: News(
         authors: moreNewsData?.authors,

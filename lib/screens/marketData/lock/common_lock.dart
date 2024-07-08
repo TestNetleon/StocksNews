@@ -73,13 +73,13 @@ class CommonLock extends StatelessWidget {
                 const SpacerVertical(),
                 Text(
                   "Premium Content",
-                  style: stylePTSansBold(fontSize: 18),
+                  style: stylePTSansBold(fontSize: 25),
                 ),
                 const SpacerVertical(height: 10),
                 Text(
                   "This content is only available for premium members. Please become a paid member to access.",
                   style: stylePTSansRegular(
-                    fontSize: 14,
+                    fontSize: 15,
                     height: 1.3,
                   ),
                   textAlign: TextAlign.center,
@@ -114,8 +114,16 @@ class CommonLock extends StatelessWidget {
                             },
                     );
                   },
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+                  textSize: 15,
+                  fontBold: true,
+                  iconFront: true,
+                  icon: Icons.lock,
+                  radius: 30,
+                  mainAxisSize: MainAxisSize.max,
                   text: "Become a Member",
-                  showArrow: false,
+                  // showArrow: false,
                 ),
                 const SpacerVertical(height: 20),
                 GestureDetector(

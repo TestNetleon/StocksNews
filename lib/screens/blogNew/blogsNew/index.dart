@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider_new.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/container.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
@@ -36,27 +35,38 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
     BlogProviderNew provider = context.watch<BlogProviderNew>();
 
     UserProvider userProvider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = (provider.extra?.membership?.permissions
+            ?.any((element) => element == "blog-category-list") ??
+        false);
 
-    if (purchased) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    if (purchased && isLocked) {
+      bool havePermissions = userProvider.user?.membership?.permissions
+              ?.any((element) => element == "blog-category-list") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
+    // bool isLocked = false;
+
+    // if (purchased) {
+    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    //           (element) =>
+    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //       false;
+    //   isLocked = !havePermissions;
+    // } else {
+    //   if (!isLocked) {
+    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //         false;
+    //   }
+    // }
 
     return BaseContainer(
       appBar: const AppBarHome(
@@ -64,30 +74,31 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
         showTrailing: true,
         isPopback: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          Dimen.padding,
-          Dimen.padding,
-          Dimen.padding,
-          0,
-        ),
-        child: BaseUiContainer(
-          hasData: !provider.tabLoading && provider.tabs?.isNotEmpty == true,
-          isLoading: provider.tabLoading,
-          error: provider.error,
-          showPreparingText: true,
-          onRefresh: () => provider.getTabsData(),
-          child: Stack(
-            children: [
-              _getWidget(provider),
-              if (isLocked)
-                CommonLock(
-                  showLogin: true,
-                  isLocked: isLocked,
-                ),
-            ],
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              Dimen.padding,
+              Dimen.padding,
+              Dimen.padding,
+              0,
+            ),
+            child: BaseUiContainer(
+              hasData:
+                  !provider.tabLoading && provider.tabs?.isNotEmpty == true,
+              isLoading: provider.tabLoading,
+              error: provider.error,
+              showPreparingText: true,
+              onRefresh: () => provider.getTabsData(),
+              child: _getWidget(provider),
+            ),
           ),
-        ),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+            ),
+        ],
       ),
     );
   }

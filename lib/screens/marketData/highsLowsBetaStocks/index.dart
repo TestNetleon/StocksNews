@@ -8,9 +8,9 @@ import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/negative_
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
+import '../../../utils/utils.dart';
 import '../../../widgets/custom_tab_container.dart';
 
 class HighLowsBetaStocksIndex extends StatelessWidget {
@@ -19,28 +19,47 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = context.watch<UserProvider>();
+    UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HighBetaStocksProvider highBetaStocksProvider =
+    //     context.watch<HighBetaStocksProvider>();
 
-    bool purchased = userProvider.user?.membership?.purchased == 1;
+    bool purchased = provider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                element == "high-beta-stocks" ||
+                element == "low-beta-stocks" ||
+                element == "negative-beta-stocks") ??
+        false;
 
-    if (purchased) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    if (purchased && isLocked) {
+      bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+                  element == "high-beta-stocks" ||
+                  element == "low-beta-stocks" ||
+                  element == "negative-beta-stocks") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
+    // bool isLocked = false;
+
+    // if (purchased) {
+    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    //           (element) =>
+    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //       false;
+    //   isLocked = !havePermissions;
+    // } else {
+    //   if (!isLocked) {
+    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //         false;
+    //   }
+    // }
 
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,

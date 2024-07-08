@@ -44,15 +44,20 @@ class NewsDetailDataRes {
 
 class PostDetail {
   final String? id;
+  final String? summary;
   // final String? api;
   // final String? symbol;
   final DateTime? publishedDate;
   final String? postDateString;
   final String? title;
   final String? slug;
+  final String? permalink;
+
   final List<NewsTicker>? tickers;
   final String? image;
   final String? site;
+  final String? source;
+
   final String? text;
   final String? url;
   final List<DetailListType>? authors;
@@ -73,6 +78,7 @@ class PostDetail {
 
   PostDetail({
     this.id,
+    this.summary,
     // this.api,
     // this.symbol,
     this.publishedDate,
@@ -81,6 +87,8 @@ class PostDetail {
     this.slug,
     this.image,
     this.site,
+    this.permalink,
+    this.source,
     this.text,
     this.url,
     this.authors,
@@ -108,7 +116,11 @@ class PostDetail {
             ? null
             : DateTime.parse(json["published_date"]),
         title: json["title"],
+        source: json["source"],
+        permalink: json["permalink"],
+
         readingStatus: json["reading_status"],
+        summary: json['summary'],
         readingTitle: json["reading_title"],
         readingSubtitle: json["reading_subtitle"],
         balanceStatus: json["balance_status"],
@@ -155,10 +167,13 @@ class PostDetail {
         "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
+        "permalink": permalink,
         "reading_status": readingStatus,
         "reading_title": readingTitle,
+        "source": source,
         "reading_subtitle": readingSubtitle,
         "balance_status": balanceStatus,
+        'summary': summary,
         'published_date_string': postDateString,
         "image": image,
         "site": site,

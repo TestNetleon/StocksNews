@@ -7,15 +7,20 @@ import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_inner_tabs.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_overtime_charts.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_payment_barchart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/sd_dividends_history.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -95,11 +100,18 @@ class _SdDividendsState extends State<SdDividends> {
                           return SdTopCard(top: top);
                         },
                       ),
-                      const SpacerVertical(height: 20),
-                      // DividendOvertimeCharts(
-                      //     charts: provider.dividends?.chartInfo),
-                      const SpacerVertical(height: 20),
-                      //DividendPaymentBarchart(),
+                      const SpacerVertical(height: 10),
+                      Container(
+                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        child: HomePartialLoading(
+                          loadingWidget: const Loading(),
+                          loading: provider.isLoadingDividends,
+                          child: const DividendInnerTabs(),
+                        ),
+                      ),
+                      // const DividendPaymentLineChart(),
+                      // const SpacerVertical(height: 20),
+                      // const DividendPaymentBarchart(),
                       const SpacerVertical(height: 20),
                       Visibility(
                         visible:

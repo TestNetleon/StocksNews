@@ -83,6 +83,8 @@ class Extra {
   final num? pending;
   final String? affiliateReferText;
   final HowItWorkRes? howItWork;
+  final HowItWorkRes? membershipText;
+
   final ReferLoginRes? referLogin;
   final String? verifyIdentity;
   final String? nudgeText;
@@ -102,6 +104,8 @@ class Extra {
     this.profileText,
     this.verifyIdentity,
     this.howItWork,
+    this.membershipText,
+
     // this.subscription,
     this.exchangeShortName,
     this.priceRange,
@@ -183,6 +187,10 @@ class Extra {
         howItWork: json["how_it_work"] == null
             ? null
             : HowItWorkRes.fromJson(json["how_it_work"]),
+        membershipText: json["membership_text"] == null
+            ? null
+            : HowItWorkRes.fromJson(json["membership_text"]),
+
         showPortfolio: json['show_portfolio'],
         signUpText: json["signup_text"],
         totalPages: json["total_pages"],
@@ -272,6 +280,7 @@ class Extra {
         "refer_login": referLogin?.toJson(),
         "title": title,
         "how_it_work": howItWork?.toJson(),
+        "membership_text": membership?.toJson(),
         "sub_title": subTitle,
         "current_balance": currentBalance,
         "show_portfolio": showPortfolio,
@@ -400,15 +409,19 @@ class ReferLoginRes {
 
 class HowItWorkRes {
   final String? title;
+  final String? subTitle;
+
   final List<StepRes>? steps;
 
   HowItWorkRes({
     this.title,
+    this.subTitle,
     this.steps,
   });
 
   factory HowItWorkRes.fromJson(Map<String, dynamic> json) => HowItWorkRes(
         title: json["title"],
+        subTitle: json["sub_title"],
         steps: json["steps"] == null
             ? []
             : List<StepRes>.from(
@@ -417,6 +430,7 @@ class HowItWorkRes {
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        "sub_title": subTitle,
         "steps": steps == null
             ? []
             : List<dynamic>.from(steps!.map((x) => x.toJson())),

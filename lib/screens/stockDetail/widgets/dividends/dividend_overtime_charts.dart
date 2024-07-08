@@ -1,209 +1,131 @@
-// // ignore_for_file: unused_local_variable
-
-// import 'package:fl_chart/fl_chart.dart';
-// import 'package:flutter/material.dart';
-// import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
-// import 'package:stocks_news_new/utils/theme.dart';
-// import 'dart:math' as math;
-
-// class DividendOvertimeCharts extends StatelessWidget {
-//   final List<DividendCharts>? charts;
-//   const DividendOvertimeCharts({super.key, this.charts});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     double minY = getMinY(charts!);
-//     double maxY = getMinY(charts!);
-
-//     return Stack(
-//       children: <Widget>[
-//         AspectRatio(
-//           aspectRatio: 1.30,
-//           child: Container(
-//             decoration: const BoxDecoration(
-//               borderRadius: BorderRadius.all(
-//                 Radius.circular(18),
-//               ),
-//             ),
-//             child: Padding(
-//               padding: const EdgeInsets.only(
-//                   right: 18.0, left: 12.0, top: 24, bottom: 12),
-//               child: LineChart(
-//                 mainData(),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-//     final Widget text = Container(
-//       width: 8.0,
-//       // color: Colors.amber,
-//       child: ListView.builder(
-//         shrinkWrap: true,
-//         itemCount: charts?.length,
-//         scrollDirection: Axis.horizontal,
-//         padding: EdgeInsets.zero,
-//         physics: const NeverScrollableScrollPhysics(),
-//         itemBuilder: (BuildContext context, int index) {
-//           final String label = charts![index].label.toString();
-//           return Text(
-//             label[value.toInt()],
-//             style: stylePTSansBold(
-//               color: Colors.white,
-//               fontSize: 8,
-//               decoration: TextDecoration.none,
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//     return SideTitleWidget(
-//       axisSide: meta.axisSide,
-//       space: 1.0,
-//       child: text,
-//     );
-//   }
-
-//   Widget leftTitleWidgets(double value, TitleMeta meta) {
-//     final Widget text = Container(
-//       width: 8.0,
-//       // color: Colors.amber,
-//       child: ListView.builder(
-//         shrinkWrap: true,
-//         itemCount: charts?.length,
-//         scrollDirection: Axis.horizontal,
-//         padding: EdgeInsets.zero,
-//         physics: const NeverScrollableScrollPhysics(),
-//         itemBuilder: (BuildContext context, int index) {
-//           final String label = charts![index].chartInfoYield.toString();
-//           return Transform.rotate(
-//             angle: -math.pi / 4,
-//             child: Text(
-//               label[value.toInt()],
-//               style: stylePTSansBold(
-//                 color: Colors.white,
-//                 fontSize: 8,
-//                 decoration: TextDecoration.none,
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//     return SideTitleWidget(
-//       axisSide: meta.axisSide,
-//       space: 1.0,
-//       child: text,
-//     );
-//   }
-
-//   LineChartData mainData() {
-//     double minY = getMinY(charts!);
-//     double maxY = getMinY(charts!);
-//     return LineChartData(
-//       gridData: FlGridData(
-//         show: true,
-//         drawVerticalLine: true,
-//         getDrawingHorizontalLine: (value) {
-//           return const FlLine(
-//             color: Color.fromARGB(100, 100, 100, 100),
-//             strokeWidth: 1,
-//           );
-//         },
-//         getDrawingVerticalLine: (value) {
-//           return const FlLine(
-//             color: Color.fromARGB(100, 100, 100, 100),
-//             strokeWidth: 1,
-//           );
-//         },
-//       ),
-//       titlesData: FlTitlesData(
-//         show: true,
-//         rightTitles: const AxisTitles(
-//           sideTitles: SideTitles(showTitles: false),
-//         ),
-//         topTitles: const AxisTitles(
-//           sideTitles: SideTitles(showTitles: false),
-//         ),
-//         bottomTitles: AxisTitles(
-//           sideTitles: SideTitles(
-//             showTitles: true,
-//             reservedSize: 22,
-//             // interval: 1,
-//             getTitlesWidget: bottomTitleWidgets,
-
-//             //update it with api response
-//           ),
-//         ),
-//         leftTitles: AxisTitles(
-//           sideTitles: SideTitles(
-//             showTitles: true,
-//             // interval: 1,
-//             getTitlesWidget: leftTitleWidgets,
-//             reservedSize: 22,
-//           ),
-//         ),
-//       ),
-//       borderData: FlBorderData(
-//         show: true,
-//         border: Border.all(color: const Color(0xff37434d)),
-//       ),
-//       minX: 0,
-//       maxX: charts!.length.toDouble() - 1,
-//       minY: minY,
-//       maxY: maxY,
-//       lineBarsData: [
-//         LineChartBarData(
-//           spots: const [
-//             FlSpot(0, 3),
-//             FlSpot(2.6, 2),
-//             FlSpot(4.9, 5),
-//             FlSpot(6.8, 3.1),
-//             FlSpot(8, 4),
-//             FlSpot(9.5, 3),
-//             FlSpot(11, 4),
-//           ],
-//           isCurved: true,
-//           color: Colors.green,
-//           barWidth: 5,
-//           isStrokeCapRound: true,
-//           dotData: const FlDotData(
-//             show: false,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   double getMinY(List<DividendCharts> data) {
-//     return data
-//         .map((e) => double.parse(e.chartInfoYield!.replaceAll('%', '')) / 100)
-//         .reduce((min, value) => min < value ? min : value);
-//   }
-
-//   double getMaxY(List<DividendCharts> data) {
-//     return data
-//         .map((e) => double.parse(e.chartInfoYield!.replaceAll('%', '')) / 100)
-//         .reduce((max, value) => max > value ? max : value);
-//   }
-// }
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/bar_points.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
-class LineChartDataWidget extends StatelessWidget {
-  final List<PricePoint>? points;
-  const LineChartDataWidget({super.key, this.points});
+class DividendPaymentLineChart extends StatelessWidget {
+  const DividendPaymentLineChart({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    if (provider.dividends?.chartInfo == null ||
+        provider.dividends!.chartInfo!.isEmpty) {
+      return const Center(child: SizedBox.shrink());
+    }
+
+    List<FlSpot> spots =
+        provider.dividends!.chartInfo!.asMap().entries.map((entry) {
+      int index = entry.key;
+      DividendCharts data = entry.value;
+      double yield =
+          double.tryParse(data.chartInfoYield!.replaceAll('%', '')) ?? 0;
+      return FlSpot(index.toDouble(), yield);
+    }).toList();
+
+    // Find the maximum amount
+    double maxAmount =
+        spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+    double minAmount = 0.0;
+    double interval = (maxAmount - minAmount) / 4;
+
     return AspectRatio(
-        aspectRatio: 2,
-        child: LineChart(LineChartData(lineBarsData: [LineChartBarData()])));
+      aspectRatio: 1.10,
+      child: LineChart(
+        LineChartData(
+          minY: minAmount,
+          // maxY: maxAmount,
+          titlesData: FlTitlesData(
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: double.parse(interval.toStringAsFixed(2)),
+                reservedSize: 30,
+                getTitlesWidget: (value, meta) {
+                  Utils().showLog(interval);
+                  return Text(
+                    '${value.toDouble()}%',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                  );
+                },
+              ),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 1,
+                reservedSize: 40,
+                getTitlesWidget: (value, meta) {
+                  int index = value.toInt();
+                  if (index < 0 ||
+                      index >= provider.dividends!.chartInfo!.length) {
+                    Utils().showLog(
+                        "data length is checking ${provider.dividends!.chartInfo!.length}");
+                    return const SizedBox.shrink();
+                  }
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    space: 1.0,
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Text(
+                        provider.dividends!.chartInfo![index].label.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          gridData: FlGridData(show: true),
+          borderData: FlBorderData(
+            show: true,
+          ),
+          lineBarsData: [
+            LineChartBarData(
+              spots: spots,
+              isCurved: true,
+              color: Colors.green,
+              barWidth: 4,
+              // belowBarData: BarAreaData(show: true, color: Colors.green),
+              dotData: FlDotData(show: false),
+            ),
+          ],
+          lineTouchData: LineTouchData(
+            touchTooltipData: LineTouchTooltipData(
+              getTooltipColor: (group) => Colors.white,
+              getTooltipItems: (touchedSpots) {
+                return touchedSpots.map((touchedSpot) {
+                  final data =
+                      provider.dividends!.chartInfo![touchedSpot.spotIndex];
+                  String inputDate = data.payableDate.toString();
+                  DateTime date = DateFormat("MM/dd/yyyy").parse(inputDate);
+                  String formattedDate = DateFormat("MMM d").format(date);
+                  return LineTooltipItem(
+                    textAlign: TextAlign.start,
+                    '${data.label} $formattedDate\n ${data.amount}',
+                    const TextStyle(color: Colors.black),
+                  );
+                }).toList();
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

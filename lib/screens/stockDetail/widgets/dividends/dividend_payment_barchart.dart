@@ -1,198 +1,132 @@
-import 'dart:io';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
-import 'package:vibration/vibration.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
-class DividendPaymentBarchart extends StatefulWidget {
-  final DividendCharts? data;
-  const DividendPaymentBarchart({super.key, this.data});
+class DividendPaymentBarchart extends StatelessWidget {
+  const DividendPaymentBarchart({
+    Key? key,
+  }) : super(key: key);
 
-  @override
-  State<DividendPaymentBarchart> createState() =>
-      _DividendPaymentBarchartState();
-}
-
-class _DividendPaymentBarchartState extends State<DividendPaymentBarchart> {
   @override
   Widget build(BuildContext context) {
-    List<BarChartGroupData> barChartGroupData = [
-      BarChartGroupData(x: 1, barRods: [
-        BarChartRodData(fromY: 0, color: Colors.green, toY: 10),
-      ]),
-      BarChartGroupData(x: 2, barRods: [
-        BarChartRodData(fromY: 0, color: Colors.green, toY: 3.8),
-      ]),
-      BarChartGroupData(x: 3, barRods: [
-        BarChartRodData(fromY: 0, color: Colors.green, toY: 10.9),
-      ]),
-      BarChartGroupData(x: 4, barRods: [
-        BarChartRodData(fromY: 0, color: Colors.green, toY: 5.6),
-      ]),
-      BarChartGroupData(x: 5, barRods: [
-        BarChartRodData(fromY: 0, color: Colors.green, toY: 8.3),
-      ]),
-    ];
+    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    if (provider.dividends?.chartInfo == null ||
+        provider.dividends!.chartInfo!.isEmpty) {
+      return const Center(child: SizedBox.shrink());
+    }
+
+    List<double> amounts = provider.dividends!.chartInfo!.map((data) {
+      return double.parse(data.amount!.replaceAll('\$', ''));
+    }).toList();
+
+    // Find the maximum amount
+    double maxAmount = amounts.reduce((a, b) => a > b ? a : b);
+    double minAmount = 0.0;
+
+    double interval = (maxAmount - minAmount) / 4;
+
     return AspectRatio(
-      aspectRatio: 1.30,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: BarChart(
-          BarChartData(
-            alignment: BarChartAlignment.spaceEvenly,
-            maxY: 20,
-            barTouchData: BarTouchData(
-                enabled: true,
-                handleBuiltInTouches: true,
-                touchCallback: (event, response) async {
-                  if (response != null &&
-                      response.spot != null &&
-                      event is FlTapUpEvent) {
-                    try {
-                      if (Platform.isAndroid) {
-                        bool isVibe = await Vibration.hasVibrator() ?? false;
-                        if (isVibe) {
-                          Vibration.vibrate(
-                              pattern: [50, 50, 79, 55], intensities: [1, 10]);
-                        }
-                      } else {
-                        HapticFeedback.lightImpact();
-                      }
-                      // ignore: empty_catches
-                    } catch (e) {}
-                    setState(() {
-                      // final x = response.spot!.touchedBarGroup.x;
-                    });
-                  }
+      aspectRatio: 1.10,
+      child: BarChart(
+        BarChartData(
+          alignment: BarChartAlignment.spaceAround,
+          maxY: maxAmount,
+          // minY: minAmount,
+          barGroups:
+              provider.dividends!.chartInfo!.asMap().entries.map((entry) {
+            int index = entry.key;
+            DividendCharts data = entry.value;
+            double amount =
+                double.tryParse(data.amount!.replaceAll('\$', '')) ?? 0;
+            return BarChartGroupData(
+              x: index,
+              barRods: [
+                BarChartRodData(
+                  toY: amount,
+                  color: Colors.green,
+                  width: 16,
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ],
+              // showingTooltipIndicators: [0],
+            );
+          }).toList(),
+          titlesData: FlTitlesData(
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: double.parse(interval.toStringAsFixed(2)),
+                reservedSize: 40,
+                getTitlesWidget: (value, meta) {
+                  return Text(
+                    '\$${value.toDouble()}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                  );
                 },
-                mouseCursorResolver: (event, response) {
-                  return response == null || response.spot == null
-                      ? MouseCursor.defer
-                      : SystemMouseCursors.click;
-                }),
-            titlesData: FlTitlesData(
-                show: true,
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 25,
-                    interval: 0.20,
-                    getTitlesWidget: bottomTitleWidgets,
-                  ),
-                ),
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 40,
-                    getTitlesWidget: (value, meta) {
-                      return SideTitleWidget(
-                        axisSide: meta.axisSide,
-                        space: 6,
-                        child: Text(
-                          value.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                rightTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: false,
-                    reservedSize: 25,
-                    getTitlesWidget: (value, meta) {
-                      return SideTitleWidget(
-                        axisSide: meta.axisSide,
-                        space: 2.0,
-                        child: Text(
-                          value.toInt().toString(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                topTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: false,
-                    reservedSize: 16,
-                    getTitlesWidget: (value, meta) {
-                      return SideTitleWidget(
-                        axisSide: meta.axisSide,
-                        space: 8.0,
-                        child: Text(value.toInt().toString()),
-                      );
-                    },
-                  ),
-                )),
-            borderData: FlBorderData(
-              show: true,
-              border: Border.all(color: Colors.grey, width: 0.30),
+              ),
             ),
-            //--------new widget --------
-            //  barGroups: List.generate(financialData!.length, (index) {
-            //    final revenueString = financialData?[index]['Revenue'] as String;
-            //    final revenueNumberString = revenueString.replaceAll(RegExp(r'[^\d.]'), '');
-            //    final revenue = double.tryParse(revenueNumberString) ?? 0.0;
-            barGroups: barChartGroupData,
-            //final incomeString = financialData?[index]['Net Income'] as String;
-            //    final incomeNumberString = incomeString.replaceAll(RegExp(r'[^\d.]'), '');
-            //    final income = double.tryParse(incomeNumberString) ?? 0.0;
-            //    print("revenue data"+ revenue.toString());
-            //    print("income data"+ income.toString());
-            //    return BarChartGroupData(
-            //      x: index,
-            //      barRods: [
-            //        BarChartRodData(
-            //          toY: revenue,
-            //          color: Colors.blue,
-            //          width: 10,
-            //          borderRadius: BorderRadius.zero,
-            //        ),
-            //      ],
-            //    );
-            //  }),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 1,
+                reservedSize: 40,
+                getTitlesWidget: (value, meta) {
+                  int index = value.toInt();
+                  if (index < 0 ||
+                      index >= provider.dividends!.chartInfo!.length) {
+                    Utils().showLog(
+                        "data lenght is checking${provider.dividends!.chartInfo!.length}");
+                    return SizedBox.shrink();
+                  }
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    space: 1.0,
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Text(
+                        provider.dividends!.chartInfo![index].label.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          gridData: const FlGridData(show: true),
+          borderData: FlBorderData(
+            show: true,
+          ),
+          barTouchData: BarTouchData(
+            touchTooltipData: BarTouchTooltipData(
+              getTooltipColor: (group) => Colors.white,
+              getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                final data = provider.dividends!.chartInfo![groupIndex];
+                String inputDate = data.payableDate.toString();
+                DateTime date = DateFormat("MM/dd/yyyy").parse(inputDate);
+                String formattedDate = DateFormat("MMM d").format(date);
+                return BarTooltipItem(
+                  textAlign: TextAlign.start,
+                  '${data.label} $formattedDate\n${data.amount}',
+                  const TextStyle(color: Colors.black),
+                );
+              },
+            ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-        fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white);
-    Widget text;
-    switch (value.toInt()) {
-      case 1:
-        text = const Text('MAR', style: style);
-        break;
-      case 2:
-        text = const Text('JUN', style: style);
-        break;
-      case 3:
-        text = const Text('SEP', style: style);
-        break;
-      case 4:
-        text = const Text('OCT', style: style);
-        break;
-      case 5:
-        text = const Text('Nov', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
-    }
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 4,
-      child: text,
     );
   }
 }
