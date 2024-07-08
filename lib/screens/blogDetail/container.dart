@@ -367,7 +367,14 @@ class BlogDetailContainer extends StatelessWidget {
                                   },
                                   text: "Refer and Earn",
                                   showArrow: false,
-                                )
+                                ),
+                                ThemeButtonSmall(
+                                  onPressed: () async {
+                                    // await _onReferClick(context);
+                                  },
+                                  text: "Upgrade Membership for more points",
+                                  showArrow: false,
+                                ),
                               ],
                             ),
                           )

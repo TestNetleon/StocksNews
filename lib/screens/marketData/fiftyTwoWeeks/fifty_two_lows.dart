@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/marketData/widget/marketDataBottomSheet/
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
+import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -87,30 +88,35 @@ class _FiftyTwoWeeksLowsStocksState extends State<FiftyTwoWeeksLowsStocks> {
                 children: [
                   HtmlTitle(subTitle: provider.extra?.subTitle),
                   Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(
-                        bottom: Dimen.padding,
-                        top: 0,
+                    child: CommonRefreshIndicator(
+                      onRefresh: () async {
+                        provider.getFiftyTwoWeekLows();
+                      },
+                      child: ListView.separated(
+                        padding: const EdgeInsets.only(
+                          bottom: Dimen.padding,
+                          top: 0,
+                        ),
+                        itemBuilder: (context, index) {
+                          if (data == null || data.isEmpty) {
+                            return const SizedBox();
+                          }
+                          return FiftyTwoWeeksItem(
+                            data: data[index],
+                            isOpen: provider.openIndex == index,
+                            onTap: () {
+                              provider.setOpenIndex(
+                                provider.openIndex == index ? -1 : index,
+                              );
+                            },
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SpacerVertical(height: 12);
+                        },
+                        // itemCount: up?.length ?? 0,
+                        itemCount: data?.length ?? 0,
                       ),
-                      itemBuilder: (context, index) {
-                        if (data == null || data.isEmpty) {
-                          return const SizedBox();
-                        }
-                        return FiftyTwoWeeksItem(
-                          data: data[index],
-                          isOpen: provider.openIndex == index,
-                          onTap: () {
-                            provider.setOpenIndex(
-                              provider.openIndex == index ? -1 : index,
-                            );
-                          },
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SpacerVertical(height: 12);
-                      },
-                      // itemCount: up?.length ?? 0,
-                      itemCount: data?.length ?? 0,
                     ),
                   ),
                 ],

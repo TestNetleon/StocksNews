@@ -653,12 +653,19 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                 // Share.share(
                                                 //   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
                                                 // );
-
                                                 await _onReferClick(context);
                                               },
                                               text: "Refer and Earn",
                                               showArrow: false,
-                                            )
+                                            ),
+                                            ThemeButtonSmall(
+                                              onPressed: () async {
+                                                // await _onReferClick(context);
+                                              },
+                                              text:
+                                                  "Upgrade Membership for more points",
+                                              showArrow: false,
+                                            ),
                                           ],
                                         ),
                                       )

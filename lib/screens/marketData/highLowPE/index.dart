@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../widgets/custom_tab_container.dart';
+import '../lock/common_lock.dart';
 
 class HighLowPEIndex extends StatelessWidget {
   static const path = "HighLowPEIndex";
@@ -28,25 +29,31 @@ class HighLowPEIndex extends StatelessWidget {
     if (purchased) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "gainer_loser" || element == "breakout-stocks") ??
+                  element == "high-pe-ratio-stocks" ||
+                  element == "low-pe-ratio-stocks" ||
+                  element == "high-pe-growth-stocks" ||
+                  element == "low-pe-growth-stocks") ??
           false;
       isLocked = !havePermissions;
     } else {
       if (!isLocked) {
         isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gainer_loser" || element == "breakout-stocks") ??
+                element == "high-pe-ratio-stocks" ||
+                element == "low-pe-ratio-stocks" ||
+                element == "high-pe-growth-stocks" ||
+                element == "low-pe-growth-stocks") ??
             false;
       }
     }
-    return const BaseContainer(
+    return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: AppBarHome(
+      appBar: const AppBarHome(
         isPopback: true,
         canSearch: true,
       ),
       body: Stack(
         children: [
-          CommonTabContainer(
+          const CommonTabContainer(
             scrollable: true,
             // tabsPadding: EdgeInsets.only(bottom: 10.sp),
             tabs: [
@@ -62,6 +69,11 @@ class HighLowPEIndex extends StatelessWidget {
               LowPEGrowthStocks(),
             ],
           ),
+          if (isLocked)
+            CommonLock(
+              isLocked: isLocked,
+              showLogin: true,
+            ),
         ],
       ),
     );
