@@ -1,24 +1,16 @@
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
-import 'package:stocks_news_new/service/ask_subscription.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -31,7 +23,6 @@ import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
 import '../../providers/home_provider.dart';
 import '../../providers/user_provider.dart';
-import '../../route/my_app.dart';
 
 //
 class StocksContainer extends StatelessWidget {
@@ -54,43 +45,56 @@ class StocksContainer extends StatelessWidget {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
 
     UserProvider userProvider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = provider.extra?.membership?.permissions
+            ?.any((element) => element == "stocks") ??
+        false;
 
-    if (purchased) {
-      bool havePermissions = userProvider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    if (purchased && isLocked) {
+      bool havePermissions = userProvider.user?.membership?.permissions
+              ?.any((element) => element == "stocks") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
+    // bool isLocked = false;
+
+    // if (purchased) {
+    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
+    //           (element) =>
+    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //       false;
+    //   isLocked = !havePermissions;
+    // } else {
+    //   if (!isLocked) {
+    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
+    //         false;
+    //   }
+    // }
+
+    // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
         filterClick: _filterClick,
         canSearch: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
-          0,
-          Dimen.padding.sp,
-          0,
-        ),
-        child: Stack(
-          children: [
-            Column(
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              Dimen.padding.sp,
+              0,
+              Dimen.padding.sp,
+              0,
+            ),
+            child: Column(
               children: [
                 ScreenTitle(
                   title: "Stocks",
@@ -188,13 +192,13 @@ class StocksContainer extends StatelessWidget {
                 ),
               ],
             ),
-            if (isLocked)
-              CommonLock(
-                showLogin: true,
-                isLocked: isLocked,
-              ),
-          ],
-        ),
+          ),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+            ),
+        ],
       ),
     );
   }

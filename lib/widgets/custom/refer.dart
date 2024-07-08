@@ -39,7 +39,10 @@ class ReferApp extends StatelessWidget {
       return;
     }
 
-    if (provider.user?.phone == null || provider.user?.phone == '') {
+    if (provider.user?.phone == null ||
+        provider.user?.phone == '' ||
+        provider.user?.displayName == '' ||
+        provider.user?.displayName == null) {
       await _bottomSheet();
     } else {
       await Navigator.push(

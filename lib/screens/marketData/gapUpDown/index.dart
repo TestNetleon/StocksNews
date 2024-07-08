@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/marketData/gapUpDown/gap_down_stocks.dart';
 import 'package:stocks_news_new/screens/marketData/gapUpDown/gap_up_stocks.dart';
@@ -10,6 +9,7 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import '../../../providers/gap_up_provider.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';
 
@@ -22,27 +22,25 @@ class GapUpDownStocks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HomeProvider homeProvider = context.watch<HomeProvider>();
+    GapUpProvider gapUpProvider = context.watch<GapUpProvider>();
 
     bool purchased = provider.user?.membership?.purchased == 1;
+    bool isLocked = gapUpProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                element == "gap-up-stocks" || element == "gap-down-stocks") ??
+        false;
 
-    bool isLocked = false;
-
-    if (purchased) {
+    if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
                   element == "gap-up-stocks" || element == "gap-down-stocks") ??
           false;
-      isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
-            false;
-      }
-    }
 
-    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
       appBar: const AppBarHome(

@@ -20,6 +20,9 @@ import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter_item.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../../../providers/home_provider.dart';
+import '../../../providers/user_provider.dart';
+import '../../marketData/lock/common_lock.dart';
 import 'widgets/buttons.dart';
 import 'widgets/graph.dart';
 
@@ -52,41 +55,72 @@ class _RedditTwitterState extends State<RedditTwitter> {
       name: 'ScreensVisit',
       parameters: {'screen_name': "Sentiments"},
     );
+
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
+    bool purchased = userProvider.user?.membership?.purchased == 1;
+
+    bool isLocked = homeProvider.extra?.membership?.permissions
+            ?.any((element) => element == "reddit-twitter") ??
+        false;
+
+    // bool isLocked = true;
+
+    if (purchased && isLocked) {
+      bool havePermissions = userProvider.user?.membership?.permissions
+              ?.any((element) => element == "reddit-twitter") ??
+          false;
+
+      isLocked = !havePermissions;
+    }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
     return BaseContainer(
       // drawer: const BaseDrawer(),
       // appBar: const AppBarHome(canSearch: true),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(
-          Dimen.padding.sp,
-          0,
-          Dimen.padding.sp,
-          0,
-        ),
-        child: Column(
-          children: [
-            // const ScreenTitle(title: "Social Sentiment"),
-            Expanded(
-              child: provider.isLoading && provider.socialSentimentRes == null
-                  ? const Loading()
-                  : provider.socialSentimentRes == null && !provider.isLoading
-                      ? Center(
-                          child: ErrorDisplayNewWidget(
-                            error: provider.error,
-                            onRefresh: _getRedditTwitterData,
-                          ),
-                        )
-                      : CommonRefreshIndicator(
-                          onRefresh: () async {
-                            await _getRedditTwitterData();
-                          },
-                          child: SingleChildScrollView(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            child: _getWidget(provider),
-                          ),
-                        ),
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              Dimen.padding.sp,
+              0,
+              Dimen.padding.sp,
+              0,
             ),
-          ],
-        ),
+            child: Column(
+              children: [
+                // const ScreenTitle(title: "Social Sentiment"),
+                Expanded(
+                  child: provider.isLoading &&
+                          provider.socialSentimentRes == null
+                      ? const Loading()
+                      : provider.socialSentimentRes == null &&
+                              !provider.isLoading
+                          ? Center(
+                              child: ErrorDisplayNewWidget(
+                                error: provider.error,
+                                onRefresh: _getRedditTwitterData,
+                              ),
+                            )
+                          : CommonRefreshIndicator(
+                              onRefresh: () async {
+                                await _getRedditTwitterData();
+                              },
+                              child: SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: _getWidget(provider),
+                              ),
+                            ),
+                ),
+              ],
+            ),
+          ),
+          if (isLocked)
+            CommonLock(
+              showLogin: true,
+              isLocked: isLocked,
+            ),
+        ],
       ),
     );
   }

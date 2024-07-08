@@ -23,6 +23,9 @@ class BlogProviderNew extends ChangeNotifier {
   final int _page = 1;
   int selectedIndex = 0;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
+
   List<BlogTabRes>? _tabs;
   List<BlogTabRes>? get tabs => _tabs;
   // List<String>? _tabs;
@@ -79,6 +82,7 @@ class BlogProviderNew extends ChangeNotifier {
         if (_tabs != null) {
           getBlogData(id: _tabs?[selectedIndex].id);
         }
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _error = response.message;
         _tabs = null;

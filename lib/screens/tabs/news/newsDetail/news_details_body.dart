@@ -11,10 +11,13 @@ import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -73,6 +76,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     if (newsProvider.data?.postDetail?.readingStatus == false) {
       return;
     }
+
+    // log("PHONE ++++ ===> ${userProvider.user?.phone}");
+
     if (userProvider.user == null) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
@@ -84,14 +90,15 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
           }
         });
       }
-    } else if (userProvider.user != null && !userProvider.phoneVerified) {
+    } else if (userProvider.user != null && userProvider.user?.phone == null) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
           if (mounted) {
             helper.update(NewsDetails.path);
-            referLogin();
+            // referLogin();
+            verifyIdentitySheet();
           }
         });
       }
@@ -155,6 +162,15 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     NewsDetailProvider provider =
         Provider.of<NewsDetailProvider>(context, listen: false);
     await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
+  }
+
+  void _membership() {
+    askToSubscribe(
+      onPressed: () {
+        Navigator.pop(context);
+        RevenueCatService.initializeSubscription();
+      },
+    );
   }
 
   @override
@@ -549,8 +565,10 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         icon: Icons.share,
                       ),
                     ),
-                    if ((provider.data?.postDetail?.readingStatus == false) &&
-                        !provider.isLoading)
+                    // if ((provider.data?.postDetail?.readingStatus == false) &&
+                    //     !provider.isLoading)
+
+                    if (true)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
@@ -610,8 +628,15 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                           onPressed: () {
                                             _onLoginClick(context);
                                           },
-                                          text: "Register/Login to continue",
-                                          showArrow: false,
+                                          mainAxisSize: MainAxisSize.max,
+                                          text: "Register/Login to Continue",
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 11),
+                                          textSize: 15,
+                                          fontBold: true,
+                                          iconFront: true,
+                                          icon: Icons.lock,
+                                          radius: 30,
                                         ),
                                         const SpacerVertical(),
                                       ],
@@ -649,19 +674,38 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                             ),
                                             const SpacerVertical(height: 10),
                                             ThemeButtonSmall(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 11),
+                                              textSize: 15,
+                                              fontBold: true,
+                                              iconFront: true,
+                                              icon: Icons.earbuds_rounded,
+                                              mainAxisSize: MainAxisSize.max,
+                                              radius: 30,
                                               onPressed: () async {
-                                                // Share.share(
-                                                //   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                                                // );
                                                 await _onReferClick(context);
                                               },
                                               text: "Refer and Earn",
-                                              showArrow: false,
                                             ),
+                                            const SpacerVertical(height: 10),
                                             ThemeButtonSmall(
-                                              onPressed: () async {
-                                                // await _onReferClick(context);
-                                              },
+                                              color: const Color.fromARGB(
+                                                  255, 194, 216, 51),
+                                              textColor: Colors.black,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 11),
+                                              textSize: 15,
+                                              fontBold: true,
+                                              iconFront: true,
+                                              radius: 30,
+                                              icon: Icons.card_membership,
+                                              textAlign: TextAlign.start,
+                                              mainAxisSize: MainAxisSize.max,
+                                              onPressed: _membership,
                                               text:
                                                   "Upgrade Membership for more points",
                                               showArrow: false,
@@ -696,12 +740,19 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                             ),
                                             const SpacerVertical(height: 10),
                                             ThemeButtonSmall(
-                                              // onPressed: () =>
-                                              //     _onViewBlogClick(context),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 11),
+                                              textSize: 15,
+                                              iconFront: true,
+                                              fontBold: true,
+                                              radius: 30,
+                                              icon: Icons.visibility,
+                                              mainAxisSize: MainAxisSize.max,
                                               onPressed: () =>
                                                   _onViewNewsClick(context),
                                               text: "View News",
-                                              showArrow: false,
                                             ),
                                           ],
                                         ),

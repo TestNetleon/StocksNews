@@ -15,6 +15,8 @@ import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
+import 'package:stocks_news_new/service/ask_subscription.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -85,6 +87,16 @@ class BlogDetailContainer extends StatelessWidget {
   void _onViewBlogClick(context) async {
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
     await provider.getBlogDetailData(slug: slug, point_deduction: true);
+  }
+
+  void _membership() {
+    askToSubscribe(
+      onPressed: () {
+        Navigator.pop(navigatorKey.currentContext!);
+
+        RevenueCatService.initializeSubscription();
+      },
+    );
   }
 
   @override
@@ -326,10 +338,21 @@ class BlogDetailContainer extends StatelessWidget {
                             ),
                             const SpacerVertical(height: 10),
                             // if (context.watch<UserProvider>().user == null)
-                            ThemeButtonSmall(
-                              onPressed: () => _onLoginClick(context),
-                              text: "Register/Login to continue",
-                              showArrow: false,
+                            SizedBox(
+                              width: double.infinity,
+                              child: ThemeButtonSmall(
+                                onPressed: () {
+                                  _onLoginClick(context);
+                                },
+                                text: "Register/Login to Continue",
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 11),
+                                textSize: 15,
+                                fontBold: true,
+                                iconFront: true,
+                                icon: Icons.lock,
+                                radius: 30,
+                              ),
                             ),
                             const SpacerVertical(),
                           ],
@@ -362,18 +385,34 @@ class BlogDetailContainer extends StatelessWidget {
                                 ),
                                 const SpacerVertical(height: 10),
                                 ThemeButtonSmall(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 11),
+                                  textSize: 15,
+                                  fontBold: true,
+                                  iconFront: true,
+                                  icon: Icons.earbuds_rounded,
+                                  mainAxisSize: MainAxisSize.max,
                                   onPressed: () async {
                                     await _onReferClick(context);
                                   },
                                   text: "Refer and Earn",
-                                  showArrow: false,
+                                  radius: 30,
                                 ),
+                                const SpacerVertical(height: 10),
                                 ThemeButtonSmall(
-                                  onPressed: () async {
-                                    // await _onReferClick(context);
-                                  },
-                                  text: "Upgrade Membership for more points",
-                                  showArrow: false,
+                                  color:
+                                      const Color.fromARGB(255, 194, 216, 51),
+                                  textColor: Colors.black,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 11),
+                                  textSize: 15,
+                                  fontBold: true,
+                                  iconFront: true,
+                                  radius: 30,
+                                  icon: Icons.card_membership,
+                                  onPressed: _membership,
+                                  textAlign: TextAlign.start,
+                                  mainAxisSize: MainAxisSize.max,
                                 ),
                               ],
                             ),
@@ -403,6 +442,14 @@ class BlogDetailContainer extends StatelessWidget {
                                 ),
                                 const SpacerVertical(height: 10),
                                 ThemeButtonSmall(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 11),
+                                  textSize: 15,
+                                  iconFront: true,
+                                  fontBold: true,
+                                  radius: 30,
+                                  icon: Icons.visibility,
+                                  mainAxisSize: MainAxisSize.max,
                                   onPressed: () => _onViewBlogClick(context),
                                   text: "View Blog",
                                   showArrow: false,
