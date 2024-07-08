@@ -61,7 +61,6 @@ class _SdFinancialState extends State<SdFinancial> {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     SdFinancialRes? data = provider.sdFinancialChartRes;
     // Utils().showLog(' data111113: ${data?.chart?[0].totalAssets}');
-
     // List<FinanceStatement>? financeStatements = data?.financeStatement;
 
     return BaseUiContainer(
