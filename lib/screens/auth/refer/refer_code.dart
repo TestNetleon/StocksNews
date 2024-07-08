@@ -23,7 +23,7 @@ import '../../contactUs/contact_us_item.dart';
 import '../../t&cAndPolicy/tc_policy.dart';
 import 'refer_otp.dart';
 
-referLogin() async {
+referLogin({bool isRefer = true}) async {
   await showModalBottomSheet(
     useSafeArea: true,
     enableDrag: false,
@@ -42,6 +42,7 @@ referLogin() async {
         initialChildSize: 1,
         builder: (context, scrollController) => ReferLogin(
           scrollController: scrollController,
+          isRefer: isRefer,
         ),
       );
     },
@@ -50,8 +51,13 @@ referLogin() async {
 
 class ReferLogin extends StatefulWidget {
   final ScrollController scrollController;
+  final bool isRefer;
 
-  const ReferLogin({super.key, required this.scrollController});
+  const ReferLogin({
+    super.key,
+    required this.scrollController,
+    required this.isRefer,
+  });
 
   @override
   State<ReferLogin> createState() => _ReferLoginState();
