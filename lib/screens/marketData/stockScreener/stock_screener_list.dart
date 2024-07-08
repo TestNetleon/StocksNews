@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_screener_res.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_screener_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/marketData/stockScreener/stock_screener_item.dart';
 import 'package:stocks_news_new/screens/marketData/widget/market_data_filter.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/html_title.dart';
 
 import '../../../utils/constants.dart';
@@ -60,70 +63,97 @@ class _StockScreenerListState extends State<StockScreenerList> {
     StockScreenerProvider provider = context.watch<StockScreenerProvider>();
     List<Result>? data = provider.data;
 
+    UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
+    bool purchased = userProvider.user?.membership?.purchased == 1;
+
+    bool isLocked = false;
+
+    if (purchased) {
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+          false;
+      isLocked = !havePermissions;
+    } else {
+      if (!isLocked) {
+        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+                element == "gap-up-stocks" || element == "gap-down-stocks") ??
+            false;
+      }
+    }
+
+    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HtmlTitle(
-          subTitle: provider.extraUp?.subTitle ?? "",
-          onFilterClick: _onFilterClick,
-        ),
-        // if (provider.filterParams != null)
-        //   FilterUiValues(
-        //     params: provider.filterParams,
-        //     onDeleteExchange: (exchange) {
-        //       provider.exchangeFilter(exchange);
-        //     },
-        //     onDeleteSector: (exchange) {
-        //       provider.exchangeFilter(exchange);
-        //     },
-        //     onDeleteIndustry: (exchange) {
-        //       provider.exchangeFilter(exchange);
-        //     },
-        //   ),
-        Expanded(
-          child: BaseUiContainer(
-            error: provider.error,
-            hasData: data != null && data.isNotEmpty,
-            isLoading: provider.isLoading,
-            errorDispCommon: true,
-            showPreparingText: true,
-            onRefresh: () => provider.getStockScreenerStocks(),
-            child: RefreshControl(
-              onRefresh: () async => provider.getStockScreenerStocks(),
-              canLoadMore: provider.canLoadMore,
-              onLoadMore: () async =>
-                  provider.getStockScreenerStocks(loadMore: true),
-              child: ListView.separated(
-                padding: EdgeInsets.only(
-                  bottom: Dimen.padding.sp,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            HtmlTitle(
+              subTitle: provider.extraUp?.subTitle ?? "",
+              onFilterClick: _onFilterClick,
+            ),
+            // if (provider.filterParams != null)
+            //   FilterUiValues(
+            //     params: provider.filterParams,
+            //     onDeleteExchange: (exchange) {
+            //       provider.exchangeFilter(exchange);
+            //     },
+            //     onDeleteSector: (exchange) {
+            //       provider.exchangeFilter(exchange);
+            //     },
+            //     onDeleteIndustry: (exchange) {
+            //       provider.exchangeFilter(exchange);
+            //     },
+            //   ),
+            Expanded(
+              child: BaseUiContainer(
+                error: provider.error,
+                hasData: data != null && data.isNotEmpty,
+                isLoading: provider.isLoading,
+                errorDispCommon: true,
+                showPreparingText: true,
+                onRefresh: () => provider.getStockScreenerStocks(),
+                child: RefreshControl(
+                  onRefresh: () async => provider.getStockScreenerStocks(),
+                  canLoadMore: provider.canLoadMore,
+                  onLoadMore: () async =>
+                      provider.getStockScreenerStocks(loadMore: true),
+                  child: ListView.separated(
+                    padding: EdgeInsets.only(
+                      bottom: Dimen.padding.sp,
+                    ),
+                    itemBuilder: (context, index) {
+                      if (data == null || data.isEmpty) {
+                        return const SizedBox();
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // if (index == 0)
+                          //   HtmlTitle(subTitle: provider.extraUp?.subTitle ?? ""),
+                          StockScreenerItem(
+                            data: data,
+                            index: index,
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        color: ThemeColors.greyBorder,
+                        height: 20.sp,
+                      );
+                    },
+                    // itemCount: up?.length ?? 0,
+                    itemCount: data?.length ?? 0,
+                  ),
                 ),
-                itemBuilder: (context, index) {
-                  if (data == null || data.isEmpty) {
-                    return const SizedBox();
-                  }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // if (index == 0)
-                      //   HtmlTitle(subTitle: provider.extraUp?.subTitle ?? ""),
-                      StockScreenerItem(
-                        data: data,
-                        index: index,
-                      ),
-                    ],
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 20.sp,
-                  );
-                },
-                // itemCount: up?.length ?? 0,
-                itemCount: data?.length ?? 0,
               ),
             ),
-          ),
+          ],
         ),
       ],
     );

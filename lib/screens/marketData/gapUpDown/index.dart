@@ -71,47 +71,48 @@ class GapUpDownStocks extends StatelessWidget {
           if (isLocked)
             CommonLock(
               showLogin: true,
-              onMembershipClick: () {
-                askToSubscribe(
-                  onPressed: provider.user == null
-                      ? () async {
-                          Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+              isLocked: isLocked,
+              // onMembershipClick: () {
+              //   askToSubscribe(
+              //     onPressed: provider.user == null
+              //         ? () async {
+              //             Utils().showLog("GAP UP DOWN OPEN? $isLocked");
 
-                          //Ask for LOGIN
-                          Navigator.pop(context);
-                          isPhone
-                              ? await loginSheet()
-                              : await loginSheetTablet();
-                          if (provider.user == null) {
-                            return;
-                          }
-                          if (isLocked) {
-                            log("message");
-                            await RevenueCatService.initializeSubscription();
-                          }
-                        }
-                      : () async {
-                          Navigator.pop(context);
-                          if (isLocked) {
-                            await RevenueCatService.initializeSubscription();
-                          }
-                        },
-                );
-              },
-              onLoginClick: () async {
-                isPhone ? await loginSheet() : await loginSheetTablet();
-                if (provider.user == null) {
-                  return;
-                }
-                Navigator.popUntil(
-                    navigatorKey.currentContext!, (route) => route.isFirst);
-                Navigator.pushReplacement(
-                  navigatorKey.currentContext!,
-                  MaterialPageRoute(
-                    builder: (_) => const Tabs(index: 0),
-                  ),
-                );
-              },
+              //             //Ask for LOGIN
+              //             Navigator.pop(context);
+              //             isPhone
+              //                 ? await loginSheet()
+              //                 : await loginSheetTablet();
+              //             if (provider.user == null) {
+              //               return;
+              //             }
+              //             if (isLocked) {
+              //               log("message");
+              //               await RevenueCatService.initializeSubscription();
+              //             }
+              //           }
+              //         : () async {
+              //             Navigator.pop(context);
+              //             if (isLocked) {
+              //               await RevenueCatService.initializeSubscription();
+              //             }
+              //           },
+              //   );
+              // },
+              // onLoginClick: () async {
+              //   isPhone ? await loginSheet() : await loginSheetTablet();
+              //   if (provider.user == null) {
+              //     return;
+              //   }
+              //   Navigator.popUntil(
+              //       navigatorKey.currentContext!, (route) => route.isFirst);
+              //   Navigator.pushReplacement(
+              //     navigatorKey.currentContext!,
+              //     MaterialPageRoute(
+              //       builder: (_) => const Tabs(index: 0),
+              //     ),
+              //   );
+              // },
             ),
         ],
       ),
