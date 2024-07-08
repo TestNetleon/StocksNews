@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -27,6 +29,7 @@ referOTP({
   String appSignature = '',
   name = "",
   displayName = "",
+  isVerifyIdentity = false,
   required String verificationId,
 }) async {
   await showModalBottomSheet(
@@ -47,6 +50,7 @@ referOTP({
         phone: phone,
         appSignature: appSignature,
         verificationId: verificationId,
+        isVerifyIdentity: isVerifyIdentity,
       );
     },
   );
@@ -58,6 +62,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
   final String name;
   final String displayName;
   final String verificationId;
+  final bool isVerifyIdentity;
 
   const OTPLoginBottomRefer({
     super.key,
@@ -66,6 +71,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
     required this.name,
     required this.displayName,
     required this.verificationId,
+    required this.isVerifyIdentity,
   });
 
   @override
@@ -142,20 +148,24 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
           Navigator.pop(navigatorKey.currentContext!);
           // Navigator.push(
           //   navigatorKey.currentContext!,
-          //   ReferAFriend.path,
-          // );
-          // Navigator.push(
-          //   navigatorKey.currentContext!,
           //   MaterialPageRoute(
           //     builder: (context) => const ReferSuccess(),
           //   ),
           // );
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (_) => const ReferAFriend(),
-            ),
-          );
+          if (widget.isVerifyIdentity) {
+            showSnackbar(
+              context: context,
+              message: response.message,
+              type: SnackbarType.info,
+            );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => const ReferAFriend(),
+              ),
+            );
+          }
         }
       } catch (e) {
         //
