@@ -32,7 +32,6 @@ class BarChartSampleState extends State<BarChartSample> {
 
   bool valueNegative = true;
   List<Chart>? charts;
-  List<Chart>? chartsPlaceHolder;
 
   @override
   void initState() {
@@ -41,82 +40,76 @@ class BarChartSampleState extends State<BarChartSample> {
   }
 
   void intFunction() {
-    charts = widget.data?.chart?.sublist(0, 5);
-    chartsPlaceHolder = null;
+    if ((widget.data?.chart?.length ?? 0) < 5) {
+      charts = widget.data?.chart?.sublist(0, widget.data?.chart?.length);
+    } else {
+      charts = widget.data?.chart?.sublist(0, 5);
+    }
 
     setState(() {});
 
-    if (charts?[4].totalAssets != null) {
-      if (charts != null) chartsPlaceHolder = charts;
+    List<BarChartGroupData> items = [];
 
-      BarChartGroupData barGroup1 = makeGroupData(
-          0,
-          (charts?[4].totalAssets == null || (charts?[4].totalAssets ?? 0) < 0)
-              ? 0.0
-              : double.parse("${charts?[4].totalAssets}"),
-          charts?[4].totalLiabilities == null ||
-                  (charts?[4].totalLiabilities ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![4].totalLiabilities}"));
-      BarChartGroupData barGroup2 = makeGroupData(
-          1,
-          charts?[3].totalAssets == null || (charts?[3].totalAssets ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[3].totalAssets}"),
-          charts?[3].totalLiabilities == null ||
-                  (charts?[3].totalLiabilities ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![3].totalLiabilities}"));
-      BarChartGroupData barGroup3 = makeGroupData(
-          2,
-          charts?[2].totalAssets == null || (charts?[2].totalAssets ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[2].totalAssets}"),
-          charts?[2].totalLiabilities == null ||
-                  (charts?[2].totalLiabilities ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![2].totalLiabilities}"));
-      BarChartGroupData barGroup4 = makeGroupData(
-          3,
-          charts?[1].totalAssets == null || (charts?[1].totalAssets ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[1].totalAssets}"),
-          charts?[1].totalLiabilities == null ||
-                  (charts?[1].totalLiabilities ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![1].totalLiabilities}"));
-      BarChartGroupData barGroup5 = makeGroupData(
-          4,
-          charts?[0].totalAssets == null || (charts?[0].totalAssets ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts?[0].totalAssets}"),
-          charts?[0].totalLiabilities == null ||
-                  (charts?[0].totalLiabilities ?? 0) < 0
-              ? 0.0
-              : double.parse("${charts![0].totalLiabilities}"));
-      final items = [
-        barGroup1,
-        barGroup2,
-        barGroup3,
-        barGroup4,
-        barGroup5,
-      ];
-      rawBarGroups = items;
+    for (int i = charts!.length - 1; i >= 0; i--) {
+      double totalAssets = (charts?[i].totalAssets == null)
+          ? 0.0
+          : double.parse("${charts?[i].totalAssets}");
+      double totalLiabilities = (charts?[i].totalLiabilities == null)
+          ? 0.0
+          : double.parse("${charts![i].totalLiabilities}");
 
-      showingBarGroups = rawBarGroups;
-      final maxRevenue = charts?.isNotEmpty == true
-          ? widget.data!.chart!
-              .map((e) => e.totalAssets)
-              .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
-          : 0;
-      final maxNetIncome = charts?.isNotEmpty == true
-          ? charts
-              ?.map((e) => e.totalLiabilities)
-              .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
-          : 0;
-      maxAbsValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
-      setState(() {});
+      BarChartGroupData barGroup =
+          makeGroupData(i, totalAssets, totalLiabilities);
+      items.add(barGroup);
     }
+
+    rawBarGroups = items;
+    showingBarGroups = rawBarGroups;
+    Utils().showLog("showingBarGroups  === $showingBarGroups");
+
+    final maxTotalAssets = charts?.isNotEmpty == true
+        ? charts!
+            .map((e) => e.totalAssets)
+            .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
+        : 0;
+    final maxTotalLiabilities = charts?.isNotEmpty == true
+        ? charts
+            ?.map((e) => e.totalLiabilities)
+            .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
+        : 0;
+    final minTotalAssets = (charts?.isNotEmpty == true &&
+            widget.data?.chart != null &&
+            widget.data!.chart!
+                .any((e) => e.totalAssets != null && e.totalAssets! < 0))
+        ? widget.data!.chart!
+            .map((e) => e.totalAssets)
+            .where((e) => e != null && e < 0) // Filter only negative values
+            .reduce(
+                (a, b) => a! < b! ? a : b) // Find the minimum negative value
+        : null;
+    final minTotalLiabilities = (charts?.isNotEmpty == true &&
+            widget.data?.chart != null &&
+            widget.data!.chart!.any(
+                (e) => e.totalLiabilities != null && e.totalLiabilities! < 0))
+        ? widget.data!.chart!
+            .map((e) => e.totalLiabilities)
+            .where((e) => e != null && e < 0) // Filter only negative values
+            .reduce(
+                (a, b) => a! < b! ? a : b) // Find the minimum negative value
+        : null;
+    minAbsValue = (minTotalAssets != null && minTotalLiabilities != null)
+        ? (minTotalAssets.abs() < minTotalLiabilities.abs()
+            ? minTotalAssets
+            : minTotalLiabilities)
+        : 0;
+    maxAbsValue = (maxTotalAssets!.abs() > maxTotalLiabilities!.abs())
+        ? maxTotalAssets.abs()
+        : maxTotalLiabilities.abs();
+
+    // minAbsValue = minAbsValueItem;
+    // maxAbsValue = (maxRevenue! > maxNetIncome!) ? maxRevenue : maxNetIncome;
+
+    setState(() {});
   }
 
   @override
@@ -125,7 +118,7 @@ class BarChartSampleState extends State<BarChartSample> {
     double positiveInterval = maxAbsValue / 5; // Example positive interval
     double negativeInterval = minAbsValue / 5;
 
-    return chartsPlaceHolder == null
+    return charts == null
         ? Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -137,9 +130,7 @@ class BarChartSampleState extends State<BarChartSample> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
-              minY: charts?[0].operatingCashFlow1 == null
-                  ? null
-                  : -double.parse("$maxAbsValue"),
+              minY: minAbsValue == 0 ? null : -double.parse("$maxAbsValue"),
               titlesData: FlTitlesData(
                 show: true,
                 leftTitles: const AxisTitles(
@@ -159,9 +150,10 @@ class BarChartSampleState extends State<BarChartSample> {
                   sideTitles: SideTitles(
                     reservedSize: 52,
                     showTitles: true,
-                    interval: maxAbsValue / 5, // Default value to avoid division by zero
+                    interval: maxAbsValue /
+                        5, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
-                      if (charts?[4].operatingCashFlow1 == null) {
+                      if (charts?[0].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);
                         return Text(
                           formattedValue,
@@ -209,28 +201,40 @@ class BarChartSampleState extends State<BarChartSample> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>[
-      charts?[4].period ?? "",
-      charts?[3].period ?? "",
-      charts?[2].period ?? "",
-      charts?[1].period ?? "",
-      charts?[0].period ?? "",
-    ];
+    List<String> titles = <String>[];
 
-    final Widget text = Text(
-      titles[value.toInt()],
-      style: stylePTSansBold(
-        color: ThemeColors.white,
-        fontSize: 12,
-        decoration: TextDecoration.none,
-      ),
-    );
+    // Ensure 'charts' is not null and has elements
+    if (charts != null && charts!.isNotEmpty) {
+      // Iterate over 'charts' from end to start
+      for (int i = charts!.length - 1; i >= 0; i--) {
+        if (charts![i].period != null) {
+          titles.add(charts![i].period!);
+        }
+      }
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16, //margin top
-      child: text,
-    );
+      // Reverse the titles list
+      titles = titles.reversed.toList();
+    }
+
+    // Check if value is within the range of titles
+    if (value.toInt() >= 0 && value.toInt() < titles.length) {
+      final Widget text = Text(
+        titles[value.toInt()],
+        style: stylePTSansBold(
+          color: ThemeColors.white,
+          fontSize: 12,
+          decoration: TextDecoration.none,
+        ),
+      );
+
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 16, // margin top
+        child: text,
+      );
+    }
+
+    return Container();
   }
 
   BarChartGroupData makeGroupData(int x, double y1, double y2) {
@@ -249,45 +253,6 @@ class BarChartSampleState extends State<BarChartSample> {
           color: widget.rightBarColor,
           width: width,
           borderRadius: radius,
-        ),
-      ],
-    );
-  }
-
-  Widget makeTransactionsIcon() {
-    const width = 4.5;
-    const space = 3.5;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 42,
-          color: Colors.white.withOpacity(1),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
         ),
       ],
     );

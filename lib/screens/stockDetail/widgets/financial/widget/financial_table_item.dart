@@ -24,34 +24,35 @@ class FinancialTableItem extends StatelessWidget {
 
     return Row(
       children: [
-        DataTable(
-          border: TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
-          columns: [
-            DataColumn(
-              label: Text(
-                // transformedData[0]['Key'].toString() == "Period"
-                //     ? "Particulars (in Cr)"
-                //     : transformedData[0]['Key'].toString(),
-                transformedData[0]['Key'].toString(),
-                style: stylePTSansRegular(),
+        Container(
+          color: ThemeColors.tableBorderColor,
+          child: DataTable(
+            horizontalMargin: 10,
+            border: TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
+            columns: [
+              DataColumn(
+                label: Text(
+                  "Particulars",
+                  style: stylePTSansRegulars(),
+                ),
               ),
-            ),
-          ],
-          rows: transformedData.skip(1).map((data) {
-            return DataRow(
-              cells: [
-                DataCell(
-                  SizedBox(
-                    width: 100,
-                    child: Text(
-                      data['Key'].toString(),
-                      style: stylePTSansRegular(),
+            ],
+            rows: transformedData.skip(1).map((data) {
+              return DataRow(
+                cells: [
+                  DataCell(
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        data['Key'].toString(),
+                        style: stylePTSansRegulars(),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          }).toList(),
+                ],
+              );
+            }).toList(),
+          ),
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -59,7 +60,7 @@ class FinancialTableItem extends StatelessWidget {
             child: DataTable(
               border:
                   TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
-              columnSpacing: 20,
+              columnSpacing: 15,
               columns: _createColumns(transformedData[0]),
               // rows: transformedData
               //     .map((data) => _createValuesRows(context, data))
@@ -80,7 +81,7 @@ class FinancialTableItem extends StatelessWidget {
       return DataColumn(
         label: Text(
           entry.value.toString(), // Convert value to string if necessary
-          style: stylePTSansRegular(),
+          style: stylePTSansRegulars(),
         ),
       );
     }).toList();
@@ -112,7 +113,7 @@ class FinancialTableItem extends StatelessWidget {
               : SizedBox(
                   child: Text(
                     value.toString(),
-                    style: stylePTSansRegular(),
+                    style: stylePTSansRegulars(),
                   ),
                 ),
         );
@@ -138,7 +139,7 @@ class FinancialTableItem extends StatelessWidget {
     return transformedData;
   }
 
-  TextStyle stylePTSansRegular() {
-    return stylePTSansBold(fontSize: 12); // Example style
+  TextStyle stylePTSansRegulars() {
+    return stylePTSansRegular(fontSize: 12); // Example style
   }
 }
