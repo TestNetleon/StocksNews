@@ -33,6 +33,7 @@ import 'package:stocks_news_new/providers/low_pe_provider.dart';
 import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/providers/morningstar_txn_provider.dart';
 import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/providers/most_popular_penny_provider.dart';
 import 'package:stocks_news_new/providers/snp_500_provider.dart';
@@ -580,6 +581,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => FiftyTwoWeeksHighProvider()),
       ChangeNotifierProvider(create: (_) => HelpDeskProvider()),
       ChangeNotifierProvider(create: (_) => MembershipProvider()),
+      ChangeNotifierProvider(create: (_) => MorningstarTxnProvider()),
     ];
   }
 }

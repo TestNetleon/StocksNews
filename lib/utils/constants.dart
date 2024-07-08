@@ -171,6 +171,8 @@ class Images {
   static const totalPoint = "assets/images/total_point.png";
   static const pointSpent = "assets/images/point_spent.png";
   static const referPoint = "assets/images/refer_point.png";
+  static const morningStarLogoSvg = "assets/images/morningstar_logo.svg";
+  static const morningStarLogo = "assets/images/morningstar_logo.png";
 }
 
 class AudioFiles {

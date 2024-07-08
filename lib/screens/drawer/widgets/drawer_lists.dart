@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
 import 'package:stocks_news_new/screens/membership/index.dart';
+import 'package:stocks_news_new/screens/morningstarTranscations/morningstar_txn.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
@@ -57,13 +58,14 @@ List<DrawerRes> marketData = [
     },
   ),
   DrawerRes(
-      iconData: Icons.precision_manufacturing_outlined,
-      icon: Images.feedback,
-      text: "Gap Up/Down Stocks",
-      onTap: () => Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const GapUpDownStocks()),
-          )),
+    iconData: Icons.precision_manufacturing_outlined,
+    icon: Images.feedback,
+    text: "Gap Up/Down Stocks",
+    onTap: () => Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const GapUpDownStocks()),
+    ),
+  ),
   DrawerRes(
     iconData: Icons.pending_actions_rounded,
     icon: Images.insider,
@@ -394,6 +396,16 @@ List<DrawerRes> aboutTiles = [
     },
   ),
   DrawerRes(
+    iconData: Icons.library_books_sharp,
+    text: "Morningstar Reports",
+    onTap: () {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
+      );
+    },
+  ),
+  DrawerRes(
     iconData: Icons.person_pin_outlined,
     text: "Portfolio",
     onTap: () {
@@ -436,6 +448,7 @@ List<DrawerRes> aboutTiles = [
   //     );
   //   },
   // ),
+
   // DrawerRes(
   //   iconData: Icons.list_alt_rounded,
   //   text: "Mission",

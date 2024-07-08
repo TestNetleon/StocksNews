@@ -93,6 +93,7 @@ class Extra {
   final String? referText;
   final int? affiliateInput;
   final LoginDialogRes? loginDialogRes;
+  final UserMembershipRes? membership;
 
   Extra({
     this.feebackType,
@@ -146,6 +147,7 @@ class Extra {
     this.affiliateInput,
     this.loginDialogRes,
     this.totalActivityPoints,
+    this.membership,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -244,6 +246,9 @@ class Extra {
             ? null
             : LoginDialogRes.fromJson(json["login_dialog"]),
         totalActivityPoints: json["total_activity_points"],
+        membership: json["membership"] == null
+            ? null
+            : UserMembershipRes.fromJson(json["membership"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -312,6 +317,7 @@ class Extra {
         "affiliate_input": affiliateInput,
         "login_dialog": loginDialogRes?.toJson(),
         "total_activity_points": totalActivityPoints,
+        "membership": membership?.toJson(),
       };
 }
 
