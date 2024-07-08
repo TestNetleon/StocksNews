@@ -26,6 +26,7 @@ class UserRes {
   bool? signupStatus;
   // int? subscriptionPurchased;
   final UserMembershipRes? membership;
+  bool? affiliateStatus;
 
   UserRes({
     // this.subscriptionPurchased = 0,
@@ -49,6 +50,7 @@ class UserRes {
     this.referralUrl,
     this.displayName,
     this.signupStatus = false,
+    this.affiliateStatus,
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
@@ -74,6 +76,7 @@ class UserRes {
         referralUrl: json["referral_url"],
         displayName: json["display_name"],
         signupStatus: json["signupStatus"],
+        affiliateStatus: json["affiliate_status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,6 +100,7 @@ class UserRes {
         "display_name": displayName,
         "membership": membership?.toJson(),
         "signupStatus": signupStatus,
+        "affiliate_status": affiliateStatus,
       };
 }
 

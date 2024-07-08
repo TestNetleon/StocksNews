@@ -1,20 +1,13 @@
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/screens/tabs/tabs.dart';
-import 'package:stocks_news_new/service/ask_subscription.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -31,7 +24,6 @@ import 'package:stocks_news_new/widgets/text_input_field_search.dart';
 
 import '../../providers/home_provider.dart';
 import '../../providers/user_provider.dart';
-import '../../route/my_app.dart';
 
 //
 class StocksContainer extends StatelessWidget {
