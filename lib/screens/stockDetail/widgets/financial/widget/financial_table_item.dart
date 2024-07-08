@@ -29,7 +29,10 @@ class FinancialTableItem extends StatelessWidget {
           columns: [
             DataColumn(
               label: Text(
-                "Particulars (in Cr)",
+                // transformedData[0]['Key'].toString() == "Period"
+                //     ? "Particulars (in Cr)"
+                //     : transformedData[0]['Key'].toString(),
+                transformedData[0]['Key'].toString(),
                 style: stylePTSansRegular(),
               ),
             ),
@@ -41,9 +44,7 @@ class FinancialTableItem extends StatelessWidget {
                   SizedBox(
                     width: 100,
                     child: Text(
-                      data['Key'].toString() == "Period"
-                          ? "Particulars (in Cr)"
-                          : data['Key'].toString(),
+                      data['Key'].toString(),
                       style: stylePTSansRegular(),
                     ),
                   ),
@@ -59,7 +60,7 @@ class FinancialTableItem extends StatelessWidget {
               border:
                   TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
               columnSpacing: 20,
-              columns: _createColumns(transformedData.first),
+              columns: _createColumns(transformedData[0]),
               // rows: transformedData
               //     .map((data) => _createValuesRows(context, data))
               //     .toList(),
@@ -75,10 +76,10 @@ class FinancialTableItem extends StatelessWidget {
   }
 
   List<DataColumn> _createColumns(Map<String, dynamic> data) {
-    return data.keys.where((key) => key != 'Key').map((key) {
+    return data.entries.where((entry) => entry.key != 'Key').map((entry) {
       return DataColumn(
         label: Text(
-          key,
+          entry.value.toString(), // Convert value to string if necessary
           style: stylePTSansRegular(),
         ),
       );
