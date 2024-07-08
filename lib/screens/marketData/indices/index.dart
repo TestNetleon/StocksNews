@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/low_price_stocks_tab.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/marketData/indices/dow_30_stocks.dart';
 import 'package:stocks_news_new/screens/marketData/indices/indices_dynamic_list.dart';
 import 'package:stocks_news_new/screens/marketData/indices/snp_500_stocks.dart';
+import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
@@ -62,42 +66,74 @@ class IndicesData extends StatelessWidget {
     IndicesProvider provider = context.watch<IndicesProvider>();
     List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
+    UserProvider userProvider = context.watch<UserProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
+    bool purchased = userProvider.user?.membership?.purchased == 1;
+
+    bool isLocked = false;
+
+    if (purchased) {
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+          false;
+      isLocked = !havePermissions;
+    } else {
+      if (!isLocked) {
+        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
+                element == "gap-up-stocks" || element == "gap-down-stocks") ??
+            false;
+      }
+    }
+
+    Utils().showLog("GAP UP DOWN OPEN? $isLocked");
+
     return provider.tabLoading
         ? const Loading()
-        : CommonTabContainer(
-            onChange: (index) {
-              if (index != 0 && index != 1) {
-                provider.tabChange(index);
-              }
-            },
-            scrollable: (tabs?.length ?? 0) > 1 ? true : false,
-            // tabs: List.generate(
-            //     tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
-            // widgets: List.generate(
-            //   tabs?.length ?? 0,
-            //   (index) => _getWidgets(provider),
-            // ),
-            tabs: tabs == null
-                ? ["DOW 30 Stocks", "S&P 500 Stocks"]
-                : [
-                    "DOW 30 Stocks",
-                    "S&P 500 Stocks",
-                    ...(tabs.map(
-                      (tab) => tab.key,
-                    )),
-                  ],
-            widgets: tabs == null
-                ? const [
-                    Dow30Stocks(),
-                    Snp500Stocks(),
-                  ]
-                : [
-                    const Dow30Stocks(),
-                    const Snp500Stocks(),
-                    ...(provider.tabs!
-                        .map((tab) => const IndicesDynamicStocks())
-                        .toList()),
-                  ],
+        : Stack(
+            children: [
+              CommonTabContainer(
+                onChange: (index) {
+                  if (index != 0 && index != 1) {
+                    provider.tabChange(index);
+                  }
+                },
+                scrollable: (tabs?.length ?? 0) > 1 ? true : false,
+                // tabs: List.generate(
+                //     tabs?.length ?? 0, (index) => "${tabs?[index].name}"),
+                // widgets: List.generate(
+                //   tabs?.length ?? 0,
+                //   (index) => _getWidgets(provider),
+                // ),
+                tabs: tabs == null
+                    ? ["DOW 30 Stocks", "S&P 500 Stocks"]
+                    : [
+                        "DOW 30 Stocks",
+                        "S&P 500 Stocks",
+                        ...(tabs.map(
+                          (tab) => tab.key,
+                        )),
+                      ],
+                widgets: tabs == null
+                    ? const [
+                        Dow30Stocks(),
+                        Snp500Stocks(),
+                      ]
+                    : [
+                        const Dow30Stocks(),
+                        const Snp500Stocks(),
+                        ...(provider.tabs!
+                            .map((tab) => const IndicesDynamicStocks())
+                            .toList()),
+                      ],
+              ),
+              if (isLocked)
+                CommonLock(
+                  isLocked: isLocked,
+                  showLogin: true,
+                ),
+            ],
           );
   }
 
