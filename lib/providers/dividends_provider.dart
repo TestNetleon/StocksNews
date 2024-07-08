@@ -20,9 +20,9 @@ class DividendsProvider extends ChangeNotifier {
   String? _error;
   int _page = 1;
   Extra? _extra;
+  Extra? get extra => _extra;
 
   List<DividendsRes>? get data => _data;
-  Extra? get extra => _extra;
   bool get canLoadMore => _page < (_extra?.totalPages ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;

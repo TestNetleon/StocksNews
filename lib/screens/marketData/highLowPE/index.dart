@@ -10,6 +10,7 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 
 import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/custom_tab_container.dart';
 import '../lock/common_lock.dart';
 
@@ -21,12 +22,19 @@ class HighLowPEIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
+    // HighPeProvider highPeProvider = context.watch<HighPeProvider>();
 
     bool purchased = provider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                element == "high-pe-ratio-stocks" ||
+                element == "low-pe-ratio-stocks" ||
+                element == "high-pe-growth-stocks" ||
+                element == "low-pe-growth-stocks") ??
+        false;
 
-    if (purchased) {
+    if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
                   element == "high-pe-ratio-stocks" ||
@@ -34,17 +42,11 @@ class HighLowPEIndex extends StatelessWidget {
                   element == "high-pe-growth-stocks" ||
                   element == "low-pe-growth-stocks") ??
           false;
+
       isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "high-pe-ratio-stocks" ||
-                element == "low-pe-ratio-stocks" ||
-                element == "high-pe-growth-stocks" ||
-                element == "low-pe-growth-stocks") ??
-            false;
-      }
     }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
       appBar: const AppBarHome(

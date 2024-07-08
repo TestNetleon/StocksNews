@@ -7,10 +7,10 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-
 import '../../../providers/home_provider.dart';
 import '../../../providers/user_provider.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/utils.dart';
 import '../lock/common_lock.dart';
 
 class GainersLosersIndex extends StatefulWidget {
@@ -28,24 +28,26 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
+    // TodayTopGainerProvider topGainerProvider =
+    //     context.watch<TodayTopGainerProvider>();
 
     bool purchased = provider.user?.membership?.purchased == 1;
 
-    bool isLocked = false;
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                element == "gainer_loser" || element == "breakout-stocks") ??
+        false;
 
-    if (purchased) {
+    if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
                   element == "gainer_loser" || element == "breakout-stocks") ??
           false;
+
       isLocked = !havePermissions;
-    } else {
-      if (!isLocked) {
-        isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-                element == "gainer_loser" || element == "breakout-stocks") ??
-            false;
-      }
     }
+    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
+
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
       appBar: const AppBarHome(
