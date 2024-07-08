@@ -29,12 +29,12 @@ class FinancialTableItem extends StatelessWidget {
           columns: [
             DataColumn(
               label: Text(
-                "",
+                "Particulars (in Cr)",
                 style: stylePTSansRegular(),
               ),
             ),
           ],
-          rows: transformedData.map((data) {
+          rows: transformedData.skip(1).map((data) {
             return DataRow(
               cells: [
                 DataCell(
@@ -60,7 +60,11 @@ class FinancialTableItem extends StatelessWidget {
                   TableBorder.all(color: ThemeColors.greyBorder, width: 0.9),
               columnSpacing: 20,
               columns: _createColumns(transformedData.first),
+              // rows: transformedData
+              //     .map((data) => _createValuesRows(context, data))
+              //     .toList(),
               rows: transformedData
+                  .skip(1) // Skip the first item
                   .map((data) => _createValuesRows(context, data))
                   .toList(),
             ),
