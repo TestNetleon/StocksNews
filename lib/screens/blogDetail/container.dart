@@ -328,7 +328,7 @@ class BlogDetailContainer extends StatelessWidget {
                             // if (context.watch<UserProvider>().user == null)
                             ThemeButtonSmall(
                               onPressed: () => _onLoginClick(context),
-                              text: "Login to continue",
+                              text: "Register/Login to continue",
                               showArrow: false,
                             ),
                             const SpacerVertical(),
@@ -365,7 +365,7 @@ class BlogDetailContainer extends StatelessWidget {
                                   onPressed: () async {
                                     await _onReferClick(context);
                                   },
-                                  text: "Refer Now",
+                                  text: "Refer and Earn",
                                   showArrow: false,
                                 )
                               ],

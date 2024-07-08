@@ -610,7 +610,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                           onPressed: () {
                                             _onLoginClick(context);
                                           },
-                                          text: "Login to continue",
+                                          text: "Register/Login to continue",
                                           showArrow: false,
                                         ),
                                         const SpacerVertical(),
@@ -656,7 +656,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
 
                                                 await _onReferClick(context);
                                               },
-                                              text: "Refer Now",
+                                              text: "Refer and Earn",
                                               showArrow: false,
                                             )
                                           ],

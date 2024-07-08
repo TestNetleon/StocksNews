@@ -159,7 +159,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                       onPressed: () {
                                         _onLoginClick(context);
                                       },
-                                      text: "Login to continue",
+                                      text: "Register/Login to continue",
                                       showArrow: false,
                                     )
                                   : (provider
@@ -178,7 +178,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           onPressed: () async {
                                             await _onReferClick(context);
                                           },
-                                          text: "Refer Now",
+                                          text: "Refer and Earn",
                                           showArrow: false,
                                         )
                                       : ThemeButtonSmall(
@@ -998,11 +998,10 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                               //                             // Share.share(
                               //                             //   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
                               //                             // );
-
                               //                             await _onReferClick(
                               //                                 context);
                               //                           },
-                              //                           text: "Refer Now",
+                              //                           text: "Refer and Earn",
                               //                           showArrow: false,
                               //                         )
                               //                       ],
