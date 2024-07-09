@@ -79,7 +79,7 @@ class DividendPaymentLineChart extends StatelessWidget {
                       quarterTurns: 3,
                       child: Text(
                         provider.dividends!.chartInfo![index].label.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 10,
@@ -91,7 +91,7 @@ class DividendPaymentLineChart extends StatelessWidget {
               ),
             ),
           ),
-          gridData: FlGridData(show: true),
+          gridData: const FlGridData(show: true),
           borderData: FlBorderData(
             show: true,
           ),
@@ -102,7 +102,7 @@ class DividendPaymentLineChart extends StatelessWidget {
               color: Colors.green,
               barWidth: 4,
               // belowBarData: BarAreaData(show: true, color: Colors.green),
-              dotData: FlDotData(show: false),
+              dotData: const FlDotData(show: false),
             ),
           ],
           lineTouchData: LineTouchData(
@@ -110,8 +110,7 @@ class DividendPaymentLineChart extends StatelessWidget {
               getTooltipColor: (group) => Colors.white,
               getTooltipItems: (touchedSpots) {
                 return touchedSpots.map((touchedSpot) {
-                  final data =
-                      provider.dividends!.chartInfo![touchedSpot.spotIndex];
+                  final data = provider.dividends!.chartInfo![touchedSpot.spotIndex];
                   String inputDate = data.payableDate.toString();
                   DateTime date = DateFormat("MM/dd/yyyy").parse(inputDate);
                   String formattedDate = DateFormat("MMM d").format(date);

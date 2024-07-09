@@ -36,8 +36,7 @@ class DividendPaymentBarchart extends StatelessWidget {
           alignment: BarChartAlignment.spaceAround,
           maxY: maxAmount,
           // minY: minAmount,
-          barGroups:
-              provider.dividends!.chartInfo!.asMap().entries.map((entry) {
+          barGroups: provider.dividends!.chartInfo!.asMap().entries.map((entry) {
             int index = entry.key;
             DividendCharts data = entry.value;
             double amount =
@@ -83,8 +82,8 @@ class DividendPaymentBarchart extends StatelessWidget {
                   if (index < 0 ||
                       index >= provider.dividends!.chartInfo!.length) {
                     Utils().showLog(
-                        "data lenght is checking${provider.dividends!.chartInfo!.length}");
-                    return SizedBox.shrink();
+                        "checking data lenght ${provider.dividends!.chartInfo!.length}");
+                    return const SizedBox.shrink();
                   }
                   return SideTitleWidget(
                     axisSide: meta.axisSide,
