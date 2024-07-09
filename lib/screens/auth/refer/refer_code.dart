@@ -93,7 +93,7 @@ class _ReferLoginState extends State<ReferLogin> {
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
-    affiliateStatus = provider.user?.affiliateStatus == 1;
+    affiliateStatus = provider.user?.affiliateStatus ?? 1;
     numberVerified = provider.user?.phone != null &&
         provider.user?.phone != "" &&
         provider.user?.name != null &&

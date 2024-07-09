@@ -32,6 +32,8 @@ class BarChartSampleState extends State<BarChartSample> {
 
   bool valueNegative = true;
   List<Chart>? charts;
+  dynamic minTotalAssets;
+  dynamic minTotalLiabilities;
 
   @override
   void initState() {
@@ -77,7 +79,7 @@ class BarChartSampleState extends State<BarChartSample> {
             ?.map((e) => e.totalLiabilities)
             .reduce((a, b) => a!.abs() > b!.abs() ? a : b)
         : 0;
-    final minTotalAssets = (charts?.isNotEmpty == true &&
+    minTotalAssets = (charts?.isNotEmpty == true &&
             widget.data?.chart != null &&
             widget.data!.chart!
                 .any((e) => e.totalAssets != null && e.totalAssets! < 0))
@@ -87,7 +89,7 @@ class BarChartSampleState extends State<BarChartSample> {
             .reduce(
                 (a, b) => a! < b! ? a : b) // Find the minimum negative value
         : null;
-    final minTotalLiabilities = (charts?.isNotEmpty == true &&
+    minTotalLiabilities = (charts?.isNotEmpty == true &&
             widget.data?.chart != null &&
             widget.data!.chart!.any(
                 (e) => e.totalLiabilities != null && e.totalLiabilities! < 0))
@@ -130,7 +132,9 @@ class BarChartSampleState extends State<BarChartSample> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
-              minY: minAbsValue == 0 ? null : -double.parse("$maxAbsValue"),
+              minY: minTotalAssets != null || minTotalLiabilities != null
+                  ? -double.parse("$maxAbsValue")
+                  : null,
               titlesData: FlTitlesData(
                 show: true,
                 leftTitles: const AxisTitles(
