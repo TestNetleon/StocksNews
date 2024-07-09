@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:vibration/vibration.dart';
 
 import '../api/apis.dart';
 import '../modals/analysis_res.dart';
@@ -1475,6 +1478,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   void changeTabTypeChartData(index, {String? symbol}) {
     if (typeIndex != index) {
       typeIndex = index;
+      vibrateTabFinancial();
       Utils().showLog("index  $index");
       if (index == 0 && incomeSdFinancialChartRes == null) {
         notifyListeners();
@@ -1523,9 +1527,23 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  void vibrateTabFinancial() async {
+    try {
+      if (Platform.isAndroid) {
+        bool isVibe = await Vibration.hasVibrator() ?? false;
+        if (isVibe) {
+          Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+        }
+      } else {
+        HapticFeedback.lightImpact();
+      }
+    } catch (e) {}
+  }
+
   void changePeriodType(index, {String? symbol}) {
     if (periodIndex != index) {
       periodIndex = index;
+      vibrateTabFinancial();
       _incomeSdFinancialChartRes = null;
       _sdFinancialArrayTableIncome = null;
       _balanceSdFinancialChartRes = null;
@@ -1544,6 +1562,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   void changePeriodTypeIndexVoid(index) {
     if (changePeriodTypeIndex != index) {
+      vibrateTabFinancial();
+
       changePeriodTypeIndex = index;
       notifyListeners();
     }
