@@ -1189,6 +1189,59 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+//---------------------------------------------------------------
+//News DATA New
+  String? _errorNewsN;
+  String? get errorNewsN => _errorNewsN ?? Const.errSomethingWrong;
+
+  Status _statusNewsN = Status.ideal;
+  Status get statusNewsN => _statusNewsN;
+
+  bool get isLoadingNewsN => _statusNewsN == Status.loading;
+
+  Extra? _extraNewsN;
+  Extra? get extraNewsN => _extraNewsN;
+
+  SdNewsRes? _newsResN;
+  SdNewsRes? get newsResN => _newsResN;
+
+  void setStatusNewsN(status) {
+    _statusNewsN = status;
+    notifyListeners();
+  }
+
+  Future getNewsDataN({
+    String? symbol,
+  }) async {
+    setStatusNewsN(Status.loading);
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailNewsV2,
+        request: request,
+        showProgress: false,
+      );
+
+      if (response.status) {
+        _newsResN = sdNewsResFromJson(jsonEncode(response.data));
+      } else {
+        _newsResN = null;
+        _errorNewsN = response.message;
+      }
+      setStatusNewsN(Status.loaded);
+    } catch (e) {
+      _newsResN = null;
+      Utils().showLog(e.toString());
+      _errorNewsN = Const.errSomethingWrong;
+      setStatusNewsN(Status.loaded);
+    }
+  }
+
   //---------------------------------------------------------------
 //Social Activities DATA
   String? _errorSocial;

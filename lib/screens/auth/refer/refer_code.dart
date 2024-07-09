@@ -241,9 +241,6 @@ class _ReferLoginState extends State<ReferLogin> {
     HomeProvider provider = context.watch<HomeProvider>();
 
     return GestureDetector(
-      onTap: () {
-        closeKeyboard();
-      },
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: const BoxDecoration(

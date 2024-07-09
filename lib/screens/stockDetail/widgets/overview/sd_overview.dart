@@ -76,6 +76,7 @@ class _SdOverviewState extends State<SdOverview> {
                 // const SpacerVertical(height: 4),
                 // const SdTopWidgetRange(),
                 const SpacerVertical(height: 12),
+
                 Visibility(
                   visible: provider.overviewRes?.morningStart != null,
                   child: Padding(
@@ -83,6 +84,7 @@ class _SdOverviewState extends State<SdOverview> {
                     child: StockDetailAnalystData(symbol: widget.symbol ?? ""),
                   ),
                 ),
+
                 SdOverviewChart(symbol: widget.symbol ?? ""),
                 const SpacerVertical(height: 4),
                 const SdCompanyBrief(),

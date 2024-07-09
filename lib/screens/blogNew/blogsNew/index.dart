@@ -39,9 +39,10 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = (provider.extra?.membership?.permissions
-            ?.any((element) => element == "blog-category-list") ??
-        false);
+    bool isLocked = ((provider.extra?.membership?.permissions
+                ?.any((element) => element == "blog-category-list") ??
+            false) &&
+        !provider.tabLoading);
 
     if (purchased && isLocked) {
       bool havePermissions = userProvider.user?.membership?.permissions

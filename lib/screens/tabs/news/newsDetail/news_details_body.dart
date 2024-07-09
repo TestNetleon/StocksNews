@@ -565,10 +565,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         icon: Icons.share,
                       ),
                     ),
-                    // if ((provider.data?.postDetail?.readingStatus == false) &&
-                    //     !provider.isLoading)
-
-                    if (true)
+                    if ((provider.data?.postDetail?.readingStatus == false) &&
+                        !provider.isLoading)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
@@ -607,8 +605,14 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.lock, size: 40),
-                                        const SpacerVertical(),
+                                        // const Icon(Icons.lock, size: 40),
+                                        // const SpacerVertical(),
+                                        Image.asset(
+                                          Images.lockGIF,
+                                          height: 70,
+                                          width: 70,
+                                        ),
+                                        const SpacerVertical(height: 5),
                                         Text(
                                           "${provider.data?.postDetail?.readingTitle}",
                                           style: stylePTSansBold(fontSize: 18),

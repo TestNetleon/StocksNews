@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +15,7 @@ import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
-import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/phone_otp.dart';
-
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -524,7 +521,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   Future _onPhoneUpdateClick(String phone) async {
-    UserProvider provider = context.read<UserProvider>();
+    // UserProvider provider = context.read<UserProvider>();
 
     if (mobileController.text.isEmpty || mobileController.text.length < 10) {
       popUpAlert(

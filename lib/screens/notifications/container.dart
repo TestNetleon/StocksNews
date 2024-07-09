@@ -69,7 +69,9 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: Column(
           children: [
-            const ScreenTitle(title: "Notifications"),
+            res == null
+                ? const SizedBox()
+                : const ScreenTitle(title: "Notifications"),
             Expanded(
               child: res == null
                   ? Column(
@@ -77,6 +79,7 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
                         Expanded(
                             child: LoginError(
                           state: "notification",
+                          title: "Notifications",
                           onClick: () async {
                             isPhone
                                 ? await loginSheet()

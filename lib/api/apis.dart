@@ -149,6 +149,8 @@ class Apis {
   static const detailSec = "/stock-detail-secFiling";
   static const detailForecast = "/stock-detail-forecast";
   static const stockDetailNews = "/stock-detail-news";
+  static const stockDetailNewsV2 = "/stock-detail-news-v2";
+
   static const stockDetailSocial = "/stock-detail-social";
   static const detailOwnership = "/stock-detail-ownership";
   static const detailCompetitor = "/stock-detail-competitior";

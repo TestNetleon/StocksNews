@@ -6,7 +6,6 @@ import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-//
 
 class SdNewsItem extends StatelessWidget {
   final TopPost? news;
@@ -118,11 +117,8 @@ class SdNewsItemSeparated extends StatelessWidget {
               Text(
                 news?.title ?? "",
                 style: styleGeorgiaBold(fontSize: 24),
-                // maxLines: 2,
-                // overflow: TextOverflow.ellipsis,
               ),
               const SpacerVertical(height: 5),
-
               Visibility(
                 visible: showCategory,
                 child: Text(
@@ -132,45 +128,7 @@ class SdNewsItemSeparated extends StatelessWidget {
                   style: stylePTSansRegular(
                       fontSize: 13, color: ThemeColors.greyText),
                 ),
-                //  Container(
-                //   margin: EdgeInsets.only(bottom: 5.sp),
-                //   decoration: BoxDecoration(
-                //     border:
-                //         Border.all(color: ThemeColors.accent, width: 1.sp),
-                //     borderRadius: BorderRadius.circular(4.sp),
-                //   ),
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: 8.sp,
-                //     vertical: 4.sp,
-                //   ),
-                //   child: Text(
-                //     news?.site ?? "",
-                //     style: stylePTSansRegular(fontSize: 10),
-                //   ),
-                // ),
               ),
-              // Visibility(
-              //   visible: (news?.authors != null &&
-              //               news?.authors?.isNotEmpty == true) &&
-              //           news?.site == "" ||
-              //       news?.site == null,
-              //   child: Visibility(
-              //     visible: !(news?.site == "" && news?.site == null),
-              //     child: Text(
-              //       "${news?.postDate}",
-              //       style: stylePTSansRegular(
-              //           fontSize: 11, color: ThemeColors.greyText),
-              //     ),
-              //   ),
-              // ),
-
-              // Text(
-              //   news?.postDate ?? "",
-              //   style: styleGeorgiaRegular(
-              //     // color: ThemeColors.greyText,
-              //     fontSize: 10,
-              //   ),
-              // ),
             ],
           ),
         ],

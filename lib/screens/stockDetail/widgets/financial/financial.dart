@@ -17,7 +17,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../widgets/disclaimer_widget.dart';
-import 'item.dart';
 import 'tab.dart';
 
 class SdFinancial extends StatefulWidget {
@@ -128,7 +127,8 @@ class _SdFinancialState extends State<SdFinancial> {
                               child: SdFinancialTabs(
                                 tabs: provider.extraFinancial?.type,
                                 onChange: (index) =>
-                                    provider.changeTabTypeChartData(index,symbol: widget.symbol),
+                                    provider.changeTabTypeChartData(index,
+                                        symbol: widget.symbol),
                                 selectedIndex: provider.typeIndex,
                               ),
                             ),

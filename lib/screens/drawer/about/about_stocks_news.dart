@@ -225,7 +225,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                     );
                   }
 
-                  if (index == 2) {
+                  if (index == 3) {
                     return Visibility(
                       visible:
                           context.watch<HomeProvider>().extra?.showPortfolio ??
@@ -234,7 +234,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           index: index, onTap: aboutTiles[index].onTap),
                     );
                   }
-                  if (index == 3) {
+                  if (index == 4) {
                     return Visibility(
                       visible: context
                               .watch<HomeProvider>()

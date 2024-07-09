@@ -141,6 +141,7 @@ class Images {
   static const String referSuccess = "assets/images/success.gif";
   static const String kingGIF = "assets/images/king.gif";
   static const String receiveGIF = "assets/images/receive.gif";
+  static const String lockGIF = "assets/images/Lock.gif";
   static const String start1 = "assets/images/1st_page.png";
   static const String start2 = "assets/images/2nd_page.png";
   static const String start3 = "assets/images/3rd_page.png";
