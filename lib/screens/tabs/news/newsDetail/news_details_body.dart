@@ -694,6 +694,16 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                       vertical: 11),
                                               textSize: 15,
                                               fontBold: true,
+                                              iconWidget: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
+                                                child: Image.asset(
+                                                  Images.referAndEarn,
+                                                  height: 18,
+                                                  width: 18,
+                                                  color: ThemeColors.white,
+                                                ),
+                                              ),
                                               iconFront: true,
                                               icon: Icons.earbuds_rounded,
                                               mainAxisSize: MainAxisSize.max,
@@ -718,6 +728,16 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               radius: 30,
                                               icon: Icons.card_membership,
                                               textAlign: TextAlign.start,
+                                              iconWidget: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
+                                                child: Image.asset(
+                                                  Images.membership,
+                                                  height: 18,
+                                                  width: 18,
+                                                  color: ThemeColors.white,
+                                                ),
+                                              ),
                                               mainAxisSize: MainAxisSize.max,
                                               onPressed: () async {
                                                 await _membership();

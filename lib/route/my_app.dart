@@ -212,8 +212,8 @@ class _MyAppState extends State<MyApp> {
         return MultiProvider(
           providers: Routes.providers,
           child: MaterialApp(
-            supportedLocales: [Locale("en")],
-            localizationsDelegates: [CountryLocalizations.delegate],
+            supportedLocales: const [Locale("en")],
+            localizationsDelegates: const [CountryLocalizations.delegate],
             navigatorObservers: [CustomNavigatorObserver()],
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,

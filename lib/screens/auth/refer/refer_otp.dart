@@ -223,6 +223,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
           icon: Images.alertPopGIF,
         );
       },
+
       codeSent: (String verificationId, int? resendToken) {
         verificationId = verificationId;
       },

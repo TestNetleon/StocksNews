@@ -9,27 +9,21 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:stocks_news_new/api/api_requester.dart';
-import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-
 import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
 import '../../contactUs/contact_us_item.dart';
-import '../../t&cAndPolicy/tc_policy.dart';
 import '../refer/refer_otp.dart';
 
 membershipLogin() async {
@@ -74,7 +68,7 @@ class MembershipLoginAsk extends StatefulWidget {
 class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
-  TextEditingController displayName = TextEditingController(text: "");
+  // TextEditingController displayName = TextEditingController(text: "");
   bool affiliateStatus = false;
   bool numberVerified = true;
 
@@ -96,10 +90,10 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
     }
-    if (provider.user?.displayName != null &&
-        provider.user?.displayName != '') {
-      displayName.text = provider.user?.displayName ?? "";
-    }
+    // if (provider.user?.displayName != null &&
+    //     provider.user?.displayName != '') {
+    //   displayName.text = provider.user?.displayName ?? "";
+    // }
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
@@ -132,13 +126,15 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
       );
     }
     //
-    else if (displayName.text.isEmpty) {
-      popUpAlert(
-        message: "Please enter a valid display name.",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-    } else if (mobile.text.isEmpty || mobile.text.length < 10) {
+    // else if (displayName.text.isEmpty) {
+    //   popUpAlert(
+    //     message: "Please enter a valid display name.",
+    //     title: "Alert",
+    //     icon: Images.alertPopGIF,
+    //   );
+    // }
+
+    else if (mobile.text.isEmpty || mobile.text.length < 10) {
       popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",
@@ -151,7 +147,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
         icon: Images.alertPopGIF,
       );
     } else {
-      if (!numberVerified) {
+      try {
         showGlobalProgressDialog();
         await FirebaseAuth.instance.verifyPhoneNumber(
           // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
@@ -172,55 +168,18 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
             closeGlobalProgressDialog();
             referOTP(
               name: name.text,
-              displayName: displayName.text,
+              // displayName: displayName.text,
               phone: mobile.text,
               appSignature: appSignature,
               verificationId: verificationId,
               countryCode: countryCode!,
+              isVerifyIdentity: true,
             );
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
         );
-      } else {
-        // showGlobalProgressDialog();
-        UserProvider provider = context.read<UserProvider>();
-        Map request = {
-          "token": provider.user?.token ?? "",
-          // "display_name": displayName.text,
-          // "name": name.text,
-          "platform": Platform.operatingSystem,
-          "affiliate_status": "1"
-        };
-
-        try {
-          ApiResponse res = await apiRequest(
-            url: Apis.updateProfile,
-            request: request,
-            showProgress: true,
-            removeForceLogin: true,
-          );
-          if (res.status) {
-            // setStatus(Status.loaded);
-            // provider.updateUser(
-            //   affiliateStatus: 1,
-            //   displayName: displayName.text,
-            // );
-            Navigator.pop(navigatorKey.currentContext!);
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (_) => const ReferAFriend(),
-              ),
-            );
-          } else {
-            popUpAlert(
-              message: res.message ?? Const.errSomethingWrong,
-              title: "Alert",
-            );
-          }
-        } catch (e) {
-          //
-        }
+      } catch (e) {
+        Utils().showLog("$e");
       }
     }
   }
@@ -339,30 +298,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                           textCapitalization: TextCapitalization.words,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: showAsteriskText(text: "Display Name"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: ThemeInputField(
-                          style: stylePTSansBold(
-                              color: Colors.black, fontSize: 18),
-                          // editable: user?.displayName == '' ||
-                          //     user?.displayName == null,
-                          controller: displayName,
-                          // fillColor: user?.displayName == '' ||
-                          //         user?.displayName == null
-                          //     ? ThemeColors.white
-                          //     : const Color.fromARGB(255, 133, 133, 133),
-                          placeholder: "Enter your display name",
-                          keyboardType: TextInputType.name,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(20)
-                          ],
-                          textCapitalization: TextCapitalization.words,
-                        ),
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: showAsteriskText(text: "Phone Number"),
@@ -381,61 +317,65 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: user?.phone == '' ||
-                                                    user?.phone == null
-                                                ? ThemeColors.white
-                                                : const Color.fromARGB(
-                                                    255, 188, 188, 188),
-                                          ),
-                                        ),
-                                        color: user?.phone == '' ||
-                                                user?.phone == null
-                                            ? ThemeColors.white
-                                            : const Color.fromARGB(
-                                                255, 188, 188, 188),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4),
-                                          bottomLeft: Radius.circular(4),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: user?.phone == '' ||
+                                                  user?.phone == null
+                                              ? ThemeColors.white
+                                              : const Color.fromARGB(
+                                                  255, 188, 188, 188),
                                         ),
                                       ),
-                                      child: CountryCodePicker(
-                                        padding: EdgeInsets.zero,
-                                        enabled: user?.phoneCode == null ||
-                                            user?.phoneCode == "",
-                                        onChanged: (CountryCode value) {
-                                          countryCode = value.dialCode;
-                                        },
-                                        initialSelection: locale,
-                                        showCountryOnly: false,
-                                        textStyle: stylePTSansBold(
-                                          color: Colors.black,
-                                          fontSize: 18,
+                                      color: user?.phone == '' ||
+                                              user?.phone == null
+                                          ? ThemeColors.white
+                                          : const Color.fromARGB(
+                                              255, 188, 188, 188),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4),
+                                        bottomLeft: Radius.circular(4),
+                                      ),
+                                    ),
+                                    child: CountryCodePicker(
+                                      padding: EdgeInsets.zero,
+                                      // enabled: user?.phoneCode == null ||
+                                      //     user?.phoneCode == "",
+
+                                      enabled: true,
+                                      onChanged: (CountryCode value) {
+                                        countryCode = value.dialCode;
+                                        setState(() {});
+                                      },
+                                      initialSelection: locale,
+                                      showCountryOnly: false,
+                                      textStyle: stylePTSansBold(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      ),
+                                      flagWidth: 24,
+                                      showOnlyCountryWhenClosed: false,
+                                      alignLeft: false,
+                                      boxDecoration: const BoxDecoration(
+                                        color: ThemeColors.tabBack,
+                                      ),
+                                      dialogTextStyle: styleGeorgiaBold(),
+                                      barrierColor: Colors.black26,
+                                      searchDecoration: InputDecoration(
+                                        iconColor: Colors.white,
+                                        fillColor: Colors.white,
+                                        prefixIcon: const Icon(
+                                          Icons.search,
+                                          size: 22,
                                         ),
-                                        flagWidth: 24,
-                                        showOnlyCountryWhenClosed: false,
-                                        alignLeft: false,
-                                        boxDecoration: const BoxDecoration(
-                                          color: ThemeColors.tabBack,
+                                        filled: true,
+                                        hintStyle: stylePTSansRegular(
+                                          color: Colors.grey,
                                         ),
-                                        dialogTextStyle: styleGeorgiaBold(),
-                                        barrierColor: Colors.black26,
-                                        searchDecoration: InputDecoration(
-                                          iconColor: Colors.white,
-                                          fillColor: Colors.white,
-                                          prefixIcon: const Icon(
-                                            Icons.search,
-                                            size: 22,
-                                          ),
-                                          filled: true,
-                                          hintStyle: stylePTSansRegular(
-                                            color: Colors.grey,
-                                          ),
-                                          hintText: "Search country",
-                                        ),
-                                      )),
+                                        hintText: "Search country",
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                               Flexible(
@@ -507,18 +447,18 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                   return null;
                                 },
                                 onTapUrl: (url) async {
-                                  Navigator.push(
-                                    context,
-                                    createRoute(
-                                      const TCandPolicy(
-                                        policyType: PolicyType.referral,
-                                        slug: "referral-terms",
-                                      ),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   createRoute(
+                                  //     const TCandPolicy(
+                                  //       policyType: PolicyType.referral,
+                                  //       slug: "referral-terms",
+                                  //     ),
+                                  //   ),
+                                  // );
                                   return true;
                                 },
-                                provider.extra?.verifyIdentity ?? "",
+                                provider.extra?.verifySubscription ?? "",
                                 textStyle:
                                     stylePTSansRegular(color: Colors.grey),
                               ),
@@ -533,12 +473,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                           onPressed: checkBox ? _referLogin : null,
                           textUppercase: true,
                         ),
-                      if (numberVerified)
-                        ThemeButton(
-                          text: "Join Affiliate Program",
-                          onPressed: checkBox ? _referLogin : null,
-                          textUppercase: true,
-                        ),
+
                       const SpacerVertical(height: 200),
                     ],
                   ),

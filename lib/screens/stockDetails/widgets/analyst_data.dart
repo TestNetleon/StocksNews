@@ -167,8 +167,14 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(Icons.lock, size: 40),
-                                  const SpacerVertical(),
+                                  // const Icon(Icons.lock, size: 40),
+                                  // const SpacerVertical(),
+                                  Image.asset(
+                                    Images.lockGIF,
+                                    height: 70,
+                                    width: 70,
+                                  ),
+
                                   Image.asset(
                                     Images.morningStarLogo,
                                     width: ScreenUtil().screenWidth * .5,
@@ -246,6 +252,17 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                   fontBold: true,
                                                   iconFront: true,
                                                   icon: Icons.earbuds_rounded,
+                                                  iconWidget: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10),
+                                                    child: Image.asset(
+                                                      Images.referAndEarn,
+                                                      height: 18,
+                                                      width: 18,
+                                                      color: ThemeColors.white,
+                                                    ),
+                                                  ),
                                                   onPressed: () async {
                                                     await _onReferClick(
                                                         context);
@@ -266,6 +283,16 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                       vertical: 11),
                                                   textSize: 15,
                                                   fontBold: true,
+                                                  iconWidget: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10),
+                                                    child: Image.asset(
+                                                      Images.membership,
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                                  ),
                                                   iconFront: true,
                                                   radius: 30,
                                                   icon: Icons.card_membership,

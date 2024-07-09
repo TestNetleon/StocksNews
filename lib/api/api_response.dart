@@ -87,6 +87,7 @@ class Extra {
 
   final ReferLoginRes? referLogin;
   final String? verifyIdentity;
+  final String? verifySubscription;
   final String? nudgeText;
   final String? earnCondition;
   final String? suspendMsg;
@@ -104,6 +105,7 @@ class Extra {
     this.selfRank,
     this.profileText,
     this.verifyIdentity,
+    this.verifySubscription,
     this.howItWork,
     this.membershipText,
     this.aiTitle,
@@ -166,6 +168,8 @@ class Extra {
             ? null
             : ProfileText.fromJson(json["profile_text"]),
         verifyIdentity: json['verify_identity_text'],
+        verifySubscription: json['verify_membership_text'],
+
         aiTitle: json['ai-news-title'],
         // subscription: json["subscription"] == null
         //     ? null
@@ -270,6 +274,8 @@ class Extra {
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
         "verify_identity_text": verifyIdentity,
+        "verify_membership_text": verifySubscription,
+
         "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,

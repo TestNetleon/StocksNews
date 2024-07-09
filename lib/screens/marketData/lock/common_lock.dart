@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
-import 'package:stocks_news_new/screens/myAccount/my_account.dart';
-
 import '../../../providers/user_provider.dart';
 import '../../../route/my_app.dart';
 import '../../../service/ask_subscription.dart';
@@ -16,7 +14,6 @@ import '../../../widgets/spacer_vertical.dart';
 import '../../../widgets/theme_button_small.dart';
 import '../../auth/login/login_sheet_tablet.dart';
 import '../../auth/membershipAsk/ask.dart';
-import '../../auth/refer/refer_code.dart';
 import '../../tabs/tabs.dart';
 
 class CommonLock extends StatelessWidget {

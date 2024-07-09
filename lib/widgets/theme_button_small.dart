@@ -18,6 +18,7 @@ class ThemeButtonSmall extends StatelessWidget {
     this.padding,
     this.icon,
     this.margin,
+    this.iconWidget,
     this.textAlign = TextAlign.center,
     super.key,
     this.iconFront = false,
@@ -27,6 +28,7 @@ class ThemeButtonSmall extends StatelessWidget {
   final String text;
   final Color? color;
   final Color textColor;
+  final Widget? iconWidget;
   final Function onPressed;
   final double textSize;
   final double radius;
@@ -56,17 +58,18 @@ class ThemeButtonSmall extends StatelessWidget {
         mainAxisSize: mainAxisSize,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Visibility(
-            visible: showArrow && iconFront,
-            child: Container(
-              margin: EdgeInsets.only(right: 8.sp),
-              child: Icon(
-                icon ?? Icons.arrow_forward,
-                size: 20,
-                color: textColor,
+          iconWidget ??
+              Visibility(
+                visible: showArrow && iconFront,
+                child: Container(
+                  margin: EdgeInsets.only(right: 8.sp),
+                  child: Icon(
+                    icon ?? Icons.arrow_forward,
+                    size: 20,
+                    color: textColor,
+                  ),
+                ),
               ),
-            ),
-          ),
           Flexible(
             child: Text(
               textAlign: textAlign,

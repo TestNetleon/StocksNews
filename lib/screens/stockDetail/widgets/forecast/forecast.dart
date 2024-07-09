@@ -6,7 +6,6 @@ import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/analyst_forecast.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/forecast/recommanded_chart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/forecast/stock_rating.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -89,8 +88,8 @@ class _SdForecastState extends State<SdForecast> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //forcasting chart
-                      const RecommandedForcastingChart(),
-                      const SpacerVertical(height: 20),
+                      // const RecommandedForcastingChart(),
+                      // const SpacerVertical(height: 20),
                       const ScreenTitle(
                         title: "Recent Analyst Forecasts and Stock Ratings",
                       ),
