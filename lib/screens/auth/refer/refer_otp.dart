@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +30,7 @@ referOTP({
   displayName = "",
   isVerifyIdentity = false,
   required String verificationId,
+  required String countryCode,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -51,6 +51,7 @@ referOTP({
         appSignature: appSignature,
         verificationId: verificationId,
         isVerifyIdentity: isVerifyIdentity,
+        countryCode: countryCode,
       );
     },
   );
@@ -62,6 +63,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
   final String name;
   final String displayName;
   final String verificationId;
+  final String countryCode;
   final bool isVerifyIdentity;
 
   const OTPLoginBottomRefer({
@@ -72,6 +74,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
     required this.displayName,
     required this.verificationId,
     required this.isVerifyIdentity,
+    required this.countryCode,
   });
 
   @override
@@ -203,7 +206,8 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     setState(() {});
     await FirebaseAuth.instance.verifyPhoneNumber(
       // phoneNumber: "+91${widget.phone}",
-      phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
+      // phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
+      phoneNumber: "${widget.countryCode}${widget.phone}",
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {},
@@ -259,17 +263,27 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         name: widget.name,
         phone: widget.phone,
         token: provider.user?.token ?? "",
-        affiliateStatus: 1,
+        affiliateStatus: widget.isVerifyIdentity ? null : 1,
       );
       if (response.status) {
-        Navigator.popUntil(
-          navigatorKey.currentContext!,
-          (route) => route.isFirst,
-        );
-        Navigator.popAndPushNamed(
-          navigatorKey.currentContext!,
-          ReferAFriend.path,
-        );
+        if (widget.isVerifyIdentity) {
+          Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+          showSnackbar(
+            context: context,
+            message: response.message,
+            type: SnackbarType.info,
+          );
+        } else {
+          Navigator.popUntil(
+            navigatorKey.currentContext!,
+            (route) => route.isFirst,
+          );
+          Navigator.popAndPushNamed(
+            navigatorKey.currentContext!,
+            ReferAFriend.path,
+          );
+        }
       } else {
         popUpAlert(
           message: response.message ?? Const.errSomethingWrong,

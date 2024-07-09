@@ -149,6 +149,7 @@ class UserProvider extends ChangeNotifier {
     String? phone,
     String? referralCode,
     String? referralUrl,
+    int? affiliateStatus,
   }) async {
     if (image != null) _user?.image = image;
     if (email != null) _user?.email = email;
@@ -157,12 +158,13 @@ class UserProvider extends ChangeNotifier {
     if (phone != null) _user?.phone = phone;
     if (referralCode != null) _user?.referralCode = referralCode;
     if (referralUrl != null) _user?.referralUrl = referralUrl;
+    if (affiliateStatus != null) _user?.affiliateStatus = affiliateStatus;
 
     Preference.saveUser(_user);
     shareUri = await DynamicLinkService.instance.getDynamicLink();
     // shareUri =
     //     await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
-    Utils().showLog("Updating user..");
+    // Utils().showLog("Updating user..");
     notifyListeners();
   }
 

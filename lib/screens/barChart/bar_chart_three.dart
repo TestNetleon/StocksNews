@@ -34,6 +34,9 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
   bool valueNegative = true;
   List<Chart>? charts;
   List<Chart>? chartsPlaceHolder;
+  dynamic minRevenue;
+  dynamic minNetIncome;
+  dynamic minNetFin;
 
   @override
   void initState() {
@@ -91,7 +94,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
     maxValue =
         (maxValueItem.abs() > maxNetFin!.abs()) ? maxValueItem : maxNetFin;
 
-    final minRevenue = (charts?.isNotEmpty == true &&
+    minRevenue = (charts?.isNotEmpty == true &&
             widget.data?.chart != null &&
             widget.data!.chart!.any((e) =>
                 e.operatingCashFlow1 != null && e.operatingCashFlow1! < 0))
@@ -102,7 +105,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
                 (a, b) => a! < b! ? a : b) // Find the minimum negative value
         : null;
 
-    final minNetIncome = (charts?.isNotEmpty == true &&
+    minNetIncome = (charts?.isNotEmpty == true &&
             widget.data?.chart != null &&
             widget.data!.chart!.any((e) =>
                 e.operatingCashFlow2 != null && e.operatingCashFlow2! < 0))
@@ -112,7 +115,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
             .reduce(
                 (a, b) => a! < b! ? a : b) // Find the minimum negative value
         : null;
-    final minNetFin = (charts?.isNotEmpty == true &&
+    minNetFin = (charts?.isNotEmpty == true &&
             widget.data?.chart != null &&
             widget.data!.chart!.any((e) =>
                 e.operatingCashFlow3 != null && e.operatingCashFlow3! < 0))
@@ -157,7 +160,12 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
-              minY: minAbsValue == 0 ? null : -double.parse("$maxAbsValue"),
+              minY: minRevenue != null ||
+                      minNetIncome != null ||
+                      minNetFin != null
+                  ? -double.parse("$maxAbsValue")
+                  : null,
+              // minY: minAbsValue == 0 ? null : -double.parse("$maxAbsValue"),
               titlesData: FlTitlesData(
                 show: true,
                 leftTitles: const AxisTitles(

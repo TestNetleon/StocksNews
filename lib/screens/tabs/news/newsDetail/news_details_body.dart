@@ -73,6 +73,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
     );
+
     if (newsProvider.data?.postDetail?.readingStatus == false) {
       return;
     }
@@ -764,7 +765,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           ),
                         ],
                       ),
-
                     // CommonShare(
                     //   visible: controllerProvider.isVisible,
                     //   linkShare: provider.data?.postDetail?.slug ?? "",
