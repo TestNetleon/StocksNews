@@ -1471,8 +1471,16 @@ class StockDetailProviderNew extends ChangeNotifier {
     _typeValue = null;
     notifyListeners();
     if (reset) {
+      _incomeSdFinancialChartRes = null;
+      _sdFinancialArrayTableIncome = null;
+      _balanceSdFinancialChartRes = null;
+      _sdFinancialArrayTableFinancial = null;
+      _cashSdFinancialChartRes = null;
+      _sdFinancialArrayTableCash = null;
+
       typeIndex = 0;
       periodIndex = 0;
+      notifyListeners();
     }
     if (tabProgress) {
       setStatusFinancialTab(Status.loading);
