@@ -66,7 +66,7 @@ class _ReferLoginState extends State<ReferLogin> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   TextEditingController displayName = TextEditingController(text: "");
-  int affiliateStatus = 0;
+  bool affiliateStatus = false;
   bool numberVerified = true;
 
   String appSignature = "";
