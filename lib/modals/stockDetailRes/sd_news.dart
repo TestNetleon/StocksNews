@@ -5,23 +5,30 @@ SdNewsRes sdNewsResFromJson(String str) => SdNewsRes.fromJson(json.decode(str));
 String sdNewsResToJson(SdNewsRes data) => json.encode(data.toJson());
 
 class SdNewsRes {
-  final List<TopPost> topPosts;
+  final List<TopPost>? topPosts;
   final String? newsText;
+  final num? sentimentsPer;
 
   SdNewsRes({
-    required this.topPosts,
+    this.topPosts,
     this.newsText,
+    this.sentimentsPer,
   });
 
   factory SdNewsRes.fromJson(Map<String, dynamic> json) => SdNewsRes(
-        topPosts: List<TopPost>.from(
-            json["top_posts"].map((x) => TopPost.fromJson(x))),
-        newsText: json["news_text"],
-      );
+      topPosts: json["top_posts"] == null
+          ? []
+          : List<TopPost>.from(
+              json["top_posts"]!.map((x) => TopPost.fromJson(x))),
+      newsText: json["news_text"],
+      sentimentsPer: json['sentiments_per']);
 
   Map<String, dynamic> toJson() => {
-        "top_posts": List<dynamic>.from(topPosts.map((x) => x.toJson())),
+        "top_posts": topPosts == null
+            ? []
+            : List<dynamic>.from(topPosts!.map((x) => x.toJson())),
         "news_text": newsText,
+        "sentiments_per": sentimentsPer,
       };
 }
 

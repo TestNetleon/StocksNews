@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -6,18 +10,19 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../stockDetails/widgets/technicalAnalysis/widgets/item.dart';
 
 class SDNewsGauge extends StatefulWidget {
-  const SDNewsGauge({super.key});
+  final String? symbol;
+  const SDNewsGauge({super.key, this.symbol});
 
   @override
   State<SDNewsGauge> createState() => _SDNewsGaugeState();
 }
 
 class _SDNewsGaugeState extends State<SDNewsGauge> {
-  double value = 50;
-  List<String> range = ['1D', '7D', '15D', '30D'];
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    num value = provider.value ?? 0;
+    log("---value is $value");
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
@@ -74,7 +79,7 @@ class _SDNewsGaugeState extends State<SDNewsGauge> {
                   TechnicalAnalysisGaugeItem(
                     width: 10,
                     tickOffset: 4,
-                    value: value,
+                    value: value.toDouble(),
                   ),
                   Positioned(
                     left: 30,
@@ -97,34 +102,45 @@ class _SDNewsGaugeState extends State<SDNewsGauge> {
             ),
             const SpacerVertical(height: 15),
             CupertinoSlidingSegmentedControl<int>(
-              groupValue: _selectedIndex,
+              groupValue: provider.selectedIndex,
               thumbColor: ThemeColors.greyBorder.withOpacity(0.4),
               padding: const EdgeInsets.all(4),
               backgroundColor: const Color.fromARGB(255, 28, 28, 28),
               onValueChanged: (int? index) {
-                setState(() {
-                  _selectedIndex = index!;
-                  if (index == 0) {
-                    value = -30;
-                  } else if (index == 1) {
-                    value = -70;
-                  } else if (index == 2) {
-                    value = 20;
-                  } else if (index == 3) {
-                    value = 70;
-                  }
-                });
+                // setState(() {
+                //   _selectedIndex = index!;
+                //   if (index == 0) {
+                //     value = -30;
+                //   } else if (index == 1) {
+                //     value = -70;
+                //   } else if (index == 2) {
+                //     value = 20;
+                //   } else if (index == 3) {
+                //     value = 70;
+                //   }
+                // });
+
+                provider.onGaugeChange(
+                    index: index,
+                    day: index == 0
+                        ? "1D"
+                        : index == 1
+                            ? "7D"
+                            : index == 2
+                                ? "15D"
+                                : "30D",
+                    symbol: widget.symbol);
               },
               children: {
-                for (int i = 0; i < range.length; i++)
+                for (int i = 0; i < provider.range.length; i++)
                   i: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                     child: Text(
-                      range[i],
+                      provider.range[i],
                       style: styleGeorgiaRegular(
                         fontSize: 13,
-                        color: _selectedIndex == i
+                        color: provider.selectedIndex == i
                             ? ThemeColors.accent
                             : ThemeColors.white,
                         // color: ThemeColors.white,

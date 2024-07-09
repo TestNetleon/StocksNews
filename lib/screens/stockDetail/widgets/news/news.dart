@@ -154,13 +154,15 @@ class _SdNewsNState extends State<SdNewsN> {
                 ScreenTitle(
                   subTitle: "${provider.newsResN?.newsText}",
                 ),
-                const SDNewsGauge(),
+                SDNewsGauge(
+                  symbol: widget.symbol,
+                ),
                 ListView.separated(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    TopPost? data = provider.newsResN?.topPosts[index];
+                    TopPost? data = provider.newsResN?.topPosts?[index];
                     if (data == null) {
                       return const SizedBox();
                     }
@@ -179,7 +181,7 @@ class _SdNewsNState extends State<SdNewsN> {
                       height: 20.sp,
                     );
                   },
-                  itemCount: provider.newsResN?.topPosts.length ?? 0,
+                  itemCount: provider.newsResN?.topPosts?.length ?? 0,
                 ),
                 if (provider.extra?.disclaimer != null)
                   DisclaimerWidget(

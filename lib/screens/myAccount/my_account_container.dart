@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +11,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -26,7 +24,7 @@ import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
-//
+
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
