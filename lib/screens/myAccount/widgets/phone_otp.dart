@@ -31,6 +31,7 @@ phoneOTP({
   displayName = "",
   isVerifyIdentity = false,
   required String verificationId,
+  required String countryCode,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -51,6 +52,7 @@ phoneOTP({
         appSignature: appSignature,
         verificationId: verificationId,
         isVerifyIdentity: isVerifyIdentity,
+        countryCode: countryCode,
       );
     },
   );
@@ -63,6 +65,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
   final String displayName;
   final String verificationId;
   final bool isVerifyIdentity;
+  final String countryCode;
 
   const OTPLoginBottomRefer({
     super.key,
@@ -72,6 +75,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
     required this.displayName,
     required this.verificationId,
     required this.isVerifyIdentity,
+    required this.countryCode,
   });
 
   @override
@@ -203,7 +207,8 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     setState(() {});
     await FirebaseAuth.instance.verifyPhoneNumber(
       // phoneNumber: "+91${widget.phone}",
-      phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
+      // phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
+      phoneNumber: "${widget.countryCode}${widget.phone}",
       verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {},
       codeSent: (String verificationId, int? resendToken) {},
@@ -265,6 +270,11 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         Navigator.pop(navigatorKey.currentContext!);
         provider.updateUser(phone: widget.phone);
         provider.setPhoneClickText();
+        showSnackbar(
+          context: navigatorKey.currentContext!,
+          message: response.message,
+          type: SnackbarType.info,
+        );
         // Navigator.popUntil(
         //   navigatorKey.currentContext!,
         //   (route) => route.isFirst,

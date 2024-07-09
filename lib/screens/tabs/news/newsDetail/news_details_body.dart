@@ -73,6 +73,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
     );
+
     if (newsProvider.data?.postDetail?.readingStatus == false) {
       return;
     }
@@ -565,10 +566,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         icon: Icons.share,
                       ),
                     ),
-                    // if ((provider.data?.postDetail?.readingStatus == false) &&
-                    //     !provider.isLoading)
-
-                    if (true)
+                    if ((provider.data?.postDetail?.readingStatus == false) &&
+                        !provider.isLoading)
+                      // if (true)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
@@ -760,7 +760,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           ),
                         ],
                       ),
-
                     // CommonShare(
                     //   visible: controllerProvider.isVisible,
                     //   linkShare: provider.data?.postDetail?.slug ?? "",
