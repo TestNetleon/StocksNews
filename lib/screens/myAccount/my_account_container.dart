@@ -239,8 +239,19 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-    final String locale = Intl.getCurrentLocale().split('_').last;
-    // UserRes? user = provider.user;
+    // final String locale = Intl.getCurrentLocale().split('_').last;
+
+    UserRes? user = context.read<UserProvider>().user;
+    // HomeProvider provider = context.watch<HomeProvider>();
+
+    final String locale = user?.phoneCode == null || user?.phoneCode == ""
+        ? Intl.getCurrentLocale().split('_').last
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+                .code
+                ?.split('_')
+                .last ??
+            "";
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -314,8 +325,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   ),
                 ),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 0,
+                  ),
                   decoration: BoxDecoration(
                     color: provider.emailVerified
                         ? ThemeColors.greyBorder
@@ -350,10 +363,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                           Text(
                             provider.emailVerified ? "Verified" : "Verify",
                             style: stylePTSansBold(
-                                color: provider.emailVerified
-                                    ? ThemeColors.accent
-                                    : Colors.white,
-                                fontSize: 14),
+                              color: provider.emailVerified
+                                  ? ThemeColors.accent
+                                  : Colors.white,
+                              fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
@@ -401,7 +415,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                       boxDecoration: const BoxDecoration(
                         color: ThemeColors.tabBack,
                       ),
-                      textStyle: styleGeorgiaBold(),
+                      textStyle: styleGeorgiaRegular(),
                       dialogTextStyle: styleGeorgiaBold(),
                       barrierColor: Colors.black26,
                       searchDecoration: InputDecoration(
