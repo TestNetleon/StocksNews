@@ -39,6 +39,7 @@ class TopPost {
   final String? postDate;
   final String? publishedDateString;
   final String? site;
+  final String? slug;
 
   TopPost({
     this.title,
@@ -47,6 +48,7 @@ class TopPost {
     this.postDate,
     this.publishedDateString,
     this.site,
+    this.slug,
   });
 
   factory TopPost.fromJson(Map<String, dynamic> json) => TopPost(
@@ -56,6 +58,7 @@ class TopPost {
         postDate: json["post_date"],
         publishedDateString: json["published_date_string"],
         site: json["site"],
+        slug: json["slug"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +68,6 @@ class TopPost {
         "post_date": postDate,
         "published_date_string": publishedDateString,
         "site": site,
+        "slug": slug,
       };
 }

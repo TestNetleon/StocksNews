@@ -1437,9 +1437,6 @@ class StockDetailProviderNew extends ChangeNotifier {
   SdFinancialRes? _cashSdFinancialChartRes;
   SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
 
-  // Map<String, dynamic>? _sdFinancialMap;
-  // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
-
   int _openIndexInsider = -1;
   int get openIndexInsider => _openIndexInsider;
 
@@ -1715,4 +1712,16 @@ class StockDetailProviderNew extends ChangeNotifier {
       setStatusMergers(Status.loaded);
     }
   }
+}
+
+class FinancialHolder {
+  String? type;
+  List<dynamic>? data;
+  SdFinancialRes? financialRes;
+
+  FinancialHolder({
+    this.type,
+    this.data,
+    this.financialRes,
+  });
 }
