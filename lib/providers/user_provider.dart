@@ -935,21 +935,21 @@ class UserProvider extends ChangeNotifier {
     required name,
     required displayName,
     affiliateStatus,
+    countryCode,
   }) async {
-    Map request = affiliateStatus != null
-        ? {
-            "token": token ?? "",
-            "phone": phone,
-            "name": name,
-            "display_name": displayName,
-            'affiliate_status': "1",
-          }
-        : {
-            "token": token ?? "",
-            "phone": phone,
-            "name": name,
-            "display_name": displayName,
-          };
+    Map request = {
+      "token": token ?? "",
+      "phone": phone,
+      "name": name,
+      "display_name": displayName,
+    };
+
+    if (affiliateStatus != null) {
+      request.addAll({"affiliate_status": "1"});
+    }
+    if (countryCode != null) {
+      request.addAll({"phone_code": countryCode});
+    }
 
     try {
       ApiResponse res = await apiRequest(

@@ -264,6 +264,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         phone: widget.phone,
         token: provider.user?.token ?? "",
         affiliateStatus: widget.isVerifyIdentity ? null : 1,
+        countryCode: widget.countryCode,
       );
       if (response.status) {
         if (widget.isVerifyIdentity) {

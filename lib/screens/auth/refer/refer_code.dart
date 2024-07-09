@@ -282,7 +282,15 @@ class _ReferLoginState extends State<ReferLogin> {
   Widget build(BuildContext context) {
     UserRes? user = context.read<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
-    final String locale = Intl.getCurrentLocale().split('_').last;
+
+    final String locale = user?.phoneCode == null || user?.phoneCode == ""
+        ? Intl.getCurrentLocale().split('_').last
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+                .code
+                ?.split('_')
+                .last ??
+            "";
+
     return GestureDetector(
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
@@ -451,12 +459,18 @@ class _ReferLoginState extends State<ReferLogin> {
                                       ),
                                       child: CountryCodePicker(
                                         padding: EdgeInsets.zero,
+                                        enabled: user?.phoneCode == null ||
+                                            user?.phoneCode == "",
                                         onChanged: (CountryCode value) {
                                           countryCode = value.dialCode;
                                           // log("Selected Log => ${value.dialCode}");
                                         },
                                         initialSelection: locale,
                                         showCountryOnly: false,
+                                        textStyle: stylePTSansBold(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                        ),
                                         flagWidth: 24,
                                         showOnlyCountryWhenClosed: false,
                                         alignLeft: false,
