@@ -109,6 +109,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     _errorNews = null;
     _extraNews = null;
     _newsRes = null;
+    _newsResN = null;
+    value = null;
 
     //Social clear
     _errorSocial = null;
@@ -1192,6 +1194,101 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+//---------------------------------------------------------------
+//News DATA New
+  String? _errorNewsN;
+  String? get errorNewsN => _errorNewsN ?? Const.errSomethingWrong;
+
+  Status _statusNewsN = Status.ideal;
+  Status get statusNewsN => _statusNewsN;
+
+  bool get isLoadingNewsN => _statusNewsN == Status.loading;
+
+  Extra? _extraNewsN;
+  Extra? get extraNewsN => _extraNewsN;
+
+  SdNewsRes? _newsResN;
+  SdNewsRes? get newsResN => _newsResN;
+
+  num? value;
+
+  List<String> range = ['1D', '7D', '15D', '30D'];
+  int selectedIndex = 0;
+
+  void setStatusNewsN(status) {
+    _statusNewsN = status;
+    notifyListeners();
+  }
+
+  void onGaugeChange({
+    String day = "1D",
+    String? symbol,
+    int? index,
+  }) {
+    selectedIndex = index ?? 0;
+    notifyListeners();
+    getNewsDataN(
+      symbol: symbol,
+      changingDay: true,
+      day: day,
+    );
+  }
+
+  Future getNewsDataN({
+    String? symbol,
+    String day = "1D",
+    bool changingDay = false,
+  }) async {
+    if (!changingDay) {
+      selectedIndex = 0;
+    }
+    if (!changingDay) setStatusNewsN(Status.loading);
+    notifyListeners();
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+        "day": day == "1D"
+            ? "1"
+            : day == "7D"
+                ? "7"
+                : day == "15D"
+                    ? "15"
+                    : "30",
+        "full_data": changingDay ? "0" : "1"
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailNewsV2,
+        request: request,
+        showProgress: changingDay,
+      );
+
+      if (response.status) {
+        if (!changingDay) {
+          _newsResN = sdNewsResFromJson(jsonEncode(response.data));
+        }
+        value = sdNewsResFromJson(jsonEncode(response.data)).sentimentsPer;
+      } else {
+        _newsResN = null;
+        _errorNewsN = response.message;
+        value = 0;
+      }
+      if (!changingDay) setStatusNewsN(Status.loaded);
+      notifyListeners();
+    } catch (e) {
+      _newsResN = null;
+      value = 0;
+
+      Utils().showLog(e.toString());
+      _errorNewsN = Const.errSomethingWrong;
+      if (!changingDay) setStatusNewsN(Status.loaded);
+      notifyListeners();
+    }
+  }
+
   //---------------------------------------------------------------
 //Social Activities DATA
   String? _errorSocial;
@@ -1342,59 +1439,6 @@ class StockDetailProviderNew extends ChangeNotifier {
   SdFinancialRes? get balanceSdFinancialChartRes => _balanceSdFinancialChartRes;
   SdFinancialRes? _cashSdFinancialChartRes;
   SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
-
-  List<dynamic>? _sdFinancialArrayAnnual;
-  List<dynamic>? get sdFinancialArrayAnnual => _sdFinancialArrayAnnual;
-
-  List<dynamic>? _sdFinancialArrayTableIncomeAnnual;
-  List<dynamic>? get sdFinancialArrayTableIncomeAnnual =>
-      _sdFinancialArrayTableIncomeAnnual;
-  List<dynamic>? _sdFinancialArrayTableFinancialAnnual;
-  List<dynamic>? get sdFinancialArrayTableFinancialAnnual =>
-      _sdFinancialArrayTableFinancialAnnual;
-  List<dynamic>? _sdFinancialArrayTableCashAnnual;
-  List<dynamic>? get sdFinancialArrayTableCashAnnual =>
-      _sdFinancialArrayTableCashAnnual;
-
-  SdFinancialRes? _sdFinancialChartResAnnual;
-  SdFinancialRes? get sdFinancialChartResAnnual => _sdFinancialChartResAnnual;
-  SdFinancialRes? _incomeSdFinancialChartResAnnual;
-  SdFinancialRes? get incomeSdFinancialChartResAnnual =>
-      _incomeSdFinancialChartResAnnual;
-  SdFinancialRes? _balanceSdFinancialChartResAnnual;
-  SdFinancialRes? get balanceSdFinancialChartResAnnual =>
-      _balanceSdFinancialChartResAnnual;
-  SdFinancialRes? _cashSdFinancialChartResAnnual;
-  SdFinancialRes? get cashSdFinancialChartResAnnual =>
-      _cashSdFinancialChartResAnnual;
-
-  List<dynamic>? _sdFinancialArrayQuarter;
-  List<dynamic>? get sdFinancialArrayQuarter => _sdFinancialArrayQuarter;
-
-  List<dynamic>? _sdFinancialArrayTableIncomeQuarter;
-  List<dynamic>? get sdFinancialArrayTableIncomeQuarter =>
-      _sdFinancialArrayTableIncomeQuarter;
-  List<dynamic>? _sdFinancialArrayTableFinancialQuarter;
-  List<dynamic>? get sdFinancialArrayTableFinancialQuarter =>
-      _sdFinancialArrayTableFinancialQuarter;
-  List<dynamic>? _sdFinancialArrayTableCashQuarter;
-  List<dynamic>? get sdFinancialArrayTableCashQuarter =>
-      _sdFinancialArrayTableCashQuarter;
-
-  SdFinancialRes? _sdFinancialChartResQuarter;
-  SdFinancialRes? get sdFinancialChartResQuarter => _sdFinancialChartResQuarter;
-  SdFinancialRes? _incomeSdFinancialChartResQuarter;
-  SdFinancialRes? get incomeSdFinancialChartResQuarter =>
-      _incomeSdFinancialChartResQuarter;
-  SdFinancialRes? _balanceSdFinancialChartResQuarter;
-  SdFinancialRes? get balanceSdFinancialChartResQuarter =>
-      _balanceSdFinancialChartResQuarter;
-  SdFinancialRes? _cashSdFinancialChartResQuarter;
-  SdFinancialRes? get cashSdFinancialChartResQuarter =>
-      _cashSdFinancialChartResQuarter;
-
-  // Map<String, dynamic>? _sdFinancialMap;
-  // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
 
   int _openIndexInsider = -1;
   int get openIndexInsider => _openIndexInsider;
@@ -1860,4 +1904,16 @@ class StockDetailProviderNew extends ChangeNotifier {
       setStatusMergers(Status.loaded);
     }
   }
+}
+
+class FinancialHolder {
+  String? type;
+  List<dynamic>? data;
+  SdFinancialRes? financialRes;
+
+  FinancialHolder({
+    this.type,
+    this.data,
+    this.financialRes,
+  });
 }

@@ -69,8 +69,14 @@ class CommonLock extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.lock, size: 40),
-                const SpacerVertical(),
+                // const Icon(Icons.lock, size: 40),
+
+                Image.asset(
+                  Images.lockGIF,
+                  height: 70,
+                  width: 70,
+                ),
+                const SpacerVertical(height: 5),
                 Text(
                   "Premium Content",
                   style: stylePTSansBold(fontSize: 25),

@@ -5,7 +5,15 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class TechnicalAnalysisGaugeItem extends StatelessWidget {
   final double value;
-  const TechnicalAnalysisGaugeItem({super.key, this.value = 80});
+  final double width;
+  final double tickOffset;
+  final bool canScaleToFit;
+  const TechnicalAnalysisGaugeItem(
+      {super.key,
+      this.value = 80,
+      this.width = 7,
+      this.tickOffset = 1,
+      this.canScaleToFit = true});
 //
   @override
   Widget build(BuildContext context) {
@@ -17,8 +25,8 @@ class TechnicalAnalysisGaugeItem extends StatelessWidget {
           minimum: -100,
           interval: 20,
           maximum: 100,
-          tickOffset: 5,
-          canScaleToFit: true,
+          tickOffset: tickOffset,
+          canScaleToFit: canScaleToFit,
           majorTickStyle: const MajorTickStyle(color: ThemeColors.divider),
           minorTickStyle: const MinorTickStyle(color: ThemeColors.divider),
           showLabels: false,
@@ -28,29 +36,29 @@ class TechnicalAnalysisGaugeItem extends StatelessWidget {
               startValue: -100,
               endValue: -50,
               color: Colors.red,
-              startWidth: 7.sp,
-              endWidth: 7.sp,
+              startWidth: width,
+              endWidth: width,
             ),
             GaugeRange(
               startValue: -50,
               endValue: 0,
               color: Colors.orange,
-              startWidth: 7.sp,
-              endWidth: 7.sp,
+              startWidth: width,
+              endWidth: width,
             ),
             GaugeRange(
               startValue: 0,
               endValue: 50,
               color: const Color.fromARGB(255, 181, 240, 105),
-              startWidth: 7.sp,
-              endWidth: 7.sp,
+              startWidth: width,
+              endWidth: width,
             ),
             GaugeRange(
               startValue: 50,
               endValue: 100,
               color: Colors.green,
-              startWidth: 7.sp,
-              endWidth: 7.sp,
+              startWidth: width,
+              endWidth: width,
             )
           ],
           pointers: [

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
@@ -205,6 +206,8 @@ class _MyAppState extends State<MyApp> {
         return MultiProvider(
           providers: Routes.providers,
           child: MaterialApp(
+            supportedLocales: [Locale("en")],
+            localizationsDelegates: [CountryLocalizations.delegate],
             navigatorObservers: [CustomNavigatorObserver()],
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,

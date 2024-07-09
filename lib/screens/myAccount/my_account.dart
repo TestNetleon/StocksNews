@@ -34,7 +34,9 @@ class MyAccount extends StatelessWidget {
             ? Column(
                 children: [
                   // const ScreenTitle(title: "My Profile"),
-                  Expanded(child: LoginError(
+                  Expanded(
+                      child: LoginError(
+                    title: "My Account",
                     onClick: () async {
                       isPhone ? await loginSheet() : await loginSheetTablet();
                     },

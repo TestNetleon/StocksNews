@@ -1,18 +1,22 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
+import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -66,9 +70,10 @@ class _ReferLoginState extends State<ReferLogin> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   TextEditingController displayName = TextEditingController(text: "");
-  int affiliateStatus = 0;
+  bool affiliateStatus = false;
   bool numberVerified = true;
 
+  String? countryCode;
   String appSignature = "";
   final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
 
@@ -93,7 +98,7 @@ class _ReferLoginState extends State<ReferLogin> {
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
-    affiliateStatus = provider.user?.affiliateStatus ?? 1;
+    affiliateStatus = provider.user?.affiliateStatus == 1;
     numberVerified = provider.user?.phone != null &&
         provider.user?.phone != "" &&
         provider.user?.name != null &&
@@ -132,11 +137,18 @@ class _ReferLoginState extends State<ReferLogin> {
         title: "Alert",
         icon: Images.alertPopGIF,
       );
+    } else if (countryCode == null) {
+      popUpAlert(
+        message: "Please select a valid country code.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
     } else {
       if (!numberVerified) {
         showGlobalProgressDialog();
         await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+          // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+          phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
             closeGlobalProgressDialog();
           },
@@ -157,38 +169,69 @@ class _ReferLoginState extends State<ReferLogin> {
               phone: mobile.text,
               appSignature: appSignature,
               verificationId: verificationId,
+              countryCode: countryCode!,
             );
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
         );
       } else {
+        // showGlobalProgressDialog();
         UserProvider provider = context.read<UserProvider>();
         Map request = {
           "token": provider.user?.token ?? "",
           "display_name": displayName.text,
-          "phone_hash": appSignature,
+          "name": name.text,
           "platform": Platform.operatingSystem,
+          "affiliate_status": "1"
         };
 
         try {
-          ApiResponse response = await provider.referLoginApi(request);
-          if (response.status) {
-            provider.updateUser(name: name.text, displayName: displayName.text);
-            Navigator.pop(navigatorKey.currentContext!);
-            referOTP(
-              phone: mobile.text,
-              appSignature: appSignature,
-              verificationId: "",
-              displayName: "",
+          ApiResponse res = await apiRequest(
+            url: Apis.updateProfile,
+            request: request,
+            showProgress: true,
+            removeForceLogin: true,
+          );
+          if (res.status) {
+            // setStatus(Status.loaded);
+            provider.updateUser(
+              affiliateStatus: 1,
+              displayName: displayName.text,
             );
-
-            // Navigator.push(
-            //     navigatorKey.currentContext!,
-            //     MaterialPageRoute(
-            //       builder: (_) => const ReferAFriend(),
-            //     ),
-            //   );
+            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => const ReferAFriend(),
+              ),
+            );
+            // return ApiResponse(status: true, message: res.message);
+          } else {
+            // setStatus(Status.loaded);
+            // return ApiResponse(status: false, message: res.message);
+            popUpAlert(
+              message: res.message ?? Const.errSomethingWrong,
+              title: "Alert",
+            );
           }
+
+          // ApiResponse response = await provider.referLoginApi(request);
+          // if (response.status) {
+          //   provider.updateUser(name: name.text, displayName: displayName.text);
+          //   Navigator.pop(navigatorKey.currentContext!);
+          //   referOTP(
+          //     phone: mobile.text,
+          //     appSignature: appSignature,
+          //     verificationId: "",
+          //     displayName: "",
+          //   );
+          // Navigator.push(
+          //     navigatorKey.currentContext!,
+          //     MaterialPageRoute(
+          //       builder: (_) => const ReferAFriend(),
+          //     ),
+          //   );
+          // }
         } catch (e) {
           //
         }
@@ -240,10 +283,15 @@ class _ReferLoginState extends State<ReferLogin> {
     UserRes? user = context.read<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
 
+    final String locale = user?.phoneCode == null || user?.phoneCode == ""
+        ? Intl.getCurrentLocale().split('_').last
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+                .code
+                ?.split('_')
+                .last ??
+            "";
+
     return GestureDetector(
-      onTap: () {
-        closeKeyboard();
-      },
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: const BoxDecoration(
@@ -385,55 +433,105 @@ class _ReferLoginState extends State<ReferLogin> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: user?.phone == '' ||
-                                                  user?.phone == null
-                                              ? ThemeColors.white
-                                              : const Color.fromARGB(
-                                                  255, 188, 188, 188),
+                                      // padding: const EdgeInsets.symmetric(
+                                      //     // horizontal: 12,
+                                      //     // horizontal: 20,
+                                      //     ),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: user?.phone == '' ||
+                                                    user?.phone == null
+                                                ? ThemeColors.white
+                                                : const Color.fromARGB(
+                                                    255, 188, 188, 188),
+                                          ),
+                                        ),
+                                        color: user?.phone == '' ||
+                                                user?.phone == null
+                                            ? ThemeColors.white
+                                            : const Color.fromARGB(
+                                                255, 188, 188, 188),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4),
+                                          bottomLeft: Radius.circular(4),
                                         ),
                                       ),
-                                      color: user?.phone == '' ||
-                                              user?.phone == null
-                                          ? ThemeColors.white
-                                          : const Color.fromARGB(
-                                              255, 188, 188, 188),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4),
-                                        bottomLeft: Radius.circular(4),
+                                      child: CountryCodePicker(
+                                        padding: EdgeInsets.zero,
+                                        enabled: user?.phoneCode == null ||
+                                            user?.phoneCode == "",
+                                        onChanged: (CountryCode value) {
+                                          countryCode = value.dialCode;
+                                          // log("Selected Log => ${value.dialCode}");
+                                        },
+                                        initialSelection: locale,
+                                        showCountryOnly: false,
+                                        textStyle: stylePTSansBold(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                        ),
+                                        flagWidth: 24,
+                                        showOnlyCountryWhenClosed: false,
+                                        alignLeft: false,
+                                        boxDecoration: const BoxDecoration(
+                                          color: ThemeColors.tabBack,
+                                        ),
+                                        // builder: (CountryCode? country) {
+                                        //   log("Selected Log => ${country?.code}");
+                                        // },
+                                        dialogTextStyle: styleGeorgiaBold(),
+                                        barrierColor: Colors.black26,
+                                        searchDecoration: InputDecoration(
+                                          iconColor: Colors.white,
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                            Icons.search,
+                                            size: 22,
+                                          ),
+                                          filled: true,
+                                          hintStyle: stylePTSansRegular(
+                                            color: Colors.grey,
+                                          ),
+                                          hintText: "Search country",
+                                        ),
+                                      )
+
+                                      // Text(
+                                      //   "+1",
+                                      //   style: stylePTSansBold(
+                                      //     color: user?.phone == '' ||
+                                      //             user?.phone == null
+                                      //         ? ThemeColors.greyText
+                                      //         : ThemeColors.greyBorder,
+                                      //     fontSize: 18,
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                    // child: Text(
-                                    //   "+1",
-                                    //   style: stylePTSansBold(
-                                    //       color: ThemeColors.greyText, fontSize: 18),
-                                    // ),
-                                  ),
-                                  Text(
-                                    "+1",
-                                    style: stylePTSansBold(
-                                      color: user?.phone == '' ||
-                                              user?.phone == null
-                                          ? ThemeColors.greyText
-                                          : ThemeColors.greyBorder,
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   "+1",
+                                  //   style: stylePTSansBold(
+                                  //     color: user?.phone == '' ||
+                                  //             user?.phone == null
+                                  //         ? ThemeColors.greyText
+                                  //         : ThemeColors.greyBorder,
+                                  //     fontSize: 18,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
-                              const SpacerHorizontal(width: 2),
+                              // const SpacerHorizontal(width: 2),
                               Flexible(
                                 child: ThemeInputField(
                                   fillColor:
                                       user?.phone == '' || user?.phone == null
                                           ? ThemeColors.white
                                           : const Color.fromARGB(
-                                              255, 188, 188, 188),
+                                              255,
+                                              188,
+                                              188,
+                                              188,
+                                            ),
                                   editable:
                                       user?.phone == '' || user?.phone == null,
                                   style: stylePTSansBold(

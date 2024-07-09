@@ -27,6 +27,7 @@ class UserRes {
   // int? subscriptionPurchased;
   final UserMembershipRes? membership;
   int? affiliateStatus;
+  String? phoneCode;
 
   UserRes({
     // this.subscriptionPurchased = 0,
@@ -51,6 +52,7 @@ class UserRes {
     this.displayName,
     this.signupStatus = false,
     this.affiliateStatus,
+    this.phoneCode,
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
@@ -77,6 +79,7 @@ class UserRes {
         displayName: json["display_name"],
         signupStatus: json["signupStatus"],
         affiliateStatus: json["affiliate_status"],
+        phoneCode: json["phone_code"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,6 +104,7 @@ class UserRes {
         "membership": membership?.toJson(),
         "signupStatus": signupStatus,
         "affiliate_status": affiliateStatus,
+        "phone_code": phoneCode,
       };
 }
 

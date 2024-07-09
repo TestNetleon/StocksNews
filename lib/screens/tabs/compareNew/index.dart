@@ -40,6 +40,7 @@ class CompareNew extends StatelessWidget {
             child: Expanded(
               child: LoginError(
                 state: "compare",
+                title: "Compare Stocks",
                 onClick: () async {
                   isPhone ? await loginSheet() : await loginSheetTablet();
 
