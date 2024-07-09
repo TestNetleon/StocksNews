@@ -89,12 +89,18 @@ class BlogDetailContainer extends StatelessWidget {
     await provider.getBlogDetailData(slug: slug, point_deduction: true);
   }
 
-  void _membership() {
-    askToSubscribe(
-      onPressed: () {
+  Future _membership() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    await askToSubscribe(
+      onPressed: () async {
         Navigator.pop(navigatorKey.currentContext!);
 
-        RevenueCatService.initializeSubscription();
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await referLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          await RevenueCatService.initializeSubscription();
+        }
       },
     );
   }
@@ -422,7 +428,9 @@ class BlogDetailContainer extends StatelessWidget {
                                   iconFront: true,
                                   radius: 30,
                                   icon: Icons.card_membership,
-                                  onPressed: _membership,
+                                  onPressed: () async {
+                                    await _membership();
+                                  },
                                   textAlign: TextAlign.start,
                                   mainAxisSize: MainAxisSize.max,
                                 ),
