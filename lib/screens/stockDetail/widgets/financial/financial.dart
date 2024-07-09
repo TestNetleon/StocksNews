@@ -17,7 +17,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../../widgets/disclaimer_widget.dart';
-import 'item.dart';
 import 'tab.dart';
 
 class SdFinancial extends StatefulWidget {
@@ -275,8 +274,8 @@ class _SdFinancialState extends State<SdFinancial> {
                             Visibility(
                               visible: provider.extraFinancial?.period != null,
                               child: SdFinancialTabs(
-                                tabs:
-                                    convertMultipleStringListsToSdTopResLists(),
+                                tabs: convertMultipleStringListsToSdTopResLists(
+                                    provider.sdFinancialChartRes),
                                 onChange: (index) =>
                                     provider.changePeriodTypeIndexVoid(
                                   index,

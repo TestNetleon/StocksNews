@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:vibration/vibration.dart';
 
 import '../api/apis.dart';
 import '../modals/analysis_res.dart';
@@ -1340,6 +1343,56 @@ class StockDetailProviderNew extends ChangeNotifier {
   SdFinancialRes? _cashSdFinancialChartRes;
   SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
 
+  List<dynamic>? _sdFinancialArrayAnnual;
+  List<dynamic>? get sdFinancialArrayAnnual => _sdFinancialArrayAnnual;
+
+  List<dynamic>? _sdFinancialArrayTableIncomeAnnual;
+  List<dynamic>? get sdFinancialArrayTableIncomeAnnual =>
+      _sdFinancialArrayTableIncomeAnnual;
+  List<dynamic>? _sdFinancialArrayTableFinancialAnnual;
+  List<dynamic>? get sdFinancialArrayTableFinancialAnnual =>
+      _sdFinancialArrayTableFinancialAnnual;
+  List<dynamic>? _sdFinancialArrayTableCashAnnual;
+  List<dynamic>? get sdFinancialArrayTableCashAnnual =>
+      _sdFinancialArrayTableCashAnnual;
+
+  SdFinancialRes? _sdFinancialChartResAnnual;
+  SdFinancialRes? get sdFinancialChartResAnnual => _sdFinancialChartResAnnual;
+  SdFinancialRes? _incomeSdFinancialChartResAnnual;
+  SdFinancialRes? get incomeSdFinancialChartResAnnual =>
+      _incomeSdFinancialChartResAnnual;
+  SdFinancialRes? _balanceSdFinancialChartResAnnual;
+  SdFinancialRes? get balanceSdFinancialChartResAnnual =>
+      _balanceSdFinancialChartResAnnual;
+  SdFinancialRes? _cashSdFinancialChartResAnnual;
+  SdFinancialRes? get cashSdFinancialChartResAnnual =>
+      _cashSdFinancialChartResAnnual;
+
+  List<dynamic>? _sdFinancialArrayQuarter;
+  List<dynamic>? get sdFinancialArrayQuarter => _sdFinancialArrayQuarter;
+
+  List<dynamic>? _sdFinancialArrayTableIncomeQuarter;
+  List<dynamic>? get sdFinancialArrayTableIncomeQuarter =>
+      _sdFinancialArrayTableIncomeQuarter;
+  List<dynamic>? _sdFinancialArrayTableFinancialQuarter;
+  List<dynamic>? get sdFinancialArrayTableFinancialQuarter =>
+      _sdFinancialArrayTableFinancialQuarter;
+  List<dynamic>? _sdFinancialArrayTableCashQuarter;
+  List<dynamic>? get sdFinancialArrayTableCashQuarter =>
+      _sdFinancialArrayTableCashQuarter;
+
+  SdFinancialRes? _sdFinancialChartResQuarter;
+  SdFinancialRes? get sdFinancialChartResQuarter => _sdFinancialChartResQuarter;
+  SdFinancialRes? _incomeSdFinancialChartResQuarter;
+  SdFinancialRes? get incomeSdFinancialChartResQuarter =>
+      _incomeSdFinancialChartResQuarter;
+  SdFinancialRes? _balanceSdFinancialChartResQuarter;
+  SdFinancialRes? get balanceSdFinancialChartResQuarter =>
+      _balanceSdFinancialChartResQuarter;
+  SdFinancialRes? _cashSdFinancialChartResQuarter;
+  SdFinancialRes? get cashSdFinancialChartResQuarter =>
+      _cashSdFinancialChartResQuarter;
+
   // Map<String, dynamic>? _sdFinancialMap;
   // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
 
@@ -1362,6 +1415,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   String? _typeValue;
   String? get typeValue => _typeValue;
+  String _periodType = "annual";
+  String get periodType => _periodType;
 
   int changePeriodTypeIndex = 0;
 
@@ -1378,59 +1433,140 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  void vibrateTabFinancial() async {
+    try {
+      if (Platform.isAndroid) {
+        bool isVibe = await Vibration.hasVibrator() ?? false;
+        if (isVibe) {
+          Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+        }
+      } else {
+        HapticFeedback.lightImpact();
+      }
+    } catch (e) {}
+  }
+
   void changeTabTypeChartData(index, {String? symbol}) {
     if (typeIndex != index) {
-      typeIndex = index;
-      Utils().showLog("index  $index");
-      if (index == 0 && incomeSdFinancialChartRes == null) {
-        notifyListeners();
-        getFinancialData(
-          symbol: symbol,
-          period: _periods?[periodIndex].value,
-          type: _types?[typeIndex].value,
-          tabProgress: true,
-        );
-      }
-      if (index == 1 && balanceSdFinancialChartRes == null) {
-        notifyListeners();
-        getFinancialData(
-          symbol: symbol,
-          period: _periods?[periodIndex].value,
-          type: _types?[typeIndex].value,
-          tabProgress: true,
-        );
-      }
-      if (index == 2 && cashSdFinancialChartRes == null) {
-        notifyListeners();
-        getFinancialData(
-          symbol: symbol,
-          period: _periods?[periodIndex].value,
-          type: _types?[typeIndex].value,
-          tabProgress: true,
-        );
-      }
-      if (index == 0 && incomeSdFinancialChartRes != null) {
-        _typeValue = "income-statement";
-        _sdFinancialChartRes = incomeSdFinancialChartRes;
-        _sdFinancialArray = _sdFinancialArrayTableIncome;
-      }
-      if (index == 1 && balanceSdFinancialChartRes != null) {
-        _typeValue = 'balance-sheet-statement';
-        _sdFinancialChartRes = balanceSdFinancialChartRes;
-        _sdFinancialArray = _sdFinancialArrayTableFinancial;
-      }
-      if (index == 2 && cashSdFinancialChartRes != null) {
-        _typeValue = 'cash-flow-statement';
-        _sdFinancialChartRes = cashSdFinancialChartRes;
-        _sdFinancialArray = _sdFinancialArrayTableCash;
-      }
+      vibrateTabFinancial();
 
-      notifyListeners();
+      typeIndex = index;
+      if (periodType == "annual") {
+        Utils().showLog("index  $index");
+        if (index == 0 && incomeSdFinancialChartResAnnual == null) {
+          notifyListeners();
+          getFinancialData(
+            symbol: symbol,
+            period: _periods?[periodIndex].value,
+            type: _types?[typeIndex].value,
+            tabProgress: true,
+          );
+        }
+        if (index == 1 && balanceSdFinancialChartResAnnual == null) {
+          notifyListeners();
+          getFinancialData(
+            symbol: symbol,
+            period: _periods?[periodIndex].value,
+            type: _types?[typeIndex].value,
+            tabProgress: true,
+          );
+        }
+        if (index == 2 && cashSdFinancialChartResAnnual == null) {
+          notifyListeners();
+          getFinancialData(
+            symbol: symbol,
+            period: _periods?[periodIndex].value,
+            type: _types?[typeIndex].value,
+            tabProgress: true,
+          );
+        }
+        if (index == 0 && incomeSdFinancialChartRes != null) {
+          _typeValue = "income-statement";
+          _sdFinancialChartRes = incomeSdFinancialChartResAnnual;
+          _sdFinancialArray = _sdFinancialArrayTableIncomeAnnual;
+        }
+        if (index == 1 && balanceSdFinancialChartRes != null) {
+          _typeValue = 'balance-sheet-statement';
+          _sdFinancialChartRes = balanceSdFinancialChartResAnnual;
+          _sdFinancialArray = _sdFinancialArrayTableFinancialAnnual;
+        }
+        if (index == 2 && cashSdFinancialChartRes != null) {
+          _typeValue = 'cash-flow-statement';
+          _sdFinancialChartRes = cashSdFinancialChartResAnnual;
+          _sdFinancialArray = _sdFinancialArrayTableCashAnnual;
+        }
+
+        notifyListeners();
+      }
+      if (periodType == "quarter") {
+        Utils().showLog("index  $index");
+        if (index == 0 && incomeSdFinancialChartResQuarter == null) {
+          notifyListeners();
+          getFinancialData(
+            symbol: symbol,
+            period: _periods?[periodIndex].value,
+            type: _types?[typeIndex].value,
+            tabProgress: true,
+          );
+        }
+        if (index == 1 && balanceSdFinancialChartResQuarter == null) {
+          notifyListeners();
+          getFinancialData(
+            symbol: symbol,
+            period: _periods?[periodIndex].value,
+            type: _types?[typeIndex].value,
+            tabProgress: true,
+          );
+        }
+        if (index == 2 && cashSdFinancialChartResQuarter == null) {
+          notifyListeners();
+          getFinancialData(
+            symbol: symbol,
+            period: _periods?[periodIndex].value,
+            type: _types?[typeIndex].value,
+            tabProgress: true,
+          );
+        }
+        if (index == 0 && incomeSdFinancialChartResQuarter != null) {
+          _typeValue = "income-statement";
+          _sdFinancialChartRes = incomeSdFinancialChartResQuarter;
+          _sdFinancialArray = _sdFinancialArrayTableIncomeQuarter;
+        }
+        if (index == 1 && balanceSdFinancialChartResQuarter != null) {
+          _typeValue = 'balance-sheet-statement';
+          _sdFinancialChartRes = balanceSdFinancialChartResQuarter;
+          _sdFinancialArray = _sdFinancialArrayTableFinancialQuarter;
+        }
+        if (index == 2 && cashSdFinancialChartResQuarter != null) {
+          _typeValue = 'cash-flow-statement';
+          _sdFinancialChartRes = cashSdFinancialChartResQuarter;
+          _sdFinancialArray = _sdFinancialArrayTableCashQuarter;
+        }
+
+        notifyListeners();
+      }
     }
   }
 
   void changePeriodType(index, {String? symbol}) {
     if (periodIndex != index) {
+      vibrateTabFinancial();
+
+      if (index == 0 && incomeSdFinancialChartResAnnual == null) {
+        _periodType = "annual";
+        periodIndex = index;
+        notifyListeners();
+        getFinancialData(
+          symbol: symbol,
+          period: _periods?[periodIndex].value,
+          type: _types?[typeIndex].value,
+          tabProgress: true,
+        );
+      }
+    }
+    if (index == 1 && balanceSdFinancialChartResQuarter == null) {
+      _periodType = "quarter";
+
       periodIndex = index;
       notifyListeners();
       getFinancialData(
@@ -1440,6 +1576,53 @@ class StockDetailProviderNew extends ChangeNotifier {
         tabProgress: true,
       );
     }
+
+    if (index == 0 && incomeSdFinancialChartResAnnual != null) {
+      _periodType = "annual";
+      notifyListeners();
+      switch (typeValue) {
+        case "income-statement":
+          _incomeSdFinancialChartRes = _incomeSdFinancialChartResAnnual;
+          _sdFinancialArrayTableIncome = _sdFinancialArrayTableIncomeAnnual;
+          break;
+        case "balance-sheet-statement":
+          _balanceSdFinancialChartRes = _balanceSdFinancialChartResAnnual;
+          _sdFinancialArrayTableFinancial =
+              _sdFinancialArrayTableFinancialAnnual;
+          break;
+        case "cash-flow-statement":
+          _cashSdFinancialChartRes = _cashSdFinancialChartResAnnual;
+          _sdFinancialArrayTableCash = _sdFinancialArrayTableCashAnnual;
+          break;
+        default:
+          // Handle unexpected types if needed
+          break;
+      }
+    }
+    if (index == 1 && balanceSdFinancialChartResQuarter != null) {
+      _periodType = "quarter";
+      notifyListeners();
+
+      switch (typeValue) {
+        case "income-statement":
+          _incomeSdFinancialChartRes = _incomeSdFinancialChartResQuarter;
+          _sdFinancialArrayTableIncome = _sdFinancialArrayTableIncomeQuarter;
+          break;
+        case "balance-sheet-statement":
+          _balanceSdFinancialChartRes = _balanceSdFinancialChartResQuarter;
+          _sdFinancialArrayTableFinancial =
+              _sdFinancialArrayTableFinancialQuarter;
+          break;
+        case "cash-flow-statement":
+          _cashSdFinancialChartRes = _cashSdFinancialChartResQuarter;
+          _sdFinancialArrayTableCash = _sdFinancialArrayTableCashQuarter;
+          break;
+        default:
+          // Handle unexpected types if needed
+          break;
+      }
+    }
+    notifyListeners();
   }
 
   void changePeriodTypeIndexVoid(index) {
@@ -1503,38 +1686,97 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
 
       if (response.status) {
+        _periodType = period.toString();
         _typeValue = type;
         _sdFinancialChartRes =
             sdFinancialResFromJson(jsonEncode(response.data));
 
-        if (type == "income-statement") {
-          _incomeSdFinancialChartRes =
-              sdFinancialResFromJson(jsonEncode(response.data));
-          _sdFinancialArrayTableIncome = response.data['finance_statement'];
-        } else if (type == "balance-sheet-statement") {
-          _balanceSdFinancialChartRes =
-              sdFinancialResFromJson(jsonEncode(response.data));
-          _sdFinancialArrayTableFinancial = response.data['finance_statement'];
-        } else if (type == "cash-flow-statement") {
-          _cashSdFinancialChartRes =
-              sdFinancialResFromJson(jsonEncode(response.data));
-          _sdFinancialArrayTableCash = response.data['finance_statement'];
-        }
-
-        // _sdFinancialChartRes?.chart?.sublist(0, 5);
-
-        // List<dynamic> financeStatementData = response.data['finance_statement'];
-
-        // for (var item in financeStatementData) {
-        //   if (item is Map<String, dynamic>) {
-        //     _sdFinancialMap?.addAll(item);
-        //   }
-        // }
-
         List<dynamic> financeStatementData = response.data['finance_statement'];
 
-        // Save the array directly for later processing
         _sdFinancialArray = financeStatementData;
+        if (period == "annual") {
+          switch (type) {
+            case "income-statement":
+              _incomeSdFinancialChartResAnnual =
+                  sdFinancialResFromJson(jsonEncode(response.data));
+              _sdFinancialArrayTableIncomeAnnual = financeStatementData;
+              break;
+            case "balance-sheet-statement":
+              _balanceSdFinancialChartResAnnual =
+                  sdFinancialResFromJson(jsonEncode(response.data));
+              _sdFinancialArrayTableFinancialAnnual = financeStatementData;
+              break;
+            case "cash-flow-statement":
+              _cashSdFinancialChartResAnnual =
+                  sdFinancialResFromJson(jsonEncode(response.data));
+              _sdFinancialArrayTableCashAnnual = financeStatementData;
+              break;
+            default:
+              // Handle unexpected types if needed
+              break;
+          }
+          notifyListeners();
+          switch (typeValue) {
+            case "income-statement":
+              _incomeSdFinancialChartRes = _incomeSdFinancialChartResAnnual;
+              _sdFinancialArrayTableIncome = _sdFinancialArrayTableIncomeAnnual;
+              break;
+            case "balance-sheet-statement":
+              _balanceSdFinancialChartRes = _balanceSdFinancialChartResAnnual;
+              _sdFinancialArrayTableFinancial =
+                  _sdFinancialArrayTableFinancialAnnual;
+              break;
+            case "cash-flow-statement":
+              _cashSdFinancialChartRes = _cashSdFinancialChartResAnnual;
+              _sdFinancialArrayTableCash = _sdFinancialArrayTableCashAnnual;
+              break;
+            default:
+              // Handle unexpected types if needed
+              break;
+          }
+        }
+        if (period == "quarter") {
+          switch (type) {
+            case "income-statement":
+              _incomeSdFinancialChartResQuarter =
+                  sdFinancialResFromJson(jsonEncode(response.data));
+              _sdFinancialArrayTableIncomeQuarter = financeStatementData;
+              break;
+            case "balance-sheet-statement":
+              _balanceSdFinancialChartResQuarter =
+                  sdFinancialResFromJson(jsonEncode(response.data));
+              _sdFinancialArrayTableFinancialQuarter = financeStatementData;
+              break;
+            case "cash-flow-statement":
+              _cashSdFinancialChartResQuarter =
+                  sdFinancialResFromJson(jsonEncode(response.data));
+              _sdFinancialArrayTableCashQuarter = financeStatementData;
+              break;
+            default:
+              // Handle unexpected types if needed
+              break;
+          }
+          notifyListeners();
+          switch (typeValue) {
+            case "income-statement":
+              _incomeSdFinancialChartRes = _incomeSdFinancialChartResQuarter;
+              _sdFinancialArrayTableIncome =
+                  _sdFinancialArrayTableIncomeQuarter;
+              break;
+            case "balance-sheet-statement":
+              _balanceSdFinancialChartRes = _balanceSdFinancialChartResQuarter;
+              _sdFinancialArrayTableFinancial =
+                  _sdFinancialArrayTableFinancialQuarter;
+              break;
+            case "cash-flow-statement":
+              _cashSdFinancialChartRes = _cashSdFinancialChartResQuarter;
+              _sdFinancialArrayTableCash = _sdFinancialArrayTableCashQuarter;
+              break;
+            default:
+              // Handle unexpected types if needed
+              break;
+          }
+        }
 
         _extraFinancial =
             (response.extra is Extra ? response.extra as Extra : null);
