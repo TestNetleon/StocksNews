@@ -136,7 +136,11 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
           closeGlobalProgressDialog();
           log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
           popUpAlert(
-            message: e.message ?? Const.errSomethingWrong,
+            message: e.code == "invalid-phone-number"
+                ? "The format of the phone number provided is incorrect."
+                : e.code == "too-many-requests"
+                    ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                    : e.message ?? Const.errSomethingWrong,
             title: "Alert",
             icon: Images.alertPopGIF,
           );
@@ -447,7 +451,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     _formatter,
-                                    LengthLimitingTextInputFormatter(10)
+                                    LengthLimitingTextInputFormatter(15)
                                   ],
                                   textCapitalization: TextCapitalization.none,
                                 ),
@@ -473,8 +477,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                                'Do not include +1 or an special character.',
+                            'Note: You will receive an OTP to verify mobile number.',
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       // const SpacerVertical(height: Dimen.itemSpacing),

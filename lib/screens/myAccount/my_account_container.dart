@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,6 +114,13 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     if (user?.email != '' && user?.email != null) {
       provider.setEmailClickText();
     }
+
+    // UserRes? user = context.read<UserProvider>().user;
+    countryCode = user?.phoneCode == null || user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
 
     log("------------${user?.phone != ''}");
     if (user?.phone != '' && user?.phone != null) {
@@ -472,7 +478,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
                     _formatter,
-                    LengthLimitingTextInputFormatter(10)
+                    LengthLimitingTextInputFormatter(15)
                   ],
                   textCapitalization: TextCapitalization.none,
                 ),
@@ -616,7 +622,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         closeGlobalProgressDialog();
         log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
         popUpAlert(
-          message: e.message ?? Const.errSomethingWrong,
+          message: e.code == "invalid-phone-number"
+              ? "The format of the phone number provided is incorrect."
+              : e.code == "too-many-requests"
+                  ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                  : e.message ?? Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF,
         );

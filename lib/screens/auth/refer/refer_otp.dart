@@ -85,6 +85,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   final TextEditingController _controller = TextEditingController();
   int startTiming = 30;
   final FocusNode _otpFocusNode = FocusNode();
+  String? verificationId;
 
   Timer? _timer;
   @override
@@ -92,6 +93,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     super.initState();
     _listenCode();
     _startTime();
+    verificationId = widget.verificationId;
     _otpFocusNode.requestFocus();
   }
 
@@ -209,8 +211,21 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
       // phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
       phoneNumber: "${widget.countryCode}${widget.phone}",
       verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
+      verificationFailed: (FirebaseAuthException e) {
+        log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+        popUpAlert(
+          message: e.code == "invalid-phone-number"
+              ? "The format of the phone number provided is incorrect."
+              : e.code == "too-many-requests"
+                  ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                  : e.message ?? Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        verificationId = verificationId;
+      },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
@@ -230,7 +245,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
 
     // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: widget.verificationId,
+      verificationId: verificationId ?? widget.verificationId,
       smsCode: smsCode,
     );
 
@@ -362,7 +377,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'We have sent the verification code \nto your phone number ${widget.phone}',
+                    'We have sent the verification code \nto your phone number ${widget.countryCode} ${widget.phone}',
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),
