@@ -96,6 +96,7 @@ class Extra {
   final int? affiliateInput;
   final LoginDialogRes? loginDialogRes;
   final UserMembershipRes? membership;
+  final String? aiTitle;
 
   Extra({
     this.feebackType,
@@ -105,6 +106,7 @@ class Extra {
     this.verifyIdentity,
     this.howItWork,
     this.membershipText,
+    this.aiTitle,
 
     // this.subscription,
     this.exchangeShortName,
@@ -164,6 +166,7 @@ class Extra {
             ? null
             : ProfileText.fromJson(json["profile_text"]),
         verifyIdentity: json['verify_identity_text'],
+        aiTitle: json['ai-news-title'],
         // subscription: json["subscription"] == null
         //     ? null
         //     : Subscription.fromJson(json["subscription"]),
@@ -282,6 +285,7 @@ class Extra {
         "how_it_work": howItWork?.toJson(),
         "membership_text": membership?.toJson(),
         "sub_title": subTitle,
+        "ai-news-title": aiTitle,
         "current_balance": currentBalance,
         "show_portfolio": showPortfolio,
         "total_pages": totalPages,

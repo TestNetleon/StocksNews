@@ -67,7 +67,7 @@ class BarChartSampleState extends State<BarChartSample> {
 
     rawBarGroups = items;
     showingBarGroups = rawBarGroups;
-    Utils().showLog("showingBarGroups  === $showingBarGroups");
+    Utils().showLog("showingBarGroups  === $items");
 
     final maxTotalAssets = charts?.isNotEmpty == true
         ? charts!

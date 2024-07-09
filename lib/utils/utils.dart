@@ -101,11 +101,8 @@ String formatDateTimeAgo(DateTime dateTime) {
   }
 }
 
-List<SdTopRes>? convertMultipleStringListsToSdTopResLists() {
-  StockDetailProviderNew provider =
-      navigatorKey.currentContext!.read<StockDetailProviderNew>();
-  SdFinancialRes? data = provider.sdFinancialChartRes;
-
+List<SdTopRes>? convertMultipleStringListsToSdTopResLists(
+    SdFinancialRes? data) {
   // Ensure data and financeStatement are not null
   if (data == null || data.financeStatement == null) {
     return null;

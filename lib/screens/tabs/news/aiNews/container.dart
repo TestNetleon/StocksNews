@@ -23,7 +23,10 @@ class _AINewsIndexState extends State<AINewsIndex> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AIProvider>().getNews();
+      AIProvider provider = context.read<AIProvider>();
+      if (provider.data == null || provider.data?.isEmpty == true) {
+        provider.getNews();
+      }
     });
   }
 

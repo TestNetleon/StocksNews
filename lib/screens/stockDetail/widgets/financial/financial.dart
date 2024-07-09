@@ -274,8 +274,8 @@ class _SdFinancialState extends State<SdFinancial> {
                             Visibility(
                               visible: provider.extraFinancial?.period != null,
                               child: SdFinancialTabs(
-                                tabs:
-                                    convertMultipleStringListsToSdTopResLists(),
+                                tabs: convertMultipleStringListsToSdTopResLists(
+                                    provider.sdFinancialChartRes),
                                 onChange: (index) =>
                                     provider.changePeriodTypeIndexVoid(
                                   index,
