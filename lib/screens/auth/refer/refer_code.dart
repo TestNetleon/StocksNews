@@ -1,4 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +14,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -62,7 +66,7 @@ class _ReferLoginState extends State<ReferLogin> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   TextEditingController displayName = TextEditingController(text: "");
-  bool affiliateStatus = true;
+  int affiliateStatus = 0;
   bool numberVerified = true;
 
   String appSignature = "";
@@ -89,7 +93,7 @@ class _ReferLoginState extends State<ReferLogin> {
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
-    affiliateStatus = provider.user?.affiliateStatus ?? false;
+    affiliateStatus = provider.user?.affiliateStatus ?? 1;
     numberVerified = provider.user?.phone != null &&
         provider.user?.phone != "" &&
         provider.user?.name != null &&
@@ -129,72 +133,105 @@ class _ReferLoginState extends State<ReferLogin> {
         icon: Images.alertPopGIF,
       );
     } else {
-      // showGlobalProgressDialog();
-      // await FirebaseAuth.instance.verifyPhoneNumber(
-      //   phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
-      //   verificationCompleted: (PhoneAuthCredential credential) {
-      //     closeGlobalProgressDialog();
-      //   },
-      //   verificationFailed: (FirebaseAuthException e) {
-      //     closeGlobalProgressDialog();
-      //     log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
-      //     popUpAlert(
-      //       message: e.message ?? Const.errSomethingWrong,
-      //       title: "Alert",
-      //       icon: Images.alertPopGIF,
-      //     );
-      //   },
-      //   codeSent: (String verificationId, int? resendToken) {
-      //     closeGlobalProgressDialog();
-      //     referOTP(
-      //       name: name.text,
-      //       displayName: displayName.text,
-      //       phone: mobile.text,
-      //       appSignature: appSignature,
-      //       verificationId: verificationId,
-      //     );
-      //   },
-      //   codeAutoRetrievalTimeout: (String verificationId) {},
-      // );
-      UserProvider provider = context.read<UserProvider>();
-      Map request = !numberVerified
-          ? {
-              "token": provider.user?.token ?? "",
-              "phone": mobile.text,
-              "name": name.text,
-              "display_name": displayName.text,
-              "phone_hash": appSignature,
-              "platform": Platform.operatingSystem,
-            }
-          : {
-              "token": provider.user?.token ?? "",
-              "display_name": displayName.text,
-              "phone_hash": appSignature,
-              "platform": Platform.operatingSystem,
-            };
+      if (!numberVerified) {
+        showGlobalProgressDialog();
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+          verificationCompleted: (PhoneAuthCredential credential) {
+            closeGlobalProgressDialog();
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            closeGlobalProgressDialog();
+            log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+            popUpAlert(
+              message: e.message ?? Const.errSomethingWrong,
+              title: "Alert",
+              icon: Images.alertPopGIF,
+            );
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            closeGlobalProgressDialog();
+            referOTP(
+              name: name.text,
+              displayName: displayName.text,
+              phone: mobile.text,
+              appSignature: appSignature,
+              verificationId: verificationId,
+            );
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {},
+        );
+      } else {
+        UserProvider provider = context.read<UserProvider>();
+        Map request = {
+          "token": provider.user?.token ?? "",
+          "display_name": displayName.text,
+          "phone_hash": appSignature,
+          "platform": Platform.operatingSystem,
+        };
 
-      try {
-        ApiResponse response = await provider.referLoginApi(request);
-        if (response.status) {
-          provider.updateUser(name: name.text, displayName: displayName.text);
-          Navigator.pop(navigatorKey.currentContext!);
-          referOTP(
-            phone: mobile.text,
-            appSignature: appSignature,
-            verificationId: "",
-            displayName: "",
-          );
+        try {
+          ApiResponse response = await provider.referLoginApi(request);
+          if (response.status) {
+            provider.updateUser(name: name.text, displayName: displayName.text);
+            Navigator.pop(navigatorKey.currentContext!);
+            referOTP(
+              phone: mobile.text,
+              appSignature: appSignature,
+              verificationId: "",
+              displayName: "",
+            );
 
-          // Navigator.push(
-          //     navigatorKey.currentContext!,
-          //     MaterialPageRoute(
-          //       builder: (_) => const ReferAFriend(),
-          //     ),
-          //   );
+            // Navigator.push(
+            //     navigatorKey.currentContext!,
+            //     MaterialPageRoute(
+            //       builder: (_) => const ReferAFriend(),
+            //     ),
+            //   );
+          }
+        } catch (e) {
+          //
         }
-      } catch (e) {
-        //
       }
+      //   UserProvider provider = context.read<UserProvider>();
+      //   Map request = !numberVerified
+      //       ? {
+      //           "token": provider.user?.token ?? "",
+      //           "phone": mobile.text,
+      //           "name": name.text,
+      //           "display_name": displayName.text,
+      //           "phone_hash": appSignature,
+      //           "platform": Platform.operatingSystem,
+      //         }
+      //       : {
+      //           "token": provider.user?.token ?? "",
+      //           "display_name": displayName.text,
+      //           "phone_hash": appSignature,
+      //           "platform": Platform.operatingSystem,
+      //         };
+
+      //   try {
+      //     ApiResponse response = await provider.referLoginApi(request);
+      //     if (response.status) {
+      //       provider.updateUser(name: name.text, displayName: displayName.text);
+      //       Navigator.pop(navigatorKey.currentContext!);
+      //       referOTP(
+      //         phone: mobile.text,
+      //         appSignature: appSignature,
+      //         verificationId: "",
+      //         displayName: "",
+      //       );
+
+      //       // Navigator.push(
+      //       //     navigatorKey.currentContext!,
+      //       //     MaterialPageRoute(
+      //       //       builder: (_) => const ReferAFriend(),
+      //       //     ),
+      //       //   );
+      //     }
+      //   } catch (e) {
+      //     //
+      //   }
     }
   }
 

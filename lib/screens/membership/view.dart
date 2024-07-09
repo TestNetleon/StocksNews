@@ -5,6 +5,7 @@ import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -71,6 +72,16 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
+    String? colorHex = provider.user?.membership?.color;
+    Color? color;
+
+    if (colorHex != null && colorHex.isNotEmpty) {
+      colorHex = colorHex.replaceAll('#', '');
+      color = Color(int.parse('0xFF$colorHex'));
+      Utils().showLog("$color, $colorHex");
+    } else {
+      color = ThemeColors.background;
+    }
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -88,13 +99,7 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
           //   color: const Color.fromARGB(255, 253, 245, 4),
           // ),
           borderRadius: BorderRadius.circular(5),
-          color: provider.user?.membership?.displayName == "Gold"
-              ? const Color.fromARGB(255, 50, 48, 0)
-              : provider.user?.membership?.displayName == "Silver"
-                  ? const Color.fromARGB(255, 56, 56, 56)
-                  : provider.user?.membership?.displayName == "Bronze"
-                      ? const Color.fromARGB(255, 50, 27, 0)
-                      : ThemeColors.background,
+          color: color,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -20,8 +20,6 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/text_input_field_search.dart';
-
-import '../../providers/home_provider.dart';
 import '../../providers/user_provider.dart';
 
 //

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../api/api_response.dart';
@@ -53,7 +56,7 @@ class AskToSubscribeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // UserProvider userProvider = context.read<UserProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
 
     return Container(
       // padding: const EdgeInsets.all(16),
@@ -102,13 +105,15 @@ class AskToSubscribeDialog extends StatelessWidget {
                 // const SpacerVertical(height: 20),
                 // const SpacerVertical(height: 15),
                 Text(
-                  "Get More with Membership!",
+                  provider.extra?.membershipText?.title ??
+                      "Get More with Membership!",
                   style: stylePTSansBold(fontSize: 30),
                   textAlign: TextAlign.start,
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "This feature is exclusive to premium members. Please create an account before purchasing a membership.",
+                  provider.extra?.membershipText?.subTitle ??
+                      "This feature is exclusive to premium members. Please create an account before purchasing a membership.",
                   style: stylePTSansRegular(fontSize: 17),
                   textAlign: TextAlign.start,
                 ),
@@ -125,32 +130,36 @@ class AskToSubscribeDialog extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       itemBuilder: (context, index) {
+                        StepRes? apiData =
+                            provider.extra?.membershipText?.steps?[index];
+                        Utils().showLog("Not null ${apiData != null}");
                         StepRes? data;
-                        if (index == 0) {
-                          data = StepRes(
-                              title: "Add Stocks to Alerts and Watchlist",
-                              subTitle:
-                                  "Stay informed about your favorite stocks with real-time alerts and a personalized watchlist.");
-                        }
-                        if (index == 1) {
-                          data = StepRes(
-                              title: "Access Market Data",
-                              subTitle:
-                                  "Get up-to-the-minute market data to make informed investment decisions.");
-                        }
+                        if (apiData == null) {
+                          if (index == 0) {
+                            data = StepRes(
+                                title: "Add Stocks to Alerts and Watchlist",
+                                subTitle:
+                                    "Stay informed about your favorite stocks with real-time alerts and a personalized watchlist.");
+                          }
+                          if (index == 1) {
+                            data = StepRes(
+                                title: "Access Market Data",
+                                subTitle:
+                                    "Get up-to-the-minute market data to make informed investment decisions.");
+                          }
 
-                        if (index == 2) {
-                          data = StepRes(
-                              title:
-                                  "Connect Brokerage Account and Sync Portfolio",
-                              subTitle:
-                                  "Seamlessly integrate your brokerage account and keep your portfolio up to date.");
+                          if (index == 2) {
+                            data = StepRes(
+                                title:
+                                    "Connect Brokerage Account and Sync Portfolio",
+                                subTitle:
+                                    "Seamlessly integrate your brokerage account and keep your portfolio up to date.");
+                          }
                         }
-
                         return HowItWorkItem(
                           index: index,
                           subtitle: Colors.white,
-                          data: data,
+                          data: apiData ?? data,
                           icon: index == 0
                               ? Image.asset(
                                   Images.bellS,
@@ -176,7 +185,8 @@ class AskToSubscribeDialog extends StatelessWidget {
                           height: 40,
                         );
                       },
-                      itemCount: 3,
+                      itemCount:
+                          provider.extra?.membershipText?.steps?.length ?? 3,
                     ),
                   ],
                 ),

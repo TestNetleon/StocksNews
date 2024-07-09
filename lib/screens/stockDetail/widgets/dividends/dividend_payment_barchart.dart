@@ -25,7 +25,7 @@ class DividendPaymentBarchart extends StatelessWidget {
 
     // Find the maximum amount
     double maxAmount = amounts.reduce((a, b) => a > b ? a : b);
-    double minAmount = 0;
+    double minAmount = 0.0;
 
     double interval = (maxAmount - minAmount) / 4;
 
@@ -59,7 +59,7 @@ class DividendPaymentBarchart extends StatelessWidget {
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                interval: double.parse(interval.toStringAsFixed(3)),
+                interval: double.parse(interval.toStringAsFixed(2)),
                 reservedSize: 40,
                 getTitlesWidget: (value, meta) {
                   return Text(
@@ -93,7 +93,7 @@ class DividendPaymentBarchart extends StatelessWidget {
                       quarterTurns: 3,
                       child: Text(
                         provider.dividends!.chartInfo![index].label.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 10,
@@ -105,7 +105,7 @@ class DividendPaymentBarchart extends StatelessWidget {
               ),
             ),
           ),
-          gridData: FlGridData(show: true),
+          gridData: const FlGridData(show: true),
           borderData: FlBorderData(
             show: true,
           ),
