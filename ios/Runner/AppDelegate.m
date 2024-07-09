@@ -66,10 +66,24 @@
     [[FIRMessaging messaging] appDidReceiveMessage:userInfo];
     NSLog(@"%@", userInfo);
     
+//    if ([firebaseAuth canHandleNotification:userInfo]) {
+//        completionHandler(UIBackgroundFetchResultNoData);
+//        return;
+//    }
     if ([firebaseAuth canHandleNotification:userInfo]) {
-        completionHandler(UIBackgroundFetchResultNoData);
-        return;
-    }
+            // Ensure completion handler is called on the main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(UIBackgroundFetchResultNoData);
+            });
+            return;
+        }
+        
+        // If you have other tasks to handle, do them here and then call the completion handler.
+        
+        // Ensure completion handler is called in all code paths
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(UIBackgroundFetchResultNewData); // Or the appropriate result
+        });
 }
 
 @end

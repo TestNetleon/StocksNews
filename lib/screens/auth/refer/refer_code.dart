@@ -87,6 +87,16 @@ class _ReferLoginState extends State<ReferLogin> {
   bool checkBox = false;
 
   _checkProfile() {
+    UserRes? user = context.read<UserProvider>().user;
+
+    countryCode = user?.phoneCode == null || user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
+
+    log("Country Code => $countryCode");
+
     UserProvider provider = context.read<UserProvider>();
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
@@ -145,6 +155,7 @@ class _ReferLoginState extends State<ReferLogin> {
       );
     } else {
       if (!numberVerified) {
+        log("Phone Number $countryCode ${mobile.text}");
         showGlobalProgressDialog();
         await FirebaseAuth.instance.verifyPhoneNumber(
           // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
@@ -156,7 +167,11 @@ class _ReferLoginState extends State<ReferLogin> {
             closeGlobalProgressDialog();
             log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
             popUpAlert(
-              message: e.message ?? Const.errSomethingWrong,
+              message: e.code == "invalid-phone-number"
+                  ? "The format of the phone number provided is incorrect."
+                  : e.code == "too-many-requests"
+                      ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                      : e.message ?? Const.errSomethingWrong,
               title: "Alert",
               icon: Images.alertPopGIF,
             );
@@ -292,6 +307,9 @@ class _ReferLoginState extends State<ReferLogin> {
             "";
 
     return GestureDetector(
+      onTap: () {
+        closeKeyboard();
+      },
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: const BoxDecoration(
@@ -547,7 +565,7 @@ class _ReferLoginState extends State<ReferLogin> {
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     _formatter,
-                                    LengthLimitingTextInputFormatter(10)
+                                    LengthLimitingTextInputFormatter(15)
                                   ],
                                   textCapitalization: TextCapitalization.none,
                                 ),
@@ -559,8 +577,7 @@ class _ReferLoginState extends State<ReferLogin> {
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                                'Do not include +1 or an special character.',
+                            'Note: You will receive an OTP to verify mobile number.',
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
@@ -603,7 +620,7 @@ class _ReferLoginState extends State<ReferLogin> {
                                 },
                                 provider.extra?.verifyIdentity ?? "",
                                 textStyle:
-                                    stylePTSansRegular(color: Colors.grey),
+                                    stylePTSansRegular(color: Colors.white),
                               ),
                             ),
                           ],

@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -84,6 +83,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
 class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   final TextEditingController _controller = TextEditingController();
   int startTiming = 30;
+  String? verificationId;
   final FocusNode _otpFocusNode = FocusNode();
 
   Timer? _timer;
@@ -92,6 +92,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     super.initState();
     _listenCode();
     _startTime();
+    verificationId = widget.verificationId;
     _otpFocusNode.requestFocus();
   }
 
@@ -209,8 +210,20 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
       // phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
       phoneNumber: "${widget.countryCode}${widget.phone}",
       verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
+      verificationFailed: (FirebaseAuthException e) {
+        popUpAlert(
+          message: e.code == "invalid-phone-number"
+              ? "The format of the phone number provided is incorrect."
+              : e.code == "too-many-requests"
+                  ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                  : e.message ?? Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        verificationId = verificationId;
+      },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
@@ -230,7 +243,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
 
     // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: widget.verificationId,
+      verificationId: verificationId ?? widget.verificationId,
       smsCode: smsCode,
     );
 
@@ -263,7 +276,6 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         name: widget.name,
         phone: widget.phone,
         token: provider.user?.token ?? "",
-        affiliateStatus: 1,
         countryCode: widget.countryCode,
       );
       if (response.status) {
@@ -360,7 +372,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'We have sent the verification code \nto your phone number ${widget.phone}',
+                    'We have sent the verification code \nto your phone number ${widget.countryCode} ${widget.phone}',
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),
