@@ -29,6 +29,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
+import '../auth/membershipAsk/ask.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 import 'blog_mention_by.dart';
 
@@ -96,7 +97,7 @@ class BlogDetailContainer extends StatelessWidget {
         Navigator.pop(navigatorKey.currentContext!);
 
         if (provider.user?.phone == null || provider.user?.phone == '') {
-          await referLogin();
+          await membershipLogin();
         }
         if (provider.user?.phone != null && provider.user?.phone != '') {
           await RevenueCatService.initializeSubscription();

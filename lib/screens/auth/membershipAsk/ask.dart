@@ -30,9 +30,9 @@ import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
 import '../../contactUs/contact_us_item.dart';
 import '../../t&cAndPolicy/tc_policy.dart';
-import 'refer_otp.dart';
+import '../refer/refer_otp.dart';
 
-referLogin() async {
+membershipLogin() async {
   await showModalBottomSheet(
     useSafeArea: true,
     enableDrag: false,
@@ -49,24 +49,29 @@ referLogin() async {
       return DraggableScrollableSheet(
         maxChildSize: 1,
         initialChildSize: 1,
-        builder: (context, scrollController) => ReferLogin(
+        builder: (context, scrollController) => MembershipLoginAsk(
           scrollController: scrollController,
         ),
       );
+
+      // return const MembershipLoginAsk();
     },
   );
 }
 
-class ReferLogin extends StatefulWidget {
+class MembershipLoginAsk extends StatefulWidget {
   final ScrollController scrollController;
 
-  const ReferLogin({super.key, required this.scrollController});
+  const MembershipLoginAsk({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
-  State<ReferLogin> createState() => _ReferLoginState();
+  State<MembershipLoginAsk> createState() => _MembershipLoginAskState();
 }
 
-class _ReferLoginState extends State<ReferLogin> {
+class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   TextEditingController displayName = TextEditingController(text: "");
@@ -125,7 +130,9 @@ class _ReferLoginState extends State<ReferLogin> {
         title: "Alert",
         icon: Images.alertPopGIF,
       );
-    } else if (displayName.text.isEmpty) {
+    }
+    //
+    else if (displayName.text.isEmpty) {
       popUpAlert(
         message: "Please enter a valid display name.",
         title: "Alert",
@@ -179,8 +186,8 @@ class _ReferLoginState extends State<ReferLogin> {
         UserProvider provider = context.read<UserProvider>();
         Map request = {
           "token": provider.user?.token ?? "",
-          "display_name": displayName.text,
-          "name": name.text,
+          // "display_name": displayName.text,
+          // "name": name.text,
           "platform": Platform.operatingSystem,
           "affiliate_status": "1"
         };
@@ -194,10 +201,10 @@ class _ReferLoginState extends State<ReferLogin> {
           );
           if (res.status) {
             // setStatus(Status.loaded);
-            provider.updateUser(
-              affiliateStatus: 1,
-              displayName: displayName.text,
-            );
+            // provider.updateUser(
+            //   affiliateStatus: 1,
+            //   displayName: displayName.text,
+            // );
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.push(
               navigatorKey.currentContext!,
@@ -232,6 +239,9 @@ class _ReferLoginState extends State<ReferLogin> {
             "";
 
     return GestureDetector(
+      onTap: () {
+        closeKeyboard();
+      },
       child: Container(
         constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight - 30),
         decoration: const BoxDecoration(
@@ -263,7 +273,6 @@ class _ReferLoginState extends State<ReferLogin> {
         ),
         child: ListView(
           controller: widget.scrollController,
-          // physics: const NeverScrollableScrollPhysics(),
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -304,8 +313,7 @@ class _ReferLoginState extends State<ReferLogin> {
                       ),
                       const SpacerVertical(height: 4),
                       Text(
-                        provider.extra?.referLogin?.subTitle ??
-                            'In order to Join our Affiliate Program, please enter the following details.',
+                        'In order to purchase our membership, please enter the following details.',
                         style: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: 30),
@@ -373,10 +381,6 @@ class _ReferLoginState extends State<ReferLogin> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                      // padding: const EdgeInsets.symmetric(
-                                      //     // horizontal: 12,
-                                      //     // horizontal: 20,
-                                      //     ),
                                       decoration: BoxDecoration(
                                         border: Border(
                                           bottom: BorderSide(
@@ -403,7 +407,6 @@ class _ReferLoginState extends State<ReferLogin> {
                                             user?.phoneCode == "",
                                         onChanged: (CountryCode value) {
                                           countryCode = value.dialCode;
-                                          // log("Selected Log => ${value.dialCode}");
                                         },
                                         initialSelection: locale,
                                         showCountryOnly: false,
@@ -417,9 +420,6 @@ class _ReferLoginState extends State<ReferLogin> {
                                         boxDecoration: const BoxDecoration(
                                           color: ThemeColors.tabBack,
                                         ),
-                                        // builder: (CountryCode? country) {
-                                        //   log("Selected Log => ${country?.code}");
-                                        // },
                                         dialogTextStyle: styleGeorgiaBold(),
                                         barrierColor: Colors.black26,
                                         searchDecoration: InputDecoration(
@@ -435,32 +435,9 @@ class _ReferLoginState extends State<ReferLogin> {
                                           ),
                                           hintText: "Search country",
                                         ),
-                                      )
-
-                                      // Text(
-                                      //   "+1",
-                                      //   style: stylePTSansBold(
-                                      //     color: user?.phone == '' ||
-                                      //             user?.phone == null
-                                      //         ? ThemeColors.greyText
-                                      //         : ThemeColors.greyBorder,
-                                      //     fontSize: 18,
-                                      //   ),
-                                      // ),
-                                      ),
-                                  // Text(
-                                  //   "+1",
-                                  //   style: stylePTSansBold(
-                                  //     color: user?.phone == '' ||
-                                  //             user?.phone == null
-                                  //         ? ThemeColors.greyText
-                                  //         : ThemeColors.greyBorder,
-                                  //     fontSize: 18,
-                                  //   ),
-                                  // ),
+                                      )),
                                 ],
                               ),
-                              // const SpacerHorizontal(width: 2),
                               Flexible(
                                 child: ThemeInputField(
                                   fillColor:

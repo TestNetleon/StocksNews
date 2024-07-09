@@ -28,6 +28,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../service/ask_subscription.dart';
+import '../../auth/membershipAsk/ask.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
@@ -75,11 +76,18 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     }
   }
 
-  void _membership() {
-    askToSubscribe(
-      onPressed: () {
-        Navigator.pop(context);
-        RevenueCatService.initializeSubscription();
+  Future _membership() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    await askToSubscribe(
+      onPressed: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          await RevenueCatService.initializeSubscription();
+        }
       },
     );
   }
@@ -261,7 +269,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                   iconFront: true,
                                                   radius: 30,
                                                   icon: Icons.card_membership,
-                                                  onPressed: _membership,
+                                                  onPressed: () async =>
+                                                      _membership(),
                                                   textAlign: TextAlign.start,
                                                   mainAxisSize:
                                                       MainAxisSize.max,

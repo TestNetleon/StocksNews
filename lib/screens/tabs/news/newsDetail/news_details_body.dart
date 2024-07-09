@@ -34,6 +34,7 @@ import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
+import '../../../auth/membershipAsk/ask.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
@@ -165,11 +166,19 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
   }
 
-  void _membership() {
-    askToSubscribe(
-      onPressed: () {
-        Navigator.pop(context);
-        RevenueCatService.initializeSubscription();
+  Future _membership() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    await askToSubscribe(
+      onPressed: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          await RevenueCatService.initializeSubscription();
+        }
       },
     );
   }
@@ -710,7 +719,9 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               icon: Icons.card_membership,
                                               textAlign: TextAlign.start,
                                               mainAxisSize: MainAxisSize.max,
-                                              onPressed: _membership,
+                                              onPressed: () async {
+                                                await _membership();
+                                              },
                                               text:
                                                   "Upgrade Membership for more points",
                                               showArrow: false,

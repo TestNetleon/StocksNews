@@ -23,6 +23,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
 import '../../../../service/revenue_cat.dart';
 import '../../../../utils/dialogs.dart';
+import '../../../auth/membershipAsk/ask.dart';
+import '../../../auth/refer/refer_code.dart';
 import 'alert_popup.dart';
 import 'button.dart';
 
@@ -45,7 +47,14 @@ class AddToAlertWatchlist extends StatelessWidget {
   }
 
   Future _subscribe() async {
-    await RevenueCatService.initializeSubscription();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+    if (provider.user?.phone != null && provider.user?.phone != '') {
+      await RevenueCatService.initializeSubscription();
+    }
 
     // await popUpAlert(
     //   message: "setting your subscription",

@@ -5,13 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
+import '../../../../route/my_app.dart';
 import '../../../../service/revenue_cat.dart';
+import '../../../auth/refer/refer_code.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
@@ -29,17 +32,14 @@ class PopUpMenuButtonCommon extends StatelessWidget {
   });
 
   Future _subscribe() async {
-    await RevenueCatService.initializeSubscription();
-    // await popUpAlert(
-    //   message: "setting your subscription",
-    //   title: "NEW",
-    //   onTap: () async {
-    //     Navigator.pop(navigatorKey.currentContext!);
-    //     await navigatorKey.currentContext!
-    //         .read<UserProvider>()
-    //         .updateUser(subscriptionPurchased: 1);
-    //   },
-    // );
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+    if (provider.user?.phone != null && provider.user?.phone != '') {
+      await RevenueCatService.initializeSubscription();
+    }
   }
 
   @override
