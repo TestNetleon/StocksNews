@@ -6,6 +6,7 @@ import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/earnings/analyst_estimation.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/earnings/earning_history_item.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/earnings/eps_estimates_item.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
@@ -96,6 +97,13 @@ class _SdEarningsState extends State<SdEarnings> {
                   },
                 ),
                 const SpacerVertical(height: 20),
+                ScreenTitle(
+                  title:
+                      "${provider.tabRes?.keyStats?.name} Analyst EPS Estimates",
+                ),
+                const SpacerVertical(height: 10),
+                const EarningsAnalystEstimateLineChart(),
+                const SpacerVertical(height: 20),
                 Visibility(
                   visible:
                       provider.earnings?.epsEstimates?.isNotEmpty == true &&
@@ -104,17 +112,14 @@ class _SdEarningsState extends State<SdEarnings> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ScreenTitle(
-                        title:
-                            "${provider.tabRes?.keyStats?.name} Analyst EPS Estimates",
+                        title: "${provider.tabRes?.keyStats?.name} Analyst EPS Estimates",
                       ),
                       ListView.separated(
                         padding: const EdgeInsets.only(top: 0, bottom: 20),
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          EpsEstimate? data =
-                              provider.earnings?.epsEstimates?[index];
-
+                          EpsEstimate? data = provider.earnings?.epsEstimates?[index];
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -188,17 +193,14 @@ class _SdEarningsState extends State<SdEarnings> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ScreenTitle(
-                        title:
-                            "${provider.tabRes?.keyStats?.name} Earnings History by Quarter",
+                        title: "${provider.tabRes?.keyStats?.name} Earnings History by Quarter",
                       ),
                       ListView.separated(
                           padding: const EdgeInsets.only(top: 0, bottom: 20),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            EarningHistory? data =
-                                provider.earnings?.earningHistory?[index];
-
+                            EarningHistory? data = provider.earnings?.earningHistory?[index];
                             return Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -262,8 +264,7 @@ class _SdEarningsState extends State<SdEarnings> {
                               height: 20.sp,
                             );
                           },
-                          itemCount:
-                              provider.earnings?.earningHistory?.length ?? 0),
+                          itemCount: provider.earnings?.earningHistory?.length ?? 0),
                     ],
                   ),
                 ),
@@ -283,7 +284,6 @@ class _SdEarningsState extends State<SdEarnings> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           FaQsRes? data = provider.earnings?.faq?[index];
-
                           return SdFaqCard(
                             data: data,
                             index: index,
