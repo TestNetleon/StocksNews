@@ -47,13 +47,13 @@ class StocksContainer extends StatelessWidget {
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = provider.extra?.membership?.permissions
-            ?.any((element) => element == "stocks") ??
+    bool isLocked = provider.extra?.membership?.permissions?.any(
+            (element) => (element.key == "stocks" && element.status == 0)) ??
         false;
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "stocks") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) => (element.key == "stocks" && element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;

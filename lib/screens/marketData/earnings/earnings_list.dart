@@ -80,13 +80,14 @@ class _EarningsListState extends State<EarningsList> {
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = homeProvider.extra?.membership?.permissions
-            ?.any((element) => element == "earnings") ??
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) => (element.key == "earnings" && element.status == 0)) ??
         false;
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "earnings") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  (element.key == "earnings" && element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;
