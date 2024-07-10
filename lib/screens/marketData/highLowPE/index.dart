@@ -27,20 +27,24 @@ class HighLowPEIndex extends StatelessWidget {
     bool purchased = provider.user?.membership?.purchased == 1;
 
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
-            (element) =>
-                element == "high-pe-ratio-stocks" ||
-                element == "low-pe-ratio-stocks" ||
-                element == "high-pe-growth-stocks" ||
-                element == "low-pe-growth-stocks") ??
+          (element) =>
+              (element.key == "high-pe-ratio-stocks" && element.status == 0) ||
+              (element.key == "low-pe-ratio-stocks" && element.status == 0) ||
+              (element.key == "high-pe-growth-stocks" && element.status == 0) ||
+              (element.key == "low-pe-growth-stocks" && element.status == 0),
+        ) ??
         false;
 
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "high-pe-ratio-stocks" ||
-                  element == "low-pe-ratio-stocks" ||
-                  element == "high-pe-growth-stocks" ||
-                  element == "low-pe-growth-stocks") ??
+            (element) =>
+                (element.key == "high-pe-ratio-stocks" &&
+                    element.status == 1) ||
+                (element.key == "low-pe-ratio-stocks" && element.status == 1) ||
+                (element.key == "high-pe-growth-stocks" &&
+                    element.status == 1) ||
+                (element.key == "low-pe-growth-stocks" && element.status == 1),
+          ) ??
           false;
 
       isLocked = !havePermissions;

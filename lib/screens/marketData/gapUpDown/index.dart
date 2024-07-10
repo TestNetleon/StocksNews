@@ -27,14 +27,18 @@ class GapUpDownStocks extends StatelessWidget {
 
     bool purchased = provider.user?.membership?.purchased == 1;
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
-            (element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
+          (element) =>
+              (element.key == "gap-up-stocks" && element.status == 0) ||
+              (element.key == "gap-down-stocks" && element.status == 0),
+        ) ??
         false;
 
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+            (element) =>
+                (element.key == "gap-up-stocks" && element.status == 1) ||
+                (element.key == "gap-down-stocks" && element.status == 1),
+          ) ??
           false;
 
       isLocked = !havePermissions;

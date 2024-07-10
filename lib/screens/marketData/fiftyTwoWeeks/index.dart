@@ -24,12 +24,18 @@ class FiftyTwoWeeksIndex extends StatelessWidget {
 
     bool purchased = provider.user?.membership?.purchased == 1;
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
-            (element) => element == "week-highs" || element == "week-lows") ??
+          (element) =>
+              (element.key == "week-highs" && element.status == 0) ||
+              (element.key == "week-lows" && element.status == 0),
+        ) ??
         false;
 
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
-              (element) => element == "week-highs" || element == "week-lows") ??
+            (element) =>
+                (element.key == "week-highs" && element.status == 1) ||
+                (element.key == "week-lows" && element.status == 1),
+          ) ??
           false;
 
       isLocked = !havePermissions;
