@@ -646,12 +646,14 @@
 
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -742,7 +744,29 @@ class AddToAlertWatchlist extends StatelessWidget {
             iconData: Icons.add_alert_outlined,
             name: alertOn == 0 ? "Add to Alerts" : "Alert Added",
             onTap: () async {
-              if (showMembership) {
+              UserProvider provider = context.read<UserProvider>();
+              HomeProvider homeProvider = context.read<HomeProvider>();
+
+              bool purchased = provider.user?.membership?.purchased == 1;
+              bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+                    (element) =>
+                        (element.key == "add-alert" && element.status == 0),
+                  ) ??
+                  false;
+
+              if (purchased && isLocked) {
+                bool havePermissions =
+                    provider.user?.membership?.permissions?.any(
+                          (element) => (element.key == "add-alert" &&
+                              element.status == 1),
+                        ) ??
+                        false;
+
+                isLocked = !havePermissions;
+              }
+
+              if (isLocked) {
+                log("message *** ");
                 //For Membership
                 Utils().showLog("---For Membership");
                 if (provider.user != null && (purchased && alertPermission)) {
@@ -844,7 +868,28 @@ class AddToAlertWatchlist extends StatelessWidget {
             iconData: Icons.star_border,
             name: watchlistOn == 0 ? "Add to Watchlist" : "Watchlist Added",
             onTap: () async {
-              if (showMembership) {
+              UserProvider provider = context.read<UserProvider>();
+              HomeProvider homeProvider = context.read<HomeProvider>();
+
+              bool purchased = provider.user?.membership?.purchased == 1;
+              bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+                    (element) =>
+                        (element.key == "add-watchlist" && element.status == 0),
+                  ) ??
+                  false;
+
+              if (purchased && isLocked) {
+                bool havePermissions =
+                    provider.user?.membership?.permissions?.any(
+                          (element) => (element.key == "add-watchlist" &&
+                              element.status == 1),
+                        ) ??
+                        false;
+
+                isLocked = !havePermissions;
+              }
+
+              if (isLocked) {
                 //For Membership
                 Utils().showLog("---For Membership");
                 if (provider.user != null &&

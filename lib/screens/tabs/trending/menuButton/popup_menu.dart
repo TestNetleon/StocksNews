@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
@@ -77,55 +78,64 @@ class PopUpMenuButtonCommon extends StatelessWidget {
       ),
       itemBuilder: (BuildContext context) => <PopupMenuEntry<AddType>>[
         PopupMenuItem<AddType>(
-          // onTap: provider.user == null
-          //     ? () async {
-          //         isPhone ? await loginSheet() : await loginSheetTablet();
+          onTap: () async {
+            UserProvider provider = context.read<UserProvider>();
+            HomeProvider homeProvider = context.read<HomeProvider>();
 
-          //         if (context.read<UserProvider>().user == null) {
-          //           return;
-          //         }
-          //         onClickAlert();
-          //       }
-          //     : () => onClickAlert(),
+            bool purchased = provider.user?.membership?.purchased == 1;
+            bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+                  (element) =>
+                      (element.key == "add-alert" && element.status == 0),
+                ) ??
+                false;
 
-          onTap: showMembership
-              ? () async {
-                  if (provider.user != null && (purchased && isPresentAlert)) {
-                    await onClickAlert();
+            if (purchased && isLocked) {
+              bool havePermissions =
+                  provider.user?.membership?.permissions?.any(
+                        (element) =>
+                            (element.key == "add-alert" && element.status == 1),
+                      ) ??
+                      false;
+
+              isLocked = !havePermissions;
+            }
+
+            if (isLocked) {
+              if (provider.user != null && (purchased && isPresentAlert)) {
+                await onClickAlert();
+                return;
+              }
+
+              askToSubscribe(
+                onPressed: () async {
+                  Navigator.pop(context);
+
+                  if (provider.user == null) {
+                    isPhone ? await loginSheet() : await loginSheetTablet();
+                  }
+                  if (provider.user == null) {
                     return;
                   }
+                  if ((!purchased && !isPresentAlert)) {
+                    await _subscribe();
+                  }
 
-                  askToSubscribe(
-                    onPressed: () async {
-                      Navigator.pop(context);
+                  if ((purchased && isPresentAlert)) {
+                    await onClickAlert();
+                  }
+                },
+              );
+            } else if (provider.user == null) {
+              isPhone ? await loginSheet() : await loginSheetTablet();
 
-                      if (provider.user == null) {
-                        isPhone ? await loginSheet() : await loginSheetTablet();
-                      }
-                      if (provider.user == null) {
-                        return;
-                      }
-                      if ((!purchased && !isPresentAlert)) {
-                        await _subscribe();
-                      }
-
-                      if ((purchased && isPresentAlert)) {
-                        await onClickAlert();
-                      }
-                    },
-                  );
-                }
-              : provider.user == null
-                  ? () async {
-                      isPhone ? await loginSheet() : await loginSheetTablet();
-
-                      if (context.read<UserProvider>().user == null) {
-                        return;
-                      }
-                      onClickAlert();
-                    }
-                  : () => onClickAlert(),
-
+              if (context.read<UserProvider>().user == null) {
+                return;
+              }
+              onClickAlert();
+            } else {
+              onClickAlert();
+            }
+          },
           value: AddType.alert,
           child: Row(
             children: [
@@ -158,60 +168,60 @@ class PopUpMenuButtonCommon extends StatelessWidget {
         ),
         const PopupMenuDivider(height: 0),
         PopupMenuItem<AddType>(
-          // onTap: provider.user == null
-          //     // ? () => _login(context)
-          //     ? () async {
-          //         // await Navigator.push(
-          //         //   context,
-          //         //   createRoute(const Login()),
-          //         // );
-          //         isPhone ? await loginSheet() : await loginSheetTablet();
+          onTap: () async {
+            UserProvider provider = context.read<UserProvider>();
+            HomeProvider homeProvider = context.read<HomeProvider>();
+            bool purchased = provider.user?.membership?.purchased == 1;
+            bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+                  (element) =>
+                      (element.key == "add-watchlist" && element.status == 0),
+                ) ??
+                false;
+            if (purchased && isLocked) {
+              bool havePermissions =
+                  provider.user?.membership?.permissions?.any(
+                        (element) => (element.key == "add-watchlist" &&
+                            element.status == 1),
+                      ) ??
+                      false;
+              isLocked = !havePermissions;
+            }
+            if (isLocked) {
+              if (provider.user != null && (purchased && isPresentWatchlist)) {
+                await onClickWatchlist();
 
-          //         if (context.read<UserProvider>().user == null) {
-          //           return;
-          //         }
-          //         onClickWatchlist();
-          //       }
-          //     : () => onClickWatchlist(),
+                return;
+              }
 
-          onTap: showMembership
-              ? () async {
-                  if (provider.user != null &&
-                      (purchased && isPresentWatchlist)) {
-                    await onClickWatchlist();
+              askToSubscribe(
+                onPressed: () async {
+                  Navigator.pop(context);
 
+                  if (provider.user == null) {
+                    isPhone ? await loginSheet() : await loginSheetTablet();
+                  }
+                  if (provider.user == null) {
                     return;
                   }
+                  if ((!purchased && !isPresentWatchlist)) {
+                    await _subscribe();
+                  }
+                  if ((purchased && isPresentWatchlist)) {
+                    await onClickWatchlist();
+                  }
+                },
+              );
+            } else if (provider.user == null) {
+              isPhone ? await loginSheet() : await loginSheetTablet();
 
-                  askToSubscribe(
-                    onPressed: () async {
-                      Navigator.pop(context);
-
-                      if (provider.user == null) {
-                        isPhone ? await loginSheet() : await loginSheetTablet();
-                      }
-                      if (provider.user == null) {
-                        return;
-                      }
-                      if ((!purchased && !isPresentWatchlist)) {
-                        await _subscribe();
-                      }
-                      if ((purchased && isPresentWatchlist)) {
-                        await onClickWatchlist();
-                      }
-                    },
-                  );
-                }
-              : provider.user == null
-                  ? () async {
-                      isPhone ? await loginSheet() : await loginSheetTablet();
-
-                      if (context.read<UserProvider>().user == null) {
-                        return;
-                      }
-                      onClickWatchlist();
-                    }
-                  : () => onClickWatchlist(),
+              if (context.read<UserProvider>().user == null) {
+                return;
+              }
+              onClickWatchlist();
+            } else {
+              onClickWatchlist();
+            }
+          },
           value: AddType.watchlist,
           child: Row(
             children: [
