@@ -29,18 +29,35 @@ class MostActiveIndex extends StatelessWidget {
 
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
-                element == "most-active-stocks" ||
-                element == "most-voliatile-stocks" ||
-                element == "unusual-volume-stocks") ??
+                (element.key == "most-active-stocks" && element.status == 0) ||
+                (element.key == "most-voliatile-stocks" &&
+                    element.status == 0) ||
+                (element.key == "unusual-volume-stocks" &&
+                    element.status == 0)) ??
         false;
+    // bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+    //         (element) =>
+    //             element == "most-active-stocks" ||
+    //             element == "most-voliatile-stocks" ||
+    //             element == "unusual-volume-stocks") ??
+    //     false;
 
     if (purchased && isLocked) {
       bool havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "most-active-stocks" ||
-                  element == "most-voliatile-stocks" ||
-                  element == "unusual-volume-stocks") ??
+                  (element.key == "most-active-stocks" &&
+                      element.status == 1) ||
+                  (element.key == "most-voliatile-stocks" &&
+                      element.status == 1) ||
+                  (element.key == "unusual-volume-stocks" &&
+                      element.status == 1)) ??
           false;
+      // bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      //         (element) =>
+      //             element == "most-active-stocks" ||
+      //             element == "most-voliatile-stocks" ||
+      //             element == "unusual-volume-stocks") ??
+      //     false;
 
       isLocked = !havePermissions;
     }

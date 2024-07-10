@@ -67,16 +67,26 @@ class LowPriceStocksData extends StatelessWidget {
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
     bool isLocked = provider.extra?.membership?.permissions?.any((element) =>
-            element == "low-priced-stocks-under" ||
-            element == "stocks-on-sale") ??
+            (element.key == "low-priced-stocks-under" && element.status == 0) ||
+            (element.key == "stocks-on-sale" && element.status == 0)) ??
         false;
+    // bool isLocked = provider.extra?.membership?.permissions?.any((element) =>
+    //         element == "low-priced-stocks-under" ||
+    //         element == "stocks-on-sale") ??
+    //     false;
 
     if (purchased && isLocked) {
       bool havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "low-priced-stocks-under" ||
-                  element == "stocks-on-sale") ??
+                  (element.key == "low-priced-stocks-under" &&
+                      element.status == 1) ||
+                  (element.key == "stocks-on-sale" && element.status == 1)) ??
           false;
+      // bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      //         (element) =>
+      //             element == "low-priced-stocks-under" ||
+      //             element == "stocks-on-sale") ??
+      //     false;
 
       isLocked = !havePermissions;
     }
