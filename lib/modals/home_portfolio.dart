@@ -97,6 +97,7 @@ class PortfolioTop {
   final String? p1;
   final String? p2;
   final String? p3;
+  final String? portfolioEarnPoint;
 
   PortfolioTop({
     this.title,
@@ -104,6 +105,7 @@ class PortfolioTop {
     this.p1,
     this.p2,
     this.p3,
+    this.portfolioEarnPoint,
   });
 
   factory PortfolioTop.fromJson(Map<String, dynamic> json) => PortfolioTop(
@@ -112,6 +114,7 @@ class PortfolioTop {
         p1: json['p1'],
         p2: json['p2'],
         p3: json['p3'],
+        portfolioEarnPoint: json['portfolio_earn_point'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,6 +123,7 @@ class PortfolioTop {
         'p1': p1,
         'p2': p2,
         'p3': p3,
+        'portfolio_earn_point': portfolioEarnPoint,
       };
 }
 

@@ -339,10 +339,9 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                     ),
                                     child: CountryCodePicker(
                                       padding: EdgeInsets.zero,
-                                      // enabled: user?.phoneCode == null ||
-                                      //     user?.phoneCode == "",
-
-                                      enabled: true,
+                                      enabled: user?.phoneCode == null ||
+                                          user?.phoneCode == "",
+                                      // enabled: true,
                                       onChanged: (CountryCode value) {
                                         countryCode = value.dialCode;
                                         setState(() {});
@@ -373,6 +372,21 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                           color: Colors.grey,
                                         ),
                                         hintText: "Search country",
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: BorderSide.none,
+                                        ),
                                       ),
                                     ),
                                   ),
