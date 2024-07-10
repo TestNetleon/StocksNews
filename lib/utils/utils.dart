@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
@@ -669,7 +668,6 @@ void handleNavigation({
     isAppUpdating = false;
   }
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-
   // String slugForTicker = extractLastPathComponent(uri);
   bool userPresent = false;
 
@@ -774,14 +772,13 @@ void handleNavigation({
     }
     // } else if (type == "dashboard") {
   } else if (type == DeeplinkEnum.dashboard) {
-    if (fromBackground) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-    }
+    // if (fromBackground) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
+    // }
     // } else if (type == "page") {
   } else if (type == DeeplinkEnum.page) {
     if (fromBackground) {

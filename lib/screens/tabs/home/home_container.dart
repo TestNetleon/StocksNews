@@ -169,9 +169,7 @@ class HomeContainer extends StatelessWidget {
                     ),
                     Visibility(
                       visible: !provider.isLoadingTrending &&
-                          (provider.homeTrendingRes?.trendingNews?.isNotEmpty ==
-                                  true &&
-                              provider.homeTrendingRes?.trendingNews != null),
+                          (provider.homeTrendingRes?.trendingNews?.isNotEmpty == true && provider.homeTrendingRes?.trendingNews != null),
                       child: Container(
                         margin: const EdgeInsets.only(top: Dimen.homeSpacing),
                         child: Column(

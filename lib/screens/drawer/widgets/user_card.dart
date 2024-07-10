@@ -11,8 +11,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../providers/leaderboard.dart';
 import '../../../utils/colors.dart';
 
+import '../../../utils/constants.dart';
 import '../../auth/membershipAsk/ask.dart';
-import '../../auth/refer/refer_code.dart';
 import '../../myAccount/widgets/my-account_header.dart';
 import 'profile_image.dart';
 
@@ -43,15 +43,17 @@ class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = context.watch<UserProvider>();
-
     return Column(
       children: [
         Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(
-                  bottom:
-                      userProvider.user?.membership?.purchased == 1 ? 0 : 50),
+              margin: showMembership
+                  ? EdgeInsets.only(
+                      bottom: userProvider.user?.membership?.purchased == 1
+                          ? 0
+                          : 50)
+                  : null,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -106,97 +108,106 @@ class _UserCardState extends State<UserCard> {
                       ),
                     ],
                   ),
-                  const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 30,
+                  Visibility(
+                    visible: showMembership,
+                    child: const Divider(
+                      color: ThemeColors.greyBorder,
+                      height: 30,
+                    ),
                   ),
-                  InkWell(
-                    onTap: userProvider.user?.membership?.purchased == 1
-                        ? () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const MembershipIndex();
-                                },
+                  Visibility(
+                    visible: showMembership,
+                    child: InkWell(
+                      onTap: userProvider.user?.membership?.purchased == 1
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const MembershipIndex();
+                                  },
+                                ),
+                              );
+                            }
+                          : null,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Current Plan",
+                            style: stylePTSansBold(fontSize: 18),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: ThemeColors.white,
+                              border: Border(
+                                bottom: BorderSide(
+                                    color: userProvider
+                                                .user?.membership?.purchased ==
+                                            1
+                                        ? const Color.fromARGB(255, 253, 245, 4)
+                                        : const Color.fromARGB(
+                                            255, 113, 113, 113),
+                                    width: 1.2),
                               ),
-                            );
-                          }
-                        : null,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Current Plan",
-                          style: stylePTSansBold(fontSize: 18),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: ThemeColors.white,
-                            border: Border(
-                              bottom: BorderSide(
+                              gradient: LinearGradient(
+                                colors: userProvider
+                                            .user?.membership?.purchased ==
+                                        1
+                                    ? [
+                                        const Color.fromARGB(255, 242, 234, 12),
+                                        const Color.fromARGB(255, 186, 181, 53),
+                                      ]
+                                    : [
+                                        Colors.white,
+                                        Colors.grey,
+                                      ],
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 0,
+                                  spreadRadius: 1,
+                                  offset: const Offset(0, 1),
                                   color: userProvider
                                               .user?.membership?.purchased ==
                                           1
-                                      ? const Color.fromARGB(255, 253, 245, 4)
+                                      ? const Color.fromARGB(255, 242, 234, 12)
                                       : const Color.fromARGB(
-                                          255, 113, 113, 113),
-                                  width: 1.2),
-                            ),
-                            gradient: LinearGradient(
-                              colors: userProvider
-                                          .user?.membership?.purchased ==
-                                      1
-                                  ? [
-                                      const Color.fromARGB(255, 242, 234, 12),
-                                      const Color.fromARGB(255, 186, 181, 53),
-                                    ]
-                                  : [
-                                      Colors.white,
-                                      Colors.grey,
-                                    ],
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 0,
-                                spreadRadius: 1,
-                                offset: const Offset(0, 1),
-                                color: userProvider
-                                            .user?.membership?.purchased ==
-                                        1
-                                    ? const Color.fromARGB(255, 242, 234, 12)
-                                    : const Color.fromARGB(255, 156, 153, 153),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          child: userProvider.user?.membership?.purchased == 0
-                              ? Text(
-                                  "Free",
-                                  style: stylePTSansBold(color: Colors.black),
-                                )
-                              : Text(
-                                  userProvider.user?.membership?.displayName ==
-                                              null ||
-                                          userProvider.user?.membership
-                                                  ?.displayName ==
-                                              ''
-                                      ? "N/A"
-                                      : "${userProvider.user?.membership?.displayName}",
-                                  style: stylePTSansBold(color: Colors.black),
+                                          255, 156, 153, 153),
                                 ),
-                        ),
-                      ],
+                              ],
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            child: userProvider.user?.membership?.purchased == 0
+                                ? Text(
+                                    "Free",
+                                    style: stylePTSansBold(color: Colors.black),
+                                  )
+                                : Text(
+                                    userProvider.user?.membership
+                                                    ?.displayName ==
+                                                null ||
+                                            userProvider.user?.membership
+                                                    ?.displayName ==
+                                                ''
+                                        ? "N/A"
+                                        : "${userProvider.user?.membership?.displayName}",
+                                    style: stylePTSansBold(color: Colors.black),
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Visibility(
-              visible: userProvider.user?.membership?.purchased != null &&
-                  userProvider.user?.membership?.purchased == 0,
+              visible: (userProvider.user?.membership?.purchased != null &&
+                      userProvider.user?.membership?.purchased == 0) &&
+                  showMembership,
               child: Positioned(
                 right: 10,
                 left: 10,

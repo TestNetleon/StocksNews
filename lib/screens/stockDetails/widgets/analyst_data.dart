@@ -273,37 +273,40 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                 ),
                                                 const SpacerVertical(
                                                     height: 10),
-                                                ThemeButtonSmall(
-                                                  color: const Color.fromARGB(
-                                                      255, 194, 216, 51),
-                                                  textColor: Colors.black,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 11),
-                                                  textSize: 15,
-                                                  fontBold: true,
-                                                  iconWidget: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 10),
-                                                    child: Image.asset(
-                                                      Images.membership,
-                                                      height: 20,
-                                                      width: 20,
+                                                Visibility(
+                                                  visible: showMembership,
+                                                  child: ThemeButtonSmall(
+                                                    color: const Color.fromARGB(
+                                                        255, 194, 216, 51),
+                                                    textColor: Colors.black,
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 5,
+                                                        vertical: 11),
+                                                    textSize: 15,
+                                                    fontBold: true,
+                                                    iconWidget: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 10),
+                                                      child: Image.asset(
+                                                        Images.membership,
+                                                        height: 20,
+                                                        width: 20,
+                                                      ),
                                                     ),
+                                                    iconFront: true,
+                                                    radius: 30,
+                                                    icon: Icons.card_membership,
+                                                    onPressed: () async =>
+                                                        _membership(),
+                                                    textAlign: TextAlign.start,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    text:
+                                                        "Upgrade Membership for more points",
+                                                    // showArrow: false,
                                                   ),
-                                                  iconFront: true,
-                                                  radius: 30,
-                                                  icon: Icons.card_membership,
-                                                  onPressed: () async =>
-                                                      _membership(),
-                                                  textAlign: TextAlign.start,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  text:
-                                                      "Upgrade Membership for more points",
-                                                  // showArrow: false,
                                                 ),
                                               ],
                                             )

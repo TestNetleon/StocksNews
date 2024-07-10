@@ -56,7 +56,7 @@ class RecommandedForcastingChart extends StatelessWidget {
                           thickness: 1,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 110.0),
+                          padding: const EdgeInsets.only(left: 100.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -102,7 +102,7 @@ class RecommandedForcastingChart extends StatelessWidget {
                         Row(
                           children: [
                             SizedBox(
-                              width: 100.sp,
+                              width: 80.sp,
                               child: Text(
                                 "${data?[index].period?.capitalize().replaceAll('_', ' ')}",
                                 // '1M ago',
@@ -208,7 +208,7 @@ class RecommandedForcastingChart extends StatelessWidget {
                   return Row(
                     children: [
                       SizedBox(
-                        width: 100.sp,
+                        width: 80.sp,
                         child: Text(
                           data![index]
                               .period!

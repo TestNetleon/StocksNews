@@ -59,7 +59,7 @@ class DividendPaymentBarchart extends StatelessWidget {
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                interval: double.parse(interval.toStringAsFixed(2)),
+                interval: double.parse(interval.toStringAsFixed(3)),
                 reservedSize: 40,
                 getTitlesWidget: (value, meta) {
                   return Text(
@@ -83,8 +83,8 @@ class DividendPaymentBarchart extends StatelessWidget {
                   if (index < 0 ||
                       index >= provider.dividends!.chartInfo!.length) {
                     Utils().showLog(
-                        "data lenght is checking${provider.dividends!.chartInfo!.length}");
-                    return SizedBox.shrink();
+                        "checking data lenght ${provider.dividends!.chartInfo!.length}");
+                    return const SizedBox.shrink();
                   }
                   return SideTitleWidget(
                     axisSide: meta.axisSide,

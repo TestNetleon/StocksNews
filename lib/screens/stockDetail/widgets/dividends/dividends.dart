@@ -99,14 +99,16 @@ class _SdDividendsState extends State<SdDividends> {
                         },
                       ),
                       const SpacerVertical(height: 10),
-                      Container(
-                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
-                        child: HomePartialLoading(
-                          loadingWidget: const Loading(),
-                          loading: provider.isLoadingDividends,
-                          child: const DividendInnerTabs(),
+                      if (provider.dividends?.chartInfo != null &&
+                          provider.dividends!.chartInfo!.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                          child: HomePartialLoading(
+                            loadingWidget: const Loading(),
+                            loading: provider.isLoadingDividends,
+                            child: const DividendInnerTabs(),
+                          ),
                         ),
-                      ),
                       // const DividendPaymentLineChart(),
                       // const SpacerVertical(height: 20),
                       // const DividendPaymentBarchart(),

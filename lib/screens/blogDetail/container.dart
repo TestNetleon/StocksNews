@@ -409,6 +409,15 @@ class BlogDetailContainer extends StatelessWidget {
                                   textSize: 15,
                                   fontBold: true,
                                   iconFront: true,
+                                  iconWidget: Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Image.asset(
+                                      Images.referAndEarn,
+                                      height: 18,
+                                      width: 18,
+                                      color: ThemeColors.white,
+                                    ),
+                                  ),
                                   icon: Icons.earbuds_rounded,
                                   mainAxisSize: MainAxisSize.max,
                                   onPressed: () async {
@@ -418,22 +427,35 @@ class BlogDetailContainer extends StatelessWidget {
                                   radius: 30,
                                 ),
                                 const SpacerVertical(height: 10),
-                                ThemeButtonSmall(
-                                  color:
-                                      const Color.fromARGB(255, 194, 216, 51),
-                                  textColor: Colors.black,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 11),
-                                  textSize: 15,
-                                  fontBold: true,
-                                  iconFront: true,
-                                  radius: 30,
-                                  icon: Icons.card_membership,
-                                  onPressed: () async {
-                                    await _membership();
-                                  },
-                                  textAlign: TextAlign.start,
-                                  mainAxisSize: MainAxisSize.max,
+                                Visibility(
+                                  visible: showMembership,
+                                  child: ThemeButtonSmall(
+                                    color:
+                                        const Color.fromARGB(255, 194, 216, 51),
+                                    textColor: Colors.black,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 11),
+                                    textSize: 15,
+                                    fontBold: true,
+                                    iconFront: true,
+                                    iconWidget: Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Image.asset(
+                                        Images.membership,
+                                        height: 18,
+                                        width: 18,
+                                        color: ThemeColors.white,
+                                      ),
+                                    ),
+                                    radius: 30,
+                                    icon: Icons.card_membership,
+                                    text: "Upgrade Membership for more points",
+                                    onPressed: () async {
+                                      await _membership();
+                                    },
+                                    textAlign: TextAlign.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                  ),
                                 ),
                               ],
                             ),

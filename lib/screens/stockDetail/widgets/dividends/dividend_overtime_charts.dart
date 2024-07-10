@@ -31,20 +31,22 @@ class DividendPaymentLineChart extends StatelessWidget {
     // Find the maximum amount
     double maxAmount =
         spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
-    double minAmount = 0.0;
-    double interval = (maxAmount - minAmount) / 4;
+    // double minAmount = 0.0;
+    double interval = (maxAmount / 4).ceilToDouble();
+    double yAxisInterval = 0.5;
 
     return AspectRatio(
       aspectRatio: 1.10,
       child: LineChart(
         LineChartData(
-          minY: minAmount,
+          maxY: maxAmount + yAxisInterval,
           // maxY: maxAmount,
+          minY: 0.0,
           titlesData: FlTitlesData(
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                interval: double.parse(interval.toStringAsFixed(2)),
+                interval: yAxisInterval,
                 reservedSize: 30,
                 getTitlesWidget: (value, meta) {
                   Utils().showLog(interval);
@@ -79,7 +81,7 @@ class DividendPaymentLineChart extends StatelessWidget {
                       quarterTurns: 3,
                       child: Text(
                         provider.dividends!.chartInfo![index].label.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 10,
@@ -91,7 +93,7 @@ class DividendPaymentLineChart extends StatelessWidget {
               ),
             ),
           ),
-          gridData: FlGridData(show: true),
+          gridData: const FlGridData(show: true),
           borderData: FlBorderData(
             show: true,
           ),
@@ -102,7 +104,7 @@ class DividendPaymentLineChart extends StatelessWidget {
               color: Colors.green,
               barWidth: 4,
               // belowBarData: BarAreaData(show: true, color: Colors.green),
-              dotData: FlDotData(show: false),
+              dotData: const FlDotData(show: false),
             ),
           ],
           lineTouchData: LineTouchData(
@@ -117,7 +119,7 @@ class DividendPaymentLineChart extends StatelessWidget {
                   String formattedDate = DateFormat("MMM d").format(date);
                   return LineTooltipItem(
                     textAlign: TextAlign.start,
-                    '${data.label} $formattedDate\n ${data.amount}',
+                    '${data.label} $formattedDate\n ${data.chartInfoYield}',
                     const TextStyle(color: Colors.black),
                   );
                 }).toList();

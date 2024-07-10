@@ -14,7 +14,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:provider/provider.dart';
 import '../../../../route/my_app.dart';
 import '../../../../service/revenue_cat.dart';
-import '../../../auth/refer/refer_code.dart';
 
 class PopUpMenuButtonCommon extends StatelessWidget {
   final String symbol;
@@ -88,32 +87,43 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           //       }
           //     : () => onClickAlert(),
 
-          onTap: () async {
-            if (provider.user != null && (purchased && isPresentAlert)) {
-              await onClickAlert();
-              return;
-            }
+          onTap: showMembership
+              ? () async {
+                  if (provider.user != null && (purchased && isPresentAlert)) {
+                    await onClickAlert();
+                    return;
+                  }
 
-            askToSubscribe(
-              onPressed: () async {
-                Navigator.pop(context);
+                  askToSubscribe(
+                    onPressed: () async {
+                      Navigator.pop(context);
 
-                if (provider.user == null) {
-                  isPhone ? await loginSheet() : await loginSheetTablet();
-                }
-                if (provider.user == null) {
-                  return;
-                }
-                if ((!purchased && !isPresentAlert)) {
-                  await _subscribe();
-                }
+                      if (provider.user == null) {
+                        isPhone ? await loginSheet() : await loginSheetTablet();
+                      }
+                      if (provider.user == null) {
+                        return;
+                      }
+                      if ((!purchased && !isPresentAlert)) {
+                        await _subscribe();
+                      }
 
-                if ((purchased && isPresentAlert)) {
-                  await onClickAlert();
+                      if ((purchased && isPresentAlert)) {
+                        await onClickAlert();
+                      }
+                    },
+                  );
                 }
-              },
-            );
-          },
+              : provider.user == null
+                  ? () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
+
+                      if (context.read<UserProvider>().user == null) {
+                        return;
+                      }
+                      onClickAlert();
+                    }
+                  : () => onClickAlert(),
 
           value: AddType.alert,
           child: Row(
@@ -163,32 +173,44 @@ class PopUpMenuButtonCommon extends StatelessWidget {
           //       }
           //     : () => onClickWatchlist(),
 
-          onTap: () async {
-            if (provider.user != null && (purchased && isPresentWatchlist)) {
-              await onClickWatchlist();
+          onTap: showMembership
+              ? () async {
+                  if (provider.user != null &&
+                      (purchased && isPresentWatchlist)) {
+                    await onClickWatchlist();
 
-              return;
-            }
+                    return;
+                  }
 
-            askToSubscribe(
-              onPressed: () async {
-                Navigator.pop(context);
+                  askToSubscribe(
+                    onPressed: () async {
+                      Navigator.pop(context);
 
-                if (provider.user == null) {
-                  isPhone ? await loginSheet() : await loginSheetTablet();
+                      if (provider.user == null) {
+                        isPhone ? await loginSheet() : await loginSheetTablet();
+                      }
+                      if (provider.user == null) {
+                        return;
+                      }
+                      if ((!purchased && !isPresentWatchlist)) {
+                        await _subscribe();
+                      }
+                      if ((purchased && isPresentWatchlist)) {
+                        await onClickWatchlist();
+                      }
+                    },
+                  );
                 }
-                if (provider.user == null) {
-                  return;
-                }
-                if ((!purchased && !isPresentWatchlist)) {
-                  await _subscribe();
-                }
-                if ((purchased && isPresentWatchlist)) {
-                  await onClickWatchlist();
-                }
-              },
-            );
-          },
+              : provider.user == null
+                  ? () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
+
+                      if (context.read<UserProvider>().user == null) {
+                        return;
+                      }
+                      onClickWatchlist();
+                    }
+                  : () => onClickWatchlist(),
           value: AddType.watchlist,
           child: Row(
             children: [

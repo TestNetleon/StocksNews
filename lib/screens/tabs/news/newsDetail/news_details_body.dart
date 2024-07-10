@@ -714,37 +714,41 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               text: "Refer and Earn",
                                             ),
                                             const SpacerVertical(height: 10),
-                                            ThemeButtonSmall(
-                                              color: const Color.fromARGB(
-                                                  255, 194, 216, 51),
-                                              textColor: Colors.black,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 11),
-                                              textSize: 15,
-                                              fontBold: true,
-                                              iconFront: true,
-                                              radius: 30,
-                                              icon: Icons.card_membership,
-                                              textAlign: TextAlign.start,
-                                              iconWidget: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10),
-                                                child: Image.asset(
-                                                  Images.membership,
-                                                  height: 18,
-                                                  width: 18,
-                                                  color: ThemeColors.white,
+                                            Visibility(
+                                              visible: showMembership,
+                                              child: ThemeButtonSmall(
+                                                color: const Color.fromARGB(
+                                                    255, 194, 216, 51),
+                                                textColor: Colors.black,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5,
+                                                        vertical: 11),
+                                                textSize: 15,
+                                                fontBold: true,
+                                                iconFront: true,
+                                                radius: 30,
+                                                icon: Icons.card_membership,
+                                                textAlign: TextAlign.start,
+                                                iconWidget: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 10),
+                                                  child: Image.asset(
+                                                    Images.membership,
+                                                    height: 18,
+                                                    width: 18,
+                                                    color: ThemeColors.white,
+                                                  ),
                                                 ),
+                                                mainAxisSize: MainAxisSize.max,
+                                                onPressed: () async {
+                                                  await _membership();
+                                                },
+                                                text:
+                                                    "Upgrade Membership for more points",
+                                                showArrow: false,
                                               ),
-                                              mainAxisSize: MainAxisSize.max,
-                                              onPressed: () async {
-                                                await _membership();
-                                              },
-                                              text:
-                                                  "Upgrade Membership for more points",
-                                              showArrow: false,
                                             ),
                                           ],
                                         ),

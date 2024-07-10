@@ -430,10 +430,20 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                           size: 22,
                         ),
                         filled: true,
-                        hintStyle: stylePTSansRegular(
-                          color: Colors.grey,
-                        ),
+                        hintStyle: stylePTSansRegular(color: Colors.grey),
                         hintText: "Search country",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
