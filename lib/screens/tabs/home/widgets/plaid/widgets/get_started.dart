@@ -134,7 +134,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = context.watch<UserProvider>();
+    // UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
     return Column(
       children: [

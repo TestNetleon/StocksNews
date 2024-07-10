@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -931,10 +932,18 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (_) => WebviewLink(
-                                              stringURL: morningStar?.pdfUrl),
+                                          builder: (_) => PdfViewerWidget(
+                                            url: morningStar?.pdfUrl,
+                                          ),
                                         ),
                                       );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (_) => WebviewLink(
+                                      //         stringURL: morningStar?.pdfUrl),
+                                      //   ),
+                                      // );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
