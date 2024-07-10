@@ -53,6 +53,8 @@ bool onDeepLinking = false;
 bool splashLoaded = false;
 String? fcmTokenGlobal;
 String? appVersion;
+bool showMembership = true;
+
 // String? clientId;
 // String? secret;
 // String? createAPI;

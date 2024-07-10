@@ -3,7 +3,6 @@ import 'package:stocks_news_new/modals/stockDetailRes/sd_news.dart';
 import 'package:stocks_news_new/screens/tabs/news/aiNews/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';

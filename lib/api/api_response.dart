@@ -98,6 +98,7 @@ class Extra {
   final LoginDialogRes? loginDialogRes;
   final UserMembershipRes? membership;
   final String? aiTitle;
+  final bool? showMembership;
 
   Extra({
     this.feebackType,
@@ -109,7 +110,7 @@ class Extra {
     this.howItWork,
     this.membershipText,
     this.aiTitle,
-
+    this.showMembership,
     // this.subscription,
     this.exchangeShortName,
     this.priceRange,
@@ -160,6 +161,7 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        showMembership: json["show_membership"],
         feebackType: json["feeback_type"] == null
             ? []
             : List<String>.from(json["feeback_type"]!.map((x) => x)),
@@ -273,9 +275,9 @@ class Extra {
         "search": search,
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
+        "show_membership": showMembership,
         "verify_identity_text": verifyIdentity,
         "verify_membership_text": verifySubscription,
-
         "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,

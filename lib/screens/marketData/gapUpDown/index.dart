@@ -9,7 +9,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import '../../../providers/gap_up_provider.dart';
 import '../../../providers/home_provider.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';

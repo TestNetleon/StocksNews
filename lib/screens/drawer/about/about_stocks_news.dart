@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -220,7 +219,9 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                 itemBuilder: (context, index) {
                   if (index == 1) {
                     return Visibility(
-                      visible: user != null && user.membership?.purchased == 1,
+                      visible:
+                          (user != null && user.membership?.purchased == 1) &&
+                              showMembership,
                       child: AboutTile(
                           index: index, onTap: aboutTiles[index].onTap),
                     );
