@@ -77,6 +77,7 @@ Future<ApiResponse> apiRequest({
   // *********** debug prints only **********
   Utils().showLog("URL  =  ${baseUrl + url}");
   Utils().showLog("HEADERS  =  ${headers.toString()}");
+
   if (formData != null) {
     Utils().showLog(
       "REQUEST  =  ${formData.fields.map((entry) => '${entry.key}: ${entry.value}').join(', ')}",

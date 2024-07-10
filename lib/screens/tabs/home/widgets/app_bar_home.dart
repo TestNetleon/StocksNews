@@ -58,41 +58,8 @@ class _AppBarHomeState extends State<AppBarHome> {
       leading: widget.isPopback
           ? IconButton(
               onPressed: () {
-                // final navObserver = Provider.of<CustomNavigatorObserver>(
-                //     context,
-                //     listen: false);
-
-                // log("ROUT COUNT =>  ${CustomNavigatorObserver().stackCount}");
-
-                // if (popHome || deepLinkData != null) {
-                //   Navigator.pushAndRemoveUntil(
-                //       context, Tabs.path, (route) => false);
-                //   popHome = false;
-                //   deepLinkData = null;
-                // }
-                // if (navigatorKey.currentState != null &&
-                //     navigatorKey.currentState!.canPop()) {
-                //   if (popHome) {
-                //     Navigator.pushAndRemoveUntil(
-                //         context, Tabs.path, (route) => false);
-                //     popHome = false;
-                //   } else {
-                //     navigatorKey.currentContext!
-                //         .read<SearchProvider>()
-                //         .clearSearch();
-                //     Navigator.pop(navigatorKey.currentContext!);
-                //   }
-                // } else {
-                //   Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(builder: (_) => const Splash()),
-                //   );
-                // }
                 if (popHome) {
-                  // final navObserver = Provider.of<CustomNavigatorObserver>(
-                  //     context,
-                  //     listen: false);
-                  if (CustomNavigatorObserver().stackCount > 2) {
+                  if (CustomNavigatorObserver().stackCount >= 2) {
                     Navigator.pop(navigatorKey.currentContext!);
                   } else {
                     Navigator.popUntil(
@@ -104,21 +71,18 @@ class _AppBarHomeState extends State<AppBarHome> {
                     popHome = false;
                   }
                 } else {
-                  // navigatorKey.currentContext!
-                  //     .read<SearchProvider>()
-                  //     .clearSearch();
-                  Navigator.pop(navigatorKey.currentContext!);
-                  // if (CustomNavigatorObserver().stackCount > 2) {
-                  //   Navigator.pop(navigatorKey.currentContext!);
-                  // } else {
-                  //   Navigator.popUntil(
-                  //       navigatorKey.currentContext!, (route) => route.isFirst);
-                  //   Navigator.pushReplacement(
-                  //     navigatorKey.currentContext!,
-                  //     MaterialPageRoute(builder: (_) => const Tabs()),
-                  //   );
-                  //   popHome = false;
-                  // }
+                  // Navigator.pop(navigatorKey.currentContext!);
+                  if (CustomNavigatorObserver().stackCount >= 2) {
+                    Navigator.pop(navigatorKey.currentContext!);
+                  } else {
+                    Navigator.popUntil(
+                        navigatorKey.currentContext!, (route) => route.isFirst);
+                    Navigator.pushReplacement(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const Tabs()),
+                    );
+                    popHome = false;
+                  }
                 }
               },
               icon: const Icon(

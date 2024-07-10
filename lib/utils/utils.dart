@@ -669,7 +669,6 @@ void handleNavigation({
     isAppUpdating = false;
   }
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-
   // String slugForTicker = extractLastPathComponent(uri);
   bool userPresent = false;
 
@@ -774,14 +773,13 @@ void handleNavigation({
     }
     // } else if (type == "dashboard") {
   } else if (type == DeeplinkEnum.dashboard) {
-    if (fromBackground) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-    }
+    // if (fromBackground) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
+    // }
     // } else if (type == "page") {
   } else if (type == DeeplinkEnum.page) {
     if (fromBackground) {

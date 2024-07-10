@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomNavigatorObserver extends NavigatorObserver {
   static final CustomNavigatorObserver _instance =
       CustomNavigatorObserver._internal();
+
   final List<Route<dynamic>> _stack = [];
 
   CustomNavigatorObserver._internal();

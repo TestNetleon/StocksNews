@@ -378,6 +378,21 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                                             color: Colors.grey,
                                           ),
                                           hintText: "Search country",
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: BorderSide.none,
+                                          ),
                                         ),
                                       )
                                       // Text(
@@ -460,7 +475,6 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                           ),
                         ),
                       ),
-
                       // IntrinsicHeight(
                       //   child: Row(
                       //     children: [
@@ -473,7 +487,6 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                       //     ],
                       //   ),
                       // ),
-
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??

@@ -182,12 +182,13 @@ class _SignUpBottomState extends State<SignUpBottom> {
       // if (referralCode != null && referralCode != "") {
       _handleAppleSignIn(id, displayName, email);
     } else {
-      referSheet(
-        // email: _controller.text.toLowerCase(),
-        onReferral: (code) {
-          _handleAppleSignIn(id, displayName, email, code: code);
-        },
-      );
+      // referSheet(
+      //   // email: _controller.text.toLowerCase(),
+      //   onReferral: (code) {
+      //     _handleAppleSignIn(id, displayName, email, code: code);
+      //   },
+      // );
+      _handleAppleSignIn(id, displayName, email);
     }
   }
 

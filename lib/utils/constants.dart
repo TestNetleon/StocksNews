@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:intl/intl.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
@@ -401,7 +403,6 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
     return DeeplinkEnum.newsDetail;
   } else if (uri.toString() == "https://app.stocks.news/" ||
       uri.toString() == "https://app.stocks.news") {
-    // return 'dashboard';
     return DeeplinkEnum.dashboard;
   } else if (uri.path.contains('/login')) {
     // return 'login';
