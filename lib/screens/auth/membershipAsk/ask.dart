@@ -99,6 +99,14 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
 
     UserProvider provider = context.read<UserProvider>();
 
+    countryCode = provider.user?.phoneCode == null ||
+            provider.user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(provider.user?.phoneCode ?? " ").dialCode ??
+            "";
+
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
     }
