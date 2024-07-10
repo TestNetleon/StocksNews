@@ -57,15 +57,17 @@ class Insider extends StatelessWidget {
     UserProvider userProvider = context.watch<UserProvider>();
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = homeProvider.extra?.membership?.permissions
-            ?.any((element) => element == "insider-trading") ??
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                (element.key == "insider-trading" && element.status == 0)) ??
         false;
 
     // bool isLocked = true;
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "insider-trading") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  (element.key == "insider-trading" && element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;

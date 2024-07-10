@@ -112,8 +112,7 @@ class UserMembershipRes {
   final int? purchased;
   final String? displayName;
   final String? color;
-
-  final List<String>? permissions;
+  final List<MembershipPermissionRes>? permissions;
 
   UserMembershipRes({
     this.purchased,
@@ -127,17 +126,39 @@ class UserMembershipRes {
         purchased: json["purchased"],
         displayName: json["display_name"],
         color: json["color"],
-        permissions: json["permissions"] == null
+        permissions: json["permissionsNew"] == null
             ? []
-            : List<String>.from(json["permissions"]!.map((x) => x)),
+            : List<MembershipPermissionRes>.from(json["permissionsNew"]!
+                .map((x) => MembershipPermissionRes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "purchased": purchased,
         "display_name": displayName,
         "color": color,
-        "permissions": permissions == null
+        "permissionsNew": permissions == null
             ? []
-            : List<dynamic>.from(permissions!.map((x) => x)),
+            : List<dynamic>.from(permissions!.map((x) => x.toJson())),
+      };
+}
+
+class MembershipPermissionRes {
+  final String key;
+  final int status;
+
+  MembershipPermissionRes({
+    required this.key,
+    required this.status,
+  });
+
+  factory MembershipPermissionRes.fromJson(Map<String, dynamic> json) =>
+      MembershipPermissionRes(
+        key: json["key"],
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "key": key,
+        "status": status,
       };
 }

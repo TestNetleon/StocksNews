@@ -27,7 +27,7 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
 
   Future<void> _downloadFile(String url) async {
     try {
-      final directory = await getTemporaryDirectory();
+      final directory = await getApplicationDocumentsDirectory();
       final filePath = '${directory.path}/temp.pdf';
       final response = await http.get(Uri.parse(url));
       final file = File(filePath);
