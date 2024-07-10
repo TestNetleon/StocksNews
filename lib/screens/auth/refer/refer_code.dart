@@ -368,6 +368,8 @@ class _ReferLoginState extends State<ReferLogin> {
                           placeholder: "Enter your display name",
                           keyboardType: TextInputType.name,
                           inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9 ]')),
                             LengthLimitingTextInputFormatter(20)
                           ],
                           textCapitalization: TextCapitalization.words,
