@@ -800,6 +800,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           ),
                         ],
                       ),
+
                     // CommonShare(
                     //   visible: controllerProvider.isVisible,
                     //   linkShare: provider.data?.postDetail?.slug ?? "",
