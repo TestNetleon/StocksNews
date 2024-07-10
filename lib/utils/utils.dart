@@ -130,6 +130,36 @@ List<SdTopRes>? convertMultipleStringListsToSdTopResLists(
   return convertedList;
 }
 
+List<SdTopRes>? convertMultipleStringListsToSdTopResListsQuarter(
+    SdFinancialRes? data) {
+  // Ensure data and financeStatement are not null
+  if (data == null || data.financeStatement == null) {
+    return null;
+  }
+
+  // Initialize a list to hold the converted SdTopRes objects
+  List<SdTopRes> convertedList = [];
+
+  // Iterate over each period in the financeStatement list
+  for (var period in data.financeStatement!) {
+    // Assuming period is an object with period and value properties
+    if (period.period != null) {
+      String cleanedPeriod = period.period!.replaceAll('-20', ' FY');
+
+      SdTopRes convertedPeriod = SdTopRes(
+        key: cleanedPeriod,
+        value: cleanedPeriod,
+      );
+
+      convertedList.add(convertedPeriod);
+    }
+  }
+
+  Utils().showLog("Converted list: $convertedList");
+
+  return convertedList;
+}
+
 bool containsMinusSymbol(String input) {
   return input.contains('-');
 }
