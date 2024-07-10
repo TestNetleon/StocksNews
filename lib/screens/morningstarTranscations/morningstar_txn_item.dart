@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/morningstar_purchase_res.dart';
-import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -61,7 +60,7 @@ class MorningStarTxnItem extends StatelessWidget {
                   ),
                   const SpacerVertical(height: 5),
                   Text(
-                    data.quantStarRatingDate,
+                    data.purchaseDate ?? data.quantStarRatingDate,
                     style: stylePTSansRegular(fontSize: 12),
                   ),
                 ],
