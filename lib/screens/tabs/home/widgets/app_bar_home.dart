@@ -108,6 +108,17 @@ class _AppBarHomeState extends State<AppBarHome> {
                   //     .read<SearchProvider>()
                   //     .clearSearch();
                   Navigator.pop(navigatorKey.currentContext!);
+                  // if (CustomNavigatorObserver().stackCount > 2) {
+                  //   Navigator.pop(navigatorKey.currentContext!);
+                  // } else {
+                  //   Navigator.popUntil(
+                  //       navigatorKey.currentContext!, (route) => route.isFirst);
+                  //   Navigator.pushReplacement(
+                  //     navigatorKey.currentContext!,
+                  //     MaterialPageRoute(builder: (_) => const Tabs()),
+                  //   );
+                  //   popHome = false;
+                  // }
                 }
               },
               icon: const Icon(

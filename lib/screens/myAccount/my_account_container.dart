@@ -1,24 +1,21 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
-
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/my-account_header.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/otp.dart';
-import 'package:stocks_news_new/screens/myAccount/widgets/phone_email_otp.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/phone_otp.dart';
-
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
@@ -26,7 +23,7 @@ import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
-//
+
 import '../../utils/theme.dart';
 import '../../utils/utils.dart';
 import '../../utils/validations.dart';
@@ -50,6 +47,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   TextEditingController mobileController = TextEditingController();
   final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
   String appSignature = "";
+  String? countryCode;
 
   // bool emailVerified = false;
   // bool phoneVerified = false;
@@ -116,6 +114,13 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     if (user?.email != '' && user?.email != null) {
       provider.setEmailClickText();
     }
+
+    // UserRes? user = context.read<UserProvider>().user;
+    countryCode = user?.phoneCode == null || user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
 
     log("------------${user?.phone != ''}");
     if (user?.phone != '' && user?.phone != null) {
@@ -238,7 +243,19 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-    // UserRes? user = provider.user;
+    // final String locale = Intl.getCurrentLocale().split('_').last;
+
+    UserRes? user = context.read<UserProvider>().user;
+    // HomeProvider provider = context.watch<HomeProvider>();
+
+    final String locale = user?.phoneCode == null || user?.phoneCode == ""
+        ? Intl.getCurrentLocale().split('_').last
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+                .code
+                ?.split('_')
+                .last ??
+            "";
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -312,8 +329,10 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   ),
                 ),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 0,
+                  ),
                   decoration: BoxDecoration(
                     color: provider.emailVerified
                         ? ThemeColors.greyBorder
@@ -348,10 +367,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                           Text(
                             provider.emailVerified ? "Verified" : "Verify",
                             style: stylePTSansBold(
-                                color: provider.emailVerified
-                                    ? ThemeColors.accent
-                                    : Colors.white,
-                                fontSize: 14),
+                              color: provider.emailVerified
+                                  ? ThemeColors.accent
+                                  : Colors.white,
+                              fontSize: 14,
+                            ),
                           ),
                         ],
                       ),
@@ -376,21 +396,70 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: ThemeColors.primaryLight),
+                      ),
                       color: ThemeColors.primaryLight,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(4),
                         bottomLeft: Radius.circular(4),
                       ),
                     ),
-                  ),
-                  Text(
-                    "+1",
-                    style: stylePTSansBold(),
+                    child: CountryCodePicker(
+                      padding: EdgeInsets.zero,
+                      onChanged: (CountryCode value) {
+                        countryCode = value.dialCode;
+                      },
+                      initialSelection: locale,
+                      showCountryOnly: false,
+                      flagWidth: 24,
+                      showOnlyCountryWhenClosed: false,
+                      alignLeft: false,
+                      boxDecoration: const BoxDecoration(
+                        color: ThemeColors.tabBack,
+                      ),
+                      textStyle: styleGeorgiaRegular(),
+                      dialogTextStyle: styleGeorgiaBold(),
+                      barrierColor: Colors.black26,
+                      searchDecoration: InputDecoration(
+                        iconColor: Colors.white,
+                        fillColor: Colors.white,
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          size: 22,
+                        ),
+                        filled: true,
+                        hintStyle: stylePTSansRegular(
+                          color: Colors.grey,
+                        ),
+                        hintText: "Search country",
+                      ),
+                    ),
                   ),
                 ],
               ),
+
+              // Stack(
+              //   alignment: Alignment.center,
+              //   children: [
+              //     Container(
+              //       padding: const EdgeInsets.symmetric(horizontal: 20),
+              //       decoration: const BoxDecoration(
+              //         color: ThemeColors.primaryLight,
+              //         borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(4),
+              //           bottomLeft: Radius.circular(4),
+              //         ),
+              //       ),
+              //     ),
+              //     Text(
+              //       "+1",
+              //       style: stylePTSansBold(),
+              //     ),
+              //   ],
+              // ),
+
               Flexible(
                 child: ThemeInputField(
                   onChanged: (value) => provider.onChangePhone(value),
@@ -403,14 +472,13 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   fillColor: ThemeColors.primaryLight,
                   borderColor: ThemeColors.primaryLight,
                   borderRadiusOnly: BorderRadius.zero,
-
                   borderRadius: 0,
                   controller: mobileController,
                   placeholder: "Enter your phone number",
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
                     _formatter,
-                    LengthLimitingTextInputFormatter(10)
+                    LengthLimitingTextInputFormatter(15)
                   ],
                   textCapitalization: TextCapitalization.none,
                 ),
@@ -524,7 +592,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   }
 
   Future _onPhoneUpdateClick(String phone) async {
-    UserProvider provider = context.read<UserProvider>();
+    // UserProvider provider = context.read<UserProvider>();
 
     if (mobileController.text.isEmpty || mobileController.text.length < 10) {
       popUpAlert(
@@ -534,10 +602,19 @@ class _MyAccountContainerState extends State<MyAccountContainer>
       );
       return;
     }
+    if (countryCode == null) {
+      popUpAlert(
+        message: "Please select a valid country code.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
+      return;
+    }
 
     showGlobalProgressDialog();
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
+      // phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
+      phoneNumber: "$countryCode $phone",
       verificationCompleted: (PhoneAuthCredential credential) {
         closeGlobalProgressDialog();
       },
@@ -545,7 +622,11 @@ class _MyAccountContainerState extends State<MyAccountContainer>
         closeGlobalProgressDialog();
         log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
         popUpAlert(
-          message: e.message ?? Const.errSomethingWrong,
+          message: e.code == "invalid-phone-number"
+              ? "The format of the phone number provided is incorrect."
+              : e.code == "too-many-requests"
+                  ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                  : e.message ?? Const.errSomethingWrong,
           title: "Alert",
           icon: Images.alertPopGIF,
         );
@@ -556,6 +637,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           phone: phone,
           verificationId: verificationId,
           name: nameController.text,
+          countryCode: countryCode!,
         );
         // referOTP(
         //   name: name.text,

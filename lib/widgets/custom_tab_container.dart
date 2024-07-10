@@ -329,8 +329,12 @@ class _CommonTabContainerState extends State<CommonTabContainer>
           }
           // ignore: empty_catches
         } catch (e) {}
-        if (widget.onChange != null) {
-          widget.onChange!(_selectedIndex);
+        try {
+          if (widget.onChange != null) {
+            widget.onChange!(_selectedIndex);
+          }
+        } catch (e) {
+          Utils().showLog("tab error $e");
         }
       }
     });

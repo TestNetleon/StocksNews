@@ -29,6 +29,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
+import '../auth/membershipAsk/ask.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 import 'blog_mention_by.dart';
 
@@ -89,12 +90,18 @@ class BlogDetailContainer extends StatelessWidget {
     await provider.getBlogDetailData(slug: slug, point_deduction: true);
   }
 
-  void _membership() {
-    askToSubscribe(
-      onPressed: () {
+  Future _membership() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    await askToSubscribe(
+      onPressed: () async {
         Navigator.pop(navigatorKey.currentContext!);
 
-        RevenueCatService.initializeSubscription();
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          await RevenueCatService.initializeSubscription();
+        }
       },
     );
   }
@@ -321,8 +328,14 @@ class BlogDetailContainer extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.lock, size: 40),
-                            const SpacerVertical(),
+                            // const Icon(Icons.lock, size: 40),
+                            // const SpacerVertical(),
+                            Image.asset(
+                              Images.lockGIF,
+                              height: 70,
+                              width: 70,
+                            ),
+                            const SpacerVertical(height: 5),
                             Text(
                               "${provider.blogsDetail?.readingTitle}",
                               style: stylePTSansBold(fontSize: 18),
@@ -368,8 +381,14 @@ class BlogDetailContainer extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.lock, size: 40),
-                                const SpacerVertical(),
+                                // const Icon(Icons.lock, size: 40),
+                                // const SpacerVertical(),
+                                Image.asset(
+                                  Images.lockGIF,
+                                  height: 70,
+                                  width: 70,
+                                ),
+                                const SpacerVertical(height: 5),
                                 Text(
                                   "${provider.blogsDetail?.readingTitle}",
                                   style: stylePTSansBold(fontSize: 18),
@@ -410,7 +429,9 @@ class BlogDetailContainer extends StatelessWidget {
                                   iconFront: true,
                                   radius: 30,
                                   icon: Icons.card_membership,
-                                  onPressed: _membership,
+                                  onPressed: () async {
+                                    await _membership();
+                                  },
                                   textAlign: TextAlign.start,
                                   mainAxisSize: MainAxisSize.max,
                                 ),

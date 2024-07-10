@@ -9,30 +9,24 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:stocks_news_new/api/api_requester.dart';
-import 'package:stocks_news_new/api/api_response.dart';
-import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/affiliate/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
-
 import '../../../../utils/constants.dart';
 import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
 import '../../contactUs/contact_us_item.dart';
-import '../../t&cAndPolicy/tc_policy.dart';
-import 'refer_otp.dart';
+import '../refer/refer_otp.dart';
 
-referLogin() async {
+membershipLogin() async {
   await showModalBottomSheet(
     useSafeArea: true,
     enableDrag: false,
@@ -49,27 +43,32 @@ referLogin() async {
       return DraggableScrollableSheet(
         maxChildSize: 1,
         initialChildSize: 1,
-        builder: (context, scrollController) => ReferLogin(
+        builder: (context, scrollController) => MembershipLoginAsk(
           scrollController: scrollController,
         ),
       );
+
+      // return const MembershipLoginAsk();
     },
   );
 }
 
-class ReferLogin extends StatefulWidget {
+class MembershipLoginAsk extends StatefulWidget {
   final ScrollController scrollController;
 
-  const ReferLogin({super.key, required this.scrollController});
+  const MembershipLoginAsk({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
-  State<ReferLogin> createState() => _ReferLoginState();
+  State<MembershipLoginAsk> createState() => _MembershipLoginAskState();
 }
 
-class _ReferLoginState extends State<ReferLogin> {
+class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
-  TextEditingController displayName = TextEditingController(text: "");
+  // TextEditingController displayName = TextEditingController(text: "");
   bool affiliateStatus = false;
   bool numberVerified = true;
 
@@ -87,24 +86,14 @@ class _ReferLoginState extends State<ReferLogin> {
   bool checkBox = false;
 
   _checkProfile() {
-    UserRes? user = context.read<UserProvider>().user;
-
-    countryCode = user?.phoneCode == null || user?.phoneCode == ""
-        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-                .dialCode ??
-            ""
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
-
-    log("Country Code => $countryCode");
-
     UserProvider provider = context.read<UserProvider>();
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
     }
-    if (provider.user?.displayName != null &&
-        provider.user?.displayName != '') {
-      displayName.text = provider.user?.displayName ?? "";
-    }
+    // if (provider.user?.displayName != null &&
+    //     provider.user?.displayName != '') {
+    //   displayName.text = provider.user?.displayName ?? "";
+    // }
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
@@ -135,13 +124,17 @@ class _ReferLoginState extends State<ReferLogin> {
         title: "Alert",
         icon: Images.alertPopGIF,
       );
-    } else if (displayName.text.isEmpty) {
-      popUpAlert(
-        message: "Please enter a valid display name.",
-        title: "Alert",
-        icon: Images.alertPopGIF,
-      );
-    } else if (mobile.text.isEmpty || mobile.text.length < 10) {
+    }
+    //
+    // else if (displayName.text.isEmpty) {
+    //   popUpAlert(
+    //     message: "Please enter a valid display name.",
+    //     title: "Alert",
+    //     icon: Images.alertPopGIF,
+    //   );
+    // }
+
+    else if (mobile.text.isEmpty || mobile.text.length < 10) {
       popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",
@@ -154,8 +147,7 @@ class _ReferLoginState extends State<ReferLogin> {
         icon: Images.alertPopGIF,
       );
     } else {
-      if (!numberVerified) {
-        log("Phone Number $countryCode ${mobile.text}");
+      try {
         showGlobalProgressDialog();
         await FirebaseAuth.instance.verifyPhoneNumber(
           // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
@@ -167,11 +159,7 @@ class _ReferLoginState extends State<ReferLogin> {
             closeGlobalProgressDialog();
             log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
             popUpAlert(
-              message: e.code == "invalid-phone-number"
-                  ? "The format of the phone number provided is incorrect."
-                  : e.code == "too-many-requests"
-                      ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
-                      : e.message ?? Const.errSomethingWrong,
+              message: e.message ?? Const.errSomethingWrong,
               title: "Alert",
               icon: Images.alertPopGIF,
             );
@@ -180,55 +168,18 @@ class _ReferLoginState extends State<ReferLogin> {
             closeGlobalProgressDialog();
             referOTP(
               name: name.text,
-              displayName: displayName.text,
+              // displayName: displayName.text,
               phone: mobile.text,
               appSignature: appSignature,
               verificationId: verificationId,
               countryCode: countryCode!,
+              isVerifyIdentity: true,
             );
           },
           codeAutoRetrievalTimeout: (String verificationId) {},
         );
-      } else {
-        // showGlobalProgressDialog();
-        UserProvider provider = context.read<UserProvider>();
-        Map request = {
-          "token": provider.user?.token ?? "",
-          "display_name": displayName.text,
-          "name": name.text,
-          "platform": Platform.operatingSystem,
-          "affiliate_status": "1"
-        };
-
-        try {
-          ApiResponse res = await apiRequest(
-            url: Apis.updateProfile,
-            request: request,
-            showProgress: true,
-            removeForceLogin: true,
-          );
-          if (res.status) {
-            // setStatus(Status.loaded);
-            provider.updateUser(
-              affiliateStatus: 1,
-              displayName: displayName.text,
-            );
-            Navigator.pop(navigatorKey.currentContext!);
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (_) => const ReferAFriend(),
-              ),
-            );
-          } else {
-            popUpAlert(
-              message: res.message ?? Const.errSomethingWrong,
-              title: "Alert",
-            );
-          }
-        } catch (e) {
-          //
-        }
+      } catch (e) {
+        Utils().showLog("$e");
       }
     }
   }
@@ -281,7 +232,6 @@ class _ReferLoginState extends State<ReferLogin> {
         ),
         child: ListView(
           controller: widget.scrollController,
-          // physics: const NeverScrollableScrollPhysics(),
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -322,8 +272,7 @@ class _ReferLoginState extends State<ReferLogin> {
                       ),
                       const SpacerVertical(height: 4),
                       Text(
-                        provider.extra?.referLogin?.subTitle ??
-                            'In order to Join our Affiliate Program, please enter the following details.',
+                        'In order to purchase our membership, please enter the following details.',
                         style: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: 30),
@@ -349,30 +298,7 @@ class _ReferLoginState extends State<ReferLogin> {
                           textCapitalization: TextCapitalization.words,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: showAsteriskText(text: "Display Name"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: ThemeInputField(
-                          style: stylePTSansBold(
-                              color: Colors.black, fontSize: 18),
-                          // editable: user?.displayName == '' ||
-                          //     user?.displayName == null,
-                          controller: displayName,
-                          // fillColor: user?.displayName == '' ||
-                          //         user?.displayName == null
-                          //     ? ThemeColors.white
-                          //     : const Color.fromARGB(255, 133, 133, 133),
-                          placeholder: "Enter your display name",
-                          keyboardType: TextInputType.name,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(20)
-                          ],
-                          textCapitalization: TextCapitalization.words,
-                        ),
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: showAsteriskText(text: "Phone Number"),
@@ -391,95 +317,67 @@ class _ReferLoginState extends State<ReferLogin> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                      // padding: const EdgeInsets.symmetric(
-                                      //     // horizontal: 12,
-                                      //     // horizontal: 20,
-                                      //     ),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: user?.phone == '' ||
-                                                    user?.phone == null
-                                                ? ThemeColors.white
-                                                : const Color.fromARGB(
-                                                    255, 188, 188, 188),
-                                          ),
-                                        ),
-                                        color: user?.phone == '' ||
-                                                user?.phone == null
-                                            ? ThemeColors.white
-                                            : const Color.fromARGB(
-                                                255, 188, 188, 188),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4),
-                                          bottomLeft: Radius.circular(4),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: user?.phone == '' ||
+                                                  user?.phone == null
+                                              ? ThemeColors.white
+                                              : const Color.fromARGB(
+                                                  255, 188, 188, 188),
                                         ),
                                       ),
-                                      child: CountryCodePicker(
-                                        padding: EdgeInsets.zero,
-                                        // enabled: user?.phoneCode == null ||
-                                        //     user?.phoneCode == "",
-                                        enabled: true,
-                                        onChanged: (CountryCode value) {
-                                          countryCode = value.dialCode;
-                                          // log("Selected Log => ${value.dialCode}");
-                                        },
-                                        initialSelection: locale,
-                                        showCountryOnly: false,
-                                        textStyle: stylePTSansBold(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                        ),
-                                        flagWidth: 24,
-                                        showOnlyCountryWhenClosed: false,
-                                        alignLeft: false,
-                                        boxDecoration: const BoxDecoration(
-                                          color: ThemeColors.tabBack,
-                                        ),
-                                        // builder: (CountryCode? country) {
-                                        //   log("Selected Log => ${country?.code}");
-                                        // },
-                                        dialogTextStyle: styleGeorgiaBold(),
-                                        barrierColor: Colors.black26,
-                                        searchDecoration: InputDecoration(
-                                          iconColor: Colors.white,
-                                          fillColor: Colors.white,
-                                          prefixIcon: const Icon(
-                                            Icons.search,
-                                            size: 22,
-                                          ),
-                                          filled: true,
-                                          hintStyle: stylePTSansRegular(
-                                            color: Colors.grey,
-                                          ),
-                                          hintText: "Search country",
-                                        ),
-                                      )
+                                      color: user?.phone == '' ||
+                                              user?.phone == null
+                                          ? ThemeColors.white
+                                          : const Color.fromARGB(
+                                              255, 188, 188, 188),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(4),
+                                        bottomLeft: Radius.circular(4),
+                                      ),
+                                    ),
+                                    child: CountryCodePicker(
+                                      padding: EdgeInsets.zero,
+                                      // enabled: user?.phoneCode == null ||
+                                      //     user?.phoneCode == "",
 
-                                      // Text(
-                                      //   "+1",
-                                      //   style: stylePTSansBold(
-                                      //     color: user?.phone == '' ||
-                                      //             user?.phone == null
-                                      //         ? ThemeColors.greyText
-                                      //         : ThemeColors.greyBorder,
-                                      //     fontSize: 18,
-                                      //   ),
-                                      // ),
+                                      enabled: true,
+                                      onChanged: (CountryCode value) {
+                                        countryCode = value.dialCode;
+                                        setState(() {});
+                                      },
+                                      initialSelection: locale,
+                                      showCountryOnly: false,
+                                      textStyle: stylePTSansBold(
+                                        color: Colors.black,
+                                        fontSize: 18,
                                       ),
-                                  // Text(
-                                  //   "+1",
-                                  //   style: stylePTSansBold(
-                                  //     color: user?.phone == '' ||
-                                  //             user?.phone == null
-                                  //         ? ThemeColors.greyText
-                                  //         : ThemeColors.greyBorder,
-                                  //     fontSize: 18,
-                                  //   ),
-                                  // ),
+                                      flagWidth: 24,
+                                      showOnlyCountryWhenClosed: false,
+                                      alignLeft: false,
+                                      boxDecoration: const BoxDecoration(
+                                        color: ThemeColors.tabBack,
+                                      ),
+                                      dialogTextStyle: styleGeorgiaBold(),
+                                      barrierColor: Colors.black26,
+                                      searchDecoration: InputDecoration(
+                                        iconColor: Colors.white,
+                                        fillColor: Colors.white,
+                                        prefixIcon: const Icon(
+                                          Icons.search,
+                                          size: 22,
+                                        ),
+                                        filled: true,
+                                        hintStyle: stylePTSansRegular(
+                                          color: Colors.grey,
+                                        ),
+                                        hintText: "Search country",
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                              // const SpacerHorizontal(width: 2),
                               Flexible(
                                 child: ThemeInputField(
                                   fillColor:
@@ -506,7 +404,7 @@ class _ReferLoginState extends State<ReferLogin> {
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     _formatter,
-                                    LengthLimitingTextInputFormatter(15)
+                                    LengthLimitingTextInputFormatter(10)
                                   ],
                                   textCapitalization: TextCapitalization.none,
                                 ),
@@ -518,7 +416,8 @@ class _ReferLoginState extends State<ReferLogin> {
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number.',
+                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
+                                'Do not include +1 or an special character.',
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
@@ -548,20 +447,20 @@ class _ReferLoginState extends State<ReferLogin> {
                                   return null;
                                 },
                                 onTapUrl: (url) async {
-                                  Navigator.push(
-                                    context,
-                                    createRoute(
-                                      const TCandPolicy(
-                                        policyType: PolicyType.referral,
-                                        slug: "referral-terms",
-                                      ),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   createRoute(
+                                  //     const TCandPolicy(
+                                  //       policyType: PolicyType.referral,
+                                  //       slug: "referral-terms",
+                                  //     ),
+                                  //   ),
+                                  // );
                                   return true;
                                 },
-                                provider.extra?.verifyIdentity ?? "",
+                                provider.extra?.verifySubscription ?? "",
                                 textStyle:
-                                    stylePTSansRegular(color: Colors.white),
+                                    stylePTSansRegular(color: Colors.grey),
                               ),
                             ),
                           ],
@@ -574,12 +473,7 @@ class _ReferLoginState extends State<ReferLogin> {
                           onPressed: checkBox ? _referLogin : null,
                           textUppercase: true,
                         ),
-                      if (numberVerified)
-                        ThemeButton(
-                          text: "Join Affiliate Program",
-                          onPressed: checkBox ? _referLogin : null,
-                          textUppercase: true,
-                        ),
+
                       const SpacerVertical(height: 200),
                     ],
                   ),

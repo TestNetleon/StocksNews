@@ -10,6 +10,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import '../../../providers/gap_up_provider.dart';
+import '../../../providers/home_provider.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';
 
@@ -22,11 +23,11 @@ class GapUpDownStocks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
-    // HomeProvider homeProvider = context.watch<HomeProvider>();
-    GapUpProvider gapUpProvider = context.watch<GapUpProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+    // GapUpProvider gapUpProvider = context.watch<GapUpProvider>();
 
     bool purchased = provider.user?.membership?.purchased == 1;
-    bool isLocked = gapUpProvider.extra?.membership?.permissions?.any(
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
                 element == "gap-up-stocks" || element == "gap-down-stocks") ??
         false;

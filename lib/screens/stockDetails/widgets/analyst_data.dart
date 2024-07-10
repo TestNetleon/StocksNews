@@ -28,6 +28,7 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../service/ask_subscription.dart';
+import '../../auth/membershipAsk/ask.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
@@ -75,11 +76,18 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     }
   }
 
-  void _membership() {
-    askToSubscribe(
-      onPressed: () {
-        Navigator.pop(context);
-        RevenueCatService.initializeSubscription();
+  Future _membership() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    await askToSubscribe(
+      onPressed: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          await RevenueCatService.initializeSubscription();
+        }
       },
     );
   }
@@ -159,8 +167,14 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(Icons.lock, size: 40),
-                                  const SpacerVertical(),
+                                  // const Icon(Icons.lock, size: 40),
+                                  // const SpacerVertical(),
+                                  Image.asset(
+                                    Images.lockGIF,
+                                    height: 70,
+                                    width: 70,
+                                  ),
+
                                   Image.asset(
                                     Images.morningStarLogo,
                                     width: ScreenUtil().screenWidth * .5,
@@ -238,6 +252,17 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                   fontBold: true,
                                                   iconFront: true,
                                                   icon: Icons.earbuds_rounded,
+                                                  iconWidget: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10),
+                                                    child: Image.asset(
+                                                      Images.referAndEarn,
+                                                      height: 18,
+                                                      width: 18,
+                                                      color: ThemeColors.white,
+                                                    ),
+                                                  ),
                                                   onPressed: () async {
                                                     await _onReferClick(
                                                         context);
@@ -258,10 +283,21 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                       vertical: 11),
                                                   textSize: 15,
                                                   fontBold: true,
+                                                  iconWidget: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 10),
+                                                    child: Image.asset(
+                                                      Images.membership,
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                                  ),
                                                   iconFront: true,
                                                   radius: 30,
                                                   icon: Icons.card_membership,
-                                                  onPressed: _membership,
+                                                  onPressed: () async =>
+                                                      _membership(),
                                                   textAlign: TextAlign.start,
                                                   mainAxisSize:
                                                       MainAxisSize.max,

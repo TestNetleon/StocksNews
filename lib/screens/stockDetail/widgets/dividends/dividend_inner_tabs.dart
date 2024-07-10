@@ -4,21 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
-import 'package:stocks_news_new/screens/moreStocks/index.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_overtime_charts.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_payment_barchart.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/custom_tab_item_label.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/home_top_gainer.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/home_top_loser.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/home_trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/view_more_widget.dart';
 import 'package:vibration/vibration.dart';
 
 class DividendInnerTabs extends StatefulWidget {

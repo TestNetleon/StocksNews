@@ -193,7 +193,8 @@ class _EditEmailClickState extends State<EditEmailClick> {
                     children: [
                       const SpacerVertical(),
                       Text(
-                        "NEW EMAIL ADDRESS",
+                        // "NEW EMAIL ADDRESS",
+                        "New Email Address",
                         style: stylePTSansBold(fontSize: 22),
                       ),
                       const SpacerVertical(height: 20),
@@ -206,7 +207,7 @@ class _EditEmailClickState extends State<EditEmailClick> {
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
                       ThemeButton(
-                        text: "Next",
+                        text: "Send OTP",
                         onPressed: _onPressed,
                       ),
                       const SpacerVertical(),

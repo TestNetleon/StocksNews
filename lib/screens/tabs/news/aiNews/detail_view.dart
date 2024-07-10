@@ -93,7 +93,6 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                               width: double.infinity,
                               // fit: BoxFit.contain,
                             ),
-
                             const SpacerVertical(height: Dimen.itemSpacing),
                             provider.detail?.postDetail?.authors?.isNotEmpty ==
                                         true ||
@@ -139,19 +138,10 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                                                       color: ThemeColors.white,
                                                     ),
                                                   ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      openUrl(provider
-                                                          .detail
-                                                          ?.postDetail
-                                                          ?.permalink);
-                                                    },
-                                                    child: Text(
-                                                      "${provider.detail?.postDetail?.source}",
-                                                      style: stylePTSansRegular(
-                                                          fontSize: 16,
-                                                          color: ThemeColors
-                                                              .accent),
+                                                  Text(
+                                                    "${provider.detail?.postDetail?.source}",
+                                                    style: stylePTSansRegular(
+                                                      fontSize: 16,
                                                     ),
                                                   ),
                                                 ],
@@ -179,15 +169,6 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                                       ),
                             SpacerVertical(height: Dimen.itemSpacing.sp),
                             HtmlWidget(
-                              // customStylesBuilder: (element) {
-                              //   if (element.localName == 'a') {
-                              //     return {
-                              //       'color': '#1bb449',
-                              //       'text-decoration': 'none'
-                              //     };
-                              //   }
-                              //   return null;
-                              // },
                               onTapUrl: (url) async {
                                 if (url.startsWith(
                                     "https://app.stocks.news/page/")) {
@@ -221,8 +202,17 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                               textStyle: styleGeorgiaRegular(
                                   fontSize: 18, height: 1.5),
                             ),
-                            // const SpacerVertical(height: 20),
-
+                            const SpacerVertical(),
+                            GestureDetector(
+                              onTap: () {
+                                openUrl(provider.detail?.postDetail?.permalink);
+                              },
+                              child: Text(
+                                "Read full news..",
+                                style: stylePTSansRegular(
+                                    color: ThemeColors.accent),
+                              ),
+                            ),
                             Visibility(
                               visible: (provider.detail?.postDetail?.categories
                                           ?.length ??

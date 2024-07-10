@@ -87,6 +87,7 @@ class Extra {
 
   final ReferLoginRes? referLogin;
   final String? verifyIdentity;
+  final String? verifySubscription;
   final String? nudgeText;
   final String? earnCondition;
   final String? suspendMsg;
@@ -96,6 +97,7 @@ class Extra {
   final int? affiliateInput;
   final LoginDialogRes? loginDialogRes;
   final UserMembershipRes? membership;
+  final String? aiTitle;
 
   Extra({
     this.feebackType,
@@ -103,8 +105,10 @@ class Extra {
     this.selfRank,
     this.profileText,
     this.verifyIdentity,
+    this.verifySubscription,
     this.howItWork,
     this.membershipText,
+    this.aiTitle,
 
     // this.subscription,
     this.exchangeShortName,
@@ -164,6 +168,9 @@ class Extra {
             ? null
             : ProfileText.fromJson(json["profile_text"]),
         verifyIdentity: json['verify_identity_text'],
+        verifySubscription: json['verify_membership_text'],
+
+        aiTitle: json['ai-news-title'],
         // subscription: json["subscription"] == null
         //     ? null
         //     : Subscription.fromJson(json["subscription"]),
@@ -267,6 +274,8 @@ class Extra {
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
         "verify_identity_text": verifyIdentity,
+        "verify_membership_text": verifySubscription,
+
         "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,
@@ -282,6 +291,7 @@ class Extra {
         "how_it_work": howItWork?.toJson(),
         "membership_text": membership?.toJson(),
         "sub_title": subTitle,
+        "ai-news-title": aiTitle,
         "current_balance": currentBalance,
         "show_portfolio": showPortfolio,
         "total_pages": totalPages,

@@ -251,6 +251,8 @@ class NewsCategoryProvider extends ChangeNotifier {
   Map<String, TabsNewsHolder?> _newsData = {};
   Map<String, TabsNewsHolder?> get newsData => _newsData;
 
+  Extra? _extra;
+  Extra? get extra => _extra;
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -267,9 +269,9 @@ class NewsCategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void tabChange(index, String? id) {
+  void tabChange(int? index, String? id) {
     if (selectedIndex != index) {
-      selectedIndex = index;
+      selectedIndex = index ?? 0;
       notifyListeners();
       if (id == null) return;
       if (_newsData[id]?.data != null || _newsData[id]?.error != null) return;
@@ -296,6 +298,7 @@ class NewsCategoryProvider extends ChangeNotifier {
         if (_tabs != null) {
           getNewsData(id: _tabs?[selectedIndex].id);
         }
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _error = response.message;
         _tabs = null;

@@ -8,8 +8,6 @@ import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_inner_tabs.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_overtime_charts.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/dividend_payment_barchart.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/dividends/sd_dividends_history.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_faq.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';

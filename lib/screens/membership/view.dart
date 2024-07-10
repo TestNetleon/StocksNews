@@ -99,7 +99,9 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
           //   color: const Color.fromARGB(255, 253, 245, 4),
           // ),
           borderRadius: BorderRadius.circular(5),
-          color: color,
+          // color: color,
+          // color: color,
+          color: ThemeColors.background,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

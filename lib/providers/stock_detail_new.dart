@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
+import 'package:vibration/vibration.dart';
 
 import '../api/apis.dart';
 import '../modals/analysis_res.dart';
@@ -106,6 +109,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     _errorNews = null;
     _extraNews = null;
     _newsRes = null;
+    _newsResN = null;
+    value = null;
 
     //Social clear
     _errorSocial = null;
@@ -1189,6 +1194,101 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+//---------------------------------------------------------------
+//News DATA New
+  String? _errorNewsN;
+  String? get errorNewsN => _errorNewsN ?? Const.errSomethingWrong;
+
+  Status _statusNewsN = Status.ideal;
+  Status get statusNewsN => _statusNewsN;
+
+  bool get isLoadingNewsN => _statusNewsN == Status.loading;
+
+  Extra? _extraNewsN;
+  Extra? get extraNewsN => _extraNewsN;
+
+  SdNewsRes? _newsResN;
+  SdNewsRes? get newsResN => _newsResN;
+
+  num? value;
+
+  List<String> range = ['1D', '7D', '15D', '30D'];
+  int selectedIndex = 0;
+
+  void setStatusNewsN(status) {
+    _statusNewsN = status;
+    notifyListeners();
+  }
+
+  void onGaugeChange({
+    String day = "1D",
+    String? symbol,
+    int? index,
+  }) {
+    selectedIndex = index ?? 0;
+    notifyListeners();
+    getNewsDataN(
+      symbol: symbol,
+      changingDay: true,
+      day: day,
+    );
+  }
+
+  Future getNewsDataN({
+    String? symbol,
+    String day = "1D",
+    bool changingDay = false,
+  }) async {
+    if (!changingDay) {
+      selectedIndex = 0;
+    }
+    if (!changingDay) setStatusNewsN(Status.loading);
+    notifyListeners();
+
+    try {
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? "",
+        "day": day == "1D"
+            ? "1"
+            : day == "7D"
+                ? "7"
+                : day == "15D"
+                    ? "15"
+                    : "30",
+        "full_data": changingDay ? "0" : "1"
+      };
+
+      ApiResponse response = await apiRequest(
+        url: Apis.stockDetailNewsV2,
+        request: request,
+        showProgress: changingDay,
+      );
+
+      if (response.status) {
+        if (!changingDay) {
+          _newsResN = sdNewsResFromJson(jsonEncode(response.data));
+        }
+        value = sdNewsResFromJson(jsonEncode(response.data)).sentimentsPer;
+      } else {
+        _newsResN = null;
+        _errorNewsN = response.message;
+        value = 0;
+      }
+      if (!changingDay) setStatusNewsN(Status.loaded);
+      notifyListeners();
+    } catch (e) {
+      _newsResN = null;
+      value = 0;
+
+      Utils().showLog(e.toString());
+      _errorNewsN = Const.errSomethingWrong;
+      if (!changingDay) setStatusNewsN(Status.loaded);
+      notifyListeners();
+    }
+  }
+
   //---------------------------------------------------------------
 //Social Activities DATA
   String? _errorSocial;
@@ -1340,9 +1440,6 @@ class StockDetailProviderNew extends ChangeNotifier {
   SdFinancialRes? _cashSdFinancialChartRes;
   SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
 
-  // Map<String, dynamic>? _sdFinancialMap;
-  // Map<String, dynamic>? get sdFinancialMap => _sdFinancialMap;
-
   int _openIndexInsider = -1;
   int get openIndexInsider => _openIndexInsider;
 
@@ -1381,6 +1478,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   void changeTabTypeChartData(index, {String? symbol}) {
     if (typeIndex != index) {
       typeIndex = index;
+      vibrateTabFinancial();
       Utils().showLog("index  $index");
       if (index == 0 && incomeSdFinancialChartRes == null) {
         notifyListeners();
@@ -1429,9 +1527,29 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  void vibrateTabFinancial() async {
+    try {
+      if (Platform.isAndroid) {
+        bool isVibe = await Vibration.hasVibrator() ?? false;
+        if (isVibe) {
+          Vibration.vibrate(pattern: [50, 50, 79, 55], intensities: [1, 10]);
+        }
+      } else {
+        HapticFeedback.lightImpact();
+      }
+    } catch (e) {}
+  }
+
   void changePeriodType(index, {String? symbol}) {
     if (periodIndex != index) {
       periodIndex = index;
+      vibrateTabFinancial();
+      _incomeSdFinancialChartRes = null;
+      _sdFinancialArrayTableIncome = null;
+      _balanceSdFinancialChartRes = null;
+      _sdFinancialArrayTableFinancial = null;
+      _cashSdFinancialChartRes = null;
+      _sdFinancialArrayTableCash = null;
       notifyListeners();
       getFinancialData(
         symbol: symbol,
@@ -1444,6 +1562,8 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   void changePeriodTypeIndexVoid(index) {
     if (changePeriodTypeIndex != index) {
+      vibrateTabFinancial();
+
       changePeriodTypeIndex = index;
       notifyListeners();
     }
@@ -1618,4 +1738,16 @@ class StockDetailProviderNew extends ChangeNotifier {
       setStatusMergers(Status.loaded);
     }
   }
+}
+
+class FinancialHolder {
+  String? type;
+  List<dynamic>? data;
+  SdFinancialRes? financialRes;
+
+  FinancialHolder({
+    this.type,
+    this.data,
+    this.financialRes,
+  });
 }

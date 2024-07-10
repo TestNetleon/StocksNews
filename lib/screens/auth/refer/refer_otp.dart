@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +30,7 @@ referOTP({
   displayName = "",
   isVerifyIdentity = false,
   required String verificationId,
+  required String countryCode,
 }) async {
   await showModalBottomSheet(
     useSafeArea: true,
@@ -51,6 +51,7 @@ referOTP({
         appSignature: appSignature,
         verificationId: verificationId,
         isVerifyIdentity: isVerifyIdentity,
+        countryCode: countryCode,
       );
     },
   );
@@ -62,6 +63,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
   final String name;
   final String displayName;
   final String verificationId;
+  final String countryCode;
   final bool isVerifyIdentity;
 
   const OTPLoginBottomRefer({
@@ -72,6 +74,7 @@ class OTPLoginBottomRefer extends StatefulWidget {
     required this.displayName,
     required this.verificationId,
     required this.isVerifyIdentity,
+    required this.countryCode,
   });
 
   @override
@@ -82,6 +85,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
   final TextEditingController _controller = TextEditingController();
   int startTiming = 30;
   final FocusNode _otpFocusNode = FocusNode();
+  String? verificationId;
 
   Timer? _timer;
   @override
@@ -89,6 +93,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     super.initState();
     _listenCode();
     _startTime();
+    verificationId = widget.verificationId;
     _otpFocusNode.requestFocus();
   }
 
@@ -203,10 +208,25 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     setState(() {});
     await FirebaseAuth.instance.verifyPhoneNumber(
       // phoneNumber: "+91${widget.phone}",
-      phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
+      // phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
+      phoneNumber: "${widget.countryCode}${widget.phone}",
       verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
+      verificationFailed: (FirebaseAuthException e) {
+        log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+        popUpAlert(
+          message: e.code == "invalid-phone-number"
+              ? "The format of the phone number provided is incorrect."
+              : e.code == "too-many-requests"
+                  ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                  : e.message ?? Const.errSomethingWrong,
+          title: "Alert",
+          icon: Images.alertPopGIF,
+        );
+      },
+
+      codeSent: (String verificationId, int? resendToken) {
+        verificationId = verificationId;
+      },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
@@ -226,7 +246,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
 
     // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: widget.verificationId,
+      verificationId: verificationId ?? widget.verificationId,
       smsCode: smsCode,
     );
 
@@ -259,17 +279,28 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
         name: widget.name,
         phone: widget.phone,
         token: provider.user?.token ?? "",
-        affiliateStatus: 1,
+        affiliateStatus: widget.isVerifyIdentity ? null : 1,
+        countryCode: widget.countryCode,
       );
       if (response.status) {
-        Navigator.popUntil(
-          navigatorKey.currentContext!,
-          (route) => route.isFirst,
-        );
-        Navigator.popAndPushNamed(
-          navigatorKey.currentContext!,
-          ReferAFriend.path,
-        );
+        if (widget.isVerifyIdentity) {
+          Navigator.pop(navigatorKey.currentContext!);
+          Navigator.pop(navigatorKey.currentContext!);
+          showSnackbar(
+            context: context,
+            message: response.message,
+            type: SnackbarType.info,
+          );
+        } else {
+          Navigator.popUntil(
+            navigatorKey.currentContext!,
+            (route) => route.isFirst,
+          );
+          Navigator.popAndPushNamed(
+            navigatorKey.currentContext!,
+            ReferAFriend.path,
+          );
+        }
       } else {
         popUpAlert(
           message: response.message ?? Const.errSomethingWrong,
@@ -347,7 +378,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
                   ),
                   const SpacerVertical(height: 4),
                   Text(
-                    'We have sent the verification code \nto your phone number ${widget.phone}',
+                    'We have sent the verification code \nto your phone number ${widget.countryCode} ${widget.phone}',
                     textAlign: TextAlign.center,
                     style: stylePTSansRegular(color: Colors.grey, fontSize: 17),
                   ),

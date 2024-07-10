@@ -34,6 +34,7 @@ import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
+import '../../../auth/membershipAsk/ask.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
@@ -73,6 +74,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       inAppMsgId: widget.inAppMsgId,
       notificationId: widget.notificationId,
     );
+
     if (newsProvider.data?.postDetail?.readingStatus == false) {
       return;
     }
@@ -164,11 +166,19 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
   }
 
-  void _membership() {
-    askToSubscribe(
-      onPressed: () {
-        Navigator.pop(context);
-        RevenueCatService.initializeSubscription();
+  Future _membership() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    await askToSubscribe(
+      onPressed: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          await RevenueCatService.initializeSubscription();
+        }
       },
     );
   }
@@ -565,10 +575,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         icon: Icons.share,
                       ),
                     ),
-                    // if ((provider.data?.postDetail?.readingStatus == false) &&
-                    //     !provider.isLoading)
-
-                    if (true)
+                    if ((provider.data?.postDetail?.readingStatus == false) &&
+                        !provider.isLoading)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
@@ -607,8 +615,14 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.lock, size: 40),
-                                        const SpacerVertical(),
+                                        // const Icon(Icons.lock, size: 40),
+                                        // const SpacerVertical(),
+                                        Image.asset(
+                                          Images.lockGIF,
+                                          height: 70,
+                                          width: 70,
+                                        ),
+                                        const SpacerVertical(height: 5),
                                         Text(
                                           "${provider.data?.postDetail?.readingTitle}",
                                           style: stylePTSansBold(fontSize: 18),
@@ -680,6 +694,16 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                       vertical: 11),
                                               textSize: 15,
                                               fontBold: true,
+                                              iconWidget: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
+                                                child: Image.asset(
+                                                  Images.referAndEarn,
+                                                  height: 18,
+                                                  width: 18,
+                                                  color: ThemeColors.white,
+                                                ),
+                                              ),
                                               iconFront: true,
                                               icon: Icons.earbuds_rounded,
                                               mainAxisSize: MainAxisSize.max,
@@ -704,8 +728,20 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               radius: 30,
                                               icon: Icons.card_membership,
                                               textAlign: TextAlign.start,
+                                              iconWidget: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
+                                                child: Image.asset(
+                                                  Images.membership,
+                                                  height: 18,
+                                                  width: 18,
+                                                  color: ThemeColors.white,
+                                                ),
+                                              ),
                                               mainAxisSize: MainAxisSize.max,
-                                              onPressed: _membership,
+                                              onPressed: () async {
+                                                await _membership();
+                                              },
                                               text:
                                                   "Upgrade Membership for more points",
                                               showArrow: false,
@@ -760,7 +796,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                           ),
                         ],
                       ),
-
                     // CommonShare(
                     //   visible: controllerProvider.isVisible,
                     //   linkShare: provider.data?.postDetail?.slug ?? "",

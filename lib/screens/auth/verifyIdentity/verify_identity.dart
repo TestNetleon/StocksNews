@@ -1,19 +1,22 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
-import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_otp.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../../utils/constants.dart';
@@ -60,6 +63,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   TextEditingController displayName = TextEditingController(text: "");
+  String? countryCode;
 
   String appSignature = "";
   final TextInputFormatter _formatter = FilteringTextInputFormatter.digitsOnly;
@@ -114,65 +118,80 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
         title: "Alert",
         icon: Images.alertPopGIF,
       );
+    } else if (countryCode == null) {
+      popUpAlert(
+        message: "Please select a valid country code.",
+        title: "Alert",
+        icon: Images.alertPopGIF,
+      );
     } else {
-      // showGlobalProgressDialog();
-      // await FirebaseAuth.instance.verifyPhoneNumber(
-      //   phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
-      //   verificationCompleted: (PhoneAuthCredential credential) {
-      //     closeGlobalProgressDialog();
-      //   },
-      //   verificationFailed: (FirebaseAuthException e) {
-      //     closeGlobalProgressDialog();
-      //     log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
-      //     popUpAlert(
-      //       message: e.message ?? Const.errSomethingWrong,
-      //       title: "Alert",
-      //       icon: Images.alertPopGIF,
-      //     );
-      //   },
-      //   codeSent: (String verificationId, int? resendToken) {
-      //     closeGlobalProgressDialog();
-      //     referOTP(
-      //       name: name.text,
-      //       displayName: displayName.text,
-      //       phone: mobile.text,
-      //       appSignature: appSignature,
-      //       verificationId: verificationId,
-      //     );
-      //   },
-      //   codeAutoRetrievalTimeout: (String verificationId) {},
-      // );
-      UserProvider provider = context.read<UserProvider>();
-      Map request = {
-        "token": provider.user?.token ?? "",
-        "phone": mobile.text,
-        "name": name.text,
-        "display_name": displayName.text,
-        "phone_hash": appSignature,
-        "platform": Platform.operatingSystem,
-      };
-      try {
-        ApiResponse response = await provider.referLoginApi(request);
-        if (response.status) {
-          provider.updateUser(name: name.text, displayName: displayName.text);
-          Navigator.pop(navigatorKey.currentContext!);
+      showGlobalProgressDialog();
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+        phoneNumber: "$countryCode ${mobile.text}",
+        verificationCompleted: (PhoneAuthCredential credential) {
+          closeGlobalProgressDialog();
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          closeGlobalProgressDialog();
+          log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+          popUpAlert(
+            message: e.code == "invalid-phone-number"
+                ? "The format of the phone number provided is incorrect."
+                : e.code == "too-many-requests"
+                    ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
+                    : e.message ?? Const.errSomethingWrong,
+            title: "Alert",
+            icon: Images.alertPopGIF,
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          closeGlobalProgressDialog();
           referOTP(
+            name: name.text,
+            displayName: displayName.text,
             phone: mobile.text,
             appSignature: appSignature,
-            verificationId: "",
-            displayName: "",
+            verificationId: verificationId,
             isVerifyIdentity: true,
+            countryCode: countryCode!,
           );
-        }
-      } catch (e) {
-        //
-      }
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+      // UserProvider provider = context.read<UserProvider>();
+      // Map request = {
+      //   "token": provider.user?.token ?? "",
+      //   "phone": mobile.text,
+      //   "name": name.text,
+      //   "display_name": displayName.text,
+      //   "phone_hash": appSignature,
+      //   "platform": Platform.operatingSystem,
+      // };
+      // try {
+      //   ApiResponse response = await provider.referLoginApi(request);
+      //   if (response.status) {
+      //     provider.updateUser(name: name.text, displayName: displayName.text);
+      //     Navigator.pop(navigatorKey.currentContext!);
+      //     referOTP(
+      //       phone: mobile.text,
+      //       appSignature: appSignature,
+      //       verificationId: "",
+      //       displayName: "",
+      //       isVerifyIdentity: true,
+      //     );
+      //   }
+      // } catch (e) {
+      //   //
+      // }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    final String locale = Intl.getCurrentLocale().split('_').last;
+
     return GestureDetector(
       onTap: () {
         closeKeyboard();
@@ -312,35 +331,111 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: ThemeColors.white,
+                                      // padding: const EdgeInsets.symmetric(
+                                      //     // horizontal: 12,
+                                      //     // horizontal: 20,
+                                      //     ),
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: ThemeColors.white,
+                                          ),
+                                        ),
+                                        color: ThemeColors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(4),
+                                          bottomLeft: Radius.circular(4),
                                         ),
                                       ),
-                                      color: ThemeColors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(4),
-                                        bottomLeft: Radius.circular(4),
+                                      child: CountryCodePicker(
+                                        padding: EdgeInsets.zero,
+                                        onChanged: (CountryCode value) {
+                                          countryCode = value.dialCode;
+                                          // log("Selected Log => ${value.dialCode}");
+                                        },
+                                        initialSelection: locale,
+                                        showCountryOnly: false,
+                                        flagWidth: 24,
+                                        showOnlyCountryWhenClosed: false,
+                                        alignLeft: false,
+                                        boxDecoration: const BoxDecoration(
+                                          color: ThemeColors.tabBack,
+                                        ),
+                                        // builder: (CountryCode? country) {
+                                        //   log("Selected Log => ${country?.code}");
+                                        // },
+                                        dialogTextStyle: styleGeorgiaBold(),
+                                        barrierColor: Colors.black26,
+                                        searchDecoration: InputDecoration(
+                                          iconColor: Colors.white,
+                                          fillColor: Colors.white,
+                                          prefixIcon: const Icon(
+                                            Icons.search,
+                                            size: 22,
+                                          ),
+                                          filled: true,
+                                          hintStyle: stylePTSansRegular(
+                                            color: Colors.grey,
+                                          ),
+                                          hintText: "Search country",
+                                        ),
+                                      )
+                                      // Text(
+                                      //   "+1",
+                                      //   style: stylePTSansBold(
+                                      //     color: user?.phone == '' ||
+                                      //             user?.phone == null
+                                      //         ? ThemeColors.greyText
+                                      //         : ThemeColors.greyBorder,
+                                      //     fontSize: 18,
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                    // child: Text(
-                                    //   "+1",
-                                    //   style: stylePTSansBold(
-                                    //       color: ThemeColors.greyText, fontSize: 18),
-                                    // ),
-                                  ),
-                                  Text(
-                                    "+1",
-                                    style: stylePTSansBold(
-                                        color: ThemeColors.greyText,
-                                        fontSize: 18),
-                                  ),
+                                  // Text(
+                                  //   "+1",
+                                  //   style: stylePTSansBold(
+                                  //     color: user?.phone == '' ||
+                                  //             user?.phone == null
+                                  //         ? ThemeColors.greyText
+                                  //         : ThemeColors.greyBorder,
+                                  //     fontSize: 18,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
-                              const SpacerHorizontal(width: 2),
+                              // Stack(
+                              //   alignment: Alignment.center,
+                              //   children: [
+                              //     Container(
+                              //       padding: const EdgeInsets.symmetric(
+                              //           horizontal: 20),
+                              //       decoration: const BoxDecoration(
+                              //         border: Border(
+                              //           bottom: BorderSide(
+                              //             color: ThemeColors.white,
+                              //           ),
+                              //         ),
+                              //         color: ThemeColors.white,
+                              //         borderRadius: BorderRadius.only(
+                              //           topLeft: Radius.circular(4),
+                              //           bottomLeft: Radius.circular(4),
+                              //         ),
+                              //       ),
+                              //       // child: Text(
+                              //       //   "+1",
+                              //       //   style: stylePTSansBold(
+                              //       //       color: ThemeColors.greyText, fontSize: 18),
+                              //       // ),
+                              //     ),
+                              //     Text(
+                              //       "+1",
+                              //       style: stylePTSansBold(
+                              //           color: ThemeColors.greyText,
+                              //           fontSize: 18),
+                              //     ),
+                              //   ],
+                              // ),
+                              // const SpacerHorizontal(width: 2),
                               Flexible(
                                 child: ThemeInputField(
                                   style: stylePTSansBold(
@@ -356,7 +451,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     _formatter,
-                                    LengthLimitingTextInputFormatter(10)
+                                    LengthLimitingTextInputFormatter(15)
                                   ],
                                   textCapitalization: TextCapitalization.none,
                                 ),
@@ -382,8 +477,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                                'Do not include +1 or an special character.',
+                            'Note: You will receive an OTP to verify mobile number.',
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       // const SpacerVertical(height: Dimen.itemSpacing),

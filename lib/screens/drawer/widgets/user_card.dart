@@ -11,6 +11,8 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../providers/leaderboard.dart';
 import '../../../utils/colors.dart';
 
+import '../../auth/membershipAsk/ask.dart';
+import '../../auth/refer/refer_code.dart';
 import '../../myAccount/widgets/my-account_header.dart';
 import 'profile_image.dart';
 
@@ -352,8 +354,15 @@ class _UserCardState extends State<UserCard> {
     );
   }
 
-  Future<void> _upgradeSubscription() async {
-    await RevenueCatService.initializeSubscription();
+  Future _upgradeSubscription() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+    if (provider.user?.phone != null && provider.user?.phone != '') {
+      await RevenueCatService.initializeSubscription();
+    }
   }
 
   // Future<void> _initPlatformState() async {

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/home_res.dart';
@@ -29,88 +31,136 @@ class StocksItemTrending extends StatelessWidget {
               builder: (_) => StockDetail(symbol: trending.symbol)),
         );
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-          color: ThemeColors.background,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(0.sp),
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                width: 48,
-                height: 48,
-                child: ThemeImageView(url: trending.image),
-              ),
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              color: ThemeColors.background,
+              borderRadius: BorderRadius.circular(5),
             ),
-            const SpacerHorizontal(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    trending.symbol,
-                    style: styleGeorgiaBold(fontSize: 18),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    trending.name,
-                    style: styleGeorgiaRegular(
-                      color: ThemeColors.greyText,
-                      fontSize: 12,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SpacerVertical(height: 5),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Mentions: ${trending.sentiment.toInt()}",
-                          style: stylePTSansRegular(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SpacerHorizontal(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+            child: Row(
               children: [
-                Text(trending.price, style: stylePTSansBold(fontSize: 18)),
-                const SpacerVertical(height: 5),
-                RichText(
-                  text: TextSpan(
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(0.sp),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 48,
+                    height: 48,
+                    child: ThemeImageView(url: trending.image),
+                  ),
+                ),
+                const SpacerHorizontal(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextSpan(
-                        text:
-                            "${trending.displayChange} (${trending.displayPercentage.toCurrency()}%)",
-                        style: stylePTSansRegular(
-                          fontSize: 14,
-                          color: trending.displayPercentage > 0
-                              ? Colors.green
-                              : Colors.red,
-                        ),
+                      Text(
+                        trending.symbol,
+                        style: styleGeorgiaBold(fontSize: 18),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
+                      const SpacerVertical(height: 5),
+                      Text(
+                        trending.name,
+                        style: styleGeorgiaRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SpacerVertical(height: 5),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Mentions: ${trending.sentiment.toInt()}",
+                              style: stylePTSansRegular(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
+                const SpacerHorizontal(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(trending.price, style: stylePTSansBold(fontSize: 18)),
+                    const SpacerVertical(height: 5),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                "${trending.displayChange} (${trending.displayPercentage.toCurrency()}%)",
+                            style: stylePTSansRegular(
+                              fontSize: 14,
+                              color: trending.displayPercentage > 0
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: CustomPaint(
+          //     painter: HalfCirclePainter(
+          //       color: trending.displayPercentage > 0
+          //           ? Colors.green.withOpacity(0.2)
+          //           : Colors.red.withOpacity(0.2),
+          //     ),
+          //     child: Container(
+          //       height: 35,
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
     );
   }
 }
+
+class HalfCirclePainter extends CustomPainter {
+  final Color color;
+
+  HalfCirclePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = color;
+    canvas.drawArc(
+      Rect.fromLTWH(0, 0, size.width / 2.5, size.height * 2),
+      pi,
+      pi,
+      true,
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+
+
+
+
+
 
 
 

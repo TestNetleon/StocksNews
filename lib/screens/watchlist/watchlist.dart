@@ -69,7 +69,10 @@ class _WatchListState extends State<WatchList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ScreenTitle(title: provider.extra?.title ?? "Stock Watchlist"),
+            userProvider.user == null
+                ? const SizedBox()
+                : ScreenTitle(
+                    title: provider.extra?.title ?? "Stock Watchlist"),
             // TextInputFieldSearch(
             //   hintText: "Add ticker in watchlist",
             //   onChanged: (text) {},
@@ -78,6 +81,7 @@ class _WatchListState extends State<WatchList> {
                 ? Expanded(
                     child: LoginError(
                       state: "watchList",
+                      title: "Stock Watchlist",
                       onClick: () async {
                         isPhone ? await loginSheet() : await loginSheetTablet();
                         await _getData();

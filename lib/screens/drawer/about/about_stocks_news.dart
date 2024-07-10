@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
@@ -75,7 +76,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       return;
     }
 
-    if (provider.user?.phone == null || provider.user?.phone == '') {
+    if (provider.user?.affiliateStatus != 1) {
       _bottomSheet();
     } else {
       await Navigator.push(
@@ -225,7 +226,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                     );
                   }
 
-                  if (index == 2) {
+                  if (index == 3) {
                     return Visibility(
                       visible:
                           context.watch<HomeProvider>().extra?.showPortfolio ??
@@ -234,7 +235,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                           index: index, onTap: aboutTiles[index].onTap),
                     );
                   }
-                  if (index == 3) {
+                  if (index == 4) {
                     return Visibility(
                       visible: context
                               .watch<HomeProvider>()

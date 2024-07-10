@@ -220,16 +220,19 @@ class _AlertBaseState extends State<AlertBase> {
         ),
         child: Column(
           children: [
-            ScreenTitle(
-              title: provider.textRes?.title ??
-                  (homeProvider.totalAlerts == 1
-                      ? "Stock Alert"
-                      : "Stock Alerts"),
-            ),
+            userProvider.user == null
+                ? const SizedBox()
+                : ScreenTitle(
+                    title: provider.textRes?.title ??
+                        (homeProvider.totalAlerts == 1
+                            ? "Stock Alert"
+                            : "Stock Alerts"),
+                  ),
             userProvider.user == null
                 ? Expanded(
                     child: LoginError(
                       error: "User Not logged in",
+                      title: "Stock Alerts",
                       onClick: () async {
                         isPhone ? await loginSheet() : await loginSheetTablet();
                         await _getData();
