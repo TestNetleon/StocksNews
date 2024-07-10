@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/morningstar_purchase_res.dart';
 import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
@@ -20,9 +21,15 @@ class MorningStarTxnItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => WebviewLink(stringURL: data.pdfUrl),
+            builder: (_) => PdfViewerWidget(url: data.pdfUrl),
           ),
         );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => WebviewLink(stringURL: data.pdfUrl),
+        //   ),
+        // );
       },
       child: Container(
         width: double.infinity,

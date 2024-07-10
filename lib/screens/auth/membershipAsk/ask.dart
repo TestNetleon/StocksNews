@@ -145,7 +145,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
         icon: Images.alertPopGIF,
       );
     }
-    //
+
     // else if (displayName.text.isEmpty) {
     //   popUpAlert(
     //     message: "Please enter a valid display name.",
