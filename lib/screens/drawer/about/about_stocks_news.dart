@@ -146,7 +146,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
 
   @override
   Widget build(BuildContext context) {
-    // HomeProvider provider = context.watch<HomeProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
     UserRes? user = context.watch<UserProvider>().user;
 
     return Scaffold(
@@ -222,6 +222,13 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                       visible:
                           (user != null && user.membership?.purchased == 1) &&
                               showMembership,
+                      child: AboutTile(
+                          index: index, onTap: aboutTiles[index].onTap),
+                    );
+                  }
+                  if (index == 2) {
+                    return Visibility(
+                      visible: provider.extra?.showMorningstar == true,
                       child: AboutTile(
                           index: index, onTap: aboutTiles[index].onTap),
                     );
