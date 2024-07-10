@@ -87,7 +87,18 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   bool checkBox = false;
 
   _checkProfile() {
+    UserRes? user = context.read<UserProvider>().user;
+
+    countryCode = user?.phoneCode == null || user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
+
+    log("Country Code => $countryCode");
+
     UserProvider provider = context.read<UserProvider>();
+
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
     }

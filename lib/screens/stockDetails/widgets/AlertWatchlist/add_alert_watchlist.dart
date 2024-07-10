@@ -646,7 +646,6 @@
 
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -721,16 +720,16 @@ class AddToAlertWatchlist extends StatelessWidget {
         context.watch<StockDetailProviderNew>().tabRes?.isAlertAdded ?? 0;
     num watchlistOn =
         context.watch<StockDetailProviderNew>().tabRes?.isWatchListAdded ?? 0;
-    UserProvider provider = context.watch<UserProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
     // HomeProvider homeProvider = context.watch<HomeProvider>();
 
-    bool purchased = provider.user?.membership?.purchased == 1;
+    bool purchased = provider.extra?.membership?.purchased == 1;
 
-    bool alertPermission = provider.user?.membership?.permissions?.any(
+    bool alertPermission = provider.extra?.membership?.permissions?.any(
             (element) => (element.key == "add-alert" && element.status == 1)) ??
         false;
 
-    bool watchListPermission = provider.user?.membership?.permissions?.any(
+    bool watchListPermission = provider.extra?.membership?.permissions?.any(
             (element) =>
                 (element.key == "add-watchlist" && element.status == 1)) ??
         false;
@@ -766,7 +765,6 @@ class AddToAlertWatchlist extends StatelessWidget {
               }
 
               if (isLocked) {
-                log("message *** ");
                 //For Membership
                 Utils().showLog("---For Membership");
                 if (provider.user != null && (purchased && alertPermission)) {
@@ -806,16 +804,19 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                       await _callTabAPI();
                       await Future.delayed(const Duration(milliseconds: 200));
-                      if (!purchased && !alertPermission) {
+                      if ((!purchased && !alertPermission) ||
+                          (purchased && !alertPermission)) {
                         await _subscribe();
                       }
                     } else {
                       //User is Logged In
                       Utils().showLog("---User is Logged In");
-                      if (!purchased && !alertPermission) {
+                      if ((!purchased && !alertPermission) ||
+                          (purchased && !alertPermission)) {
                         await _subscribe();
                         return;
                       }
+
                       if (alertOn == 0) {
                         _vibrate();
                         _showAlertPopup(navigatorKey.currentContext!, symbol);
@@ -932,16 +933,19 @@ class AddToAlertWatchlist extends StatelessWidget {
 
                       await _callTabAPI();
                       await Future.delayed(const Duration(milliseconds: 200));
-                      if (!purchased && !alertPermission) {
+                      if ((!purchased && !watchListPermission) ||
+                          (purchased && !watchListPermission)) {
                         await _subscribe();
                       }
                     } else {
                       //User is Logged In
                       Utils().showLog("---User is Logged In");
-                      if (!purchased && !alertPermission) {
+                      if ((!purchased && !watchListPermission) ||
+                          (purchased && !watchListPermission)) {
                         await _subscribe();
                         return;
                       }
+
                       if (watchlistOn == 0) {
                         _vibrate();
                         await context
