@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/low_prices_stocks.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
@@ -62,13 +63,15 @@ class LowPriceStocksData extends StatelessWidget {
     List<LowPriceStocksTabRes>? tabs = provider.tabs;
 
     UserProvider userProvider = context.watch<UserProvider>();
-    // HomeProvider homeProvider = context.watch<HomeProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = provider.extra?.membership?.permissions?.any((element) =>
-            (element.key == "low-priced-stocks-under" && element.status == 0) ||
-            (element.key == "stocks-on-sale" && element.status == 0)) ??
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                (element.key == "low-priced-stocks-under" &&
+                    element.status == 0) ||
+                (element.key == "stocks-on-sale" && element.status == 0)) ??
         false;
     // bool isLocked = provider.extra?.membership?.permissions?.any((element) =>
     //         element == "low-priced-stocks-under" ||
