@@ -48,16 +48,17 @@ class PopUpMenuButtonCommon extends StatelessWidget {
 
     bool purchased = provider.user?.membership?.purchased == 1;
 
-    bool isPresentAlert = provider.user?.membership?.permissions
-            ?.any((element) => element == "add-alert") ??
+    bool isPresentAlert = provider.user?.membership?.permissions?.any(
+            (element) => (element.key == "add-alert" && element.status == 1)) ??
         false;
 
     // bool isPresentAlertE =
     //     subscription?.permissions?.any((element) => element == "add-alert") ??
     //         false;
 
-    bool isPresentWatchlist = provider.user?.membership?.permissions
-            ?.any((element) => element == "add-watchlist") ??
+    bool isPresentWatchlist = provider.user?.membership?.permissions?.any(
+            (element) =>
+                (element.key == "add-watchlist" && element.status == 1)) ??
         false;
 
     // bool isPresentWatchlistE = subscription?.permissions

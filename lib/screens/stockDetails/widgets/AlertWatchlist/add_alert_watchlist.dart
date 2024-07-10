@@ -724,12 +724,13 @@ class AddToAlertWatchlist extends StatelessWidget {
 
     bool purchased = provider.user?.membership?.purchased == 1;
 
-    bool alertPermission = provider.user?.membership?.permissions
-            ?.any((element) => element == "add-alert") ??
+    bool alertPermission = provider.user?.membership?.permissions?.any(
+            (element) => (element.key == "add-alert" && element.status == 1)) ??
         false;
 
-    bool watchListPermission = provider.user?.membership?.permissions
-            ?.any((element) => element == "add-watchlist") ??
+    bool watchListPermission = provider.user?.membership?.permissions?.any(
+            (element) =>
+                (element.key == "add-watchlist" && element.status == 1)) ??
         false;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.sp),
