@@ -73,18 +73,31 @@ class IndicesData extends StatelessWidget {
 
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
-                element == "exchanage" ||
-                element == "sp-500-stocks" ||
-                element == "indices") ??
+                (element.key == "exchanage" && element.status == 0) ||
+                (element.key == "sp-500-stocks" && element.status == 0) ||
+                (element.key == "indices" && element.status == 0)) ??
         false;
+    ;
+    // bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+    //         (element) =>
+    //             element == "exchanage" ||
+    //             element == "sp-500-stocks" ||
+    //             element == "indices") ??
+    //     false;
 
     if (purchased && isLocked) {
       bool havePermissions = userProvider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "exchanage" ||
-                  element == "sp-500-stocks" ||
-                  element == "indices") ??
+                  (element.key == "exchanage" && element.status == 1) ||
+                  (element.key == "sp-500-stocks" && element.status == 1) ||
+                  (element.key == "indices" && element.status == 1)) ??
           false;
+      // bool havePermissions = userProvider.user?.membership?.permissions?.any(
+      //         (element) =>
+      //             element == "exchanage" ||
+      //             element == "sp-500-stocks" ||
+      //             element == "indices") ??
+      //     false;
 
       isLocked = !havePermissions;
     }
