@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stocks_res.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
@@ -43,11 +44,11 @@ class StocksContainer extends StatelessWidget {
     AllStocksProvider provider = context.watch<AllStocksProvider>();
 
     UserProvider userProvider = context.watch<UserProvider>();
-    // HomeProvider homeProvider = context.watch<HomeProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = provider.extra?.membership?.permissions?.any(
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) => (element.key == "stocks" && element.status == 0)) ??
         false;
 
