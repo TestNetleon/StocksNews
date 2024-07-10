@@ -116,7 +116,8 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                   if (provider.user == null) {
                     return;
                   }
-                  if ((!purchased && !isPresentAlert)) {
+                  if ((!purchased && !isPresentAlert) ||
+                      (purchased && !isPresentAlert)) {
                     await _subscribe();
                   }
 
@@ -203,7 +204,8 @@ class PopUpMenuButtonCommon extends StatelessWidget {
                   if (provider.user == null) {
                     return;
                   }
-                  if ((!purchased && !isPresentWatchlist)) {
+                  if ((!purchased && !isPresentWatchlist) ||
+                      (purchased && !isPresentWatchlist)) {
                     await _subscribe();
                   }
                   if ((purchased && isPresentWatchlist)) {
