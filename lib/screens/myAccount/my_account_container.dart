@@ -287,7 +287,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           placeholder: "Enter your display name",
           keyboardType: TextInputType.text,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
+            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
+            LengthLimitingTextInputFormatter(20)
           ],
           textCapitalization: TextCapitalization.words,
         ),

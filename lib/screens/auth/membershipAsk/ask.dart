@@ -70,7 +70,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   // TextEditingController displayName = TextEditingController(text: "");
-  bool affiliateStatus = false;
+  // bool affiliateStatus = false;
   bool numberVerified = true;
 
   String? countryCode;
@@ -117,7 +117,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
-    affiliateStatus = provider.user?.affiliateStatus == 1;
+    // affiliateStatus = provider.user?.affiliateStatus == 1;
     numberVerified = provider.user?.phone != null &&
         provider.user?.phone != "" &&
         provider.user?.name != null &&
