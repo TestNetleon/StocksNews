@@ -24,6 +24,7 @@ import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
 import '../../contactUs/contact_us_item.dart';
+import '../../t&cAndPolicy/tc_policy.dart';
 import '../refer/refer_otp.dart';
 
 membershipLogin() async {
@@ -461,15 +462,15 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                   return null;
                                 },
                                 onTapUrl: (url) async {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   createRoute(
-                                  //     const TCandPolicy(
-                                  //       policyType: PolicyType.referral,
-                                  //       slug: "referral-terms",
-                                  //     ),
-                                  //   ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    createRoute(
+                                      const TCandPolicy(
+                                        policyType: PolicyType.membership,
+                                        slug: "membership-terms",
+                                      ),
+                                    ),
+                                  );
                                   return true;
                                 },
                                 provider.extra?.verifySubscription ?? "",

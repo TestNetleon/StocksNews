@@ -112,7 +112,9 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
                             ? "Terms of Service"
                             : widget.slug == "privacy-policy"
                                 ? "Privacy Policy"
-                                : "Disclaimer",
+                                : widget.slug == "membership-terms"
+                                    ? "Membership Terms"
+                                    : "Disclaimer",
                 // title: widget.policyType == PolicyType.aboutUs
                 //     ? "About Stocks.News"
                 //     : widget.policyType == PolicyType.tC

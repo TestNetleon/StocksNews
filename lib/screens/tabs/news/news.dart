@@ -41,39 +41,39 @@ class News extends StatelessWidget {
         ),
         child: CommonTabContainer(
           tabPaddingNew: false,
-
           onChange: (index) {
             provider.tabChange(index, provider.tabs?[index].id);
           },
-          scrollable: provider.extra?.aiTitle != null &&
-                  provider.extra?.aiTitle != '' &&
-                  provider.tabs?.length == 1
+          scrollable: (provider.extra?.aiTitle != null &&
+                      provider.extra?.aiTitle != '' &&
+                      provider.tabs?.length == 1) ||
+                  (provider.tabs?.length == 2)
               ? false
               : true,
-          //  provider.tabs?.length == 2 ? false : true,
           padding: EdgeInsets.only(bottom: 10.sp),
-          // tabs: List.generate(
-          //   provider.tabs?.length ?? 0,
-          //   (index) => "${provider.tabs?[index].name}",
-          // ),
-
-          tabs: [
-            ...(provider.tabs?.map((tab) => tab.name) ?? []),
-            provider.extra?.aiTitle ?? "N/A"
-          ],
-
-          // widgets: List.generate(
-          //   provider.tabs?.length ?? 0,
-          //   (index) => NewsTypeData(id: provider.tabs![index].id),
-          // ),
-
-          widgets: [
-            ...(provider.tabs?.map((tab) {
-                  return NewsTypeData(id: tab.id);
-                }).toList() ??
-                []),
-            const AINewsIndex(),
-          ],
+          tabs: provider.extra?.aiTitle == null || provider.extra?.aiTitle == ""
+              ? [
+                  ...(provider.tabs?.map((tab) => tab.name) ?? []),
+                ]
+              : [
+                  ...(provider.tabs?.map((tab) => tab.name) ?? []),
+                  provider.extra?.aiTitle ?? "N/A"
+                ],
+          widgets:
+              provider.extra?.aiTitle == null || provider.extra?.aiTitle == ""
+                  ? [
+                      ...(provider.tabs?.map((tab) {
+                            return NewsTypeData(id: tab.id);
+                          }).toList() ??
+                          []),
+                    ]
+                  : [
+                      ...(provider.tabs?.map((tab) {
+                            return NewsTypeData(id: tab.id);
+                          }).toList() ??
+                          []),
+                      const AINewsIndex(),
+                    ],
         ),
       ),
     );

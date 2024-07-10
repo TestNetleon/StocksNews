@@ -80,7 +80,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-
 import '../screens/auth/signup/signup_sheet.dart';
 import '../screens/auth/signup/signup_sheet_tablet.dart';
 import '../utils/colors.dart';
