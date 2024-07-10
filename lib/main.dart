@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,12 +11,14 @@ import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
+
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
   } catch (e) {
     if (kDebugMode) print(e.toString());
   }
+ 
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

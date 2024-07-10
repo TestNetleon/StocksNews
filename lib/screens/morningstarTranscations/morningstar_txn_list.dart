@@ -5,6 +5,7 @@ import 'package:stocks_news_new/providers/morningstar_txn_provider.dart';
 
 import 'package:stocks_news_new/screens/morningstarTranscations/morningstar_txn_item.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
+import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -40,9 +41,13 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
       padding: const EdgeInsets.only(
           left: Dimen.padding, right: Dimen.padding, bottom: 40),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const ScreenTitle(title: "Morningstar Reports"),
+          ScreenTitle(
+            title: provider.extra?.title.toString(),
+            subTitle: provider.extra?.subTitle.toString(),
+          ),
           Expanded(
             child: BaseUiContainer(
               error: provider.error,
@@ -61,32 +66,23 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
                     if (data == null || data.isEmpty) {
                       return const SizedBox();
                     }
-                    return MorningStarTxnItem(data: data[index]);
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        MorningStarTxnItem(data: data[index]),
+                        if (index == data.length - 1)
+                          DisclaimerWidget(data: provider.extra!.disclaimer!)
+                      ],
+                    );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SpacerVertical(height: 12);
                   },
-                  // itemCount: up?.length ?? 0,
                   itemCount: data?.length ?? 0,
                 ),
               ),
             ),
           ),
-          // ,
-          // Expanded(
-          //   child: ListView.separated(
-          //     shrinkWrap: true,
-          //     padding: const EdgeInsets.only(top: Dimen.padding),
-          //     itemBuilder: (context, index) {
-          //       return const MorningStarTxnItem();
-          //     },
-          //     separatorBuilder: (BuildContext context, int index) {
-          //       return const SpacerVertical(height: 12);
-          //     },
-          //     // itemCount: up?.length ?? 0,
-          //     itemCount: 0,
-          //   ),
-          // ),
         ],
       ),
     );

@@ -27,6 +27,7 @@ class MorningStarPurchase {
   final dynamic pdfUrl;
   final dynamic updatedAt;
   final dynamic createdAt;
+  final dynamic tickerImage;
 
   MorningStarPurchase({
     required this.id,
@@ -48,30 +49,31 @@ class MorningStarPurchase {
     required this.pdfUrl,
     required this.updatedAt,
     required this.createdAt,
+    required this.tickerImage,
   });
 
   factory MorningStarPurchase.fromJson(Map<String, dynamic> json) =>
       MorningStarPurchase(
-        id: json["_id"],
-        userId: json["user_id"],
-        morningStarId: json["morning_star_id"],
-        symbol: json["symbol"],
-        priceOverQuantFairValue: json["PriceOverQuantFairValue"],
-        quantFairValue: json["QuantFairValue"],
-        oneStarPrice: json["OneStarPrice"],
-        fiveStarPrice: json["FiveStarPrice"],
-        quantStarRatingDate: json["QuantStarRatingDate"],
-        quantEconomicMoatDate: json["QuantEconomicMoatDate"],
-        priceOverQuantFairValueDate: json["PriceOverQuantFairValueDate"],
-        quantFairValueDate: json["QuantFairValueDate"],
-        quantFairValueUncertaintyDate: json["QuantFairValueUncertaintyDate"],
-        oneStarPriceDate: json["OneStarPriceDate"],
-        fiveStarPriceDate: json["FiveStarPriceDate"],
-        quantFinancialHealthDate: json["QuantFinancialHealthDate"],
-        pdfUrl: json["pdf_url"],
-        updatedAt: json["updated_at"],
-        createdAt: json["created_at"],
-      );
+          id: json["_id"],
+          userId: json["user_id"],
+          morningStarId: json["morning_star_id"],
+          symbol: json["symbol"],
+          priceOverQuantFairValue: json["PriceOverQuantFairValue"],
+          quantFairValue: json["QuantFairValue"],
+          oneStarPrice: json["OneStarPrice"],
+          fiveStarPrice: json["FiveStarPrice"],
+          quantStarRatingDate: json["QuantStarRatingDate"],
+          quantEconomicMoatDate: json["QuantEconomicMoatDate"],
+          priceOverQuantFairValueDate: json["PriceOverQuantFairValueDate"],
+          quantFairValueDate: json["QuantFairValueDate"],
+          quantFairValueUncertaintyDate: json["QuantFairValueUncertaintyDate"],
+          oneStarPriceDate: json["OneStarPriceDate"],
+          fiveStarPriceDate: json["FiveStarPriceDate"],
+          quantFinancialHealthDate: json["QuantFinancialHealthDate"],
+          pdfUrl: json["pdf_url"],
+          updatedAt: json["updated_at"],
+          createdAt: json["created_at"],
+          tickerImage: json["ticker_image"]);
 
   Map<String, dynamic> toJson() => {
         "_id": id,
@@ -93,5 +95,6 @@ class MorningStarPurchase {
         "pdf_url": pdfUrl,
         "updated_at": updatedAt,
         "created_at": createdAt,
+        "ticker_image": tickerImage,
       };
 }
