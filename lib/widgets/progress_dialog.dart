@@ -33,12 +33,6 @@ class ProgressDialog extends StatelessWidget {
                       width: 100,
                       height: 100,
                     ),
-                    // // TODO: ------
-                    // const CircularProgressIndicator(
-                    //   color: ThemeColors.themeGreen,
-                    //   strokeWidth: 4,
-                    // ),
-                    // // TODO: ------
                     const SpacerVertical(height: 16),
                     Flexible(
                       child: Text(
