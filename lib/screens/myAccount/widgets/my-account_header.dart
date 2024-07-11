@@ -5,6 +5,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
@@ -222,20 +223,22 @@ class MyVerifiedCard extends StatelessWidget {
         Flexible(
           child: InkWell(
             onTap: () {
-              popUpAlert(
-                padding: const EdgeInsets.all(10),
-                message: !verified
-                    ? homeProvider.extra?.profileText?.unVerified ??
-                        "Unverified users are those who have not confirmed their name, email, display name, or mobile number."
-                    : homeProvider.extra?.profileText?.verified ??
-                        "Verified users are those who have confirmed their name, email, display name, and mobile number.",
-                title: verified ? "Verified" : "Unverified",
-                iconWidget: Icon(
-                  Icons.verified,
-                  size: 80,
-                  color: verified ? ThemeColors.accent : ThemeColors.sos,
-                ),
-              );
+              verified
+                  ? popUpAlert(
+                      padding: const EdgeInsets.all(10),
+                      message: !verified
+                          ? homeProvider.extra?.profileText?.unVerified ??
+                              "Unverified users are those who have not confirmed their name, email, display name, or mobile number."
+                          : homeProvider.extra?.profileText?.verified ??
+                              "Verified users are those who have confirmed their name, email, display name, and mobile number.",
+                      title: verified ? "Verified" : "Unverified",
+                      iconWidget: Icon(
+                        Icons.verified,
+                        size: 80,
+                        color: verified ? ThemeColors.accent : ThemeColors.sos,
+                      ),
+                    )
+                  : verifyIdentitySheet();
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -277,7 +280,7 @@ class MyVerifiedCard extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "Points - ${leaderProvider.extra?.received ?? 0}",
+                  "Points - ${leaderProvider.extra?.balance ?? 0}",
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),
               ],
