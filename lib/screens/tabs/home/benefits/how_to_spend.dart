@@ -132,8 +132,8 @@ class _HowToSpendState extends State<HowToSpend> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const SpacerVertical(height: 8),
                                   Container(
+                                    alignment: Alignment.centerRight,
                                     decoration: const BoxDecoration(
                                       gradient: LinearGradient(
                                         begin: Alignment.topLeft,
@@ -151,7 +151,7 @@ class _HowToSpendState extends State<HowToSpend> {
                                       // "Start earning points right from your first action.",
                                       style: stylePTSansRegular(
                                         color: ThemeColors.white,
-                                        fontSize: 10,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ),
@@ -163,7 +163,11 @@ class _HowToSpendState extends State<HowToSpend> {
                                       // "Climb the Stages and Unlock Exclusive Benefits!",
                                       style: stylePTSansRegular(
                                         color: const Color.fromARGB(
-                                            255, 252, 252, 252),
+                                          255,
+                                          252,
+                                          252,
+                                          252,
+                                        ),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -172,13 +176,16 @@ class _HowToSpendState extends State<HowToSpend> {
                                   const SpacerVertical(height: 10),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 5.0, right: 25.0),
+                                      left: 5.0,
+                                      right: 25.0,
+                                    ),
                                     child: Text(
                                       spend?.banner.text ?? "",
                                       // "The more you engage, the more you earn – it's that simple!",
                                       style: stylePTSansRegular(
-                                          color: ThemeColors.white,
-                                          fontSize: 14),
+                                        color: ThemeColors.white,
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   ),
                                   const SpacerVertical(height: 8),
