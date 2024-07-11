@@ -1,27 +1,12 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/benefits_analysis.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/benefits_items.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/benefits_redeem_items.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import 'package:stocks_news_new/widgets/loading.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
 class BenefitsMarketing extends StatefulWidget {
@@ -36,7 +21,7 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.watch<HomeProvider>();
+    // HomeProvider provider = context.watch<HomeProvider>();
 
     return BaseContainer(
         drawer: const BaseDrawer(resetIndex: true),

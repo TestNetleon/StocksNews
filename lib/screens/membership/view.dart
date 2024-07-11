@@ -8,7 +8,6 @@ import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -26,6 +25,7 @@ class MembershipView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MembershipProvider provider = context.watch<MembershipProvider>();
+
     return BaseUiContainer(
       hasData: !provider.isLoading &&
           (provider.data?.isNotEmpty == true && provider.data != null),
@@ -83,16 +83,15 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
     Extra? extra = context.watch<MembershipProvider>().extra;
 
     UserProvider provider = context.watch<UserProvider>();
-    String? colorHex = provider.user?.membership?.color;
-    Color? color;
-
-    if (colorHex != null && colorHex.isNotEmpty) {
-      colorHex = colorHex.replaceAll('#', '');
-      color = Color(int.parse('0xFF$colorHex'));
-      Utils().showLog("$color, $colorHex");
-    } else {
-      color = ThemeColors.background;
-    }
+    // String? colorHex = provider.user?.membership?.color;
+    // Color? color;
+    // if (colorHex != null && colorHex.isNotEmpty) {
+    //   colorHex = colorHex.replaceAll('#', '');
+    //   color = Color(int.parse('0xFF$colorHex'));
+    //   Utils().showLog("$color, $colorHex");
+    // } else {
+    //   color = ThemeColors.background;
+    // }
     return Column(
       children: [
         GestureDetector(

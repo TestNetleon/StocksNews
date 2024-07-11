@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/benefits_analysis.dart';
-import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
-import 'package:svg_flutter/svg.dart';
 
 class AnalysisBenefitItem extends StatelessWidget {
   final String? images;
@@ -41,17 +37,17 @@ class AnalysisBenefitItem extends StatelessWidget {
       // Images.ultimatePlan,
       Images.bg,
     ];
-    List description = [
-      'Earn points for every friend you refer who signs up using your referral link.',
-      'Sign up today and receive bonus points as a welcome gift.',
-      'Log in daily to earn points and keep your streak going.',
-      'Complete your profile to earn points and unlock additional features.',
-      'Purchase the Beginner Plan and earn points as a reward.',
-      'Get rewarded with points when you purchase the Trader Plan.',
-      'Earn bonus points with the purchase of the Ultimate Trader Plan.',
-      'Achieve the Morning Star status and earn exclusive points.',
-      'Sync your portfolio to our platform and get rewarded with points.',
-    ];
+    // List description = [
+    //   'Earn points for every friend you refer who signs up using your referral link.',
+    //   'Sign up today and receive bonus points as a welcome gift.',
+    //   'Log in daily to earn points and keep your streak going.',
+    //   'Complete your profile to earn points and unlock additional features.',
+    //   'Purchase the Beginner Plan and earn points as a reward.',
+    //   'Get rewarded with points when you purchase the Trader Plan.',
+    //   'Earn bonus points with the purchase of the Ultimate Trader Plan.',
+    //   'Achieve the Morning Star status and earn exclusive points.',
+    //   'Sync your portfolio to our platform and get rewarded with points.',
+    // ];
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 60.0),
@@ -205,7 +201,7 @@ class AnalysisBenefitItem extends StatelessWidget {
                         itemBuilder: (context, index) {
                           SdBenefitAnalyst? data =
                               provider.benefitAnalysisRes?[index];
-                              
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
