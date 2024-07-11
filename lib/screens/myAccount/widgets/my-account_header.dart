@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/profile_image.dart';
+import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/myAccount/widgets/select_type.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -189,7 +190,9 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                     // ),
                     const Padding(
                       padding: EdgeInsets.only(top: 13),
-                      child: MyVerifiedCard(),
+                      child: MyVerifiedCard(
+                        gotoProfile: false,
+                      ),
                     ),
                   ],
                 ),
@@ -203,7 +206,8 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
 }
 
 class MyVerifiedCard extends StatelessWidget {
-  const MyVerifiedCard({super.key});
+  final bool gotoProfile;
+  const MyVerifiedCard({super.key, this.gotoProfile = true});
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +242,14 @@ class MyVerifiedCard extends StatelessWidget {
                         color: verified ? ThemeColors.accent : ThemeColors.sos,
                       ),
                     )
-                  : verifyIdentitySheet();
+                  : gotoProfile
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyAccount(),
+                          ),
+                        )
+                      : null;
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,

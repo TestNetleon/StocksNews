@@ -15,6 +15,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../widgets/theme_button_small.dart';
+import '../auth/membershipAsk/ask.dart';
 import '../drawer/widgets/profile_image.dart';
 import 'item.dart';
 
@@ -264,9 +265,18 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
                         color: const Color.fromARGB(255, 194, 216, 51),
                         onPressed: () {
                           askToSubscribe(
-                            onPressed: () {
+                            onPressed: () async {
                               Navigator.pop(context);
-                              RevenueCatService.initializeSubscription();
+                              if (provider.user?.phone == null ||
+                                  provider.user?.phone == '') {
+                                // await referLogin();
+                                await membershipLogin();
+                              }
+                              if (provider.user?.phone != null &&
+                                  provider.user?.phone != '') {
+                                await RevenueCatService
+                                    .initializeSubscription();
+                              }
                             },
                           );
                         },
