@@ -89,12 +89,18 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   _checkProfile() {
     UserRes? user = context.read<UserProvider>().user;
 
-    countryCode = user?.phoneCode == null || user?.phoneCode == ""
-        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-                .dialCode ??
-            ""
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
-
+    // countryCode = user?.phoneCode == null || user?.phoneCode == ""
+    //     ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+    //             .dialCode ??
+    //         ""
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    }
     log("Country Code => $countryCode");
 
     UserProvider provider = context.read<UserProvider>();
@@ -209,13 +215,21 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     UserRes? user = context.read<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
 
-    final String locale = user?.phoneCode == null || user?.phoneCode == ""
-        ? Intl.getCurrentLocale().split('_').last
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
-                .code
-                ?.split('_')
-                .last ??
-            "";
+    String? locale;
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      locale = geoCountryCode;
+    } else {
+      locale = "US";
+    }
+    // final String locale = user?.phoneCode == null || user?.phoneCode == ""
+    //     ? Intl.getCurrentLocale().split('_').last
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+    //             .code
+    //             ?.split('_')
+    //             .last ??
+    //         "";
 
     return GestureDetector(
       onTap: () {
