@@ -150,29 +150,32 @@ class CommonLock extends StatelessWidget {
                   ),
                 ),
                 const SpacerVertical(height: 20),
-                GestureDetector(
-                  onTap: () async {
-                    isPhone ? await loginSheet() : await loginSheetTablet();
-                    if (provider.user == null) {
-                      return;
-                    }
-                    Navigator.popUntil(
-                        navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(
-                        builder: (_) => const Tabs(index: 0),
+                Visibility(
+                  visible: provider.user == null,
+                  child: GestureDetector(
+                    onTap: () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
+                      if (provider.user == null) {
+                        return;
+                      }
+                      Navigator.popUntil(navigatorKey.currentContext!,
+                          (route) => route.isFirst);
+                      Navigator.pushReplacement(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(
+                          builder: (_) => const Tabs(index: 0),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Already have an account? Log in",
+                      style: stylePTSansRegular(
+                        fontSize: 16,
+                        height: 1.3,
+                        color: ThemeColors.themeGreen,
                       ),
-                    );
-                  },
-                  child: Text(
-                    "Already have an account? Log in",
-                    style: stylePTSansRegular(
-                      fontSize: 16,
-                      height: 1.3,
-                      color: ThemeColors.themeGreen,
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SpacerVertical(height: 10),
