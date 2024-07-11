@@ -1,8 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/stockDetailRes/dividends.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -270,11 +268,12 @@ class _EarningsAnalystEstimateLineChartState
                     showTitles: true,
                     interval: 1,
                     reservedSize: 40,
-                    getTitlesWidget: (value, meta) { 
+                    getTitlesWidget: (value, meta) {
                       int index = value.toInt();
                       if (index < 0 ||
                           index >= provider.earnings!.epsEstimates!.length) {
-                        Utils().showLog("data length is checking ${provider.earnings!.epsEstimates!.length}");
+                        Utils().showLog(
+                            "data length is checking ${provider.earnings!.epsEstimates!.length}");
                         return const SizedBox.shrink();
                       }
                       return SideTitleWidget(

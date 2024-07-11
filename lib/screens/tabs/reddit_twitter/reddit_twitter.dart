@@ -60,15 +60,17 @@ class _RedditTwitterState extends State<RedditTwitter> {
     UserProvider userProvider = context.watch<UserProvider>();
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = homeProvider.extra?.membership?.permissions
-            ?.any((element) => element == "reddit-twitter") ??
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) =>
+                (element.key == "reddit-twitter" && element.status == 0)) ??
         false;
 
     // bool isLocked = true;
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "reddit-twitter") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  (element.key == "reddit-twitter" && element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;

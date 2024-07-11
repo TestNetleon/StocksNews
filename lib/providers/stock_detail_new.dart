@@ -1460,6 +1460,9 @@ class StockDetailProviderNew extends ChangeNotifier {
   String? _typeValue;
   String? get typeValue => _typeValue;
 
+  String? _typePeriods;
+  String? get typePeriods => _typePeriods;
+
   int changePeriodTypeIndex = 0;
 
   void changeTabType(index, {String? symbol}) {
@@ -1623,6 +1626,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
 
       if (response.status) {
+        _typePeriods = period.toString();
         _typeValue = type;
         _sdFinancialChartRes =
             sdFinancialResFromJson(jsonEncode(response.data));

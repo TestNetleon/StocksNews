@@ -36,13 +36,13 @@ class SdFinancialRes {
 
 class Chart {
   final String? period;
-  final int? revenue;
-  final int? netIncome;
-  final int? totalAssets;
-  final int? totalLiabilities;
-  final int? operatingCashFlow1;
-  final int? operatingCashFlow2;
-  final int? operatingCashFlow3;
+  final dynamic revenue;
+  final dynamic netIncome;
+  final dynamic totalAssets;
+  final dynamic totalLiabilities;
+  final dynamic operatingCashFlow1;
+  final dynamic operatingCashFlow2;
+  final dynamic operatingCashFlow3;
 
   Chart({
     this.period,

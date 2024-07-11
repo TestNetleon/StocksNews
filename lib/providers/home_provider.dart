@@ -282,6 +282,7 @@ class HomeProvider extends ChangeNotifier {
 
         if (_extra != null) {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
+          showMembership = (response.extra as Extra).showMembership == true;
         }
 
         notifyListeners();

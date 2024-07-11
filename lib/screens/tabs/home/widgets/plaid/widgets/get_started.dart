@@ -8,9 +8,9 @@ import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/plaid.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -45,12 +45,43 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     super.dispose();
   }
 
-  Future _onTap(UserProvider provider, HomeProvider homeProvider) async {
+  void _handleClick() async {
+    UserProvider provider = context.read<UserProvider>();
+    if (provider.user == null) {
+      fromDrawer = widget.fromDrawer;
+      _onTap();
+    } else if (provider.user != null &&
+        (provider.user?.phone == null || provider.user?.phone == "")) {
+      fromDrawer = widget.fromDrawer;
+      await verifyIdentitySheet();
+      if (provider.user != null &&
+          (provider.user?.phone == null || provider.user?.phone == "")) {
+        return;
+      }
+      Timer(const Duration(seconds: 1), () async {
+        await _plaidLinkHandler?.plaidAPi();
+      });
+    } else {
+      fromDrawer = widget.fromDrawer;
+      _plaidLinkHandler?.plaidAPi();
+    }
+  }
+
+  Future _onTap() async {
+    UserProvider provider = context.read<UserProvider>();
+    HomeProvider homeProvider = context.read<HomeProvider>();
     Utils().showLog("---------FROM DRAWER ON TAP  $fromDrawer");
     PlaidProvider plaidProvider = context.read<PlaidProvider>();
-    isPhone ? await loginSheet() : await loginSheetTablet();
-    if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+
+    if (provider.user == null) {
+      isPhone ? await loginSheet() : await loginSheetTablet();
+    }
+    if (provider.user == null) {
       return;
+    }
+    if (provider.user != null &&
+        (provider.user?.phone == null || provider.user?.phone == "")) {
+      await verifyIdentitySheet();
     }
 
     try {
@@ -73,9 +104,37 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
     }
   }
 
+  // Future _onTap(UserProvider provider, HomeProvider homeProvider) async {
+  //   Utils().showLog("---------FROM DRAWER ON TAP  $fromDrawer");
+  //   PlaidProvider plaidProvider = context.read<PlaidProvider>();
+  //   isPhone ? await loginSheet() : await loginSheetTablet();
+  //   if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+  //     return;
+  //   }
+
+  //   try {
+  //     ApiResponse res = await homeProvider.getHomePortfolio();
+  //     if (res.status && res.data['bottom'] == null) {
+  //       Timer(const Duration(seconds: 1), () async {
+  //         await _plaidLinkHandler?.plaidAPi();
+  //       });
+  //     } else {
+  //       if (fromDrawer) {
+  //         log("we are calling tab API");
+  //         // await plaidProvider.getTabData();
+
+  //         await plaidProvider.getPlaidPortfolioDataNew();
+  //       }
+  //       // log("${res.status}, ${res.data['bottom'] == null}");
+  //     }
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = context.watch<UserProvider>();
+    // UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
     return Column(
       children: [
@@ -90,18 +149,16 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
             ),
             InkWell(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              onTap: provider.user == null
-                  ? () {
-                      fromDrawer = widget.fromDrawer;
-                      _onTap(provider, homeProvider);
-                    }
-                  : () {
-                      fromDrawer = widget.fromDrawer;
-                      Utils().showLog(
-                          "---------FROM DRAWER ELSE ON TAP  $fromDrawer");
-
-                      _plaidLinkHandler?.plaidAPi();
-                    },
+              onTap: _handleClick,
+              // onTap: provider.user == null
+              //     ? () {
+              //         fromDrawer = widget.fromDrawer;
+              //         _onTap();
+              //       }
+              //     : () {
+              //         fromDrawer = widget.fromDrawer;
+              //         _plaidLinkHandler?.plaidAPi();
+              //       },
               child: Ink(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -177,37 +234,42 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
             ),
           ],
         ),
-        Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: const BoxDecoration(
-            // color: ThemeColors.accent,
-            gradient: LinearGradient(
-              colors: [
-                ThemeColors.bottomsheetGradient,
-                ThemeColors.accent,
+        Visibility(
+          visible: homeProvider.homePortfolio?.top?.portfolioEarnPoint != null,
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: const BoxDecoration(
+              // color: ThemeColors.accent,
+              gradient: LinearGradient(
+                colors: [
+                  ThemeColors.bottomsheetGradient,
+                  ThemeColors.accent,
+                ],
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Images.starAffiliate,
+                  height: 20,
+                  width: 20,
+                ),
+                const SpacerHorizontal(width: 5),
+                Flexible(
+                  child: Text(
+                    homeProvider.homePortfolio?.top?.portfolioEarnPoint ?? "",
+                    style: stylePTSansBold(),
+                  ),
+                )
               ],
             ),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              bottomRight: Radius.circular(8),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                Images.starAffiliate,
-                height: 20,
-                width: 20,
-              ),
-              const SpacerHorizontal(width: 5),
-              Text(
-                "Sync your portfolio and earn 10 points",
-                style: stylePTSansBold(),
-              )
-            ],
           ),
         ),
       ],

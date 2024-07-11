@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/stock_score.dart';
 import 'package:stocks_news_new/screens/stockDetails/widgets/analyst_data.dart';
@@ -48,6 +49,8 @@ class _SdOverviewState extends State<SdOverview> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     return BaseUiContainer(
       isFull: true,
       hasData: !provider.isLoadingOverview && provider.overviewRes != null,
@@ -78,7 +81,8 @@ class _SdOverviewState extends State<SdOverview> {
                 const SpacerVertical(height: 12),
 
                 Visibility(
-                  visible: provider.overviewRes?.morningStart != null,
+                  visible: provider.overviewRes?.morningStart != null &&
+                      homeProvider.extra?.showMorningstar == true,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: Dimen.padding),
                     child: StockDetailAnalystData(symbol: widget.symbol ?? ""),

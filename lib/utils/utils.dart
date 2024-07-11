@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
-import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
@@ -116,6 +115,36 @@ List<SdTopRes>? convertMultipleStringListsToSdTopResLists(
     // Assuming period is an object with period and value properties
     if (period.period != null) {
       String cleanedPeriod = period.period!.replaceAll('-20', '');
+
+      SdTopRes convertedPeriod = SdTopRes(
+        key: cleanedPeriod,
+        value: cleanedPeriod,
+      );
+
+      convertedList.add(convertedPeriod);
+    }
+  }
+
+  Utils().showLog("Converted list: $convertedList");
+
+  return convertedList;
+}
+
+List<SdTopRes>? convertMultipleStringListsToSdTopResListsQuarter(
+    SdFinancialRes? data) {
+  // Ensure data and financeStatement are not null
+  if (data == null || data.financeStatement == null) {
+    return null;
+  }
+
+  // Initialize a list to hold the converted SdTopRes objects
+  List<SdTopRes> convertedList = [];
+
+  // Iterate over each period in the financeStatement list
+  for (var period in data.financeStatement!) {
+    // Assuming period is an object with period and value properties
+    if (period.period != null) {
+      String cleanedPeriod = period.period!.replaceAll('-20', ' FY');
 
       SdTopRes convertedPeriod = SdTopRes(
         key: cleanedPeriod,
@@ -669,7 +698,6 @@ void handleNavigation({
     isAppUpdating = false;
   }
   // Utils().showLog("---Type $type, -----Uri $uri,-----Slug $slug");
-
   // String slugForTicker = extractLastPathComponent(uri);
   bool userPresent = false;
 
@@ -774,14 +802,13 @@ void handleNavigation({
     }
     // } else if (type == "dashboard") {
   } else if (type == DeeplinkEnum.dashboard) {
-    if (fromBackground) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-    }
+    // if (fromBackground) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const Tabs()),
+    );
+    // }
     // } else if (type == "page") {
   } else if (type == DeeplinkEnum.page) {
     if (fromBackground) {

@@ -24,6 +24,7 @@ import '../../../../utils/theme.dart';
 import '../../../../widgets/spacer_vertical.dart';
 import '../../../../widgets/theme_input_field.dart';
 import '../../contactUs/contact_us_item.dart';
+import '../../t&cAndPolicy/tc_policy.dart';
 import '../refer/refer_otp.dart';
 
 membershipLogin() async {
@@ -69,7 +70,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   TextEditingController mobile = TextEditingController(text: "");
   TextEditingController name = TextEditingController(text: "");
   // TextEditingController displayName = TextEditingController(text: "");
-  bool affiliateStatus = false;
+  // bool affiliateStatus = false;
   bool numberVerified = true;
 
   String? countryCode;
@@ -86,7 +87,26 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   bool checkBox = false;
 
   _checkProfile() {
+    UserRes? user = context.read<UserProvider>().user;
+
+    countryCode = user?.phoneCode == null || user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
+
+    log("Country Code => $countryCode");
+
     UserProvider provider = context.read<UserProvider>();
+
+    countryCode = provider.user?.phoneCode == null ||
+            provider.user?.phoneCode == ""
+        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+                .dialCode ??
+            ""
+        : CountryCode.fromDialCode(provider.user?.phoneCode ?? " ").dialCode ??
+            "";
+
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
     }
@@ -97,7 +117,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     if (provider.user?.phone != null && provider.user?.phone != '') {
       mobile.text = provider.user?.phone ?? "";
     }
-    affiliateStatus = provider.user?.affiliateStatus == 1;
+    // affiliateStatus = provider.user?.affiliateStatus == 1;
     numberVerified = provider.user?.phone != null &&
         provider.user?.phone != "" &&
         provider.user?.name != null &&
@@ -125,7 +145,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
         icon: Images.alertPopGIF,
       );
     }
-    //
+
     // else if (displayName.text.isEmpty) {
     //   popUpAlert(
     //     message: "Please enter a valid display name.",
@@ -339,10 +359,9 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                     ),
                                     child: CountryCodePicker(
                                       padding: EdgeInsets.zero,
-                                      // enabled: user?.phoneCode == null ||
-                                      //     user?.phoneCode == "",
-
-                                      enabled: true,
+                                      enabled: user?.phoneCode == null ||
+                                          user?.phoneCode == "",
+                                      // enabled: true,
                                       onChanged: (CountryCode value) {
                                         countryCode = value.dialCode;
                                         setState(() {});
@@ -373,6 +392,21 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                           color: Colors.grey,
                                         ),
                                         hintText: "Search country",
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: BorderSide.none,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -447,15 +481,15 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                   return null;
                                 },
                                 onTapUrl: (url) async {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   createRoute(
-                                  //     const TCandPolicy(
-                                  //       policyType: PolicyType.referral,
-                                  //       slug: "referral-terms",
-                                  //     ),
-                                  //   ),
-                                  // );
+                                  Navigator.push(
+                                    context,
+                                    createRoute(
+                                      const TCandPolicy(
+                                        policyType: PolicyType.membership,
+                                        slug: "membership-terms",
+                                      ),
+                                    ),
+                                  );
                                   return true;
                                 },
                                 provider.extra?.verifySubscription ?? "",

@@ -27,6 +27,8 @@ class MorningStarPurchase {
   final dynamic pdfUrl;
   final dynamic updatedAt;
   final dynamic createdAt;
+  final dynamic tickerImage;
+  final dynamic purchaseDate;
 
   MorningStarPurchase({
     required this.id,
@@ -48,6 +50,8 @@ class MorningStarPurchase {
     required this.pdfUrl,
     required this.updatedAt,
     required this.createdAt,
+    required this.tickerImage,
+    this.purchaseDate,
   });
 
   factory MorningStarPurchase.fromJson(Map<String, dynamic> json) =>
@@ -71,6 +75,8 @@ class MorningStarPurchase {
         pdfUrl: json["pdf_url"],
         updatedAt: json["updated_at"],
         createdAt: json["created_at"],
+        tickerImage: json["ticker_image"],
+        purchaseDate: json["purchase_date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -93,5 +99,7 @@ class MorningStarPurchase {
         "pdf_url": pdfUrl,
         "updated_at": updatedAt,
         "created_at": createdAt,
+        "ticker_image": tickerImage,
+        "purchase_date": purchaseDate,
       };
 }

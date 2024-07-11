@@ -287,7 +287,8 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           placeholder: "Enter your display name",
           keyboardType: TextInputType.text,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
+            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 ]')),
+            LengthLimitingTextInputFormatter(20)
           ],
           textCapitalization: TextCapitalization.words,
         ),
@@ -430,10 +431,20 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                           size: 22,
                         ),
                         filled: true,
-                        hintStyle: stylePTSansRegular(
-                          color: Colors.grey,
-                        ),
+                        hintStyle: stylePTSansRegular(color: Colors.grey),
                         hintText: "Search country",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),

@@ -9,7 +9,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
-import '../../../providers/gap_up_provider.dart';
 import '../../../providers/home_provider.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';
@@ -28,14 +27,18 @@ class GapUpDownStocks extends StatelessWidget {
 
     bool purchased = provider.user?.membership?.purchased == 1;
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
-            (element) =>
-                element == "gap-up-stocks" || element == "gap-down-stocks") ??
+          (element) =>
+              (element.key == "gap-up-stocks" && element.status == 0) ||
+              (element.key == "gap-down-stocks" && element.status == 0),
+        ) ??
         false;
 
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gap-up-stocks" || element == "gap-down-stocks") ??
+            (element) =>
+                (element.key == "gap-up-stocks" && element.status == 1) ||
+                (element.key == "gap-down-stocks" && element.status == 1),
+          ) ??
           false;
 
       isLocked = !havePermissions;

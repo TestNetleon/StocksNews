@@ -28,18 +28,32 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
 
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
-                element == "high-beta-stocks" ||
-                element == "low-beta-stocks" ||
-                element == "negative-beta-stocks") ??
+                (element.key == "high-beta-stocks" && element.status == 0) ||
+                (element.key == "low-beta-stocks" && element.status == 0) ||
+                (element.key == "negative-beta-stocks" &&
+                    element.status == 0)) ??
         false;
+    // bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+    //         (element) =>
+    //             element == "high-beta-stocks" ||
+    //             element == "low-beta-stocks" ||
+    //             element == "negative-beta-stocks") ??
+    //     false;
 
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
-                  element == "high-beta-stocks" ||
-                  element == "low-beta-stocks" ||
-                  element == "negative-beta-stocks") ??
+                  (element.key == "high-beta-stocks" && element.status == 1) ||
+                  (element.key == "low-beta-stocks" && element.status == 1) ||
+                  (element.key == "negative-beta-stocks" &&
+                      element.status == 1)) ??
           false;
+      // bool havePermissions = provider.user?.membership?.permissions?.any(
+      //         (element) =>
+      //             element == "high-beta-stocks" ||
+      //             element == "low-beta-stocks" ||
+      //             element == "negative-beta-stocks") ??
+      //     false;
 
       isLocked = !havePermissions;
     }

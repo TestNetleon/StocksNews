@@ -368,6 +368,8 @@ class _ReferLoginState extends State<ReferLogin> {
                           placeholder: "Enter your display name",
                           keyboardType: TextInputType.name,
                           inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9 ]')),
                             LengthLimitingTextInputFormatter(20)
                           ],
                           textCapitalization: TextCapitalization.words,
@@ -417,9 +419,9 @@ class _ReferLoginState extends State<ReferLogin> {
                                       ),
                                       child: CountryCodePicker(
                                         padding: EdgeInsets.zero,
-                                        // enabled: user?.phoneCode == null ||
-                                        //     user?.phoneCode == "",
-                                        enabled: true,
+                                        enabled: user?.phoneCode == null ||
+                                            user?.phoneCode == "",
+                                        // enabled: true,
                                         onChanged: (CountryCode value) {
                                           countryCode = value.dialCode;
                                           // log("Selected Log => ${value.dialCode}");
@@ -453,6 +455,21 @@ class _ReferLoginState extends State<ReferLogin> {
                                             color: Colors.grey,
                                           ),
                                           hintText: "Search country",
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: BorderSide.none,
+                                          ),
                                         ),
                                       )
 

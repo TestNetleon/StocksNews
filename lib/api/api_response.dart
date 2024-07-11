@@ -98,9 +98,12 @@ class Extra {
   final LoginDialogRes? loginDialogRes;
   final UserMembershipRes? membership;
   final String? aiTitle;
+  final bool? showMembership;
+  final bool? showMorningstar;
 
   Extra({
     this.feebackType,
+    this.showMorningstar,
     this.search,
     this.selfRank,
     this.profileText,
@@ -109,7 +112,7 @@ class Extra {
     this.howItWork,
     this.membershipText,
     this.aiTitle,
-
+    this.showMembership,
     // this.subscription,
     this.exchangeShortName,
     this.priceRange,
@@ -160,6 +163,7 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        showMembership: json["show_membership"],
         feebackType: json["feeback_type"] == null
             ? []
             : List<String>.from(json["feeback_type"]!.map((x) => x)),
@@ -168,6 +172,7 @@ class Extra {
             ? null
             : ProfileText.fromJson(json["profile_text"]),
         verifyIdentity: json['verify_identity_text'],
+        showMorningstar: json['show_morningstar'],
         verifySubscription: json['verify_membership_text'],
 
         aiTitle: json['ai-news-title'],
@@ -273,9 +278,10 @@ class Extra {
         "search": search,
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
+        "show_membership": showMembership,
         "verify_identity_text": verifyIdentity,
+        "show_morningstar": showMorningstar,
         "verify_membership_text": verifySubscription,
-
         "self_rank": selfRank,
         "earn_condition": earnCondition,
         'total_points_received': received,

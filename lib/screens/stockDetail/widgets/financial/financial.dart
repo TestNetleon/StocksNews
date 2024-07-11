@@ -270,12 +270,30 @@ class _SdFinancialState extends State<SdFinancial> {
                               selectedIndex: provider.periodIndex,
                             ),
                           ),
-                          if (provider.typeValue != null && data?.chart != null)
+                          if (provider.typeValue != null &&
+                              data?.chart != null &&
+                              provider.typePeriods == "annual")
                             Visibility(
                               visible: provider.extraFinancial?.period != null,
                               child: SdFinancialTabs(
                                 tabs: convertMultipleStringListsToSdTopResLists(
                                     provider.sdFinancialChartRes),
+                                onChange: (index) =>
+                                    provider.changePeriodTypeIndexVoid(
+                                  index,
+                                ),
+                                selectedIndex: provider.changePeriodTypeIndex,
+                              ),
+                            ),
+                          if (provider.typeValue != null &&
+                              data?.chart != null &&
+                              provider.typePeriods == "quarter")
+                            Visibility(
+                              visible: provider.extraFinancial?.period != null,
+                              child: SdFinancialTabs(
+                                tabs:
+                                    convertMultipleStringListsToSdTopResListsQuarter(
+                                        provider.sdFinancialChartRes),
                                 onChange: (index) =>
                                     provider.changePeriodTypeIndexVoid(
                                   index,

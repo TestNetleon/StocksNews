@@ -71,13 +71,14 @@ class _DividendsListState extends State<DividendsList> {
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = homeProvider.extra?.membership?.permissions
-            ?.any((element) => element == "dividends") ??
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) => (element.key == "dividends" && element.status == 0)) ??
         false;
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "dividends") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) =>
+                  (element.key == "dividends" && element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;

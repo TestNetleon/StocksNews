@@ -35,16 +35,20 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
 
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
-                element == "gainer_loser" || element == "breakout-stocks") ??
+                (element.key == "gainer-loser" && element.status == 0) ||
+                (element.key == "breakout-stocks" && element.status == 0)) ??
         false;
 
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
-              (element) =>
-                  element == "gainer_loser" || element == "breakout-stocks") ??
+            (element) =>
+                (element.key == "gainer-loser" && element.status == 1) ||
+                (element.key == "breakout-stocks" && element.status == 1),
+          ) ??
           false;
 
       isLocked = !havePermissions;
+      Utils().showLog("$isLocked");
     }
     Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
 

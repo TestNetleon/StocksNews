@@ -91,84 +91,91 @@ class CommonLock extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SpacerVertical(height: 10),
-                ThemeButtonSmall(
-                  onPressed: () {
-                    askToSubscribe(
-                      onPressed: provider.user == null
-                          ? () async {
-                              Utils().showLog("is Locked? $isLocked");
+                Visibility(
+                  visible: showMembership,
+                  child: ThemeButtonSmall(
+                    onPressed: () {
+                      askToSubscribe(
+                        onPressed: provider.user == null
+                            ? () async {
+                                Utils().showLog("is Locked? $isLocked");
 
-                              //Ask for LOGIN
-                              Navigator.pop(context);
-                              isPhone
-                                  ? await loginSheet()
-                                  : await loginSheetTablet();
-                              if (provider.user == null) {
-                                return;
-                              }
-                              if (isLocked) {
-                                if (provider.user?.phone == null ||
-                                    provider.user?.phone == '') {
-                                  // await referLogin();
-                                  await membershipLogin();
+                                //Ask for LOGIN
+                                Navigator.pop(context);
+                                isPhone
+                                    ? await loginSheet()
+                                    : await loginSheetTablet();
+                                if (provider.user == null) {
+                                  return;
                                 }
-                                if (provider.user?.phone != null &&
-                                    provider.user?.phone != '') {
-                                  await RevenueCatService
-                                      .initializeSubscription();
-                                }
-                              }
-                            }
-                          : () async {
-                              Navigator.pop(context);
-                              if (isLocked) {
-                                if (provider.user?.phone == null ||
-                                    provider.user?.phone == '') {
-                                  await membershipLogin();
-                                }
-                                if (provider.user?.phone != null &&
-                                    provider.user?.phone != '') {
-                                  await RevenueCatService
-                                      .initializeSubscription();
+                                if (isLocked) {
+                                  if (provider.user?.phone == null ||
+                                      provider.user?.phone == '') {
+                                    // await referLogin();
+                                    await membershipLogin();
+                                  }
+                                  if (provider.user?.phone != null &&
+                                      provider.user?.phone != '') {
+                                    await RevenueCatService
+                                        .initializeSubscription();
+                                  }
                                 }
                               }
-                            },
-                    );
-                  },
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
-                  textSize: 15,
-                  fontBold: true,
-                  iconFront: true,
-                  icon: Icons.lock,
-                  radius: 30,
-                  mainAxisSize: MainAxisSize.max,
-                  text: "Become a Member",
-                  // showArrow: false,
+                            : () async {
+                                Navigator.pop(context);
+                                if (isLocked) {
+                                  if (provider.user?.phone == null ||
+                                      provider.user?.phone == '') {
+                                    await membershipLogin();
+                                  }
+                                  if (provider.user?.phone != null &&
+                                      provider.user?.phone != '') {
+                                    await RevenueCatService
+                                        .initializeSubscription();
+                                  }
+                                }
+                              },
+                      );
+                    },
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+                    textSize: 15,
+                    fontBold: true,
+                    iconFront: true,
+                    icon: Icons.lock,
+                    radius: 30,
+                    mainAxisSize: MainAxisSize.max,
+                    text: "Become a Member",
+                    // showArrow: false,
+                  ),
                 ),
                 const SpacerVertical(height: 20),
-                GestureDetector(
-                  onTap: () async {
-                    isPhone ? await loginSheet() : await loginSheetTablet();
-                    if (provider.user == null) {
-                      return;
-                    }
-                    Navigator.popUntil(
-                        navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(
-                        builder: (_) => const Tabs(index: 0),
+                Visibility(
+                  visible: provider.user == null,
+                  child: GestureDetector(
+                    onTap: () async {
+                      isPhone ? await loginSheet() : await loginSheetTablet();
+                      if (provider.user == null) {
+                        return;
+                      }
+                      Navigator.popUntil(navigatorKey.currentContext!,
+                          (route) => route.isFirst);
+                      Navigator.pushReplacement(
+                        navigatorKey.currentContext!,
+                        MaterialPageRoute(
+                          builder: (_) => const Tabs(index: 0),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Already have an account? Log in",
+                      style: stylePTSansRegular(
+                        fontSize: 16,
+                        height: 1.3,
+                        color: ThemeColors.themeGreen,
                       ),
-                    );
-                  },
-                  child: Text(
-                    "Already have an account? Log in",
-                    style: stylePTSansRegular(
-                      fontSize: 16,
-                      height: 1.3,
-                      color: ThemeColors.themeGreen,
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SpacerVertical(height: 10),

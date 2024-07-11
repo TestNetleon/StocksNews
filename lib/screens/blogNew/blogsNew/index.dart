@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/blog_provider_new.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/container.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
@@ -35,18 +36,20 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
     BlogProviderNew provider = context.watch<BlogProviderNew>();
 
     UserProvider userProvider = context.watch<UserProvider>();
-    // HomeProvider homeProvider = context.watch<HomeProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = ((provider.extra?.membership?.permissions
-                ?.any((element) => element == "blog-category-list") ??
+    bool isLocked = ((homeProvider.extra?.membership?.permissions?.any(
+                (element) => (element.key == "blog-category-list" &&
+                    element.status == 0)) ??
             false) &&
         !provider.tabLoading);
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "blog-category-list") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) => (element.key == "blog-category-list" &&
+                  element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;

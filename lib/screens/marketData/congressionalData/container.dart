@@ -67,13 +67,15 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
 
     bool purchased = userProvider.user?.membership?.purchased == 1;
 
-    bool isLocked = homeProvider.extra?.membership?.permissions
-            ?.any((element) => element == "congress-stock-trades") ??
+    bool isLocked = homeProvider.extra?.membership?.permissions?.any(
+            (element) => (element.key == "congress-stock-trades" &&
+                element.status == 0)) ??
         false;
 
     if (purchased && isLocked) {
-      bool havePermissions = userProvider.user?.membership?.permissions
-              ?.any((element) => element == "congress-stock-trades") ??
+      bool havePermissions = userProvider.user?.membership?.permissions?.any(
+              (element) => (element.key == "congress-stock-trades" &&
+                  element.status == 1)) ??
           false;
 
       isLocked = !havePermissions;
