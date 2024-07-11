@@ -386,16 +386,15 @@ Future<String?> _getUserLocation() async {
     // Get current position
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-
     // Reverse geocoding
-
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
+    geoCountryCode = place.isoCountryCode;
 
     String address =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
-    Utils().showLog("Address:  $address");
+    Utils().showLog("Address:  $address  $geoCountryCode");
     return address;
   } catch (e) {
     Utils().showLog('Error: $e');

@@ -151,9 +151,9 @@ class AskToSubscribeDialog extends StatelessWidget {
                           if (index == 2) {
                             data = StepRes(
                                 title:
-                                    "Connect Brokerage Account and Sync Portfolio",
+                                    "Unlock “Insider Trades” “Congressional Trades” “High/Low PE” “Compare Stocks” and much more",
                                 subTitle:
-                                    "Seamlessly integrate your brokerage account and keep your portfolio up to date.");
+                                    "Gain access to Insider Trades, Congressional Trades, High/Low PE ratios, Compare Stocks, and much more!");
                           }
                         }
                         return HowItWorkItem(
