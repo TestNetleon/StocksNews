@@ -59,7 +59,7 @@ class _HowToSpendState extends State<HowToSpend> {
       showPreparingText: true,
       isFull: true,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 65.0),
+        padding: const EdgeInsets.only(bottom: 0.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
