@@ -723,7 +723,7 @@ class AddToAlertWatchlist extends StatelessWidget {
     HomeProvider provider = context.watch<HomeProvider>();
     // HomeProvider homeProvider = context.watch<HomeProvider>();
 
-    bool purchased = provider.extra?.membership?.purchased == 1;
+    // bool purchased = provider.extra?.membership?.purchased == 1;
 
     bool alertPermission = provider.extra?.membership?.permissions?.any(
             (element) => (element.key == "add-alert" && element.status == 1)) ??

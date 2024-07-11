@@ -615,14 +615,20 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        // const Icon(Icons.lock, size: 40),
-                                        // const SpacerVertical(),
-                                        Image.asset(
-                                          Images.lockGIF,
-                                          height: 70,
-                                          width: 70,
+                                        // TODO: -------
+                                        const Icon(
+                                          Icons.lock,
+                                          size: 40,
+                                          color: ThemeColors.themeGreen,
                                         ),
-                                        const SpacerVertical(height: 5),
+                                        const SpacerVertical(height: 15),
+                                        // TODO: -------
+                                        // Image.asset(
+                                        //   Images.lockGIF,
+                                        //   height: 70,
+                                        //   width: 70,
+                                        // ),
+                                        // const SpacerVertical(height: 5),
                                         Text(
                                           "${provider.data?.postDetail?.readingTitle}",
                                           style: stylePTSansBold(fontSize: 18),

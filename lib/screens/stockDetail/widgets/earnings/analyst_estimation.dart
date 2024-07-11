@@ -68,15 +68,15 @@ class _EarningsAnalystEstimateLineChartState
       return FlSpot(index.toDouble(), average);
     }).toList();
 
-    double maxValue = [
-      currentSpots,
-      lowSpots,
-      highSpots,
-      averageSpots,
-    ]
-        .expand((spots) => spots)
-        .map((spot) => spot.y)
-        .reduce((a, b) => a > b ? a : b);
+    // double maxValue = [
+    //   currentSpots,
+    //   lowSpots,
+    //   highSpots,
+    //   averageSpots,
+    // ]
+    //     .expand((spots) => spots)
+    //     .map((spot) => spot.y)
+    //     .reduce((a, b) => a > b ? a : b);
 
     List<LineChartBarData> lineBarsData = [];
     if (_selectedValue == ChartValue.all ||

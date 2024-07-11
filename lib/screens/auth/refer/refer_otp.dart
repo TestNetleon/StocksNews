@@ -206,7 +206,7 @@ class _OTPLoginBottomReferState extends State<OTPLoginBottomRefer> {
     _startTime();
     _controller.text = '';
     setState(() {});
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    FirebaseAuth.instance.verifyPhoneNumber(
       // phoneNumber: "+91${widget.phone}",
       // phoneNumber: kDebugMode ? "+91${widget.phone}" : "+1${widget.phone}",
       phoneNumber: "${widget.countryCode}${widget.phone}",

@@ -13,7 +13,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/deepLinkScreen/webscreen.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
@@ -168,14 +167,19 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // const Icon(Icons.lock, size: 40),
-                                  // const SpacerVertical(),
-                                  Image.asset(
-                                    Images.lockGIF,
-                                    height: 70,
-                                    width: 70,
+                                  // TODO: -------
+                                  const Icon(
+                                    Icons.lock,
+                                    size: 40,
+                                    color: ThemeColors.themeGreen,
                                   ),
-
+                                  const SpacerVertical(height: 15),
+                                  // TODO: -------
+                                  // Image.asset(
+                                  //   Images.lockGIF,
+                                  //   height: 70,
+                                  //   width: 70,
+                                  // ),
                                   Image.asset(
                                     Images.morningStarLogo,
                                     width: ScreenUtil().screenWidth * .5,
