@@ -144,11 +144,10 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                 options: CarouselOptions(
                   height: imageHeight,
                   enlargeCenterPage: true,
-                  autoPlay: false, //TODO;
-                  // autoPlay: true, //TODO;
-                  // autoPlayInterval: const Duration(seconds: 3),
-                  // autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  // pauseAutoPlayOnTouch: true,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  pauseAutoPlayOnTouch: true,
                   viewportFraction: 1,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   onPageChanged: (index, reason) {
@@ -165,7 +164,9 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                         child: Container(
                           width: constraints.maxWidth,
                           padding: EdgeInsets.symmetric(
-                              horizontal: 15.sp, vertical: 10.sp),
+                            horizontal: 15.sp,
+                            vertical: 10.sp,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
