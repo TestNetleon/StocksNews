@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:intl/intl.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
@@ -64,6 +62,8 @@ bool splashLoaded = false;
 String? fcmTokenGlobal;
 String? appVersion;
 bool showMembership = true;
+// this is to set default country code for phone number
+String? geoCountryCode;
 
 // String? clientId;
 // String? secret;

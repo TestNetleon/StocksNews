@@ -53,7 +53,7 @@ class HomeContainer extends StatelessWidget {
     }
     return CommonRefreshIndicator(
       onRefresh: () async {
-        provider.refreshData(null);
+        await provider.refreshData(null);
       },
       child: DefaultTextStyle(
         style: styleGeorgiaBold(),
@@ -61,32 +61,6 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // Image.asset(
-              //   "assets/images/progressF.gif",
-              //   height: 100,
-              //   width: 100,
-              // ),
-              // ThemeButton(
-              //   text: "Invoices",
-              //   onPressed: () {
-              //     showModalBottomSheet(
-              //       useSafeArea: true,
-              //       shape: const RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(5),
-              //           topRight: Radius.circular(5),
-              //         ),
-              //       ),
-              //       backgroundColor: ThemeColors.transparent,
-              //       isScrollControlled: true,
-              //       context: navigatorKey.currentContext!,
-              //       builder: (context) {
-              //         return const SubscriptionPurchased();
-              //       },
-              //     );
-              //   },
-              // ),
-
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,

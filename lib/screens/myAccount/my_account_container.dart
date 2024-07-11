@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -116,13 +115,20 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     }
 
     // UserRes? user = context.read<UserProvider>().user;
-    countryCode = user?.phoneCode == null || user?.phoneCode == ""
-        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-                .dialCode ??
-            ""
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
+    // countryCode = user?.phoneCode == null || user?.phoneCode == ""
+    //     ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+    //             .dialCode ??
+    //         ""
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
 
-    log("------------${user?.phone != ''}");
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    }
+
     if (user?.phone != '' && user?.phone != null) {
       provider.setPhoneClickText();
     }
@@ -248,13 +254,22 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     UserRes? user = context.read<UserProvider>().user;
     // HomeProvider provider = context.watch<HomeProvider>();
 
-    final String locale = user?.phoneCode == null || user?.phoneCode == ""
-        ? Intl.getCurrentLocale().split('_').last
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
-                .code
-                ?.split('_')
-                .last ??
-            "";
+    // final String locale = user?.phoneCode == null || user?.phoneCode == ""
+    //     ? Intl.getCurrentLocale().split('_').last
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+    //             .code
+    //             ?.split('_')
+    //             .last ??
+    //         "";
+
+    String? locale;
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      locale = geoCountryCode;
+    } else {
+      locale = "US";
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -623,7 +638,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     }
 
     showGlobalProgressDialog();
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    FirebaseAuth.instance.verifyPhoneNumber(
       // phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
       phoneNumber: "$countryCode $phone",
       verificationCompleted: (PhoneAuthCredential credential) {

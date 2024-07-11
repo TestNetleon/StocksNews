@@ -32,7 +32,7 @@ class HelpDesk extends StatelessWidget {
                   Expanded(
                       child: LoginError(
                     state: "notification",
-                    title: "Help Desk",
+                    title: "Helpdesk",
                     onClick: () async {
                       isPhone ? await loginSheet() : await loginSheetTablet();
                       if (context.read<UserProvider>().user != null) {

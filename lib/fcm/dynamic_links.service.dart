@@ -1,5 +1,4 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
@@ -37,24 +36,19 @@ class DynamicLinkService {
     UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
     final dynamicLinkParams = DynamicLinkParameters(
       link: Uri.parse(
-          "https://app.stocks.news/install?code=${user?.userId}&_id=${user?.userId}"),
-      // link: Uri.parse(
-      //     "https://app.stocks.news/install?code=$code&_id=${user?.userId}"),
+        "https://app.stocks.news/install?code=${user?.referralCode}&_id=${user?.userId}",
+      ),
       uriPrefix: "https://stocksnews.page.link",
       androidParameters: const AndroidParameters(
         packageName: "com.stocks.news",
         minimumVersion: 0,
       ),
-      iosParameters: const IOSParameters(
-        bundleId: "app.stocks.news",
-      ),
+      iosParameters: const IOSParameters(bundleId: "app.stocks.news"),
     );
 
     final dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
-
-    debugPrint("${dynamicLink.shortUrl}");
-
+    // debugPrint("${dynamicLink.shortUrl}");
     return dynamicLink.shortUrl;
   }
 
@@ -74,12 +68,9 @@ class DynamicLinkService {
   //       bundleId: "app.stocks.news",
   //     ),
   //   );
-
   //   final dynamicLink =
   //       await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
-
   //   debugPrint("${dynamicLink.shortUrl}");
-
   //   return dynamicLink.shortUrl;
   // }
 }

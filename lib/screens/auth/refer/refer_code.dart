@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -88,14 +87,13 @@ class _ReferLoginState extends State<ReferLogin> {
 
   _checkProfile() {
     UserRes? user = context.read<UserProvider>().user;
-
-    countryCode = user?.phoneCode == null || user?.phoneCode == ""
-        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-                .dialCode ??
-            ""
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
-
-    log("Country Code => $countryCode");
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    }
 
     UserProvider provider = context.read<UserProvider>();
     if (provider.user?.name != null && provider.user?.name != '') {
@@ -157,8 +155,7 @@ class _ReferLoginState extends State<ReferLogin> {
       if (!numberVerified) {
         log("Phone Number $countryCode ${mobile.text}");
         showGlobalProgressDialog();
-        await FirebaseAuth.instance.verifyPhoneNumber(
-          // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+        FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
             closeGlobalProgressDialog();
@@ -238,13 +235,24 @@ class _ReferLoginState extends State<ReferLogin> {
     UserRes? user = context.read<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
 
-    final String locale = user?.phoneCode == null || user?.phoneCode == ""
-        ? Intl.getCurrentLocale().split('_').last
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
-                .code
-                ?.split('_')
-                .last ??
-            "";
+    String? locale;
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      locale = geoCountryCode;
+    } else {
+      locale = "US";
+    }
+
+    // final String locale = (user?.phoneCode == null || user?.phoneCode == "")
+    //     ? ((countryCode == null || countryCode == "")
+    //         ? Intl.getCurrentLocale().split('_').last
+    //         : countryCode)
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+    //             .code
+    //             ?.split('_')
+    //             .last ??
+    //         "";
 
     return GestureDetector(
       onTap: () {

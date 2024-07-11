@@ -220,11 +220,12 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
                             style: stylePTSansBold(fontSize: 15),
                           ),
                           const SpacerHorizontal(width: 5),
-                          Image.asset(
-                            Images.syncGIF,
-                            height: 20,
-                            width: 20,
-                          ),
+                          // Image.asset(
+                          //   Images.syncGIF,
+                          //   height: 20,
+                          //   width: 20,
+                          // ),
+                          const Icon(Icons.sync, size: 18)
                         ],
                       ),
                     ),

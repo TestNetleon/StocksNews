@@ -76,6 +76,7 @@ class BaseBottomSheets {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: ScreenTitle(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         title: title,
                         subTitle: subTitle,
                         optionalWidget: onResetClick != null
@@ -153,9 +154,9 @@ class BaseBottomSheets {
       context: navigatorKey.currentContext!,
       builder: (context) => DraggableScrollableSheet(
         expand: false,
-        shouldCloseOnMinExtent: false,
+        shouldCloseOnMinExtent: true,
         initialChildSize: 0.5,
-        minChildSize: 0.3,
+        minChildSize: 0.5,
         maxChildSize: 0.9,
         builder: (context, scrollController) {
           return Container(
@@ -319,9 +320,9 @@ class BaseBottomSheets {
       builder: (context) {
         return DraggableScrollableSheet(
             expand: false,
-            shouldCloseOnMinExtent: false,
+            shouldCloseOnMinExtent: true,
             initialChildSize: 0.5,
-            minChildSize: 0.3,
+            minChildSize: 0.5,
             maxChildSize: 0.9,
             builder: (context, scrollController) {
               return Container(

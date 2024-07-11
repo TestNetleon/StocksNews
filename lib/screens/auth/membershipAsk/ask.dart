@@ -89,12 +89,18 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
   _checkProfile() {
     UserRes? user = context.read<UserProvider>().user;
 
-    countryCode = user?.phoneCode == null || user?.phoneCode == ""
-        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-                .dialCode ??
-            ""
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
-
+    // countryCode = user?.phoneCode == null || user?.phoneCode == ""
+    //     ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
+    //             .dialCode ??
+    //         ""
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ").dialCode ?? "";
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      countryCode = CountryCode.fromDialCode(user?.phoneCode ?? "").dialCode;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      countryCode = CountryCode.fromCountryCode(geoCountryCode!).dialCode;
+    } else {
+      countryCode = CountryCode.fromCountryCode("US").dialCode;
+    }
     log("Country Code => $countryCode");
 
     UserProvider provider = context.read<UserProvider>();
@@ -169,7 +175,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     } else {
       try {
         showGlobalProgressDialog();
-        await FirebaseAuth.instance.verifyPhoneNumber(
+        FirebaseAuth.instance.verifyPhoneNumber(
           // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
@@ -209,13 +215,21 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     UserRes? user = context.read<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
 
-    final String locale = user?.phoneCode == null || user?.phoneCode == ""
-        ? Intl.getCurrentLocale().split('_').last
-        : CountryCode.fromDialCode(user?.phoneCode ?? " ")
-                .code
-                ?.split('_')
-                .last ??
-            "";
+    String? locale;
+    if (user?.phoneCode != null && user?.phoneCode != "") {
+      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    } else if (geoCountryCode != null && geoCountryCode != "") {
+      locale = geoCountryCode;
+    } else {
+      locale = "US";
+    }
+    // final String locale = user?.phoneCode == null || user?.phoneCode == ""
+    //     ? Intl.getCurrentLocale().split('_').last
+    //     : CountryCode.fromDialCode(user?.phoneCode ?? " ")
+    //             .code
+    //             ?.split('_')
+    //             .last ??
+    //         "";
 
     return GestureDetector(
       onTap: () {
@@ -450,8 +464,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                                'Do not include +1 or an special character.',
+                            'Note: You will receive an OTP to verify mobile number. ',
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
@@ -484,9 +497,9 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                   Navigator.push(
                                     context,
                                     createRoute(
-                                      const TCandPolicy(
+                                      TCandPolicy(
                                         policyType: PolicyType.membership,
-                                        slug: "membership-terms",
+                                        slug: url,
                                       ),
                                     ),
                                   );

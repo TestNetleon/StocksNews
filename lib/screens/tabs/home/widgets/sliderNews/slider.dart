@@ -164,7 +164,9 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                         child: Container(
                           width: constraints.maxWidth,
                           padding: EdgeInsets.symmetric(
-                              horizontal: 15.sp, vertical: 10.sp),
+                            horizontal: 15.sp,
+                            vertical: 10.sp,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,

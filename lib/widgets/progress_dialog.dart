@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class ProgressDialog extends StatelessWidget {
   final bool optionalParent;
@@ -33,10 +33,7 @@ class ProgressDialog extends StatelessWidget {
                       width: 100,
                       height: 100,
                     ),
-                    // const CircularProgressIndicator(
-                    //   strokeWidth: 4,
-                    // ),
-                    const SpacerHorizontal(width: 16),
+                    const SpacerVertical(height: 16),
                     Flexible(
                       child: Text(
                         "Please wait...",

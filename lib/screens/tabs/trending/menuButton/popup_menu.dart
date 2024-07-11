@@ -46,8 +46,7 @@ class PopUpMenuButtonCommon extends StatelessWidget {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     // HomeProvider homeProvider = context.watch<HomeProvider>();
-
-    bool purchased = provider.user?.membership?.purchased == 1;
+    // bool purchased = provider.user?.membership?.purchased == 1;
 
     bool isPresentAlert = provider.user?.membership?.permissions?.any(
             (element) => (element.key == "add-alert" && element.status == 1)) ??

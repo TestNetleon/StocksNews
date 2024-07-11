@@ -37,7 +37,7 @@ class AboutTile extends StatelessWidget {
                   const SpacerHorizontal(width: 20),
                   Expanded(
                     child: Text(aboutTiles[index].text,
-                        style: stylePTSansBold(fontSize: 14)),
+                        style: stylePTSansBold(fontSize: 16)),
                   ),
                 ],
               ),

@@ -20,20 +20,21 @@ class ScreenTitle extends StatelessWidget {
   final bool htmlTitle;
   final EdgeInsets? dividerPadding;
   final bool subTitleHtml;
+  final CrossAxisAlignment crossAxisAlignment;
 
-  const ScreenTitle({
-    this.title,
-    this.style,
-    super.key,
-    this.dividerPadding,
-    this.optionalText,
-    this.subTitle,
-    this.canPopBack = false,
-    this.divider = true,
-    this.subTitleHtml = false,
-    this.optionalWidget,
-    this.htmlTitle = false,
-  });
+  const ScreenTitle(
+      {this.title,
+      this.style,
+      super.key,
+      this.dividerPadding,
+      this.optionalText,
+      this.subTitle,
+      this.canPopBack = false,
+      this.divider = true,
+      this.subTitleHtml = false,
+      this.optionalWidget,
+      this.htmlTitle = false,
+      this.crossAxisAlignment = CrossAxisAlignment.end});
 //
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class ScreenTitle extends StatelessWidget {
               addParent: optionalText != null || optionalWidget != null,
               parentBuilder: (child) {
                 return Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: crossAxisAlignment,
                   children: [
                     Expanded(
                       child: htmlTitle
