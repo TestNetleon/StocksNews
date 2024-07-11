@@ -56,11 +56,8 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
   @override
   Widget build(BuildContext context) {
     AIProvider provider = context.watch<AIProvider>();
-
     String date = provider.detail?.postDetail?.postDateString ?? "";
-
-    bool foundSite = provider.detail?.postDetail?.source != "" &&
-        provider.detail?.postDetail?.source != null;
+    bool foundSite = provider.detail?.postDetail?.source != "" && provider.detail?.postDetail?.source != null;
 
     return provider.detailLoading
         ? const Loading()

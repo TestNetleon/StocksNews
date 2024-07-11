@@ -1,7 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/benefits_affiliate.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 // ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
@@ -13,6 +17,8 @@ import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
@@ -119,6 +125,80 @@ class HomeContainer extends StatelessWidget {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                      decoration: BoxDecoration(
+                        // color: Colors.transparent,
+                        border: Border.all(
+                            color: ThemeColors.greyBorder.withOpacity(0.4)),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.2, 0.65],
+                          colors: [
+                            Color.fromARGB(255, 14, 41, 0),
+                            // ThemeColors.greyBorder,
+                            Color.fromARGB(255, 0, 0, 0),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Stack(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Affiliate \nAdvantage",
+                                style: stylePTSansRegular(
+                                    color: ThemeColors.white, fontSize: 40),
+                              ),
+                              const SpacerVertical(height: 5),
+                              Text(
+                                "Discover how to earn more points at every stage.",
+                                style: stylePTSansRegular(
+                                    color: ThemeColors.white, fontSize: 18),
+                              ),
+                              const SpacerVertical(height: 30),
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    left: Dimen.homeSpacing,
+                                    right: Dimen.homeSpacing,
+                                    bottom: Dimen.homeSpacing),
+                                child: ThemeButtonSmall(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            const BenefitsMarketing(),
+                                      ),
+                                    );
+                                  },
+                                  textSize: 15,
+                                  fontBold: true,
+                                  iconFront: true,
+                                  // icon: Icons.lock,
+                                  radius: 30,
+                                  mainAxisSize: MainAxisSize.max,
+                                  text: "Learn More",
+                                  // showArrow: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            right: 0,
+                            child: Image.asset(
+                              'assets/images/Coin_Rotate.gif',
+                              height: 110.0,
+                              width: 130.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
                       child: const HomeMyAlerts(),
                     ),
                     Visibility(
@@ -169,7 +249,9 @@ class HomeContainer extends StatelessWidget {
                     ),
                     Visibility(
                       visible: !provider.isLoadingTrending &&
-                          (provider.homeTrendingRes?.trendingNews?.isNotEmpty == true && provider.homeTrendingRes?.trendingNews != null),
+                          (provider.homeTrendingRes?.trendingNews?.isNotEmpty ==
+                                  true &&
+                              provider.homeTrendingRes?.trendingNews != null),
                       child: Container(
                         margin: const EdgeInsets.only(top: Dimen.homeSpacing),
                         child: Column(

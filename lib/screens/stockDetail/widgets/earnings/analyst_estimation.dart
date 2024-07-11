@@ -32,8 +32,7 @@ class _EarningsAnalystEstimateLineChartState
       return const Center(child: SizedBox.shrink());
     }
 
-    List<FlSpot> currentSpots =
-        provider.earnings!.epsEstimates!.asMap().entries.map((entry) {
+    List<FlSpot> currentSpots = provider.earnings!.epsEstimates!.asMap().entries.map((entry) {
       int index = entry.key;
       EpsEstimate data = entry.value;
       double current = double.tryParse(data.numberOfEstimates.toString()) ?? 0;

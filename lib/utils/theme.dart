@@ -242,3 +242,23 @@ TextStyle stylePTSansBold({
     // letterSpacing: letterSpacing,
   );
 }
+
+TextStyle styleSansBold({
+  color = Colors.black,
+  double fontSize = 16,
+  letterSpacing = 0.70,
+  height = 1.2,
+  decoration,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
+    color: color,
+    fontFamily: Fonts.ptSans,
+    fontWeight: FontWeight.bold,
+    decoration: decoration,
+    decorationColor: color,
+    height: height,
+
+    // letterSpacing: letterSpacing,
+  );
+}

@@ -242,8 +242,7 @@ class _SdEarningsState extends State<SdEarnings> {
                                   ),
                                 EarningHistoryItem(
                                   data: data,
-                                  isOpen:
-                                      provider.openIndexEarningHistory == index,
+                                  isOpen: provider.openIndexEarningHistory == index,
                                   onTap: () {
                                     provider.setOpenIndexEarningHistory(
                                       provider.openIndexEarningHistory == index
