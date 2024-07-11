@@ -60,7 +60,7 @@ class _HowToEarnState extends State<HowToEarn> {
       showPreparingText: true,
       isFull: true,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 50.0),
+        padding: const EdgeInsets.only(bottom: 0),
         child: SingleChildScrollView(
           child: Column(
             children: [

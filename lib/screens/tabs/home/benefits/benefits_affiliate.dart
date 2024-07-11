@@ -32,46 +32,71 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
           showTrailing: true,
           canSearch: true,
         ),
-        floatingAlingment: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Container(
-          height: 80,
-          decoration: const BoxDecoration(color: Colors.white),
-          padding: const EdgeInsets.all(18.0),
-          child: ThemeButtonSmall(
-            onPressed: () {},
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
-            textSize: 15,
-            fontBold: true,
-            iconFront: true,
-            color: _selectedIndex == 0
-                ? ThemeColors.accent
-                : const Color.fromARGB(255, 241, 70, 70),
-            radius: 30,
-            mainAxisSize: MainAxisSize.max,
-            text: "Get Rewarded Now",
-            // showArrow: false,
-          ),
-        ),
-        body: CustomTabContainer(
-          onChange: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
-          tabs: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: const Text("How to Earn"),
+        // floatingAlingment: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: Container(
+        //   height: 80,
+        //   decoration: const BoxDecoration(color: Colors.white),
+        //   padding: const EdgeInsets.all(18.0),
+        //   child: ThemeButtonSmall(
+        //     onPressed: () {},
+        //     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+        //     textSize: 15,
+        //     fontBold: true,
+        //     iconFront: true,
+        //     color: _selectedIndex == 0
+        //         ? ThemeColors.accent
+        //         : const Color.fromARGB(255, 241, 70, 70),
+        //     radius: 30,
+        //     mainAxisSize: MainAxisSize.max,
+        //     text: "Get Rewarded Now",
+        //     // showArrow: false,
+        //   ),
+        // ),
+        body: Column(
+          children: [
+            Expanded(
+              child: CustomTabContainer(
+                onChange: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+                padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
+                tabs: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: const Text("How to Earn"),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: const Text("How to Spend"),
+                  ),
+                ],
+                widgets: [
+                  HowToEarn(onTap: () {}),
+                  HowToSpend(onTap: () {}),
+                ],
+              ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: const Text("How to Spend"),
+              decoration: const BoxDecoration(color: Colors.white),
+              padding: const EdgeInsets.all(18.0),
+              child: ThemeButtonSmall(
+                onPressed: () {},
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+                textSize: 15,
+                fontBold: true,
+                iconFront: true,
+                color: _selectedIndex == 0
+                    ? ThemeColors.accent
+                    : const Color.fromARGB(255, 241, 70, 70),
+                radius: 30,
+                mainAxisSize: MainAxisSize.max,
+                text: "Get Rewarded Now",
+                // showArrow: false,
+              ),
             ),
-          ],
-          widgets: [
-            HowToEarn(onTap: () {}),
-            HowToSpend(onTap: () {}),
           ],
         ));
   }
