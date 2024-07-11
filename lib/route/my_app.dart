@@ -67,6 +67,15 @@ class _MyAppState extends State<MyApp> {
           _initialDeepLinks = false;
         });
       }
+    } else {
+      bool isFirstOpen = await Preference.isFirstOpen();
+      if (isFirstOpen) {
+        Timer(const Duration(seconds: 5), () {
+          if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+            signupSheet();
+          }
+        });
+      }
     }
 
     FirebaseDynamicLinks.instance.onLink.listen(
@@ -135,12 +144,6 @@ class _MyAppState extends State<MyApp> {
         name: 'referrals',
         parameters: {'referral_code': referralCode},
       );
-    } else if (isFirstOpen) {
-      Timer(const Duration(seconds: 4), () {
-        if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
-          signupSheet();
-        }
-      });
     }
     onDeepLinking = false;
   }
