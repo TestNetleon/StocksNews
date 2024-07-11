@@ -156,7 +156,7 @@ class BaseBottomSheets {
         expand: false,
         shouldCloseOnMinExtent: true,
         initialChildSize: 0.5,
-        minChildSize: 0.3,
+        minChildSize: 0.5,
         maxChildSize: 0.9,
         builder: (context, scrollController) {
           return Container(
@@ -322,7 +322,7 @@ class BaseBottomSheets {
             expand: false,
             shouldCloseOnMinExtent: true,
             initialChildSize: 0.5,
-            minChildSize: 0.3,
+            minChildSize: 0.5,
             maxChildSize: 0.9,
             builder: (context, scrollController) {
               return Container(
