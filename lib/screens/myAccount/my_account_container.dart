@@ -623,7 +623,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     }
 
     showGlobalProgressDialog();
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    FirebaseAuth.instance.verifyPhoneNumber(
       // phoneNumber: kDebugMode ? "+91 $phone" : "+1$phone",
       phoneNumber: "$countryCode $phone",
       verificationCompleted: (PhoneAuthCredential credential) {

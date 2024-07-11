@@ -169,7 +169,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     } else {
       try {
         showGlobalProgressDialog();
-        await FirebaseAuth.instance.verifyPhoneNumber(
+        FirebaseAuth.instance.verifyPhoneNumber(
           // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
@@ -450,8 +450,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                       const SpacerVertical(height: Dimen.itemSpacing),
                       HtmlWidget(
                         provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number. Please enter USA phone number only. '
-                                'Do not include +1 or an special character.',
+                            'Note: You will receive an OTP to verify mobile number. ',
                         textStyle: stylePTSansRegular(color: Colors.grey),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
@@ -484,9 +483,9 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                   Navigator.push(
                                     context,
                                     createRoute(
-                                      const TCandPolicy(
+                                      TCandPolicy(
                                         policyType: PolicyType.membership,
-                                        slug: "membership-terms",
+                                        slug: url,
                                       ),
                                     ),
                                   );

@@ -18,6 +18,15 @@ class Loading extends StatelessWidget {
             width: 100,
             height: 100,
           ),
+
+          // // TODO: -----
+          // const CircularProgressIndicator(
+          //   color: ThemeColors.themeGreen,
+          //   strokeWidth: 4,
+          // ),
+          // const SpacerVertical(),
+          // // TODO: -----
+
           Text(
             textAlign: TextAlign.center,
             text ?? Const.loadingMessage,

@@ -112,11 +112,13 @@ class UserMembershipRes {
   final int? purchased;
   final String? displayName;
   final String? color;
+  final bool? canUpgrade;
   final List<MembershipPermissionRes>? permissions;
 
   UserMembershipRes({
     this.purchased,
     this.displayName,
+    this.canUpgrade,
     this.color,
     this.permissions,
   });
@@ -124,6 +126,7 @@ class UserMembershipRes {
   factory UserMembershipRes.fromJson(Map<String, dynamic> json) =>
       UserMembershipRes(
         purchased: json["purchased"],
+        canUpgrade: json['can_upgrade'],
         displayName: json["display_name"],
         color: json["color"],
         permissions: json["permissionsNew"] == null
@@ -135,6 +138,7 @@ class UserMembershipRes {
   Map<String, dynamic> toJson() => {
         "purchased": purchased,
         "display_name": displayName,
+        "can_upgrade": canUpgrade,
         "color": color,
         "permissionsNew": permissions == null
             ? []
