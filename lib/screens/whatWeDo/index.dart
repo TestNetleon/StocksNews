@@ -93,11 +93,9 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
                             // hasData:
                             //     !provider.isLoadingData && provider.res != null,
                             // error: provider.error,
-
                             error: whatWeDoHolder?.error,
                             hasData: whatWeDoHolder?.data != null,
                             isLoading: whatWeDoHolder?.loading ?? true,
-
                             errorDispCommon: true,
                             showPreparingText: true,
                             // onRefresh: () => provider.getWhatWeDOData(

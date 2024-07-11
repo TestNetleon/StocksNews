@@ -76,8 +76,10 @@ String? geoCountryCode;
 class Images {
   static const String logo = "assets/images/logo.png";
   static const String logoP = "assets/images/logo_holder.png";
+  static const String login = "assets/images/log-in.png";
   static const String stockIcon = "assets/images/stock_icon.png";
   static const String signupSuccess = "assets/images/signup_success.png";
+  static const String signup = "assets/images/signup.png";
   static const String google = "assets/images/google.png";
   static const String apple = "assets/images/apple.png";
   static const String userPlaceholder = "assets/images/user_placeholder.png";
@@ -102,6 +104,7 @@ class Images {
   static const String nudge = "assets/images/nudge.png";
   static const String starAffiliate = "assets/images/star.png";
   static const String profileBg = "assets/images/profile_bg1.png";
+  static const String profile = "assets/images/profile.png";
   static const String rankAffiliate = "assets/images/award.png";
   static const String transaction = "assets/images/transaction.png";
 
@@ -132,9 +135,13 @@ class Images {
   static const String referF = "assets/images/refer_f.png";
   static const String line = "assets/images/line.png";
   static const String upgrade = "assets/images/upgrade.png";
+  static const String graphBG = "assets/images/graph_bg.png";
+  static const String graphBG2 = "assets/images/graph_bg2.png";
+  static const String graphBG3 = "assets/images/graph_bg3.png";
 
   //GIF
   static const String trendingGIF = "assets/images/trending.gif";
+  static const String coins = "assets/images/coin_Rotate.gif";
   static const String discussedGIF = "assets/images/most_discussed.gif";
   static const String newsGIT = "assets/images/news.gif";
   static const String bearBullGIF = "assets/images/animation_bull_bear.json";
@@ -178,6 +185,7 @@ class Images {
   static const tickFeedback = "assets/images/tick_feedback.png";
   static const String downloadFile = "assets/images/download_file.png";
   static const refer = "assets/images/refer.png";
+  static const marketing = "assets/images/marketing.jpeg";
 
   static const health = "assets/images/health.png";
   static const viewFile = "assets/images/view_file.png";
@@ -188,6 +196,22 @@ class Images {
   static const referPoint = "assets/images/refer_point.png";
   static const morningStarLogoSvg = "assets/images/morningstar_logo.svg";
   static const morningStarLogo = "assets/images/morningstar_logo.png";
+  static const beginnerPlan = "assets/images/loyalty.png";
+  static const traderPlan = "assets/images/vip-card.png";
+  static const portfolio = "assets/images/membership-card.png";
+  static const ultimatePlan = "assets/images/member-card.png";
+  static const background = "assets/images/background.png";
+  static const bg = "assets/images/sync.png";
+
+  //svg
+  // static const share = "assets/svg/share.svg";
+  // static const buy = "assets/svg/buy.svg";
+  // static const credit = "assets/svg/credit.svg";
+  // static const profile = "assets/svg/profile.svg";
+  // static const purchase = "assets/svg/purchase.svg";
+  // // static const login = "assets/svg/login.svg";
+  // static const signin = "assets/svg/signin.svg";
+  // static const star = "assets/svg/star.svg";
 }
 
 class AudioFiles {

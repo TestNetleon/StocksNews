@@ -14,6 +14,7 @@ import 'package:stocks_news_new/api/third_party_api_requester.dart'
     as third_party_api;
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/benefits_analysis.dart';
 import 'package:stocks_news_new/modals/home_alert_res.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/home_portfolio.dart';
@@ -58,6 +59,9 @@ class HomeProvider extends ChangeNotifier {
   Status _statusIpo = Status.ideal;
   Status get statusIpo => _statusIpo;
 
+  Status _statusBenefits = Status.ideal;
+  Status get statusBenefits => _statusBenefits;
+
   Status _statusHomeAlert = Status.ideal;
   Status get statusHomeAlert => _statusHomeAlert;
 
@@ -81,6 +85,23 @@ class HomeProvider extends ChangeNotifier {
   HomeTrendingRes? _homeTrendingRes;
   HomeTrendingRes? get homeTrendingRes => _homeTrendingRes;
 
+  int _openIndexBenefit = -1;
+  int get openIndexbenefit => _openIndexBenefit;
+
+  void setOpenIndexBenefit(index) {
+    _openIndexBenefit = index;
+    notifyListeners();
+  }
+
+   List<String> benefitTabs = [
+    'Earn Rewards',
+    'Redeem Rewards',
+  ];
+
+
+  List<SdBenefitAnalyst>? _benefitAnalysisRes;
+  List<SdBenefitAnalyst>? get benefitAnalysisRes => _benefitAnalysisRes;
+
   HomeTopGainerRes? _homeTopGainerRes;
   HomeTopGainerRes? get homeTopGainerRes => _homeTopGainerRes;
 
@@ -101,6 +122,7 @@ class HomeProvider extends ChangeNotifier {
   bool get isLoadingTrending => _statusTrending == Status.loading;
   bool get isLoadingInsider => _statusInsider == Status.loading;
   bool get isLoadingIpo => _statusIpo == Status.loading;
+  bool get isLoadingBenefits => _statusBenefits == Status.loading;
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
   bool get isLoadingStockFocus => _statusFocus == Status.loading;
   bool get isLoadingGainers => _statusGainers == Status.loading;
@@ -121,6 +143,9 @@ class HomeProvider extends ChangeNotifier {
 
   StockInFocusRes? _focusRes;
   StockInFocusRes? get focusRes => _focusRes;
+
+  SdBenefitAnalyst? _benefitFocus;
+  SdBenefitAnalyst? get benefitFocus => _benefitFocus;
 
   bool notificationSeen = false;
   String? loginTxt;
@@ -162,7 +187,10 @@ class HomeProvider extends ChangeNotifier {
     getHomeSlider();
     getHomeAlerts();
     getMostPurchased(home: "home");
-    getHomeTrendingData(); //ADD AGAIN AFTER BACKEND MERGING
+    getHomeTrendingData();
+    getBenefitsDetails();
+
+    //ADD AGAIN AFTER BACKEND MERGING
     _homeTopGainerRes = null;
     _homeTopLosersRes = null;
     // getIpoData();
@@ -180,6 +208,9 @@ class HomeProvider extends ChangeNotifier {
     }
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
+    }
+    if (_benefitAnalysisRes == null) {
+      getBenefitsDetails();
     }
     // if (_ipoRes == null) {
     //   getIpoData();
@@ -224,6 +255,7 @@ class HomeProvider extends ChangeNotifier {
         updateDatabase: true,
         onRefresh: () => refreshData(null),
       );
+      
       if (response.status) {
         //...........PLAID KEYS SET............
         // String basePlaidUrl = "https://sandbox.plaid.com";
@@ -233,7 +265,6 @@ class HomeProvider extends ChangeNotifier {
         // exchangeAPI = "$basePlaidUrl/item/public_token/exchange";
         // holdingsAPI = "$basePlaidUrl/investments/holdings/get";
         //.....................................
-
         _homeSliderRes = HomeSliderRes.fromJson(response.data);
         Utils().showLog("-----!!${_homeSliderRes?.rating?.description}");
         _extra = (response.extra is Extra ? response.extra as Extra : null);
@@ -475,6 +506,35 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     }
     // closeGlobalProgressDialog();
+  }
+
+  Future getBenefitsDetails() async {
+    _statusBenefits = Status.loading;
+    notifyListeners();
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    try {
+      Map request = {
+        "token": provider.user?.token ?? "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.benefitAnalysis,
+        request: request,
+        showProgress: false,
+        onRefresh: () => refreshData(null),
+      );
+      if (response.status) {
+        _benefitAnalysisRes =
+            sdBenefitAnalystFromJson(jsonEncode(response.data));
+      } else {
+        _benefitAnalysisRes = null;
+      }
+      _statusBenefits = Status.loaded;
+      notifyListeners();
+    } catch (e) {
+      _benefitAnalysisRes = null;
+      _statusBenefits = Status.loaded;
+      notifyListeners();
+    }
   }
 
   Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {

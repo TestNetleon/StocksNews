@@ -8,8 +8,10 @@ class BaseContainer extends StatefulWidget {
   const BaseContainer({
     required this.body,
     this.appBar,
+    this.floatingAlingment,
     this.bottomNavigationBar,
     this.showSync = false,
+    this.showBehind = true,
     this.drawer,
     this.moreGradient = false,
     super.key,
@@ -22,8 +24,10 @@ class BaseContainer extends StatefulWidget {
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
   final PreferredSizeWidget? appBar;
+  final FloatingActionButtonLocation? floatingAlingment;
   final Widget body;
   final bool showSync;
+  final bool showBehind;
   final bool? resizeToAvoidBottomInset;
   final bool moreGradient;
   final Color? bottomSafeAreaColor;
@@ -92,62 +96,62 @@ class _BaseContainerState extends State<BaseContainer> {
             //   }
             // },
             Scaffold(
-          extendBodyBehindAppBar: true,
-          backgroundColor: ThemeColors.transparent,
-          appBar: widget.appBar,
-          resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-          drawer: widget.drawer,
-          body: PopScope(
-            canPop: false,
-            // onPopInvoked: (didPop) {
-            //   log("POPDPODPODPODPO  ===>  $didPop  NAVI =>$isNavigating  popHONE => $popHome");
-            //   if (isNavigating) {
-            //     try {
-            //       // if (!didPop) return;
-            //       Preference.saveDataList(
-            //         DeeplinkData(
-            //           uri: null,
-            //           from: "POP Scope => didPop => $didPop",
-            //           onDeepLink: onDeepLinking,
-            //         ),
-            //       );
-            //       if (popHome) {
-            //         // Navigator.popUntil(
-            //         //     navigatorKey.currentContext!, (route) => route.isFirst);
-            //         Navigator.pushReplacement(
-            //           navigatorKey.currentContext!,
-            //           MaterialPageRoute(builder: (_) => const Tabs()),
-            //         );
-            //       } else {
-            //         log("HERE ******* ");
-            //         Navigator.pop(navigatorKey.currentContext!);
-            //       }
-            //       isNavigating = false;
-            //     } catch (e) {
-            //       log("HERE ERROR  ******* ${e.toString()}");
-            //     }
-            //   }
-            // },
-            child: widget.bottomSafeAreaColor != null
-                ? Column(
-                    children: [
-                      Container(
-                        color: widget.bottomSafeAreaColor,
-                        height: MediaQuery.of(context).padding.top +
-                            (widget.appBar?.preferredSize.height ?? 0),
-                      ),
-                      Expanded(child: widget.body),
-                      Container(
-                        color: widget.bottomSafeAreaColor,
-                        height: MediaQuery.of(context).padding.bottom,
-                      ),
-                    ],
-                  )
-                : SafeArea(child: widget.body),
-          ),
-          bottomNavigationBar: widget.bottomNavigationBar,
-          floatingActionButton: widget.floatingActionButton,
-        ),
+                extendBodyBehindAppBar: widget.showBehind,
+                backgroundColor: ThemeColors.transparent,
+                appBar: widget.appBar,
+                resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+                drawer: widget.drawer,
+                body: PopScope(
+                  canPop: false,
+                  // onPopInvoked: (didPop) {
+                  //   log("POPDPODPODPODPO  ===>  $didPop  NAVI =>$isNavigating  popHONE => $popHome");
+                  //   if (isNavigating) {
+                  //     try {
+                  //       // if (!didPop) return;
+                  //       Preference.saveDataList(
+                  //         DeeplinkData(
+                  //           uri: null,
+                  //           from: "POP Scope => didPop => $didPop",
+                  //           onDeepLink: onDeepLinking,
+                  //         ),
+                  //       );
+                  //       if (popHome) {
+                  //         // Navigator.popUntil(
+                  //         //     navigatorKey.currentContext!, (route) => route.isFirst);
+                  //         Navigator.pushReplacement(
+                  //           navigatorKey.currentContext!,
+                  //           MaterialPageRoute(builder: (_) => const Tabs()),
+                  //         );
+                  //       } else {
+                  //         log("HERE ******* ");
+                  //         Navigator.pop(navigatorKey.currentContext!);
+                  //       }
+                  //       isNavigating = false;
+                  //     } catch (e) {
+                  //       log("HERE ERROR  ******* ${e.toString()}");
+                  //     }
+                  //   }
+                  // },
+                  child: widget.bottomSafeAreaColor != null
+                      ? Column(
+                          children: [
+                            Container(
+                              color: widget.bottomSafeAreaColor,
+                              height: MediaQuery.of(context).padding.top +
+                                  (widget.appBar?.preferredSize.height ?? 0),
+                            ),
+                            Expanded(child: widget.body),
+                            Container(
+                              color: widget.bottomSafeAreaColor,
+                              height: MediaQuery.of(context).padding.bottom,
+                            ),
+                          ],
+                        )
+                      : SafeArea(child: widget.body),
+                ),
+                bottomNavigationBar: widget.bottomNavigationBar,
+                floatingActionButton: widget.floatingActionButton,
+                floatingActionButtonLocation: widget.floatingAlingment),
       ),
     );
   }

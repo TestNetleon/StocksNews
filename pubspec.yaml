@@ -75,6 +75,7 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   sign_in_with_apple: ^5.0.0
   responsive_builder: ^0.7.0
+  svg_flutter: ^0.0.1
   percent_indicator: ^4.2.3
   # uni_links: ^0.5.1
   share_plus: ^7.2.2
@@ -137,6 +138,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/json/coin.json
+    - assets/svg/
     - assets/fonts/
     - assets/fonts/roboto/
     - assets/fonts/georgia/

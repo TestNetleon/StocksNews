@@ -209,12 +209,13 @@ TextStyle stylePTSansRegular(
     height = 1.2,
     letterSpacing = 0.70,
     decoration,
+    FontWeight? fontWeight,
     FontStyle? fontStyle}) {
   return TextStyle(
     fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
-    fontWeight: FontWeight.normal,
+    fontWeight: fontWeight ?? FontWeight.normal,
     height: height,
     decoration: decoration,
     fontStyle: fontStyle,
@@ -225,6 +226,26 @@ TextStyle stylePTSansRegular(
 
 TextStyle stylePTSansBold({
   color = Colors.white,
+  double fontSize = 16,
+  letterSpacing = 0.70,
+  height = 1.2,
+  decoration,
+}) {
+  return TextStyle(
+    fontSize: fontSize,
+    color: color,
+    fontFamily: Fonts.ptSans,
+    fontWeight: FontWeight.bold,
+    decoration: decoration,
+    decorationColor: color,
+    height: height,
+
+    // letterSpacing: letterSpacing,
+  );
+}
+
+TextStyle styleSansBold({
+  color = Colors.black,
   double fontSize = 16,
   letterSpacing = 0.70,
   height = 1.2,

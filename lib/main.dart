@@ -42,8 +42,7 @@ void main() async {
   FirebaseApi().initNotifications();
 
   splashLoaded = false;
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(const MyApp());
   });
 }
