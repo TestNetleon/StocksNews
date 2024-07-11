@@ -14,6 +14,7 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import '../../api/api_response.dart';
 import '../../widgets/theme_button_small.dart';
 import '../auth/membershipAsk/ask.dart';
 import '../drawer/widgets/profile_image.dart';
@@ -32,6 +33,9 @@ class MembershipView extends StatelessWidget {
       error: provider.error,
       isFull: true,
       showPreparingText: true,
+      onRefresh: () {
+        provider.getData();
+      },
       child: CommonRefreshIndicator(
         onRefresh: () async {
           provider.getData();
@@ -76,6 +80,8 @@ class MyMembershipWidget extends StatefulWidget {
 class _MyMembershipWidgetState extends State<MyMembershipWidget> {
   @override
   Widget build(BuildContext context) {
+    Extra? extra = context.watch<MembershipProvider>().extra;
+
     UserProvider provider = context.watch<UserProvider>();
     String? colorHex = provider.user?.membership?.color;
     Color? color;
@@ -208,8 +214,8 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
           ),
         ),
         Visibility(
-          visible: provider.user?.membership?.canUpgrade == true &&
-              provider.user?.membership?.purchased == 1,
+          // visible: provider.user?.membership?.canUpgrade == true &&
+          //     provider.user?.membership?.purchased == 1,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -244,17 +250,18 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Upgrade Your Membership Today!",
+                      extra?.text1 ?? "Upgrade Your Membership Today!",
                       style: stylePTSansBold(fontSize: 30),
                     ),
                     const SpacerVertical(height: 8),
                     Text(
-                      "Unlock exclusive features and enjoy premium benefits.",
+                      extra?.text2 ??
+                          "Unlock exclusive features and enjoy premium benefits.",
                       style: stylePTSansRegular(),
                     ),
                     const SpacerVertical(height: 10),
                     Text(
-                      "Click here to upgrade now! ",
+                      extra?.text3 ?? "Click here to upgrade now! ",
                       style: stylePTSansBold(fontSize: 15),
                       textAlign: TextAlign.center,
                     ),

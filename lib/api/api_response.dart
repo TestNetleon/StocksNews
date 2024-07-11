@@ -100,8 +100,14 @@ class Extra {
   final String? aiTitle;
   final bool? showMembership;
   final bool? showMorningstar;
+  final String? text1;
+  final String? text2;
+  final String? text3;
 
   Extra({
+    this.text1,
+    this.text2,
+    this.text3,
     this.feebackType,
     this.showMorningstar,
     this.search,
@@ -163,6 +169,10 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        text1: json["text1"],
+        text2: json["text2"],
+        text3: json["text3"],
+
         showMembership: json["show_membership"],
         feebackType: json["feeback_type"] == null
             ? []
@@ -287,6 +297,10 @@ class Extra {
         'total_points_received': received,
         "total_balance": balance,
         "total_spent": spent,
+        "text1": text1,
+        "text2": text2,
+        "text3": text3,
+
         // "subscription": subscription?.toJson(),
         "total_points_pending": pending,
         'referral_status_message': suspendMsg,
