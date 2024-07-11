@@ -89,7 +89,6 @@ class TrendingPartialLoading extends StatelessWidget {
           //     error: error,
           //     onRefresh: onRefresh,
           //   ),
-
           if (!loading && error == null)
             Container(
               margin: EdgeInsets.only(top: isPhone ? 0.sp : 10.sp),

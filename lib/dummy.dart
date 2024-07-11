@@ -17,87 +17,87 @@ class DemoWeb extends StatefulWidget {
 class _DemoWebState extends State<DemoWeb> {
   void _showAlert({required title, description, image, onClick}) {
     showGeneralDialog(
-        barrierColor: Colors.black.withOpacity(0.5),
-        transitionBuilder: (context, a1, a2, widget) {
-          return SafeArea(
-            child: Transform.scale(
-              scale: a1.value,
-              child: Opacity(
-                opacity: a1.value,
-                child: Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  elevation: 10.0,
-                  backgroundColor: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (image != null)
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16.0),
-                            topRight: Radius.circular(16.0),
-                          ),
-                          child: CachedNetworkImagesWidget(
-                            image ??
-                                "https://img.freepik.com/free-vector/gradient-stock-market-concept_23-2149166910.jpg?t=st=1716027320~exp=1716030920~hmac=fb2ed98c07151bfa1e80148a0a59fc074a616b58d6d9ceca573c8bf414731371&w=720",
-                          ),
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return SafeArea(
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                elevation: 10.0,
+                backgroundColor: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (image != null)
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16.0),
+                          topRight: Radius.circular(16.0),
                         ),
-                      Container(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title ?? 'Dialog Title',
-                              style: stylePTSansBold(color: Colors.black),
-                            ),
-                            if (description != null)
-                              Container(
-                                margin: EdgeInsets.only(top: 5.sp),
-                                child: Text(
-                                  description ??
-                                      'This is a custom dialog with a different style.',
-                                  style:
-                                      stylePTSansRegular(color: Colors.black),
-                                ),
-                              ),
-                            if (onClick != null)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text(
-                                      'Okay',
-                                      style: stylePTSansRegular(
-                                        color: ThemeColors.buttonBlue,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
+                        child: CachedNetworkImagesWidget(
+                          image ??
+                              "https://img.freepik.com/free-vector/gradient-stock-market-concept_23-2149166910.jpg?t=st=1716027320~exp=1716030920~hmac=fb2ed98c07151bfa1e80148a0a59fc074a616b58d6d9ceca573c8bf414731371&w=720",
                         ),
                       ),
-                    ],
-                  ),
+                    Container(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title ?? 'Dialog Title',
+                            style: stylePTSansBold(color: Colors.black),
+                          ),
+                          if (description != null)
+                            Container(
+                              margin: EdgeInsets.only(top: 5.sp),
+                              child: Text(
+                                description ??
+                                    'This is a custom dialog with a different style.',
+                                style: stylePTSansRegular(color: Colors.black),
+                              ),
+                            ),
+                          if (onClick != null)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Okay',
+                                    style: stylePTSansRegular(
+                                      color: ThemeColors.buttonBlue,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 200),
-        barrierDismissible: true,
-        barrierLabel: '',
-        context: context,
-        pageBuilder: (context, animation1, animation2) {
-          return const SizedBox();
-        });
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 200),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {
+        return const SizedBox();
+      },
+    );
 
     // showDialog(
     //   context: context,

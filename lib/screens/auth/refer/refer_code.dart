@@ -88,7 +88,6 @@ class _ReferLoginState extends State<ReferLogin> {
 
   _checkProfile() {
     UserRes? user = context.read<UserProvider>().user;
-
     countryCode = user?.phoneCode == null || user?.phoneCode == ""
         ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
                 .dialCode ??
@@ -157,8 +156,7 @@ class _ReferLoginState extends State<ReferLogin> {
       if (!numberVerified) {
         log("Phone Number $countryCode ${mobile.text}");
         showGlobalProgressDialog();
-        await FirebaseAuth.instance.verifyPhoneNumber(
-          // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
+        FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
             closeGlobalProgressDialog();

@@ -144,10 +144,11 @@ class _HomeTopNewsSliderState extends State<HomeTopNewsSlider> {
                 options: CarouselOptions(
                   height: imageHeight,
                   enlargeCenterPage: true,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 3),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  pauseAutoPlayOnTouch: true,
+                  autoPlay: false, //TODO;
+                  // autoPlay: true, //TODO;
+                  // autoPlayInterval: const Duration(seconds: 3),
+                  // autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  // pauseAutoPlayOnTouch: true,
                   viewportFraction: 1,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   onPageChanged: (index, reason) {

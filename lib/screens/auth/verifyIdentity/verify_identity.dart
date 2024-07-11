@@ -126,7 +126,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
       );
     } else {
       showGlobalProgressDialog();
-      await FirebaseAuth.instance.verifyPhoneNumber(
+      FirebaseAuth.instance.verifyPhoneNumber(
         // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
         phoneNumber: "$countryCode ${mobile.text}",
         verificationCompleted: (PhoneAuthCredential credential) {
