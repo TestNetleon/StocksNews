@@ -319,7 +319,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
                                 Expanded(
                                   child: Text('Logout',
                                       style: stylePTSansBold(
-                                          fontSize: 14,
+                                          fontSize: 16,
                                           color: ThemeColors.sos)),
                                 ),
                               ],

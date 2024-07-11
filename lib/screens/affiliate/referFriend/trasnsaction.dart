@@ -66,8 +66,9 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                 if (index == 0) {
                   return Column(
                     children: [
-                      const ScreenTitle(
-                        title: "Points Transactions",
+                      ScreenTitle(
+                        title: provider.extra?.title.toString() ?? "",
+                        subTitle: provider.extra?.subTitle.toString() ?? "",
                       ),
                       AffiliateTranItem(
                         data: provider.tnxData?[index],

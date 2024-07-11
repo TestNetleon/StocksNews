@@ -228,6 +228,8 @@ class LeaderBoardProvider extends ChangeNotifier {
       );
       if (response.status) {
         _tnxData = affiliateTransactionResFromJson(jsonEncode(response.data));
+        _extra = response.extra is Extra ? response.extra : null;
+
         _errorT = null;
       } else {
         _errorT = response.message;

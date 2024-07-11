@@ -150,7 +150,7 @@ class _PortfolioUserNotLoggedInState extends State<PortfolioUserNotLoggedIn> {
                           homeProvider.homePortfolio?.top?.subTitle ?? "",
                           style: stylePTSansRegular(
                             fontSize: 14,
-                            color: ThemeColors.greyText,
+                            // color: ThemeColors.greyText,
                           ),
                         ),
                         const SpacerVertical(height: 30),
@@ -227,13 +227,13 @@ class _PortfolioUserNotLoggedInState extends State<PortfolioUserNotLoggedIn> {
       children: [
         const CircleAvatar(
           radius: 3,
-          backgroundColor: ThemeColors.greyBorder,
+          backgroundColor: Colors.white,
         ),
         const SpacerHorizontal(width: 10),
         Flexible(
           child: Text(
             text,
-            style: stylePTSansRegular(color: ThemeColors.greyText),
+            style: stylePTSansRegular(),
           ),
         ),
       ],

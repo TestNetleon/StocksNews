@@ -167,7 +167,7 @@ class Tickets extends StatelessWidget {
       children: [
         ScreenTitle(
             title: provider.extra?.title ?? "Helpdesk",
-            subTitle: provider.extra?.subTitle),
+            subTitle: provider.extra?.subTitle ?? ""),
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: ThemeColors.greyBorder.withOpacity(0.4)),

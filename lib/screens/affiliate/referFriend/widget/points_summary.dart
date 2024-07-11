@@ -189,7 +189,7 @@ class PointsSummary extends StatelessWidget {
                           child: Text(
                             "View Points Transactions",
                             style: stylePTSansBold(
-                              fontSize: 14,
+                              fontSize: 16,
                               color: ThemeColors.accent,
                               decoration: TextDecoration.underline,
                             ),

@@ -118,7 +118,8 @@ class _SdOwnershipState extends State<SdOwnership> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          OwnershipList? data = provider.ownershipRes?.ownershipList?[index];
+                          OwnershipList? data =
+                              provider.ownershipRes?.ownershipList?[index];
                           if (index == 0) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,25 +192,40 @@ class _SdOwnershipState extends State<SdOwnership> {
                                   height: 15.sp,
                                   thickness: 1,
                                 ),
-                                SdOwnershipItem(
-                                  data: data,
-                                  isOpen: openIndexItem == index,
-                                  onTap: () => changeOpenIndexItem(index),
-                                )
+                                data!.sharesNumber.toString() == "0" ||
+                                        data.sharesNumber.toString() == "0.0"
+                                    ? const SizedBox()
+                                    : SdOwnershipItem(
+                                        data: data,
+                                        isOpen: openIndexItem == index,
+                                        onTap: () => changeOpenIndexItem(index),
+                                      )
                               ],
                             );
                           }
-                          return SdOwnershipItem(
-                            data: data,
-                            isOpen: openIndexItem == index,
-                            onTap: () => changeOpenIndexItem(index),
-                          );
+                          return data!.sharesNumber.toString() == "0" ||
+                                  data.sharesNumber.toString() == "0.0"
+                              ? const SizedBox()
+                              : SdOwnershipItem(
+                                  data: data,
+                                  isOpen: openIndexItem == index,
+                                  onTap: () => changeOpenIndexItem(index),
+                                );
                         },
                         separatorBuilder: (context, index) {
-                          return const Divider(
-                            color: ThemeColors.greyBorder,
-                            height: 20,
-                          );
+                          return provider.ownershipRes?.ownershipList?[index]
+                                          .sharesNumber
+                                          .toString() ==
+                                      "0" ||
+                                  provider.ownershipRes?.ownershipList?[index]
+                                          .sharesNumber
+                                          .toString() ==
+                                      "0.0"
+                              ? const SizedBox()
+                              : const Divider(
+                                  color: ThemeColors.greyBorder,
+                                  height: 20,
+                                );
                         },
                         itemCount:
                             provider.ownershipRes?.ownershipList?.length ?? 0,
