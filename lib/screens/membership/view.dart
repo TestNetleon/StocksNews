@@ -265,6 +265,7 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
                         onPressed: () {
                           askToSubscribe(
                             onPressed: () {
+                              Navigator.pop(context);
                               RevenueCatService.initializeSubscription();
                             },
                           );
