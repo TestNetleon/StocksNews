@@ -196,7 +196,8 @@ class _HowToSpendState extends State<HowToSpend> {
                           ),
                           // padding: const EdgeInsets.only(left: 10.0),
                           child: ListView.separated(
-                            itemCount: 5 ?? 0,
+                            itemCount:
+                                provider.benefitRes?.spend.points.length ?? 0,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.symmetric(horizontal: 12.sp),
