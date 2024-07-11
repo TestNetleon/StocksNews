@@ -209,12 +209,13 @@ TextStyle stylePTSansRegular(
     height = 1.2,
     letterSpacing = 0.70,
     decoration,
+    FontWeight? fontWeight,
     FontStyle? fontStyle}) {
   return TextStyle(
     fontSize: fontSize,
     color: color,
     fontFamily: Fonts.ptSans,
-    fontWeight: FontWeight.normal,
+    fontWeight: fontWeight ?? FontWeight.normal,
     height: height,
     decoration: decoration,
     fontStyle: fontStyle,

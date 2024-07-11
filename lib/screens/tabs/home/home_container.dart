@@ -189,9 +189,9 @@ class HomeContainer extends StatelessWidget {
                           Positioned(
                             right: 0,
                             child: Image.asset(
-                              'assets/images/Coin_Rotate.gif',
-                              height: 110.0,
-                              width: 130.0,
+                              Images.reward,
+                              height: 80.0,
+                              width: 100.0,
                             ),
                           ),
                         ],

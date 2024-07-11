@@ -93,6 +93,12 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+   List<String> benefitTabs = [
+    'Earn Rewards',
+    'Redeem Rewards',
+  ];
+
+
   List<SdBenefitAnalyst>? _benefitAnalysisRes;
   List<SdBenefitAnalyst>? get benefitAnalysisRes => _benefitAnalysisRes;
 

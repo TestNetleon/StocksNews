@@ -8,173 +8,89 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/benefits_items.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/benefits_redeem_items.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
+import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
-class BenefitsMarketing extends StatelessWidget {
+class BenefitsMarketing extends StatefulWidget {
   const BenefitsMarketing({super.key});
 
   @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     HomeProvider provider = context.read<HomeProvider>();
-  //     if (provider.benefitAnalysisRes == null) {
-  //       context.read<HomeProvider>().getBenefitsDetails();
-  //     }
-  //   });
-  // }
+  State<BenefitsMarketing> createState() => _BenefitsMarketingState();
+}
+
+class _BenefitsMarketingState extends State<BenefitsMarketing> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    List images = [
-      Images.share,
-      Images.signin,
-      Images.login,
-      Images.profile,
-      Images.signin,
-      Images.profile,
-      Images.share,
-      Images.credit,
-      Images.signin,
-    ];
-    List description = [
-      'Earn points for every friend you refer who signs up using your referral link.',
-      'Sign up today and receive bonus points as a welcome gift.',
-      'Log in daily to earn points and keep your streak going.',
-      'Complete your profile to earn points and unlock additional features.',
-      'Purchase the Beginner Plan and earn points as a reward.',
-      'Get rewarded with points when you purchase the Trader Plan.',
-      'Earn bonus points with the purchase of the Ultimate Trader Plan.',
-      'Achieve the Morning Star status and earn exclusive points.',
-      'Sync your portfolio to our platform and get rewarded with points.',
-    ];
     HomeProvider provider = context.watch<HomeProvider>();
-    // Utils().showLog('helllllllllllll${provider.benefitAnalysisRes?.length}');
+
     return BaseContainer(
-      drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: true,
-        canSearch: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ScreenTitle(title: 'Referral Settings Data'),
-              const SpacerVertical(height: 10.0),
-              // ListView.separated(
-              //   itemCount: provider.benefitAnalysisRes?.length ?? 0,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   shrinkWrap: true,
-              //   padding: EdgeInsets.only(top: 12.sp, left: 12.sp, right: 12.sp),
-              //   itemBuilder: (context, index) {
-              //     // Utils().showLog('Data lenght${provider?.length.toString()}');
-              //     return Column(
-              //       children: [
-              //         if (index == 0)
-              //           Column(
-              //             mainAxisSize: MainAxisSize.min,
-              //             children: [
-              //               Row(
-              //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   AutoSizeText(
-              //                     maxLines: 1,
-              //                     "Nema",
-              //                     style: stylePTSansRegular(
-              //                       fontSize: 12,
-              //                       color: ThemeColors.greyText,
-              //                     ),
-              //                   ),
-              //                   const SpacerHorizontal(width: 10),
-              //                   AutoSizeText(
-              //                     maxLines: 1,
-              //                     "Points",
-              //                     style: stylePTSansRegular(
-              //                       fontSize: 12,
-              //                       color: ThemeColors.greyText,
-              //                     ),
-              //                   ),
-              //                 ],
-              //               ),
-              //               Divider(
-              //                 color: ThemeColors.greyBorder,
-              //                 height: 20.sp,
-              //                 thickness: 1,
-              //               )
-              //             ],
-              //           ),
-              //         Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             Expanded(
-              //               child: Text(
-              //                 "${provider.benefitAnalysisRes?[index].key}",
-              //                 style: stylePTSansRegular(
-              //                     color: ThemeColors.white, fontSize: 13),
-              //               ),
-              //             ),
-              //             Text(
-              //               "${provider.benefitAnalysisRes?[index].point}",
-              //               style: stylePTSansRegular(
-              //                   color: ThemeColors.white, fontSize: 13),
-              //             ),
-              //           ],
-              //         ),
-              //       ],
-              //     );
-              //   },
-              //   separatorBuilder: (BuildContext context, int index) {
-              //     return const Divider(
-              //       color: ThemeColors.greyBorder,
-              //       height: 15,
-              //     );
-              //   },
-              // ),
-              //-------copy data
-              ListView.separated(
-                itemCount: provider.benefitAnalysisRes?.length ?? 0,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                // padding: EdgeInsets.only(left: 12.sp, right: 12.sp),
-                itemBuilder: (context, index) {
-                  SdBenefitAnalyst? data = provider.benefitAnalysisRes?[index];
-                  return Column(
-                    children: [
-                      AnalysisBenefitItem(
-                        description: description[index],
-                        images: images[index],
-                        data: data,
-                        //isOpen: provider.openIndexbenefit == index,
-                        onTap: () {},
-                      ),
-                      const SpacerVertical(height: 8),
-                    ],
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 15,
-                  );
-                },
-              ),
-            ],
+        drawer: const BaseDrawer(resetIndex: true),
+        appBar: const AppBarHome(
+          isPopback: true,
+          showTrailing: true,
+          canSearch: true,
+        ),
+        floatingAlingment: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          height: 80,
+          decoration: const BoxDecoration(color: Colors.white),
+          padding: const EdgeInsets.all(18.0),
+          child: ThemeButtonSmall(
+            onPressed: () {},
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+            textSize: 15,
+            fontBold: true,
+            iconFront: true,
+            color: _selectedIndex == 0
+                ? ThemeColors.accent
+                : const Color.fromARGB(255, 241, 70, 70),
+            // icon: Icons.lock,
+            radius: 30,
+            mainAxisSize: MainAxisSize.max,
+            text: "Get Rewarded Now",
+            // showArrow: false,
           ),
         ),
-      ),
-    );
+        body: Expanded(
+          child: CustomTabContainer(
+            // scrollable: false,
+            onChange: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            // padding: EdgeInsets.zero,
+            padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
+            tabs: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: const Text("How to earn"),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: const Text("How to Spend"),
+              ),
+            ],
+            widgets: [
+              AnalysisBenefitItem(onTap: () {}),
+              AnalysisBenefitRedeemItem(onTap: () {}),
+            ],
+          ),
+        ));
   }
 }
