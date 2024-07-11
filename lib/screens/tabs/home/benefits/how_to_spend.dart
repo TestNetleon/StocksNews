@@ -67,7 +67,6 @@ class _HowToSpendState extends State<HowToSpend> {
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Text(
                   spend?.title ?? "",
-                  // 'Earn More with Our Affiliate Program!',
                   style: stylePTSansRegular(
                     color: ThemeColors.white,
                     fontSize: 22,
@@ -80,21 +79,19 @@ class _HowToSpendState extends State<HowToSpend> {
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Text(
                   spend?.subTitle ?? "",
-                  // "Discover How Easy It Is to Earn Reward Points for Every Action You Take",
                   style: stylePTSansRegular(
                     color: ThemeColors.white,
                     fontSize: 14,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SpacerVertical(height: 20),
               Container(
-                // width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height * 0.80,
                 decoration: BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.circular(10.0),
-                ), // Adjust as needed
+                ),
                 child: Stack(
                   children: [
                     Container(
@@ -129,67 +126,66 @@ class _HowToSpendState extends State<HowToSpend> {
                               ),
                             ),
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.centerRight,
-                                    decoration: const BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.topRight,
-                                        stops: [0.3, 0.65],
-                                        colors: [
-                                          Color.fromARGB(255, 204, 56, 19),
-                                          Color.fromARGB(255, 148, 25, 4),
-                                        ],
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.all(8),
-                                    child: Text(
-                                      spend?.banner.title ?? "",
-                                      // "Start earning points right from your first action.",
-                                      style: stylePTSansRegular(
-                                        color: ThemeColors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  const SpacerVertical(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5.0),
-                                    child: Text(
-                                      spend?.banner.subTitle ?? "",
-                                      // "Climb the Stages and Unlock Exclusive Benefits!",
-                                      style: stylePTSansRegular(
-                                        color: const Color.fromARGB(
-                                          255,
-                                          252,
-                                          252,
-                                          252,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          colors: [
+                                            Color.fromARGB(255, 204, 56, 19),
+                                            Color.fromARGB(255, 169, 29, 4),
+                                          ],
                                         ),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      padding: const EdgeInsets.all(8),
+                                      child: Text(
+                                        spend?.banner.title ?? "",
+                                        style: stylePTSansRegular(
+                                          color: ThemeColors.white,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SpacerVertical(height: 10),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 5.0,
-                                      right: 25.0,
-                                    ),
-                                    child: Text(
-                                      spend?.banner.text ?? "",
-                                      // "The more you engage, the more you earn – it's that simple!",
-                                      style: stylePTSansRegular(
-                                        color: ThemeColors.white,
-                                        fontSize: 14,
+                                    const SpacerVertical(height: 10),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5.0),
+                                      child: Text(
+                                        spend?.banner.subTitle ?? "",
+                                        style: stylePTSansRegular(
+                                          color: const Color.fromARGB(
+                                            255,
+                                            252,
+                                            252,
+                                            252,
+                                          ),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SpacerVertical(height: 8),
-                                ],
+                                    const SpacerVertical(height: 10),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 5.0,
+                                        right: 25.0,
+                                      ),
+                                      child: Text(
+                                        spend?.banner.text ?? "",
+                                        style: stylePTSansRegular(
+                                          color: ThemeColors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    // const SpacerVertical(height: 8),
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -201,7 +197,6 @@ class _HowToSpendState extends State<HowToSpend> {
                             borderRadius: BorderRadius.circular(8.0),
                             border: Border.all(color: Colors.white),
                           ),
-                          // padding: const EdgeInsets.only(left: 10.0),
                           child: ListView.separated(
                             itemCount:
                                 provider.benefitRes?.spend.points.length ?? 0,
@@ -223,8 +218,9 @@ class _HowToSpendState extends State<HowToSpend> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 10.0),
+                                        padding: const EdgeInsets.only(
+                                          top: 10.0,
+                                        ),
                                         child: Image.asset(
                                           images[index],
                                           width: 40,
@@ -257,28 +253,6 @@ class _HowToSpendState extends State<HowToSpend> {
                                         ),
                                       ),
                                       const SpacerHorizontal(width: 10),
-                                      // Padding(
-                                      //   padding: const EdgeInsets.only(
-                                      //       right: 10.0, top: 15),
-                                      //   child: Container(
-                                      //     height: 50,
-                                      //     width: 50,
-                                      //     decoration: const BoxDecoration(
-                                      //       shape: BoxShape.circle,
-                                      //       color: Color.fromARGB(
-                                      //           255, 247, 41, 41),
-                                      //     ),
-                                      //     padding: const EdgeInsets.all(8),
-                                      //     child: Center(
-                                      //       child: Text(
-                                      //         points[index].toString() ?? "",
-                                      //         style: styleSansBold(
-                                      //             fontSize: 15,
-                                      //             color: Colors.white),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
                                   const SpacerVertical(height: 3),
