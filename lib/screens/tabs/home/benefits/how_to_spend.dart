@@ -3,23 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/benefits_analysis.dart';
-import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button.dart';
-import 'package:svg_flutter/svg.dart';
 
-class AnalysisBenefitItem extends StatelessWidget {
+class HowToSpend extends StatelessWidget {
   final String? images;
   final String? description;
   final Function() onTap;
 
-  const AnalysisBenefitItem({
+  const HowToSpend({
     required this.onTap,
     super.key,
     this.images,
@@ -35,26 +31,34 @@ class AnalysisBenefitItem extends StatelessWidget {
       Images.signup,
       Images.login,
       Images.profile,
-      Images.portfolio,
-      Images.beginnerPlan,
-      Images.traderPlan,
-      // Images.ultimatePlan,
       Images.bg,
     ];
+    List title = [
+      'Access morning star report',
+      'Unlock premium alerts and news',
+      'Unlock news sentiment ',
+      'Unlock analyst ratings',
+      'Unlock company financials ',
+    ];
+
     List description = [
-      'Earn points for every friend you refer who signs up using your referral link.',
-      'Sign up today and receive bonus points as a welcome gift.',
-      'Log in daily to earn points and keep your streak going.',
-      'Complete your profile to earn points and unlock additional features.',
-      'Purchase the Beginner Plan and earn points as a reward.',
-      'Get rewarded with points when you purchase the Trader Plan.',
-      'Earn bonus points with the purchase of the Ultimate Trader Plan.',
-      'Achieve the Morning Star status and earn exclusive points.',
-      'Sync your portfolio to our platform and get rewarded with points.',
+      'Access Morningstar reports for detailed investment analysis.',
+      'Unlock premium alerts and news for timely updates.',
+      'Unlock news sentiment to gauge market mood.',
+      'Unlock analyst ratings for expert stock evaluations.',
+      'Unlock company financials for in-depth financial data.',
+    ];
+
+    List points = [
+      '10',
+      '30',
+      '20',
+      '10',
+      '50',
     ];
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 60.0),
+      padding: const EdgeInsets.only(bottom: 65.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -80,7 +84,7 @@ class AnalysisBenefitItem extends StatelessWidget {
             const SpacerVertical(height: 20),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 1.14,
+              height: MediaQuery.of(context).size.height * 0.80,
               decoration: BoxDecoration(
                   color: Colors.grey,
                   borderRadius:
@@ -96,7 +100,7 @@ class AnalysisBenefitItem extends StatelessWidget {
                           end: Alignment.bottomCenter,
                           stops: [0.2, 0.65],
                           colors: [
-                            Color.fromARGB(255, 32, 128, 65),
+                            Color.fromARGB(255, 204, 56, 19),
                             Color.fromARGB(255, 39, 37, 37),
                           ],
                         ),
@@ -134,8 +138,8 @@ class AnalysisBenefitItem extends StatelessWidget {
                                     end: Alignment.topRight,
                                     stops: [0.3, 0.65],
                                     colors: [
-                                      Color.fromARGB(255, 32, 128, 65),
-                                      Color.fromARGB(255, 11, 85, 37),
+                                      Color.fromARGB(255, 204, 56, 19),
+                                      Color.fromARGB(255, 148, 25, 4),
                                     ],
                                   ),
                                 ),
@@ -154,7 +158,7 @@ class AnalysisBenefitItem extends StatelessWidget {
                                 child: Text(
                                   "Climb the Stages and Unlock Exclusive Benefits!",
                                   style: stylePTSansRegular(
-                                      color: ThemeColors.lightGreen,
+                                      color: Color.fromARGB(255, 252, 252, 252),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
                                 ),
@@ -199,13 +203,11 @@ class AnalysisBenefitItem extends StatelessWidget {
                       ),
                       padding: EdgeInsets.only(left: 10.0),
                       child: ListView.separated(
-                        itemCount: provider.benefitAnalysisRes?.length ?? 0,
+                        itemCount: 5 ?? 0,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 12.sp),
                         itemBuilder: (context, index) {
-                          SdBenefitAnalyst? data =
-                              provider.benefitAnalysisRes?[index];
-                              
+                          Point? data = provider.benefitRes?.earn.points[index];
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -230,14 +232,14 @@ class AnalysisBenefitItem extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${data?.key}",
+                                          "${title[index]?.toString()}",
                                           style: styleSansBold(fontSize: 14),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         const SpacerVertical(height: 5),
                                         Text(
-                                          "${data?.text}",
+                                          description[index].toString(),
                                           overflow: TextOverflow.fade,
                                           style: stylePTSansRegular(
                                             fontSize: 14,
@@ -256,12 +258,12 @@ class AnalysisBenefitItem extends StatelessWidget {
                                       width: 50,
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: ThemeColors.darkGreen,
+                                        color: Color.fromARGB(255, 247, 41, 41),
                                       ),
                                       padding: const EdgeInsets.all(8),
                                       child: Center(
                                         child: Text(
-                                          data?.point.toString() ?? "",
+                                          points[index].toString() ?? "",
                                           style: styleSansBold(
                                               fontSize: 15,
                                               color: Colors.white),

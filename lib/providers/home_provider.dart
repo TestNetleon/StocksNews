@@ -93,14 +93,13 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-   List<String> benefitTabs = [
+  List<String> benefitTabs = [
     'Earn Rewards',
     'Redeem Rewards',
   ];
 
-
-  List<SdBenefitAnalyst>? _benefitAnalysisRes;
-  List<SdBenefitAnalyst>? get benefitAnalysisRes => _benefitAnalysisRes;
+  BenefitsRes? _benefitRes;
+  BenefitsRes? get benefitRes => _benefitRes;
 
   HomeTopGainerRes? _homeTopGainerRes;
   HomeTopGainerRes? get homeTopGainerRes => _homeTopGainerRes;
@@ -144,8 +143,8 @@ class HomeProvider extends ChangeNotifier {
   StockInFocusRes? _focusRes;
   StockInFocusRes? get focusRes => _focusRes;
 
-  SdBenefitAnalyst? _benefitFocus;
-  SdBenefitAnalyst? get benefitFocus => _benefitFocus;
+  // SdBenefitAnalyst? _benefitFocus;
+  // SdBenefitAnalyst? get benefitFocus => _benefitFocus;
 
   bool notificationSeen = false;
   String? loginTxt;
@@ -188,7 +187,7 @@ class HomeProvider extends ChangeNotifier {
     getHomeAlerts();
     getMostPurchased(home: "home");
     getHomeTrendingData();
-    getBenefitsDetails();
+    // getBenefitsDetails();
 
     //ADD AGAIN AFTER BACKEND MERGING
     _homeTopGainerRes = null;
@@ -209,9 +208,9 @@ class HomeProvider extends ChangeNotifier {
     if (_homeTrendingRes == null) {
       getHomeTrendingData();
     }
-    if (_benefitAnalysisRes == null) {
-      getBenefitsDetails();
-    }
+    // if (_benefitRes == null) {
+    //   getBenefitsDetails();
+    // }
     // if (_ipoRes == null) {
     //   getIpoData();
     // }
@@ -255,7 +254,7 @@ class HomeProvider extends ChangeNotifier {
         updateDatabase: true,
         onRefresh: () => refreshData(null),
       );
-      
+
       if (response.status) {
         //...........PLAID KEYS SET............
         // String basePlaidUrl = "https://sandbox.plaid.com";
@@ -523,15 +522,14 @@ class HomeProvider extends ChangeNotifier {
         onRefresh: () => refreshData(null),
       );
       if (response.status) {
-        _benefitAnalysisRes =
-            sdBenefitAnalystFromJson(jsonEncode(response.data));
+        _benefitRes = benefitsResFromJson(jsonEncode(response.data));
       } else {
-        _benefitAnalysisRes = null;
+        _benefitRes = null;
       }
       _statusBenefits = Status.loaded;
       notifyListeners();
     } catch (e) {
-      _benefitAnalysisRes = null;
+      _benefitRes = null;
       _statusBenefits = Status.loaded;
       notifyListeners();
     }
