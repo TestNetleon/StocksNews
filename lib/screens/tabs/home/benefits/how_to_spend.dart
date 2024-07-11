@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/benefits_analysis.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class AnalysisBenefitRedeemItem extends StatelessWidget {
+class HowToSpend extends StatelessWidget {
   final String? images;
   final String? description;
   final Function() onTap;
 
-  const AnalysisBenefitRedeemItem({
+  const HowToSpend({
     required this.onTap,
     super.key,
     this.images,
@@ -21,7 +24,7 @@ class AnalysisBenefitRedeemItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // HomeProvider provider = context.watch<HomeProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
 
     List<String> images = [
       Images.referAndEarn,
@@ -200,12 +203,11 @@ class AnalysisBenefitRedeemItem extends StatelessWidget {
                       ),
                       padding: EdgeInsets.only(left: 10.0),
                       child: ListView.separated(
-                        itemCount: 5,
+                        itemCount: 5 ?? 0,
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.symmetric(horizontal: 12.sp),
                         itemBuilder: (context, index) {
-                          // SdBenefitAnalyst? data =
-                          //     provider.benefitAnalysisRes?[index];
+                          Point? data = provider.benefitRes?.earn.points[index];
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -261,7 +263,7 @@ class AnalysisBenefitRedeemItem extends StatelessWidget {
                                       padding: const EdgeInsets.all(8),
                                       child: Center(
                                         child: Text(
-                                          points[index].toString(),
+                                          points[index].toString() ?? "",
                                           style: styleSansBold(
                                               fontSize: 15,
                                               color: Colors.white),

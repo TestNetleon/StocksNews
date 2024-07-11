@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -47,14 +48,15 @@ class _CustomState extends State<CustomTabContainer>
     _controller = TabController(length: widget.tabs.length, vsync: this);
 
     _controller?.addListener(() {
-      if (_controller?.indexIsChanging == true) {
-        setState(() {
-          _selectedIndex = _controller?.index ?? 0;
-        });
-        if (widget.onChange != null) {
-          widget.onChange!(_selectedIndex);
-        }
+      log("INDEX CHANGES -=> ${_controller?.index}");
+      // if (_controller?.indexIsChanging == true) {
+      setState(() {
+        _selectedIndex = _controller?.index ?? 0;
+      });
+      if (widget.onChange != null) {
+        widget.onChange!(_selectedIndex);
       }
+      // }
     });
   }
 
@@ -79,18 +81,19 @@ class _CustomState extends State<CustomTabContainer>
               borderRadius: BorderRadius.circular(10),
             ),
             child: TabBar(
-                controller: _controller,
-                onTap: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-                indicator: BoxDecoration(
-                  color: const Color.fromARGB(255, 0, 82, 4),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                isScrollable: widget.isScrollable,
-                tabs: widget.tabs),
+              controller: _controller,
+              onTap: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              indicator: BoxDecoration(
+                color: const Color.fromARGB(255, 0, 82, 4),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              isScrollable: widget.isScrollable,
+              tabs: widget.tabs,
+            ),
           ),
           const SpacerVertical(height: 10),
           // TabBar(
