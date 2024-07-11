@@ -80,7 +80,7 @@ class AnalysisBenefitItem extends StatelessWidget {
             const SpacerVertical(height: 20),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 1.15,
+              height: MediaQuery.of(context).size.height * 1.14,
               decoration: BoxDecoration(
                   color: Colors.grey,
                   borderRadius:
@@ -205,6 +205,7 @@ class AnalysisBenefitItem extends StatelessWidget {
                         itemBuilder: (context, index) {
                           SdBenefitAnalyst? data =
                               provider.benefitAnalysisRes?[index];
+                              
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -236,7 +237,7 @@ class AnalysisBenefitItem extends StatelessWidget {
                                         ),
                                         const SpacerVertical(height: 5),
                                         Text(
-                                          description[index],
+                                          "${data?.text}",
                                           overflow: TextOverflow.fade,
                                           style: stylePTSansRegular(
                                             fontSize: 14,
