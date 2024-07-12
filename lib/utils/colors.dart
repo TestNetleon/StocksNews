@@ -51,6 +51,8 @@ class ThemeColors {
   static const progressbackgroundColorDark = Color(0xFFb48245);
 
   static const darkGreen = Color(0xFF269238);
+  static const darkRed = Color.fromARGB(255, 213, 14, 7);
+
   static const ratingIconColor = Color(0xFFfec107);
   static const themeGreen = Color(0xFF14b24a);
 
