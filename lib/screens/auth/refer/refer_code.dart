@@ -365,7 +365,9 @@ class _ReferLoginState extends State<ReferLogin> {
                         padding: const EdgeInsets.only(bottom: 15),
                         child: ThemeInputField(
                           style: stylePTSansBold(
-                              color: Colors.black, fontSize: 18),
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                           // editable: user?.displayName == '' ||
                           //     user?.displayName == null,
                           controller: displayName,
@@ -541,12 +543,20 @@ class _ReferLoginState extends State<ReferLogin> {
                         ),
                       ),
                       const SpacerVertical(height: Dimen.itemSpacing),
-                      HtmlWidget(
-                        provider.extra?.referLogin?.note ??
-                            'Note: You will receive an OTP to verify mobile number.',
-                        textStyle: stylePTSansRegular(color: Colors.grey),
+                      Visibility(
+                        visible: user?.phone == '' || user?.phone == null,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HtmlWidget(
+                              provider.extra?.referLogin?.note ??
+                                  'Note: You will receive an OTP to verify mobile number.',
+                              textStyle: stylePTSansRegular(color: Colors.grey),
+                            ),
+                            const SpacerVertical(height: Dimen.itemSpacing),
+                          ],
+                        ),
                       ),
-                      const SpacerVertical(height: Dimen.itemSpacing),
                       InkWell(
                         onTap: () {
                           checkBox = !checkBox;
