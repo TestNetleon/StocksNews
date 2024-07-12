@@ -28,7 +28,7 @@ class BenefitsRes {
 class Earn {
   final String title;
   final String subTitle;
-  final Banner banner;
+  final BannerRes banner;
   final List<Point> points;
 
   Earn({
@@ -41,7 +41,7 @@ class Earn {
   factory Earn.fromJson(Map<String, dynamic> json) => Earn(
         title: json["title"],
         subTitle: json["sub_title"],
-        banner: Banner.fromJson(json["banner"]),
+        banner: BannerRes.fromJson(json["banner"]),
         points: List<Point>.from(json["points"].map((x) => Point.fromJson(x))),
       );
 
@@ -53,18 +53,18 @@ class Earn {
       };
 }
 
-class Banner {
+class BannerRes {
   final String title;
   final String subTitle;
   final String text;
 
-  Banner({
+  BannerRes({
     required this.title,
     required this.subTitle,
     required this.text,
   });
 
-  factory Banner.fromJson(Map<String, dynamic> json) => Banner(
+  factory BannerRes.fromJson(Map<String, dynamic> json) => BannerRes(
         title: json["title"],
         subTitle: json["sub_title"],
         text: json["text"],
