@@ -408,62 +408,74 @@ class _MyAccountContainerState extends State<MyAccountContainer>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: ThemeColors.primaryLight),
-                      ),
-                      color: ThemeColors.primaryLight,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(4),
-                        bottomLeft: Radius.circular(4),
-                      ),
-                    ),
-                    child: CountryCodePicker(
-                      padding: EdgeInsets.zero,
-                      onChanged: (CountryCode value) {
-                        countryCode = value.dialCode;
-                      },
-                      initialSelection: locale,
-                      showCountryOnly: false,
-                      flagWidth: 24,
-                      showOnlyCountryWhenClosed: false,
-                      alignLeft: false,
-                      boxDecoration: const BoxDecoration(
-                        color: ThemeColors.tabBack,
-                      ),
-                      textStyle: styleGeorgiaRegular(),
-                      dialogTextStyle: styleGeorgiaBold(),
-                      barrierColor: Colors.black26,
-                      searchDecoration: InputDecoration(
-                        iconColor: Colors.white,
-                        fillColor: Colors.white,
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          size: 22,
-                        ),
-                        filled: true,
-                        hintStyle: stylePTSansRegular(color: Colors.grey),
-                        hintText: "Search country",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: ThemeColors.primaryLight),
                   ),
-                ],
+                  color: ThemeColors.primaryLight,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(4),
+                    bottomLeft: Radius.circular(4),
+                  ),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: ThemeColors.primaryLight),
+                        ),
+                        color: ThemeColors.primaryLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          bottomLeft: Radius.circular(4),
+                        ),
+                      ),
+                      child: CountryCodePicker(
+                        padding: EdgeInsets.zero,
+                        onChanged: (CountryCode value) {
+                          countryCode = value.dialCode;
+                        },
+                        initialSelection: locale,
+                        showCountryOnly: false,
+                        flagWidth: 24,
+                        showOnlyCountryWhenClosed: false,
+                        alignLeft: false,
+                        boxDecoration: const BoxDecoration(
+                          color: ThemeColors.tabBack,
+                        ),
+                        textStyle: styleGeorgiaRegular(),
+                        dialogTextStyle: styleGeorgiaBold(),
+                        barrierColor: Colors.black26,
+                        searchDecoration: InputDecoration(
+                          iconColor: Colors.white,
+                          fillColor: Colors.white,
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 22,
+                          ),
+                          filled: true,
+                          hintStyle: stylePTSansRegular(color: Colors.grey),
+                          hintText: "Search country",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               // Stack(
