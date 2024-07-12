@@ -83,8 +83,7 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
               padding: const EdgeInsets.all(18.0),
               child: ThemeButtonSmall(
                 onPressed: () {},
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
                 textSize: 15,
                 fontBold: true,
                 iconFront: true,

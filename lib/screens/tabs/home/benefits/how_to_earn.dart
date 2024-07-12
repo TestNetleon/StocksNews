@@ -12,14 +12,14 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class HowToEarn extends StatefulWidget {
   final String? images;
-  final String? description;
+  // final String? description;
   final Function() onTap;
 
   const HowToEarn({
     required this.onTap,
     super.key,
     this.images,
-    this.description,
+    // this.description,
   });
 
   @override
@@ -85,7 +85,7 @@ class _HowToEarnState extends State<HowToEarn> {
                     color: ThemeColors.white,
                     fontSize: 14,
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                 ),
               ),
               const SpacerVertical(height: 20),

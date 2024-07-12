@@ -239,9 +239,7 @@ class HomeContainer extends StatelessWidget {
                               ),
                             ),
                             ListView.separated(
-                              itemCount: provider
-                                      .homeTrendingRes?.trendingNews?.length ??
-                                  0,
+                              itemCount: provider.homeTrendingRes?.trendingNews?.length ?? 0,
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               padding: EdgeInsets.only(top: 12.sp),
