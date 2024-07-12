@@ -95,13 +95,15 @@ class HomeContainer extends StatelessWidget {
                       child: const TopPlaidIndex(),
                     ),
                     Visibility(
-                      visible: false,
+                      // TODO: Comment this if not complete
+                      visible: true,
                       child: Container(
                         margin: const EdgeInsets.only(top: Dimen.homeSpacing),
                         decoration: BoxDecoration(
                           // color: Colors.transparent,
                           border: Border.all(
-                              color: ThemeColors.greyBorder.withOpacity(0.4)),
+                            color: ThemeColors.greyBorder.withOpacity(0.4),
+                          ),
                           gradient: const LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,

@@ -280,26 +280,12 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                     color: ThemeColors.greyBorder,
                   ),
                 ),
-                // const SpacerVertical(height: 70),
-                // Container(
-                //   width: MediaQuery.of(context).size.width * .45,
-                //   constraints:
-                //       BoxConstraints(maxHeight: kTextTabBarHeight - 2.sp),
-                //   child: Image.asset(
-                //     Images.logo,
-                //     fit: BoxFit.contain,
-                //   ),
-                // ),
                 const SpacerVertical(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(Dimen.authScreenPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   provider.extra?.referLogin?.title ?? "Verify Identity",
-                      //   style: stylePTSansBold(fontSize: 24),
-                      // ),
                       Text(
                         provider.extra?.referLogin?.title ?? "Action Required",
                         style: stylePTSansBold(fontSize: 24),
@@ -332,7 +318,6 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                           textCapitalization: TextCapitalization.words,
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5),
                         child: showAsteriskText(text: "Phone Number"),
@@ -520,7 +505,6 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                           onPressed: checkBox ? _referLogin : null,
                           textUppercase: true,
                         ),
-
                       const SpacerVertical(height: 200),
                     ],
                   ),
