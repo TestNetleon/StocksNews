@@ -9,6 +9,7 @@ import 'package:stocks_news_new/screens/affiliate/referFriend/suspend.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/widget/points_summary.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
@@ -230,6 +231,10 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                                 ],
                               ),
                               onPressed: () {
+                                Utils().showLog(
+                                    "Share Text - ${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}");
+                                Utils().showLog("Share URI - $shareUri");
+
                                 Share.share(
                                   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
                                 );

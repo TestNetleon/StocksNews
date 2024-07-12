@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 
 class DynamicLinkService {
   static final DynamicLinkService _singleton = DynamicLinkService._internal();
@@ -34,6 +35,7 @@ class DynamicLinkService {
 
   Future<Uri> getDynamicLink() async {
     UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+    Utils().showLog("REFER CODE=>${user?.referralCode}, ID=>${user?.userId}");
     final dynamicLinkParams = DynamicLinkParameters(
       link: Uri.parse(
         "https://app.stocks.news/install?code=${user?.referralCode}&_id=${user?.userId}",

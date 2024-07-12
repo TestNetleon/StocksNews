@@ -9,7 +9,7 @@
   "settings" : {
     "_applicationInternalID" : "6476615803",
     "_compatibilityTimeRate" : {
-      "3" : 3
+      "3" : 6
     },
     "_developerTeamID" : "NPUHL9S742",
     "_failTransactionsEnabled" : false,
@@ -63,7 +63,7 @@
         "name" : "Offer Code Redeem Sheet"
       }
     ],
-    "_timeRate" : 10
+    "_timeRate" : 13
   },
   "subscriptionGroups" : [
     {

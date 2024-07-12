@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:stocks_news_new/modals/user_res.dart';
@@ -104,14 +103,6 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     log("Country Code => $countryCode");
 
     UserProvider provider = context.read<UserProvider>();
-
-    countryCode = provider.user?.phoneCode == null ||
-            provider.user?.phoneCode == ""
-        ? CountryCode.fromCountryCode(Intl.getCurrentLocale().split('_').last)
-                .dialCode ??
-            ""
-        : CountryCode.fromDialCode(provider.user?.phoneCode ?? " ").dialCode ??
-            "";
 
     if (provider.user?.name != null && provider.user?.name != '') {
       name.text = provider.user?.name ?? "";
@@ -363,7 +354,6 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                       // enabled: true,
                                       onChanged: (CountryCode value) {
                                         countryCode = value.dialCode;
-                                        setState(() {});
                                       },
                                       initialSelection: locale,
                                       showCountryOnly: false,
