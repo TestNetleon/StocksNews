@@ -79,9 +79,9 @@ class BannerRes {
 
 class Point {
   final String key;
-  final int point;
+  final int? point;
   final String text;
-  final String image;
+  final String? image;
 
   Point({
     required this.key,

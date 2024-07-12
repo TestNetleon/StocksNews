@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -529,6 +530,7 @@ class HomeProvider extends ChangeNotifier {
       _statusBenefits = Status.loaded;
       notifyListeners();
     } catch (e) {
+      log(e.toString());
       _benefitRes = null;
       _statusBenefits = Status.loaded;
       notifyListeners();

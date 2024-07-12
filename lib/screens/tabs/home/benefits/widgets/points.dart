@@ -37,8 +37,8 @@ class BenefitPoints extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: Image.asset(
-                      images[index],
+                    child: Image.network(
+                      points?[index].image ?? "",
                       width: 40,
                       height: 40,
                     ),

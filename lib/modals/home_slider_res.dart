@@ -18,6 +18,7 @@ class HomeSliderRes {
   final String? shareText;
   final TextSliderRes? text;
   final Rating? rating;
+  final AffiliateAdv? affiliateAdv;
 
   HomeSliderRes({
     this.sliderPosts,
@@ -29,6 +30,7 @@ class HomeSliderRes {
     required this.totalAlerts,
     required this.text,
     required this.totalWatchList,
+    this.affiliateAdv,
   });
 //
   factory HomeSliderRes.fromJson(Map<String, dynamic> json) => HomeSliderRes(
@@ -45,6 +47,9 @@ class HomeSliderRes {
             ? []
             : List<SliderPost>.from(
                 json["slider_posts"]!.map((x) => SliderPost.fromJson(x))),
+        affiliateAdv: json["affiliate_advantage"] == null
+            ? null
+            : AffiliateAdv.fromJson(json["affiliate_advantage"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +64,7 @@ class HomeSliderRes {
         "total_watchlist": totalWatchList,
         "telegram-link": telegramLink,
         "whats-app-link": whatsappLink,
+        "affiliate_advantage": affiliateAdv?.toJson(),
       };
 }
 
@@ -106,9 +112,7 @@ class SliderPost {
 class TextSliderRes {
   final String? drawerHeader;
 
-  TextSliderRes({
-    this.drawerHeader,
-  });
+  TextSliderRes({this.drawerHeader});
 
   factory TextSliderRes.fromJson(Map<String, dynamic> json) => TextSliderRes(
         drawerHeader: json["drawer_header"],
@@ -116,5 +120,22 @@ class TextSliderRes {
 
   Map<String, dynamic> toJson() => {
         "drawer_header": drawerHeader,
+      };
+}
+
+class AffiliateAdv {
+  final String? title;
+  final String? subTitle;
+
+  AffiliateAdv({this.title, this.subTitle});
+
+  factory AffiliateAdv.fromJson(Map<String, dynamic> json) => AffiliateAdv(
+        title: json["title"],
+        subTitle: json["sub_title"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "sub_title": subTitle,
       };
 }
