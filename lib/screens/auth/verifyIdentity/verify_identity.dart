@@ -42,6 +42,7 @@ verifyIdentitySheet() async {
       return DraggableScrollableSheet(
         maxChildSize: 1,
         initialChildSize: 1,
+        shouldCloseOnMinExtent: true,
         builder: (context, scrollController) => VerifyIdentity(
           scrollController: scrollController,
         ),
