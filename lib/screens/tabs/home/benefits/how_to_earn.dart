@@ -54,6 +54,7 @@ class _HowToEarnState extends State<HowToEarn> {
       Images.traderPlan,
       Images.bg,
     ];
+
     return BaseUiContainer(
       hasData: !provider.isLoadingBenefits && provider.benefitRes != null,
       isLoading: provider.isLoadingBenefits,

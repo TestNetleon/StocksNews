@@ -41,8 +41,8 @@ referSheet({
         child: ReferBottomSheet(onReferral: onReferral),
       );
     },
-    isDismissible: false,
-    enableDrag: false,
+    // isDismissible: false,
+    enableDrag: true,
   );
 }
 
