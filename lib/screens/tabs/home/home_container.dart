@@ -97,79 +97,98 @@ class HomeContainer extends StatelessWidget {
                     Visibility(
                       // TODO: Comment this if not complete
                       visible: true,
-                      child: Container(
-                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
-                        decoration: BoxDecoration(
-                          // color: Colors.transparent,
-                          border: Border.all(
-                            color: ThemeColors.greyBorder.withOpacity(0.4),
-                          ),
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.2, 0.65],
-                            colors: [
-                              Color.fromARGB(255, 14, 41, 0),
-                              // ThemeColors.greyBorder,
-                              Color.fromARGB(255, 0, 0, 0),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Stack(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Affiliate \nAdvantage",
-                                  style: stylePTSansRegular(
-                                      color: ThemeColors.white, fontSize: 40),
-                                ),
-                                const SpacerVertical(height: 5),
-                                Text(
-                                  "Discover how to earn more points at every stage.",
-                                  style: stylePTSansRegular(
-                                      color: ThemeColors.white, fontSize: 18),
-                                ),
-                                const SpacerVertical(height: 30),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                      left: Dimen.homeSpacing,
-                                      right: Dimen.homeSpacing,
-                                      bottom: Dimen.homeSpacing),
-                                  child: ThemeButtonSmall(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              const BenefitsMarketing(),
-                                        ),
-                                      );
-                                    },
-                                    textSize: 15,
-                                    fontBold: true,
-                                    iconFront: true,
-                                    // icon: Icons.lock,
-                                    radius: 30,
-                                    mainAxisSize: MainAxisSize.max,
-                                    text: "Learn More",
-                                    // showArrow: false,
-                                  ),
-                                ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const BenefitsMarketing(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                          decoration: BoxDecoration(
+                            // color: Colors.transparent,
+                            border: Border.all(
+                              color: ThemeColors.greyBorder.withOpacity(0.4),
+                            ),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              stops: [0.2, 0.65],
+                              colors: [
+                                Color.fromARGB(255, 14, 41, 0),
+                                // ThemeColors.greyBorder,
+                                Color.fromARGB(255, 0, 0, 0),
                               ],
                             ),
-                            Positioned(
-                              right: 0,
-                              child: Image.asset(
-                                Images.reward,
-                                height: 80.0,
-                                width: 100.0,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          padding: const EdgeInsets.all(12),
+                          child: Stack(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Affiliate \nAdvantage",
+                                    style: stylePTSansBold(
+                                        color: ThemeColors.white, fontSize: 40),
+                                  ),
+                                  const SpacerVertical(height: 5),
+                                  Text(
+                                    "Discover how to earn more\npoints at every stage.",
+                                    style: stylePTSansRegular(
+                                        color: ThemeColors.white, fontSize: 18),
+                                  ),
+                                  const SpacerVertical(
+                                      height: Dimen.itemSpacing),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        // left: Dimen.homeSpacing,
+                                        // right: Dimen.homeSpacing,
+                                        // bottom: Dimen.padding,
+                                        ),
+                                    alignment: Alignment.centerLeft,
+                                    child: ThemeButtonSmall(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                const BenefitsMarketing(),
+                                          ),
+                                        );
+                                      },
+                                      textSize: 15,
+                                      fontBold: true,
+                                      iconFront: true,
+                                      // icon: Icons.lock,
+                                      radius: 30,
+                                      mainAxisSize: MainAxisSize.min,
+                                      text: "Learn how",
+                                      // showArrow: false,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                child: Opacity(
+                                  opacity: .2,
+                                  child: Image.asset(
+                                    Images.affWhite,
+                                    height: 150.0,
+                                    width: 150.0,
+                                    color: ThemeColors.themeGreen,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
