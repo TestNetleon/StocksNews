@@ -56,10 +56,9 @@ class LoginBottom extends StatefulWidget {
 
 class _LoginBottomState extends State<LoginBottom> {
   final TextEditingController _controller = TextEditingController(
-    text: kDebugMode ? "utkarshsinghdhakad@gmail.com" : "",
+    // text: kDebugMode ? "utkarshsinghdhakad@gmail.com" : "",
     // text: kDebugMode ? "utk123@mailinator.com" : "",
-
-    // text: kDebugMode ? "chetan@netleon.com" : "",
+    text: kDebugMode ? "chetan@netleon.com" : "",
   );
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
