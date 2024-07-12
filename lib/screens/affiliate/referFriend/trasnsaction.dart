@@ -9,6 +9,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
+import 'package:stocks_news_new/widgets/helpdesk_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
@@ -47,44 +48,55 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
         showTrailing: true,
         isPopback: true,
       ),
-      body: BaseUiContainer(
-        hasData: !provider.isLoadingT &&
-            (provider.tnxData?.isNotEmpty == true && provider.tnxData != null),
+      body: CommonEmptyError(
+        hasData: provider.tnxData == null || provider.tnxData?.isEmpty == true,
         isLoading: provider.isLoadingT,
-        error: provider.errorT,
-        onRefresh: () async {
+        title: "Points Transactions",
+        subTitle: provider.errorT,
+        onClick: () async {
           provider.getTransactionData();
         },
-        showPreparingText: true,
-        child: CommonRefreshIndicator(
+        child: BaseUiContainer(
+          hasData: !provider.isLoadingT &&
+              (provider.tnxData?.isNotEmpty == true &&
+                  provider.tnxData != null),
+          isLoading: provider.isLoadingT,
+          error: provider.errorT,
           onRefresh: () async {
             provider.getTransactionData();
           },
-          child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Column(
-                    children: [
-                      ScreenTitle(
-                        title: provider.extra?.title.toString() ?? "",
-                        subTitle: provider.extra?.subTitle.toString() ?? "",
-                      ),
-                      AffiliateTranItem(
-                        data: provider.tnxData?[index],
-                      ),
-                    ],
-                  );
-                }
+          showPreparingText: true,
+          child: CommonRefreshIndicator(
+            onRefresh: () async {
+              provider.getTransactionData();
+            },
+            child: ListView.separated(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Column(
+                      children: [
+                        ScreenTitle(
+                          title: provider.extra?.title.toString() ?? "",
+                          subTitle: provider.extra?.subTitle.toString() ?? "",
+                        ),
+                        AffiliateTranItem(
+                          data: provider.tnxData?[index],
+                        ),
+                      ],
+                    );
+                  }
 
-                return AffiliateTranItem(
-                  data: provider.tnxData?[index],
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SpacerVertical(height: 10);
-              },
-              itemCount: provider.tnxData?.length ?? 0),
+                  return AffiliateTranItem(
+                    data: provider.tnxData?[index],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SpacerVertical(height: 10);
+                },
+                itemCount: provider.tnxData?.length ?? 0),
+          ),
         ),
       ),
     );

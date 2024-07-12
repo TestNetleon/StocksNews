@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/how_to_earn.dart';
@@ -23,7 +21,7 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
 
   @override
   Widget build(BuildContext context) {
-    HomeProvider provider = context.watch<HomeProvider>();
+    // HomeProvider provider = context.watch<HomeProvider>();
 
     return BaseContainer(
         drawer: const BaseDrawer(resetIndex: true),
@@ -32,26 +30,6 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
           showTrailing: true,
           canSearch: true,
         ),
-        // floatingAlingment: FloatingActionButtonLocation.centerDocked,
-        // floatingActionButton: Container(
-        //   height: 80,
-        //   decoration: const BoxDecoration(color: Colors.white),
-        //   padding: const EdgeInsets.all(18.0),
-        //   child: ThemeButtonSmall(
-        //     onPressed: () {},
-        //     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
-        //     textSize: 15,
-        //     fontBold: true,
-        //     iconFront: true,
-        //     color: _selectedIndex == 0
-        //         ? ThemeColors.accent
-        //         : const Color.fromARGB(255, 241, 70, 70),
-        //     radius: 30,
-        //     mainAxisSize: MainAxisSize.max,
-        //     text: "Get Rewarded Now",
-        //     // showArrow: false,
-        //   ),
-        // ),
         body: Column(
           children: [
             Expanded(

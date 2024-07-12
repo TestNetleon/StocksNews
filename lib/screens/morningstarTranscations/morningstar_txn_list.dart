@@ -6,6 +6,7 @@ import 'package:stocks_news_new/providers/morningstar_txn_provider.dart';
 import 'package:stocks_news_new/screens/morningstarTranscations/morningstar_txn_item.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
+import 'package:stocks_news_new/widgets/helpdesk_error.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -49,36 +50,45 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
             subTitle: provider.extra?.subTitle.toString(),
           ),
           Expanded(
-            child: BaseUiContainer(
-              error: provider.error,
-              hasData: data != null && data.isNotEmpty,
+            child: CommonEmptyError(
+              hasData: data == null || data.isEmpty == true,
               isLoading: provider.isLoading,
-              errorDispCommon: true,
-              showPreparingText: true,
-              onRefresh: () => provider.getData(),
-              child: RefreshControl(
-                onRefresh: () async => provider.getData(),
-                canLoadMore: false, // provider.canLoadMore,
-                onLoadMore: () async => provider.getData(),
-                child: ListView.separated(
-                  // padding: const EdgeInsets.only(top: Dimen.padding),
-                  itemBuilder: (context, index) {
-                    if (data == null || data.isEmpty) {
-                      return const SizedBox();
-                    }
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        MorningStarTxnItem(data: data[index]),
-                        if (index == data.length - 1)
-                          DisclaimerWidget(data: provider.extra!.disclaimer!)
-                      ],
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SpacerVertical(height: 12);
-                  },
-                  itemCount: data?.length ?? 0,
+              title: "Morningstar Reports",
+              subTitle: provider.error,
+              onClick: () async {
+                provider.onRefresh();
+              },
+              child: BaseUiContainer(
+                error: provider.error,
+                hasData: data != null && data.isNotEmpty,
+                isLoading: provider.isLoading,
+                errorDispCommon: true,
+                showPreparingText: true,
+                onRefresh: () => provider.getData(),
+                child: RefreshControl(
+                  onRefresh: () async => provider.getData(),
+                  canLoadMore: false, // provider.canLoadMore,
+                  onLoadMore: () async => provider.getData(),
+                  child: ListView.separated(
+                    // padding: const EdgeInsets.only(top: Dimen.padding),
+                    itemBuilder: (context, index) {
+                      if (data == null || data.isEmpty) {
+                        return const SizedBox();
+                      }
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          MorningStarTxnItem(data: data[index]),
+                          if (index == data.length - 1)
+                            DisclaimerWidget(data: provider.extra!.disclaimer!)
+                        ],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SpacerVertical(height: 12);
+                    },
+                    itemCount: data?.length ?? 0,
+                  ),
                 ),
               ),
             ),
