@@ -31,6 +31,9 @@ class LeaderBoardProvider extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
+  Extra? _extraNew;
+  Extra? get extraNew => _extraNew;
+
   List<AffiliateReferRes>? _data;
   List<AffiliateReferRes>? get data => _data;
 
@@ -228,7 +231,7 @@ class LeaderBoardProvider extends ChangeNotifier {
       );
       if (response.status) {
         _tnxData = affiliateTransactionResFromJson(jsonEncode(response.data));
-        _extra = response.extra is Extra ? response.extra : null;
+        _extraNew = response.extra is Extra ? response.extra : null;
 
         _errorT = null;
       } else {
