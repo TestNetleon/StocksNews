@@ -213,8 +213,8 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
           ),
         ),
         Visibility(
-          // visible: provider.user?.membership?.canUpgrade == true &&
-          //     provider.user?.membership?.purchased == 1,
+          visible: provider.user?.membership?.canUpgrade == true &&
+              provider.user?.membership?.purchased == 1,
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
