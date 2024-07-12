@@ -145,9 +145,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const DrawerTopNew(
-                text: "About Stocks.News",
-              ),
+              const DrawerTopNew(text: "About Stocks.News"),
               const SpacerVertical(height: 30),
               GestureDetector(
                 onTap: () {

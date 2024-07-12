@@ -65,13 +65,15 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
       appBar: const AppBarHome(
           isPopback: true, showTrailing: false, canSearch: true),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding.sp, 0),
         child: Column(
           children: [
             res == null
                 ? const SizedBox()
-                : const ScreenTitle(title: "Notifications"),
+                : const ScreenTitle(
+                    title: "Notifications",
+                    dividerPadding: EdgeInsets.only(bottom: Dimen.itemSpacing),
+                  ),
             Expanded(
               child: res == null
                   ? Column(
