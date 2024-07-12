@@ -203,6 +203,8 @@ class Images {
   static const background = "assets/images/background.png";
   static const bg = "assets/images/sync.png";
 
+  static const affWhite = "assets/images/aff_white.png";
+
   //svg
   // static const share = "assets/svg/share.svg";
   // static const buy = "assets/svg/buy.svg";

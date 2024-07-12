@@ -78,8 +78,9 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                     return Column(
                       children: [
                         ScreenTitle(
-                          title: provider.extra?.title.toString() ?? "",
-                          subTitle: provider.extra?.subTitle.toString() ?? "",
+                          title: provider.extraNew?.title.toString() ?? "",
+                          subTitle:
+                              provider.extraNew?.subTitle.toString() ?? "",
                         ),
                         AffiliateTranItem(
                           data: provider.tnxData?[index],
