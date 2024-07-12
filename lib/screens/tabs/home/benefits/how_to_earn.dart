@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/benefits_analysis.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/screens/tabs/home/benefits/widgets/benefit_title.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -64,31 +65,10 @@ class _HowToEarnState extends State<HowToEarn> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Text(
-                  earn?.title ?? "",
-                  // 'Earn More with Our Affiliate Program!',
-                  style: stylePTSansRegular(
-                      color: ThemeColors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700),
-                ),
+              BenefitTitle(
+                title: earn?.title,
+                subTitle: earn?.subTitle,
               ),
-              const SpacerVertical(height: 8),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Text(
-                  earn?.subTitle ?? "",
-                  // "Discover How Easy It Is to Earn Reward Points for Every Action You Take",
-                  style: stylePTSansRegular(
-                    color: ThemeColors.white,
-                    fontSize: 14,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SpacerVertical(height: 20),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey,
@@ -198,10 +178,7 @@ class _HowToEarnState extends State<HowToEarn> {
                                 provider.benefitRes?.earn.points.length ?? 0,
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: const EdgeInsets.only(
-                              left: 12,
-                              right: 12,
-                            ),
+                            padding: const EdgeInsets.only(left: 12, right: 12),
                             itemBuilder: (context, index) {
                               Point? data =
                                   provider.benefitRes?.earn.points[index];
