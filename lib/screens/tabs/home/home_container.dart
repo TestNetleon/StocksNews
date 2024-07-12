@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
@@ -95,8 +96,7 @@ class HomeContainer extends StatelessWidget {
                       child: const TopPlaidIndex(),
                     ),
                     Visibility(
-                      // TODO: Comment this if not complete
-                      visible: true,
+                      visible: provider.homeSliderRes?.affiliateAdv != null,
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -131,15 +131,17 @@ class HomeContainer extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Affiliate \nAdvantage",
-                                    style: stylePTSansBold(
+                                  HtmlWidget(
+                                    provider.homeSliderRes?.affiliateAdv
+                                            ?.title ??
+                                        "",
+                                    textStyle: stylePTSansBold(
                                         color: ThemeColors.white, fontSize: 40),
                                   ),
                                   const SpacerVertical(height: 5),
-                                  Text(
-                                    "Discover how to earn more\npoints at every stage.",
-                                    style: stylePTSansRegular(
+                                  HtmlWidget(
+                                    "${provider.homeSliderRes?.affiliateAdv?.subTitle}",
+                                    textStyle: stylePTSansRegular(
                                         color: ThemeColors.white, fontSize: 18),
                                   ),
                                   const SpacerVertical(
