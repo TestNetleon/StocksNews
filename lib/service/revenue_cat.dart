@@ -32,7 +32,10 @@ class RevenueCatService {
     if (configuration != null) {
       await Purchases.configure(configuration);
       PaywallResult result = await RevenueCatUI.presentPaywall();
-      Utils().showLog("$result");
+      // PaywallResult result =
+      //     await RevenueCatUI.presentPaywallIfNeeded("ProAndUltimate");
+
+      Utils().showLog("Result -> $result");
 
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
       Utils().showLog("Customer-->${customerInfo.managementURL}");
