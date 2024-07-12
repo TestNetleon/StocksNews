@@ -154,9 +154,7 @@ class _HowToEarnState extends State<HowToEarn> {
                         //     )
                         //   ],
                         // ),
-
                         BenefitsBanner(banner: earn?.banner),
-
                         const SpacerVertical(height: 12),
                         // Container(
                         //   decoration: BoxDecoration(

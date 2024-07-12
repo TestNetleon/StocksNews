@@ -143,7 +143,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                         margin: const EdgeInsets.only(top: 15),
                         decoration: BoxDecoration(
                           // color: ThemeColors.sos,
-                          // border: Border.all(color: ThemeColors.lightRed),
                           gradient: const LinearGradient(
                             begin: Alignment.bottomLeft,
                             end: Alignment.topRight,
@@ -163,7 +162,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                             // margin: const EdgeInsets.only(top: 15),
                             decoration: BoxDecoration(
                               color: ThemeColors.background,
-                              // border: Border.all(color: ThemeColors.lightRed),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Padding(
@@ -448,10 +446,10 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                         alignment: Alignment.center,
                                         children: [
                                           Container(
-                                            height: 350,
+                                            height: 360,
                                             width: double.infinity,
                                             decoration: const BoxDecoration(
-                                              gradient: const LinearGradient(
+                                              gradient: LinearGradient(
                                                 begin: Alignment.topCenter,
                                                 end: Alignment.bottomCenter,
                                                 colors: [
@@ -467,14 +465,15 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                             child: Stack(
                                               children: [
                                                 Positioned(
-                                                  right: 20,
-                                                  top: 0,
+                                                  right: 10,
+                                                  top: -8,
                                                   child: Image.asset(
                                                     Images.cardBG,
-                                                    height: 50,
+                                                    height: 100,
+                                                    color: Colors.white,
                                                     opacity:
                                                         const AlwaysStoppedAnimation(
-                                                            .5),
+                                                            .2),
                                                   ),
                                                 ),
                                                 Column(
@@ -496,35 +495,44 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                       ),
                                                     ),
                                                     const SpacerVertical(
-                                                      height: 15,
+                                                      height: 20,
                                                     ),
-                                                    Container(
-                                                      width:
-                                                          constraints.maxWidth *
-                                                              (value / 100),
-                                                      height: 40,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color: Color.fromARGB(
-                                                            255, 245, 250, 245),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(30),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 18.0),
+                                                      child: Container(
+                                                        width: constraints
+                                                                .maxWidth *
+                                                            (value / 100),
+                                                        height: 40,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              245,
+                                                              250,
+                                                              245),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                            Radius.circular(30),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 9.0),
-                                                        child: Text(
-                                                          "${morningStar?.quantEconomicMoatLabel}"
-                                                              .toUpperCase(),
-                                                          style:
-                                                              stylePTSansBold(
-                                                                  color: Colors
-                                                                      .black),
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 9.0),
+                                                          child: Text(
+                                                            "${morningStar?.quantEconomicMoatLabel}"
+                                                                .toUpperCase(),
+                                                            style:
+                                                                stylePTSansBold(
+                                                                    color: Colors
+                                                                        .black),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -535,15 +543,12 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                             // padding: EdgeInsets.all(15),
                                           ),
                                           Positioned(
-                                            top: 120,
+                                            top: 130,
                                             bottom: 0,
                                             left: 0,
                                             right: 0,
                                             child: Container(
                                               decoration: const BoxDecoration(
-                                                //color: ThemeColors.buttonBlue,
-                                                // border: Border.all(
-                                                //     color: Colors.white),
                                                 gradient: LinearGradient(
                                                   begin: Alignment.topCenter,
                                                   end: Alignment.bottomCenter,
@@ -564,31 +569,33 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                               child: Stack(
                                                 children: [
                                                   Positioned(
-                                                    right: 20,
-                                                    top: -8,
+                                                    right: 40,
+                                                    top: -4,
                                                     child: Image.asset(
                                                       Images.cardBG,
-                                                      height: 50,
+                                                      height: 80,
+                                                      color: Colors.white,
                                                       opacity:
                                                           const AlwaysStoppedAnimation(
-                                                              .5),
+                                                              .2),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 15.0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text("Valuation",
-                                                            style:
-                                                                styleGeorgiaBold()),
-                                                        const SpacerVertical(
-                                                            height: 10),
-                                                        Container(
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text("Valuation",
+                                                          style:
+                                                              styleGeorgiaBold()),
+                                                      const SpacerVertical(
+                                                          height: 10),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 20.0),
+                                                        child: Container(
                                                           width: constraints
                                                                   .maxWidth *
                                                               (value / 100),
@@ -672,27 +679,26 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                             ),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ),
                                           Positioned(
-                                            top: 230,
+                                            top: 250,
                                             bottom: 0,
                                             left: 0,
                                             right: 0,
                                             child: Container(
                                               decoration: const BoxDecoration(
-                                                gradient: const LinearGradient(
+                                                gradient: LinearGradient(
                                                   begin: Alignment.topCenter,
                                                   end: Alignment.bottomCenter,
                                                   colors: [
                                                     Color(0xFFcc3333),
-                                                    Color.fromRGBO(
-                                                        34, 33, 33, 1),
+                                                    ThemeColors.background,
                                                   ],
                                                 ),
                                                 borderRadius: BorderRadius.all(
@@ -707,11 +713,11 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                     top: -8,
                                                     child: Image.asset(
                                                       Images.cardBG,
-                                                      height: 50,
+                                                      height: 110,
                                                       color: Colors.white,
                                                       opacity:
                                                           const AlwaysStoppedAnimation(
-                                                              .5),
+                                                              .2),
                                                     ),
                                                   ),
                                                   Column(
