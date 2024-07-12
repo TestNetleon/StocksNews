@@ -39,7 +39,7 @@ class ScreenTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
+      // color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -85,13 +85,14 @@ class ScreenTitle extends StatelessWidget {
                   return Row(
                     children: [
                       IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            size: 20,
-                          )),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          size: 20,
+                        ),
+                      ),
                       Expanded(
                         child: Text(
                           title ?? "",

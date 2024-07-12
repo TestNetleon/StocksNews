@@ -166,7 +166,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     } else {
       try {
         showGlobalProgressDialog();
-        FirebaseAuth.instance.verifyPhoneNumber(
+        await FirebaseAuth.instance.verifyPhoneNumber(
           // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
@@ -174,7 +174,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
           },
           verificationFailed: (FirebaseAuthException e) {
             closeGlobalProgressDialog();
-            log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+            // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
             popUpAlert(
               message: e.message ?? Const.errSomethingWrong,
               title: "Alert",
@@ -238,18 +238,6 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
             end: Alignment.bottomCenter,
             colors: [ThemeColors.bottomsheetGradient, Colors.black],
           ),
-          // gradient: RadialGradient(
-          //   center: Alignment.bottomCenter,
-          //   radius: 0.6,
-          //   stops: [
-          //     0.0,
-          //     0.9,
-          //   ],
-          //   colors: [
-          //     Color.fromARGB(255, 0, 93, 12),
-          //     Colors.black,
-          //   ],
-          // ),
           color: ThemeColors.background,
           border: Border(
             top: BorderSide(color: ThemeColors.greyBorder),

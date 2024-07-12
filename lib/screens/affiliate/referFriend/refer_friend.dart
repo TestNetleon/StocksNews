@@ -8,6 +8,7 @@ import 'package:stocks_news_new/screens/affiliate/referFriend/howit_work.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/suspend.dart';
 import 'package:stocks_news_new/screens/affiliate/referFriend/widget/points_summary.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
@@ -18,7 +19,6 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 
 import '../../../modals/affiliate/refer_friend_res.dart';
 import '../../../providers/home_provider.dart';
-import '../../../route/my_app.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/spacer_vertical.dart';
 import 'item.dart';
@@ -230,13 +230,16 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                                   ),
                                 ],
                               ),
-                              onPressed: () {
-                                Utils().showLog(
-                                    "Share Text - ${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}");
-                                Utils().showLog("Share URI - $shareUri");
-
+                              onPressed: () async {
+                                if (!(homeProvider.extra?.referral?.shareText ??
+                                        "")
+                                    .contains(userProvider.user?.name ?? "")) {
+                                  showGlobalProgressDialog();
+                                  await homeProvider.getHomeSlider();
+                                  closeGlobalProgressDialog();
+                                }
                                 Share.share(
-                                  "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
+                                  "${homeProvider.extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
                                 );
                               },
                             ),

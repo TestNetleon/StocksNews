@@ -198,6 +198,10 @@ class _MyAppState extends State<MyApp> {
         await _handleReferralLink(deepLink);
         return;
       }
+      if (event.toString().contains("com.googleusercontent.apps")) {
+        return;
+      }
+
       DeeplinkEnum type = containsSpecificPath(event);
       onDeepLinking =
           (type == DeeplinkEnum.login || type == DeeplinkEnum.signup)

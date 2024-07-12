@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -153,22 +152,24 @@ class _ReferLoginState extends State<ReferLogin> {
       );
     } else {
       if (!numberVerified) {
-        log("Phone Number $countryCode ${mobile.text}");
+        // log("Phone Number $countryCode ${mobile.text}");
         showGlobalProgressDialog();
-        FirebaseAuth.instance.verifyPhoneNumber(
+        await FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: "$countryCode ${mobile.text}",
           verificationCompleted: (PhoneAuthCredential credential) {
             closeGlobalProgressDialog();
           },
           verificationFailed: (FirebaseAuthException e) {
             closeGlobalProgressDialog();
-            log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+            // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
             popUpAlert(
               message: e.code == "invalid-phone-number"
                   ? "The format of the phone number provided is incorrect."
                   : e.code == "too-many-requests"
                       ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
-                      : e.message ?? Const.errSomethingWrong,
+                      : e.code == "internal-error"
+                          ? "The phone number you entered is either incorrect or not currently in use."
+                          : e.message ?? Const.errSomethingWrong,
               title: "Alert",
               icon: Images.alertPopGIF,
             );
