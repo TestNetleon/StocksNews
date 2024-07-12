@@ -108,16 +108,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
               padding: EdgeInsets.only(top: 30),
               child: SingleChildScrollView(child: ReferDialog()),
             ),
-            // Container(
-            //   width: 50,
-            //   height: 50,
-            //   color: Colors.amber,
-            // ),
-            // Image.asset(
-            //   Images.apple,
-            //   height: 60,
-            //   width: 60,
-            // ),
             Image.asset(
               Images.kingGIF,
               height: 70,
@@ -155,9 +145,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const DrawerTopNew(
-                text: "About Stocks.News",
-              ),
+              const DrawerTopNew(text: "About Stocks.News"),
               const SpacerVertical(height: 30),
               GestureDetector(
                 onTap: () {

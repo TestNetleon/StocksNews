@@ -42,6 +42,7 @@ verifyIdentitySheet() async {
       return DraggableScrollableSheet(
         maxChildSize: 1,
         initialChildSize: 1,
+        shouldCloseOnMinExtent: true,
         builder: (context, scrollController) => VerifyIdentity(
           scrollController: scrollController,
         ),
@@ -137,7 +138,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
       );
     } else {
       showGlobalProgressDialog();
-      FirebaseAuth.instance.verifyPhoneNumber(
+      await FirebaseAuth.instance.verifyPhoneNumber(
         // phoneNumber: kDebugMode ? "+91 ${mobile.text}" : "+1${mobile.text}",
         phoneNumber: "$countryCode ${mobile.text}",
         verificationCompleted: (PhoneAuthCredential credential) {
@@ -145,13 +146,15 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
         },
         verificationFailed: (FirebaseAuthException e) {
           closeGlobalProgressDialog();
-          log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
+          // log("Error message => ${e.code} ${e.message} ${e.stackTrace}");
           popUpAlert(
             message: e.code == "invalid-phone-number"
                 ? "The format of the phone number provided is incorrect."
                 : e.code == "too-many-requests"
                     ? "We have blocked all requests from this device due to unusual activity. Try again after 24 hours."
-                    : e.message ?? Const.errSomethingWrong,
+                    : e.code == "internal-error"
+                        ? "The phone number you entered is either incorrect or not currently in use."
+                        : e.message ?? Const.errSomethingWrong,
             title: "Alert",
             icon: Images.alertPopGIF,
           );

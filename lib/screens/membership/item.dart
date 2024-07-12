@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../modals/membership.dart';
@@ -64,44 +65,50 @@ class MembershipItem extends StatelessWidget {
           const SpacerVertical(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Transaction ID",
-                    style: stylePTSansRegular(
-                      fontSize: 14,
-                      color: ThemeColors.greyBorder,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Transaction ID",
+                      style: stylePTSansRegular(
+                        fontSize: 14,
+                        color: ThemeColors.greyBorder,
+                      ),
                     ),
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    data?.transactionId ?? "N/A",
-                    style: stylePTSansBold(fontSize: 14),
-                  ),
-                ],
+                    const SpacerVertical(height: 5),
+                    Text(
+                      data?.transactionId ?? "N/A",
+                      style: stylePTSansBold(fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
               // Text(
               //   data?.purchasedAt ?? "N/A",
               //   style: stylePTSansRegular(color: ThemeColors.greyText),
               // ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "Purchased on",
-                    style: stylePTSansRegular(
-                      fontSize: 14,
-                      color: ThemeColors.greyBorder,
+              const SpacerHorizontal(width: 10),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Purchased on",
+                      style: stylePTSansRegular(
+                        fontSize: 14,
+                        color: ThemeColors.greyBorder,
+                      ),
                     ),
-                  ),
-                  SpacerVertical(height: 5),
-                  Text(
-                    data?.purchasedAt ?? "N/A",
-                    style: stylePTSansBold(fontSize: 14),
-                  ),
-                ],
+                    const SpacerVertical(height: 5),
+                    Text(
+                      data?.purchasedAt ?? "N/A",
+                      style: stylePTSansBold(fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
             ],
           )

@@ -114,7 +114,6 @@ class AffiliateReferItem extends StatelessWidget {
                   text: "Send Instant Message",
                   onPressed: () {
                     // _launchWhatsApp();
-
                     Share.share(
                       navigatorKey.currentContext!
                               .read<LeaderBoardProvider>()

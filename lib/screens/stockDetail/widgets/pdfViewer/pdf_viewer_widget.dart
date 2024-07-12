@@ -53,21 +53,25 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
       ),
       body: isLoading
           ? const Center(child: Loading())
-          : PDFView(
-              filePath: localPath!,
-              enableSwipe: true,
-              swipeHorizontal: false,
-              autoSpacing: false,
-              pageFling: false,
-              onRender: (pages) {
-                setState(() {});
-              },
-              onError: (error) {
-                // print(error.toString());
-              },
-              onPageError: (page, error) {
-                // print('$page: ${error.toString()}');
-              },
+          : SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: PDFView(
+                filePath: localPath!,
+                enableSwipe: true,
+                swipeHorizontal: false,
+                autoSpacing: true,
+                pageFling: false,
+                onRender: (pages) {
+                  setState(() {});
+                },
+                onError: (error) {
+                  // print(error.toString());
+                },
+                onPageError: (page, error) {
+                  // print('$page: ${error.toString()}');
+                },
+              ),
             ),
     );
   }

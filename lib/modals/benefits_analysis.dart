@@ -81,22 +81,26 @@ class Point {
   final String key;
   final int point;
   final String text;
+  final String image;
 
   Point({
     required this.key,
     required this.point,
     required this.text,
+    required this.image,
   });
 
   factory Point.fromJson(Map<String, dynamic> json) => Point(
         key: json["key"],
         point: json["point"],
         text: json["text"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "key": key,
         "point": point,
         "text": text,
+        "image": image,
       };
 }

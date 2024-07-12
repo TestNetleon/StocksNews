@@ -16,9 +16,7 @@ class PointsSummary extends StatelessWidget {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
 
     return Visibility(
-      visible: (provider.data?.length ?? 0) != 0 ||
-          (provider.extra?.received ?? 0) != 0 ||
-          (provider.extra?.totalActivityPoints ?? 0) != 0,
+      visible: (provider.extra?.totalActivityPoints ?? 0) != 0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
