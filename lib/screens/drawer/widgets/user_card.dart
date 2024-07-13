@@ -7,6 +7,7 @@ import 'package:stocks_news_new/screens/membership/index.dart';
 import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import '../../../providers/leaderboard.dart';
 import '../../../utils/colors.dart';
@@ -43,6 +44,7 @@ class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = context.watch<UserProvider>();
+    Utils().showLog("$showMembership");
     return Column(
       children: [
         Stack(
