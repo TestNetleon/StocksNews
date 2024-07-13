@@ -6,6 +6,7 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
+import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -150,6 +151,22 @@ class _AppBarHomeState extends State<AppBarHome> {
         ),
       ),
       actions: [
+        // IconButton(
+        //   onPressed: () async {
+        //     final value = await referSheet(onReferral: (_) {});
+        //     if (value == null) {
+        //       // Bottom sheet was dismissed by sliding down
+        //       print('Bottom sheet was slid down');
+        //     } else {
+        //       // Bottom sheet was closed with a result
+        //       print('Bottom sheet was closed with result: $value');
+        //     }
+        //   },
+        //   icon: const Icon(
+        //     Icons.temple_buddhist_outlined,
+        //     color: ThemeColors.white,
+        //   ),
+        // ),
         // Visibility(
         //   visible: widget.showQR,
         //   child: IconButton(
