@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/plans_res.dart';
-import 'package:stocks_news_new/providers/membership.dart';
-import 'package:stocks_news_new/service/widgets/list_item_plan.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
+import '../api/api_response.dart';
 import '../route/my_app.dart';
+import '../screens/affiliate/referFriend/howit_work.dart';
+import '../utils/colors.dart';
 
 Future askToSubscribe({void Function()? onPressed}) async {
-  // API call for Plans
-
-  MembershipProvider provider =
-      navigatorKey.currentContext!.read<MembershipProvider>();
-
-  await provider.getPlansDetail();
-
-  if (provider.plansRes == null) {
-    popUpAlert(
-      message: Const.errSomethingWrong,
-      title: "Alert",
-      icon: Images.alertPopGIF,
-    );
-    return;
-  }
-
   await showModalBottomSheet(
     useSafeArea: true,
     shape: const RoundedRectangleBorder(
@@ -35,6 +20,7 @@ Future askToSubscribe({void Function()? onPressed}) async {
         topLeft: Radius.circular(10),
         topRight: Radius.circular(10),
       ),
+      // side: const BorderSide(color: ThemeColors.greyBorder),
     ),
     context: navigatorKey.currentContext!,
     backgroundColor: Colors.transparent,
@@ -42,8 +28,23 @@ Future askToSubscribe({void Function()? onPressed}) async {
     enableDrag: true,
     barrierColor: Colors.transparent,
     builder: (BuildContext ctx) {
-      return AskToSubscribeDialog(
-        onPressed: onPressed,
+      return Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: SingleChildScrollView(
+                child: AskToSubscribeDialog(
+              onPressed: onPressed,
+            )),
+          ),
+          Image.asset(
+            Images.diamondS,
+            height: 100,
+            width: 100,
+            fit: BoxFit.cover,
+          ),
+        ],
       );
     },
   );
@@ -55,17 +56,16 @@ class AskToSubscribeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MembershipProvider provider = context.watch<MembershipProvider>();
+    HomeProvider provider = context.watch<HomeProvider>();
 
     return Container(
-      constraints: BoxConstraints(maxHeight: ScreenUtil().screenHeight * .85),
-      padding: const EdgeInsets.only(top: 12),
+      // padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
         ),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
           colors: [
@@ -75,7 +75,6 @@ class AskToSubscribeDialog extends StatelessWidget {
         ),
       ),
       child: Stack(
-        alignment: Alignment.topCenter,
         children: [
           Image.asset(
             Images.referBack,
@@ -83,104 +82,126 @@ class AskToSubscribeDialog extends StatelessWidget {
             fit: BoxFit.cover,
             height: 500,
           ),
-
+          // const Align(
+          //   alignment: Alignment.center,
+          //   child: Padding(
+          //     padding: EdgeInsets.only(top: 7),
+          //     child: BottomSheetTick(),
+          //   ),
+          // ),
           Padding(
-            padding: EdgeInsets.zero,
-            // padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.fromLTRB(16, 70, 16, 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.all(16),
-                      // decoration: const BoxDecoration(
-                      //   borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(10),
-                      //     topRight: Radius.circular(10),
-                      //   ),
-                      //   gradient: const LinearGradient(
-                      //     begin: Alignment.bottomLeft,
-                      //     end: Alignment.topRight,
-                      //     colors: [
-                      //       Color.fromARGB(255, 3, 91, 14),
-                      //       Color.fromARGB(255, 0, 55, 7),
-                      //     ],
-                      //   ),
-                      // ),
-                      child: Padding(
-                        padding: EdgeInsets.zero,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              provider.plansRes?.title ?? '',
-                              style: stylePTSansBold(fontSize: 30),
-                              textAlign: TextAlign.start,
-                            ),
-                            const SpacerVertical(height: 5),
-                            Text(
-                              provider.plansRes?.subTitle ?? '',
-                              style: stylePTSansRegular(fontSize: 17),
-                              textAlign: TextAlign.start,
-                            ),
-                            const SpacerVertical(height: 30),
-                            // if (provider.plansRes?.plans != null)
-                            // if (provider.plansRes?.plans != null)
-                            ListView.separated(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                Plan plan = provider.plansRes!.plans[index];
-                                return ListItemPlan(plan: plan);
-                              },
-                              separatorBuilder: (context, index) {
-                                return const SpacerVertical(height: 12);
-                              },
-                              itemCount: provider.plansRes?.plans.length ?? 0,
-                            ),
-                            // const SpacerVertical(height: 10),
-                            // ThemeButton(
-                            //   color: Color.fromARGB(255, 0, 1, 0),
-                            //   text: "Get a Membership",
-                            //   onPressed: onPressed,
-                            // ),
-                            // SpacerVertical(
-                            //     height: ScreenUtil().bottomBarHeight),
-                          ],
-                        ),
-                      ),
+                // ClipRRect(
+                //   borderRadius: BorderRadius.circular(6),
+                //   child: Image.asset(
+                //     Images.stockIcon3d,
+                //     width: 100,
+                //     height: 100,
+                //   ),
+                // ),
+                // const SpacerVertical(height: 20),
+                // const SpacerVertical(height: 15),
+                Text(
+                  provider.extra?.membershipText?.title ??
+                      "Get More with Membership!",
+                  style: stylePTSansBold(fontSize: 30),
+                  textAlign: TextAlign.start,
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  provider.extra?.membershipText?.subTitle ??
+                      "This feature is exclusive to premium members. Please create an account before purchasing a membership.",
+                  style: stylePTSansRegular(fontSize: 17),
+                  textAlign: TextAlign.start,
+                ),
+                const SpacerVertical(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ScreenTitle(
+                    //   title: "PURCHASE",
+                    // ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      itemBuilder: (context, index) {
+                        StepRes? apiData =
+                            provider.extra?.membershipText?.steps?[index];
+                        Utils().showLog("Not null ${apiData != null}");
+                        StepRes? data;
+                        if (apiData == null) {
+                          if (index == 0) {
+                            data = StepRes(
+                                title: "Add Stocks to Alerts and Watchlist",
+                                subTitle:
+                                    "Stay informed about your favorite stocks with real-time alerts and a personalized watchlist.");
+                          }
+                          if (index == 1) {
+                            data = StepRes(
+                                title: "Access Market Data",
+                                subTitle:
+                                    "Get up-to-the-minute market data to make informed investment decisions.");
+                          }
+
+                          if (index == 2) {
+                            data = StepRes(
+                                title:
+                                    "Unlock “Insider Trades” “Congressional Trades” “High/Low PE” “Compare Stocks” and much more",
+                                subTitle:
+                                    "Gain access to Insider Trades, Congressional Trades, High/Low PE ratios, Compare Stocks, and much more!");
+                          }
+                        }
+                        return HowItWorkItem(
+                          index: index,
+                          subtitle: Colors.white,
+                          data: apiData ?? data,
+                          icon: index == 0
+                              ? Image.asset(
+                                  Images.bellS,
+                                  height: 25,
+                                  width: 25,
+                                )
+                              : index == 1
+                                  ? Image.asset(
+                                      Images.reportS,
+                                      height: 25,
+                                      width: 25,
+                                    )
+                                  : Image.asset(
+                                      Images.tickS,
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          color: ThemeColors.greyBorder,
+                          height: 40,
+                        );
+                      },
+                      itemCount:
+                          provider.extra?.membershipText?.steps?.length ?? 3,
                     ),
-                  ),
+                  ],
                 ),
+                const SpacerVertical(height: 10),
                 ThemeButton(
-                  color: const Color.fromARGB(255, 0, 1, 0),
-                  text: "Get a Membership",
+                  color: const Color.fromARGB(255, 7, 127, 23),
+                  // text: "Generate Affiliate Link",
+                  // text: "Upgrade your membership",
+                  // text: "Get a Membership",
+                  text: "See Membership Plans",
                   onPressed: onPressed,
-                  margin: EdgeInsets.only(
-                    top: 5,
-                    bottom: ScreenUtil().bottomBarHeight,
-                    left: 12,
-                    right: 12,
-                  ),
                 ),
+                SpacerVertical(height: ScreenUtil().bottomBarHeight),
               ],
             ),
           ),
-
-          // ThemeButton(
-          //   color: const Color.fromARGB(255, 0, 1, 0),
-          //   text: "Get a Membership",
-          //   onPressed: onPressed,
-          //   margin: const EdgeInsets.symmetric(horizontal: 12),
-          // ),
-          // Image.asset(
-          //   Images.diamondS,
-          //   height: 100,
-          //   width: 100,
-          //   fit: BoxFit.cover,
-          // ),
         ],
       ),
     );
