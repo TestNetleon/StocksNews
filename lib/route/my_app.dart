@@ -70,8 +70,9 @@ class _MyAppState extends State<MyApp> {
     } else {
       bool isFirstOpen = await Preference.isFirstOpen();
       if (isFirstOpen) {
-        Timer(const Duration(seconds: 5), () {
-          if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+        Timer(const Duration(seconds: 8), () {
+          if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
+              !signUpVisible) {
             signupSheet();
           }
         });
@@ -136,7 +137,8 @@ class _MyAppState extends State<MyApp> {
         isFirstOpen) {
       Preference.saveReferral(referralCode);
       Timer(const Duration(seconds: 4), () {
-        if (navigatorKey.currentContext!.read<UserProvider>().user == null) {
+        if (navigatorKey.currentContext!.read<UserProvider>().user == null &&
+            !signUpVisible) {
           signupSheet();
         }
       });

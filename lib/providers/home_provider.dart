@@ -231,7 +231,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getHomeSlider() async {
+  Future getHomeSlider({showProgress = false}) async {
     // showGlobalProgressDialog();
 
     _statusSlider = Status.loading;
@@ -251,7 +251,7 @@ class HomeProvider extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.homeSlider,
         request: request,
-        showProgress: false,
+        showProgress: showProgress,
         updateDatabase: true,
         onRefresh: () => refreshData(null),
       );
