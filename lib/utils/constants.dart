@@ -167,6 +167,9 @@ class Images {
   static const String start3 = "assets/images/3rd_page.png";
   static const String referAndEarn = "assets/images/refer_and_earn.png";
   static const String membership = "assets/images/membership.png";
+  static const String newLineBG = "assets/images/newLineBG.png";
+  static const String objective = "assets/images/objective.png";
+  static const String transferMoney = "assets/images/transfer-money.png";
 
   static const String tickS = "assets/images/tick.png";
   static const String reportS = "assets/images/report.png";
@@ -214,7 +217,7 @@ class Images {
   // static const purchase = "assets/svg/purchase.svg";
   // // static const login = "assets/svg/login.svg";
   // static const signin = "assets/svg/signin.svg";
-  // static const star = "assets/svg/star.svg";
+  static const arrow = "assets/svg/arrow.svg";
 }
 
 class AudioFiles {

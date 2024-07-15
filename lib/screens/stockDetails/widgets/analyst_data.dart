@@ -446,7 +446,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                         alignment: Alignment.center,
                                         children: [
                                           Container(
-                                            height: 360,
+                                            height: 340,
                                             width: double.infinity,
                                             decoration: const BoxDecoration(
                                               gradient: LinearGradient(
@@ -461,89 +461,124 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                 Radius.circular(10),
                                               ),
                                             ),
-                                            padding: const EdgeInsets.all(12.0),
+                                            // padding: const EdgeInsets.all(12.0),
                                             child: Stack(
                                               children: [
                                                 Positioned(
-                                                  right: 10,
-                                                  top: -8,
+                                                  top: 10,
                                                   child: Image.asset(
-                                                    Images.cardBG,
-                                                    height: 100,
+                                                    Images.newLineBG,
+                                                    height: 120,
+                                                    fit: BoxFit.fill,
+                                                    width: MediaQuery.sizeOf(
+                                                            context)
+                                                        .width,
                                                     color: Colors.white,
                                                     opacity:
                                                         const AlwaysStoppedAnimation(
-                                                            .2),
+                                                            .4),
                                                   ),
                                                 ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "Economic Moat",
-                                                      style: styleGeorgiaBold(),
-                                                    ),
-                                                    const SpacerVertical(
-                                                        height: 5),
-                                                    Text(
-                                                      "As on - ${morningStar?.updated ?? "N/A"}",
-                                                      style: stylePTSansRegular(
-                                                        fontSize: 12,
-                                                        color:
-                                                            ThemeColors.white,
-                                                      ),
-                                                    ),
-                                                    const SpacerVertical(
-                                                      height: 20,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 18.0),
-                                                      child: Container(
-                                                        width: constraints
-                                                                .maxWidth *
-                                                            (value / 100),
-                                                        height: 40,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              245,
-                                                              250,
-                                                              245),
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                            Radius.circular(30),
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 9.0),
-                                                          child: Text(
-                                                            "${morningStar?.quantEconomicMoatLabel}"
-                                                                .toUpperCase(),
-                                                            style:
-                                                                stylePTSansBold(
-                                                                    color: Colors
-                                                                        .black),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Image.asset(
+                                                          Images.transferMoney,
+                                                          // fit: BoxFit.fill,
+                                                          height: 80,
+                                                          width:
+                                                              MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width,
+                                                          color: Colors.white,
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Text(
+                                                              "Economic Moat"
+                                                                  .toUpperCase(),
+                                                              style:
+                                                                  styleGeorgiaBold(
+                                                                      fontSize:
+                                                                          18),
+                                                            ),
+                                                            const SpacerVertical(
+                                                                height: 5),
+                                                            Text(
+                                                              "As on - ${morningStar?.updated ?? "N/A"}",
+                                                              style:
+                                                                  stylePTSansRegular(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    ThemeColors
+                                                                        .white,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                top: 15.0,
+                                                              ),
+                                                              child: Container(
+                                                                width: constraints
+                                                                        .maxWidth *
+                                                                    (value /
+                                                                        100),
+                                                                height: 40,
+                                                                decoration:
+                                                                    const BoxDecoration(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          245,
+                                                                          250,
+                                                                          245),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                            30),
+                                                                  ),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                      .only(
+                                                                      top: 9.0,
+                                                                      right:
+                                                                          8.0),
+                                                                  child: Text(
+                                                                    "${morningStar?.quantEconomicMoatLabel}"
+                                                                        .toUpperCase(),
+                                                                    style: stylePTSansBold(
+                                                                        color: Colors
+                                                                            .black),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
                                             // padding: EdgeInsets.all(15),
                                           ),
                                           Positioned(
-                                            top: 130,
+                                            top: 120,
                                             bottom: 0,
                                             left: 0,
                                             right: 0,
@@ -565,129 +600,137 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                   Radius.circular(10),
                                                 ),
                                               ),
-                                              padding: const EdgeInsets.all(12),
+                                              // padding: const EdgeInsets.all(12),
                                               child: Stack(
                                                 children: [
                                                   Positioned(
-                                                    right: 40,
-                                                    top: -4,
+                                                    top: 10,
                                                     child: Image.asset(
-                                                      Images.cardBG,
-                                                      height: 80,
+                                                      Images.newLineBG,
+                                                      height: 120,
+                                                      fit: BoxFit.fill,
+                                                      width: MediaQuery.sizeOf(
+                                                              context)
+                                                          .width,
                                                       color: Colors.white,
                                                       opacity:
                                                           const AlwaysStoppedAnimation(
-                                                              .2),
+                                                              .4),
                                                     ),
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text("Valuation",
-                                                          style:
-                                                              styleGeorgiaBold()),
-                                                      const SpacerVertical(
-                                                          height: 10),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                top: 20.0),
-                                                        child: Container(
-                                                          width: constraints
-                                                                  .maxWidth *
-                                                              (value / 100),
-                                                          height: 40,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            // color: ThemeColors.accent,
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                  30),
-                                                            ),
-                                                            gradient:
-                                                                LinearGradient(
-                                                              begin: Alignment
-                                                                  .centerLeft,
-                                                              end: Alignment
-                                                                  .centerRight,
-                                                              colors: morningStar
-                                                                          ?.quantValuation ==
-                                                                      "Undervalued"
-                                                                  ? [
-                                                                      const Color
-                                                                          .fromARGB(
-                                                                          255,
-                                                                          242,
-                                                                          150,
-                                                                          37),
-                                                                      const Color
-                                                                          .fromARGB(
-                                                                          255,
-                                                                          144,
-                                                                          87,
-                                                                          17),
-                                                                    ]
-                                                                  : morningStar
-                                                                              ?.quantValuation ==
-                                                                          "Fairly Valued"
-                                                                      ? [
-                                                                          const Color
-                                                                              .fromARGB(
-                                                                              255,
-                                                                              14,
-                                                                              173,
-                                                                              5),
-                                                                          const Color
-                                                                              .fromARGB(
-                                                                              255,
-                                                                              11,
-                                                                              95,
-                                                                              13),
-                                                                        ]
-                                                                      // Overvalued
-                                                                      : [
-                                                                          const Color
-                                                                              .fromARGB(
-                                                                              255,
-                                                                              219,
-                                                                              219,
-                                                                              219),
-                                                                          const Color
-                                                                              .fromARGB(
-                                                                              255,
-                                                                              238,
-                                                                              236,
-                                                                              236),
-                                                                        ],
-                                                            ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            12.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                            "Valuation"
+                                                                .toUpperCase(),
+                                                            style:
+                                                                styleGeorgiaBold(
+                                                                    fontSize:
+                                                                        18)),
+                                                        // const SpacerVertical(
+                                                        //     height: 8),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            top: 20.0,
                                                           ),
-                                                          child: Center(
-                                                            child: Text(
-                                                              "${morningStar?.quantValuation}"
-                                                                  .toUpperCase(),
-                                                              style: stylePTSansBold(
-                                                                  color: Colors
-                                                                      .black),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                                          child: Container(
+                                                            width: constraints
+                                                                    .maxWidth *
+                                                                (value / 100),
+                                                            height: 40,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              // color: ThemeColors.accent,
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .all(
+                                                                Radius.circular(
+                                                                    30),
+                                                              ),
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                begin: Alignment
+                                                                    .centerLeft,
+                                                                end: Alignment
+                                                                    .centerRight,
+                                                                colors: morningStar
+                                                                            ?.quantValuation ==
+                                                                        "Undervalued"
+                                                                    ? [
+                                                                        const Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            242,
+                                                                            150,
+                                                                            37),
+                                                                        const Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            144,
+                                                                            87,
+                                                                            17),
+                                                                      ]
+                                                                    : morningStar?.quantValuation ==
+                                                                            "Fairly Valued"
+                                                                        ? [
+                                                                            const Color.fromARGB(
+                                                                                255,
+                                                                                14,
+                                                                                173,
+                                                                                5),
+                                                                            const Color.fromARGB(
+                                                                                255,
+                                                                                11,
+                                                                                95,
+                                                                                13),
+                                                                          ]
+                                                                        // Overvalued
+                                                                        : [
+                                                                            Color.fromARGB(
+                                                                                255,
+                                                                                231,
+                                                                                41,
+                                                                                41),
+                                                                            Color.fromARGB(
+                                                                                255,
+                                                                                243,
+                                                                                88,
+                                                                                88),
+                                                                          ],
+                                                              ),
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "${morningStar?.quantValuation}"
+                                                                    .toUpperCase(),
+                                                                style: stylePTSansBold(
+                                                                    color: Colors
+                                                                        .white),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ),
                                           Positioned(
-                                            top: 250,
+                                            top: 225,
                                             bottom: 0,
                                             left: 0,
                                             right: 0,
@@ -705,50 +748,85 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                   Radius.circular(10),
                                                 ),
                                               ),
-                                              padding: const EdgeInsets.all(12),
+                                              // padding: const EdgeInsets.all(12),
                                               child: Stack(
                                                 children: [
                                                   Positioned(
-                                                    right: 20,
-                                                    top: -8,
+                                                    top: 10,
+                                                    // left: ,
                                                     child: Image.asset(
-                                                      Images.cardBG,
-                                                      height: 110,
+                                                      Images.newLineBG,
+                                                      fit: BoxFit.fill,
+                                                      height: 120,
+                                                      width: MediaQuery.sizeOf(
+                                                              context)
+                                                          .width,
                                                       color: Colors.white,
                                                       opacity:
                                                           const AlwaysStoppedAnimation(
-                                                              .2),
+                                                              .4),
                                                     ),
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      ItemRow(
-                                                        label: "Fair Value",
-                                                        value:
-                                                            "${morningStar?.quantFairValue}",
-                                                      ),
-                                                      const SpacerVertical(
-                                                          height: 5),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Flexible(
-                                                            child: Text(
-                                                              "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
-                                                              style:
-                                                                  stylePTSansRegular(
-                                                                      fontSize:
-                                                                          12),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            12.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Image.asset(
+                                                            Images.objective,
+                                                            // fit: BoxFit.fill,
+                                                            height: 80,
+                                                            width: MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    right:
+                                                                        20.0),
+                                                            child: Column(
+                                                              children: [
+                                                                ItemRow(
+                                                                  label: "Fair Value"
+                                                                      .toUpperCase(),
+                                                                  value:
+                                                                      "${morningStar?.quantFairValue}",
+                                                                ),
+                                                                const SpacerVertical(
+                                                                    height: 5),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Flexible(
+                                                                      child:
+                                                                          Text(
+                                                                        "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
+                                                                        style: stylePTSansRegular(
+                                                                            fontSize:
+                                                                                12),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -1556,12 +1634,12 @@ class ItemRow extends StatelessWidget {
       children: [
         Text(
           label,
-          style: styleGeorgiaBold(),
+          style: styleGeorgiaBold(fontSize: 18),
         ),
         const SpacerVertical(height: 10),
         Text(
           value ?? "",
-          style: styleGeorgiaBold(color: valueColor, fontSize: 20),
+          style: styleGeorgiaBold(color: valueColor, fontSize: 25),
         )
       ],
     );

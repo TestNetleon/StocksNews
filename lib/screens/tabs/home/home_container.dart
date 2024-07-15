@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
+import 'package:stocks_news_new/screens/tabs/home/membership/membership.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 // ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
@@ -73,7 +74,19 @@ class HomeContainer extends StatelessWidget {
                   child: const ReferApp(),
                 ),
               ),
-              // const SpacerVertical(height: Dimen.padding),
+              Container(
+                margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const NewMembership(),
+                        ),
+                      );
+                    },
+                    child: const Text('Click')),
+              ),
               Container(
                 margin: EdgeInsets.only(
                   left: Dimen.padding.sp,
@@ -262,7 +275,9 @@ class HomeContainer extends StatelessWidget {
                               ),
                             ),
                             ListView.separated(
-                              itemCount: provider.homeTrendingRes?.trendingNews?.length ?? 0,
+                              itemCount: provider
+                                      .homeTrendingRes?.trendingNews?.length ??
+                                  0,
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               padding: EdgeInsets.only(top: 12.sp),
