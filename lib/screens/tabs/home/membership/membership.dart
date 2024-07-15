@@ -48,6 +48,9 @@ class NewMembership extends StatelessWidget {
               child: Column(
                 children: [
                   NewMembershipUpgradeCurrentPlan(),
+                  SpacerVertical(
+                    height: 10,
+                  ),
                   NewMembershipReviews(),
                   SpacerVertical(
                     height: 10,
@@ -60,20 +63,20 @@ class NewMembership extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(12.0),
-                child: MyElevatedButton(
-                  width: double.infinity,
-                  onPressed: () {},
-                  borderRadius: BorderRadius.circular(10),
-                  child: const Text('Upgrade Now'),
-                )),
-          ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Container(
+          //       color: Colors.white,
+          //       padding: const EdgeInsets.all(12.0),
+          //       child: MyElevatedButton(
+          //         width: double.infinity,
+          //         onPressed: () {},
+          //         borderRadius: BorderRadius.circular(10),
+          //         child: const Text('Purchase Membership'),
+          //       )),
+          // ),
         ],
       ),
     ));

@@ -53,8 +53,7 @@ class _AppUpdateContentState extends State<AppUpdateContent> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Update Successful'),
-          content:
-              const Text('The app has been updated to the latest version.'),
+          content: const Text('The app has been updated to the latest version.'),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),

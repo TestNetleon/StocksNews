@@ -216,7 +216,7 @@ class Images {
   // static const profile = "assets/svg/profile.svg";
   // static const purchase = "assets/svg/purchase.svg";
   // // static const login = "assets/svg/login.svg";
-  // static const signin = "assets/svg/signin.svg";
+  static const add = "assets/svg/add.svg";
   static const arrow = "assets/svg/arrow.svg";
 }
 

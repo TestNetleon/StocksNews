@@ -1,83 +1,121 @@
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/screens/tabs/home/membership/widgtes/custom_expantion_tile.dart';
+import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class NewMembershipFaq extends StatelessWidget {
+class NewMembershipFaq extends StatefulWidget {
   const NewMembershipFaq({super.key});
 
   @override
+  State<NewMembershipFaq> createState() => _NewMembershipFaqState();
+}
+
+class _NewMembershipFaqState extends State<NewMembershipFaq> {
+  // final bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        // color: Color(0xFF7a9295)
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.2, 0.65],
-          colors: [
-            Color.fromARGB(255, 27, 85, 68),
-            Color.fromARGB(255, 39, 37, 37),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Frequantly asked question',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'FAQ',
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25),
-            ),
-            const SpacerVertical(
-              height: 10,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(4, (index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black.withOpacity(.2)),
-                        borderRadius: BorderRadius.circular(10.0)),
-                    padding: const EdgeInsets.all(2.0),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(dividerColor: Colors.transparent),
-                      child: ExpansionTile(
-                        title: const Text(
-                          'Subscriber Information',
+        const SpacerVertical(
+          height: 10,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: MediaQuery.of(context).size.width / 1.08,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
+            padding: const EdgeInsets.only(top: 25.0, right: 20.0, left: 5.0),
+            // margin: const EdgeInsets.only(bottom: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(5, (index) {
+                return Column(
+                  children: [
+                    const CustomExpansionTile(
+                      title: Padding(
+                        padding: EdgeInsets.only(right: 10.0),
+                        child: Text(
+                          "Will my subsricption be active on all platform?",
+                          textAlign: TextAlign.start,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
                         ),
-                        // collapsedBackgroundColor: Colors.green.withOpacity(0.20),
-                        // backgroundColor: Colors.green.withOpacity(0.10),
-                        onExpansionChanged: (bool change) {},
-                        childrenPadding: const EdgeInsets.all(10),
-                        expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                        expandedAlignment: Alignment.topLeft,
-                        children: const [
-                          Text('* Ticket Id1'),
-                          Text('* Ticket Id2'),
-                          Text('* Ticket Id3'),
-                          Text('* Ticket Id 4'),
-                        ],
                       ),
+                      children: [
+                        Text(
+                          'You can use the minLeadingWidth on your ListTile.',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SpacerVertical(
+                          height: 8.0,
+                        ),
+                        Text(
+                          'For those who are looking for a clean.',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SpacerVertical(
+                          height: 8.0,
+                        ),
+                        Text(
+                          'In my case I used clipBehavior: Clip.antiAlias on card.',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SpacerVertical(
+                          height: 8.0,
+                        ),
+                        Text(
+                          'In my case I used clipBehavior: Clip.antiAlias on card.',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
-                  );
-                }),
-              ),
+                    const SpacerVertical(
+                      height: 15.0,
+                    ),
+                    index == 4
+                        ? const SizedBox.shrink()
+                        : const Divider(
+                            color: ThemeColors.greyBorder,
+                            height: 10,
+                            indent: 20,
+                            endIndent: 8,
+                          ),
+                    const SpacerVertical(
+                      height: 15.0,
+                    )
+                  ],
+                );
+              }),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
