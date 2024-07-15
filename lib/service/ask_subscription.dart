@@ -117,7 +117,6 @@ class AskToSubscribeDialog extends StatelessWidget {
                   style: stylePTSansRegular(fontSize: 17),
                   textAlign: TextAlign.start,
                 ),
-
                 const SpacerVertical(height: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,10 +194,10 @@ class AskToSubscribeDialog extends StatelessWidget {
                   color: const Color.fromARGB(255, 7, 127, 23),
                   // text: "Generate Affiliate Link",
                   // text: "Upgrade your membership",
-                  text: "Get a Membership",
+                  // text: "Get a Membership",
+                  text: "See Membership Plans",
                   onPressed: onPressed,
                 ),
-
                 SpacerVertical(height: ScreenUtil().bottomBarHeight),
               ],
             ),

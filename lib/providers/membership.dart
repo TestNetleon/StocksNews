@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/modals/plans_res.dart';
 
 import '../api/api_response.dart';
 import '../api/apis.dart';
@@ -25,6 +27,9 @@ class MembershipProvider extends ChangeNotifier {
 
   List<MembershipRes>? _data;
   List<MembershipRes>? get data => _data;
+
+  PlansRes? _plansRes;
+  PlansRes? get plansRes => _plansRes;
 
   MembershipSuccess? _success;
   MembershipSuccess? get success => _success;
@@ -87,6 +92,33 @@ class MembershipProvider extends ChangeNotifier {
     } catch (e) {
       Utils().showLog(e.toString());
       notifyListeners();
+    }
+  }
+
+  Future getPlansDetail() async {
+    setStatus(Status.loading);
+
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "platform": Platform.operatingSystem,
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.plansDetail,
+        formData: request,
+        showProgress: true,
+      );
+      if (response.status) {
+        _plansRes = plansResFromJson(jsonEncode(response.data));
+      } else {
+        _plansRes = null;
+      }
+      setStatus(Status.loaded);
+    } catch (e) {
+      _plansRes = null;
+      Utils().showLog(e.toString());
+      setStatus(Status.loaded);
     }
   }
 }

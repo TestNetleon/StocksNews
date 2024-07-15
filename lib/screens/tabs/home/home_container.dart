@@ -70,7 +70,6 @@ class HomeContainer extends StatelessWidget {
                     Dimen.padding,
                     0,
                   ),
-                  // color: Colors.red,
                   child: const ReferApp(),
                 ),
               ),
@@ -92,7 +91,6 @@ class HomeContainer extends StatelessWidget {
                   left: Dimen.padding.sp,
                   right: Dimen.padding.sp,
                 ),
-                // color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
