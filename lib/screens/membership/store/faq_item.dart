@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -21,18 +23,18 @@ class FaqItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    StoreProvider provider = context.watch<StoreProvider>();
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: ThemeColors.divider),
-        // color: ThemeColors.background,
       ),
       padding: EdgeInsets.all(Dimen.itemSpacing.sp),
       child: Column(
         children: [
           GestureDetector(
-            // onTap: () =>
-            //     provider.change(provider.openIndex == index ? -1 : index),
+            onTap: () => provider
+                .setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
