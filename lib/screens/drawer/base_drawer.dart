@@ -89,19 +89,48 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                   style: stylePTSansBold(fontSize: 20),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 5.sp,
-                                  ),
+                                  padding: EdgeInsets.only(top: 5.sp),
                                   child: Text(
                                     provider.homeSliderRes?.text
                                             ?.drawerHeader ??
                                         "",
                                     style: stylePTSansRegular(
-                                        fontSize: 13,
-                                        color: ThemeColors.greyText),
+                                      fontSize: 13,
+                                      color: ThemeColors.greyText,
+                                    ),
                                   ),
                                 ),
                                 const SpacerVertical(height: 20),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ThemeButtonSmall(
+                                        showArrow: false,
+                                        text: "Log in",
+                                        onPressed: () {
+                                          Scaffold.of(context).closeDrawer();
+                                          isPhone
+                                              ? loginSheet()
+                                              : loginSheetTablet();
+                                        },
+                                      ),
+                                    ),
+                                    const SpacerHorizontal(width: 10),
+                                    Expanded(
+                                      child: ThemeButtonSmall(
+                                        showArrow: false,
+                                        text: "Sign up",
+                                        onPressed: () {
+                                          Scaffold.of(context).closeDrawer();
+                                          isPhone
+                                              ? signupSheet()
+                                              : signupSheetTablet(
+                                                  dontPop: "true");
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -118,43 +147,16 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
                           Visibility(
-                            visible: userProvider.user == null,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: ThemeButtonSmall(
-                                    showArrow: false,
-                                    text: "Log in",
-                                    onPressed: () {
-                                      Scaffold.of(context).closeDrawer();
-                                      isPhone
-                                          ? loginSheet()
-                                          : loginSheetTablet();
-                                    },
-                                  ),
-                                ),
-                                const SpacerHorizontal(width: 10),
-                                Expanded(
-                                  child: ThemeButtonSmall(
-                                    showArrow: false,
-                                    text: "Sign up",
-                                    onPressed: () {
-                                      Scaffold.of(context).closeDrawer();
-                                      isPhone
-                                          ? signupSheet()
-                                          : signupSheetTablet(dontPop: "true");
-                                    },
-                                  ),
-                                ),
-                              ],
+                            visible: !(userProvider.user != null &&
+                                userProvider.user?.membership?.purchased == 1),
+                            child: Divider(
+                              color: ThemeColors.greyBorder,
+                              height: 40.sp,
                             ),
                           ),
-                          // MembershipButton(),
-                          // Divider(color: ThemeColors.greyBorder, height: 40.sp),
-                          const SpacerVertical(height: 15),
                           Visibility(
-                            // visible: userProvider.user != null &&
-                            //     userProvider.user?.membership?.purchased == 1,
+                            visible: userProvider.user != null &&
+                                userProvider.user?.membership?.purchased == 1,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -165,7 +167,10 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                 );
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(bottom: 15),
+                                margin: const EdgeInsets.only(
+                                  bottom: 15,
+                                  top: 15,
+                                ),
                                 decoration: BoxDecoration(
                                   color: ThemeColors.tabBack,
                                   borderRadius: BorderRadius.circular(6),
@@ -205,13 +210,15 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                                 Text(
                                                   "Store",
                                                   style: stylePTSansBold(
-                                                      fontSize: 18),
+                                                    fontSize: 18,
+                                                  ),
                                                 ),
                                                 const SpacerVertical(height: 3),
                                                 Text(
                                                   "Buy points to unlock news and blogs",
                                                   style: stylePTSansRegular(
-                                                      fontSize: 14),
+                                                    fontSize: 14,
+                                                  ),
                                                 )
                                               ],
                                             ),
@@ -224,79 +231,6 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               ),
                             ),
                           ),
-                          // Visibility(
-                          //   // visible: userProvider.user != null &&
-                          //   //     userProvider.user?.membership?.purchased == 1,
-                          //   child: GestureDetector(
-                          //     onTap: () {
-                          //       Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //           builder: (_) => const NewMembership(),
-                          //         ),
-                          //       );
-                          //     },
-                          //     child: Container(
-                          //       margin: const EdgeInsets.only(bottom: 15),
-                          //       decoration: BoxDecoration(
-                          //         color: ThemeColors.tabBack,
-                          //         borderRadius: BorderRadius.circular(6),
-                          //         gradient: const LinearGradient(
-                          //           colors: [
-                          //             Color.fromARGB(255, 65, 171, 83),
-                          //             Color.fromARGB(255, 1, 122, 44),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       child: Stack(
-                          //         children: [
-                          //           Positioned(
-                          //             right: 0,
-                          //             bottom: 0,
-                          //             top: 0,
-                          //             child: Padding(
-                          //               padding: const EdgeInsets.all(8.0),
-                          //               child: Image.asset(
-                          //                 Images.storeIcon,
-                          //                 height: 60,
-                          //                 fit: BoxFit.contain,
-                          //               ),
-                          //             ),
-                          //           ),
-                          //           Padding(
-                          //             padding: const EdgeInsets.all(12),
-                          //             child: Row(
-                          //               children: [
-                          //                 const Icon(Icons.store, size: 40),
-                          //                 const SpacerHorizontal(width: 10),
-                          //                 Expanded(
-                          //                   child: Column(
-                          //                     crossAxisAlignment:
-                          //                         CrossAxisAlignment.start,
-                          //                     children: [
-                          //                       Text(
-                          //                         "Store",
-                          //                         style: stylePTSansBold(
-                          //                             fontSize: 18),
-                          //                       ),
-                          //                       const SpacerVertical(height: 3),
-                          //                       Text(
-                          //                         "Buy points to unlock news and blogs",
-                          //                         style: stylePTSansRegular(
-                          //                             fontSize: 14),
-                          //                       )
-                          //                     ],
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

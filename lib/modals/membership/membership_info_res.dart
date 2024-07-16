@@ -68,29 +68,35 @@ class Plan {
 }
 
 class Testimonial {
-  final String id;
-  final String text;
-  final int rating;
-  final String title;
+  // final String id;
+  final String? text;
+  final double? rating;
+  final String? title;
+  final String? name;
 
   Testimonial({
-    required this.id,
+    // required this.id,
     required this.text,
     required this.rating,
     required this.title,
+    required this.name,
   });
 
   factory Testimonial.fromJson(Map<String, dynamic> json) => Testimonial(
-        id: json["_id"],
+        // id: json["_id"],
         text: json["text"],
-        rating: json["rating"],
+        rating: json["rating"] == null
+            ? null
+            : double.tryParse("""${json["rating"]}"""),
         title: json["title"],
+        name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
+        // "_id": id,
         "text": text,
         "rating": rating,
         "title": title,
+        "name": name,
       };
 }

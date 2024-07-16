@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -109,25 +111,50 @@ class _NewMembershipUpgradeCurrentPlanState
                             ),
                             // padding: const EdgeInsets.all(8),
                             child: const Center(
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.green,
+                                size: 16,
+                              ),
+                            ),
+                          ),
+                          const SpacerHorizontal(
+                            width: 6,
+                          ),
+                          Text(
+                            'You will get 10 Points',
+                            style: stylePTSansRegular(
+                                fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      const SpacerVertical(height: 20),
+                      Row(
+                        children: [
+                          Container(
+                            height: 20,
+                            width: 20,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ThemeColors.white,
+                            ),
+                            // padding: const EdgeInsets.all(8),
+                            child: const Center(
                                 child: Icon(
                               Icons.check,
                               color: Colors.green,
                               size: 16,
                             )),
                           ),
-                          const SpacerHorizontal(
-                            width: 6,
-                          ),
+                          const SpacerHorizontal(width: 6),
                           Text(
-                            ' Get More with Membership!',
+                            'Get More with Membership!',
                             style: stylePTSansRegular(
                                 fontSize: 16, color: Colors.white),
                           ),
                         ],
                       ),
-                      const SpacerVertical(
-                        height: 20,
-                      ),
+                      const SpacerVertical(height: 20),
                       Row(
                         children: [
                           Container(
@@ -155,9 +182,7 @@ class _NewMembershipUpgradeCurrentPlanState
                           ),
                         ],
                       ),
-                      const SpacerVertical(
-                        height: 20,
-                      ),
+                      const SpacerVertical(height: 20),
                       Row(
                         children: [
                           Container(
@@ -185,9 +210,7 @@ class _NewMembershipUpgradeCurrentPlanState
                           ),
                         ],
                       ),
-                      const SpacerVertical(
-                        height: 20,
-                      ),
+                      const SpacerVertical(height: 20),
                       Row(
                         children: [
                           Padding(
@@ -239,9 +262,7 @@ class _NewMembershipUpgradeCurrentPlanState
                           ),
                         ],
                       ),
-                      const SpacerVertical(
-                        height: 20,
-                      ),
+                      const SpacerVertical(height: 20),
                       MyElevatedButton(
                         width: double.infinity,
                         onPressed: () {},
@@ -252,12 +273,12 @@ class _NewMembershipUpgradeCurrentPlanState
                               fontSize: 16, color: Colors.white),
                         ),
                       ),
-                      const SpacerVertical(
-                        height: 10,
-                      ),
+                      const SpacerVertical(height: 10),
                       Center(
                         child: Text(
-                          'Cancel anytime, Secured by App store',
+                          Platform.isAndroid
+                              ? 'Cancel anytime. Secured by the Play Store.'
+                              : 'Cancel anytime. Secured by the App Store.',
                           textAlign: TextAlign.center,
                           style: stylePTSansRegular(
                               fontSize: 12, color: Colors.grey),
