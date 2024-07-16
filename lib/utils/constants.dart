@@ -205,6 +205,9 @@ class Images {
   static const bg = "assets/images/sync.png";
 
   static const affWhite = "assets/images/aff_white.png";
+  static const storeIcon = "assets/images/store_icon.png";
+  static const storeBanner = "assets/images/store_banner.png";
+  static const storeBack = "assets/images/store_back.png";
 
   //svg
   // static const share = "assets/svg/share.svg";
