@@ -93,7 +93,7 @@ class RevenueCatService {
       case PaywallResult.purchased:
         navigatorKey.currentContext!
             .read<MembershipProvider>()
-            .getMembershipSuccess();
+            .getMembershipSuccess(isMembership: isMembership);
         await _handlePurchaseSuccess(isMembership: isMembership);
         break;
       case PaywallResult.restored:

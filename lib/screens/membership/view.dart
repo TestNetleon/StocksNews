@@ -56,7 +56,7 @@ class MembershipView extends StatelessWidget {
             return MembershipItem(data: data);
           },
           separatorBuilder: (context, index) {
-            return const SpacerVertical(height: 10);
+            return const SpacerVertical(height: 20);
           },
           itemCount: provider.data?.length ?? 0,
         ),
