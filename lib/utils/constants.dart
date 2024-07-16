@@ -215,6 +215,7 @@ class Images {
   static const storeIcon = "assets/images/store_icon.png";
   static const storeBanner = "assets/images/store_banner.png";
   static const storeBack = "assets/images/store_back.png";
+  static const buyPoints = "assets/images/buy_points.png";
 
   //svg
   // static const share = "assets/svg/share.svg";

@@ -183,7 +183,7 @@ class StateItem extends StatelessWidget {
 //       children: [
 //         const CommonHeadingStockDetail(),
 //         CustomGridView(
-//           paddingVerticle: 8,
+//           paddingVertical: 8,
 //           paddingHorizontal: 0,
 //           length: 25,
 //           getChild: (index) => Column(

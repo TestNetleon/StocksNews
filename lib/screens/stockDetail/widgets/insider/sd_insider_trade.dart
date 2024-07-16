@@ -92,7 +92,7 @@ class _SdInsiderTradeState extends State<SdInsiderTrade> {
                 ),
                 CustomGridView(
                   length: provider.sdInsiderTradeRes?.top?.length ?? 0,
-                  paddingVerticle: 8,
+                  paddingVertical: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.sdInsiderTradeRes?.top?[index];
                     return SdTopCard(

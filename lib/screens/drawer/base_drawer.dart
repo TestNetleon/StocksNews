@@ -14,6 +14,7 @@ import 'package:stocks_news_new/screens/drawer/about/about_stocks_news.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/user_card.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';

@@ -71,7 +71,7 @@ class _SdChartsState extends State<SdCharts> {
                 ),
                 CustomGridView(
                   length: provider.chartRes?.top?.length ?? 0,
-                  paddingVerticle: 8,
+                  paddingVertical: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.chartRes?.top?[index];
                     return SdTopCard(

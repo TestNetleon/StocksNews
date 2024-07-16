@@ -68,7 +68,7 @@ class TopPlaidIndex extends StatelessWidget {
           CustomGridView(
             paddingHorizontal: 0,
             itemSpace: 5,
-            paddingVerticle: 5,
+            paddingVertical: 5,
             length: 4,
             getChild: (index) {
               MostPurchasedRes? data = provider.mostPurchased?[index];
