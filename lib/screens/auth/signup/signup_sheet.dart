@@ -72,6 +72,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
     if (widget.email != null && widget.email != '') {
       _controller.text = widget.email ?? "";
     }
+    signUpVisible = true;
   }
 
   void _onSignUpClick() async {
@@ -171,6 +172,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
   @override
   void dispose() {
     _controller.dispose();
+    signUpVisible = false;
     super.dispose();
   }
 

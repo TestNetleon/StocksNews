@@ -79,11 +79,9 @@ class HomeContainer extends StatelessWidget {
                     Dimen.padding,
                     0,
                   ),
-                  // color: Colors.red,
                   child: const ReferApp(),
                 ),
               ),
-              // const SpacerVertical(height: Dimen.padding),
               Container(
                 // margin: EdgeInsets.only(
                 //   left: Dimen.padding.sp,

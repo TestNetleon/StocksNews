@@ -74,6 +74,9 @@ class Extra {
   final MessageRes? messageObject;
   final UserRes? user;
   final bool? showPortfolio;
+  final bool? showAboutStockNews;
+  final bool? showWhatWeDo;
+  final bool? showFAQ;
   final ReferralRes? referral;
   final num? received;
   final num? totalActivityPoints;
@@ -147,6 +150,9 @@ class Extra {
     this.loginText,
     this.signUpText,
     this.showPortfolio,
+    this.showAboutStockNews,
+    this.showWhatWeDo,
+    this.showFAQ,
     this.txnSize,
     this.totalPages,
     this.userAlert,
@@ -294,6 +300,9 @@ class Extra {
         membership: json["membership"] == null
             ? null
             : UserMembershipRes.fromJson(json["membership"]),
+        showAboutStockNews: json['show_about_stocks_news'],
+        showWhatWeDo: json['show_what_we_do'],
+        showFAQ: json['show_faq'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -373,6 +382,9 @@ class Extra {
         "login_dialog": loginDialogRes?.toJson(),
         "total_activity_points": totalActivityPoints,
         "membership": membership?.toJson(),
+        "show_about_stocks_news": showAboutStockNews,
+        "show_what_we_do": showWhatWeDo,
+        "show_faq": showFAQ,
       };
 }
 

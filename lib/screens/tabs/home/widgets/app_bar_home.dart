@@ -59,7 +59,8 @@ class _AppBarHomeState extends State<AppBarHome> {
           ? IconButton(
               onPressed: () {
                 if (popHome) {
-                  if (CustomNavigatorObserver().stackCount >= 2) {
+                  if (CustomNavigatorObserver().stackCount >= 2 &&
+                      splashLoaded) {
                     Navigator.pop(navigatorKey.currentContext!);
                   } else {
                     Navigator.popUntil(
@@ -72,7 +73,8 @@ class _AppBarHomeState extends State<AppBarHome> {
                   }
                 } else {
                   // Navigator.pop(navigatorKey.currentContext!);
-                  if (CustomNavigatorObserver().stackCount >= 2) {
+                  if (CustomNavigatorObserver().stackCount >= 2 &&
+                      splashLoaded) {
                     Navigator.pop(navigatorKey.currentContext!);
                   } else {
                     Navigator.popUntil(
@@ -150,6 +152,22 @@ class _AppBarHomeState extends State<AppBarHome> {
         ),
       ),
       actions: [
+        // IconButton(
+        //   onPressed: () async {
+        //     final value = await referSheet(onReferral: (_) {});
+        //     if (value == null) {
+        //       // Bottom sheet was dismissed by sliding down
+        //       print('Bottom sheet was slid down');
+        //     } else {
+        //       // Bottom sheet was closed with a result
+        //       print('Bottom sheet was closed with result: $value');
+        //     }
+        //   },
+        //   icon: const Icon(
+        //     Icons.temple_buddhist_outlined,
+        //     color: ThemeColors.white,
+        //   ),
+        // ),
         // Visibility(
         //   visible: widget.showQR,
         //   child: IconButton(
@@ -223,7 +241,6 @@ class _AppBarHomeState extends State<AppBarHome> {
                 ],
               )
             : const SizedBox(),
-
         // TODO MUST REMOVE IN LIVE BUILD
         // IconButton(
         //   onPressed: () {

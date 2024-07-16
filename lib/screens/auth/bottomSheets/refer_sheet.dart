@@ -22,6 +22,8 @@ import '../../../widgets/theme_input_field.dart';
 referSheet({
   required Function(String? code) onReferral,
 }) async {
+  bool isReferralSubmitted = false;
+
   await showModalBottomSheet(
     useSafeArea: true,
     backgroundColor: ThemeColors.transparent,
@@ -38,12 +40,21 @@ referSheet({
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        child: ReferBottomSheet(onReferral: onReferral),
+        child: ReferBottomSheet(onReferral: (code) {
+          isReferralSubmitted = true;
+          onReferral(code);
+        }),
       );
     },
     // isDismissible: false,
     enableDrag: true,
   );
+
+  if (!isReferralSubmitted) {
+    return null; // Indicates the sheet was slid down
+  } else {
+    return "Result"; // Indicates the sheet was closed with a result
+  }
 }
 
 class ReferBottomSheet extends StatefulWidget {

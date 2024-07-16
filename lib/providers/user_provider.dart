@@ -397,7 +397,7 @@ class UserProvider extends ChangeNotifier {
             // Sign up but not from referral link
 
             if (await Preference.isReferInput()) {
-              referSheet(
+              final result = await referSheet(
                 onReferral: (code) {
                   if (code == null || code == "") {
                     Navigator.pop(navigatorKey.currentContext!);
@@ -410,6 +410,12 @@ class UserProvider extends ChangeNotifier {
                   }
                 },
               );
+              if (result == null) {
+                Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                );
+              }
             } else {
               Navigator.push(
                 navigatorKey.currentContext!,
@@ -496,7 +502,7 @@ class UserProvider extends ChangeNotifier {
           } else {
             // Sign up but not from referral link
             if (await Preference.isReferInput()) {
-              referSheet(
+              final result = await referSheet(
                 onReferral: (code) {
                   if (code == null || code == "") {
                     Navigator.pop(navigatorKey.currentContext!);
@@ -509,6 +515,12 @@ class UserProvider extends ChangeNotifier {
                   }
                 },
               );
+              if (result == null) {
+                Navigator.push(
+                  navigatorKey.currentContext!,
+                  MaterialPageRoute(builder: (_) => const SignUpSuccess()),
+                );
+              }
             } else {
               Navigator.push(
                 navigatorKey.currentContext!,
