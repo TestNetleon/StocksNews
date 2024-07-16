@@ -39,6 +39,7 @@ import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/providers/most_popular_penny_provider.dart';
 import 'package:stocks_news_new/providers/snp_500_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
@@ -584,6 +585,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MembershipProvider()),
       ChangeNotifierProvider(create: (_) => MorningstarTxnProvider()),
       ChangeNotifierProvider(create: (_) => AIProvider()),
+      ChangeNotifierProvider(create: (_) => StoreProvider()),
     ];
   }
 }

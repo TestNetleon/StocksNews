@@ -170,6 +170,7 @@ class Apis {
   static const updateReferral = "/update-referral-code";
   static const userPurchase = "/user-purchase";
   static const plansDetail = "/membership/plans";
+  static const storeInfo = "/store-points/list";
 }
 
 //

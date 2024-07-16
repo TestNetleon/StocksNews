@@ -1,268 +1,263 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/store_info_res.dart';
+import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/screens/membership/store/faq_item.dart';
-import 'package:stocks_news_new/screens/membership/store/store_earn_more.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
+import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class Store extends StatelessWidget {
+class Store extends StatefulWidget {
   const Store({super.key});
 
   @override
+  State<Store> createState() => _StoreState();
+}
+
+class _StoreState extends State<Store> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      //
+      getStoreInfo();
+    });
+  }
+
+  void getStoreInfo() {
+    StoreProvider provider = context.read<StoreProvider>();
+
+    provider.getStoreInfo();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List points = [
-      {
-        "icon": Images.advisor,
-        "title": "Secure Transactions:",
-        "text":
-            "All purchases are processed securely via the App Store and Play Store",
-      },
-      {
-        "icon": Images.advisor,
-        "title": "Trusted Platform:",
-        "text":
-            "Join thousands of satisfied users who trust Points Central for their premium content needs.",
-      },
-      {
-        "icon": Images.advisor,
-        "title": "Instant Access:",
-        "text":
-            "Get immediate access to your points and start unlocking premium content and features right away.",
-      },
-      {
-        "icon": Images.advisor,
-        "title": "No Expiry:",
-        "text":
-            "Your points never expire, allowing you to use them whenever you need.",
-      },
-      {
-        "icon": Images.advisor,
-        "title": "Customer Support:",
-        "text":
-            "Our dedicated support team is always here to help you with any questions or issues.",
-      },
-      {
-        "icon": Images.advisor,
-        "title": "Flexible Bundles:",
-        "text":
-            " Choose from a variety of bundles to suit your needs and budget.",
-      },
-    ];
+    StoreProvider provider = context.watch<StoreProvider>();
+    StoreInfoRes? data = provider.data;
+
+    // List points = [
+    //   {
+    //     "icon": Images.advisor,
+    //     "title": "Secure Transactions:",
+    //     "text":
+    //         "All purchases are processed securely via the App Store and Play Store",
+    //   },
+    //   {
+    //     "icon": Images.advisor,
+    //     "title": "Trusted Platform:",
+    //     "text":
+    //         "Join thousands of satisfied users who trust Points Central for their premium content needs.",
+    //   },
+    //   {
+    //     "icon": Images.advisor,
+    //     "title": "Instant Access:",
+    //     "text":
+    //         "Get immediate access to your points and start unlocking premium content and features right away.",
+    //   },
+    //   {
+    //     "icon": Images.advisor,
+    //     "title": "No Expiry:",
+    //     "text":
+    //         "Your points never expire, allowing you to use them whenever you need.",
+    //   },
+    //   {
+    //     "icon": Images.advisor,
+    //     "title": "Customer Support:",
+    //     "text":
+    //         "Our dedicated support team is always here to help you with any questions or issues.",
+    //   },
+    //   {
+    //     "icon": Images.advisor,
+    //     "title": "Flexible Bundles:",
+    //     "text":
+    //         " Choose from a variety of bundles to suit your needs and budget.",
+    //   },
+    // ];
 
     return BaseContainer(
       appBar: const AppBarHome(
         isPopback: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+      body: BaseUiContainer(
+        hasData: !provider.isLoading && data != null,
+        isLoading: provider.isLoading,
+        error: provider.error,
+        showPreparingText: true,
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            Stack(
-              children: [
-                Container(
-                  // height: 200,
-                  decoration: const BoxDecoration(
-                    color: ThemeColors.tabBack,
-                    // borderRadius: BorderRadius.circular(6),
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 65, 171, 83),
-                        Color.fromARGB(255, 1, 122, 44),
+            Positioned(
+              top: 0,
+              child: Container(
+                height: 400,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                child: Image.asset(
+                  Images.start3,
+                  fit: BoxFit.fill,
+                  height: 350,
+                  opacity: const AlwaysStoppedAnimation(.5),
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${data?.title}",
+                        style: stylePTSansBold(
+                          color: Colors.white,
+                          fontSize: 28,
+                        ),
+                      ),
+                      const SpacerVertical(height: 5),
+                      Text(
+                        "${data?.subTitle}",
+                        style: stylePTSansRegular(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  const SpacerVertical(),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(255, 215, 255, 221),
+                          Colors.white
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Choose Your Points Bundle",
+                          style: stylePTSansBold(
+                            color: Colors.black,
+                            fontSize: 28,
+                          ),
+                        ),
+                        // const SpacerVertical(height: 5),
+                        // Text(
+                        //   "Ran out of points? Get more at Points Central for premium content access!",
+                        //   style: stylePTSansRegular(color: Colors.black),
+                        // ),
+                        CustomGridView(
+                          length: data?.points.length ?? 0,
+                          paddingVertical: 0,
+                          itemSpace: 20,
+                          paddingHorizontal: 0,
+                          getChild: (index) {
+                            return PointsItem(
+                              points: "${data?.points[index].point}",
+                              price: "${data?.points[index].price}",
+                            );
+                          },
+                        ),
+                        const SpacerVertical(height: 20),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 219, 243, 220),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 4),
+                                    child: const Icon(
+                                      Icons.circle,
+                                      size: 12,
+                                      color: ThemeColors.themeGreen,
+                                    ),
+                                  ),
+                                  const SpacerHorizontal(width: 10),
+                                  Flexible(
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text:
+                                            "${data?.benefits?[index].question}: ",
+                                        style: stylePTSansBold(
+                                            color: Colors.black),
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                "${data?.benefits?[index].answer}",
+                                            style: stylePTSansRegular(
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SpacerVertical(height: 8);
+                            },
+                            itemCount: data?.benefits?.length ?? 0,
+                          ),
+                        ),
+
+                        const SpacerVertical(height: 15),
+                        // const StoreEarnMore(),
+                        // const SpacerVertical(height: 15),
+                        Text(
+                          "Frequently Asked Questions",
+                          style: stylePTSansBold(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SpacerVertical(height: 15),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return FaqItem(
+                              question: "${data?.faq?[index].question}",
+                              answer: "${data?.faq?[index].answer}",
+                              openIndex: provider.faqOpenIndex,
+                              index: index,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SpacerVertical(height: 12);
+                          },
+                          itemCount: data?.faq?.length ?? 0,
+                        ),
                       ],
                     ),
-                  ),
-                  child: Image.asset(
-                    Images.storeBanner,
-                    // width: 30,
-                    // height: 30,
-                  ),
-                ),
-                // Positioned(
-                //   bottom: 0,
-                //   child: Container(
-                //     width: ScreenUtil().screenWidth,
-                //     padding: const EdgeInsets.all(16),
-                //     decoration: const BoxDecoration(
-                //       gradient: LinearGradient(
-                //         colors: [Colors.transparent, ThemeColors.background],
-                //         begin: Alignment.topCenter,
-                //         end: Alignment.bottomCenter,
-                //       ),
-                //     ),
-                //     // child: Column(
-                //     //   crossAxisAlignment: CrossAxisAlignment.start,
-                //     //   children: [
-                //     //     Text(
-                //     //       "Running out of points?",
-                //     //       style: stylePTSansBold(fontSize: 18),
-                //     //     ),
-                //     //     const SpacerVertical(height: 2),
-                //     //     Text(
-                //     //       "Check out our plans to continue using our features.",
-                //     //       style: stylePTSansRegular(),
-                //     //     ),
-                //     //   ],
-                //     // ),
-                //   ),
-                // )
-              ],
-            ),
-            const SpacerVertical(),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color.fromARGB(255, 215, 255, 221), Colors.white],
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // const SpacerVertical(height: 12),
-                  Text(
-                    "Points Central",
-                    style: stylePTSansBold(
-                      color: Colors.black,
-                      fontSize: 28,
-                    ),
-                  ),
-                  const SpacerVertical(height: 5),
-                  Text(
-                    "Ran out of points? Get more at Points Central for premium content access!",
-                    style: stylePTSansRegular(color: Colors.black),
-                  ),
-                  const SpacerVertical(height: 2),
-                  // const Row(
-                  //   children: [
-                  //     PointsItem(points: "100", price: "\$100"),
-                  //     SpacerHorizontal(width: 12),
-                  //     PointsItem(points: "200", price: "\$200"),
-                  //     SpacerHorizontal(width: 12),
-                  //     PointsItem(points: "300", price: "\$300"),
-                  //   ],
-                  // ),
-                  CustomGridView(
-                    length: 4,
-                    paddingVertical: 0,
-                    itemSpace: 20,
-                    paddingHorizontal: 0,
-                    getChild: (index) {
-                      if (index == 0) {
-                        return const PointsItem(points: "100", price: "\$100");
-                      } else if (index == 1) {
-                        return const PointsItem(points: "200", price: "\$200");
-                      } else if (index == 2) {
-                        return const PointsItem(points: "300", price: "\$300");
-                      } else {
-                        return const PointsItem(points: "400", price: "\$400");
-                      }
-                    },
-                  ),
-                  const SpacerVertical(height: 20),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 219, 243, 220),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 4),
-                              child: const Icon(
-                                Icons.circle,
-                                size: 12,
-                                color: ThemeColors.themeGreen,
-                              ),
-                            ),
-                            const SpacerHorizontal(width: 10),
-                            // Flexible(
-                            //   child: Text(
-                            //     points[index]["title"],
-                            //     style: stylePTSansBold(color: Colors.black),
-                            //   ),
-                            // ),
-                            // Flexible(
-                            //   child: Text(
-                            //     points[index]["title"],
-                            //     style: stylePTSansRegular(color: Colors.black),
-                            //   ),
-                            // ),
-                            Flexible(
-                              child: RichText(
-                                // points[index]["title"],
-                                // style: stylePTSansRegular(color: Colors.black),
-                                text: TextSpan(
-                                  text: """${points[index]["title"]} """,
-                                  style: stylePTSansBold(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: points[index]["text"],
-                                      style: stylePTSansRegular(
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SpacerVertical(height: 8);
-                      },
-                      itemCount: points.length,
-                    ),
-                  ),
-
-                  const SpacerVertical(height: 15),
-                  const StoreEarnMore(),
-                  const SpacerVertical(height: 15),
-                  Text(
-                    "Frequently Asked Questions",
-                    style: stylePTSansBold(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SpacerVertical(height: 15),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return const FaqItem(
-                        question: "Lorem Ipsum dummy text!!!",
-                        answer: "Lorem Ipsum dummy text!!!",
-                        openIndex: 1,
-                        index: 0,
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SpacerVertical(height: 12);
-                    },
-                    itemCount: 5,
-                  ),
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -392,7 +387,6 @@ class PointsItem extends StatelessWidget {
                     ),
                   ),
                   const SpacerVertical(height: 12),
-
                   // Text(
                   //   "Points",
                   //   style: stylePTSansRegular(),
@@ -416,7 +410,7 @@ class PointsItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Buy Now - $price",
+                          "Buy @ $price",
                           style: stylePTSansRegular(fontSize: 16).copyWith(
                             shadows: [
                               Shadow(
