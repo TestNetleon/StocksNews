@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -12,6 +10,7 @@ class FaqItem extends StatelessWidget {
   final int index;
   final String question;
   final String answer;
+  final dynamic provider;
 
   const FaqItem({
     super.key,
@@ -19,11 +18,12 @@ class FaqItem extends StatelessWidget {
     required this.answer,
     required this.openIndex,
     required this.index,
+    required this.provider,
   });
 
   @override
   Widget build(BuildContext context) {
-    StoreProvider provider = context.watch<StoreProvider>();
+    // StoreProvider provider = context.watch<StoreProvider>();
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

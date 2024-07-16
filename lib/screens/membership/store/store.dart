@@ -245,6 +245,7 @@ class _StoreState extends State<Store> {
                               answer: "${data?.faq?[index].answer}",
                               openIndex: provider.faqOpenIndex,
                               index: index,
+                              provider: provider,
                             );
                           },
                           separatorBuilder: (context, index) {

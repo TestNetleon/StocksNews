@@ -171,6 +171,7 @@ class Apis {
   static const userPurchase = "/user-purchase";
   static const plansDetail = "/membership/plans";
   static const storeInfo = "/store-points/list";
+  static const membershipInfo = "/membership/plan-data";
 }
 
 //
