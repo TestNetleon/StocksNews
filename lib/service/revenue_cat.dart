@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
 import '../utils/colors.dart';
@@ -19,8 +17,8 @@ import '../utils/utils.dart';
 import 'success.dart';
 
 class RevenueCatService {
-  static Future initializeSubscription(
-      {MembershipEnum? type = MembershipEnum.membership}) async {
+  static Future initializeSubscription({String? type}) async {
+    Utils().showLog("---TYPE $type");
     Purchases.setLogLevel(LogLevel.debug);
     RevenueCatKeyRes? keys =
         navigatorKey.currentContext!.read<HomeProvider>().extra?.revenueCatKeys;
@@ -61,24 +59,16 @@ class RevenueCatService {
         Offerings? offerings;
 
         offerings = await Purchases.getOfferings();
-        log("Identifier => ${offerings.all.keys}");
         closeGlobalProgressDialog();
 
         PaywallResult result = await RevenueCatUI.presentPaywall(
           offering: offerings.getOffering(
-            type == MembershipEnum.membership
-                ? 'access'
-                : type == MembershipEnum.hundredPoint
-                    ? '100 Points Bundle'
-                    : type == MembershipEnum.twoHundredPoint
-                        ? '200 Points Bundle'
-                        : type == MembershipEnum.threeHundredPoint
-                            ? '300 Points Bundle'
-                            : 'access',
+            type ?? 'access',
           ),
         );
 
-        await _handlePaywallResult(result);
+        await _handlePaywallResult(result,
+            isMembership: type == null || type == '');
       } else {
         closeGlobalProgressDialog();
       }
@@ -89,7 +79,8 @@ class RevenueCatService {
     }
   }
 
-  static Future _handlePaywallResult(PaywallResult result) async {
+  static Future _handlePaywallResult(PaywallResult result,
+      {bool isMembership = false}) async {
     switch (result) {
       case PaywallResult.cancelled:
         break;
@@ -103,7 +94,7 @@ class RevenueCatService {
         navigatorKey.currentContext!
             .read<MembershipProvider>()
             .getMembershipSuccess();
-        await _handlePurchaseSuccess();
+        await _handlePurchaseSuccess(isMembership: isMembership);
         break;
       case PaywallResult.restored:
         // Handle restore
@@ -112,7 +103,7 @@ class RevenueCatService {
     }
   }
 
-  static Future _handlePurchaseSuccess() async {
+  static Future _handlePurchaseSuccess({bool isMembership = false}) async {
     await showModalBottomSheet(
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
@@ -125,7 +116,7 @@ class RevenueCatService {
       isScrollControlled: true,
       context: navigatorKey.currentContext!,
       builder: (context) {
-        return const SubscriptionPurchased();
+        return SubscriptionPurchased(isMembership: isMembership);
       },
     );
   }
