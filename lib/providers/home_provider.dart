@@ -494,13 +494,13 @@ class HomeProvider extends ChangeNotifier {
   FeaturedWatchlistRes? _fwData;
   FeaturedWatchlistRes? get fwData => _fwData;
 
-  Future getFeaturedWatchlist() async {
+  Future getFeaturedWatchlist({bool userAvail = true}) async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     // _fwData = null;
     setStatusFW(Status.loading);
     try {
       Map request = {
-        "token": provider.user?.token ?? "",
+        "token": userAvail ? provider.user?.token ?? "" : "",
       };
       ApiResponse response = await apiRequest(
         url: Apis.featuredWatchlist,

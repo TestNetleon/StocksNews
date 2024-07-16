@@ -29,6 +29,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../service/ask_subscription.dart';
 import '../../auth/membershipAsk/ask.dart';
+import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
@@ -989,6 +990,22 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  ),
+                                  const SpacerVertical(height: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        navigatorKey.currentContext!,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const MorningStarTransaction()),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Read your all Morning Star Reports",
+                                      style: stylePTSansBold(
+                                          color: ThemeColors.accent),
                                     ),
                                   ),
                                 ],

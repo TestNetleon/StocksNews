@@ -64,6 +64,7 @@ class TopPlaidIndex extends StatelessWidget {
               ),
             ],
           ),
+          const SpacerVertical(height: 5),
           CustomGridView(
             paddingHorizontal: 0,
             itemSpace: 5,

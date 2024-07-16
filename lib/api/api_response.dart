@@ -110,8 +110,14 @@ class Extra {
   final String? text3;
   final String? featuredTitle;
   final String? watchlistTitle;
+  final bool? showFeatured;
+  final bool? showWatchlist;
+  final bool? showMostPurchased;
 
   Extra({
+    this.showFeatured,
+    this.showWatchlist,
+    this.showMostPurchased,
     this.text1,
     this.text2,
     this.text3,
@@ -182,6 +188,9 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        showFeatured: json['show_featured'],
+        showWatchlist: json['show_watchlist'],
+        showMostPurchased: json['show_most_purchased'],
         text1: json["text1"],
         text2: json["text2"],
         text3: json["text3"],
@@ -310,6 +319,9 @@ class Extra {
             ? []
             : List<dynamic>.from(feebackType!.map((x) => x)),
         "search": search,
+        "show_featured": showFeatured,
+        "show_watchlist": showWatchlist,
+        "show_most_purchased": showMostPurchased,
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
         "show_membership": showMembership,

@@ -1,0 +1,148 @@
+{
+  "identifier" : "5091A69F",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "100.0",
+      "familyShareable" : false,
+      "internalID" : "6544797935",
+      "localizations" : [
+        {
+          "description" : "100 points for $100",
+          "displayName" : "100 Points Bundle",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "100points",
+      "referenceName" : "100 Points Bundle",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "200.0",
+      "familyShareable" : false,
+      "internalID" : "6544798079",
+      "localizations" : [
+        {
+          "description" : "200 points for $200",
+          "displayName" : "200 Points Bundle",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "200points",
+      "referenceName" : "200 Points Bundle",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "300.0",
+      "familyShareable" : false,
+      "internalID" : "6544798142",
+      "localizations" : [
+        {
+          "description" : "300 points for $300",
+          "displayName" : "300 Points Bundle",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "300points",
+      "referenceName" : "300 Points Bundle",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6476615803",
+    "_developerTeamID" : "NPUHL9S742",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 742805791.158162,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21510065",
+      "localizations" : [
+
+      ],
+      "name" : "Membership",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6544800115",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlock premium features by becoming a member.",
+              "displayName" : "Premium Member",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "premium",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Premium Member",
+          "subscriptionGroupID" : "21510065",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

@@ -3,19 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
-import 'package:stocks_news_new/service/ask_subscription.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import '../../api/api_response.dart';
-import '../../widgets/theme_button_small.dart';
-import '../auth/membershipAsk/ask.dart';
 import '../drawer/widgets/profile_image.dart';
 import 'item.dart';
 
@@ -80,7 +74,7 @@ class MyMembershipWidget extends StatefulWidget {
 class _MyMembershipWidgetState extends State<MyMembershipWidget> {
   @override
   Widget build(BuildContext context) {
-    Extra? extra = context.watch<MembershipProvider>().extra;
+    // Extra? extra = context.watch<MembershipProvider>().extra;
 
     UserProvider provider = context.watch<UserProvider>();
     // String? colorHex = provider.user?.membership?.color;
@@ -212,96 +206,96 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
             ),
           ),
         ),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          margin: const EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-            // color: ThemeColors.background,
-            gradient: const LinearGradient(
-              // colors: [
-              //   ThemeColors.background,
-              //   Color.fromARGB(255, 54, 54, 54),
-              // ],
-              colors: [
-                Color.fromARGB(255, 1, 61, 10),
-                Color.fromARGB(255, 22, 117, 35)
-              ],
-            ),
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                right: 0,
-                child: Opacity(
-                  opacity: 0.15,
-                  child: Image.asset(
-                    Images.diamondS,
-                    height: 150,
-                  ),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    extra?.text1 ?? "Update Your Membership Today!",
-                    style: stylePTSansBold(fontSize: 30),
-                  ),
-                  const SpacerVertical(height: 8),
-                  Text(
-                    extra?.text2 ??
-                        "Unlock exclusive features and enjoy premium benefits.",
-                    style: stylePTSansRegular(),
-                  ),
-                  const SpacerVertical(height: 10),
-                  Text(
-                    extra?.text3 ?? "Click here to upgrade now! ",
-                    style: stylePTSansBold(fontSize: 15),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SpacerVertical(height: 15),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ThemeButtonSmall(
-                      color: const Color.fromARGB(255, 194, 216, 51),
-                      onPressed: () {
-                        askToSubscribe(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                            if (provider.user?.phone == null ||
-                                provider.user?.phone == '') {
-                              // await referLogin();
-                              await membershipLogin();
-                            }
-                            if (provider.user?.phone != null &&
-                                provider.user?.phone != '') {
-                              await RevenueCatService.initializeSubscription();
-                            }
-                          },
-                        );
-                      },
-                      radius: 30,
-                      text: "Upgrade your Membership",
-                      textColor: ThemeColors.background,
-                      fontBold: true,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.membership,
-                          height: 25,
-                        ),
-                      ),
-                      showArrow: false,
-                      mainAxisSize: MainAxisSize.max,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        // Container(
+        //   width: double.infinity,
+        //   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        //   margin: const EdgeInsets.only(bottom: 10),
+        //   decoration: BoxDecoration(
+        //     // color: ThemeColors.background,
+        //     gradient: const LinearGradient(
+        //       // colors: [
+        //       //   ThemeColors.background,
+        //       //   Color.fromARGB(255, 54, 54, 54),
+        //       // ],
+        //       colors: [
+        //         Color.fromARGB(255, 1, 61, 10),
+        //         Color.fromARGB(255, 22, 117, 35)
+        //       ],
+        //     ),
+        //     borderRadius: BorderRadius.circular(5),
+        //   ),
+        //   child: Stack(
+        //     children: [
+        //       Positioned(
+        //         right: 0,
+        //         child: Opacity(
+        //           opacity: 0.15,
+        //           child: Image.asset(
+        //             Images.diamondS,
+        //             height: 150,
+        //           ),
+        //         ),
+        //       ),
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text(
+        //             extra?.text1 ?? "Update Your Membership Today!",
+        //             style: stylePTSansBold(fontSize: 30),
+        //           ),
+        //           const SpacerVertical(height: 8),
+        //           Text(
+        //             extra?.text2 ??
+        //                 "Unlock exclusive features and enjoy premium benefits.",
+        //             style: stylePTSansRegular(),
+        //           ),
+        //           const SpacerVertical(height: 10),
+        //           Text(
+        //             extra?.text3 ?? "Click here to upgrade now! ",
+        //             style: stylePTSansBold(fontSize: 15),
+        //             textAlign: TextAlign.center,
+        //           ),
+        //           const SpacerVertical(height: 15),
+        //           Align(
+        //             alignment: Alignment.centerRight,
+        //             child: ThemeButtonSmall(
+        //               color: const Color.fromARGB(255, 194, 216, 51),
+        //               onPressed: () {
+        //                 askToSubscribe(
+        //                   onPressed: () async {
+        //                     Navigator.pop(context);
+        //                     if (provider.user?.phone == null ||
+        //                         provider.user?.phone == '') {
+        //                       // await referLogin();
+        //                       await membershipLogin();
+        //                     }
+        //                     if (provider.user?.phone != null &&
+        //                         provider.user?.phone != '') {
+        //                       await RevenueCatService.initializeSubscription();
+        //                     }
+        //                   },
+        //                 );
+        //               },
+        //               radius: 30,
+        //               text: "Upgrade your Membership",
+        //               textColor: ThemeColors.background,
+        //               fontBold: true,
+        //               iconWidget: Padding(
+        //                 padding: const EdgeInsets.only(right: 10),
+        //                 child: Image.asset(
+        //                   Images.membership,
+        //                   height: 25,
+        //                 ),
+        //               ),
+        //               showArrow: false,
+        //               mainAxisSize: MainAxisSize.max,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }

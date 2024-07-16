@@ -38,6 +38,13 @@ enum NotificationType {
   appUpdate,
 }
 
+enum MembershipEnum {
+  membership,
+  hundredPoint,
+  twoHundredPoint,
+  threeHundredPoint
+}
+
 enum BlogsType { blog, author, category, tag }
 
 enum CommentType { reddit, twitter }

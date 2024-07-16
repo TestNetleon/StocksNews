@@ -164,7 +164,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     if (user != null && user.membership?.purchased == 1 && showMembership) {
       visibleAboutTiles.add(DrawerRes(
         iconData: Icons.wallet_membership,
-        text: "My Membership",
+        text: "My Membership/Store",
         onTap: () {
           Navigator.push(
             navigatorKey.currentContext!,
@@ -292,7 +292,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.wallet_membership,
-          text: "My Membership",
+          text: "My Membership/Store",
           onTap: () {
             Navigator.push(
               navigatorKey.currentContext!,

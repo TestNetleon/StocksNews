@@ -55,7 +55,7 @@ class FeaturedWatchlistStockView extends StatelessWidget {
                       isFeatured && data?.isNotEmpty == true && data != null,
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(bottom: 5, left: 15, right: 15),
+                        const EdgeInsets.only(bottom: 10, left: 15, right: 15),
                     child: FeaturedWatchlistTitle(
                       title: extra?.featuredTitle ?? "Featured Stocks",
                       onTap: () {
@@ -73,8 +73,8 @@ class FeaturedWatchlistStockView extends StatelessWidget {
                   visible:
                       !isFeatured && (data?.isNotEmpty == true && data != null),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 15),
+                    padding: const EdgeInsets.only(
+                        bottom: 10, left: 15, right: 15, top: 20),
                     child: FeaturedWatchlistTitle(
                       title: extra?.watchlistTitle ?? "Your Watchlist",
                       onTap: () {
@@ -88,11 +88,11 @@ class FeaturedWatchlistStockView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15, left: 15),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
                     child: Row(
                       children: List.generate(
                         data?.length ?? 1,

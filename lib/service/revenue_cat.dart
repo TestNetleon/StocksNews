@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 
 import '../utils/colors.dart';
@@ -17,7 +19,8 @@ import '../utils/utils.dart';
 import 'success.dart';
 
 class RevenueCatService {
-  static Future initializeSubscription({int? index = 0}) async {
+  static Future initializeSubscription(
+      {MembershipEnum? type = MembershipEnum.membership}) async {
     Purchases.setLogLevel(LogLevel.debug);
     RevenueCatKeyRes? keys =
         navigatorKey.currentContext!.read<HomeProvider>().extra?.revenueCatKeys;
@@ -58,17 +61,20 @@ class RevenueCatService {
         Offerings? offerings;
 
         offerings = await Purchases.getOfferings();
+        log("Identifier => ${offerings.all.keys}");
         closeGlobalProgressDialog();
 
         PaywallResult result = await RevenueCatUI.presentPaywall(
           offering: offerings.getOffering(
-            index == 0
+            type == MembershipEnum.membership
                 ? 'access'
-                : index == 1
+                : type == MembershipEnum.hundredPoint
                     ? '100 Points Bundle'
-                    : index == 2
+                    : type == MembershipEnum.twoHundredPoint
                         ? '200 Points Bundle'
-                        : '300 Points Bundle',
+                        : type == MembershipEnum.threeHundredPoint
+                            ? '300 Points Bundle'
+                            : 'access',
           ),
         );
 
