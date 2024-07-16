@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/membership/store/faq_item.dart';
 import 'package:stocks_news_new/screens/membership/store/store_earn_more.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';

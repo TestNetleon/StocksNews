@@ -20,7 +20,7 @@ class _NewMembershipFaqState extends State<NewMembershipFaq> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Frequantly asked question',
+          'Frequently asked question',
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
