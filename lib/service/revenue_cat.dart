@@ -94,7 +94,14 @@ class RevenueCatService {
         navigatorKey.currentContext!
             .read<MembershipProvider>()
             .getMembershipSuccess(isMembership: isMembership);
-        await _handlePurchaseSuccess(isMembership: isMembership);
+        // await _handlePurchaseSuccess(isMembership: isMembership);
+        await Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) =>
+                const SubscriptionPurchased(isMembership: true),
+          ),
+        );
         break;
       case PaywallResult.restored:
         // Handle restore

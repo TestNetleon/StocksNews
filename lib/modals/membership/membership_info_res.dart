@@ -46,24 +46,27 @@ class MembershipInfoRes {
 class Plan {
   final String name;
   final String price;
-  final List<dynamic> options;
+  final List<String>? features;
 
   Plan({
     required this.name,
     required this.price,
-    required this.options,
+    this.features,
   });
 
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
         name: json["name"],
         price: json["price"],
-        options: List<dynamic>.from(json["options"].map((x) => x)),
+        features: json["features"] == null
+            ? []
+            : List<String>.from(json["features"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "price": price,
-        "options": List<dynamic>.from(options.map((x) => x)),
+        "features":
+            features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
       };
 }
 
