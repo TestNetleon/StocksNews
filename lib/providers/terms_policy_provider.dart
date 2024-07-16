@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
@@ -38,29 +37,11 @@ class TermsAndPolicyProvider extends ChangeNotifier {
       "token":
           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "slug": slug,
-      // "slug": type == PolicyType.contactUs
-      //     ? "contact-us"
-      //     : type == PolicyType.aboutUs
-      //         ? "about-us"
-      //         : type == PolicyType.privacy
-      //             ? "privacy-policy"
-      //             : type == PolicyType.tC
-      //                 ? "terms-of-service"
-      //                 : "disclaimer",
     };
     try {
       ApiResponse response = await apiRequest(
         url: Apis.infoPage,
         request: request,
-        // showProgress: type == PolicyType.contactUs
-        //     ? false
-        //     : type == PolicyType.aboutUs
-        //         ? false
-        //         : type == PolicyType.privacy
-        //             ? false
-        //             : type == PolicyType.tC
-        //                 ? false
-        //                 : false,
       );
 
       if (response.status) {

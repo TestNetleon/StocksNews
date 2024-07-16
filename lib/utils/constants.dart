@@ -214,6 +214,7 @@ class Images {
   // // static const login = "assets/svg/login.svg";
   // static const signin = "assets/svg/signin.svg";
   // static const star = "assets/svg/star.svg";
+  static const add = "assets/svg/add.svg";
 }
 
 class AudioFiles {

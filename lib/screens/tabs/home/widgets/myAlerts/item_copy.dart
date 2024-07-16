@@ -59,7 +59,7 @@ class HomeMyAlertItem extends StatelessWidget {
           barWidth: 2,
           isStrokeCapRound: false,
           dotData: const FlDotData(
-            show: false, // hide dots
+            show: false,
           ),
           belowBarData: BarAreaData(
             show: true,

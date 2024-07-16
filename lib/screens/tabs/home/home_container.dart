@@ -4,10 +4,10 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 // ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index_copy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -16,6 +16,7 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
@@ -23,6 +24,7 @@ import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
 import '../news/news_item.dart';
+import 'revenue_point.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
 import 'widgets/stockBuzz/index.dart';
@@ -59,6 +61,14 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              ThemeButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RevenueCatPoints()));
+                },
+              ),
               const HomeTopNewsSlider(),
               Visibility(
                 visible: provider.extra?.referral?.shwReferral ?? false,
@@ -75,10 +85,10 @@ class HomeContainer extends StatelessWidget {
               ),
               // const SpacerVertical(height: Dimen.padding),
               Container(
-                margin: EdgeInsets.only(
-                  left: Dimen.padding.sp,
-                  right: Dimen.padding.sp,
-                ),
+                // margin: EdgeInsets.only(
+                //   left: Dimen.padding.sp,
+                //   right: Dimen.padding.sp,
+                // ),
                 // color: Colors.red,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,11 +98,20 @@ class HomeContainer extends StatelessWidget {
                             provider.homeTrendingRes == null) &&
                         provider.statusTrending != Status.loading))
                       Container(
-                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        margin: const EdgeInsets.only(
+                            top: Dimen.homeSpacing, left: 15, right: 15),
                         child: const StockInBuzz(),
                       ),
                     Container(
-                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                      margin: const EdgeInsets.only(top: 10),
+                      child: const FeaturedStocksIndex(),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: Dimen.homeSpacing,
+                        left: 15,
+                        right: 15,
+                      ),
                       child: const TopPlaidIndex(),
                     ),
                     Visibility(
@@ -194,14 +213,19 @@ class HomeContainer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
-                      child: const HomeMyAlerts(),
-                    ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                    //   child: const HomeMyAlerts(),
+                    // ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                    //   child: const FeaturedStocksIndex(),
+                    // ),
                     Visibility(
                       visible: provider.extra?.showPortfolio ?? false,
                       child: Container(
-                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        margin: const EdgeInsets.only(
+                            top: Dimen.homeSpacing, left: 15, right: 15),
                         // color: Colors.red,
                         child: HomePartialLoading(
                           loading: provider.isLoadingPortfolio,
@@ -236,7 +260,8 @@ class HomeContainer extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                      margin: const EdgeInsets.only(
+                          top: Dimen.homeSpacing, left: 15, right: 15),
                       child: HomePartialLoading(
                         loadingWidget: const Loading(),
                         loading: provider.isLoadingTrending,
@@ -250,7 +275,8 @@ class HomeContainer extends StatelessWidget {
                                   true &&
                               provider.homeTrendingRes?.trendingNews != null),
                       child: Container(
-                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+                        margin: const EdgeInsets.only(
+                            top: Dimen.homeSpacing, left: 15, right: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

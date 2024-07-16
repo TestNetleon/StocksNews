@@ -6,6 +6,7 @@ import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/custom_gridview.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import '../../../../../widgets/spacer_horizontal.dart';
 import 'view_all.dart';
@@ -23,16 +24,10 @@ class TopPlaidIndex extends StatelessWidget {
     }
 
     return Padding(
-      // padding: const EdgeInsets.only(bottom: Dimen.padding),
       padding: const EdgeInsets.only(bottom: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Text(
-          //   provider.extraMostPopular?.title ??
-          //       "Most purchased by Stocks.News users ",
-          //   style: stylePTSansBold(),
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -43,7 +38,7 @@ class TopPlaidIndex extends StatelessWidget {
                   style: stylePTSansBold(),
                 ),
               ),
-              const SpacerHorizontal(width: 5),
+              const SpacerHorizontal(width: 10),
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -69,39 +64,36 @@ class TopPlaidIndex extends StatelessWidget {
               ),
             ],
           ),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children:
-                  // List.generate(
-                  //   4,
-                  //   (index) {
-                  //     MostPurchasedRes? data = provider.mostPurchased?[index];
-                  //     if (data == null) {
-                  //       return const SizedBox();
-                  //     }
-                  //     return SizedBox(
-                  //       width: 200,
-                  //       child: Text(
-                  //         "data",
-                  //         style: styleGeorgiaRegular(),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
-                  List.generate(
-                provider.mostPurchased?.length ?? 0,
-                (index) {
-                  MostPurchasedRes? data = provider.mostPurchased?[index];
-                  if (data == null) {
-                    return const SizedBox();
-                  }
-                  return TopPlaidItem(data: data);
-                },
-              ),
-            ),
+          CustomGridView(
+            paddingHorizontal: 0,
+            itemSpace: 5,
+            paddingVerticle: 5,
+            length: 4,
+            getChild: (index) {
+              MostPurchasedRes? data = provider.mostPurchased?[index];
+              if (data == null) {
+                return const SizedBox();
+              }
+              return TopPlaidItem(data: data);
+            },
           ),
+
+          // SingleChildScrollView(
+          //   physics: const BouncingScrollPhysics(),
+          //   scrollDirection: Axis.horizontal,
+          //   child: Row(
+          //     children: List.generate(
+          //       provider.mostPurchased?.length ?? 0,
+          //       (index) {
+          //         MostPurchasedRes? data = provider.mostPurchased?[index];
+          //         if (data == null) {
+          //           return const SizedBox();
+          //         }
+          //         return TopPlaidItem(data: data);
+          //       },
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -115,7 +107,7 @@ class TopPlaidItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       // padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(5),

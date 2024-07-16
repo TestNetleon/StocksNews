@@ -38,151 +38,147 @@ class ScreenTitle extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.red,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            OptionalParent(
-              addParent: optionalText != null || optionalWidget != null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (title != null)
+          OptionalParent(
+            addParent: optionalText != null || optionalWidget != null,
+            parentBuilder: (child) {
+              return Row(
+                crossAxisAlignment: crossAxisAlignment,
+                children: [
+                  Expanded(
+                    child: htmlTitle
+                        ? HtmlWidget(
+                            title ?? "",
+                            textStyle: style ?? styleGeorgiaBold(fontSize: 25),
+                          )
+                        : Text(
+                            title ?? "",
+                            style: style ?? styleGeorgiaBold(fontSize: 25),
+                          ),
+                  ),
+                  Visibility(
+                    visible: optionalText != null,
+                    child: Text(
+                      optionalText ?? "",
+                      style: style ?? stylePTSansRegular(fontSize: 12),
+                    ),
+                  ),
+                  Visibility(
+                    visible: optionalWidget != null,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10.sp),
+                      child: optionalWidget ?? const SizedBox(),
+                    ),
+                  ),
+                ],
+              );
+            },
+            child: OptionalParent(
+              addParent: canPopBack,
               parentBuilder: (child) {
                 return Row(
-                  crossAxisAlignment: crossAxisAlignment,
                   children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 20,
+                      ),
+                    ),
                     Expanded(
-                      child: htmlTitle
-                          ? HtmlWidget(
-                              title ?? "",
-                              textStyle:
-                                  style ?? styleGeorgiaBold(fontSize: 25),
-                            )
-                          : Text(
-                              title ?? "",
-                              style: style ?? styleGeorgiaBold(fontSize: 25),
-                            ),
-                    ),
-                    Visibility(
-                      visible: optionalText != null,
                       child: Text(
-                        optionalText ?? "",
-                        style: style ?? stylePTSansRegular(fontSize: 12),
+                        title ?? "",
+                        style: style ?? styleGeorgiaBold(fontSize: 25),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    Visibility(
-                      visible: optionalWidget != null,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.sp),
-                        child: optionalWidget ?? const SizedBox(),
-                      ),
-                    ),
+                    const SpacerHorizontal(width: 20),
                   ],
                 );
               },
-              child: OptionalParent(
-                addParent: canPopBack,
-                parentBuilder: (child) {
-                  return Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          size: 20,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          title ?? "",
-                          style: style ?? styleGeorgiaBold(fontSize: 25),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const SpacerHorizontal(width: 20),
-                    ],
-                  );
-                },
-                child: htmlTitle
-                    ? HtmlWidget(
-                        title ?? "",
-                        textStyle: style ?? styleGeorgiaBold(fontSize: 25),
-                      )
-                    : Text(
-                        title ?? "",
-                        style: style ?? styleGeorgiaBold(fontSize: 25),
-                      ),
-              ),
-            ),
-          if (!isEmpty(subTitle))
-            subTitleHtml
-                ? HtmlWidget(
-                    subTitle ?? "",
-                    textStyle: stylePTSansRegular(
-                        fontSize: 14, color: ThemeColors.greyText),
-                    customWidgetBuilder: (element) {
-                      return CustomReadMoreText(
-                        text: element.text,
-                      );
-                    },
-                  )
-                : Visibility(
-                    visible: subTitle != null,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 3.sp),
-                      child: AnimatedSize(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                          child: CustomReadMoreText(
-                            text: subTitle ?? "",
-                          )
-                          //  ReadMoreText(
-                          //   textAlign: TextAlign.start,
-                          //   subTitle ?? "",
-                          //   trimLines: 2,
-                          //   colorClickableText: ThemeColors.accent,
-                          //   trimMode: TrimMode.Line,
-                          //   trimCollapsedText: ' Read more',
-                          //   trimExpandedText: ' Read less',
-                          //   moreStyle: stylePTSansRegular(
-                          //     color: ThemeColors.accent,
-                          //     fontSize: 12,
-                          //     height: 1.3,
-                          //   ),
-                          //   style: stylePTSansRegular(
-                          //     height: 1.3,
-                          //     fontSize: 13,
-                          //     color: ThemeColors.greyText,
-                          //   ),
-                          // ),
-                          ),
-                      // Text(
-                      //   subTitle ?? "",
-                      //   style: stylePTSansRegular(
-                      //       fontSize: 14, color: ThemeColors.greyText),
-                      // ),
+              child: htmlTitle
+                  ? HtmlWidget(
+                      title ?? "",
+                      textStyle: style ?? styleGeorgiaBold(fontSize: 25),
+                    )
+                  : Text(
+                      title ?? "",
+                      style: style ?? styleGeorgiaBold(fontSize: 25),
                     ),
+            ),
+          ),
+        if (!isEmpty(subTitle))
+          subTitleHtml
+              ? HtmlWidget(
+                  subTitle ?? "",
+                  textStyle: stylePTSansRegular(
+                      fontSize: 14, color: ThemeColors.greyText),
+                  customWidgetBuilder: (element) {
+                    return CustomReadMoreText(
+                      text: element.text,
+                    );
+                  },
+                )
+              : Visibility(
+                  visible: subTitle != null,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 3.sp),
+                    child: AnimatedSize(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        child: CustomReadMoreText(
+                          text: subTitle ?? "",
+                        )
+                        //  ReadMoreText(
+                        //   textAlign: TextAlign.start,
+                        //   subTitle ?? "",
+                        //   trimLines: 2,
+                        //   colorClickableText: ThemeColors.accent,
+                        //   trimMode: TrimMode.Line,
+                        //   trimCollapsedText: ' Read more',
+                        //   trimExpandedText: ' Read less',
+                        //   moreStyle: stylePTSansRegular(
+                        //     color: ThemeColors.accent,
+                        //     fontSize: 12,
+                        //     height: 1.3,
+                        //   ),
+                        //   style: stylePTSansRegular(
+                        //     height: 1.3,
+                        //     fontSize: 13,
+                        //     color: ThemeColors.greyText,
+                        //   ),
+                        // ),
+                        ),
+                    // Text(
+                    //   subTitle ?? "",
+                    //   style: stylePTSansRegular(
+                    //       fontSize: 14, color: ThemeColors.greyText),
+                    // ),
                   ),
-          Padding(
-            padding: dividerPadding ??
-                const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-            child: const SizedBox(),
-          )
-          // Visibility(  //   dividerVisible
-          //   visible: divider,
-          //   child: Padding(
-          //     padding: dividerPadding ??
-          //         const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
-          //     child: const Divider(
-          //       color: ThemeColors.accent,
-          //       height: 2,
-          //       thickness: 2,
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
+                ),
+        Padding(
+          padding: dividerPadding ??
+              const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+          child: const SizedBox(),
+        )
+        // Visibility(  //   dividerVisible
+        //   visible: divider,
+        //   child: Padding(
+        //     padding: dividerPadding ??
+        //         const EdgeInsets.symmetric(vertical: Dimen.itemSpacing),
+        //     child: const Divider(
+        //       color: ThemeColors.accent,
+        //       height: 2,
+        //       thickness: 2,
+        //     ),
+        //   ),
+        // ),
+      ],
     );
   }
 }

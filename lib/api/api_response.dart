@@ -86,6 +86,8 @@ class Extra {
   final HowItWorkRes? membershipText;
 
   final ReferLoginRes? referLogin;
+  final RevenueCatKeyRes? revenueCatKeys;
+
   final String? verifyIdentity;
   final String? verifySubscription;
   final String? nudgeText;
@@ -103,6 +105,8 @@ class Extra {
   final String? text1;
   final String? text2;
   final String? text3;
+  final String? featuredTitle;
+  final String? watchlistTitle;
 
   Extra({
     this.text1,
@@ -124,6 +128,7 @@ class Extra {
     this.priceRange,
     this.transactionType,
     this.referLogin,
+    this.revenueCatKeys,
     this.nudgeText,
     this.suspendMsg,
     this.period,
@@ -165,6 +170,8 @@ class Extra {
     this.loginDialogRes,
     this.totalActivityPoints,
     this.membership,
+    this.featuredTitle,
+    this.watchlistTitle,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -172,6 +179,8 @@ class Extra {
         text1: json["text1"],
         text2: json["text2"],
         text3: json["text3"],
+        featuredTitle: json["featured_title"],
+        watchlistTitle: json["watchlist_title"],
 
         showMembership: json["show_membership"],
         feebackType: json["feeback_type"] == null
@@ -198,6 +207,11 @@ class Extra {
         referLogin: json["refer_login"] == null
             ? null
             : ReferLoginRes.fromJson(json["refer_login"]),
+
+        revenueCatKeys: json["revenuecat_key"] == null
+            ? null
+            : RevenueCatKeyRes.fromJson(json["revenuecat_key"]),
+
         pending: json['total_points_pending'],
         affiliateReferText: json['heading'],
         userAlert: json["user_alerts"],
@@ -206,6 +220,7 @@ class Extra {
         currentBalance: json['current_balance'],
         subTitle: json["sub_title"],
         loginText: json["login_text"],
+
         howItWork: json["how_it_work"] == null
             ? null
             : HowItWorkRes.fromJson(json["how_it_work"]),
@@ -307,6 +322,7 @@ class Extra {
         "profile_text": profileText?.toJson(),
         "heading": affiliateReferText,
         "refer_login": referLogin?.toJson(),
+        "revenuecat_key": revenueCatKeys?.toJson(),
         "title": title,
         "how_it_work": howItWork?.toJson(),
         "membership_text": membership?.toJson(),
@@ -434,6 +450,27 @@ class ReferLoginRes {
         "title": title,
         "sub_title": subTitle,
         "note": note,
+      };
+}
+
+class RevenueCatKeyRes {
+  final String? appStore;
+  final String? playStore;
+
+  RevenueCatKeyRes({
+    this.appStore,
+    this.playStore,
+  });
+
+  factory RevenueCatKeyRes.fromJson(Map<String, dynamic> json) =>
+      RevenueCatKeyRes(
+        appStore: json["app_store"],
+        playStore: json["play_store"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "app_store": appStore,
+        "play_store": playStore,
       };
 }
 

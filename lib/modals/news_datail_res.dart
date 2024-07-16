@@ -118,7 +118,6 @@ class PostDetail {
         title: json["title"],
         source: json["source"],
         permalink: json["permalink"],
-
         readingStatus: json["reading_status"],
         summary: json['summary'],
         readingTitle: json["reading_title"],
