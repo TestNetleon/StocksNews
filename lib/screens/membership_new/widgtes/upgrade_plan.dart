@@ -9,6 +9,9 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../service/revenue_cat.dart';
+import '../../../widgets/my_evaluvated_button.dart';
+
 class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
   const NewMembershipUpgradeCurrentPlan({super.key});
 
@@ -146,6 +149,27 @@ class _NewMembershipUpgradeCurrentPlanState
                     itemCount: data?.plan.features?.length ?? 0,
                   ),
                 ),
+                const SpacerVertical(height: 20),
+                MyElevatedButton(
+                  width: double.infinity,
+                  onPressed: () {
+                    RevenueCatService.initializeSubscription();
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const SubscriptionPurchased(
+                    //         isMembership: true),
+                    //   ),
+                    // );
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  child: Text(
+                    'Continue',
+                    style: stylePTSansBold(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+                const SpacerVertical(height: 10),
+
                 // Column(
                 //   crossAxisAlignment: CrossAxisAlignment.start,
                 //   children: [
