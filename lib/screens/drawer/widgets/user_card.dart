@@ -4,6 +4,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/membership/index.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -243,19 +244,25 @@ class _UserCardState extends State<UserCard> {
                       const SpacerHorizontal(width: 5),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 0, 98, 13)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          backgroundColor: const Color.fromARGB(255, 0, 98, 13),
+                        ),
                         onPressed: () {
                           Scaffold.of(context).closeDrawer();
-                          askToSubscribe(
-                            onPressed: () {
-                              Navigator.pop(navigatorKey.currentContext!);
-                              _upgradeSubscription();
-                            },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const NewMembership(),
+                            ),
                           );
+                          // askToSubscribe(
+                          //   onPressed: () {
+                          //     Navigator.pop(navigatorKey.currentContext!);
+                          //     _upgradeSubscription();
+                          //   },
+                          // );
                         },
                         child: Text(
                           "UPGRADE",

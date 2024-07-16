@@ -44,7 +44,7 @@ class NewMembershipReviews extends StatelessWidget {
                   children: [
                     // const SpacerVertical(height: 15),
                     RatingBar.builder(
-                      initialRating: 5,
+                      initialRating: data?.testimonials[index].rating ?? 5,
                       minRating: 5,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
@@ -82,7 +82,7 @@ class NewMembershipReviews extends StatelessWidget {
                     const SpacerVertical(height: 10),
                     Text(
                       textAlign: TextAlign.center,
-                      "Owen G.",
+                      "${data?.testimonials[index].name}",
                       style: stylePTSansBold(
                         color: Colors.black,
                         fontSize: 16,
