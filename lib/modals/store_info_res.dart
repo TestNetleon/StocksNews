@@ -80,14 +80,14 @@ class Point {
   });
 
   factory Point.fromJson(Map<String, dynamic> json) => Point(
-        lookupKey: json["lookup_key"],
+        lookupKey: json["product_id"],
         displayName: json["display_name"],
         price: json["price"],
         point: json["point"],
       );
 
   Map<String, dynamic> toJson() => {
-        "lookup_key": lookupKey,
+        "product_id": lookupKey,
         "display_name": displayName,
         "price": price,
         "point": point,

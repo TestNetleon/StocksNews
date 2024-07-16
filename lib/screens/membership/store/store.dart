@@ -4,6 +4,7 @@ import 'package:stocks_news_new/modals/store_info_res.dart';
 import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/screens/membership/store/faq_item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -171,6 +172,10 @@ class _StoreState extends State<Store> {
                             return PointsItem(
                               points: "${data?.points[index].point}",
                               price: "${data?.points[index].price}",
+                              onTap: () {
+                                RevenueCatService.initializeSubscription(
+                                    type: data?.points[index].lookupKey);
+                              },
                             );
                           },
                         ),
@@ -178,7 +183,7 @@ class _StoreState extends State<Store> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 219, 243, 220),
+                            color: const Color.fromARGB(255, 146, 165, 147),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: ListView.separated(
@@ -279,190 +284,193 @@ class PointsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        AspectRatio(
-          aspectRatio: .88,
-          child: Container(
-            padding: const EdgeInsets.all(2),
-            margin: const EdgeInsets.only(top: 50),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromARGB(255, 23, 254, 42),
-                  Color.fromARGB(255, 217, 159, 0),
-                ],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5), // Color of the shadow
-                  spreadRadius: 5, // Spread radius
-                  blurRadius: 7, // Blur radius
-                  offset: const Offset(0, 3), // Offset from the box
-                ),
-              ],
-            ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          AspectRatio(
+            aspectRatio: .88,
             child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              // margin: const EdgeInsets.only(top: 50),
-              // constraints: const BoxConstraints(
-              //   maxWidth: 250,
-              //   minWidth: 150,
-              // ),
+              padding: const EdgeInsets.all(2),
+              margin: const EdgeInsets.only(top: 50),
               decoration: BoxDecoration(
-                color: ThemeColors.tabBack,
                 borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  opacity: .5,
-                  image: AssetImage(Images.storeBack),
-                ),
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(255, 1, 87, 15),
-                    Color.fromARGB(255, 128, 197, 151),
+                    Color.fromARGB(255, 23, 254, 42),
+                    Color.fromARGB(255, 217, 159, 0),
                   ],
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // const SpacerVertical(height: 20),
-                  // Text(
-                  //   "Get",
-                  //   style: stylePTSansRegular(),
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // const SpacerVertical(height: 5),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              points,
-                              style: stylePTSansBold(fontSize: 34).copyWith(
-                                height: 0,
-                                fontWeight: FontWeight.w900,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 10.0,
-                                    color: Colors.black.withOpacity(0.5),
-                                    offset: const Offset(2.0, 2.0),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SpacerHorizontal(width: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 5),
-                              child: Text(
-                                "Points",
-                                style:
-                                    stylePTSansRegular(fontSize: 16).copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // const SpacerVertical(height: 2),
-                        // Text(
-                        //   "Unlimited Validity",
-                        //   style: stylePTSansRegular(fontSize: 14),
-                        //   textAlign: TextAlign.center,
-                        // ),
-                      ],
-                    ),
-                  ),
-                  const SpacerVertical(height: 12),
-                  // Text(
-                  //   "Points",
-                  //   style: stylePTSansRegular(),
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // // const SpacerVertical(height: 2),
-                  // // Text(
-                  // //   "in Just",
-                  // //   style: stylePTSansRegular(),
-                  // //   textAlign: TextAlign.center,
-                  // // ),
-                  // const SpacerVertical(height: 5),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.black,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Buy @ $price",
-                          style: stylePTSansRegular(fontSize: 16).copyWith(
-                            shadows: [
-                              Shadow(
-                                blurRadius: 10.0,
-                                color: Colors.black.withOpacity(0.5),
-                                offset: const Offset(2.0, 2.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SpacerHorizontal(width: 10),
-                        Image.asset(
-                          Images.buyPoints,
-                          color: Colors.white,
-                          width: 18,
-                          height: 18,
-                        )
-                      ],
-                    ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Color of the shadow
+                    spreadRadius: 5, // Spread radius
+                    blurRadius: 7, // Blur radius
+                    offset: const Offset(0, 3), // Offset from the box
                   ),
                 ],
               ),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                // margin: const EdgeInsets.only(top: 50),
+                // constraints: const BoxConstraints(
+                //   maxWidth: 250,
+                //   minWidth: 150,
+                // ),
+                decoration: BoxDecoration(
+                  color: ThemeColors.tabBack,
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                    fit: BoxFit.cover,
+                    opacity: .5,
+                    image: AssetImage(Images.storeBack),
+                  ),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(255, 1, 87, 15),
+                      Color.fromARGB(255, 128, 197, 151),
+                    ],
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // const SpacerVertical(height: 20),
+                    // Text(
+                    //   "Get",
+                    //   style: stylePTSansRegular(),
+                    //   textAlign: TextAlign.center,
+                    // ),
+                    // const SpacerVertical(height: 5),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                points,
+                                style: stylePTSansBold(fontSize: 34).copyWith(
+                                  height: 0,
+                                  fontWeight: FontWeight.w900,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 10.0,
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: const Offset(2.0, 2.0),
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SpacerHorizontal(width: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Text(
+                                  "Points",
+                                  style:
+                                      stylePTSansRegular(fontSize: 16).copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // const SpacerVertical(height: 2),
+                          // Text(
+                          //   "Unlimited Validity",
+                          //   style: stylePTSansRegular(fontSize: 14),
+                          //   textAlign: TextAlign.center,
+                          // ),
+                        ],
+                      ),
+                    ),
+                    const SpacerVertical(height: 12),
+                    // Text(
+                    //   "Points",
+                    //   style: stylePTSansRegular(),
+                    //   textAlign: TextAlign.center,
+                    // ),
+                    // // const SpacerVertical(height: 2),
+                    // // Text(
+                    // //   "in Just",
+                    // //   style: stylePTSansRegular(),
+                    // //   textAlign: TextAlign.center,
+                    // // ),
+                    // const SpacerVertical(height: 5),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.black,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Buy @ $price",
+                            style: stylePTSansRegular(fontSize: 16).copyWith(
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.black.withOpacity(0.5),
+                                  offset: const Offset(2.0, 2.0),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SpacerHorizontal(width: 10),
+                          Image.asset(
+                            Images.buyPoints,
+                            color: Colors.white,
+                            width: 18,
+                            height: 18,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.center,
-            // decoration: const BoxDecoration(
-            //   color: ThemeColors.tabBack,
-            //   // borderRadius: BorderRadius.circular(6),
-            //   shape: BoxShape.circle,
-            //   gradient: LinearGradient(
-            //     begin: Alignment.topCenter,
-            //     end: Alignment.bottomCenter,
-            //     colors: [
-            //       Color.fromARGB(255, 1, 87, 15),
-            //       Color.fromARGB(255, 128, 197, 151),
-            //     ],
-            //   ),
-            // ),
-            // child: const Icon(Icons.star, size: 36),
-            child: Image.asset(
-              Images.starAffiliate,
-              width: 60,
-              height: 60,
+          Positioned(
+            top: 0,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              alignment: Alignment.center,
+              // decoration: const BoxDecoration(
+              //   color: ThemeColors.tabBack,
+              //   // borderRadius: BorderRadius.circular(6),
+              //   shape: BoxShape.circle,
+              //   gradient: LinearGradient(
+              //     begin: Alignment.topCenter,
+              //     end: Alignment.bottomCenter,
+              //     colors: [
+              //       Color.fromARGB(255, 1, 87, 15),
+              //       Color.fromARGB(255, 128, 197, 151),
+              //     ],
+              //   ),
+              // ),
+              // child: const Icon(Icons.star, size: 36),
+              child: Image.asset(
+                Images.starAffiliate,
+                width: 60,
+                height: 60,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

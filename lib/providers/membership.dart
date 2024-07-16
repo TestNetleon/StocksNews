@@ -71,12 +71,13 @@ class MembershipProvider extends ChangeNotifier {
     }
   }
 
-  Future getMembershipSuccess() async {
+  Future getMembershipSuccess({bool isMembership = false}) async {
     notifyListeners();
     try {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "membership": "$isMembership",
       });
       ApiResponse response = await apiRequest(
         url: Apis.membershipSuccess,

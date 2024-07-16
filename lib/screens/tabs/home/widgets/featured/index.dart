@@ -19,9 +19,12 @@ class FeaturedStocksIndex extends StatelessWidget {
       children: [
         Visibility(
           visible: provider.extraFW?.showFeatured == true,
-          child: FeaturedWatchlistStockView(
-            isFeatured: true,
-            data: featured,
+          child: Container(
+            margin: const EdgeInsets.only(top: Dimen.homeSpacing),
+            child: FeaturedWatchlistStockView(
+              isFeatured: true,
+              data: featured,
+            ),
           ),
         ),
         Visibility(

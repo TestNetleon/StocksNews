@@ -37,7 +37,7 @@ class _MembershipIndexState extends State<MembershipIndex> {
         child: Column(
           children: [
             ScreenTitle(
-              title: "My Membership/Store",
+              title: "My Membership",
             ),
             Expanded(child: MembershipView()),
           ],

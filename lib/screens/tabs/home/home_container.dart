@@ -84,10 +84,7 @@ class HomeContainer extends StatelessWidget {
                           top: Dimen.homeSpacing, left: 15, right: 15),
                       child: const StockInBuzz(),
                     ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    child: const FeaturedStocksIndex(),
-                  ),
+                  const FeaturedStocksIndex(),
                   Visibility(
                     visible:
                         provider.extraMostPopular?.showMostPurchased == true,

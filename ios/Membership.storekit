@@ -48,13 +48,28 @@
       "productID" : "300points",
       "referenceName" : "300 Points Bundle",
       "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "400.0",
+      "familyShareable" : false,
+      "internalID" : "6547853611",
+      "localizations" : [
+        {
+          "description" : "400 points for $400",
+          "displayName" : "400 Points Bundle",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "400points",
+      "referenceName" : "400 Points Bundle",
+      "type" : "Consumable"
     }
   ],
   "settings" : {
     "_applicationInternalID" : "6476615803",
     "_developerTeamID" : "NPUHL9S742",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 742805791.158162,
+    "_lastSynchronizedDate" : 742822905.89534903,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [

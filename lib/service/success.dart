@@ -13,7 +13,11 @@ import '../../../utils/colors.dart';
 import '../../../widgets/theme_button.dart';
 
 class SubscriptionPurchased extends StatefulWidget {
-  const SubscriptionPurchased({super.key});
+  final bool isMembership;
+  const SubscriptionPurchased({
+    super.key,
+    this.isMembership = false,
+  });
 
   @override
   State<SubscriptionPurchased> createState() => _SubscriptionPurchasedState();
@@ -71,12 +75,25 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
               style: stylePTSansBold(fontSize: 35),
             ),
             const SpacerVertical(height: 20),
-            Text(
-              provider.success?.description ??
-                  "Your membership purchase is successful. It may take 3-5 minutes to reflect.",
-              textAlign: TextAlign.center,
-              style:
-                  stylePTSansRegular(fontSize: 20, color: ThemeColors.greyText),
+            Visibility(
+              visible: widget.isMembership,
+              child: Text(
+                provider.success?.description ??
+                    "Your membership purchase is successful. It may take 3-5 minutes to reflect.",
+                textAlign: TextAlign.center,
+                style: stylePTSansRegular(
+                    fontSize: 20, color: ThemeColors.greyText),
+              ),
+            ),
+            Visibility(
+              visible: !widget.isMembership,
+              child: Text(
+                provider.success?.description ??
+                    "Your points purchase is successful. It may take 3-5 minutes to reflect.",
+                textAlign: TextAlign.center,
+                style: stylePTSansRegular(
+                    fontSize: 20, color: ThemeColors.greyText),
+              ),
             ),
             const SpacerVertical(height: 20),
             Padding(
