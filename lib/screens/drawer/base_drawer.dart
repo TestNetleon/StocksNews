@@ -14,6 +14,7 @@ import 'package:stocks_news_new/screens/drawer/about/about_stocks_news.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/drawer_new_widget.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/user_card.dart';
 import 'package:stocks_news_new/screens/membership/store/store.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -198,19 +199,20 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Store",
+                                                "Points Central",
                                                 style: stylePTSansBold(
                                                     fontSize: 18),
                                               ),
                                               const SpacerVertical(height: 3),
                                               Text(
-                                                "Buy points to unlock news and blogs",
+                                                "Discover more points at Points Central!",
                                                 style: stylePTSansRegular(
                                                     fontSize: 14),
                                               )
                                             ],
                                           ),
                                         ),
+                                        const SpacerHorizontal(width: 90),
                                       ],
                                     ),
                                   ),
@@ -219,6 +221,77 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
                           const SpacerVertical(height: 15),
+
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const NewMembership(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ThemeColors.tabBack,
+                                borderRadius: BorderRadius.circular(6),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(255, 65, 171, 83),
+                                    Color.fromARGB(255, 1, 122, 44),
+                                  ],
+                                ),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    top: 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.asset(
+                                        Images.storeIcon,
+                                        height: 60,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.store, size: 40),
+                                        const SpacerHorizontal(width: 10),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Points Central",
+                                                style: stylePTSansBold(
+                                                    fontSize: 18),
+                                              ),
+                                              const SpacerVertical(height: 3),
+                                              Text(
+                                                "Discover more points at Points Central!",
+                                                style: stylePTSansRegular(
+                                                    fontSize: 14),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        const SpacerHorizontal(width: 90),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SpacerVertical(height: 15),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

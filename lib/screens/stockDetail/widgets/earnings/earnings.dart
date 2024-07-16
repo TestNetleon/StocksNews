@@ -85,7 +85,7 @@ class _SdEarningsState extends State<SdEarnings> {
                 ),
                 CustomGridView(
                   length: provider.earnings?.top?.length ?? 0,
-                  paddingVerticle: 8,
+                  paddingVertical: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.earnings?.top?[index];
                     return SdTopCard(
@@ -245,7 +245,8 @@ class _SdEarningsState extends State<SdEarnings> {
                                   ),
                                 EarningHistoryItem(
                                   data: data,
-                                  isOpen: provider.openIndexEarningHistory == index,
+                                  isOpen:
+                                      provider.openIndexEarningHistory == index,
                                   onTap: () {
                                     provider.setOpenIndexEarningHistory(
                                       provider.openIndexEarningHistory == index

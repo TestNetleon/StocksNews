@@ -90,7 +90,7 @@ class _SdOwnershipState extends State<SdOwnership> {
                 ),
                 CustomGridView(
                   length: provider.ownershipRes?.top?.length ?? 0,
-                  paddingVerticle: 8,
+                  paddingVertical: 8,
                   getChild: (index) {
                     SdTopRes? top = provider.ownershipRes?.top?[index];
                     return SdTopCard(
