@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
+import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/my_evaluvated_button.dart';
@@ -265,7 +266,9 @@ class _NewMembershipUpgradeCurrentPlanState
                       const SpacerVertical(height: 20),
                       MyElevatedButton(
                         width: double.infinity,
-                        onPressed: () {},
+                        onPressed: () {
+                          RevenueCatService.initializeSubscription();
+                        },
                         borderRadius: BorderRadius.circular(10),
                         child: Text(
                           'Continue',
