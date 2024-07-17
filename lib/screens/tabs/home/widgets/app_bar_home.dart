@@ -17,6 +17,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopback, showQR, canSearch;
   final void Function()? filterClick;
+  final void Function()? onTap;
 //
   const AppBarHome({
     super.key,
@@ -26,6 +27,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     this.filterClick,
     this.isHome = false,
     this.canSearch = false,
+    this.onTap,
   });
 
   @override
@@ -57,36 +59,37 @@ class _AppBarHomeState extends State<AppBarHome> {
       automaticallyImplyLeading: false,
       leading: widget.isPopback
           ? IconButton(
-              onPressed: () {
-                if (popHome) {
-                  if (CustomNavigatorObserver().stackCount >= 2 &&
-                      splashLoaded) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                  } else {
-                    Navigator.popUntil(
-                        navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const Tabs()),
-                    );
-                    popHome = false;
-                  }
-                } else {
-                  // Navigator.pop(navigatorKey.currentContext!);
-                  if (CustomNavigatorObserver().stackCount >= 2 &&
-                      splashLoaded) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                  } else {
-                    Navigator.popUntil(
-                        navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const Tabs()),
-                    );
-                    popHome = false;
-                  }
-                }
-              },
+              onPressed: widget.onTap ??
+                  () {
+                    if (popHome) {
+                      if (CustomNavigatorObserver().stackCount >= 2 &&
+                          splashLoaded) {
+                        Navigator.pop(navigatorKey.currentContext!);
+                      } else {
+                        Navigator.popUntil(navigatorKey.currentContext!,
+                            (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(builder: (_) => const Tabs()),
+                        );
+                        popHome = false;
+                      }
+                    } else {
+                      // Navigator.pop(navigatorKey.currentContext!);
+                      if (CustomNavigatorObserver().stackCount >= 2 &&
+                          splashLoaded) {
+                        Navigator.pop(navigatorKey.currentContext!);
+                      } else {
+                        Navigator.popUntil(navigatorKey.currentContext!,
+                            (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(builder: (_) => const Tabs()),
+                        );
+                        popHome = false;
+                      }
+                    }
+                  },
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,

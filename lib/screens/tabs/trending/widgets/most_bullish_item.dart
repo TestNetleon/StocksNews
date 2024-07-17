@@ -426,7 +426,7 @@ class MostBullishItem extends StatefulWidget {
   final int alertForBearish;
   final int watlistForBullish;
   final int watlistForBearish;
-  MostBullishItem({
+  const MostBullishItem({
     required this.data,
     this.up = true,
     super.key,
@@ -691,7 +691,8 @@ class _MostBullishItemState extends State<MostBullishItem> {
       } else {
         if (userPresent) {
           log("set HERE");
-          _showAlertPopup(context: navigatorKey.currentContext!, symbol: symbol);
+          _showAlertPopup(
+              context: navigatorKey.currentContext!, symbol: symbol);
           return;
         }
         try {

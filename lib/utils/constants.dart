@@ -38,6 +38,13 @@ enum NotificationType {
   appUpdate,
 }
 
+enum MembershipEnum {
+  membership,
+  hundredPoint,
+  twoHundredPoint,
+  threeHundredPoint
+}
+
 enum BlogsType { blog, author, category, tag }
 
 enum CommentType { reddit, twitter }
@@ -209,6 +216,10 @@ class Images {
   static const bg = "assets/images/sync.png";
 
   static const affWhite = "assets/images/aff_white.png";
+  static const storeIcon = "assets/images/store_icon.png";
+  static const storeBanner = "assets/images/store_banner.png";
+  static const storeBack = "assets/images/store_back.png";
+  static const buyPoints = "assets/images/buy_points.png";
 
   //svg
   // static const share = "assets/svg/share.svg";
@@ -217,8 +228,9 @@ class Images {
   // static const profile = "assets/svg/profile.svg";
   // static const purchase = "assets/svg/purchase.svg";
   // // static const login = "assets/svg/login.svg";
+  // static const signin = "assets/svg/signin.svg";
+  // static const star = "assets/svg/star.svg";
   static const add = "assets/svg/add.svg";
-  static const arrow = "assets/svg/arrow.svg";
 }
 
 class AudioFiles {

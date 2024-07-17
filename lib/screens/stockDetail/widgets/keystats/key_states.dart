@@ -39,7 +39,7 @@ class _SdKeyStatsState extends State<SdKeyStats> {
               height: 20,
             ),
             CustomGridView(
-              paddingVerticle: 0,
+              paddingVertical: 0,
               paddingHorizontal: 0,
               itemSpace: 10,
               length: 25,

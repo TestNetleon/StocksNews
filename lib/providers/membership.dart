@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/modals/plans_res.dart';
 
 import '../api/api_response.dart';
@@ -28,11 +29,22 @@ class MembershipProvider extends ChangeNotifier {
   List<MembershipRes>? _data;
   List<MembershipRes>? get data => _data;
 
+  MembershipInfoRes? _membershipInfoRes;
+  MembershipInfoRes? get membershipInfoRes => _membershipInfoRes;
+
   PlansRes? _plansRes;
   PlansRes? get plansRes => _plansRes;
 
   MembershipSuccess? _success;
   MembershipSuccess? get success => _success;
+
+  int _faqOpenIndex = -1;
+  int get faqOpenIndex => _faqOpenIndex;
+
+  void setOpenIndex(index) {
+    _faqOpenIndex = index;
+    notifyListeners();
+  }
 
   void setStatus(status) {
     _status = status;
@@ -71,12 +83,13 @@ class MembershipProvider extends ChangeNotifier {
     }
   }
 
-  Future getMembershipSuccess() async {
+  Future getMembershipSuccess({bool isMembership = false}) async {
     notifyListeners();
     try {
       FormData request = FormData.fromMap({
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "membership": "$isMembership",
       });
       ApiResponse response = await apiRequest(
         url: Apis.membershipSuccess,
@@ -117,6 +130,40 @@ class MembershipProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     } catch (e) {
       _plansRes = null;
+      Utils().showLog(e.toString());
+      setStatus(Status.loaded);
+    }
+  }
+
+  Future getMembershipInfo() async {
+    setStatus(Status.loading);
+
+    try {
+      FormData request = FormData.fromMap({
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      });
+      ApiResponse response = await apiRequest(
+        url: Apis.membershipInfo,
+        formData: request,
+        showProgress: false,
+      );
+      //  setStatus(Status.loaded);
+      if (response.status) {
+        _membershipInfoRes = membershipInfoResFromJson(
+          jsonEncode(response.data),
+        );
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+      } else {
+        _membershipInfoRes = null;
+        _error = response.message;
+        _extra = null;
+      }
+      setStatus(Status.loaded);
+    } catch (e) {
+      _membershipInfoRes = null;
+      _extra = null;
+      _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

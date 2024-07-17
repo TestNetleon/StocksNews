@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -33,6 +32,7 @@ import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
+import '../modals/featured_watchlist.dart';
 import '../modals/most_purchased.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -183,9 +183,12 @@ class HomeProvider extends ChangeNotifier {
   Future refreshData(String? inAppMsgId) async {
     retryCount = 0;
     getHomePortfolio();
-    _getLastMarketOpen();
+    // _getLastMarketOpen();
+    _getLastMarketOpenFW();
+
     getHomeSlider();
-    getHomeAlerts();
+    getFeaturedWatchlist();
+    // getHomeAlerts();
     getMostPurchased(home: "home");
     getHomeTrendingData();
     // getBenefitsDetails();
@@ -473,6 +476,56 @@ class HomeProvider extends ChangeNotifier {
     // closeGlobalProgressDialog();
   }
 
+// Featured Watchlist Data
+
+  Status _statusFW = Status.ideal;
+  Status get statusFW => _statusFW;
+
+  Extra? _extraFW;
+  Extra? get extraFW => _extraFW;
+
+  bool get isLoadinFW => _statusFW == Status.loading;
+
+  setStatusFW(Status value) {
+    _statusFW = value;
+    notifyListeners();
+  }
+
+  FeaturedWatchlistRes? _fwData;
+  FeaturedWatchlistRes? get fwData => _fwData;
+
+  Future getFeaturedWatchlist({bool userAvail = true}) async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    // _fwData = null;
+    setStatusFW(Status.loading);
+    try {
+      Map request = {
+        "token": userAvail ? provider.user?.token ?? "" : "",
+      };
+      ApiResponse response = await apiRequest(
+        url: Apis.featuredWatchlist,
+        request: request,
+        showProgress: false,
+        onRefresh: () => refreshData(null),
+        removeForceLogin: true,
+      );
+      setStatusFW(Status.loading);
+
+      if (response.status) {
+        _extraFW = (response.extra is Extra ? response.extra as Extra : null);
+        _fwData = featuredWatchlistResFromJson(jsonEncode(response.data));
+      } else {
+        _fwData = null;
+      }
+      apiKeyFMP = response.extra?.apiKeyFMP;
+      _updateFeaturedChartData();
+    } catch (e) {
+      _fwData = null;
+      setStatusFW(Status.loading);
+      Utils().showLog("ERROR $e");
+    }
+  }
+
   Future getHomeAlerts({bool userAvail = true}) async {
     _statusHomeAlert = Status.loading;
     _homeAlertData = null;
@@ -537,19 +590,19 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
-    try {
-      ApiResponse response = await apiRequest(
-        url: apiUrl,
-        request: request,
-        showProgress: false,
-        onRefresh: () => refreshData(null),
-      );
-      sendPort.send(response);
-    } catch (e) {
-      sendPort.send(e);
-    }
-  }
+  // Future<void> apiIsolate(SendPort sendPort, String apiUrl, Map request) async {
+  //   try {
+  //     ApiResponse response = await apiRequest(
+  //       url: apiUrl,
+  //       request: request,
+  //       showProgress: false,
+  //       onRefresh: () => refreshData(null),
+  //     );
+  //     sendPort.send(response);
+  //   } catch (e) {
+  //     sendPort.send(e);
+  //   }
+  // }
 
   Future getStockInFocus() async {
     _statusFocus = Status.loading;
@@ -580,34 +633,33 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future getIpoData() async {
-    _statusIpo = Status.loading;
-    notifyListeners();
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    try {
-      Map request = {
-        "token": provider.user?.token ?? "",
-      };
-      ApiResponse response = await apiRequest(
-        url: Apis.ipoCalendar,
-        request: request,
-        showProgress: false,
-        onRefresh: () => refreshData(null),
-      );
-
-      if (response.status) {
-        _ipoRes = ipoResFromJson(jsonEncode(response.data));
-      } else {
-        _ipoRes = null;
-      }
-      _statusIpo = Status.loaded;
-      notifyListeners();
-    } catch (e) {
-      _ipoRes = null;
-      _statusIpo = Status.loaded;
-      notifyListeners();
-    }
-  }
+  // Future getIpoData() async {
+  //   _statusIpo = Status.loading;
+  //   notifyListeners();
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   try {
+  //     Map request = {
+  //       "token": provider.user?.token ?? "",
+  //     };
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.ipoCalendar,
+  //       request: request,
+  //       showProgress: false,
+  //       onRefresh: () => refreshData(null),
+  //     );
+  //     if (response.status) {
+  //       _ipoRes = ipoResFromJson(jsonEncode(response.data));
+  //     } else {
+  //       _ipoRes = null;
+  //     }
+  //     _statusIpo = Status.loaded;
+  //     notifyListeners();
+  //   } catch (e) {
+  //     _ipoRes = null;
+  //     _statusIpo = Status.loaded;
+  //     notifyListeners();
+  //   }
+  // }
 
   Future getHomeSentimentData() async {
     _statusSentiment = Status.loading;
@@ -715,6 +767,30 @@ class HomeProvider extends ChangeNotifier {
   }
 
   // -------------  Start Update Chart data on HomePage ------------
+  int retryCountFW = 0;
+  void _updateFeaturedChartData() async {
+    if (_fwData == null ||
+        (_fwData?.featuredTickers == null ||
+            _fwData?.featuredTickers?.isEmpty == true)) return;
+    for (var item in _fwData!.featuredTickers!) {
+      if (item.chart == null || (item.chart?.isEmpty ?? true)) {
+        await getHomeAlertsGraphDataFW(symbol: item.symbol);
+      }
+    }
+
+    bool callAgain = false;
+    for (var item in _fwData!.featuredTickers!) {
+      if (item.chart == null || (item.chart?.isEmpty ?? true)) {
+        callAgain = true;
+        break;
+      }
+    }
+    if (callAgain && retryCountFW < 1) {
+      retryCountFW++;
+      _updateFeaturedChartData();
+    }
+  }
+
   int retryCount = 0;
   void _updateChartData() async {
     if (_homeAlertData == null || (_homeAlertData?.isEmpty ?? true)) return;
@@ -738,6 +814,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   DateTime? _lastMarketOpen;
+  DateTime? _lastMarketOpenFW;
 
   Future _getLastMarketOpen() async {
     ApiResponse response = await third_party_api.apiRequest(
@@ -753,12 +830,84 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
+  Future _getLastMarketOpenFW() async {
+    ApiResponse response = await third_party_api.apiRequest(
+      url: "quote/AAPL?apikey=5e5573e6668fcd5327987ab3b912ef3e",
+      showProgress: false,
+    );
+
+    if (response.status == true) {
+      var timeStamp = response.data[0]['timestamp'];
+      _lastMarketOpenFW = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+      _lastMarketOpenFW =
+          _lastMarketOpenFW!.toUtc().subtract(const Duration(hours: 4));
+    }
+  }
+
   bool _isLastOpenToday(DateTime date1, DateTime date2) {
     // Convert both dates to midnight by creating new DateTime objects
     DateTime midnightDate1 = DateTime(date1.year, date1.month, date1.day);
     DateTime midnightDate2 = DateTime(date2.year, date2.month, date2.day);
     // Compare the two dates
     return midnightDate1.isAtSameMomentAs(midnightDate2);
+  }
+
+  Future getHomeAlertsGraphDataFW({required String symbol}) async {
+    if (_lastMarketOpenFW == null) {
+      Utils().showLog("_lastMarketOpenFW is null");
+      await _getLastMarketOpenFW();
+    }
+
+    // // Current time in GMT-4
+    DateTime today = DateTime.now().toUtc().subtract(const Duration(hours: 4));
+
+    bool isLastOpenToday = false;
+
+    if (_lastMarketOpenFW != null) {
+      isLastOpenToday = _isLastOpenToday(_lastMarketOpenFW!, today);
+    }
+
+    String interval = "15min";
+
+    // Fixed time 10:30 AM in GMT-4
+    DateTime fixedTime = DateTime.utc(
+      DateTime.now().toUtc().year,
+      DateTime.now().toUtc().month,
+      DateTime.now().toUtc().day,
+      10,
+      30,
+    ).toUtc();
+
+    if (today.isBefore(fixedTime) && isLastOpenToday) {
+      // if (currentTime.isBefore(fixedTime)) {
+      interval = '5min';
+    }
+
+    String formattedToday =
+        DateFormat('yyyy-MM-dd').format(_lastMarketOpenFW ?? today);
+
+    try {
+      ApiResponse response = await third_party_api.apiRequest(
+        url:
+            // "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=5e5573e6668fcd5327987ab3b912ef3e",
+            "historical-chart/$interval/$symbol?from=$formattedToday&to=$formattedToday&apikey=$apiKeyFMP",
+        showProgress: false,
+      );
+
+      if (response.status == true) {
+        List<Chart> data = response.data == null
+            ? []
+            : List<Chart>.from(response.data!.map((x) => Chart.fromJson(x)));
+        int? index = _fwData?.featuredTickers
+            ?.indexWhere((element) => element.symbol == symbol);
+        if (index != null && index >= 0) {
+          _fwData?.featuredTickers?[index].chart = data;
+          notifyListeners();
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) print(e.toString());
+    }
   }
 
   Future getHomeAlertsGraphData({required String symbol}) async {
@@ -817,6 +966,7 @@ class HomeProvider extends ChangeNotifier {
       if (kDebugMode) print(e.toString());
     }
   }
+
   // -------------  End Update Chart data on HomePage ------------
 
   void _checkForNewVersion(Extra extra) async {

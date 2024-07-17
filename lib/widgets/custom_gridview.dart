@@ -5,13 +5,13 @@ class CustomGridView extends StatelessWidget {
   const CustomGridView({
     required this.length,
     required this.getChild,
-    this.paddingVerticle = 16,
+    this.paddingVertical = 16,
     this.paddingHorizontal = 8,
     this.itemSpace,
     super.key,
   });
 
-  final double paddingVerticle, paddingHorizontal;
+  final double paddingVertical, paddingHorizontal;
   final int length;
   final double? itemSpace;
   final Widget Function(int index) getChild;
@@ -21,7 +21,7 @@ class CustomGridView extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: paddingVerticle),
+      padding: EdgeInsets.symmetric(vertical: paddingVertical),
       itemBuilder: (context, index) {
         return IntrinsicHeight(
           child: Padding(
@@ -43,7 +43,7 @@ class CustomGridView extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) {
-        return SizedBox(height: (paddingVerticle * 1.2).sp);
+        return SizedBox(height: (paddingVertical * 1.2).sp);
       },
       itemCount: ((length / 2) + (length % 2)).toInt(),
     );
@@ -102,12 +102,12 @@ class CustomGridView4 extends StatelessWidget {
   const CustomGridView4({
     required this.length,
     required this.getChild,
-    this.paddingVerticle = 16,
+    this.paddingVertical = 16,
     this.paddingHorizontal = 8,
     super.key,
   });
 
-  final double paddingVerticle, paddingHorizontal;
+  final double paddingVertical, paddingHorizontal;
   final int length;
   final Widget Function(int index) getChild;
 
@@ -116,7 +116,7 @@ class CustomGridView4 extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: paddingVerticle.sp),
+      padding: EdgeInsets.symmetric(vertical: paddingVertical.sp),
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: paddingHorizontal.sp),
@@ -135,7 +135,7 @@ class CustomGridView4 extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) {
-        return SizedBox(height: (paddingVerticle * 1.2).sp);
+        return SizedBox(height: (paddingVertical * 1.2).sp);
       },
       itemCount: ((length / 4).ceil()),
     );
