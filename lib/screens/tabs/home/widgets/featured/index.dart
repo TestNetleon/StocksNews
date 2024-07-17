@@ -18,7 +18,8 @@ class FeaturedStocksIndex extends StatelessWidget {
     return Column(
       children: [
         Visibility(
-          visible: provider.extraFW?.showFeatured == true,
+          visible: (featured?.isNotEmpty == true && featured != null) &&
+              provider.extraFW?.showFeatured == true,
           child: Container(
             margin: const EdgeInsets.only(top: Dimen.homeSpacing),
             child: FeaturedWatchlistStockView(
