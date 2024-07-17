@@ -115,7 +115,8 @@ class Images {
   static const String profile = "assets/images/profile.png";
   static const String rankAffiliate = "assets/images/award.png";
   static const String transaction = "assets/images/transaction.png";
-  static const String cardBG = "assets/images/ss.png";
+  static const String pointIcon = "assets/images/golden1.png";
+  static const String pointIcon2 = "assets/images/01.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";

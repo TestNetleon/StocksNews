@@ -11,8 +11,6 @@ import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-
-import '../utils/colors.dart';
 import '../utils/utils.dart';
 import 'success.dart';
 
@@ -53,6 +51,9 @@ class RevenueCatService {
     // }
 
     try {
+      navigatorKey.currentContext!
+          .read<MembershipProvider>()
+          .getMembershipSuccess(isMembership: type == null || type == '');
       showGlobalProgressDialog();
       if (configuration != null) {
         await Purchases.configure(configuration);
@@ -91,15 +92,13 @@ class RevenueCatService {
         // Handle not presented
         break;
       case PaywallResult.purchased:
-        navigatorKey.currentContext!
-            .read<MembershipProvider>()
-            .getMembershipSuccess(isMembership: isMembership);
+
         // await _handlePurchaseSuccess(isMembership: isMembership);
         await Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (context) =>
-                const SubscriptionPurchased(isMembership: true),
+                SubscriptionPurchased(isMembership: isMembership),
           ),
         );
         break;
@@ -110,21 +109,21 @@ class RevenueCatService {
     }
   }
 
-  static Future _handlePurchaseSuccess({bool isMembership = false}) async {
-    await showModalBottomSheet(
-      useSafeArea: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(5),
-          topRight: Radius.circular(5),
-        ),
-      ),
-      backgroundColor: ThemeColors.transparent,
-      isScrollControlled: true,
-      context: navigatorKey.currentContext!,
-      builder: (context) {
-        return SubscriptionPurchased(isMembership: isMembership);
-      },
-    );
-  }
+  // static Future _handlePurchaseSuccess({bool isMembership = false}) async {
+  //   await showModalBottomSheet(
+  //     useSafeArea: true,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(5),
+  //         topRight: Radius.circular(5),
+  //       ),
+  //     ),
+  //     backgroundColor: ThemeColors.transparent,
+  //     isScrollControlled: true,
+  //     context: navigatorKey.currentContext!,
+  //     builder: (context) {
+  //       return SubscriptionPurchased(isMembership: isMembership);
+  //     },
+  //   );
+  // }
 }

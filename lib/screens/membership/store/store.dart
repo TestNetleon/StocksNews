@@ -183,7 +183,7 @@ class _StoreState extends State<Store> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 146, 165, 147),
+                            color: const Color.fromARGB(255, 206, 245, 212),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: ListView.separated(
@@ -229,7 +229,6 @@ class _StoreState extends State<Store> {
                             itemCount: data?.benefits?.length ?? 0,
                           ),
                         ),
-
                         const SpacerVertical(height: 15),
                         // const StoreEarnMore(),
                         // const SpacerVertical(height: 15),
@@ -464,7 +463,7 @@ class PointsItem extends StatelessWidget {
               // ),
               // child: const Icon(Icons.star, size: 36),
               child: Image.asset(
-                Images.starAffiliate,
+                Images.pointIcon,
                 width: 60,
                 height: 60,
               ),

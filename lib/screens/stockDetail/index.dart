@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compititor.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_insider_trade.dart';
@@ -59,6 +60,10 @@ class _StockDetailState extends State<StockDetail> {
 
   _callApi() {
     context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
+    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+    if (provider.extra == null) {
+      provider.getLeaderBoardData();
+    }
   }
 
   WebSocketService? _webSocketService;
