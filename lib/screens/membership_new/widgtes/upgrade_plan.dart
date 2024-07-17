@@ -89,7 +89,7 @@ class _NewMembershipUpgradeCurrentPlanState
                     ),
                   ],
                 ),
-               
+
                 const SpacerVertical(
                   height: 15,
                 ),
