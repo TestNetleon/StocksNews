@@ -39,8 +39,97 @@ class SdStockScore extends StatelessWidget {
           ],
         ),
 
+        // Container(
+        //   color: ThemeColors.background,
+        //   padding: const EdgeInsets.all(10),
+        //   child: Row(
+        //     children: [
+        //       Expanded(
+        //           child: Column(
+        //         children: [
+        //           Text(
+        //             "Altman Z Score",
+        //             style: stylePTSansBold(),
+        //           ),
+        //           Container(
+        //             constraints: BoxConstraints(
+        //               maxWidth: ScreenUtil().screenWidth * .5,
+        //               minHeight: 50.0,
+        //               maxHeight: 150.0,
+        //             ),
+        //             color: ThemeColors.background,
+        //             width: ScreenUtil().screenWidth * .5,
+        //             height: ScreenUtil().screenWidth / 3,
+        //             child: OverViewGaugeItem(
+        //                 minimumValue: -100.toDouble(),
+        //                 maximumValue: 100.toDouble(),
+        //                 value: double.parse(
+        //                     score?.altmanZScore.toString() ?? "0.0")),
+        //           ),
+        //           Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //             children: [
+        //               Text(
+        //                 "",
+        //                 style: stylePTSansBold(),
+        //               ),
+        //               Text(
+        //                 score?.altmanZScore.toString() ?? "N/A",
+        //                 style: stylePTSansBold(),
+        //               ),
+        //               Text(
+        //                 "",
+        //                 style: stylePTSansBold(),
+        //               ),
+        //             ],
+        //           )
+        //         ],
+        //       )),
+        //       const SpacerHorizontal(width: 30),
+        //       Expanded(
+        //           child: Column(
+        //         children: [
+        //           Text(
+        //             "Piotroski Score",
+        //             style: stylePTSansBold(),
+        //           ),
+        //           Container(
+        //             color: ThemeColors.background,
+        //             width: ScreenUtil().screenWidth * .5,
+        //             height: ScreenUtil().screenWidth / 3,
+        //             child: OverViewGaugeItem(
+        //               minimumValue: -100.toDouble(),
+        //               maximumValue: 100.toDouble(),
+        //               value: double.parse(
+        //                   score?.piotroskiScore.toString() ?? "0.0"),
+        //             ),
+        //           ),
+        //           Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //             children: [
+        //               Text(
+        //                 "",
+        //                 style: stylePTSansBold(),
+        //               ),
+        //               Text(
+        //                 score?.piotroskiScore.toString() ?? "N/A",
+        //                 style: stylePTSansBold(),
+        //               ),
+        //               Text(
+        //                 "",
+        //                 style: stylePTSansBold(),
+        //               ),
+        //             ],
+        //           )
+        //         ],
+        //       )),
+        //     ],
+        //   ),
+        // ),
+
         Container(
-          margin: const EdgeInsets.only(top: 8),
+          color: ThemeColors.background,
+          margin: const EdgeInsets.only(top: 0),
           width: double.infinity,
           child: stockDOverviewItem(
               title: "Grade", value: score?.mostRepeatedGrade),

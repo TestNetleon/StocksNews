@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/store_info_res.dart';
@@ -193,12 +194,27 @@ class _StoreState extends State<Store> {
                               return Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // Container(
+                                  //   margin: const EdgeInsets.only(top: 4),
+                                  //   child: const Icon(
+                                  //     Icons.circle,
+                                  //     size: 12,
+                                  //     color: ThemeColors.themeGreen,
+                                  //   ),
+                                  // ),
                                   Container(
-                                    margin: const EdgeInsets.only(top: 4),
-                                    child: const Icon(
-                                      Icons.circle,
-                                      size: 12,
-                                      color: ThemeColors.themeGreen,
+                                    height: 17,
+                                    width: 17,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ThemeColors.white,
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 14,
+                                      ),
                                     ),
                                   ),
                                   const SpacerHorizontal(width: 10),
@@ -408,7 +424,8 @@ class PointsItem extends StatelessWidget {
                     // const SpacerVertical(height: 5),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color: Colors.black,
@@ -416,16 +433,19 @@ class PointsItem extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Buy @ $price",
-                            style: stylePTSansRegular(fontSize: 16).copyWith(
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 10.0,
-                                  color: Colors.black.withOpacity(0.5),
-                                  offset: const Offset(2.0, 2.0),
-                                ),
-                              ],
+                          Flexible(
+                            child: AutoSizeText(
+                              maxLines: 1,
+                              "Buy @ $price",
+                              style: stylePTSansRegular(fontSize: 16).copyWith(
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 10.0,
+                                    color: Colors.black.withOpacity(0.5),
+                                    offset: const Offset(2.0, 2.0),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const SpacerHorizontal(width: 10),

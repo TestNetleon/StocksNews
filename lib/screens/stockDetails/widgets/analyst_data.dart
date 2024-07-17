@@ -33,10 +33,7 @@ import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
-  const StockDetailAnalystData({
-    super.key,
-    required this.symbol,
-  });
+  const StockDetailAnalystData({super.key, required this.symbol});
 
   @override
   State<StockDetailAnalystData> createState() => _StockDetailAnalystDataState();
@@ -82,7 +79,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
   //   await askToSubscribe(
   //     onPressed: () async {
   //       Navigator.pop(navigatorKey.currentContext!);
-
   //       if (provider.user?.phone == null || provider.user?.phone == '') {
   //         await membershipLogin();
   //       }
@@ -92,6 +88,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
   //     },
   //   );
   // }
+
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     if (provider.user?.phone == null || provider.user?.phone == '') {
@@ -113,9 +110,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     // Utils().showLog('is user logged in ${userPresent}');
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
 
-    UserProvider userProvider = context.watch<UserProvider>();
-
-    bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+    // UserProvider userProvider = context.watch<UserProvider>();
+    // bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
 
     MorningStar? morningStar =
         context.watch<StockDetailProviderNew>().overviewRes?.morningStart;
@@ -362,7 +358,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                     //           ),
                     //         )),
                     //   )
-
                     : CommonRefreshIndicator(
                         onRefresh: () async {
                           provider.getOverviewData(

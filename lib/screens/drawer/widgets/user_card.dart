@@ -380,7 +380,13 @@ class _UserCardState extends State<UserCard> {
       await membershipLogin();
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
-      await RevenueCatService.initializeSubscription();
+      // await RevenueCatService.initializeSubscription();
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(),
+        ),
+      );
     }
   }
 

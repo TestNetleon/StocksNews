@@ -73,6 +73,7 @@ class LowPriceStocksData extends StatelessWidget {
                     element.status == 0) ||
                 (element.key == "stocks-on-sale" && element.status == 0)) ??
         false;
+
     // bool isLocked = provider.extra?.membership?.permissions?.any((element) =>
     //         element == "low-priced-stocks-under" ||
     //         element == "stocks-on-sale") ??

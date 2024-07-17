@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -13,6 +12,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -46,7 +46,9 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
     UserProvider userProvider = context.read<UserProvider>();
     if (userProvider.user != null) {
       LeaderBoardProvider lbProvider = context.read<LeaderBoardProvider>();
-      lbProvider.getReferData();
+      if (lbProvider.extra == null) {
+        lbProvider.getReferData();
+      }
     }
   }
 
@@ -98,26 +100,37 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
     await provider.getOverviewData(symbol: widget.symbol, pointsDeducted: true);
   }
 
+  Future _navigateToStore() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const Store(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // bool isLogin = userProvider.user != null;
+    // bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+    // bool havePoints = provider.data?.postDetail?.totalPoints != null &&
+    //     (provider.data?.postDetail?.totalPoints > 0);
+
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-
     UserProvider userProvider = context.watch<UserProvider>();
-
     LeaderBoardProvider lbProvider = context.watch<LeaderBoardProvider>();
 
-    bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+    bool isLogin = userProvider.user != null;
+    bool hasMembership = userProvider.user?.membership?.purchased == 1;
+    bool havePoints = lbProvider.extra?.balance != null &&
+        ((lbProvider.extra?.balance ?? 0) > 0);
 
-    MorningStar? morningStar = provider.overviewRes?.morningStart;
-
-    bool showReferAndUpgrade =
-        (morningStar?.lockInformation?.balanceStatus == null ||
-                morningStar?.lockInformation?.balanceStatus == false) &&
-            userProvider.user != null;
-
-    bool showViewOption = userProvider.user != null && !showReferAndUpgrade;
-
-    num? points = lbProvider.extra?.balance;
+    // bool showReferAndUpgrade =
+    //     (morningStar?.lockInformation?.balanceStatus == null ||
+    //             morningStar?.lockInformation?.balanceStatus == false) &&
+    //         userProvider.user != null;
+    // bool showViewOption = userProvider.user != null && !showReferAndUpgrade;
+    // MorningStar? morningStar = provider.overviewRes?.morningStart;
 
     return Container(
       padding: const EdgeInsets.all(15),
@@ -193,82 +206,27 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Login
-                    ThemeButtonSmall(
-                      onPressed: () {
-                        _onLoginClick(context);
-                      },
-                      text: "Register/Login to Continue",
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconFront: true,
-                      icon: Icons.lock,
-                      radius: 30,
-                    ),
-
-                    // Refer
-                    ThemeButtonSmall(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconFront: true,
-                      icon: Icons.earbuds_rounded,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.referAndEarn,
-                          height: 18,
-                          width: 18,
-                          color: ThemeColors.white,
+                    if (!isLogin)
+                      ThemeButtonSmall(
+                        onPressed: () {
+                          _onLoginClick(context);
+                        },
+                        text: "Register/Login to Continue",
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
                         ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconFront: true,
+                        icon: Icons.lock,
+                        radius: 30,
+                        margin: const EdgeInsets.only(top: 10),
                       ),
-                      onPressed: () async {
-                        await _onReferClick(context);
-                      },
-                      text: "Refer and Earn",
-                      radius: 30,
-                      // showArrow: false,
-                    ),
-
-                    // Subscribe
-                    ThemeButtonSmall(
-                      color: const Color.fromARGB(255, 194, 216, 51),
-                      textColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.membership,
-                          height: 20,
-                          width: 20,
-                        ),
-                      ),
-                      iconFront: true,
-                      radius: 30,
-                      icon: Icons.card_membership,
-                      onPressed: () async => _membership(),
-                      textAlign: TextAlign.start,
-                      mainAxisSize: MainAxisSize.max,
-                      text: "Upgrade Membership for more points",
-                      // showArrow: false,
-                    ),
 
                     // Spend Point and View
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(top: 10),
-                      child: ThemeButtonSmall(
+                    if (isLogin && havePoints)
+                      ThemeButtonSmall(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 11,
@@ -280,8 +238,106 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                         icon: Icons.visibility,
                         onPressed: () => _onViewNewsClick(context),
                         text: "View Research Report",
+                        margin: const EdgeInsets.only(top: 10),
                       ),
-                    ),
+
+                    // Refer
+                    if (isLogin && !havePoints)
+                      ThemeButtonSmall(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
+                        ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconFront: true,
+                        icon: Icons.earbuds_rounded,
+                        iconWidget: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Image.asset(
+                            Images.referAndEarn,
+                            height: 18,
+                            width: 18,
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await _onReferClick(context);
+                        },
+                        text: "Refer and Earn",
+                        radius: 30,
+                        margin: const EdgeInsets.only(top: 10),
+                        // showArrow: false,
+                      ),
+
+                    // Subscribe
+                    if (isLogin && !hasMembership && showMembership)
+                      ThemeButtonSmall(
+                        color: const Color.fromARGB(255, 194, 216, 51),
+                        textColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
+                        ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconWidget: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Image.asset(
+                            Images.membership,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                        iconFront: true,
+                        radius: 30,
+                        icon: Icons.card_membership,
+                        onPressed: () async => _membership(),
+                        textAlign: TextAlign.start,
+                        mainAxisSize: MainAxisSize.max,
+                        text: "Become a Premium Member",
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
+
+                    if (isLogin &&
+                        !havePoints &&
+                        hasMembership &&
+                        showMembership)
+                      ThemeButtonSmall(
+                        color: const Color.fromARGB(
+                          255,
+                          194,
+                          216,
+                          51,
+                        ),
+                        textColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
+                        ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconFront: true,
+                        radius: 30,
+                        icon: Icons.card_membership,
+                        textAlign: TextAlign.start,
+                        iconWidget: Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10,
+                          ),
+                          child: Image.asset(
+                            Images.membership,
+                            height: 18,
+                            width: 18,
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                        mainAxisSize: MainAxisSize.max,
+                        onPressed: _navigateToStore,
+                        text: "Points Central",
+                        showArrow: false,
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
                   ],
                 ),
 

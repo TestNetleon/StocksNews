@@ -74,37 +74,3 @@ class _BlogState extends State<Blog> {
     return const BlogContainer();
   }
 }
-
-// class IndexBlog extends StatefulWidget {
-//   static const path = "IndexBlog";
-
-//   const IndexBlog({super.key});
-
-//   @override
-//   State<IndexBlog> createState() => _IndexBlogState();
-// }
-
-// class _IndexBlogState extends State<IndexBlog> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       _callAPi();
-//     });
-//   }
-
-//   _callAPi() {
-//     BlogProvider provider = context.read<BlogProvider>();
-//     Utils().showLog(" Blog Data ->${provider.blogData == null}");
-//     if (provider.blogData == null || provider.blogData?.isEmpty == true) {
-//       context
-//           .read<BlogProvider>()
-//           .getData(showProgress: true, type: BlogsType.blog);
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const BlogContainer();
-//   }
-// }
