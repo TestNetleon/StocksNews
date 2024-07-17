@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -168,7 +170,15 @@ class _NewMembershipUpgradeCurrentPlanState
                   ),
                 ),
                 const SpacerVertical(height: 10),
-
+                Center(
+                  child: Text(
+                    Platform.isAndroid
+                        ? 'Cancel anytime. Secured by the Play Store.'
+                        : 'Cancel anytime. Secured by the App Store.',
+                    textAlign: TextAlign.center,
+                    style: stylePTSansRegular(fontSize: 12, color: Colors.grey),
+                  ),
+                ),
                 // Column(
                 //   crossAxisAlignment: CrossAxisAlignment.start,
                 //   children: [
