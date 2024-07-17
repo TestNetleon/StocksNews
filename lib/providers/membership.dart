@@ -100,9 +100,11 @@ class MembershipProvider extends ChangeNotifier {
         _success = membershipSuccessFromJson(jsonEncode(response.data));
       } else {
         //
+        _success = null;
       }
       notifyListeners();
     } catch (e) {
+      _success = null;
       Utils().showLog(e.toString());
       notifyListeners();
     }

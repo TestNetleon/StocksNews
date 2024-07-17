@@ -255,7 +255,7 @@ class MyVerifiedCard extends StatelessWidget {
               children: [
                 Icon(
                   Icons.verified,
-                  size: 18,
+                  size: 24,
                   color: verified ? ThemeColors.accent : ThemeColors.sos,
                 ),
                 const SpacerVertical(height: 5),
@@ -278,19 +278,20 @@ class MyVerifiedCard extends StatelessWidget {
                 message: homeProvider.extra?.profileText?.points ??
                     "Points are earned by referring the app to friends and family who join and verify their contact information, with the referring user receiving points for each verified referral.",
                 title: "Points",
-                icon: Images.starAffiliate,
+                icon: Images.pointIcon,
               );
             },
             child: Column(
               children: [
                 Image.asset(
-                  Images.starAffiliate,
-                  height: 20,
-                  width: 20,
+                  Images.pointIcon,
+                  height: 30,
+                  width: 30,
                 ),
                 const SpacerVertical(height: 5),
                 Text(
                   "Points - ${leaderProvider.extra?.balance ?? 0}",
+                  textAlign: TextAlign.center,
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),
               ],
@@ -313,8 +314,8 @@ class MyVerifiedCard extends StatelessWidget {
               children: [
                 Image.asset(
                   Images.rankAffiliate,
-                  height: 20,
-                  width: 20,
+                  height: 30,
+                  width: 30,
                 ),
                 const SpacerVertical(height: 5),
                 Text(

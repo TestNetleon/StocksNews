@@ -74,7 +74,7 @@ class _RequiredLoginSheetState extends State<RequiredLoginSheet> {
             ),
             const SpacerVertical(height: 20),
             Image.asset(
-              Images.starAffiliate,
+              Images.pointIcon,
               height: 60,
               width: 60,
             ),

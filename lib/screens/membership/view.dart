@@ -10,6 +10,7 @@ import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import '../../api/api_response.dart';
 import '../drawer/widgets/profile_image.dart';
 import 'item.dart';
 
@@ -74,7 +75,7 @@ class MyMembershipWidget extends StatefulWidget {
 class _MyMembershipWidgetState extends State<MyMembershipWidget> {
   @override
   Widget build(BuildContext context) {
-    // Extra? extra = context.watch<MembershipProvider>().extra;
+    Extra? extra = context.watch<MembershipProvider>().extra;
 
     UserProvider provider = context.watch<UserProvider>();
     // String? colorHex = provider.user?.membership?.color;
@@ -201,6 +202,16 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
                       ),
                     ),
                   ],
+                ),
+                Visibility(
+                  visible: extra?.tagLine != null && extra?.tagLine != '',
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      "${extra?.tagLine}",
+                      style: styleSansBold(color: ThemeColors.greyText),
+                    ),
+                  ),
                 ),
               ],
             ),

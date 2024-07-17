@@ -88,6 +88,7 @@ class Extra {
   final HowItWorkRes? howItWork;
   final HowItWorkRes? membershipText;
 
+  final String? tagLine;
   final ReferLoginRes? referLogin;
   final RevenueCatKeyRes? revenueCatKeys;
 
@@ -116,6 +117,7 @@ class Extra {
 
   Extra({
     this.showFeatured,
+    this.tagLine,
     this.showWatchlist,
     this.showMostPurchased,
     this.text1,
@@ -188,6 +190,7 @@ class Extra {
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        tagLine: json['tag_line'],
         showFeatured: json['show_featured'],
         showWatchlist: json['show_watchlist'],
         showMostPurchased: json['show_most_purchased'],
@@ -334,6 +337,7 @@ class Extra {
         "total_balance": balance,
         "total_spent": spent,
         "text1": text1,
+        "tag_line": tagLine,
         "text2": text2,
         "text3": text3,
 

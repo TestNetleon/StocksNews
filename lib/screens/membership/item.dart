@@ -16,7 +16,7 @@ class MembershipItem extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          margin: const EdgeInsets.only(bottom: 8),
+          margin: const EdgeInsets.only(bottom: 4),
           decoration: BoxDecoration(
             color: ThemeColors.background,
             borderRadius: BorderRadius.circular(5),
@@ -75,7 +75,7 @@ class MembershipItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Transaction ID",
+                          "Invoice ID",
                           style: stylePTSansRegular(
                             fontSize: 14,
                             color: ThemeColors.greyBorder,
@@ -83,7 +83,7 @@ class MembershipItem extends StatelessWidget {
                         ),
                         const SpacerVertical(height: 5),
                         Text(
-                          data?.transactionId ?? "N/A",
+                          "${data?.id}",
                           style: stylePTSansBold(fontSize: 14),
                         ),
                       ],
@@ -123,10 +123,12 @@ class MembershipItem extends StatelessWidget {
           right: 10,
           bottom: 0,
           child: Container(
-            height: 8,
-            decoration: const BoxDecoration(
-              color: ThemeColors.accent,
-              borderRadius: BorderRadius.only(
+            height: 4,
+            decoration: BoxDecoration(
+              color: data?.type == "NON_RENEWING_PURCHASE"
+                  ? ThemeColors.accent
+                  : const Color.fromARGB(255, 225, 218, 30),
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(5),
                 bottomRight: Radius.circular(5),
               ),
