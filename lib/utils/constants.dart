@@ -116,7 +116,8 @@ class Images {
   static const String rankAffiliate = "assets/images/award.png";
   static const String transaction = "assets/images/transaction.png";
   static const String pointIcon = "assets/images/golden1.png";
-  static const String pointIcon2 = "assets/images/01.png";
+  static const String pointIcon2 = "assets/images/golden.png";
+  static const String pointIcon3 = "assets/images/3_coins.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -218,8 +219,9 @@ class Images {
   static const storeBanner = "assets/images/store_banner.png";
   static const storeBack = "assets/images/store_back.png";
   static const buyPoints = "assets/images/buy_points.png";
-  static const coinWin = "assets/images/coin_win.png";
   static const congrationTextImage = "assets/images/congration_text_image.jpeg";
+  static const congratsGIF = "assets/images/Congrats.gif";
+  static const congratsGIF1 = "assets/images/Congrats.png";
 
   //svg
   // static const share = "assets/svg/share.svg";
@@ -236,7 +238,7 @@ class Images {
 class AudioFiles {
   static const alertWeathlist = "audios/alert_watchlist.mp3";
   static const coinWinAudio = "audios/coin_win.wav";
-
+  static const successCoin = "audios/success_coin.mp3";
   static const refresh = "audios/refresh.wav";
 }
 
