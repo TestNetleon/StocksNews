@@ -463,7 +463,7 @@ class PointsItem extends StatelessWidget {
               // ),
               // child: const Icon(Icons.star, size: 36),
               child: Image.asset(
-                Images.starAffiliate,
+                Images.pointIcon,
                 width: 60,
                 height: 60,
               ),

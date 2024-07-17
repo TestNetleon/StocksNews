@@ -85,7 +85,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <StoreKitConfigurationFileReference
-         identifier = "../Membership.storekit">
+         identifier = "../../Membership.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction

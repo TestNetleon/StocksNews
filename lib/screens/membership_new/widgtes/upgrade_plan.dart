@@ -8,7 +8,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
 import '../../../service/revenue_cat.dart';
 import '../../../widgets/my_evaluvated_button.dart';
 
@@ -157,8 +156,8 @@ class _NewMembershipUpgradeCurrentPlanState
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
-                    //     builder: (context) => const SubscriptionPurchased(
-                    //         isMembership: true),
+                    //     builder: (context) =>
+                    //         const SubscriptionPurchased(isMembership: true),
                     //   ),
                     // );
                   },
