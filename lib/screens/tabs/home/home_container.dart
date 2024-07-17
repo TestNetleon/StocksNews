@@ -74,40 +74,6 @@ class HomeContainer extends StatelessWidget {
                   child: const ReferApp(),
                 ),
               ),
-<<<<<<< HEAD
-              // GestureDetector(
-              //   onTap: () {
-              //     showDialog(
-              //       context: navigatorKey.currentContext!,
-              //       barrierColor: Colors.black.withOpacity(0.5),
-              //       builder: (context) {
-              //         return const CoinAnimationWidget();
-              //       },
-              //     );
-              //   },
-              //   child: Image.asset(
-              //     Images.coinWin,
-              //     width: 40,
-              //     height: 40,
-              //   ),
-              // ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: Dimen.padding.sp,
-                  right: Dimen.padding.sp,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (!((provider.homeTrendingRes?.popular.isEmpty == true ||
-                            provider.homeTrendingRes?.popular == null ||
-                            provider.homeTrendingRes == null) &&
-                        provider.statusTrending != Status.loading))
-                      Container(
-                        margin: const EdgeInsets.only(top: Dimen.homeSpacing),
-                        child: const StockInBuzz(),
-                      ),
-=======
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -115,7 +81,6 @@ class HomeContainer extends StatelessWidget {
                           provider.homeTrendingRes?.popular == null ||
                           provider.homeTrendingRes == null) &&
                       provider.statusTrending != Status.loading))
->>>>>>> 3ed40368902a1eff2cc246fd07d9ba3ac527dfcc
                     Container(
                       margin: const EdgeInsets.only(
                           top: Dimen.homeSpacing, left: 15, right: 15),
