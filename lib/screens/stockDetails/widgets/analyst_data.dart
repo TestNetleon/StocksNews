@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
@@ -15,10 +14,11 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/morningstart_lock.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
+import 'package:stocks_news_new/screens/stockDetails/Economic.dart';
+import 'package:stocks_news_new/screens/stockDetails/fair_value.dart';
+import 'package:stocks_news_new/screens/stockDetails/valuable.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -27,10 +27,7 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-
-import '../../../service/ask_subscription.dart';
 import '../../auth/membershipAsk/ask.dart';
 import '../../morningstarTranscations/morningstar_txn.dart';
 
@@ -172,7 +169,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                     //         colors: [
                     //           // Color.fromARGB(255, 2, 71, 12),
                     //           // Color.fromARGB(255, 10, 160, 30),
-
                     //           Color.fromARGB(255, 114, 10, 2),
                     //           Colors.red,
                     //         ],
@@ -465,400 +461,705 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     ],
                                   ),
                                   const SpacerVertical(height: 15),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Container(
-                                            height: 340,
-                                            width: double.infinity,
-                                            decoration: const BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  Color(0xFF99cc00),
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                                ],
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(10),
-                                              ),
-                                            ),
-                                            // padding: const EdgeInsets.all(12.0),
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 10,
-                                                  child: Image.asset(
-                                                    Images.newLineBG,
-                                                    height: 120,
-                                                    fit: BoxFit.fill,
-                                                    width: MediaQuery.sizeOf(
-                                                            context)
-                                                        .width,
-                                                    color: Colors.white,
-                                                    opacity:
-                                                        const AlwaysStoppedAnimation(
-                                                            .4),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Image.asset(
-                                                          Images.transferMoney,
-                                                          // fit: BoxFit.fill,
-                                                          height: 80,
-                                                          width:
-                                                              MediaQuery.sizeOf(
-                                                                      context)
-                                                                  .width,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
-                                                            Text(
-                                                              "Economic Moat"
-                                                                  .toUpperCase(),
-                                                              style:
-                                                                  styleGeorgiaBold(
-                                                                      fontSize:
-                                                                          18),
-                                                            ),
-                                                            const SpacerVertical(
-                                                                height: 5),
-                                                            Text(
-                                                              "As on - ${morningStar?.updated ?? "N/A"}",
-                                                              style:
-                                                                  stylePTSansRegular(
-                                                                fontSize: 12,
-                                                                color:
-                                                                    ThemeColors
-                                                                        .white,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                top: 15.0,
-                                                              ),
-                                                              child: Container(
-                                                                width: constraints
-                                                                        .maxWidth *
-                                                                    (value /
-                                                                        100),
-                                                                height: 40,
-                                                                decoration:
-                                                                    const BoxDecoration(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          245,
-                                                                          250,
-                                                                          245),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                            30),
-                                                                  ),
-                                                                ),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .only(
-                                                                      top: 9.0,
-                                                                      right:
-                                                                          8.0),
-                                                                  child: Text(
-                                                                    "${morningStar?.quantEconomicMoatLabel}"
-                                                                        .toUpperCase(),
-                                                                    style: stylePTSansBold(
-                                                                        color: Colors
-                                                                            .black),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            // padding: EdgeInsets.all(15),
-                                          ),
-                                          Positioned(
-                                            top: 120,
-                                            bottom: 0,
-                                            left: 0,
-                                            right: 0,
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    // Color.fromARGB(255, 2, 71, 12),
-                                                    // Color.fromARGB(255, 10, 160, 30),
 
-                                                    Color(0xff005bef),
-                                                    Color.fromARGB(
-                                                        255, 26, 24, 24),
-                                                  ],
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                              ),
-                                              // padding: const EdgeInsets.all(12),
-                                              child: Stack(
-                                                children: [
-                                                  Positioned(
-                                                    top: 10,
-                                                    child: Image.asset(
-                                                      Images.newLineBG,
-                                                      height: 120,
-                                                      fit: BoxFit.fill,
-                                                      width: MediaQuery.sizeOf(
-                                                              context)
-                                                          .width,
-                                                      color: Colors.white,
-                                                      opacity:
-                                                          const AlwaysStoppedAnimation(
-                                                              .4),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12.0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                            "Valuation"
-                                                                .toUpperCase(),
-                                                            style:
-                                                                styleGeorgiaBold(
-                                                                    fontSize:
-                                                                        18)),
-                                                        // const SpacerVertical(
-                                                        //     height: 8),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                            top: 20.0,
-                                                          ),
-                                                          child: Container(
-                                                            width: constraints
-                                                                    .maxWidth *
-                                                                (value / 100),
-                                                            height: 40,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              // color: ThemeColors.accent,
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .all(
-                                                                Radius.circular(
-                                                                    30),
-                                                              ),
-                                                              gradient:
-                                                                  LinearGradient(
-                                                                begin: Alignment
-                                                                    .centerLeft,
-                                                                end: Alignment
-                                                                    .centerRight,
-                                                                colors: morningStar
-                                                                            ?.quantValuation ==
-                                                                        "Undervalued"
-                                                                    ? [
-                                                                        const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            242,
-                                                                            150,
-                                                                            37),
-                                                                        const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            144,
-                                                                            87,
-                                                                            17),
-                                                                      ]
-                                                                    : morningStar?.quantValuation ==
-                                                                            "Fairly Valued"
-                                                                        ? [
-                                                                            const Color.fromARGB(
-                                                                                255,
-                                                                                14,
-                                                                                173,
-                                                                                5),
-                                                                            const Color.fromARGB(
-                                                                                255,
-                                                                                11,
-                                                                                95,
-                                                                                13),
-                                                                          ]
-                                                                        // Overvalued
-                                                                        : [
-                                                                            Color.fromARGB(
-                                                                                255,
-                                                                                231,
-                                                                                41,
-                                                                                41),
-                                                                            Color.fromARGB(
-                                                                                255,
-                                                                                243,
-                                                                                88,
-                                                                                88),
-                                                                          ],
-                                                              ),
-                                                            ),
-                                                            child: Center(
-                                                              child: Text(
-                                                                "${morningStar?.quantValuation}"
-                                                                    .toUpperCase(),
-                                                                style: stylePTSansBold(
-                                                                    color: Colors
-                                                                        .white),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                  // Container(
+                                  //   height: 372,
+                                  //   width: double.infinity,
+                                  //   decoration: const BoxDecoration(
+                                  //     gradient: LinearGradient(
+                                  //       begin: Alignment.topCenter,
+                                  //       end: Alignment.bottomCenter,
+                                  //       colors: [
+                                  //         Color(0xFF99cc00),
+                                  //         Color.fromARGB(255, 8, 8, 8),
+                                  //       ],
+                                  //     ),
+                                  //     borderRadius: BorderRadius.all(
+                                  //       Radius.circular(10),
+                                  //     ),
+                                  //   ),
+                                  //   // padding: const EdgeInsets.all(12.0),
+                                  //   child: Stack(
+                                  //     children: [
+                                  //       Positioned(
+                                  //         top: 10,
+                                  //         child: Image.asset(
+                                  //           Images.newLineBG,
+                                  //           height: 120,
+                                  //           fit: BoxFit.fill,
+                                  //           width: MediaQuery.sizeOf(context)
+                                  //               .width,
+                                  //           color: Colors.white,
+                                  //           opacity:
+                                  //               const AlwaysStoppedAnimation(
+                                  //                   .4),
+                                  //         ),
+                                  //       ),
+                                  //       Padding(
+                                  //         padding: const EdgeInsets.all(12.0),
+                                  //         child: Row(
+                                  //           children: [
+                                  //             const SpacerHorizontal(
+                                  //               width: 10.0,
+                                  //             ),
+                                  //             Expanded(
+                                  //               child: Column(
+                                  //                 crossAxisAlignment:
+                                  //                     CrossAxisAlignment.start,
+                                  //                 children: [
+                                  //                   Column(
+                                  //                     crossAxisAlignment:
+                                  //                         CrossAxisAlignment
+                                  //                             .start,
+                                  //                     children: [
+                                  //                       Text(
+                                  //                         "Economic Moat"
+                                  //                             .toUpperCase(),
+                                  //                         style:
+                                  //                             styleGeorgiaBold(
+                                  //                                 fontSize: 18),
+                                  //                       ),
+                                  //                       const SpacerVertical(
+                                  //                           height: 5),
+                                  //                       Text(
+                                  //                         "As on - ${morningStar?.updated ?? "N/A"}",
+                                  //                         style:
+                                  //                             stylePTSansRegular(
+                                  //                           fontSize: 12,
+                                  //                           color: ThemeColors
+                                  //                               .white,
+                                  //                         ),
+                                  //                       ),
+                                  //                     ],
+                                  //                   ),
+                                  //                   Row(
+                                  //                     mainAxisAlignment:
+                                  //                         MainAxisAlignment
+                                  //                             .start,
+                                  //                     children: [
+                                  //                       Expanded(
+                                  //                         child: Padding(
+                                  //                           padding:
+                                  //                               const EdgeInsets
+                                  //                                   .only(
+                                  //                                   right:
+                                  //                                       80.0),
+                                  //                           child: Image.asset(
+                                  //                             Images.economic,
+                                  //                             // fit: BoxFit.fill,
+                                  //                             height: 50,
+                                  //                             opacity:
+                                  //                                 const AlwaysStoppedAnimation(
+                                  //                                     .5),
+                                  //                             width: MediaQuery
+                                  //                                     .sizeOf(
+                                  //                                         context)
+                                  //                                 .width,
+                                  //                             color:
+                                  //                                 Colors.white,
+                                  //                           ),
+                                  //                         ),
+                                  //                       ),
+                                  //                       Expanded(
+                                  //                         child: Padding(
+                                  //                           padding:
+                                  //                               const EdgeInsets
+                                  //                                   .only(
+                                  //                                   top: 6.0),
+                                  //                           child: Container(
+                                  //                             width: constraints
+                                  //                                     .maxWidth *
+                                  //                                 (value / 100),
+                                  //                             height: 40,
+                                  //                             decoration:
+                                  //                                 const BoxDecoration(
+                                  //                               color: Color
+                                  //                                   .fromARGB(
+                                  //                                       255,
+                                  //                                       245,
+                                  //                                       250,
+                                  //                                       245),
+                                  //                               borderRadius:
+                                  //                                   BorderRadius
+                                  //                                       .all(
+                                  //                                 Radius
+                                  //                                     .circular(
+                                  //                                         30),
+                                  //                               ),
+                                  //                             ),
+                                  //                             child: Padding(
+                                  //                               padding:
+                                  //                                   const EdgeInsets
+                                  //                                       .only(
+                                  //                                       top:
+                                  //                                           9.0,
+                                  //                                       right:
+                                  //                                           8.0),
+                                  //                               child: Text(
+                                  //                                 "${morningStar?.quantEconomicMoatLabel}"
+                                  //                                     .toUpperCase(),
+                                  //                                 style: stylePTSansBold(
+                                  //                                     color: Colors
+                                  //                                         .black),
+                                  //                                 textAlign:
+                                  //                                     TextAlign
+                                  //                                         .center,
+                                  //                               ),
+                                  //                             ),
+                                  //                           ),
+                                  //                         ),
+                                  //                       ),
+                                  //                     ],
+                                  //                   ),
+                                  //                 ],
+                                  //               ),
+                                  //             ),
+                                  //             // Expanded(
+                                  //             //   child: Column(
+                                  //             //     crossAxisAlignment:
+                                  //             //         CrossAxisAlignment
+                                  //             //             .center,
+                                  //             //     children: [
+                                  //             //       // Text(
+                                  //             //       //   "Economic Moat"
+                                  //             //       //       .toUpperCase(),
+                                  //             //       //   style:
+                                  //             //       //       styleGeorgiaBold(
+                                  //             //       //           fontSize:
+                                  //             //       //               18),
+                                  //             //       // ),
+                                  //             //       // const SpacerVertical(
+                                  //             //       //     height: 5),
+                                  //             //       // Text(
+                                  //             //       //   "As on - ${morningStar?.updated ?? "N/A"}",
+                                  //             //       //   style:
+                                  //             //       //       stylePTSansRegular(
+                                  //             //       //     fontSize: 12,
+                                  //             //       //     color:
+                                  //             //       //         ThemeColors
+                                  //             //       //             .white,
+                                  //             //       //   ),
+                                  //             //       // ),
+                                  //             //       Padding(
+                                  //             //         padding:
+                                  //             //             const EdgeInsets
+                                  //             //                 .only(
+                                  //             //           top: 15.0,
+                                  //             //         ),
+                                  //             //         child: Container(
+                                  //             //           width: constraints
+                                  //             //                   .maxWidth *
+                                  //             //               (value /
+                                  //             //                   100),
+                                  //             //           height: 40,
+                                  //             //           decoration:
+                                  //             //               const BoxDecoration(
+                                  //             //             color: Color
+                                  //             //                 .fromARGB(
+                                  //             //                     255,
+                                  //             //                     245,
+                                  //             //                     250,
+                                  //             //                     245),
+                                  //             //             borderRadius:
+                                  //             //                 BorderRadius
+                                  //             //                     .all(
+                                  //             //               Radius
+                                  //             //                   .circular(
+                                  //             //                       30),
+                                  //             //             ),
+                                  //             //           ),
+                                  //             //           child: Padding(
+                                  //             //             padding: const EdgeInsets
+                                  //             //                 .only(
+                                  //             //                 top: 9.0,
+                                  //             //                 right:
+                                  //             //                     8.0),
+                                  //             //             child: Text(
+                                  //             //               "${morningStar?.quantEconomicMoatLabel}"
+                                  //             //                   .toUpperCase(),
+                                  //             //               style: stylePTSansBold(
+                                  //             //                   color: Colors
+                                  //             //                       .black),
+                                  //             //               textAlign:
+                                  //             //                   TextAlign
+                                  //             //                       .center,
+                                  //             //             ),
+                                  //             //           ),
+                                  //             //         ),
+                                  //             //       ),
+                                  //             //     ],
+                                  //             //   ),
+                                  //             // ),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  //   // padding: EdgeInsets.all(15),
+                                  // ),
+                                  // Positioned(
+                                  //   top: 120,
+                                  //   bottom: 0,
+                                  //   left: 0,
+                                  //   right: 0,
+                                  //   child: Container(
+                                  //     decoration: const BoxDecoration(
+                                  //       gradient: LinearGradient(
+                                  //         begin: Alignment.topCenter,
+                                  //         end: Alignment.bottomCenter,
+                                  //         colors: [
+                                  //           // Color.fromARGB(255, 2, 71, 12),
+                                  //           // Color.fromARGB(255, 10, 160, 30),
+                                  //           Color(0xff005bef),
+                                  //           Color.fromARGB(255, 26, 24, 24),
+                                  //         ],
+                                  //       ),
+                                  //       borderRadius: BorderRadius.all(
+                                  //         Radius.circular(10),
+                                  //       ),
+                                  //     ),
+                                  //     // padding: const EdgeInsets.all(12),
+                                  //     child: Stack(
+                                  //       children: [
+                                  //         Positioned(
+                                  //           top: 10,
+                                  //           child: Image.asset(
+                                  //             Images.newLineBG,
+                                  //             height: 120,
+                                  //             fit: BoxFit.fill,
+                                  //             width: MediaQuery.sizeOf(context)
+                                  //                 .width,
+                                  //             color: Colors.white,
+                                  //             opacity:
+                                  //                 const AlwaysStoppedAnimation(
+                                  //                     .4),
+                                  //           ),
+                                  //         ),
+                                  //         Padding(
+                                  //           padding: const EdgeInsets.all(12.0),
+                                  //           child: Row(
+                                  //             crossAxisAlignment:
+                                  //                 CrossAxisAlignment.start,
+                                  //             children: [
+                                  //               const SpacerHorizontal(
+                                  //                 width: 10.0,
+                                  //               ),
+                                  //               Expanded(
+                                  //                 child: Column(
+                                  //                   crossAxisAlignment:
+                                  //                       CrossAxisAlignment
+                                  //                           .start,
+                                  //                   children: [
+                                  //                     Text(
+                                  //                         "Valuation"
+                                  //                             .toUpperCase(),
+                                  //                         style:
+                                  //                             styleGeorgiaBold(
+                                  //                                 fontSize:
+                                  //                                     18)),
+                                  //                     const SpacerVertical(
+                                  //                         height: 15),
+                                  //                     Row(
+                                  //                       mainAxisAlignment:
+                                  //                           MainAxisAlignment
+                                  //                               .start,
+                                  //                       children: [
+                                  //                         Expanded(
+                                  //                           child: Padding(
+                                  //                             padding:
+                                  //                                 const EdgeInsets
+                                  //                                     .only(
+                                  //                                     right:
+                                  //                                         80.0),
+                                  //                             child:
+                                  //                                 Image.asset(
+                                  //                               Images
+                                  //                                   .transferMoney,
+                                  //                               opacity:
+                                  //                                   const AlwaysStoppedAnimation(
+                                  //                                       .5),
+                                  //                               // fit: BoxFit.fill,
+                                  //                               height: 50,
+                                  //                               width: MediaQuery
+                                  //                                       .sizeOf(
+                                  //                                           context)
+                                  //                                   .width,
+                                  //                               color: Colors
+                                  //                                   .white,
+                                  //                             ),
+                                  //                           ),
+                                  //                         ),
+                                  //                         Expanded(
+                                  //                           child: Container(
+                                  //                             width: constraints
+                                  //                                     .maxWidth *
+                                  //                                 (value / 100),
+                                  //                             height: 40,
+                                  //                             decoration:
+                                  //                                 BoxDecoration(
+                                  //                               // color: ThemeColors.accent,
+                                  //                               borderRadius:
+                                  //                                   const BorderRadius
+                                  //                                       .all(
+                                  //                                 Radius
+                                  //                                     .circular(
+                                  //                                         30),
+                                  //                               ),
+                                  //                               gradient:
+                                  //                                   LinearGradient(
+                                  //                                 begin: Alignment
+                                  //                                     .centerLeft,
+                                  //                                 end: Alignment
+                                  //                                     .centerRight,
+                                  //                                 colors: morningStar
+                                  //                                             ?.quantValuation ==
+                                  //                                         "Undervalued"
+                                  //                                     ? [
+                                  //                                         const Color
+                                  //                                             .fromARGB(
+                                  //                                             255,
+                                  //                                             242,
+                                  //                                             150,
+                                  //                                             37),
+                                  //                                         const Color
+                                  //                                             .fromARGB(
+                                  //                                             255,
+                                  //                                             144,
+                                  //                                             87,
+                                  //                                             17),
+                                  //                                       ]
+                                  //                                     : morningStar?.quantValuation ==
+                                  //                                             "Fairly Valued"
+                                  //                                         ? [
+                                  //                                             const Color.fromARGB(255, 14, 173, 5),
+                                  //                                             const Color.fromARGB(255, 11, 95, 13),
+                                  //                                           ]
+                                  //                                         // Overvalued
+                                  //                                         : [
+                                  //                                             const Color.fromARGB(255, 231, 41, 41),
+                                  //                                             const Color.fromARGB(255, 243, 88, 88),
+                                  //                                           ],
+                                  //                               ),
+                                  //                             ),
+                                  //                             child: Center(
+                                  //                               child: Text(
+                                  //                                 "${morningStar?.quantValuation}"
+                                  //                                     .toUpperCase(),
+                                  //                                 style: stylePTSansBold(
+                                  //                                     color: Colors
+                                  //                                         .white),
+                                  //                                 textAlign:
+                                  //                                     TextAlign
+                                  //                                         .center,
+                                  //                               ),
+                                  //                             ),
+                                  //                           ),
+                                  //                         ),
+                                  //                       ],
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //               ),
+                                  //               // Expanded(
+                                  //               //   child: Column(
+                                  //               //     crossAxisAlignment:
+                                  //               //         CrossAxisAlignment
+                                  //               //             .center,
+                                  //               //     children: [
+                                  //               //       // const SpacerVertical(
+                                  //               //       //     height: 8),
+                                  //               //       Padding(
+                                  //               //         padding:
+                                  //               //             const EdgeInsets
+                                  //               //                 .only(
+                                  //               //           top: 20.0,
+                                  //               //         ),
+                                  //               //         child:
+                                  //               //             Container(
+                                  //               //           width: constraints
+                                  //               //                   .maxWidth *
+                                  //               //               (value /
+                                  //               //                   100),
+                                  //               //           height: 40,
+                                  //               //           decoration:
+                                  //               //               BoxDecoration(
+                                  //               //             // color: ThemeColors.accent,
+                                  //               //             borderRadius:
+                                  //               //                 const BorderRadius
+                                  //               //                     .all(
+                                  //               //               Radius.circular(
+                                  //               //                   30),
+                                  //               //             ),
+                                  //               //             gradient:
+                                  //               //                 LinearGradient(
+                                  //               //               begin: Alignment
+                                  //               //                   .centerLeft,
+                                  //               //               end: Alignment
+                                  //               //                   .centerRight,
+                                  //               //               colors: morningStar?.quantValuation ==
+                                  //               //                       "Undervalued"
+                                  //               //                   ? [
+                                  //               //                       const Color.fromARGB(255, 242, 150, 37),
+                                  //               //                       const Color.fromARGB(255, 144, 87, 17),
+                                  //               //                     ]
+                                  //               //                   : morningStar?.quantValuation == "Fairly Valued"
+                                  //               //                       ? [
+                                  //               //                           const Color.fromARGB(255, 14, 173, 5),
+                                  //               //                           const Color.fromARGB(255, 11, 95, 13),
+                                  //               //                         ]
+                                  //               //                       // Overvalued
+                                  //               //                       : [
+                                  //               //                           const Color.fromARGB(255, 231, 41, 41),
+                                  //               //                           const Color.fromARGB(255, 243, 88, 88),
+                                  //               //                         ],
+                                  //               //             ),
+                                  //               //           ),
+                                  //               //           child: Center(
+                                  //               //             child: Text(
+                                  //               //               "${morningStar?.quantValuation}"
+                                  //               //                   .toUpperCase(),
+                                  //               //               style: stylePTSansBold(
+                                  //               //                   color:
+                                  //               //                       Colors.white),
+                                  //               //               textAlign:
+                                  //               //                   TextAlign
+                                  //               //                       .center,
+                                  //               //             ),
+                                  //               //           ),
+                                  //               //         ),
+                                  //               //       ),
+                                  //               //     ],
+                                  //               //   ),
+                                  //               // ),
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // Positioned(
+                                  //   top: 230,
+                                  //   bottom: 0,
+                                  //   left: 0,
+                                  //   right: 0,
+                                  //   child: Container(
+                                  //     decoration: const BoxDecoration(
+                                  //       gradient: LinearGradient(
+                                  //         begin: Alignment.topCenter,
+                                  //         end: Alignment.bottomCenter,
+                                  //         colors: [
+                                  //           Color(0xFFcc3333),
+                                  //           ThemeColors.background,
+                                  //         ],
+                                  //       ),
+                                  //       borderRadius: BorderRadius.all(
+                                  //         Radius.circular(10),
+                                  //       ),
+                                  //     ),
+                                  //     // padding: const EdgeInsets.all(12),
+                                  //     child: Stack(
+                                  //       children: [
+                                  //         Positioned(
+                                  //           top: 10,
+                                  //           // left: ,
+                                  //           child: Image.asset(
+                                  //             Images.newLineBG,
+                                  //             fit: BoxFit.fill,
+                                  //             height: 120,
+                                  //             width: MediaQuery.sizeOf(context)
+                                  //                 .width,
+                                  //             color: Colors.white,
+                                  //             opacity:
+                                  //                 const AlwaysStoppedAnimation(
+                                  //                     .4),
+                                  //           ),
+                                  //         ),
+                                  //         Padding(
+                                  //           padding: const EdgeInsets.all(12.0),
+                                  //           child: Row(
+                                  //             mainAxisAlignment:
+                                  //                 MainAxisAlignment.start,
+                                  //             children: [
+                                  //               const SpacerHorizontal(
+                                  //                 width: 10.0,
+                                  //               ),
+                                  //               Expanded(
+                                  //                 child: Column(
+                                  //                   crossAxisAlignment:
+                                  //                       CrossAxisAlignment
+                                  //                           .start,
+                                  //                   children: [
+                                  //                     Column(
+                                  //                       crossAxisAlignment:
+                                  //                           CrossAxisAlignment
+                                  //                               .start,
+                                  //                       children: [
+                                  //                         Text(
+                                  //                           "Fair Value",
+                                  //                           style:
+                                  //                               styleGeorgiaBold(
+                                  //                                   fontSize:
+                                  //                                       18),
+                                  //                         ),
+                                  //                         const SpacerVertical(
+                                  //                             height: 5),
+                                  //                         Text(
+                                  //                           "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
+                                  //                           style:
+                                  //                               stylePTSansRegular(
+                                  //                                   fontSize:
+                                  //                                       12),
+                                  //                         ),
+                                  //                       ],
+                                  //                     ),
+                                  //                     const SpacerVertical(
+                                  //                         height: 5),
+                                  //                     Row(
+                                  //                       mainAxisAlignment:
+                                  //                           MainAxisAlignment
+                                  //                               .start,
+                                  //                       children: [
+                                  //                         Expanded(
+                                  //                           child: Padding(
+                                  //                             padding:
+                                  //                                 const EdgeInsets
+                                  //                                     .only(
+                                  //                                     right:
+                                  //                                         80.0),
+                                  //                             child:
+                                  //                                 Image.asset(
+                                  //                               Images
+                                  //                                   .objective,
+                                  //                               height: 70,
+                                  //                               opacity:
+                                  //                                   const AlwaysStoppedAnimation(
+                                  //                                       .5),
+                                  //                               width: MediaQuery
+                                  //                                       .sizeOf(
+                                  //                                           context)
+                                  //                                   .width,
+                                  //                               color: Colors
+                                  //                                   .white,
+                                  //                             ),
+                                  //                           ),
+                                  //                         ),
+                                  //                         Expanded(
+                                  //                           child: Padding(
+                                  //                             padding:
+                                  //                                 const EdgeInsets
+                                  //                                     .only(
+                                  //                                     left:
+                                  //                                         40.0),
+                                  //                             child: Text(
+                                  //                               "${morningStar?.quantFairValue ?? "N/A"}",
+                                  //                               style: styleGeorgiaBold(
+                                  //                                   color: ThemeColors
+                                  //                                       .white,
+                                  //                                   fontSize:
+                                  //                                       30),
+                                  //                             ),
+                                  //                           ),
+                                  //                         ),
+                                  //                       ],
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //               ),
+                                  //               // Expanded(
+                                  //               //   child: Padding(
+                                  //               //     padding:
+                                  //               //         const EdgeInsets
+                                  //               //             .only(
+                                  //               //             right:
+                                  //               //                 10.0),
+                                  //               //     child: Column(
+                                  //               //       children: [
+                                  //               //         // ItemRow(
+                                  //               //         //   label: "Fair Value"
+                                  //               //         //       .toUpperCase(),
+                                  //               //         //   value: "${morningStar?.quantFairValue}",
+                                  //               //         // ),
+                                  //               //         // const SpacerVertical(
+                                  //               //         //     height: 5),
+                                  //               //         // Row(
+                                  //               //         //   mainAxisAlignment:
+                                  //               //         //       MainAxisAlignment
+                                  //               //         //           .center,
+                                  //               //         //   children: [
+                                  //               //         //     Flexible(
+                                  //               //         //       child:
+                                  //               //         //           Text(
+                                  //               //         //         "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
+                                  //               //         //         style: stylePTSansRegular(
+                                  //               //         //             fontSize:
+                                  //               //         //                 12),
+                                  //               //         //       ),
+                                  //               //         //     ),
+                                  //               //         //   ],
+                                  //               //         // ),
+                                  //               //       ],
+                                  //               //     ),
+                                  //               //   ),
+                                  //               // )
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  ///---------new upadation
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 390,
+                                        decoration: BoxDecoration(
+                                          // color: Colors.amber,
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            stops: [0.2, 0.65],
+                                            colors: [
+                                              Color.fromARGB(
+                                                  255, 32, 128, 65),
+                                              Color.fromARGB(
+                                                  255, 39, 37, 37),
+                                            ],
                                           ),
-                                          Positioned(
-                                            top: 225,
-                                            bottom: 0,
-                                            left: 0,
-                                            right: 0,
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Color(0xFFcc3333),
-                                                    ThemeColors.background,
-                                                  ],
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                              ),
-                                              // padding: const EdgeInsets.all(12),
-                                              child: Stack(
-                                                children: [
-                                                  Positioned(
-                                                    top: 10,
-                                                    // left: ,
-                                                    child: Image.asset(
-                                                      Images.newLineBG,
-                                                      fit: BoxFit.fill,
-                                                      height: 120,
-                                                      width: MediaQuery.sizeOf(
-                                                              context)
-                                                          .width,
-                                                      color: Colors.white,
-                                                      opacity:
-                                                          const AlwaysStoppedAnimation(
-                                                              .4),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Image.asset(
-                                                            Images.objective,
-                                                            // fit: BoxFit.fill,
-                                                            height: 80,
-                                                            width: MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    right:
-                                                                        20.0),
-                                                            child: Column(
-                                                              children: [
-                                                                ItemRow(
-                                                                  label: "Fair Value"
-                                                                      .toUpperCase(),
-                                                                  value:
-                                                                      "${morningStar?.quantFairValue}",
-                                                                ),
-                                                                const SpacerVertical(
-                                                                    height: 5),
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Flexible(
-                                                                      child:
-                                                                          Text(
-                                                                        "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
-                                                                        style: stylePTSansRegular(
-                                                                            fontSize:
-                                                                                12),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 14, 41, 0),
                                           ),
-                                        ],
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top:
+                                            0, // Adjust the top position as needed
+                                        left: 0,
+                                        right: 0,
+                                        child: EconomicMoat(
+                                          value: value,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top:
+                                            130, // Adjust the top position based on EconomicMoat's height
+                                        left: 0,
+                                        right: 0,
+                                        child: Valuable(
+                                          value: value,
+                                        ),
+                                      ),
+                                      const Positioned(
+                                        top:
+                                            250, // Adjust the top position based on Valuable's height
+                                        left: 0,
+                                        right: 0,
+                                        child: FairValue(),
                                       ),
                                     ],
                                   ),
@@ -1180,8 +1481,19 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           // clipper: CustomClipPathTopContainerOne(),
                                           child: Container(
                                             decoration: const BoxDecoration(
-                                              color:
-                                                  Color.fromARGB(255, 85, 1, 8),
+                                              //color:
+                                              // Color.fromARGB(255, 85, 1, 8),
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                stops: [0.40, 0.9],
+                                                colors: [
+                                                  Color.fromARGB(
+                                                      226, 238, 55, 42),
+                                                  Color.fromARGB(
+                                                      255, 93, 19, 0),
+                                                ],
+                                              ),
                                             ),
                                             padding: const EdgeInsets.all(12),
                                             child: Column(
@@ -1212,8 +1524,18 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           // clipper: CustomClipPathTopContainerOne(),
                                           child: Container(
                                             decoration: const BoxDecoration(
-                                              color:
-                                                  Color.fromARGB(255, 2, 75, 2),
+                                              // color: Color.fromARGB(255, 2, 75, 2),
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                stops: [0.40, 0.9],
+                                                colors: [
+                                                  Color.fromARGB(
+                                                      255, 45, 161, 30),
+                                                  Color.fromARGB(
+                                                      255, 0, 93, 12),
+                                                ],
+                                              ),
                                             ),
                                             padding: const EdgeInsets.all(12),
                                             child: Column(
@@ -1245,10 +1567,23 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                   Container(
                                     padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: ThemeColors.tabBack),
+                                      borderRadius: BorderRadius.circular(5),
+                                      // color: ThemeColors.tabBack
+                                      gradient: const LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color.fromARGB(255, 63, 63, 63),
+                                          Color.fromARGB(255, 23, 23, 23),
+                                          Color.fromARGB(255, 63, 63, 63),
+                                        ],
+                                      ),
+                                    ),
                                     child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
+                                        const SpacerHorizontal(width: 8),
                                         Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
@@ -1256,60 +1591,71 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           ),
                                           margin: const EdgeInsets.only(
                                               top: 2, left: 2),
-                                          child: Image.asset(
-                                            Images.health,
-                                            width: 40,
-                                            height: 40,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SpacerHorizontal(width: 12),
-                                        Expanded(
                                           child: Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Text(
-                                                    "Financial Health",
-                                                    style: styleGeorgiaBold(
-                                                        fontSize: 18),
-                                                  ),
-                                                  const SpacerHorizontal(
-                                                      width: 10),
-                                                ],
+                                              Text(
+                                                "Financial Health",
+                                                style: styleGeorgiaBold(
+                                                    fontSize: 18),
                                               ),
                                               const SpacerVertical(height: 3),
-                                              Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 3,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                    color: healthLabel == "Weak"
-                                                        ? const Color.fromARGB(
-                                                            255, 244, 67, 54)
-                                                        : healthLabel ==
-                                                                "Moderate"
-                                                            ? const Color
-                                                                .fromARGB(255,
-                                                                253, 239, 45)
-                                                            : const Color
-                                                                .fromARGB(255,
-                                                                43, 255, 117),
-                                                  ),
+                                              Text(
+                                                "As on - ${morningStar?.quantFinancialHealthDate}",
+                                                style: stylePTSansRegular(
+                                                  fontSize: 12,
+                                                  color: ThemeColors.greyText,
+                                                ),
+                                              ),
+                                              const SpacerVertical(height: 6),
+                                              Image.asset(
+                                                Images.financialHealth,
+                                                width: 50,
+                                                height: 50,
+                                                opacity:
+                                                    const AlwaysStoppedAnimation(
+                                                        .8),
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SpacerHorizontal(width: 40),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 50.0, right: 10.0),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 3,
+                                                  vertical: 3,
+                                                ),
+                                                width: 120,
+                                                height: 40,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  color: healthLabel == "Weak"
+                                                      ? const Color.fromARGB(
+                                                          255, 244, 67, 54)
+                                                      : healthLabel ==
+                                                              "Moderate"
+                                                          ? const Color
+                                                              .fromARGB(
+                                                              255, 253, 239, 45)
+                                                          : const Color
+                                                              .fromARGB(255, 43,
+                                                              255, 117),
+                                                ),
+                                                child: Center(
                                                   child: Text(
                                                     "${morningStar?.quantFinancialHealthLabel}",
                                                     style: styleGeorgiaBold(
-                                                      fontSize: 12,
+                                                      fontSize: 16,
                                                       color: healthLabel ==
                                                               "Weak"
                                                           ? Colors.white
@@ -1321,21 +1667,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                   ),
                                                 ),
                                               ),
-                                              // Text(
-                                              //   "Intended to reflect the probability that a firm will face financial distress in the near future",
-                                              //   style: styleGeorgiaRegular(
-                                              //     color: ThemeColors.greyText,
-                                              //   ),
-                                              // ),
-                                              const SpacerVertical(height: 3),
-                                              Text(
-                                                "As on - ${morningStar?.quantFinancialHealthDate}",
-                                                style: stylePTSansRegular(
-                                                  fontSize: 12,
-                                                  color: ThemeColors.greyText,
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         )
                                       ],
@@ -1362,12 +1694,25 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: ThemeColors.themeGreen,
+                                        // color: ThemeColors.themeGreen,
+                                        gradient: const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.40, 0.9],
+                                          colors: [
+                                            Color.fromARGB(255, 45, 161, 30),
+                                            Color.fromARGB(255, 1, 107, 15),
+                                          ],
+                                        ),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       padding: const EdgeInsets.all(12),
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
+                                          // const Icon(Icons.picture_as_pdf_outlined, size: 30),
+                                          const SpacerHorizontal(width: 6),
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
@@ -1392,11 +1737,12 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                               ],
                                             ),
                                           ),
-                                          const SpacerHorizontal(width: 12),
-                                          // const Icon(Icons.picture_as_pdf_outlined, size: 30),
+                                          const SpacerHorizontal(width: 70),
+
                                           Image.asset(
-                                            Images.viewFile,
-                                            width: 36,
+                                            Images.viewReport,
+                                            color: Colors.white,
+                                            width: 50,
                                           ),
                                         ],
                                       ),
@@ -1412,10 +1758,12 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                 const MorningStarTransaction()),
                                       );
                                     },
-                                    child: Text(
-                                      "Read your all Morning Star Reports",
-                                      style: stylePTSansBold(
-                                          color: ThemeColors.accent),
+                                    child: Center(
+                                      child: Text(
+                                        "Read your all Morning Star Reports",
+                                        style: stylePTSansBold(
+                                            color: ThemeColors.accent),
+                                      ),
                                     ),
                                   ),
                                 ],

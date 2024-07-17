@@ -251,7 +251,8 @@ class HomeContainer extends StatelessWidget {
                   ),
                   Visibility(
                     visible: !provider.isLoadingTrending &&
-                        (provider.homeTrendingRes?.trendingNews?.isNotEmpty == true &&
+                        (provider.homeTrendingRes?.trendingNews?.isNotEmpty ==
+                                true &&
                             provider.homeTrendingRes?.trendingNews != null),
                     child: Container(
                       margin: const EdgeInsets.only(
