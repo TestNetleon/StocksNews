@@ -13,6 +13,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/service/ask_subscription.dart';
@@ -90,20 +91,30 @@ class BlogDetailContainer extends StatelessWidget {
     await provider.getBlogDetailData(slug: slug, point_deduction: true);
   }
 
+  // Future _membership() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   await askToSubscribe(
+  //     onPressed: () async {
+  //       Navigator.pop(navigatorKey.currentContext!);
+
+  //       if (provider.user?.phone == null || provider.user?.phone == '') {
+  //         await membershipLogin();
+  //       }
+  //       if (provider.user?.phone != null && provider.user?.phone != '') {
+  //         await RevenueCatService.initializeSubscription();
+  //       }
+  //     },
+  //   );
+  // }
+
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    await askToSubscribe(
-      onPressed: () async {
-        Navigator.pop(navigatorKey.currentContext!);
-
-        if (provider.user?.phone == null || provider.user?.phone == '') {
-          await membershipLogin();
-        }
-        if (provider.user?.phone != null && provider.user?.phone != '') {
-          await RevenueCatService.initializeSubscription();
-        }
-      },
-    );
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+    if (provider.user?.phone != null && provider.user?.phone != '') {
+      await RevenueCatService.initializeSubscription();
+    }
   }
 
   @override
@@ -456,6 +467,14 @@ class BlogDetailContainer extends StatelessWidget {
                                     radius: 30,
                                     icon: Icons.card_membership,
                                     text: "Upgrade Membership for more points",
+                                    // onPressed: () {
+                                    //   Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (_) => const NewMembership(),
+                                    //     ),
+                                    //   );
+                                    // },
                                     onPressed: () async {
                                       await _membership();
                                     },
