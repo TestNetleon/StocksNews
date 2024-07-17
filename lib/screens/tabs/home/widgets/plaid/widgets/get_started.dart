@@ -258,7 +258,7 @@ class _PlaidHomeGetStartedState extends State<PlaidHomeGetStarted> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  Images.pointIcon,
+                  Images.pointIcon2,
                   height: 20,
                   width: 20,
                 ),

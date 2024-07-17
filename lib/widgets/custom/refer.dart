@@ -116,40 +116,45 @@ class ReferApp extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          // color: ThemeColors.accent,
-          // gradient: const LinearGradient(
-          //   begin: Alignment.bottomLeft,
-          //   end: Alignment.topRight,
-          //   colors: [
-          //     Colors.black,
-          //     ThemeColors.accent,
-          //     // Color.fromARGB(255, 10, 114, 24),
-          //   ],.
-          // ),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 2,
-            stops: [0.0, 0.6],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              Color.fromARGB(255, 6, 41, 1),
-            ],
-          ),
+
           // gradient: const RadialGradient(
           //   center: Alignment.bottomCenter,
-          //   radius: 3,
-          //   stops: [0.0, 0.2, 1.0],
+          //   radius: 2,
+          //   stops: [0.0, 0.6],
           //   colors: [
-          //     Color.fromARGB(255, 20, 156, 10),
           //     Color.fromARGB(255, 0, 93, 12),
-          //     Color.fromARGB(255, 4, 34, 0),
+          //     Color.fromARGB(255, 6, 41, 1),
           //   ],
           // ),
+
+          // gradient: const SweepGradient(
+          //   colors: [
+          //     Colors.red,
+          //     Colors.orange,
+          //     Colors.green,
+          //     Colors.blue,
+          //   ],
+          //   stops: [0.0, 0.33, 0.66, 1.0],
+          //   center: Alignment.center,
+          //   startAngle: 0.0,
+          //   endAngle: 3.14 * 2,
+          // ),
+
+          gradient: const RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 3,
+            stops: [0.0, 0.2, 1.0],
+            colors: [
+              Color.fromARGB(255, 20, 156, 10),
+              Color.fromARGB(255, 0, 93, 12),
+              Color.fromARGB(255, 4, 34, 0),
+            ],
+          ),
         ),
         child: Row(
           children: [
             Image.asset(
-              Images.pointIcon,
+              Images.pointIcon2,
               // Images.reward,
               // Images.flames,
 
