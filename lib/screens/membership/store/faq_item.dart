@@ -27,7 +27,8 @@ class FaqItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: ThemeColors.divider),
+        border: Border.all(color: ThemeColors.greyBorder),
+        // border: Border.all(color: ThemeColors.divider),
       ),
       padding: EdgeInsets.all(Dimen.itemSpacing.sp),
       child: Column(
@@ -46,7 +47,13 @@ class FaqItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     question,
-                    style: stylePTSansBold(fontSize: 16, color: Colors.black),
+                    style: stylePTSansBold(
+                      fontSize: 16,
+                      color: openIndex == index
+                          ? ThemeColors.themeGreen
+                          : Colors.white,
+                      // color: Colors.black,
+                    ),
                   ),
                 ),
               ],
@@ -59,8 +66,12 @@ class FaqItem extends StatelessWidget {
               height: openIndex == index ? null : 0,
               padding: EdgeInsets.only(top: Dimen.itemSpacing.sp),
               child: Text(
-                "${answer} sdij fosijdf iopsjdfiosdjf soifj iosdjf oijs dfiojsdfio jsdfioj sdiofjsdiofjspdoifj ",
-                style: stylePTSansRegular(fontSize: 14, color: Colors.black),
+                answer,
+                style: stylePTSansRegular(
+                  fontSize: 14,
+                  color: Colors.white,
+                  // color: Colors.black,
+                ),
               ),
             ),
           ),

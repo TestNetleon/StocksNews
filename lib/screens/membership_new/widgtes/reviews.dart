@@ -34,15 +34,12 @@ class NewMembershipReviews extends StatelessWidget {
             itemBuilder: (context, index) {
               return Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(28),
                 color: index % 2 == 0
-                    ? ThemeColors.white
-                    : const Color.fromARGB(255, 243, 242, 242),
-                // ? ThemeColors.greyText.withOpacity(0.4)
-                // : ThemeColors.greyBorder.withOpacity(0.9),
+                    ? Colors.black
+                    : const Color.fromARGB(255, 22, 22, 22),
                 child: Column(
                   children: [
-                    // const SpacerVertical(height: 15),
                     RatingBar.builder(
                       initialRating: data?.testimonials[index].rating ?? 5,
                       minRating: 5,
@@ -66,7 +63,8 @@ class NewMembershipReviews extends StatelessWidget {
                       "${data?.testimonials[index].title}",
                       textAlign: TextAlign.center,
                       style: styleSansBold(
-                        color: Colors.black,
+                        // color: Colors.black,
+                        color: ThemeColors.themeGreen,
                         fontSize: 20,
                       ),
                     ),
@@ -75,20 +73,22 @@ class NewMembershipReviews extends StatelessWidget {
                       textAlign: TextAlign.center,
                       "${data?.testimonials[index].text}",
                       style: stylePTSansRegular(
-                        color: Colors.black,
+                        // color: Colors.black,
+                        color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
-                    const SpacerVertical(height: 10),
+                    const SpacerVertical(height: 20),
                     Text(
                       textAlign: TextAlign.center,
                       "${data?.testimonials[index].name}",
                       style: stylePTSansBold(
-                        color: Colors.black,
+                        // color: Colors.black,
+                        // color: Colors.white,
+                        color: ThemeColors.themeGreen,
                         fontSize: 16,
                       ),
                     ),
-                    // const SpacerVertical(height: 20),
                   ],
                 ),
               );
