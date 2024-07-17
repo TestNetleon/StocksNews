@@ -13,7 +13,9 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/overview/morningstart_lock.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -29,6 +31,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../service/ask_subscription.dart';
 import '../../auth/membershipAsk/ask.dart';
+import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
@@ -76,26 +79,46 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     }
   }
 
+  // Future _membership() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   await askToSubscribe(
+  //     onPressed: () async {
+  //       Navigator.pop(navigatorKey.currentContext!);
+
+  //       if (provider.user?.phone == null || provider.user?.phone == '') {
+  //         await membershipLogin();
+  //       }
+  //       if (provider.user?.phone != null && provider.user?.phone != '') {
+  //         await RevenueCatService.initializeSubscription();
+  //       }
+  //     },
+  //   );
+  // }
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    await askToSubscribe(
-      onPressed: () async {
-        Navigator.pop(navigatorKey.currentContext!);
-
-        if (provider.user?.phone == null || provider.user?.phone == '') {
-          await membershipLogin();
-        }
-        if (provider.user?.phone != null && provider.user?.phone != '') {
-          await RevenueCatService.initializeSubscription();
-        }
-      },
-    );
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+    if (provider.user?.phone != null && provider.user?.phone != '') {
+      // await RevenueCatService.initializeSubscription();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     // Utils().showLog('is user logged in ${userPresent}');
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+
+    UserProvider userProvider = context.watch<UserProvider>();
+
+    bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+
     MorningStar? morningStar =
         context.watch<StockDetailProviderNew>().overviewRes?.morningStart;
     //NewsDetailProvider provider = context.watch<NewsDetailProvider>();
@@ -136,209 +159,213 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                 ?.readingStatus ==
                             false) &&
                         !provider.isLoadingOverview)
-                    ? Container(
-                        padding: const EdgeInsets.all(15),
-                        margin: const EdgeInsets.only(top: 15),
-                        decoration: BoxDecoration(
-                          // color: ThemeColors.sos,
-                          gradient: const LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [
-                              // Color.fromARGB(255, 2, 71, 12),
-                              // Color.fromARGB(255, 10, 160, 30),
+                    ? SdMorningStarLock(symbol: widget.symbol)
+                    // Container(
+                    //     padding: const EdgeInsets.all(15),
+                    //     margin: const EdgeInsets.only(top: 15),
+                    //     decoration: BoxDecoration(
+                    //       // color: ThemeColors.sos,
+                    //       gradient: const LinearGradient(
+                    //         begin: Alignment.bottomLeft,
+                    //         end: Alignment.topRight,
+                    //         colors: [
+                    //           // Color.fromARGB(255, 2, 71, 12),
+                    //           // Color.fromARGB(255, 10, 160, 30),
 
-                              Color.fromARGB(255, 114, 10, 2),
-                              Colors.red,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            // margin: const EdgeInsets.only(top: 15),
-                            decoration: BoxDecoration(
-                              color: ThemeColors.background,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // TODO: -------
-                                  const Icon(
-                                    Icons.lock,
-                                    size: 40,
-                                    color: ThemeColors.themeGreen,
-                                  ),
-                                  const SpacerVertical(height: 15),
-                                  // TODO: -------
-                                  // Image.asset(
-                                  //   Images.lockGIF,
-                                  //   height: 70,
-                                  //   width: 70,
-                                  // ),
-                                  Image.asset(
-                                    Images.morningStarLogo,
-                                    width: ScreenUtil().screenWidth * .5,
-                                  ),
-                                  const SpacerVertical(),
-                                  Text(
-                                    // "Quantitative Equity Research Report",
-                                    "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
-                                    style: stylePTSansBold(
-                                      fontSize: 18,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SpacerVertical(height: 10),
+                    //           Color.fromARGB(255, 114, 10, 2),
+                    //           Colors.red,
+                    //         ],
+                    //       ),
+                    //       borderRadius: BorderRadius.circular(8),
+                    //     ),
+                    //     child: Container(
+                    //         width: double.infinity,
+                    //         alignment: Alignment.center,
+                    //         // margin: const EdgeInsets.only(top: 15),
+                    //         decoration: BoxDecoration(
+                    //           color: ThemeColors.background,
+                    //           borderRadius: BorderRadius.circular(8),
+                    //         ),
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.all(15),
+                    //           child: Column(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             children: [
+                    //               const Icon(
+                    //                 Icons.lock,
+                    //                 size: 40,
+                    //                 color: ThemeColors.themeGreen,
+                    //               ),
+                    //               const SpacerVertical(height: 15),
+                    //               Image.asset(
+                    //                 Images.morningStarLogo,
+                    //                 width: ScreenUtil().screenWidth * .5,
+                    //               ),
+                    //               const SpacerVertical(),
+                    //               Text(
+                    //                 // "Quantitative Equity Research Report",
+                    //                 "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
+                    //                 style: stylePTSansBold(
+                    //                   fontSize: 18,
+                    //                 ),
+                    //                 textAlign: TextAlign.center,
+                    //               ),
+                    //               const SpacerVertical(height: 10),
+                    //               Text(
+                    //                 // "Quantitative Equity Research Report",
+                    //                 "Undervalued or Overvalued? Find out if “${widget.symbol}” has 1 star or 5 Stars Today!",
+                    //                 style: stylePTSansRegular(
+                    //                   fontSize: 14,
+                    //                   height: 1.3,
+                    //                 ),
+                    //                 textAlign: TextAlign.center,
+                    //               ),
+                    //               const SpacerVertical(height: 10),
+                    //               Text(
+                    //                 "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
+                    //                 style: stylePTSansRegular(
+                    //                   fontSize: 14,
+                    //                   height: 1.3,
+                    //                 ),
+                    //                 textAlign: TextAlign.center,
+                    //               ),
+                    //               const SpacerVertical(height: 10),
+                    //               context.watch<UserProvider>().user == null
+                    //                   ? SizedBox(
+                    //                       width: double.infinity,
+                    //                       child: ThemeButtonSmall(
+                    //                         onPressed: () {
+                    //                           _onLoginClick(context);
+                    //                         },
+                    //                         text: "Register/Login to Continue",
+                    //                         padding: const EdgeInsets.symmetric(
+                    //                           horizontal: 5,
+                    //                           vertical: 11,
+                    //                         ),
+                    //                         textSize: 15,
+                    //                         fontBold: true,
+                    //                         iconFront: true,
+                    //                         icon: Icons.lock,
+                    //                         radius: 30,
+                    //                       ),
+                    //                     )
+                    //                   : (provider
+                    //                                   .overviewRes
+                    //                                   ?.morningStart
+                    //                                   ?.lockInformation
+                    //                                   ?.balanceStatus ==
+                    //                               null ||
+                    //                           provider
+                    //                                   .overviewRes
+                    //                                   ?.morningStart
+                    //                                   ?.lockInformation
+                    //                                   ?.balanceStatus ==
+                    //                               false)
+                    //                       ? Column(
+                    //                           crossAxisAlignment:
+                    //                               CrossAxisAlignment.stretch,
+                    //                           children: [
+                    //                             ThemeButtonSmall(
+                    //                               padding: const EdgeInsets
+                    //                                   .symmetric(
+                    //                                   horizontal: 5,
+                    //                                   vertical: 11),
+                    //                               textSize: 15,
+                    //                               fontBold: true,
+                    //                               iconFront: true,
+                    //                               icon: Icons.earbuds_rounded,
+                    //                               iconWidget: Padding(
+                    //                                 padding:
+                    //                                     const EdgeInsets.only(
+                    //                                         right: 10),
+                    //                                 child: Image.asset(
+                    //                                   Images.referAndEarn,
+                    //                                   height: 18,
+                    //                                   width: 18,
+                    //                                   color: ThemeColors.white,
+                    //                                 ),
+                    //                               ),
+                    //                               onPressed: () async {
+                    //                                 await _onReferClick(
+                    //                                     context);
+                    //                               },
+                    //                               text: "Refer and Earn",
+                    //                               radius: 30,
+                    //                               // showArrow: false,
+                    //                             ),
+                    //                             const SpacerVertical(
+                    //                                 height: 10),
+                    //                             Visibility(
+                    //                               visible: showMembership,
+                    //                               child: ThemeButtonSmall(
+                    //                                 color: const Color.fromARGB(
+                    //                                     255, 194, 216, 51),
+                    //                                 textColor: Colors.black,
+                    //                                 padding: const EdgeInsets
+                    //                                     .symmetric(
+                    //                                     horizontal: 5,
+                    //                                     vertical: 11),
+                    //                                 textSize: 15,
+                    //                                 fontBold: true,
+                    //                                 iconWidget: Padding(
+                    //                                   padding:
+                    //                                       const EdgeInsets.only(
+                    //                                           right: 10),
+                    //                                   child: Image.asset(
+                    //                                     Images.membership,
+                    //                                     height: 20,
+                    //                                     width: 20,
+                    //                                   ),
+                    //                                 ),
+                    //                                 iconFront: true,
+                    //                                 radius: 30,
+                    //                                 icon: Icons.card_membership,
+                    //                                 onPressed: () async =>
+                    //                                     _membership(),
+                    //                                 // onPressed: () {
+                    //                                 //   Navigator.push(
+                    //                                 //     context,
+                    //                                 //     MaterialPageRoute(
+                    //                                 //       builder: (_) =>
+                    //                                 //           const NewMembership(),
+                    //                                 //     ),
+                    //                                 //   );
+                    //                                 // },
+                    //                                 textAlign: TextAlign.start,
+                    //                                 mainAxisSize:
+                    //                                     MainAxisSize.max,
+                    //                                 text:
+                    //                                     "Upgrade Membership for more points",
+                    //                                 // showArrow: false,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         )
+                    //                       : Container(
+                    //                           width: double.infinity,
+                    //                           margin: const EdgeInsets.only(
+                    //                               top: 10),
+                    //                           child: ThemeButtonSmall(
+                    //                             padding:
+                    //                                 const EdgeInsets.symmetric(
+                    //                                     horizontal: 5,
+                    //                                     vertical: 11),
+                    //                             textSize: 15,
+                    //                             iconFront: true,
+                    //                             fontBold: true,
+                    //                             radius: 30,
+                    //                             icon: Icons.visibility,
+                    //                             onPressed: () =>
+                    //                                 _onViewNewsClick(context),
+                    //                             text: "View Research Report",
+                    //                           ),
+                    //                         ),
+                    //               // const SpacerVertical(),
+                    //             ],
+                    //           ),
+                    //         )),
+                    //   )
 
-                                  Text(
-                                    // "Quantitative Equity Research Report",
-                                    "Undervalued or Overvalued? Find out if “${widget.symbol}” has 1 star or 5 Stars Today!",
-                                    style: stylePTSansRegular(
-                                      fontSize: 14,
-                                      height: 1.3,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-
-                                  const SpacerVertical(height: 10),
-                                  Text(
-                                    "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
-                                    style: stylePTSansRegular(
-                                      fontSize: 14,
-                                      height: 1.3,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SpacerVertical(height: 10),
-                                  context.watch<UserProvider>().user == null
-                                      ? SizedBox(
-                                          width: double.infinity,
-                                          child: ThemeButtonSmall(
-                                            onPressed: () {
-                                              _onLoginClick(context);
-                                            },
-                                            text: "Register/Login to Continue",
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5, vertical: 11),
-                                            textSize: 15,
-                                            fontBold: true,
-                                            iconFront: true,
-                                            icon: Icons.lock,
-                                            radius: 30,
-                                          ),
-                                        )
-                                      : (provider
-                                                      .overviewRes
-                                                      ?.morningStart
-                                                      ?.lockInformation
-                                                      ?.balanceStatus ==
-                                                  null ||
-                                              provider
-                                                      .overviewRes
-                                                      ?.morningStart
-                                                      ?.lockInformation
-                                                      ?.balanceStatus ==
-                                                  false)
-                                          ? Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: [
-                                                ThemeButtonSmall(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 11),
-                                                  textSize: 15,
-                                                  fontBold: true,
-                                                  iconFront: true,
-                                                  icon: Icons.earbuds_rounded,
-                                                  iconWidget: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 10),
-                                                    child: Image.asset(
-                                                      Images.referAndEarn,
-                                                      height: 18,
-                                                      width: 18,
-                                                      color: ThemeColors.white,
-                                                    ),
-                                                  ),
-                                                  onPressed: () async {
-                                                    await _onReferClick(
-                                                        context);
-                                                  },
-                                                  text: "Refer and Earn",
-                                                  radius: 30,
-                                                  // showArrow: false,
-                                                ),
-                                                const SpacerVertical(
-                                                    height: 10),
-                                                Visibility(
-                                                  visible: showMembership,
-                                                  child: ThemeButtonSmall(
-                                                    color: const Color.fromARGB(
-                                                        255, 194, 216, 51),
-                                                    textColor: Colors.black,
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 11),
-                                                    textSize: 15,
-                                                    fontBold: true,
-                                                    iconWidget: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 10),
-                                                      child: Image.asset(
-                                                        Images.membership,
-                                                        height: 20,
-                                                        width: 20,
-                                                      ),
-                                                    ),
-                                                    iconFront: true,
-                                                    radius: 30,
-                                                    icon: Icons.card_membership,
-                                                    onPressed: () async =>
-                                                        _membership(),
-                                                    textAlign: TextAlign.start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    text:
-                                                        "Upgrade Membership for more points",
-                                                    // showArrow: false,
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Container(
-                                              width: double.infinity,
-                                              margin: const EdgeInsets.only(
-                                                  top: 10),
-                                              child: ThemeButtonSmall(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 11),
-                                                textSize: 15,
-                                                iconFront: true,
-                                                fontBold: true,
-                                                radius: 30,
-                                                icon: Icons.visibility,
-                                                onPressed: () =>
-                                                    _onViewNewsClick(context),
-                                                text: "View Research Report",
-                                              ),
-                                            ),
-                                  // const SpacerVertical(),
-                                ],
-                              ),
-                            )),
-                      )
                     : CommonRefreshIndicator(
                         onRefresh: () async {
                           provider.getOverviewData(
@@ -989,6 +1016,22 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           ),
                                         ],
                                       ),
+                                    ),
+                                  ),
+                                  const SpacerVertical(height: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        navigatorKey.currentContext!,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const MorningStarTransaction()),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Read your all Morning Star Reports",
+                                      style: stylePTSansBold(
+                                          color: ThemeColors.accent),
                                     ),
                                   ),
                                 ],

@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';

@@ -6,7 +6,6 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/route/navigation_observer.dart';
-import 'package:stocks_news_new/screens/auth/bottomSheets/refer_sheet.dart';
 import 'package:stocks_news_new/screens/notifications/index.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -18,6 +17,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
   final bool showTrailing, isPopback, showQR, canSearch;
   final void Function()? filterClick;
+  final void Function()? onTap;
 //
   const AppBarHome({
     super.key,
@@ -27,6 +27,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     this.filterClick,
     this.isHome = false,
     this.canSearch = false,
+    this.onTap,
   });
 
   @override
@@ -58,34 +59,37 @@ class _AppBarHomeState extends State<AppBarHome> {
       automaticallyImplyLeading: false,
       leading: widget.isPopback
           ? IconButton(
-              onPressed: () {
-                if (popHome) {
-                  if (CustomNavigatorObserver().stackCount >= 2) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                  } else {
-                    Navigator.popUntil(
-                        navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const Tabs()),
-                    );
-                    popHome = false;
-                  }
-                } else {
-                  // Navigator.pop(navigatorKey.currentContext!);
-                  if (CustomNavigatorObserver().stackCount >= 2) {
-                    Navigator.pop(navigatorKey.currentContext!);
-                  } else {
-                    Navigator.popUntil(
-                        navigatorKey.currentContext!, (route) => route.isFirst);
-                    Navigator.pushReplacement(
-                      navigatorKey.currentContext!,
-                      MaterialPageRoute(builder: (_) => const Tabs()),
-                    );
-                    popHome = false;
-                  }
-                }
-              },
+              onPressed: widget.onTap ??
+                  () {
+                    if (popHome) {
+                      if (CustomNavigatorObserver().stackCount >= 2 &&
+                          splashLoaded) {
+                        Navigator.pop(navigatorKey.currentContext!);
+                      } else {
+                        Navigator.popUntil(navigatorKey.currentContext!,
+                            (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(builder: (_) => const Tabs()),
+                        );
+                        popHome = false;
+                      }
+                    } else {
+                      // Navigator.pop(navigatorKey.currentContext!);
+                      if (CustomNavigatorObserver().stackCount >= 2 &&
+                          splashLoaded) {
+                        Navigator.pop(navigatorKey.currentContext!);
+                      } else {
+                        Navigator.popUntil(navigatorKey.currentContext!,
+                            (route) => route.isFirst);
+                        Navigator.pushReplacement(
+                          navigatorKey.currentContext!,
+                          MaterialPageRoute(builder: (_) => const Tabs()),
+                        );
+                        popHome = false;
+                      }
+                    }
+                  },
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -240,7 +244,6 @@ class _AppBarHomeState extends State<AppBarHome> {
                 ],
               )
             : const SizedBox(),
-
         // TODO MUST REMOVE IN LIVE BUILD
         // IconButton(
         //   onPressed: () {

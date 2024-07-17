@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/drawer_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -14,18 +13,11 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
-import 'package:stocks_news_new/screens/membership/index.dart';
-import 'package:stocks_news_new/screens/morningstarTranscations/morningstar_txn.dart';
-import 'package:stocks_news_new/screens/myAccount/my_account.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../blogNew/blogsNew/index.dart';
-import '../../faq/index.dart';
-import '../../t&cAndPolicy/tc_policy.dart';
-import '../../whatWeDo/index.dart';
 
 List<DrawerRes> marketData = [
   // DrawerRes(
@@ -374,147 +366,146 @@ List<DrawerRes> learn = [
 // 5: ContactUs.path,
 // 6: FAQ.path,
 
-List<DrawerRes> aboutTiles = [
-  DrawerRes(
-    iconData: Icons.person_2_outlined,
-    text: "My Account",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const MyAccount()),
-      );
-    },
-  ),
-  DrawerRes(
-    iconData: Icons.wallet_membership,
-    text: "My Membership",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const MembershipIndex()),
-      );
-    },
-  ),
-  DrawerRes(
-    iconData: Icons.library_books_sharp,
-    text: "Morningstar Reports",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
-      );
-    },
-  ),
+// List<DrawerRes> aboutTiles = [
+//   DrawerRes(
+//     iconData: Icons.person_2_outlined,
+//     text: "My Account",
+//     onTap: () {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const MyAccount()),
+//       );
+//     },
+//   ),
+//   DrawerRes(
+//     iconData: Icons.wallet_membership,
+//     text: "My Membership",
+//     onTap: () {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const MembershipIndex()),
+//       );
+//     },
+//   ),
+//   DrawerRes(
+//     iconData: Icons.library_books_sharp,
+//     text: "Morningstar Reports",
+//     onTap: () {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
+//       );
+//     },
+//   ),
+//   DrawerRes(
+//     iconData: Icons.person_pin_outlined,
+//     text: "Portfolio",
+//     onTap: () {
+//       // Navigator.push(navigatorKey.currentContext!, HomePlaidAdded.path);
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
+//       );
+//     },
+//   ),
+//   DrawerRes(
+//     iconData: Icons.leaderboard_outlined,
+//     text: "Refer and Earn",
+//     onTap: () {
+//       // Navigator.push(navigatorKey.currentContext!, ReferAFriend.path);
+//     },
+//   ),
+//   DrawerRes(
+//     iconData: Icons.list_alt_rounded,
+//     text: "About Stocks.News",
+//     onTap: () {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) {
+//           return const TCandPolicy(
+//             slug: "about-us",
+//             policyType: PolicyType.aboutUs,
+//           );
+//         }),
+//       );
+//     },
+//   ),
+//   // DrawerRes(
+//   //   iconData: Icons.list_alt_rounded,
+//   //   text: "ReferAFriendNew",
+//   //   onTap: () {
+//   //     Navigator.push(
+//   //       navigatorKey.currentContext!,
+//   //       MaterialPageRoute(builder: (_) => const ReferFriendNew()),
+//   //     );
+//   //   },
+//   // ),
 
-  DrawerRes(
-    iconData: Icons.person_pin_outlined,
-    text: "Portfolio",
-    onTap: () {
-      // Navigator.push(navigatorKey.currentContext!, HomePlaidAdded.path);
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
-      );
-    },
-  ),
-  DrawerRes(
-    iconData: Icons.leaderboard_outlined,
-    text: "Refer and Earn",
-    onTap: () {
-      // Navigator.push(navigatorKey.currentContext!, ReferAFriend.path);
-    },
-  ),
-  DrawerRes(
-    iconData: Icons.list_alt_rounded,
-    text: "About Stocks.News",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) {
-          return const TCandPolicy(
-            slug: "about-us",
-            policyType: PolicyType.aboutUs,
-          );
-        }),
-      );
-    },
-  ),
-  // DrawerRes(
-  //   iconData: Icons.list_alt_rounded,
-  //   text: "ReferAFriendNew",
-  //   onTap: () {
-  //     Navigator.push(
-  //       navigatorKey.currentContext!,
-  //       MaterialPageRoute(builder: (_) => const ReferFriendNew()),
-  //     );
-  //   },
-  // ),
+//   // DrawerRes(
+//   //   iconData: Icons.list_alt_rounded,
+//   //   text: "Mission",
+//   //   onTap: () {
+//   //     Navigator.push(
+//   //       navigatorKey.currentContext!,
+//   //       MaterialPageRoute(builder: (_) => const MissionsScreen()),
+//   //     );
+//   //   },
+//   // ),
+//   DrawerRes(
+//     iconData: Icons.featured_play_list_outlined,
+//     text: "What We Do",
+//     onTap: () {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
+//       );
+//     },
+//   ),
+//   // DrawerRes(
+//   //   iconData: Icons.mail_outline_sharp,
+//   //   text: "Contact Us",
+//   //   onTap: () {
+//   //     Navigator.push(
+//   //       navigatorKey.currentContext!,
+//   //       MaterialPageRoute(builder: (_) => const ContactUs()),
+//   //     );
+//   //   },
+//   // ),
+//   DrawerRes(
+//     iconData: Icons.support_agent,
+//     text: "Helpdesk",
+//     onTap: () {
+//       // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+//       // log("1");
+//       // if (user == null) {
+//       //   isPhone ? await loginSheet() : await loginSheetTablet();
+//       // }
 
-  // DrawerRes(
-  //   iconData: Icons.list_alt_rounded,
-  //   text: "Mission",
-  //   onTap: () {
-  //     Navigator.push(
-  //       navigatorKey.currentContext!,
-  //       MaterialPageRoute(builder: (_) => const MissionsScreen()),
-  //     );
-  //   },
-  // ),
-  DrawerRes(
-    iconData: Icons.featured_play_list_outlined,
-    text: "What We Do",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
-      );
-    },
-  ),
-  // DrawerRes(
-  //   iconData: Icons.mail_outline_sharp,
-  //   text: "Contact Us",
-  //   onTap: () {
-  //     Navigator.push(
-  //       navigatorKey.currentContext!,
-  //       MaterialPageRoute(builder: (_) => const ContactUs()),
-  //     );
-  //   },
-  // ),
-  DrawerRes(
-    iconData: Icons.support_agent,
-    text: "Helpdesk",
-    onTap: () {
-      // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-      // log("1");
-      // if (user == null) {
-      //   isPhone ? await loginSheet() : await loginSheetTablet();
-      // }
-
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const HelpDesk()),
-      );
-      // log("3");
-    },
-  ),
-  // DrawerRes(
-  //   iconData: Icons.support_agent,
-  //   text: "Deep Links",
-  //   onTap: () {
-  //     Navigator.push(
-  //       navigatorKey.currentContext!,
-  //       MaterialPageRoute(builder: (_) => const Deeplinks()),
-  //     );
-  //   },
-  // ),
-  DrawerRes(
-    iconData: Icons.help_outline_rounded,
-    text: "FAQ",
-    onTap: () {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const FAQ()),
-      );
-    },
-  ),
-];
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const HelpDesk()),
+//       );
+//       // log("3");
+//     },
+//   ),
+//   // DrawerRes(
+//   //   iconData: Icons.support_agent,
+//   //   text: "Deep Links",
+//   //   onTap: () {
+//   //     Navigator.push(
+//   //       navigatorKey.currentContext!,
+//   //       MaterialPageRoute(builder: (_) => const Deeplinks()),
+//   //     );
+//   //   },
+//   // ),
+//   DrawerRes(
+//     iconData: Icons.help_outline_rounded,
+//     text: "FAQ",
+//     onTap: () {
+//       Navigator.push(
+//         navigatorKey.currentContext!,
+//         MaterialPageRoute(builder: (_) => const FAQ()),
+//       );
+//     },
+//   ),
+// ];

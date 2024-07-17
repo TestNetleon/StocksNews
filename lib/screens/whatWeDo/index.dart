@@ -24,11 +24,12 @@ class WhatWeDoIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-        appBar: AppBarHome(
-          isPopback: true,
-          canSearch: true,
-        ),
-        body: WhatWeDoContainer());
+      appBar: AppBarHome(
+        isPopback: true,
+        canSearch: true,
+      ),
+      body: WhatWeDoContainer(),
+    );
   }
 }
 

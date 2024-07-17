@@ -136,7 +136,9 @@ class LogoutPopUpCustom extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            HomeProvider homeProvider =
+                                context.read<HomeProvider>();
                             Map request = {
                               'token':
                                   context.read<UserProvider>().user?.token ??
@@ -144,12 +146,11 @@ class LogoutPopUpCustom extends StatelessWidget {
                             };
                             Navigator.pop(context);
                             // if (pop) Navigator.of(context).pop();
-                            context
+                            await context
                                 .read<UserProvider>()
                                 .logoutUser(request, pop);
-                            context
-                                .read<HomeProvider>()
-                                .getHomeAlerts(userAvail: false);
+                            homeProvider.getHomeSlider(showProgress: true);
+                            homeProvider.getFeaturedWatchlist(userAvail: false);
                           },
                           child: Text(
                             "LOGOUT",

@@ -65,7 +65,7 @@ class AskToSubscribeDialog extends StatelessWidget {
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
         ),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
           colors: [

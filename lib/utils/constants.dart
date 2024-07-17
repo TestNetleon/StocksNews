@@ -38,6 +38,13 @@ enum NotificationType {
   appUpdate,
 }
 
+enum MembershipEnum {
+  membership,
+  hundredPoint,
+  twoHundredPoint,
+  threeHundredPoint
+}
+
 enum BlogsType { blog, author, category, tag }
 
 enum CommentType { reddit, twitter }
@@ -62,6 +69,7 @@ bool splashLoaded = false;
 String? fcmTokenGlobal;
 String? appVersion;
 bool showMembership = true;
+bool signUpVisible = false;
 // this is to set default country code for phone number
 String? geoCountryCode;
 
@@ -107,6 +115,8 @@ class Images {
   static const String profile = "assets/images/profile.png";
   static const String rankAffiliate = "assets/images/award.png";
   static const String transaction = "assets/images/transaction.png";
+  static const String pointIcon = "assets/images/golden1.png";
+  static const String pointIcon2 = "assets/images/01.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -204,6 +214,10 @@ class Images {
   static const bg = "assets/images/sync.png";
 
   static const affWhite = "assets/images/aff_white.png";
+  static const storeIcon = "assets/images/store_icon.png";
+  static const storeBanner = "assets/images/store_banner.png";
+  static const storeBack = "assets/images/store_back.png";
+  static const buyPoints = "assets/images/buy_points.png";
   static const coinWin = "assets/images/coin_win.png";
   static const congrationTextImage = "assets/images/congration_text_image.jpeg";
 
@@ -216,6 +230,7 @@ class Images {
   // // static const login = "assets/svg/login.svg";
   // static const signin = "assets/svg/signin.svg";
   // static const star = "assets/svg/star.svg";
+  static const add = "assets/svg/add.svg";
 }
 
 class AudioFiles {
@@ -233,11 +248,9 @@ class Dimen {
   static const double authScreenPadding = 24;
   static const double padding = 16;
   static const double paddingTablet = 8;
-
   static const int narrationLength = 500;
   static const double itemSpacing = 12;
   static const double radius = 10;
-
   static const double homeSpacing = 30;
 }
 

@@ -39,6 +39,7 @@ void main() async {
   } catch (e) {
     Utils().showLog('Error initializing Firebase: $e');
   }
+
   FirebaseApi().initNotifications();
 
   splashLoaded = false;

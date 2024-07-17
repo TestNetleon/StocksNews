@@ -74,6 +74,9 @@ class Extra {
   final MessageRes? messageObject;
   final UserRes? user;
   final bool? showPortfolio;
+  final bool? showAboutStockNews;
+  final bool? showWhatWeDo;
+  final bool? showFAQ;
   final ReferralRes? referral;
   final num? received;
   final num? totalActivityPoints;
@@ -85,7 +88,10 @@ class Extra {
   final HowItWorkRes? howItWork;
   final HowItWorkRes? membershipText;
 
+  final String? tagLine;
   final ReferLoginRes? referLogin;
+  final RevenueCatKeyRes? revenueCatKeys;
+
   final String? verifyIdentity;
   final String? verifySubscription;
   final String? nudgeText;
@@ -103,8 +109,17 @@ class Extra {
   final String? text1;
   final String? text2;
   final String? text3;
+  final String? featuredTitle;
+  final String? watchlistTitle;
+  final bool? showFeatured;
+  final bool? showWatchlist;
+  final bool? showMostPurchased;
 
   Extra({
+    this.showFeatured,
+    this.tagLine,
+    this.showWatchlist,
+    this.showMostPurchased,
     this.text1,
     this.text2,
     this.text3,
@@ -124,6 +139,7 @@ class Extra {
     this.priceRange,
     this.transactionType,
     this.referLogin,
+    this.revenueCatKeys,
     this.nudgeText,
     this.suspendMsg,
     this.period,
@@ -142,6 +158,9 @@ class Extra {
     this.loginText,
     this.signUpText,
     this.showPortfolio,
+    this.showAboutStockNews,
+    this.showWhatWeDo,
+    this.showFAQ,
     this.txnSize,
     this.totalPages,
     this.userAlert,
@@ -165,13 +184,21 @@ class Extra {
     this.loginDialogRes,
     this.totalActivityPoints,
     this.membership,
+    this.featuredTitle,
+    this.watchlistTitle,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
+        tagLine: json['tag_line'],
+        showFeatured: json['show_featured'],
+        showWatchlist: json['show_watchlist'],
+        showMostPurchased: json['show_most_purchased'],
         text1: json["text1"],
         text2: json["text2"],
         text3: json["text3"],
+        featuredTitle: json["featured_title"],
+        watchlistTitle: json["watchlist_title"],
 
         showMembership: json["show_membership"],
         feebackType: json["feeback_type"] == null
@@ -198,6 +225,11 @@ class Extra {
         referLogin: json["refer_login"] == null
             ? null
             : ReferLoginRes.fromJson(json["refer_login"]),
+
+        revenueCatKeys: json["revenuecat_key"] == null
+            ? null
+            : RevenueCatKeyRes.fromJson(json["revenuecat_key"]),
+
         pending: json['total_points_pending'],
         affiliateReferText: json['heading'],
         userAlert: json["user_alerts"],
@@ -206,6 +238,7 @@ class Extra {
         currentBalance: json['current_balance'],
         subTitle: json["sub_title"],
         loginText: json["login_text"],
+
         howItWork: json["how_it_work"] == null
             ? null
             : HowItWorkRes.fromJson(json["how_it_work"]),
@@ -279,6 +312,9 @@ class Extra {
         membership: json["membership"] == null
             ? null
             : UserMembershipRes.fromJson(json["membership"]),
+        showAboutStockNews: json['show_about_stocks_news'],
+        showWhatWeDo: json['show_what_we_do'],
+        showFAQ: json['show_faq'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -286,6 +322,9 @@ class Extra {
             ? []
             : List<dynamic>.from(feebackType!.map((x) => x)),
         "search": search,
+        "show_featured": showFeatured,
+        "show_watchlist": showWatchlist,
+        "show_most_purchased": showMostPurchased,
         "user_alerts": userAlert,
         "nudge_text": nudgeText,
         "show_membership": showMembership,
@@ -298,6 +337,7 @@ class Extra {
         "total_balance": balance,
         "total_spent": spent,
         "text1": text1,
+        "tag_line": tagLine,
         "text2": text2,
         "text3": text3,
 
@@ -307,6 +347,7 @@ class Extra {
         "profile_text": profileText?.toJson(),
         "heading": affiliateReferText,
         "refer_login": referLogin?.toJson(),
+        "revenuecat_key": revenueCatKeys?.toJson(),
         "title": title,
         "how_it_work": howItWork?.toJson(),
         "membership_text": membership?.toJson(),
@@ -357,6 +398,9 @@ class Extra {
         "login_dialog": loginDialogRes?.toJson(),
         "total_activity_points": totalActivityPoints,
         "membership": membership?.toJson(),
+        "show_about_stocks_news": showAboutStockNews,
+        "show_what_we_do": showWhatWeDo,
+        "show_faq": showFAQ,
       };
 }
 
@@ -434,6 +478,27 @@ class ReferLoginRes {
         "title": title,
         "sub_title": subTitle,
         "note": note,
+      };
+}
+
+class RevenueCatKeyRes {
+  final String? appStore;
+  final String? playStore;
+
+  RevenueCatKeyRes({
+    this.appStore,
+    this.playStore,
+  });
+
+  factory RevenueCatKeyRes.fromJson(Map<String, dynamic> json) =>
+      RevenueCatKeyRes(
+        appStore: json["app_store"],
+        playStore: json["play_store"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "app_store": appStore,
+        "play_store": playStore,
       };
 }
 

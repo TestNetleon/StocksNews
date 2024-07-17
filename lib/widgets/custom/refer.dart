@@ -6,7 +6,6 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -118,24 +117,44 @@ class ReferApp extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           // color: ThemeColors.accent,
-          gradient: const LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
+          // gradient: const LinearGradient(
+          //   begin: Alignment.bottomLeft,
+          //   end: Alignment.topRight,
+          //   colors: [
+          //     Colors.black,
+          //     ThemeColors.accent,
+          //     // Color.fromARGB(255, 10, 114, 24),
+          //   ],.
+          // ),
+          gradient: const RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 2,
+            stops: [0.0, 0.6],
             colors: [
-              ThemeColors.accent,
-              Color.fromARGB(255, 10, 114, 24),
+              Color.fromARGB(255, 0, 93, 12),
+              Color.fromARGB(255, 6, 41, 1),
             ],
           ),
+          // gradient: const RadialGradient(
+          //   center: Alignment.bottomCenter,
+          //   radius: 3,
+          //   stops: [0.0, 0.2, 1.0],
+          //   colors: [
+          //     Color.fromARGB(255, 20, 156, 10),
+          //     Color.fromARGB(255, 0, 93, 12),
+          //     Color.fromARGB(255, 4, 34, 0),
+          //   ],
+          // ),
         ),
         child: Row(
           children: [
             Image.asset(
-              Images.starAffiliate,
+              Images.pointIcon,
               // Images.reward,
               // Images.flames,
 
-              height: 40,
-              width: 40,
+              height: 60,
+              width: 60,
             ),
             const SpacerHorizontal(width: 10),
             Flexible(
@@ -153,13 +172,13 @@ class ReferApp extends StatelessWidget {
                   const SpacerVertical(height: 3),
                   Text(
                     referral?.message ?? "",
-                    style: stylePTSansRegular(fontSize: 12),
+                    style: stylePTSansRegular(fontSize: 14, height: 1.4),
                   ),
                 ],
               ),
             ),
-            const SpacerHorizontal(width: 10),
-            const Icon(Icons.arrow_forward_ios_rounded),
+            // const SpacerHorizontal(width: 10),
+            // const Icon(Icons.arrow_forward_ios_rounded),
           ],
         ),
       ),

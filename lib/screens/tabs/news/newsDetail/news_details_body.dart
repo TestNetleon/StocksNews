@@ -13,6 +13,8 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
+import 'package:stocks_news_new/screens/membership_new/widgtes/faq.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -168,20 +170,36 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
 
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-
-    await askToSubscribe(
-      onPressed: () async {
-        Navigator.pop(navigatorKey.currentContext!);
-
-        if (provider.user?.phone == null || provider.user?.phone == '') {
-          await membershipLogin();
-        }
-        if (provider.user?.phone != null && provider.user?.phone != '') {
-          await RevenueCatService.initializeSubscription();
-        }
-      },
-    );
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+    if (provider.user?.phone != null && provider.user?.phone != '') {
+      // await RevenueCatService.initializeSubscription();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(),
+        ),
+      );
+    }
   }
+
+  // Future _membership() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+  //   await askToSubscribe(
+  //     onPressed: () async {
+  //       Navigator.pop(navigatorKey.currentContext!);
+
+  //       if (provider.user?.phone == null || provider.user?.phone == '') {
+  //         await membershipLogin();
+  //       }
+  //       if (provider.user?.phone != null && provider.user?.phone != '') {
+  //         await RevenueCatService.initializeSubscription();
+  //       }
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -192,9 +210,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
 
     bool foundSite = provider.data?.postDetail?.site != "" &&
         provider.data?.postDetail?.site != null;
-
-    // ScrollControllerProvider controllerProvider =
-    //     context.watch<ScrollControllerProvider>();
     double height = (ScreenUtil().screenHeight -
             ScreenUtil().bottomBarHeight -
             ScreenUtil().statusBarHeight) /
@@ -724,12 +739,17 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                               visible: showMembership,
                                               child: ThemeButtonSmall(
                                                 color: const Color.fromARGB(
-                                                    255, 194, 216, 51),
+                                                  255,
+                                                  194,
+                                                  216,
+                                                  51,
+                                                ),
                                                 textColor: Colors.black,
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 11),
+                                                  horizontal: 5,
+                                                  vertical: 11,
+                                                ),
                                                 textSize: 15,
                                                 fontBold: true,
                                                 iconFront: true,
@@ -739,7 +759,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                 iconWidget: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          right: 10),
+                                                    right: 10,
+                                                  ),
                                                   child: Image.asset(
                                                     Images.membership,
                                                     height: 18,
@@ -748,6 +769,15 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                   ),
                                                 ),
                                                 mainAxisSize: MainAxisSize.max,
+                                                // onPressed: () {
+                                                //   Navigator.push(
+                                                //     context,
+                                                //     MaterialPageRoute(
+                                                //       builder: (_) =>
+                                                //           const NewMembership(),
+                                                //     ),
+                                                //   );
+                                                // },
                                                 onPressed: () async {
                                                   await _membership();
                                                 },

@@ -37,6 +37,7 @@ class Apis {
   static const checkUpdatePhoneOtp = "/check-update-phone-otp";
   static const checkPhone = "/check-phone-otp";
   static const lowPricesStocks = "/low-priced-stocks-under";
+  static const featuredWatchlist = "/home-watchlist-data";
   static const indices = "/indices";
   static const spFifty = "/sp-500-stocks";
   static const dowThirty = "/dow-30-stocks";
@@ -169,6 +170,8 @@ class Apis {
   static const updateReferral = "/update-referral-code";
   static const userPurchase = "/user-purchase";
   static const plansDetail = "/membership/plans";
+  static const storeInfo = "/store-points/list";
+  static const membershipInfo = "/membership/plan-data";
 }
 
 //

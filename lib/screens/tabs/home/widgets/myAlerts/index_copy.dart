@@ -228,7 +228,7 @@ class AddAlert extends StatelessWidget {
 }
 
 class Placeholder extends StatelessWidget {
-  const Placeholder({super.key, required this.height});
+  const Placeholder({super.key, this.height});
 
   final double? height;
 
@@ -237,6 +237,7 @@ class Placeholder extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       width: isPhone ? 198 : 200,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(
