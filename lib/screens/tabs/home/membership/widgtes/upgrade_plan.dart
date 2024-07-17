@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/colors.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/my_evaluvated_button.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:svg_flutter/svg.dart';
 
 class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
   const NewMembershipUpgradeCurrentPlan({super.key});
@@ -262,9 +260,7 @@ class _NewMembershipUpgradeCurrentPlanState
                           ),
                           MyElevatedButton(
                             width: double.infinity,
-                            onPressed: () {
-                              
-                            },
+                            onPressed: () {},
                             borderRadius: BorderRadius.circular(10),
                             child: Text(
                               'Continue',
