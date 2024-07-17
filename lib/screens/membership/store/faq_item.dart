@@ -34,8 +34,7 @@ class FaqItem extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => provider
-                .setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
+            onTap: () => provider.setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
