@@ -102,8 +102,7 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  provider.success?.subTitle ??
-                      "Explore Stocks.News without limits.",
+                  provider.success?.subTitle ?? "Explore Stocks.News without limits.",
                   textAlign: TextAlign.center,
                   style: stylePTSansRegular(
                       fontSize: 20, color: ThemeColors.greyText),

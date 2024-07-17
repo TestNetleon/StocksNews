@@ -177,6 +177,10 @@ class Images {
   static const String start3 = "assets/images/3rd_page.png";
   static const String referAndEarn = "assets/images/refer_and_earn.png";
   static const String membership = "assets/images/membership.png";
+  static const String newLineBG = "assets/images/newLineBG.png";
+  static const String objective = "assets/images/objective.png";
+  static const String transferMoney = "assets/images/transfer-money.png";
+  static const String economic = "assets/images/ecom.png";
 
   static const String tickS = "assets/images/tick.png";
   static const String reportS = "assets/images/report.png";
@@ -199,6 +203,9 @@ class Images {
   static const marketing = "assets/images/marketing.jpeg";
 
   static const health = "assets/images/health.png";
+  static const heart = "assets/images/heart.png";
+  static const financialHealth = "assets/images/financial-health.png";
+  static const viewReport = "assets/images/research.png";
   static const viewFile = "assets/images/view_file.png";
   static const totalPoints = "assets/images/total_points.png";
   static const activityPoints = "assets/images/activity_point.png";
