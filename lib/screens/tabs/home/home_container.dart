@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/animation/Coin_animation.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 // ignore: unused_import
@@ -72,6 +74,22 @@ class HomeContainer extends StatelessWidget {
                   child: const ReferApp(),
                 ),
               ),
+              // GestureDetector(
+              //   onTap: () {
+              //     showDialog(
+              //       context: navigatorKey.currentContext!,
+              //       barrierColor: Colors.black.withOpacity(0.5),
+              //       builder: (context) {
+              //         return const CoinAnimationWidget();
+              //       },
+              //     );
+              //   },
+              //   child: Image.asset(
+              //     Images.coinWin,
+              //     width: 40,
+              //     height: 40,
+              //   ),
+              // ),
               Container(
                 margin: EdgeInsets.only(
                   left: Dimen.padding.sp,

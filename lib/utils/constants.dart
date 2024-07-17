@@ -204,6 +204,8 @@ class Images {
   static const bg = "assets/images/sync.png";
 
   static const affWhite = "assets/images/aff_white.png";
+  static const coinWin = "assets/images/coin_win.png";
+  static const congrationTextImage = "assets/images/congration_text_image.jpeg";
 
   //svg
   // static const share = "assets/svg/share.svg";
@@ -218,6 +220,8 @@ class Images {
 
 class AudioFiles {
   static const alertWeathlist = "audios/alert_watchlist.mp3";
+  static const coinWinAudio = "audios/coin_win.wav";
+
   static const refresh = "audios/refresh.wav";
 }
 
