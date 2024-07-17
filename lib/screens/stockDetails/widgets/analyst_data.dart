@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
@@ -17,7 +16,6 @@ import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/bottomsheet_morningstar_info.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/morningstart_lock.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -26,19 +24,14 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../../../service/ask_subscription.dart';
 import '../../auth/membershipAsk/ask.dart';
 import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
   final String symbol;
-  const StockDetailAnalystData({
-    super.key,
-    required this.symbol,
-  });
+  const StockDetailAnalystData({super.key, required this.symbol});
 
   @override
   State<StockDetailAnalystData> createState() => _StockDetailAnalystDataState();
@@ -84,7 +77,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
   //   await askToSubscribe(
   //     onPressed: () async {
   //       Navigator.pop(navigatorKey.currentContext!);
-
   //       if (provider.user?.phone == null || provider.user?.phone == '') {
   //         await membershipLogin();
   //       }
@@ -94,6 +86,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
   //     },
   //   );
   // }
+
   Future _membership() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     if (provider.user?.phone == null || provider.user?.phone == '') {
@@ -115,9 +108,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     // Utils().showLog('is user logged in ${userPresent}');
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
 
-    UserProvider userProvider = context.watch<UserProvider>();
-
-    bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+    // UserProvider userProvider = context.watch<UserProvider>();
+    // bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
 
     MorningStar? morningStar =
         context.watch<StockDetailProviderNew>().overviewRes?.morningStart;
@@ -171,7 +163,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                     //         colors: [
                     //           // Color.fromARGB(255, 2, 71, 12),
                     //           // Color.fromARGB(255, 10, 160, 30),
-
                     //           Color.fromARGB(255, 114, 10, 2),
                     //           Colors.red,
                     //         ],
@@ -365,7 +356,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                     //           ),
                     //         )),
                     //   )
-
                     : CommonRefreshIndicator(
                         onRefresh: () async {
                           provider.getOverviewData(

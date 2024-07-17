@@ -43,60 +43,66 @@ class ThemeButtonSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => onPressed(),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        elevation: 0,
-        padding:
-            padding ?? EdgeInsets.symmetric(horizontal: 16.sp, vertical: 8.sp),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius.sp),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: mainAxisSize,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          iconWidget ??
-              Visibility(
-                visible: showArrow && iconFront,
-                child: Container(
-                  margin: EdgeInsets.only(right: 8.sp),
-                  child: Icon(
-                    icon ?? Icons.arrow_forward,
-                    size: 20,
-                    color: textColor,
-                  ),
-                ),
+    return Container(
+      margin: margin,
+      child: ElevatedButton(
+        onPressed: () => onPressed(),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          elevation: 0,
+          padding: padding ??
+              EdgeInsets.symmetric(
+                horizontal: 16.sp,
+                vertical: 8.sp,
               ),
-          Flexible(
-            child: Text(
-              textAlign: textAlign,
-              text,
-              style: fontBold
-                  ? stylePTSansBold(
-                      fontSize: textSize,
-                      color: textColor,
-                    )
-                  : stylePTSansRegular(
-                      fontSize: textSize,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radius.sp),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: mainAxisSize,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            iconWidget ??
+                Visibility(
+                  visible: showArrow && iconFront,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 8.sp),
+                    child: Icon(
+                      icon ?? Icons.arrow_forward,
+                      size: 20,
                       color: textColor,
                     ),
-            ),
-          ),
-          Visibility(
-            visible: showArrow && !iconFront,
-            child: Container(
-              margin: EdgeInsets.only(left: 8.sp),
-              child: Icon(
-                icon ?? Icons.arrow_forward,
-                size: 20,
-                color: textColor,
+                  ),
+                ),
+            Flexible(
+              child: Text(
+                textAlign: textAlign,
+                text,
+                style: fontBold
+                    ? stylePTSansBold(
+                        fontSize: textSize,
+                        color: textColor,
+                      )
+                    : stylePTSansRegular(
+                        fontSize: textSize,
+                        color: textColor,
+                      ),
               ),
             ),
-          ),
-        ],
+            Visibility(
+              visible: showArrow && !iconFront,
+              child: Container(
+                margin: EdgeInsets.only(left: 8.sp),
+                child: Icon(
+                  icon ?? Icons.arrow_forward,
+                  size: 20,
+                  color: textColor,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

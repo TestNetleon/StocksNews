@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import '../../../providers/user_provider.dart';
 import '../../../route/my_app.dart';
-import '../../../service/ask_subscription.dart';
-import '../../../service/revenue_cat.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
@@ -24,6 +23,86 @@ class CommonLock extends StatelessWidget {
     this.showLogin = false,
     this.isLocked = false,
   });
+
+  void onBecomeMemberClick(BuildContext context) async {
+    UserProvider provider = context.read<UserProvider>();
+    if (provider.user == null) {
+      Utils().showLog("is Locked? $isLocked");
+
+      //Ask for LOGIN
+      // Navigator.pop(context);
+
+      isPhone ? await loginSheet() : await loginSheetTablet();
+
+      if (provider.user == null) {
+        return;
+      }
+
+      if (isLocked) {
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          // await referLogin();
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          // await RevenueCatService.initializeSubscription();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const NewMembership()),
+          );
+        }
+      }
+    } else {
+      if (isLocked) {
+        if (provider.user?.phone == null || provider.user?.phone == '') {
+          await membershipLogin();
+        }
+        if (provider.user?.phone != null && provider.user?.phone != '') {
+          // await RevenueCatService.initializeSubscription();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const NewMembership()),
+          );
+        }
+      }
+    }
+
+    // askToSubscribe(
+    //   onPressed: provider.user == null
+    //       ? () async {
+    //           Utils().showLog("is Locked? $isLocked");
+    //           //Ask for LOGIN
+    //           Navigator.pop(context);
+    //           isPhone ? await loginSheet() : await loginSheetTablet();
+    //           if (provider.user == null) {
+    //             return;
+    //           }
+    //           if (isLocked) {
+    //             if (provider.user?.phone == null ||
+    //                 provider.user?.phone == '') {
+    //               // await referLogin();
+    //               await membershipLogin();
+    //             }
+    //             if (provider.user?.phone != null &&
+    //                 provider.user?.phone != '') {
+    //               await RevenueCatService.initializeSubscription();
+    //             }
+    //           }
+    //         }
+    //       : () async {
+    //           Navigator.pop(context);
+    //           if (isLocked) {
+    //             if (provider.user?.phone == null ||
+    //                 provider.user?.phone == '') {
+    //               await membershipLogin();
+    //             }
+    //             if (provider.user?.phone != null &&
+    //                 provider.user?.phone != '') {
+    //               await RevenueCatService.initializeSubscription();
+    //             }
+    //           }
+    //         }
+    // );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,47 +181,7 @@ class CommonLock extends StatelessWidget {
                   visible: showMembership,
                   child: ThemeButtonSmall(
                     onPressed: () {
-                      askToSubscribe(
-                        onPressed: provider.user == null
-                            ? () async {
-                                Utils().showLog("is Locked? $isLocked");
-
-                                //Ask for LOGIN
-                                Navigator.pop(context);
-                                isPhone
-                                    ? await loginSheet()
-                                    : await loginSheetTablet();
-                                if (provider.user == null) {
-                                  return;
-                                }
-                                if (isLocked) {
-                                  if (provider.user?.phone == null ||
-                                      provider.user?.phone == '') {
-                                    // await referLogin();
-                                    await membershipLogin();
-                                  }
-                                  if (provider.user?.phone != null &&
-                                      provider.user?.phone != '') {
-                                    await RevenueCatService
-                                        .initializeSubscription();
-                                  }
-                                }
-                              }
-                            : () async {
-                                Navigator.pop(context);
-                                if (isLocked) {
-                                  if (provider.user?.phone == null ||
-                                      provider.user?.phone == '') {
-                                    await membershipLogin();
-                                  }
-                                  if (provider.user?.phone != null &&
-                                      provider.user?.phone != '') {
-                                    await RevenueCatService
-                                        .initializeSubscription();
-                                  }
-                                }
-                              },
-                      );
+                      onBecomeMemberClick(context);
                     },
                     padding:
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 11),
@@ -152,7 +191,7 @@ class CommonLock extends StatelessWidget {
                     icon: Icons.lock,
                     radius: 30,
                     mainAxisSize: MainAxisSize.max,
-                    text: "Become a Member",
+                    text: "Become a Premium Member",
                     // showArrow: false,
                   ),
                 ),

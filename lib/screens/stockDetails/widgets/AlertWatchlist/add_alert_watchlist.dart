@@ -658,14 +658,13 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
-import 'package:stocks_news_new/service/ask_subscription.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:vibration/vibration.dart';
-import '../../../../service/revenue_cat.dart';
 import '../../../../utils/dialogs.dart';
 import '../../../alerts/alerts.dart';
 import '../../../auth/membershipAsk/ask.dart';
@@ -696,7 +695,13 @@ class AddToAlertWatchlist extends StatelessWidget {
       await membershipLogin();
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
-      await RevenueCatService.initializeSubscription();
+      // await RevenueCatService.initializeSubscription();
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(),
+        ),
+      );
     }
   }
 
@@ -788,47 +793,47 @@ class AddToAlertWatchlist extends StatelessWidget {
                 //Starting with asking Membership
                 Utils().showLog("---Starting with asking Membership");
 
-                askToSubscribe(
-                  onPressed: () async {
-                    if (provider.user == null) {
-                      //Ask for Login
-                      Utils().showLog("---Ask for Login");
+                // askToSubscribe(
+                //   onPressed: () async {
+                if (provider.user == null) {
+                  //Ask for Login
+                  Utils().showLog("---Ask for Login");
 
-                      isPhone ? await loginSheet() : await loginSheetTablet();
-                      if (provider.user == null) {
-                        return;
-                      }
-                      //Call Tab API to check if alert present or not
-                      Utils().showLog(
-                          "---Call Tab API to check if alert present or not");
+                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  if (provider.user == null) {
+                    return;
+                  }
+                  //Call Tab API to check if alert present or not
+                  Utils().showLog(
+                      "---Call Tab API to check if alert present or not");
 
-                      await _callTabAPI();
-                      await Future.delayed(const Duration(milliseconds: 200));
-                      if ((!purchased && !alertPermission) ||
-                          (purchased && !alertPermission)) {
-                        await _subscribe();
-                      }
-                    } else {
-                      //User is Logged In
-                      Utils().showLog("---User is Logged In");
-                      if ((!purchased && !alertPermission) ||
-                          (purchased && !alertPermission)) {
-                        await _subscribe();
-                        return;
-                      }
+                  await _callTabAPI();
+                  await Future.delayed(const Duration(milliseconds: 200));
+                  if ((!purchased && !alertPermission) ||
+                      (purchased && !alertPermission)) {
+                    await _subscribe();
+                  }
+                } else {
+                  //User is Logged In
+                  Utils().showLog("---User is Logged In");
+                  if ((!purchased && !alertPermission) ||
+                      (purchased && !alertPermission)) {
+                    await _subscribe();
+                    return;
+                  }
 
-                      if (alertOn == 0) {
-                        _vibrate();
-                        _showAlertPopup(navigatorKey.currentContext!, symbol);
-                      } else {
-                        Navigator.push(
-                          navigatorKey.currentContext!,
-                          MaterialPageRoute(builder: (_) => const Alerts()),
-                        );
-                      }
-                    }
-                  },
-                );
+                  if (alertOn == 0) {
+                    _vibrate();
+                    _showAlertPopup(navigatorKey.currentContext!, symbol);
+                  } else {
+                    Navigator.push(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const Alerts()),
+                    );
+                  }
+                }
+                //   },
+                // );
               } else {
                 //Normal Flow
                 Utils().showLog("---Normal Flow");
@@ -917,49 +922,49 @@ class AddToAlertWatchlist extends StatelessWidget {
                 //Starting with asking Membership
                 Utils().showLog("---Starting with asking Membership");
 
-                askToSubscribe(
-                  onPressed: () async {
-                    if (provider.user == null) {
-                      //Ask for Login
-                      Utils().showLog("---Ask for Login");
+                // askToSubscribe(
+                //   onPressed: () async {
+                if (provider.user == null) {
+                  //Ask for Login
+                  Utils().showLog("---Ask for Login");
 
-                      isPhone ? await loginSheet() : await loginSheetTablet();
-                      if (provider.user == null) {
-                        return;
-                      }
-                      //Call Tab API to check if alert present or not
-                      Utils().showLog(
-                          "---Call Tab API to check if alert present or not");
+                  isPhone ? await loginSheet() : await loginSheetTablet();
+                  if (provider.user == null) {
+                    return;
+                  }
+                  //Call Tab API to check if alert present or not
+                  Utils().showLog(
+                      "---Call Tab API to check if alert present or not");
 
-                      await _callTabAPI();
-                      await Future.delayed(const Duration(milliseconds: 200));
-                      if ((!purchased && !watchListPermission) ||
-                          (purchased && !watchListPermission)) {
-                        await _subscribe();
-                      }
-                    } else {
-                      //User is Logged In
-                      Utils().showLog("---User is Logged In");
-                      if ((!purchased && !watchListPermission) ||
-                          (purchased && !watchListPermission)) {
-                        await _subscribe();
-                        return;
-                      }
+                  await _callTabAPI();
+                  await Future.delayed(const Duration(milliseconds: 200));
+                  if ((!purchased && !watchListPermission) ||
+                      (purchased && !watchListPermission)) {
+                    await _subscribe();
+                  }
+                } else {
+                  //User is Logged In
+                  Utils().showLog("---User is Logged In");
+                  if ((!purchased && !watchListPermission) ||
+                      (purchased && !watchListPermission)) {
+                    await _subscribe();
+                    return;
+                  }
 
-                      if (watchlistOn == 0) {
-                        _vibrate();
-                        await context
-                            .read<StockDetailProviderNew>()
-                            .addToWishList();
-                      } else {
-                        Navigator.push(
-                          navigatorKey.currentContext!,
-                          MaterialPageRoute(builder: (_) => const WatchList()),
-                        );
-                      }
-                    }
-                  },
-                );
+                  if (watchlistOn == 0) {
+                    _vibrate();
+                    await context
+                        .read<StockDetailProviderNew>()
+                        .addToWishList();
+                  } else {
+                    Navigator.push(
+                      navigatorKey.currentContext!,
+                      MaterialPageRoute(builder: (_) => const WatchList()),
+                    );
+                  }
+                }
+                //   },
+                // );
               } else {
                 //Normal Flow
                 Utils().showLog("---Normal Flow");
