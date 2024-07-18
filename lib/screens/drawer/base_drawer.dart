@@ -207,14 +207,17 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Points Central",
+                                                  provider.extra?.storeTitle ??
+                                                      "",
                                                   style: stylePTSansBold(
                                                     fontSize: 18,
                                                   ),
                                                 ),
                                                 const SpacerVertical(height: 3),
                                                 Text(
-                                                  "Buy points to unlock premium content",
+                                                  provider.extra
+                                                          ?.storeSubTitle ??
+                                                      "",
                                                   style: stylePTSansRegular(
                                                     fontSize: 14,
                                                   ),
