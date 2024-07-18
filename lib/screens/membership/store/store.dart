@@ -146,9 +146,10 @@ class _StoreState extends State<Store> {
                       gradient: const LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
+                        stops: [0.0, 0.4],
                         colors: [
-                          Color.fromARGB(255, 215, 255, 221),
-                          Colors.white
+                          Color.fromARGB(255, 138, 255, 156),
+                          Colors.white,
                         ],
                       ),
                     ),
@@ -241,6 +242,39 @@ class _StoreState extends State<Store> {
                                   ),
                                 ],
                               );
+
+                              // return Container(
+                              //   width: double.infinity,
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 40),
+                              //   color: index % 2 == 0
+                              //       ? Colors.black
+                              //       : const Color.fromARGB(255, 22, 22, 22),
+                              //   child: Column(
+                              //     children: [
+                              //       // const SpacerVertical(height: 10),
+                              //       Text(
+                              //         "${data?.benefits?[index].question}",
+                              //         textAlign: TextAlign.center,
+                              //         style: styleSansBold(
+                              //           // color: Colors.black,
+                              //           color: ThemeColors.themeGreen,
+                              //           fontSize: 20,
+                              //         ),
+                              //       ),
+                              //       const SpacerVertical(height: 10),
+                              //       Text(
+                              //         textAlign: TextAlign.center,
+                              //         "${data?.benefits?[index].answer}",
+                              //         style: stylePTSansRegular(
+                              //           // color: Colors.black,
+                              //           color: Colors.white,
+                              //           fontSize: 16,
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // );
                             },
                             separatorBuilder: (context, index) {
                               return const SpacerVertical(height: 8);
