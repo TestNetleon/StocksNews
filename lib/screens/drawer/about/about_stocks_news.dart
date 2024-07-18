@@ -11,6 +11,7 @@ import 'package:stocks_news_new/modals/user_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
@@ -140,129 +141,147 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     );
   }
 
-  List<DrawerRes> getVisibleAboutTiles() {
-    HomeProvider provider = context.watch<HomeProvider>();
-    UserRes? user = context.watch<UserProvider>().user;
+  // List<DrawerRes> getVisibleAboutTiles() {
+  //   HomeProvider provider = context.watch<HomeProvider>();
+  //   UserRes? user = context.watch<UserProvider>().user;
 
-    List<DrawerRes> visibleAboutTiles = [];
+  //   List<DrawerRes> visibleAboutTiles = [];
 
-    // My Account is always visible
-    visibleAboutTiles.add(
-      DrawerRes(
-        iconData: Icons.person_2_outlined,
-        text: "My Account",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const MyAccount()),
-          );
-        },
-      ),
-    );
+  //   // My Account is always visible
+  //   visibleAboutTiles.add(
+  //     DrawerRes(
+  //       iconData: Icons.person_2_outlined,
+  //       text: "My Account",
+  //       onTap: () {
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(builder: (_) => const MyAccount()),
+  //         );
+  //       },
+  //     ),
+  //   );
 
-    // My Membership
-    if (user != null && user.membership?.purchased == 1 && showMembership) {
-      visibleAboutTiles.add(DrawerRes(
-        iconData: Icons.wallet_membership,
-        text: "My Membership",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const MembershipIndex()),
-          );
-        },
-      ));
-    }
+  //   // My Membership
+  //   if (user != null && user.membership?.purchased == 1 && showMembership) {
+  //     visibleAboutTiles.add(DrawerRes(
+  //       iconData: Icons.wallet_membership,
+  //       text: "My Membership",
+  //       onTap: () {
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(builder: (_) => const MembershipIndex()),
+  //         );
+  //       },
+  //     ));
+  //   }
 
-    // Morningstar Reports
-    if (provider.extra?.showMorningstar == true) {
-      visibleAboutTiles.add(DrawerRes(
-        iconData: Icons.library_books_sharp,
-        text: "MORNINGSTAR Reports",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
-          );
-        },
-      ));
-    }
+  //   // Morningstar Reports
+  //   if (provider.extra?.showMorningstar == true) {
+  //     visibleAboutTiles.add(DrawerRes(
+  //       iconData: Icons.library_books_sharp,
+  //       text: "MORNINGSTAR Reports",
+  //       onTap: () {
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
+  //         );
+  //       },
+  //     ));
+  //   }
 
-    // Portfolio
-    if (provider.extra?.showPortfolio == true) {
-      visibleAboutTiles.add(DrawerRes(
-        iconData: Icons.person_pin_outlined,
-        text: "Portfolio",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
-          );
-        },
-      ));
-    }
+  //   // Portfolio
+  //   if (provider.extra?.showPortfolio == true) {
+  //     visibleAboutTiles.add(DrawerRes(
+  //       iconData: Icons.person_pin_outlined,
+  //       text: "Portfolio",
+  //       onTap: () {
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
+  //         );
+  //       },
+  //     ));
+  //   }
 
-    // Refer and Earn
-    if (provider.extra?.referral?.shwReferral == true) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.leaderboard_outlined,
-          text: "Refer and Earn",
-          onTap: () {
-            _onShareAppClick();
-          },
-        ),
-      );
-    }
+  //   // Points Transactions if only not joined affiliate
+  //   // if (provider.extra?.referral?.shwReferral != true) {
+  //   visibleAboutTiles.add(
+  //     DrawerRes(
+  //       iconData: Icons.leaderboard_outlined,
+  //       text: "Transactions",
+  //       onTap: () {
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(
+  //             builder: (context) => const AffiliateTransaction(),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  //   // }
 
-    // What We Do is always visible
-    visibleAboutTiles.add(DrawerRes(
-      iconData: Icons.featured_play_list_outlined,
-      text: "What We Do",
-      onTap: () {
-        Navigator.push(
-          navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
-        );
-      },
-    ));
+  //   // Refer and Earn
+  //   if (provider.extra?.referral?.shwReferral == true) {
+  //     visibleAboutTiles.add(
+  //       DrawerRes(
+  //         iconData: Icons.leaderboard_outlined,
+  //         text: "Refer and Earn",
+  //         onTap: () {
+  //           _onShareAppClick();
+  //         },
+  //       ),
+  //     );
+  //   }
 
-    // Helpdesk
-    visibleAboutTiles.add(
-      DrawerRes(
-        iconData: Icons.support_agent,
-        text: "Helpdesk",
-        onTap: () async {
-          // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-          // log("1");
-          // if (user == null) {
-          //   isPhone ? await loginSheet() : await loginSheetTablet();
-          // }
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const HelpDesk()),
-          );
-          // log("3");
-        },
-      ),
-    );
+  //   // What We Do is always visible
+  //   visibleAboutTiles.add(DrawerRes(
+  //     iconData: Icons.featured_play_list_outlined,
+  //     text: "What We Do",
+  //     onTap: () {
+  //       Navigator.push(
+  //         navigatorKey.currentContext!,
+  //         MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
+  //       );
+  //     },
+  //   ));
 
-    // FAQ is always visible
-    visibleAboutTiles.add(
-      DrawerRes(
-        iconData: Icons.help_outline_rounded,
-        text: "FAQ",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const FAQ()),
-          );
-        },
-      ),
-    );
+  //   // Helpdesk
+  //   visibleAboutTiles.add(
+  //     DrawerRes(
+  //       iconData: Icons.support_agent,
+  //       text: "Helpdesk",
+  //       onTap: () async {
+  //         // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+  //         // log("1");
+  //         // if (user == null) {
+  //         //   isPhone ? await loginSheet() : await loginSheetTablet();
+  //         // }
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(builder: (_) => const HelpDesk()),
+  //         );
+  //         // log("3");
+  //       },
+  //     ),
+  //   );
 
-    return visibleAboutTiles;
-  }
+  //   // FAQ is always visible
+  //   visibleAboutTiles.add(
+  //     DrawerRes(
+  //       iconData: Icons.help_outline_rounded,
+  //       text: "FAQ",
+  //       onTap: () {
+  //         Navigator.push(
+  //           navigatorKey.currentContext!,
+  //           MaterialPageRoute(builder: (_) => const FAQ()),
+  //         );
+  //       },
+  //     ),
+  //   );
+
+  //   return visibleAboutTiles;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -318,6 +337,24 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
+
+    // Always Visible
+    visibleAboutTiles.add(
+      DrawerRes(
+        iconData: Icons.topic_sharp,
+        text: "Points Transactions",
+        onTap: () {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (context) => const AffiliateTransaction(
+                fromDrawer: true,
+              ),
+            ),
+          );
+        },
+      ),
+    );
 
     // Portfolio
     if (provider.extra?.showPortfolio == true) {
