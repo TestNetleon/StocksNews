@@ -16,6 +16,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/custom/country_code_picker_widget.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../../utils/constants.dart';
@@ -206,14 +207,14 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     UserRes? user = context.read<UserProvider>().user;
     HomeProvider provider = context.watch<HomeProvider>();
 
-    String? locale;
-    if (user?.phoneCode != null && user?.phoneCode != "") {
-      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
-    } else if (geoCountryCode != null && geoCountryCode != "") {
-      locale = geoCountryCode;
-    } else {
-      locale = "US";
-    }
+    // String? locale;
+    // if (user?.phoneCode != null && user?.phoneCode != "") {
+    //   locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    // } else if (geoCountryCode != null && geoCountryCode != "") {
+    //   locale = geoCountryCode;
+    // } else {
+    //   locale = "US";
+    // }
     // final String locale = user?.phoneCode == null || user?.phoneCode == ""
     //     ? Intl.getCurrentLocale().split('_').last
     //     : CountryCode.fromDialCode(user?.phoneCode ?? " ")
@@ -315,78 +316,85 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: user?.phone == '' ||
-                                                  user?.phone == null
-                                              ? ThemeColors.white
-                                              : const Color.fromARGB(
-                                                  255, 188, 188, 188),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: user?.phone == '' ||
+                                                    user?.phone == null
+                                                ? ThemeColors.white
+                                                : const Color.fromARGB(
+                                                    255, 188, 188, 188),
+                                          ),
+                                        ),
+                                        color: user?.phone == '' ||
+                                                user?.phone == null
+                                            ? ThemeColors.white
+                                            : const Color.fromARGB(
+                                                255, 188, 188, 188),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4),
+                                          bottomLeft: Radius.circular(4),
                                         ),
                                       ),
-                                      color: user?.phone == '' ||
-                                              user?.phone == null
-                                          ? ThemeColors.white
-                                          : const Color.fromARGB(
-                                              255, 188, 188, 188),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4),
-                                        bottomLeft: Radius.circular(4),
+                                      child: CountryPickerWidget(
+                                        onChanged: (CountryCode value) {
+                                          countryCode = value.dialCode;
+                                        },
+                                        enabled: user?.phoneCode == null ||
+                                            user?.phoneCode == "",
+                                      )
+                                      //  CountryCodePicker(
+                                      //   padding: EdgeInsets.zero,
+                                      //   enabled: user?.phoneCode == null ||
+                                      //       user?.phoneCode == "",
+                                      //   // enabled: true,
+                                      //   onChanged: (CountryCode value) {
+                                      //     countryCode = value.dialCode;
+                                      //   },
+                                      //   initialSelection: locale,
+                                      //   showCountryOnly: false,
+                                      //   textStyle: stylePTSansBold(
+                                      //     color: Colors.black,
+                                      //     fontSize: 18,
+                                      //   ),
+                                      //   flagWidth: 24,
+                                      //   showOnlyCountryWhenClosed: false,
+                                      //   alignLeft: false,
+                                      //   boxDecoration: const BoxDecoration(
+                                      //     color: ThemeColors.tabBack,
+                                      //   ),
+                                      //   dialogTextStyle: styleGeorgiaBold(),
+                                      //   barrierColor: Colors.black26,
+                                      //   searchDecoration: InputDecoration(
+                                      //     iconColor: Colors.white,
+                                      //     fillColor: Colors.white,
+                                      //     prefixIcon: const Icon(
+                                      //       Icons.search,
+                                      //       size: 22,
+                                      //     ),
+                                      //     filled: true,
+                                      //     hintStyle: stylePTSansRegular(
+                                      //       color: Colors.grey,
+                                      //     ),
+                                      //     hintText: "Search country",
+                                      //     border: OutlineInputBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(4.0),
+                                      //       borderSide: BorderSide.none,
+                                      //     ),
+                                      //     enabledBorder: OutlineInputBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(4.0),
+                                      //       borderSide: BorderSide.none,
+                                      //     ),
+                                      //     focusedBorder: OutlineInputBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(4.0),
+                                      //       borderSide: BorderSide.none,
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       ),
-                                    ),
-                                    child: CountryCodePicker(
-                                      padding: EdgeInsets.zero,
-                                      enabled: user?.phoneCode == null ||
-                                          user?.phoneCode == "",
-                                      // enabled: true,
-                                      onChanged: (CountryCode value) {
-                                        countryCode = value.dialCode;
-                                      },
-                                      initialSelection: locale,
-                                      showCountryOnly: false,
-                                      textStyle: stylePTSansBold(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                      ),
-                                      flagWidth: 24,
-                                      showOnlyCountryWhenClosed: false,
-                                      alignLeft: false,
-                                      boxDecoration: const BoxDecoration(
-                                        color: ThemeColors.tabBack,
-                                      ),
-                                      dialogTextStyle: styleGeorgiaBold(),
-                                      barrierColor: Colors.black26,
-                                      searchDecoration: InputDecoration(
-                                        iconColor: Colors.white,
-                                        fillColor: Colors.white,
-                                        prefixIcon: const Icon(
-                                          Icons.search,
-                                          size: 22,
-                                        ),
-                                        filled: true,
-                                        hintStyle: stylePTSansRegular(
-                                          color: Colors.grey,
-                                        ),
-                                        hintText: "Search country",
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                               Flexible(
