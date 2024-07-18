@@ -178,7 +178,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     if (provider.extra?.showMorningstar == true) {
       visibleAboutTiles.add(DrawerRes(
         iconData: Icons.library_books_sharp,
-        text: "Morningstar Reports",
+        text: "MORNINGSTAR Reports",
         onTap: () {
           Navigator.push(
             navigatorKey.currentContext!,
@@ -308,7 +308,7 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       visibleAboutTiles.add(
         DrawerRes(
           iconData: Icons.library_books_sharp,
-          text: "Morningstar Reports",
+          text: "MORNINGSTAR Reports",
           onTap: () {
             Navigator.push(
               navigatorKey.currentContext!,

@@ -11,6 +11,7 @@ class FaqItem extends StatelessWidget {
   final String question;
   final String answer;
   final dynamic provider;
+  final Color textColor;
 
   const FaqItem({
     super.key,
@@ -19,6 +20,7 @@ class FaqItem extends StatelessWidget {
     required this.openIndex,
     required this.index,
     required this.provider,
+    this.textColor = Colors.white,
   });
 
   @override
@@ -34,7 +36,8 @@ class FaqItem extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => provider.setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
+            onTap: () => provider
+                .setOpenIndex(provider.faqOpenIndex == index ? -1 : index),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,7 +53,7 @@ class FaqItem extends StatelessWidget {
                       fontSize: 16,
                       color: openIndex == index
                           ? ThemeColors.themeGreen
-                          : Colors.white,
+                          : textColor,
                       // color: Colors.black,
                     ),
                   ),
@@ -68,7 +71,7 @@ class FaqItem extends StatelessWidget {
                 answer,
                 style: stylePTSansRegular(
                   fontSize: 14,
-                  color: Colors.white,
+                  color: textColor,
                   // color: Colors.black,
                 ),
               ),

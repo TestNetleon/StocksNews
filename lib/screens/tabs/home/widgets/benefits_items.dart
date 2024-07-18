@@ -45,7 +45,7 @@
 //     //   'Purchase the Beginner Plan and earn points as a reward.',
 //     //   'Get rewarded with points when you purchase the Trader Plan.',
 //     //   'Earn bonus points with the purchase of the Ultimate Trader Plan.',
-//     //   'Achieve the Morning Star status and earn exclusive points.',
+//     //   'Achieve the MORNINGSTAR status and earn exclusive points.',
 //     //   'Sync your portfolio to our platform and get rewarded with points.',
 //     // ];
 

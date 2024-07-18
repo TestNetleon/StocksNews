@@ -92,6 +92,31 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
     bool havePoints = provider.blogsDetail?.totalPoints != null &&
         (provider.blogsDetail?.totalPoints > 0);
 
+    bool haveEnoughPoints = (provider.blogsDetail?.totalPoints == null ||
+            provider.blogsDetail?.pointsRequired == null)
+        ? false
+        : (provider.blogsDetail!.totalPoints! >
+            provider.blogsDetail!.pointsRequired!);
+
+    // bool showLoginButton = !isLogin;
+    // bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    // bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    // bool showSubscribe =
+    //     isLogin && !hasMembership && showMembership && !havePoints;
+    // bool showStore = isLogin && hasMembership && showMembership && !havePoints;
+
+    bool showLoginButton = !isLogin;
+    bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    bool showSubscribe = isLogin &&
+        !hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+    bool showStore = isLogin &&
+        hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+
     double height = (ScreenUtil().screenHeight -
             ScreenUtil().bottomBarHeight -
             ScreenUtil().statusBarHeight) /
@@ -119,177 +144,168 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
             ),
           ),
           Container(
-              height: height / 1.2,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                color: ThemeColors.tabBack,
+            height: height / 1.1,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              color: ThemeColors.tabBack,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.lock, size: 40),
-                    const SpacerVertical(),
-                    Text(
-                      "${provider.blogsDetail?.readingTitle}",
-                      style: stylePTSansBold(fontSize: 18),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.lock, size: 40),
+                  const SpacerVertical(),
+                  Text(
+                    "${provider.blogsDetail?.readingTitle}",
+                    style: stylePTSansBold(fontSize: 18),
+                  ),
+                  const SpacerVertical(height: 10),
+                  Text(
+                    "${provider.blogsDetail?.readingSubtitle}",
+                    style: stylePTSansRegular(
+                      fontSize: 14,
+                      height: 1.3,
                     ),
-                    const SpacerVertical(height: 10),
-                    Text(
-                      "${provider.blogsDetail?.readingSubtitle}",
-                      style: stylePTSansRegular(
-                        fontSize: 14,
-                        height: 1.3,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SpacerVertical(height: 10),
+                  if (showLoginButton)
+                    ThemeButtonSmall(
+                      onPressed: () {
+                        _onLoginClick(context);
+                      },
+                      mainAxisSize: MainAxisSize.max,
+                      text: "Register/Login to Continue",
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                      textAlign: TextAlign.center,
+                      textSize: 15,
+                      fontBold: true,
+                      iconFront: true,
+                      icon: Icons.lock,
+                      radius: 30,
+                      margin: const EdgeInsets.only(bottom: 10),
                     ),
-                    const SpacerVertical(height: 10),
-                    if (!isLogin)
-                      ThemeButtonSmall(
-                        onPressed: () {
-                          _onLoginClick(context);
-                        },
-                        mainAxisSize: MainAxisSize.max,
-                        text: "Register/Login to Continue",
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconFront: true,
-                        icon: Icons.lock,
-                        radius: 30,
-                        margin: const EdgeInsets.only(bottom: 10),
+                  if (showViewReport)
+                    ThemeButtonSmall(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                    if (isLogin && havePoints)
-                      ThemeButtonSmall(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        iconFront: true,
-                        fontBold: true,
-                        radius: 30,
-                        icon: Icons.visibility,
-                        mainAxisSize: MainAxisSize.max,
-                        onPressed: () => _onViewNewsClick(context),
-                        text: "View News",
-                        margin: const EdgeInsets.only(bottom: 10),
+                      textSize: 15,
+                      iconFront: true,
+                      fontBold: true,
+                      radius: 30,
+                      icon: Icons.visibility,
+                      mainAxisSize: MainAxisSize.max,
+                      onPressed: () => _onViewNewsClick(context),
+                      text: "View News",
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  if (showRefer)
+                    ThemeButtonSmall(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                    if (isLogin && !havePoints)
-                      ThemeButtonSmall(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
+                      textSize: 15,
+                      fontBold: true,
+                      iconWidget: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Image.asset(
+                          Images.referAndEarn,
+                          height: 18,
+                          width: 18,
+                          color: ThemeColors.white,
                         ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            Images.referAndEarn,
-                            height: 18,
-                            width: 18,
-                            color: ThemeColors.white,
-                          ),
-                        ),
-                        iconFront: true,
-                        icon: Icons.earbuds_rounded,
-                        mainAxisSize: MainAxisSize.max,
-                        radius: 30,
-                        onPressed: () async {
-                          await _onReferClick(context);
-                        },
-                        text: "Refer and Earn",
-                        margin: const EdgeInsets.only(bottom: 10),
                       ),
-                    if (isLogin && !hasMembership && showMembership)
-                      ThemeButtonSmall(
-                        color: const Color.fromARGB(
-                          255,
-                          194,
-                          216,
-                          51,
-                        ),
-                        textColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconFront: true,
-                        radius: 30,
-                        icon: Icons.card_membership,
-                        textAlign: TextAlign.start,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Image.asset(
-                            Images.membership,
-                            height: 18,
-                            width: 18,
-                            color: ThemeColors.white,
-                          ),
-                        ),
-                        mainAxisSize: MainAxisSize.max,
-                        onPressed: () async {
-                          await _membership();
-                        },
-                        // text: "Upgrade Membership for more points",
-                        text: "Become a Premium Member",
-                        showArrow: false,
-                        margin: const EdgeInsets.only(bottom: 10),
+                      iconFront: true,
+                      icon: Icons.earbuds_rounded,
+                      mainAxisSize: MainAxisSize.max,
+                      radius: 30,
+                      onPressed: () async {
+                        await _onReferClick(context);
+                      },
+                      text: "Refer and Earn",
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  if (showSubscribe)
+                    ThemeButtonSmall(
+                      color: const Color.fromARGB(
+                        255,
+                        194,
+                        216,
+                        51,
                       ),
-                    if (isLogin &&
-                        !havePoints &&
-                        hasMembership &&
-                        showMembership)
-                      ThemeButtonSmall(
-                        color: const Color.fromARGB(
-                          255,
-                          194,
-                          216,
-                          51,
-                        ),
-                        textColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 11,
-                        ),
-                        textSize: 15,
-                        fontBold: true,
-                        iconFront: true,
-                        radius: 30,
-                        icon: Icons.card_membership,
-                        textAlign: TextAlign.start,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Image.asset(
-                            Images.membership,
-                            height: 18,
-                            width: 18,
-                            color: ThemeColors.white,
-                          ),
-                        ),
-                        mainAxisSize: MainAxisSize.max,
-                        onPressed: _navigateToStore,
-                        text: "Points Central",
-                        showArrow: false,
-                        margin: const EdgeInsets.only(bottom: 10),
+                      textColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 11,
                       ),
-                  ],
-                ),
-              )),
+                      textSize: 15,
+                      fontBold: true,
+                      iconFront: true,
+                      radius: 30,
+                      icon: Icons.card_membership,
+                      textAlign: TextAlign.start,
+                      iconWidget: Padding(
+                        padding: const EdgeInsets.only(
+                          right: 10,
+                        ),
+                        child: Image.asset(
+                          Images.membership,
+                          height: 18,
+                          width: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                      mainAxisSize: MainAxisSize.max,
+                      onPressed: () async {
+                        await _membership();
+                      },
+                      // text: "Upgrade Membership for more points",
+                      text: "Become a Premium Member",
+                      showArrow: false,
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                  if (showStore)
+                    ThemeButtonSmall(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      textColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 7,
+                      ),
+                      textSize: 15,
+                      fontBold: true,
+                      iconFront: true,
+                      radius: 30,
+                      icon: Icons.card_membership,
+                      textAlign: TextAlign.start,
+                      iconWidget: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Image.asset(
+                          Images.pointIcon3,
+                          height: 28,
+                          width: 28,
+                          // color: Colors.black,
+                        ),
+                      ),
+                      mainAxisSize: MainAxisSize.max,
+                      onPressed: _navigateToStore,
+                      text: "Buy Points",
+                      showArrow: false,
+                      margin: const EdgeInsets.only(bottom: 10),
+                    ),
+                ],
+              ),
+            ),
+          ),
         ],
       );
     } else {

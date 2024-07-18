@@ -13,7 +13,6 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
@@ -34,7 +33,6 @@ import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
-import '../../../auth/membershipAsk/ask.dart';
 import '../../../auth/refer/refer_code.dart';
 import '../../../blogs/index.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
@@ -166,21 +164,21 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
     await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
   }
 
-  Future _membership() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (provider.user?.phone == null || provider.user?.phone == '') {
-      await membershipLogin();
-    }
-    if (provider.user?.phone != null && provider.user?.phone != '') {
-      // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
-    }
-  }
+  // Future _membership() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   if (provider.user?.phone == null || provider.user?.phone == '') {
+  //     await membershipLogin();
+  //   }
+  //   if (provider.user?.phone != null && provider.user?.phone != '') {
+  //     // await RevenueCatService.initializeSubscription();
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (_) => const NewMembership(),
+  //       ),
+  //     );
+  //   }
+  // }
 
   // Future _membership() async {
   //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();

@@ -5,7 +5,6 @@ import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class FairValue extends StatelessWidget {
@@ -31,7 +30,7 @@ class FairValue extends StatelessWidget {
             Radius.circular(10),
           ),
         ),
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(15),
         child: Stack(
           children: [
             Image.asset(
@@ -42,46 +41,34 @@ class FairValue extends StatelessWidget {
               color: Colors.white,
               opacity: const AlwaysStoppedAnimation(.4),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Fair Value",
-                        style: styleGeorgiaBold(fontSize: 18),
-                      ),
-                      const SpacerVertical(height: 5),
-                      Text(
-                        "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
-                        style: stylePTSansRegular(fontSize: 12),
-                      ),
-                      const SpacerVertical(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            Images.objective,
-                            height: 50,
-                            opacity: const AlwaysStoppedAnimation(.5),
-                            color: Colors.white,
-                          ),
-                          const SpacerHorizontal(
-                            width: 140.0,
-                          ),
-                          Expanded(
-                            child: Text(
-                              "${morningStar?.quantFairValue ?? "N/A"}",
-                              style: styleGeorgiaBold(
-                                  color: ThemeColors.white, fontSize: 30),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                Text(
+                  "Fair Value".toUpperCase(),
+                  style: styleGeorgiaBold(fontSize: 18),
+                ),
+                const SpacerVertical(height: 5),
+                Text(
+                  "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
+                  style: stylePTSansRegular(fontSize: 12),
+                ),
+                const SpacerVertical(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      Images.objective,
+                      height: 65,
+                      opacity: const AlwaysStoppedAnimation(.5),
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "${morningStar?.quantFairValue ?? "N/A"}",
+                      style: styleGeorgiaBold(
+                          color: ThemeColors.white, fontSize: 30),
+                    ),
+                  ],
                 ),
               ],
             ),

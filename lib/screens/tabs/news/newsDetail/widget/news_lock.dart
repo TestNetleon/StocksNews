@@ -141,6 +141,24 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
     bool havePoints = provider.data?.postDetail?.totalPoints != null &&
         (provider.data?.postDetail?.totalPoints > 0);
 
+    bool haveEnoughPoints = (provider.data?.postDetail?.totalPoints == null ||
+            provider.data?.postDetail?.pointsRequired == null)
+        ? false
+        : (provider.data?.postDetail?.totalPoints! >
+            provider.data?.postDetail?.pointsRequired!);
+
+    bool showLoginButton = !isLogin;
+    bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    bool showSubscribe = isLogin &&
+        !hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+    bool showStore = isLogin &&
+        hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+
     double height = (ScreenUtil().screenHeight -
             ScreenUtil().bottomBarHeight -
             ScreenUtil().statusBarHeight) /
@@ -168,7 +186,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
             ),
           ),
           Container(
-              height: height / 1.2,
+              height: height / 1.1,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
                 color: ThemeColors.tabBack,
@@ -197,7 +215,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                       textAlign: TextAlign.center,
                     ),
                     const SpacerVertical(height: 10),
-                    if (!isLogin)
+                    if (showLoginButton)
                       ThemeButtonSmall(
                         onPressed: () {
                           _onLoginClick(context);
@@ -215,7 +233,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                         radius: 30,
                         margin: const EdgeInsets.only(bottom: 10),
                       ),
-                    if (isLogin && havePoints)
+                    if (showViewReport)
                       ThemeButtonSmall(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
@@ -231,7 +249,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                         text: "View News",
                         margin: const EdgeInsets.only(bottom: 10),
                       ),
-                    if (isLogin && !havePoints)
+                    if (showRefer)
                       ThemeButtonSmall(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
@@ -258,7 +276,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                         text: "Refer and Earn",
                         margin: const EdgeInsets.only(bottom: 10),
                       ),
-                    if (isLogin && !hasMembership && showMembership)
+                    if (showSubscribe)
                       ThemeButtonSmall(
                         color: const Color.fromARGB(
                           255,
@@ -285,7 +303,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                             Images.membership,
                             height: 18,
                             width: 18,
-                            color: ThemeColors.white,
+                            color: Colors.black,
                           ),
                         ),
                         mainAxisSize: MainAxisSize.max,
@@ -296,21 +314,13 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                         showArrow: false,
                         margin: const EdgeInsets.only(bottom: 10),
                       ),
-                    if (isLogin &&
-                        !havePoints &&
-                        hasMembership &&
-                        showMembership)
+                    if (showStore)
                       ThemeButtonSmall(
-                        color: const Color.fromARGB(
-                          255,
-                          194,
-                          216,
-                          51,
-                        ),
+                        color: const Color.fromARGB(255, 255, 255, 255),
                         textColor: Colors.black,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
-                          vertical: 11,
+                          vertical: 7,
                         ),
                         textSize: 15,
                         fontBold: true,
@@ -323,15 +333,15 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
                             right: 10,
                           ),
                           child: Image.asset(
-                            Images.membership,
-                            height: 18,
-                            width: 18,
-                            color: ThemeColors.white,
+                            Images.pointIcon3,
+                            height: 28,
+                            width: 28,
+                            // color: Colors.black,
                           ),
                         ),
                         mainAxisSize: MainAxisSize.max,
                         onPressed: _navigateToStore,
-                        text: "Points Central",
+                        text: "Buy Points",
                         showArrow: false,
                         margin: const EdgeInsets.only(bottom: 10),
                       ),
