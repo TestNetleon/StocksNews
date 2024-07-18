@@ -68,6 +68,7 @@ class PostDetail {
   String? readingSubtitle;
   bool? balanceStatus;
   dynamic totalPoints;
+  dynamic pointsRequired;
 
   // final int? status;
   // final String? sector;
@@ -101,6 +102,7 @@ class PostDetail {
     this.readingSubtitle,
     this.balanceStatus,
     this.totalPoints,
+    this.pointsRequired,
     // this.status,
     // this.sector,
     // this.mentionStatus,
@@ -149,6 +151,7 @@ class PostDetail {
         text: json["text"],
         url: json["url"],
         totalPoints: json["total_points"],
+        pointsRequired: json["point_required"],
         // status: json["status"],
         // sector: json["sector"],
         // mentionStatus: json["mention_status"],
@@ -202,6 +205,7 @@ class PostDetail {
         // "created_at": createdAt?.toIso8601String(),
         // "views": views,
         "total_points": totalPoints,
+        "point_required": pointsRequired,
       };
 }
 

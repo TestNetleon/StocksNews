@@ -249,12 +249,13 @@ class _UserCardState extends State<UserCard> {
                         ),
                         onPressed: () {
                           Scaffold.of(context).closeDrawer();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const NewMembership(),
-                            ),
-                          );
+                          _upgradeSubscription();
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (_) => const NewMembership(),
+                          //   ),
+                          // );
                           // askToSubscribe(
                           //   onPressed: () {
                           //     Navigator.pop(navigatorKey.currentContext!);

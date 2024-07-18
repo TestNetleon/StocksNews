@@ -27,6 +27,7 @@ class BlogsDetailRes {
   String? readingSubtitle;
   bool? balanceStatus;
   dynamic totalPoints;
+  dynamic pointsRequired;
 
   BlogsDetailRes({
     required this.id,
@@ -47,6 +48,7 @@ class BlogsDetailRes {
     this.readingSubtitle,
     this.balanceStatus,
     this.totalPoints,
+    this.pointsRequired,
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
@@ -78,6 +80,7 @@ class BlogsDetailRes {
         readingSubtitle: json["reading_subtitle"],
         balanceStatus: json["balance_status"],
         totalPoints: json["total_points"],
+        pointsRequired: json["point_required"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -103,5 +106,6 @@ class BlogsDetailRes {
         "reading_subtitle": readingSubtitle,
         "balance_status": balanceStatus,
         "total_points": totalPoints,
+        "point_required": pointsRequired,
       };
 }

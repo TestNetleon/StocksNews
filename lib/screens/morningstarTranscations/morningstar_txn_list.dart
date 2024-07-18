@@ -53,7 +53,7 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
             child: CommonEmptyError(
               hasData: data == null || data.isEmpty == true,
               isLoading: provider.isLoading,
-              title: "Morningstar Reports",
+              title: "MORNINGSTAR Reports",
               subTitle: provider.error,
               onClick: () async {
                 provider.onRefresh();

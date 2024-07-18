@@ -13,7 +13,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/morningstart_lock.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/screens/stockDetails/Economic.dart';
@@ -28,7 +27,6 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../../auth/membershipAsk/ask.dart';
 import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
@@ -89,21 +87,21 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
   //   );
   // }
 
-  Future _membership() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (provider.user?.phone == null || provider.user?.phone == '') {
-      await membershipLogin();
-    }
-    if (provider.user?.phone != null && provider.user?.phone != '') {
-      // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
-    }
-  }
+  // Future _membership() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   if (provider.user?.phone == null || provider.user?.phone == '') {
+  //     await membershipLogin();
+  //   }
+  //   if (provider.user?.phone != null && provider.user?.phone != '') {
+  //     // await RevenueCatService.initializeSubscription();
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (_) => const NewMembership(),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -420,7 +418,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                   ),
                                   const SpacerVertical(height: 5),
                                   Text(
-                                    "Powered by Morningstar",
+                                    "Powered by MORNINGSTAR",
                                     textAlign: TextAlign.center,
                                     style: stylePTSansRegular(
                                       fontSize: 12,
@@ -1117,10 +1115,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                             end: Alignment.bottomCenter,
                                             stops: [0.2, 0.65],
                                             colors: [
-                                              Color.fromARGB(
-                                                  255, 32, 128, 65),
-                                              Color.fromARGB(
-                                                  255, 39, 37, 37),
+                                              Color.fromARGB(255, 32, 128, 65),
+                                              Color.fromARGB(255, 39, 37, 37),
                                             ],
                                           ),
                                           borderRadius:
@@ -1560,7 +1556,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                   ),
                                   const SpacerVertical(height: 15),
                                   Container(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       // color: ThemeColors.tabBack
@@ -1577,90 +1573,81 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        const SpacerHorizontal(width: 8),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                          ),
-                                          margin: const EdgeInsets.only(
-                                              top: 2, left: 2),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Financial Health",
-                                                style: styleGeorgiaBold(
-                                                    fontSize: 18),
-                                              ),
-                                              const SpacerVertical(height: 3),
-                                              Text(
-                                                "As on - ${morningStar?.quantFinancialHealthDate}",
-                                                style: stylePTSansRegular(
-                                                  fontSize: 12,
-                                                  color: ThemeColors.greyText,
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            margin: const EdgeInsets.only(
+                                              top: 2,
+                                              left: 2,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Financial Health",
+                                                  style: styleGeorgiaBold(
+                                                    fontSize: 18,
+                                                  ).copyWith(height: 1),
                                                 ),
-                                              ),
-                                              const SpacerVertical(height: 6),
-                                              Image.asset(
-                                                Images.financialHealth,
-                                                width: 50,
-                                                height: 50,
-                                                opacity:
-                                                    const AlwaysStoppedAnimation(
-                                                        .8),
-                                                color: Colors.white,
-                                              ),
-                                            ],
+                                                const SpacerVertical(height: 3),
+                                                Text(
+                                                  "As on - ${morningStar?.quantFinancialHealthDate}",
+                                                  style: stylePTSansRegular(
+                                                    fontSize: 12,
+                                                    color: ThemeColors.greyText,
+                                                  ),
+                                                ),
+                                                const SpacerVertical(height: 6),
+                                                Image.asset(
+                                                  Images.financialHealth,
+                                                  width: 50,
+                                                  height: 50,
+                                                  opacity:
+                                                      const AlwaysStoppedAnimation(
+                                                          .8),
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         const SpacerHorizontal(width: 40),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 50.0, right: 10.0),
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 3,
-                                                  vertical: 3,
-                                                ),
-                                                width: 120,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  color: healthLabel == "Weak"
-                                                      ? const Color.fromARGB(
-                                                          255, 244, 67, 54)
-                                                      : healthLabel ==
-                                                              "Moderate"
-                                                          ? const Color
-                                                              .fromARGB(
-                                                              255, 253, 239, 45)
-                                                          : const Color
-                                                              .fromARGB(255, 43,
-                                                              255, 117),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "${morningStar?.quantFinancialHealthLabel}",
-                                                    style: styleGeorgiaBold(
-                                                      fontSize: 16,
-                                                      color: healthLabel ==
-                                                              "Weak"
-                                                          ? Colors.white
-                                                          : healthLabel ==
-                                                                  "Moderate"
-                                                              ? Colors.black
-                                                              : Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 3,
+                                            vertical: 3,
+                                          ),
+                                          width: 120,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: healthLabel == "Weak"
+                                                ? const Color.fromARGB(
+                                                    255, 244, 67, 54)
+                                                : healthLabel == "Moderate"
+                                                    ? const Color.fromARGB(
+                                                        255, 253, 239, 45)
+                                                    : const Color.fromARGB(
+                                                        255, 43, 255, 117),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "${morningStar?.quantFinancialHealthLabel}",
+                                              style: styleGeorgiaBold(
+                                                fontSize: 16,
+                                                color: healthLabel == "Weak"
+                                                    ? Colors.white
+                                                    : healthLabel == "Moderate"
+                                                        ? Colors.black
+                                                        : Colors.black,
                                               ),
                                             ),
                                           ),
@@ -1719,7 +1706,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                 ),
                                                 const SpacerVertical(height: 5),
                                                 Text(
-                                                  "Powered by Morningstar",
+                                                  "Powered by MORNINGSTAR",
                                                   style: stylePTSansRegular(
                                                       fontSize: 12),
                                                 ),
@@ -1755,7 +1742,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     },
                                     child: Center(
                                       child: Text(
-                                        "Read your all Morning Star Reports",
+                                        "Read your all MORNINGSTAR Reports",
                                         style: stylePTSansBold(
                                             color: ThemeColors.accent),
                                       ),

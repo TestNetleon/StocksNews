@@ -114,22 +114,25 @@ class _StoreState extends State<Store> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${data?.title}",
-                        style: stylePTSansBold(
-                          color: Colors.white,
-                          fontSize: 28,
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${data?.title}",
+                          style: stylePTSansBold(
+                            color: Colors.white,
+                            fontSize: 28,
+                          ),
                         ),
-                      ),
-                      const SpacerVertical(height: 5),
-                      Text(
-                        "${data?.subTitle}",
-                        style: stylePTSansRegular(color: Colors.white),
-                      ),
-                    ],
+                        const SpacerVertical(height: 5),
+                        Text(
+                          "${data?.subTitle}",
+                          style: stylePTSansRegular(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                   const SpacerVertical(),
                   Container(
@@ -266,6 +269,7 @@ class _StoreState extends State<Store> {
                               openIndex: provider.faqOpenIndex,
                               index: index,
                               provider: provider,
+                              textColor: Colors.black,
                             );
                           },
                           separatorBuilder: (context, index) {
