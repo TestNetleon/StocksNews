@@ -41,8 +41,6 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
   _callAPI() {
     LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
     provider.getReferData();
-    // if (provider.data == null || provider.data?.isEmpty == true) {
-    // }
   }
 
   @override
@@ -298,7 +296,7 @@ class _AffiliateReferFriendState extends State<AffiliateReferFriend> {
                           ],
                         ),
                       ),
-                      const PointsSummary(),
+                      const PointsSummary(fromDrawer: false),
                       const SpacerVertical(height: 15),
                       Visibility(
                         visible: provider.data?.isNotEmpty == true &&

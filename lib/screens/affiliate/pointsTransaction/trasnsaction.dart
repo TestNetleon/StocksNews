@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
+import 'package:stocks_news_new/screens/affiliate/referFriend/widget/points_summary.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -23,7 +24,8 @@ import '../../stockDetail/index.dart';
 import '../../tabs/tabs.dart';
 
 class AffiliateTransaction extends StatefulWidget {
-  const AffiliateTransaction({super.key});
+  const AffiliateTransaction({super.key, this.fromDrawer = false});
+  final bool fromDrawer;
 
   @override
   State<AffiliateTransaction> createState() => _AffiliateTransactionState();
@@ -70,8 +72,10 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
               provider.getTransactionData();
             },
             child: ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Column(
@@ -81,13 +85,12 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                           subTitle:
                               provider.extraNew?.subTitle.toString() ?? "",
                         ),
-                        AffiliateTranItem(
-                          data: provider.tnxData?[index],
-                        ),
+                        const PointsSummary(fromDrawer: true),
+                        const SpacerVertical(height: 10),
+                        AffiliateTranItem(data: provider.tnxData?[index]),
                       ],
                     );
                   }
-
                   return AffiliateTranItem(
                     data: provider.tnxData?[index],
                   );

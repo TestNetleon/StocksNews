@@ -18,6 +18,7 @@ class News extends StatelessWidget {
     NewsCategoryProvider provider = context.watch<NewsCategoryProvider>();
     Utils().showLog("----${provider.extra?.aiTitle}");
     Utils().showLog("${provider.tabs?.length}");
+
     if (provider.tabLoading) {
       return const SizedBox();
     }
