@@ -464,28 +464,17 @@ class PointsItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 0,
+            top: 5,
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
-              // decoration: const BoxDecoration(
-              //   color: ThemeColors.tabBack,
-              //   // borderRadius: BorderRadius.circular(6),
-              //   shape: BoxShape.circle,
-              //   gradient: LinearGradient(
-              //     begin: Alignment.topCenter,
-              //     end: Alignment.bottomCenter,
-              //     colors: [
-              //       Color.fromARGB(255, 1, 87, 15),
-              //       Color.fromARGB(255, 128, 197, 151),
-              //     ],
-              //   ),
-              // ),
-              // child: const Icon(Icons.star, size: 36),
-              child: Image.asset(
-                Images.pointIcon,
-                width: 60,
-                height: 60,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(
+                  Images.pointIcon2,
+                  width: 55,
+                  height: 55,
+                ),
               ),
             ),
           ),

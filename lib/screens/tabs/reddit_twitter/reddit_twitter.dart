@@ -110,7 +110,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
                               },
                               child: SingleChildScrollView(
                                 physics: const AlwaysScrollableScrollPhysics(),
-                                child: _getWidget(provider),
+                                child: _getWidget(),
                               ),
                             ),
                 ),
@@ -127,7 +127,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
     );
   }
 
-  Widget _getWidget(RedditTwitterProvider provider) {
+  Widget _getWidget() {
+    RedditTwitterProvider provider = context.watch<RedditTwitterProvider>();
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(

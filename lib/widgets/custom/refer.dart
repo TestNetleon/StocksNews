@@ -116,7 +116,16 @@ class ReferApp extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-
+          // color: ThemeColors.accent,
+          // gradient: const LinearGradient(
+          //   begin: Alignment.bottomLeft,
+          //   end: Alignment.topRight,
+          //   colors: [
+          //     Colors.black,
+          //     ThemeColors.accent,
+          //     // Color.fromARGB(255, 10, 114, 24),
+          //   ],.
+          // ),
           // gradient: const RadialGradient(
           //   center: Alignment.bottomCenter,
           //   radius: 2,
@@ -129,14 +138,16 @@ class ReferApp extends StatelessWidget {
 
           // gradient: const SweepGradient(
           //   colors: [
-          //     Colors.red,
-          //     Colors.orange,
-          //     Colors.green,
-          //     Colors.blue,
+          //     Color.fromARGB(255, 222, 69, 9),
+          //     Color.fromARGB(255, 227, 209, 18),
+          //     Color.fromARGB(255, 11, 199, 29),
+          //     Color.fromARGB(255, 227, 209, 18),
+          //     Color.fromARGB(255, 222, 69, 9)
           //   ],
-          //   stops: [0.0, 0.33, 0.66, 1.0],
+          //   stops: [0.0, 0.25, 0.5, 0.75, 1],
           //   center: Alignment.center,
           //   startAngle: 0.0,
+          //   transform: GradientRotation(2),
           //   endAngle: 3.14 * 2,
           // ),
 

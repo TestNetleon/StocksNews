@@ -283,10 +283,13 @@ class MyVerifiedCard extends StatelessWidget {
             },
             child: Column(
               children: [
-                Image.asset(
-                  Images.pointIcon2,
-                  height: 25,
-                  width: 25,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    Images.pointIcon2,
+                    height: 25,
+                    width: 25,
+                  ),
                 ),
                 const SpacerVertical(height: 5),
                 Text(
