@@ -69,36 +69,37 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
           showPreparingText: true,
           child: CommonRefreshIndicator(
             onRefresh: () async {
+              context.read<LeaderBoardProvider>().getReferData();
               provider.getTransactionData();
             },
             child: ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 10,
-                ),
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Column(
-                      children: [
-                        ScreenTitle(
-                          title: provider.extraNew?.title.toString() ?? "",
-                          subTitle:
-                              provider.extraNew?.subTitle.toString() ?? "",
-                        ),
-                        const PointsSummary(fromDrawer: true),
-                        const SpacerVertical(height: 10),
-                        AffiliateTranItem(data: provider.tnxData?[index]),
-                      ],
-                    );
-                  }
-                  return AffiliateTranItem(
-                    data: provider.tnxData?[index],
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 10,
+              ),
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Column(
+                    children: [
+                      ScreenTitle(
+                        title: provider.extraNew?.title.toString() ?? "",
+                        subTitle: provider.extraNew?.subTitle.toString() ?? "",
+                      ),
+                      const PointsSummary(fromDrawer: true),
+                      const SpacerVertical(height: 10),
+                      AffiliateTranItem(data: provider.tnxData?[index]),
+                    ],
                   );
-                },
-                separatorBuilder: (context, index) {
-                  return const SpacerVertical(height: 10);
-                },
-                itemCount: provider.tnxData?.length ?? 0),
+                }
+                return AffiliateTranItem(
+                  data: provider.tnxData?[index],
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const SpacerVertical(height: 10);
+              },
+              itemCount: provider.tnxData?.length ?? 0,
+            ),
           ),
         ),
       ),
@@ -135,43 +136,64 @@ class AffiliateTranItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Visibility(
-            visible: data?.spent != null && data?.spent != 0,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    ((data?.spent ?? 0) > 1) ? "Points spent" : "Point spent",
-                    style: styleGeorgiaBold(fontSize: 16),
-                  ),
-                  Text(
-                    "-${data?.spent}",
-                    style: styleGeorgiaBold(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Visibility(
-            visible: data?.earn != null && data?.earn != 0,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    // "Point earned",
-                    ((data?.earn ?? 0) > 1) ? "Points earned" : "Point earned",
-                    style: styleGeorgiaBold(fontSize: 16),
-                  ),
-                  Text(
-                    "+${data?.earn}",
-                    style: styleGeorgiaBold(fontSize: 16),
-                  ),
-                ],
-              ),
+          // Visibility(
+          //   visible: data?.spent != null && data?.spent != 0,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(bottom: 5),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Text(
+          //           ((data?.spent ?? 0) > 1) ? "Points spent" : "Point spent",
+          //           style: styleGeorgiaBold(fontSize: 16),
+          //         ),
+          //         Text(
+          //           "-${data?.spent}",
+          //           style: styleGeorgiaBold(fontSize: 16),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Visibility(
+          //   visible: data?.earn != null && data?.earn != 0,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(bottom: 5),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Text(
+          //           // "Point earned",
+          //           ((data?.earn ?? 0) > 1) ? "Points earned" : "Point earned",
+          //           style: styleGeorgiaBold(fontSize: 16),
+          //         ),
+          //         Text(
+          //           "+${data?.earn}",
+          //           style: styleGeorgiaBold(fontSize: 16),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  data?.label ?? "",
+                  style: styleGeorgiaBold(fontSize: 16),
+                ),
+                Text(
+                  (data?.spent != null && (data?.spent ?? 0) > 0)
+                      ? "-${data?.spent}"
+                      : (data?.earn != null && (data?.earn ?? 0) > 0)
+                          ? "+${data?.earn}"
+                          : "",
+                  style: styleGeorgiaBold(fontSize: 16),
+                ),
+              ],
             ),
           ),
           const Divider(
@@ -182,21 +204,24 @@ class AffiliateTranItem extends StatelessWidget {
           //   "${data?.txnDetail ?? ""} - ${data?.title}",
           //   style: stylePTSansRegular(height: 1.5),
           // ),
-
           RichText(
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "${data?.txnDetail ?? ""} - ",
+                  text: data?.txnDetail ?? "",
                   style: stylePTSansRegular(height: 1.5),
                 ),
                 TextSpan(
                   text: " ${data?.title ?? ""}",
                   style: stylePTSansRegular(
-                      height: 1.5,
-                      color: data?.spent != null && data?.spent != 0
-                          ? ThemeColors.accent
-                          : ThemeColors.white),
+                    height: 1.5,
+                    color: data?.txnType != "" && data?.slug != ""
+                        ? ThemeColors.accent
+                        : ThemeColors.white,
+                    // data?.spent != null && data?.spent != 0
+                    //     ? ThemeColors.accent
+                    //     : ThemeColors.white,
+                  ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = data?.spent != null && data?.spent != 0
                         ? () {
@@ -207,7 +232,17 @@ class AffiliateTranItem extends StatelessWidget {
               ],
             ),
           ),
-
+          // const SpacerVertical(height: 10),
+          Visibility(
+            visible: data?.duration != null && data?.duration != "",
+            child: Container(
+              margin: const EdgeInsets.only(top: 3),
+              child: Text(
+                data?.duration ?? "",
+                style: stylePTSansRegular(height: 1.5),
+              ),
+            ),
+          ),
           const SpacerVertical(height: 10),
           Align(
             alignment: Alignment.centerRight,

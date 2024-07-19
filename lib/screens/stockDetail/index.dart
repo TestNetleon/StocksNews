@@ -144,7 +144,6 @@ class _StockDetailState extends State<StockDetail> {
                   // SdSocialActivities(symbol: widget.symbol),
                   // SdNews(symbol: widget.symbol),
                   SdNewsN(symbol: widget.symbol),
-
                   SdEarnings(symbol: widget.symbol),
                   SdDividends(symbol: widget.symbol),
                   SdInsiderTrade(symbol: widget.symbol),
