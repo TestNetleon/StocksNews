@@ -62,7 +62,7 @@ class _BlogDetailState extends State<BlogDetail> {
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          if (mounted) {
+          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(BlogDetail.path);
             loginSheet();
           }
@@ -73,7 +73,7 @@ class _BlogDetailState extends State<BlogDetail> {
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          if (mounted) {
+          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(BlogDetail.path);
             verifyIdentitySheet();
           }

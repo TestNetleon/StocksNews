@@ -78,14 +78,12 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       return;
     }
 
-    // log("PHONE ++++ ===> ${userProvider.user?.phone}");
-
     if (userProvider.user == null) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          if (mounted) {
+          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(NewsDetails.path);
             loginSheet();
           }
@@ -96,14 +94,12 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          if (mounted) {
+          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(NewsDetails.path);
-            // referLogin();
             verifyIdentitySheet();
           }
         });
       }
-      //
     }
   }
 

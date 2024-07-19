@@ -102,7 +102,8 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  provider.success?.subTitle ?? "Explore Stocks.News without limits.",
+                  provider.success?.subTitle ??
+                      "Explore Stocks.News without limits.",
                   textAlign: TextAlign.center,
                   style: stylePTSansRegular(
                       fontSize: 20, color: ThemeColors.greyText),
@@ -116,9 +117,10 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
                   onPressed: () {
                     // Navigator.pop(context);
                     Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Tabs()),
-                        (routes) => false);
+                      context,
+                      MaterialPageRoute(builder: (context) => const Tabs()),
+                      (routes) => false,
+                    );
                   },
                 ),
               )

@@ -289,9 +289,12 @@ class FirebaseApi {
       }
       // bool inAppMsg = message.data["in_app_msg"] ?? false;
       HomeProvider provider = navigatorKey.currentContext!.read<HomeProvider>();
+      Utils().showLog("Step 1 ==>  ${message.data["in_app_msg"]}");
       if (message.data["in_app_msg"] == true ||
           message.data["in_app_msg"] == 'true') {
+        Utils().showLog("Step 2 ==>  ${isAppInForeground}");
         if (isAppInForeground) {
+          Utils().showLog("Step 3 ==>  VISIBLE NOW");
           provider.updateInAppMsgStatus(message.data["_id"]);
           checkForInAppMessage(
             InAppNotification(
