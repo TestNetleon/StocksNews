@@ -281,25 +281,39 @@ class FeatureWatchListItem extends StatelessWidget {
                 ),
                 const SpacerHorizontal(width: 12),
                 Expanded(
-                  child: Text(
-                    data?.symbol ?? '',
-                    style: stylePTSansBold(fontSize: 14),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data?.symbol ?? '',
+                        style: stylePTSansBold(fontSize: 14),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        data?.name ?? '',
+                        style: stylePTSansRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 12,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SpacerVertical(height: 8),
-            Text(
-              data?.name ?? '',
-              style: stylePTSansRegular(
-                color: ThemeColors.greyText,
-                fontSize: 12,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
+            // const SpacerVertical(height: 8),
+            // Text(
+            //   data?.name ?? '',
+            //   style: stylePTSansRegular(
+            //     color: ThemeColors.greyText,
+            //     fontSize: 12,
+            //   ),
+            //   maxLines: 2,
+            //   overflow: TextOverflow.ellipsis,
+            // ),
             const SpacerVertical(height: 8),
             Text(
               data?.price ?? '',

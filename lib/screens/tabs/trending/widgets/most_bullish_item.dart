@@ -580,8 +580,8 @@ class _MostBullishItemState extends State<MostBullishItem> {
             ),
             PopUpMenuButtonCommon(
               symbol: widget.data.symbol,
-              onClickAlert: () => _alertElse(context),
-              onClickWatchlist: () => _watchlistElse(context),
+              onClickAlert: () => _alertElse(),
+              onClickWatchlist: () => _watchlistElse(),
               watchlistString: widget.up
                   ? widget.watlistForBullish == 1
                       ? 'Watchlist Added'
@@ -600,6 +600,470 @@ class _MostBullishItemState extends State<MostBullishItem> {
           ],
         ),
       );
+
+      // return InkWell(
+      //   onTap: () {
+      //     Navigator.push(
+      //       navigatorKey.currentContext!,
+      //       MaterialPageRoute(
+      //           builder: (_) => StockDetail(symbol: widget.data.symbol)),
+      //     );
+      //   },
+      //   child: Stack(
+      //     children: [
+      //       Container(
+      //         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      //         decoration: BoxDecoration(
+      //           color: ThemeColors.background,
+      //           borderRadius: BorderRadius.circular(5),
+      //         ),
+      //         child: Row(
+      //           children: [
+      //             ClipRRect(
+      //               borderRadius: BorderRadius.circular(0.sp),
+      //               child: Container(
+      //                 padding: const EdgeInsets.all(5),
+      //                 width: 48,
+      //                 height: 48,
+      //                 child: CachedNetworkImagesWidget(widget.data.image ?? ""),
+      //               ),
+      //             ),
+      //             const SpacerHorizontal(width: 12),
+      //             Expanded(
+      //               child: Column(
+      //                 crossAxisAlignment: CrossAxisAlignment.start,
+      //                 children: [
+      //                   Text(
+      //                     widget.data.symbol,
+      //                     style: styleGeorgiaBold(fontSize: 18),
+      //                     maxLines: 1,
+      //                     overflow: TextOverflow.ellipsis,
+      //                   ),
+      //                   const SpacerVertical(height: 5),
+      //                   // Text(
+      //                   //   widget.data.name,
+      //                   //   style: styleGeorgiaRegular(
+      //                   //     color: ThemeColors.greyText,
+      //                   //     fontSize: 12,
+      //                   //   ),
+      //                   //   maxLines: 2,
+      //                   //   overflow: TextOverflow.ellipsis,
+      //                   // ),
+      //                   // const SpacerVertical(height: 5),
+      //                   Row(
+      //                     children: [
+      //                       RichText(
+      //                         text: TextSpan(
+      //                           children: [
+      //                             TextSpan(
+      //                               text:
+      //                                   "Mentions: ${widget.data.mention?.toInt()} ",
+      //                               style: stylePTSansRegular(fontSize: 12),
+      //                             ),
+      //                           ],
+      //                         ),
+      //                       ),
+      //                       Flexible(
+      //                         child: RichText(
+      //                           text: TextSpan(
+      //                             children: [
+      //                               TextSpan(
+      //                                 text:
+      //                                     "(${widget.data.mentionChange.toCurrency()}%)",
+      //                                 style: stylePTSansRegular(
+      //                                   fontSize: 12,
+      //                                   color: widget.data.mentionChange >= 0
+      //                                       ? ThemeColors.accent
+      //                                       : ThemeColors.sos,
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //             const SpacerHorizontal(width: 10),
+      //             Column(
+      //               crossAxisAlignment: CrossAxisAlignment.end,
+      //               children: [
+      //                 Text(widget.data.price ?? "",
+      //                     style: stylePTSansBold(fontSize: 18)),
+      //                 const SpacerVertical(height: 5),
+      //                 RichText(
+      //                   text: TextSpan(
+      //                     children: [
+      //                       TextSpan(
+      //                         text:
+      //                             "${widget.data.displayChange} (${widget.data.changesPercentage.toCurrency()}%)",
+      //                         style: stylePTSansRegular(
+      //                           fontSize: 14,
+      //                           color: widget.data.changesPercentage > 0
+      //                               ? Colors.green
+      //                               : Colors.red,
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //             // const SpacerHorizontal(width: 5),
+      //             PopUpMenuButtonCommon(
+      //               symbol: widget.data.symbol,
+      //               onClickAlert: () => _alertElse(context),
+      //               onClickWatchlist: () => _watchlistElse(context),
+      //               watchlistString: widget.up
+      //                   ? widget.watlistForBullish == 1
+      //                       ? 'Watchlist Added'
+      //                       : 'Add to Watchlist'
+      //                   : widget.watlistForBearish == 1
+      //                       ? 'Watchlist Added'
+      //                       : 'Add to Watchlist',
+      //               alertString: widget.up
+      //                   ? widget.alertForBullish == 1
+      //                       ? 'Alert Added'
+      //                       : 'Add to Alert'
+      //                   : widget.alertForBearish == 1
+      //                       ? 'Alert Added'
+      //                       : 'Add to Alert',
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // );
+
+      // return Slidable(
+      //   key: const ValueKey(0),
+      //   endActionPane: ActionPane(
+      //     motion: const ScrollMotion(),
+      //     extentRatio: 0.8,
+      //     children: [
+      //       SlidableAction(
+      //         onPressed: (context) => null,
+      //         backgroundColor: const Color.fromARGB(255, 210, 191, 15),
+      //         foregroundColor: Colors.black,
+      //         icon: Icons.notification_important_outlined,
+      //         label: widget.up
+      //             ? widget.alertForBullish == 1
+      //                 ? 'Alert Added'
+      //                 : 'Add to Alert'
+      //             : widget.alertForBearish == 1
+      //                 ? 'Alert Added'
+      //                 : 'Add to Alert',
+      //       ),
+      //       SlidableAction(
+      //         backgroundColor: ThemeColors.accent,
+      //         onPressed: (context) => null,
+      //         foregroundColor: Colors.black,
+      //         icon: Icons.star_border,
+      //         label: widget.up
+      //             ? widget.watlistForBullish == 1
+      //                 ? 'Watchlist Added'
+      //                 : 'Add to Watchlist'
+      //             : widget.watlistForBearish == 1
+      //                 ? 'Watchlist Added'
+      //                 : 'Add to Watchlist',
+      //         borderRadius: const BorderRadius.only(
+      //           topRight: Radius.circular(5),
+      //           bottomRight: Radius.circular(5),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      //   child: InkWell(
+      //     onTap: () {
+      //       Navigator.push(
+      //         navigatorKey.currentContext!,
+      //         MaterialPageRoute(
+      //             builder: (_) => StockDetail(symbol: widget.data.symbol)),
+      //       );
+      //     },
+      //     child: Stack(
+      //       children: [
+      //         Container(
+      //           padding:
+      //               const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      //           decoration: BoxDecoration(
+      //             color: ThemeColors.background,
+      //             borderRadius: BorderRadius.circular(5),
+      //           ),
+      //           child: Row(
+      //             children: [
+      //               ClipRRect(
+      //                 borderRadius: BorderRadius.circular(0.sp),
+      //                 child: Container(
+      //                   padding: const EdgeInsets.all(5),
+      //                   width: 48,
+      //                   height: 48,
+      //                   child:
+      //                       CachedNetworkImagesWidget(widget.data.image ?? ""),
+      //                 ),
+      //               ),
+      //               const SpacerHorizontal(width: 12),
+      //               Expanded(
+      //                 child: Column(
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   children: [
+      //                     Text(
+      //                       widget.data.symbol,
+      //                       style: styleGeorgiaBold(fontSize: 18),
+      //                       maxLines: 1,
+      //                       overflow: TextOverflow.ellipsis,
+      //                     ),
+      //                     const SpacerVertical(height: 5),
+      //                     // Text(
+      //                     //   widget.data.name,
+      //                     //   style: styleGeorgiaRegular(
+      //                     //     color: ThemeColors.greyText,
+      //                     //     fontSize: 12,
+      //                     //   ),
+      //                     //   maxLines: 2,
+      //                     //   overflow: TextOverflow.ellipsis,
+      //                     // ),
+      //                     // const SpacerVertical(height: 5),
+      //                     Row(
+      //                       children: [
+      //                         RichText(
+      //                           text: TextSpan(
+      //                             children: [
+      //                               TextSpan(
+      //                                 text:
+      //                                     "Mentions: ${widget.data.mention?.toInt()} ",
+      //                                 style: stylePTSansRegular(fontSize: 12),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                         ),
+      //                         Flexible(
+      //                           child: RichText(
+      //                             text: TextSpan(
+      //                               children: [
+      //                                 TextSpan(
+      //                                   text:
+      //                                       "(${widget.data.mentionChange.toCurrency()}%)",
+      //                                   style: stylePTSansRegular(
+      //                                     fontSize: 12,
+      //                                     color: widget.data.mentionChange >= 0
+      //                                         ? ThemeColors.accent
+      //                                         : ThemeColors.sos,
+      //                                   ),
+      //                                 ),
+      //                               ],
+      //                             ),
+      //                           ),
+      //                         ),
+      //                       ],
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //               const SpacerHorizontal(width: 10),
+      //               Column(
+      //                 crossAxisAlignment: CrossAxisAlignment.end,
+      //                 children: [
+      //                   Text(widget.data.price ?? "",
+      //                       style: stylePTSansBold(fontSize: 18)),
+      //                   const SpacerVertical(height: 5),
+      //                   RichText(
+      //                     text: TextSpan(
+      //                       children: [
+      //                         TextSpan(
+      //                           text:
+      //                               "${widget.data.displayChange} (${widget.data.changesPercentage.toCurrency()}%)",
+      //                           style: stylePTSansRegular(
+      //                             fontSize: 14,
+      //                             color: widget.data.changesPercentage > 0
+      //                                 ? Colors.green
+      //                                 : Colors.red,
+      //                           ),
+      //                         ),
+      //                       ],
+      //                     ),
+      //                   ),
+      //                 ],
+      //               ),
+      //               // const SpacerHorizontal(width: 5),
+      //               PopUpMenuButtonCommon(
+      //                 symbol: widget.data.symbol,
+      //                 onClickAlert: () => _alertElse(context),
+      //                 onClickWatchlist: () => _watchlistElse(context),
+      //                 watchlistString: widget.up
+      //                     ? widget.watlistForBullish == 1
+      //                         ? 'Watchlist Added'
+      //                         : 'Add to Watchlist'
+      //                     : widget.watlistForBearish == 1
+      //                         ? 'Watchlist Added'
+      //                         : 'Add to Watchlist',
+      //                 alertString: widget.up
+      //                     ? widget.alertForBullish == 1
+      //                         ? 'Alert Added'
+      //                         : 'Add to Alert'
+      //                     : widget.alertForBearish == 1
+      //                         ? 'Alert Added'
+      //                         : 'Add to Alert',
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // );
+
+      // return SlidableMenuWidget(
+      //   alertForBearish: widget.alertForBearish,
+      //   alertForBullish: widget.alertForBullish,
+      //   up: widget.up,
+      //   watlistForBearish: widget.watlistForBearish,
+      //   watlistForBullish: widget.watlistForBullish,
+      //   onClickAlert: () => _alertElse(),
+      //   onClickWatchlist: () => _watchlistElse(),
+      //   child: InkWell(
+      //     onTap: () {
+      //       Navigator.push(
+      //         navigatorKey.currentContext!,
+      //         MaterialPageRoute(
+      //           builder: (_) => StockDetail(symbol: widget.data.symbol),
+      //         ),
+      //       );
+      //     },
+      //     child: Stack(
+      //       children: [
+      //         Container(
+      //           padding:
+      //               const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      //           decoration: BoxDecoration(
+      //             color: ThemeColors.background,
+      //             borderRadius: BorderRadius.circular(5),
+      //           ),
+      //           child: Row(
+      //             children: [
+      //               ClipRRect(
+      //                 borderRadius: BorderRadius.circular(0.sp),
+      //                 child: Container(
+      //                   padding: const EdgeInsets.all(5),
+      //                   width: 48,
+      //                   height: 48,
+      //                   child:
+      //                       CachedNetworkImagesWidget(widget.data.image ?? ""),
+      //                 ),
+      //               ),
+      //               const SpacerHorizontal(width: 12),
+      //               Expanded(
+      //                 child: Column(
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   children: [
+      //                     Text(
+      //                       widget.data.symbol,
+      //                       style: styleGeorgiaBold(fontSize: 18),
+      //                       maxLines: 1,
+      //                       overflow: TextOverflow.ellipsis,
+      //                     ),
+      //                     const SpacerVertical(height: 5),
+      //                     // Text(
+      //                     //   widget.data.name,
+      //                     //   style: styleGeorgiaRegular(
+      //                     //     color: ThemeColors.greyText,
+      //                     //     fontSize: 12,
+      //                     //   ),
+      //                     //   maxLines: 2,
+      //                     //   overflow: TextOverflow.ellipsis,
+      //                     // ),
+      //                     // const SpacerVertical(height: 5),
+      //                     Row(
+      //                       children: [
+      //                         RichText(
+      //                           text: TextSpan(
+      //                             children: [
+      //                               TextSpan(
+      //                                 text:
+      //                                     "Mentions: ${widget.data.mention?.toInt()} ",
+      //                                 style: stylePTSansRegular(fontSize: 12),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                         ),
+      //                         Flexible(
+      //                           child: RichText(
+      //                             text: TextSpan(
+      //                               children: [
+      //                                 TextSpan(
+      //                                   text:
+      //                                       "(${widget.data.mentionChange.toCurrency()}%)",
+      //                                   style: stylePTSansRegular(
+      //                                     fontSize: 12,
+      //                                     color: widget.data.mentionChange >= 0
+      //                                         ? ThemeColors.accent
+      //                                         : ThemeColors.sos,
+      //                                   ),
+      //                                 ),
+      //                               ],
+      //                             ),
+      //                           ),
+      //                         ),
+      //                       ],
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //               const SpacerHorizontal(width: 10),
+      //               Column(
+      //                 crossAxisAlignment: CrossAxisAlignment.end,
+      //                 children: [
+      //                   Text(widget.data.price ?? "",
+      //                       style: stylePTSansBold(fontSize: 18)),
+      //                   const SpacerVertical(height: 5),
+      //                   RichText(
+      //                     text: TextSpan(
+      //                       children: [
+      //                         TextSpan(
+      //                           text:
+      //                               "${widget.data.displayChange} (${widget.data.changesPercentage.toCurrency()}%)",
+      //                           style: stylePTSansRegular(
+      //                             fontSize: 14,
+      //                             color: widget.data.changesPercentage > 0
+      //                                 ? Colors.green
+      //                                 : Colors.red,
+      //                           ),
+      //                         ),
+      //                       ],
+      //                     ),
+      //                   ),
+      //                 ],
+      //               ),
+      //               // const SpacerHorizontal(width: 5),
+      //               // PopUpMenuButtonCommon(
+      //               //   symbol: widget.data.symbol,
+      //               //   onClickAlert: () => _alertElse(),
+      //               //   onClickWatchlist: () => _watchlistElse(),
+      //               //   watchlistString: widget.up
+      //               //       ? widget.watlistForBullish == 1
+      //               //           ? 'Watchlist Added'
+      //               //           : 'Add to Watchlist'
+      //               //       : widget.watlistForBearish == 1
+      //               //           ? 'Watchlist Added'
+      //               //           : 'Add to Watchlist',
+      //               //   alertString: widget.up
+      //               //       ? widget.alertForBullish == 1
+      //               //           ? 'Alert Added'
+      //               //           : 'Add to Alert'
+      //               //       : widget.alertForBearish == 1
+      //               //           ? 'Alert Added'
+      //               //           : 'Add to Alert',
+      //               // ),
+      //             ],
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // );
     });
   }
 
@@ -659,35 +1123,35 @@ class _MostBullishItemState extends State<MostBullishItem> {
     //     });
   }
 
-  void _addToWatchlist(BuildContext context) {
-    context.read<TrendingProvider>().addToWishList(
+  Future _addToWatchlist() async {
+    await navigatorKey.currentContext!.read<TrendingProvider>().addToWishList(
           symbol: widget.data.symbol,
           index: widget.index,
           up: widget.up,
         );
   }
 
-  void _navigateToAlert(BuildContext context) {
+  void _navigateToAlert() {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Alerts()),
     );
   }
 
-  void _navigateToWatchlist(BuildContext context) {
+  void _navigateToWatchlist() {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const WatchList()),
     );
   }
 
-  Future<void> _alertElse(BuildContext context) async {
+  Future<void> _alertElse() async {
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
     String symbol = provider.tabRes?.keyStats?.symbol ?? "";
 
     if (widget.up) {
       if (widget.alertForBullish == 1) {
-        _navigateToAlert(context);
+        _navigateToAlert();
       } else {
         if (userPresent) {
           log("set HERE");
@@ -722,7 +1186,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
       }
     } else {
       if (widget.alertForBearish == 1) {
-        _navigateToAlert(context);
+        _navigateToAlert();
       } else {
         if (userPresent) {
           log("set HERE");
@@ -758,20 +1222,21 @@ class _MostBullishItemState extends State<MostBullishItem> {
     }
   }
 
-  Future<void> _watchlistElse(BuildContext context) async {
+  Future<void> _watchlistElse() async {
     if (widget.up) {
       if (widget.watlistForBullish == 1) {
-        _navigateToWatchlist(context);
+        _navigateToWatchlist();
       } else {
         if (userPresent) {
           log("set HERE");
-          _addToWatchlist(context);
+          _addToWatchlist();
           return;
         }
         try {
           Utils().showLog("calling api..");
-          ApiResponse res =
-              await context.read<TrendingProvider>().getMostBullish();
+          ApiResponse res = await navigatorKey.currentContext!
+              .read<TrendingProvider>()
+              .getMostBullish();
           if (res.status) {
             num alertOn = navigatorKey.currentContext!
                     .read<TrendingProvider>()
@@ -780,7 +1245,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
                     .isWatchlistAdded ??
                 0;
             if (alertOn == 0) {
-              _addToWatchlist(context);
+              await _addToWatchlist();
             } else {
               Navigator.push(
                 navigatorKey.currentContext!,
@@ -794,17 +1259,18 @@ class _MostBullishItemState extends State<MostBullishItem> {
       }
     } else {
       if (widget.watlistForBearish == 1) {
-        _navigateToWatchlist(context);
+        _navigateToWatchlist();
       } else {
         if (userPresent) {
           log("set HERE");
-          _addToWatchlist(context);
+          _addToWatchlist();
           return;
         }
         try {
           Utils().showLog("calling api..");
-          ApiResponse res =
-              await context.read<TrendingProvider>().getMostBearish();
+          ApiResponse res = await navigatorKey.currentContext!
+              .read<TrendingProvider>()
+              .getMostBearish();
           if (res.status) {
             num alertOn = navigatorKey.currentContext!
                     .read<TrendingProvider>()
@@ -813,7 +1279,7 @@ class _MostBullishItemState extends State<MostBullishItem> {
                     .isWatchlistAdded ??
                 0;
             if (alertOn == 0) {
-              _addToWatchlist(context);
+              await _addToWatchlist();
             } else {
               Navigator.push(
                 navigatorKey.currentContext!,
