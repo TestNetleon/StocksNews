@@ -1,11 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
-import 'package:stocks_news_new/screens/tabs/home/referPurchaseSlider/slider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
@@ -35,6 +34,7 @@ class HomeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
 
     if (!provider.isLoadingSlider &&
         provider.statusSlider != Status.ideal &&
@@ -72,40 +72,41 @@ class HomeContainer extends StatelessWidget {
               //   },
               // ),
               const HomeTopNewsSlider(),
-              // Visibility(
-              //   visible: provider.extra?.referral?.shwReferral ?? false,
-              //   child: Container(
-              //     margin: const EdgeInsets.fromLTRB(
-              //       Dimen.padding,
-              //       Dimen.homeSpacing,
-              //       Dimen.padding,
-              //       0,
-              //     ),
-              //     child: const ReferApp(),
-              //   ),
-              // ),
-              // Visibility(
-              //   visible: provider.extra?.referral?.shwReferral ?? false,
-              //   child: Container(
-              //     margin: const EdgeInsets.fromLTRB(
-              //       Dimen.padding,
-              //       Dimen.homeSpacing,
-              //       Dimen.padding,
-              //       0,
-              //     ),
-              //     child: const UpdateMembershipCard(),
-              //   ),
-              // ),
-
-              Container(
-                margin: const EdgeInsets.fromLTRB(
-                  Dimen.padding,
-                  Dimen.homeSpacing,
-                  Dimen.padding,
-                  0,
+              Visibility(
+                visible: showMembership &&
+                    userProvider.user?.membership?.purchased != 1,
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(
+                    Dimen.padding,
+                    Dimen.homeSpacing,
+                    Dimen.padding,
+                    0,
+                  ),
+                  child: const UpdateMembershipCard(),
                 ),
-                child: const ReferPurchaseSlider(),
               ),
+              Visibility(
+                visible: provider.extra?.referral?.shwReferral ?? false,
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(
+                    Dimen.padding,
+                    Dimen.homeSpacing,
+                    Dimen.padding,
+                    0,
+                  ),
+                  child: const ReferApp(),
+                ),
+              ),
+
+              // Container(
+              //   margin: const EdgeInsets.fromLTRB(
+              //     Dimen.padding,
+              //     Dimen.homeSpacing,
+              //     Dimen.padding,
+              //     0,
+              //   ),
+              //   child: const ReferPurchaseSlider(),
+              // ),
 
               // Container(
               //   margin: const EdgeInsets.fromLTRB(
