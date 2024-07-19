@@ -119,6 +119,15 @@ class Images {
   static const String pointIcon2 = "assets/images/golden.png";
   static const String pointIcon3 = "assets/images/3_coins.png";
 
+  static const String netflix = "assets/images/nflx.png";
+  static const String amazon = "assets/images/amzn.png";
+  static const String spotify = "assets/images/spot.pngv";
+  static const String fb = "assets/images/fb.png";
+  static const String microsoft = "assets/images/msft.png";
+  static const String download = "assets/images/download.png";
+  static const String edit = "assets/images/edit.png";
+  static const String report = "assets/images/report2.png";
+
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
   static const String penny = "assets/images/penny.png";

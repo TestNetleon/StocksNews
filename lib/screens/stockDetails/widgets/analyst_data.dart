@@ -456,7 +456,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     ],
                                   ),
                                   const SpacerVertical(height: 15),
-
                                   // Container(
                                   //   height: 372,
                                   //   width: double.infinity,
@@ -1117,10 +1116,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                             end: Alignment.bottomCenter,
                                             stops: [0.2, 0.65],
                                             colors: [
-                                              Color.fromARGB(
-                                                  255, 32, 128, 65),
-                                              Color.fromARGB(
-                                                  255, 39, 37, 37),
+                                              Color.fromARGB(255, 32, 128, 65),
+                                              Color.fromARGB(255, 39, 37, 37),
                                             ],
                                           ),
                                           borderRadius:
@@ -1131,23 +1128,19 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           ),
                                         ),
                                       ),
-                                      Positioned(
+                                      const Positioned(
                                         top:
                                             0, // Adjust the top position as needed
                                         left: 0,
                                         right: 0,
-                                        child: EconomicMoat(
-                                          value: value,
-                                        ),
+                                        child: EconomicMoat(),
                                       ),
-                                      Positioned(
+                                      const Positioned(
                                         top:
                                             130, // Adjust the top position based on EconomicMoat's height
                                         left: 0,
                                         right: 0,
-                                        child: Valuable(
-                                          value: value,
-                                        ),
+                                        child: Valuable(),
                                       ),
                                       const Positioned(
                                         top:

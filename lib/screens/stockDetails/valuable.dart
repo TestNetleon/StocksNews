@@ -28,10 +28,7 @@ class Valuable extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              // Color.fromARGB(255, 2, 71, 12),
-              // Color.fromARGB(255, 10, 160, 30),
-
+            colors: [      
               Color(0xff005bef),
               Color.fromARGB(255, 26, 24, 24),
             ],

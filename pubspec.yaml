@@ -42,7 +42,7 @@ dependencies:
   validators: ^3.0.0
   collection:
   http: ^1.1.0
-  intl: ^0.18.1
+  intl: 
   pull_to_refresh: ^2.0.0
   url_launcher: ^6.2.1
   provider: ^6.1.2
@@ -50,7 +50,7 @@ dependencies:
   # device_info_plus: ^9.1.1
   # connectivity_plus: ^5.0.1
   package_info_plus: ^5.0.1
-  syncfusion_flutter_gauges: ^25.1.42
+  syncfusion_flutter_gauges: 
   pinput: ^4.0.0
   flutter_slidable: ^3.0.1
   change_app_package_name: ^1.1.0
@@ -112,6 +112,13 @@ dependencies:
   purchases_ui_flutter: ^6.29.4
   flutter_animation_progress_bar: ^2.3.1
   dotted_border: ^2.1.0
+  multi_charts: 
+  google_fonts: 
+  charts_flutter:
+  # syncfusion_flutter_gauges:
+  slide_to_act: ^2.0.2 
+  # fl_chart:
+
   # flutter_keyboard_visibility: ^6.0.0
   # flutter_branch_sdk: ^7.1.0
   country_code_picker: ^3.0.0
