@@ -20,6 +20,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/alphabet_inputformatter.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
+import 'package:stocks_news_new/widgets/custom/country_code_picker_widget.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:validators/validators.dart';
 
@@ -251,7 +252,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     UserProvider provider = context.watch<UserProvider>();
     // final String locale = Intl.getCurrentLocale().split('_').last;
 
-    UserRes? user = context.read<UserProvider>().user;
+    // UserRes? user = context.read<UserProvider>().user;
     // HomeProvider provider = context.watch<HomeProvider>();
 
     // final String locale = user?.phoneCode == null || user?.phoneCode == ""
@@ -262,14 +263,14 @@ class _MyAccountContainerState extends State<MyAccountContainer>
     //             .last ??
     //         "";
 
-    String? locale;
-    if (user?.phoneCode != null && user?.phoneCode != "") {
-      locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
-    } else if (geoCountryCode != null && geoCountryCode != "") {
-      locale = geoCountryCode;
-    } else {
-      locale = "US";
-    }
+    // String? locale;
+    // if (user?.phoneCode != null && user?.phoneCode != "") {
+    //   locale = CountryCode.fromDialCode(user!.phoneCode!).code?.split('_').last;
+    // } else if (geoCountryCode != null && geoCountryCode != "") {
+    //   locale = geoCountryCode;
+    // } else {
+    //   locale = "US";
+    // }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,57 +424,71 @@ class _MyAccountContainerState extends State<MyAccountContainer>
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: ThemeColors.primaryLight),
-                        ),
-                        color: ThemeColors.primaryLight,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4),
-                          bottomLeft: Radius.circular(4),
-                        ),
-                      ),
-                      child: CountryCodePicker(
-                        padding: EdgeInsets.zero,
-                        onChanged: (CountryCode value) {
-                          countryCode = value.dialCode;
-                        },
-                        initialSelection: locale,
-                        showCountryOnly: false,
-                        flagWidth: 24,
-                        showOnlyCountryWhenClosed: false,
-                        alignLeft: false,
-                        boxDecoration: const BoxDecoration(
-                          color: ThemeColors.tabBack,
-                        ),
-                        textStyle: styleGeorgiaRegular(),
-                        dialogTextStyle: styleGeorgiaBold(),
-                        barrierColor: Colors.black26,
-                        searchDecoration: InputDecoration(
-                          iconColor: Colors.white,
-                          fillColor: Colors.white,
-                          prefixIcon: const Icon(
-                            Icons.search,
-                            size: 22,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: ThemeColors.primaryLight),
                           ),
-                          filled: true,
-                          hintStyle: stylePTSansRegular(color: Colors.grey),
-                          hintText: "Search country",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide: BorderSide.none,
+                          color: ThemeColors.primaryLight,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            bottomLeft: Radius.circular(4),
                           ),
                         ),
-                      ),
-                    ),
+                        child: CountryPickerWidget(
+                          onChanged: (CountryCode value) {
+                            countryCode = value.dialCode;
+                          },
+                          textColor: Colors.white,
+                        )
+                        // CountryCodePicker(
+                        //   padding: EdgeInsets.zero,
+                        //   onChanged: (CountryCode value) {
+                        //     countryCode = value.dialCode;
+                        //   },
+                        //   initialSelection: locale,
+                        //   showCountryOnly: false,
+                        //   closeIcon: const Icon(
+                        //     Icons.close_sharp,
+                        //     color: Colors.black,
+                        //   ),
+                        //   flagWidth: 24,
+                        //   showOnlyCountryWhenClosed: false,
+                        //   alignLeft: false,
+                        //   boxDecoration: BoxDecoration(
+                        //     color: ThemeColors.white,
+                        //     borderRadius: BorderRadius.circular(8),
+                        //   ),
+                        //   dialogTextStyle: styleGeorgiaBold(color: Colors.black),
+                        //   textStyle: styleGeorgiaRegular(),
+                        //   searchStyle: styleGeorgiaRegular(color: Colors.black),
+                        //   barrierColor: Colors.black26,
+                        //   searchDecoration: InputDecoration(
+                        //     iconColor: Colors.black,
+                        //     fillColor: ThemeColors.divider,
+                        //     contentPadding: EdgeInsets.zero,
+                        //     prefixIcon: const Icon(
+                        //       Icons.search,
+                        //       size: 22,
+                        //       color: Colors.black,
+                        //     ),
+                        //     filled: true,
+                        //     hintStyle: stylePTSansRegular(color: Colors.grey),
+                        //     hintText: "Search country",
+                        //     border: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(4.0),
+                        //       borderSide: BorderSide.none,
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(4.0),
+                        //       borderSide: BorderSide.none,
+                        //     ),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(4.0),
+                        //       borderSide: BorderSide.none,
+                        //     ),
+                        //   ),
+                        // ),
+                        ),
                   ],
                 ),
               ),

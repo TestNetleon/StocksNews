@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/modals/stockDetailRes/morning_start_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -54,7 +55,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
 
   Future _onReferClick(BuildContext context) async {
     UserProvider userProvider = context.read<UserProvider>();
-    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    if (userProvider.user?.affiliateStatus != 1) {
+      // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
       await referLogin();
     } else {
       if (userProvider.user != null) {
@@ -118,19 +120,48 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
 
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     UserProvider userProvider = context.watch<UserProvider>();
-    LeaderBoardProvider lbProvider = context.watch<LeaderBoardProvider>();
+    // LeaderBoardProvider lbProvider = context.watch<LeaderBoardProvider>();
 
     bool isLogin = userProvider.user != null;
     bool hasMembership = userProvider.user?.membership?.purchased == 1;
-    bool havePoints = lbProvider.extra?.balance != null &&
-        ((lbProvider.extra?.balance ?? 0) > 0);
+    // bool havePoints = lbProvider.extra?.balance != null &&
+    //     ((lbProvider.extra?.balance ?? 0) > 0);
 
+    MorningStar? morningStar = provider.overviewRes?.morningStart;
+    bool havePoints = morningStar?.lockInformation?.balanceStatus ?? false;
+
+    bool haveEnoughPoints =
+        (morningStar?.lockInformation?.totalPoints == null ||
+                morningStar?.lockInformation?.pointRequired == null)
+            ? false
+            : (morningStar!.lockInformation!.totalPoints! >
+                morningStar.lockInformation!.pointRequired!);
+
+    // bool showLoginButton = !isLogin;
+    // bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    // bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    // bool showSubscribe =
+    //     isLogin && !hasMembership && showMembership && !havePoints;
+    // bool showStore = isLogin && hasMembership && showMembership && !havePoints;
+
+    bool showLoginButton = !isLogin;
+    bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    bool showSubscribe = isLogin &&
+        !hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+    bool showStore = isLogin &&
+        hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+
+    // MorningStar? morningStar = provider.overviewRes?.morningStart;
     // bool showReferAndUpgrade =
     //     (morningStar?.lockInformation?.balanceStatus == null ||
     //             morningStar?.lockInformation?.balanceStatus == false) &&
     //         userProvider.user != null;
     // bool showViewOption = userProvider.user != null && !showReferAndUpgrade;
-    // MorningStar? morningStar = provider.overviewRes?.morningStart;
 
     return Container(
       padding: const EdgeInsets.all(15),
@@ -206,7 +237,7 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Login
-                    if (!isLogin)
+                    if (showLoginButton)
                       ThemeButtonSmall(
                         onPressed: () {
                           _onLoginClick(context);
@@ -223,9 +254,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                         radius: 30,
                         margin: const EdgeInsets.only(top: 10),
                       ),
-
                     // Spend Point and View
-                    if (isLogin && havePoints)
+                    if (showViewReport)
                       ThemeButtonSmall(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
@@ -240,9 +270,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                         text: "View Research Report",
                         margin: const EdgeInsets.only(top: 10),
                       ),
-
                     // Refer
-                    if (isLogin && !havePoints)
+                    if (showRefer)
                       ThemeButtonSmall(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
@@ -269,9 +298,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                         margin: const EdgeInsets.only(top: 10),
                         // showArrow: false,
                       ),
-
                     // Subscribe
-                    if (isLogin && !hasMembership && showMembership)
+                    if (showSubscribe)
                       ThemeButtonSmall(
                         color: const Color.fromARGB(255, 194, 216, 51),
                         textColor: Colors.black,
@@ -298,22 +326,13 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                         text: "Become a Premium Member",
                         margin: const EdgeInsets.only(top: 10),
                       ),
-
-                    if (isLogin &&
-                        !havePoints &&
-                        hasMembership &&
-                        showMembership)
+                    if (showStore)
                       ThemeButtonSmall(
-                        color: const Color.fromARGB(
-                          255,
-                          194,
-                          216,
-                          51,
-                        ),
+                        color: const Color.fromARGB(255, 255, 255, 255),
                         textColor: Colors.black,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
-                          vertical: 11,
+                          vertical: 7,
                         ),
                         textSize: 15,
                         fontBold: true,
@@ -326,15 +345,15 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                             right: 10,
                           ),
                           child: Image.asset(
-                            Images.membership,
-                            height: 18,
-                            width: 18,
-                            color: ThemeColors.white,
+                            Images.pointIcon3,
+                            height: 28,
+                            width: 28,
+                            // color: Colors.black,
                           ),
                         ),
                         mainAxisSize: MainAxisSize.max,
                         onPressed: _navigateToStore,
-                        text: "Points Central",
+                        text: "Buy Points",
                         showArrow: false,
                         margin: const EdgeInsets.only(top: 10),
                       ),

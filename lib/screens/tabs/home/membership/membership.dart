@@ -6,7 +6,6 @@ import 'package:stocks_news_new/screens/tabs/home/membership/widgtes/upgrade_pla
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/my_evaluvated_button.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class NewMembership extends StatelessWidget {

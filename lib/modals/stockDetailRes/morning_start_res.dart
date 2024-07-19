@@ -29,6 +29,7 @@ class MorningStar {
   final dynamic updated;
   final LockInformation? lockInformation;
   final dynamic description;
+  final dynamic viewAllText;
 
   MorningStar({
     required this.id,
@@ -59,6 +60,7 @@ class MorningStar {
     this.lockInformation,
     required this.updated,
     required this.description,
+    required this.viewAllText,
   });
 
   factory MorningStar.fromJson(Map<String, dynamic> json) => MorningStar(
@@ -92,6 +94,7 @@ class MorningStar {
         pdfUrl: json["pdf_url"],
         updated: json["updated"],
         description: json["description"],
+        viewAllText: json["view_all_text"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -123,5 +126,6 @@ class MorningStar {
         "updated": updated,
         "lock_information": lockInformation?.toJson(),
         "description": description,
+        "view_all_text": viewAllText,
       };
 }

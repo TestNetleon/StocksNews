@@ -13,7 +13,6 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 //
 import 'aiNews/detail.dart';
-import 'newsAuthor/index.dart';
 
 class NewsItem extends StatelessWidget {
   final News? news;
@@ -31,8 +30,9 @@ class NewsItem extends StatelessWidget {
   });
 
   void _gotoDetail(BuildContext context) {
-    Utils().showLog("GOTO DETAIL");
     if (fromAI && !fromMoreNews) {
+      Utils().showLog("from AI true From more news false");
+
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => NewsDetailsAI(slug: news?.slug)),
@@ -42,6 +42,8 @@ class NewsItem extends StatelessWidget {
     }
 
     if (fromAI && fromMoreNews) {
+      Utils().showLog("from AI true From more news true");
+
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => NewsDetailsAI(slug: news?.slug)),
@@ -51,6 +53,8 @@ class NewsItem extends StatelessWidget {
     }
 
     if (fromMoreNews) {
+      Utils().showLog("From more news true");
+
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(
@@ -75,23 +79,27 @@ class NewsItem extends StatelessWidget {
     // Iterate over the data list using forEach
     for (var detail in data) {
       widgets.add(
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (_) => NewsAuthorIndex(
-                  type: type,
-                  data: detail,
-                ),
-              ),
-            );
-          },
-          child: Text(
-            "${detail.name}",
-            style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
-          ),
+        Text(
+          "${detail.name}",
+          style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
         ),
+        // InkWell(
+        //   onTap: () {
+        //     Navigator.push(
+        //       navigatorKey.currentContext!,
+        //       MaterialPageRoute(
+        //         builder: (_) => NewsAuthorIndex(
+        //           type: type,
+        //           data: detail,
+        //         ),
+        //       ),
+        //     );
+        //   },
+        //   child: Text(
+        //     "${detail.name}",
+        //     style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
+        //   ),
+        // ),
       );
       // Add comma if it's not the last item
       if (detail != data.last) {
@@ -339,23 +347,27 @@ class NewsItemSeparated extends StatelessWidget {
     // Iterate over the data list using forEach
     for (var detail in data) {
       widgets.add(
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(
-                builder: (_) => NewsAuthorIndex(
-                  type: type,
-                  data: detail,
-                ),
-              ),
-            );
-          },
-          child: Text(
-            "${detail.name}",
-            style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
-          ),
+        Text(
+          "${detail.name}",
+          style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
         ),
+        // InkWell(
+        //   onTap: () {
+        //     Navigator.push(
+        //       navigatorKey.currentContext!,
+        //       MaterialPageRoute(
+        //         builder: (_) => NewsAuthorIndex(
+        //           type: type,
+        //           data: detail,
+        //         ),
+        //       ),
+        //     );
+        //   },
+        //   child: Text(
+        //     "${detail.name}",
+        //     style: stylePTSansRegular(color: ThemeColors.white, fontSize: 13),
+        //   ),
+        // ),
       );
       // Add comma if it's not the last item
       if (detail != data.last) {

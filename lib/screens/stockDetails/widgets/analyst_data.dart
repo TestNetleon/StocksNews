@@ -13,7 +13,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/overview/morningstart_lock.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/pdfViewer/pdf_viewer_widget.dart';
 import 'package:stocks_news_new/screens/stockDetails/Economic.dart';
@@ -28,7 +27,6 @@ import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../../auth/membershipAsk/ask.dart';
 import '../../morningstarTranscations/morningstar_txn.dart';
 
 class StockDetailAnalystData extends StatefulWidget {
@@ -50,7 +48,8 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
 
   Future _onReferClick(BuildContext context) async {
     UserProvider userProvider = context.read<UserProvider>();
-    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    if (userProvider.user?.affiliateStatus != 1) {
       await referLogin();
     } else {
       if (userProvider.user != null) {
@@ -74,58 +73,16 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     }
   }
 
-  // Future _membership() async {
-  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-  //   await askToSubscribe(
-  //     onPressed: () async {
-  //       Navigator.pop(navigatorKey.currentContext!);
-  //       if (provider.user?.phone == null || provider.user?.phone == '') {
-  //         await membershipLogin();
-  //       }
-  //       if (provider.user?.phone != null && provider.user?.phone != '') {
-  //         await RevenueCatService.initializeSubscription();
-  //       }
-  //     },
-  //   );
-  // }
-
-  Future _membership() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (provider.user?.phone == null || provider.user?.phone == '') {
-      await membershipLogin();
-    }
-    if (provider.user?.phone != null && provider.user?.phone != '') {
-      // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    // Utils().showLog('is user logged in ${userPresent}');
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-
-    // UserProvider userProvider = context.watch<UserProvider>();
-    // bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
-
     MorningStar? morningStar =
         context.watch<StockDetailProviderNew>().overviewRes?.morningStart;
-    //NewsDetailProvider provider = context.watch<NewsDetailProvider>();
     int value = morningStar?.quantEconomicMoatLabel == "Narrow"
         ? 70
         : morningStar?.quantEconomicMoatLabel == "Wide"
             ? 99
             : 0;
-
-    // double height = (ScreenUtil().screenHeight -
-    //         ScreenUtil().bottomBarHeight -
-    //         ScreenUtil().statusBarHeight) /
-    //     2.2;
 
     String? healthLabel = morningStar?.quantFinancialHealthLabel;
     String? unCerLabel = morningStar?.quantFairValueUncertaintyLabel;
@@ -154,210 +111,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                             false) &&
                         !provider.isLoadingOverview)
                     ? SdMorningStarLock(symbol: widget.symbol)
-                    // Container(
-                    //     padding: const EdgeInsets.all(15),
-                    //     margin: const EdgeInsets.only(top: 15),
-                    //     decoration: BoxDecoration(
-                    //       // color: ThemeColors.sos,
-                    //       gradient: const LinearGradient(
-                    //         begin: Alignment.bottomLeft,
-                    //         end: Alignment.topRight,
-                    //         colors: [
-                    //           // Color.fromARGB(255, 2, 71, 12),
-                    //           // Color.fromARGB(255, 10, 160, 30),
-                    //           Color.fromARGB(255, 114, 10, 2),
-                    //           Colors.red,
-                    //         ],
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(8),
-                    //     ),
-                    //     child: Container(
-                    //         width: double.infinity,
-                    //         alignment: Alignment.center,
-                    //         // margin: const EdgeInsets.only(top: 15),
-                    //         decoration: BoxDecoration(
-                    //           color: ThemeColors.background,
-                    //           borderRadius: BorderRadius.circular(8),
-                    //         ),
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.all(15),
-                    //           child: Column(
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             children: [
-                    //               const Icon(
-                    //                 Icons.lock,
-                    //                 size: 40,
-                    //                 color: ThemeColors.themeGreen,
-                    //               ),
-                    //               const SpacerVertical(height: 15),
-                    //               Image.asset(
-                    //                 Images.morningStarLogo,
-                    //                 width: ScreenUtil().screenWidth * .5,
-                    //               ),
-                    //               const SpacerVertical(),
-                    //               Text(
-                    //                 // "Quantitative Equity Research Report",
-                    //                 "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
-                    //                 style: stylePTSansBold(
-                    //                   fontSize: 18,
-                    //                 ),
-                    //                 textAlign: TextAlign.center,
-                    //               ),
-                    //               const SpacerVertical(height: 10),
-                    //               Text(
-                    //                 // "Quantitative Equity Research Report",
-                    //                 "Undervalued or Overvalued? Find out if “${widget.symbol}” has 1 star or 5 Stars Today!",
-                    //                 style: stylePTSansRegular(
-                    //                   fontSize: 14,
-                    //                   height: 1.3,
-                    //                 ),
-                    //                 textAlign: TextAlign.center,
-                    //               ),
-                    //               const SpacerVertical(height: 10),
-                    //               Text(
-                    //                 "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
-                    //                 style: stylePTSansRegular(
-                    //                   fontSize: 14,
-                    //                   height: 1.3,
-                    //                 ),
-                    //                 textAlign: TextAlign.center,
-                    //               ),
-                    //               const SpacerVertical(height: 10),
-                    //               context.watch<UserProvider>().user == null
-                    //                   ? SizedBox(
-                    //                       width: double.infinity,
-                    //                       child: ThemeButtonSmall(
-                    //                         onPressed: () {
-                    //                           _onLoginClick(context);
-                    //                         },
-                    //                         text: "Register/Login to Continue",
-                    //                         padding: const EdgeInsets.symmetric(
-                    //                           horizontal: 5,
-                    //                           vertical: 11,
-                    //                         ),
-                    //                         textSize: 15,
-                    //                         fontBold: true,
-                    //                         iconFront: true,
-                    //                         icon: Icons.lock,
-                    //                         radius: 30,
-                    //                       ),
-                    //                     )
-                    //                   : (provider
-                    //                                   .overviewRes
-                    //                                   ?.morningStart
-                    //                                   ?.lockInformation
-                    //                                   ?.balanceStatus ==
-                    //                               null ||
-                    //                           provider
-                    //                                   .overviewRes
-                    //                                   ?.morningStart
-                    //                                   ?.lockInformation
-                    //                                   ?.balanceStatus ==
-                    //                               false)
-                    //                       ? Column(
-                    //                           crossAxisAlignment:
-                    //                               CrossAxisAlignment.stretch,
-                    //                           children: [
-                    //                             ThemeButtonSmall(
-                    //                               padding: const EdgeInsets
-                    //                                   .symmetric(
-                    //                                   horizontal: 5,
-                    //                                   vertical: 11),
-                    //                               textSize: 15,
-                    //                               fontBold: true,
-                    //                               iconFront: true,
-                    //                               icon: Icons.earbuds_rounded,
-                    //                               iconWidget: Padding(
-                    //                                 padding:
-                    //                                     const EdgeInsets.only(
-                    //                                         right: 10),
-                    //                                 child: Image.asset(
-                    //                                   Images.referAndEarn,
-                    //                                   height: 18,
-                    //                                   width: 18,
-                    //                                   color: ThemeColors.white,
-                    //                                 ),
-                    //                               ),
-                    //                               onPressed: () async {
-                    //                                 await _onReferClick(
-                    //                                     context);
-                    //                               },
-                    //                               text: "Refer and Earn",
-                    //                               radius: 30,
-                    //                               // showArrow: false,
-                    //                             ),
-                    //                             const SpacerVertical(
-                    //                                 height: 10),
-                    //                             Visibility(
-                    //                               visible: showMembership,
-                    //                               child: ThemeButtonSmall(
-                    //                                 color: const Color.fromARGB(
-                    //                                     255, 194, 216, 51),
-                    //                                 textColor: Colors.black,
-                    //                                 padding: const EdgeInsets
-                    //                                     .symmetric(
-                    //                                     horizontal: 5,
-                    //                                     vertical: 11),
-                    //                                 textSize: 15,
-                    //                                 fontBold: true,
-                    //                                 iconWidget: Padding(
-                    //                                   padding:
-                    //                                       const EdgeInsets.only(
-                    //                                           right: 10),
-                    //                                   child: Image.asset(
-                    //                                     Images.membership,
-                    //                                     height: 20,
-                    //                                     width: 20,
-                    //                                   ),
-                    //                                 ),
-                    //                                 iconFront: true,
-                    //                                 radius: 30,
-                    //                                 icon: Icons.card_membership,
-                    //                                 onPressed: () async =>
-                    //                                     _membership(),
-                    //                                 // onPressed: () {
-                    //                                 //   Navigator.push(
-                    //                                 //     context,
-                    //                                 //     MaterialPageRoute(
-                    //                                 //       builder: (_) =>
-                    //                                 //           const NewMembership(),
-                    //                                 //     ),
-                    //                                 //   );
-                    //                                 // },
-                    //                                 textAlign: TextAlign.start,
-                    //                                 mainAxisSize:
-                    //                                     MainAxisSize.max,
-                    //                                 text:
-                    //                                     "Upgrade Membership for more points",
-                    //                                 // showArrow: false,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         )
-                    //                       : Container(
-                    //                           width: double.infinity,
-                    //                           margin: const EdgeInsets.only(
-                    //                               top: 10),
-                    //                           child: ThemeButtonSmall(
-                    //                             padding:
-                    //                                 const EdgeInsets.symmetric(
-                    //                                     horizontal: 5,
-                    //                                     vertical: 11),
-                    //                             textSize: 15,
-                    //                             iconFront: true,
-                    //                             fontBold: true,
-                    //                             radius: 30,
-                    //                             icon: Icons.visibility,
-                    //                             onPressed: () =>
-                    //                                 _onViewNewsClick(context),
-                    //                             text: "View Research Report",
-                    //                           ),
-                    //                         ),
-                    //               // const SpacerVertical(),
-                    //             ],
-                    //           ),
-                    //         )),
-                    //   )
                     : CommonRefreshIndicator(
                         onRefresh: () async {
                           provider.getOverviewData(
@@ -420,7 +173,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                   ),
                                   const SpacerVertical(height: 5),
                                   Text(
-                                    "Powered by Morningstar",
+                                    "Powered by MORNINGSTAR",
                                     textAlign: TextAlign.center,
                                     style: stylePTSansRegular(
                                       fontSize: 12,
@@ -456,655 +209,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     ],
                                   ),
                                   const SpacerVertical(height: 15),
-                                  // Container(
-                                  //   height: 372,
-                                  //   width: double.infinity,
-                                  //   decoration: const BoxDecoration(
-                                  //     gradient: LinearGradient(
-                                  //       begin: Alignment.topCenter,
-                                  //       end: Alignment.bottomCenter,
-                                  //       colors: [
-                                  //         Color(0xFF99cc00),
-                                  //         Color.fromARGB(255, 8, 8, 8),
-                                  //       ],
-                                  //     ),
-                                  //     borderRadius: BorderRadius.all(
-                                  //       Radius.circular(10),
-                                  //     ),
-                                  //   ),
-                                  //   // padding: const EdgeInsets.all(12.0),
-                                  //   child: Stack(
-                                  //     children: [
-                                  //       Positioned(
-                                  //         top: 10,
-                                  //         child: Image.asset(
-                                  //           Images.newLineBG,
-                                  //           height: 120,
-                                  //           fit: BoxFit.fill,
-                                  //           width: MediaQuery.sizeOf(context)
-                                  //               .width,
-                                  //           color: Colors.white,
-                                  //           opacity:
-                                  //               const AlwaysStoppedAnimation(
-                                  //                   .4),
-                                  //         ),
-                                  //       ),
-                                  //       Padding(
-                                  //         padding: const EdgeInsets.all(12.0),
-                                  //         child: Row(
-                                  //           children: [
-                                  //             const SpacerHorizontal(
-                                  //               width: 10.0,
-                                  //             ),
-                                  //             Expanded(
-                                  //               child: Column(
-                                  //                 crossAxisAlignment:
-                                  //                     CrossAxisAlignment.start,
-                                  //                 children: [
-                                  //                   Column(
-                                  //                     crossAxisAlignment:
-                                  //                         CrossAxisAlignment
-                                  //                             .start,
-                                  //                     children: [
-                                  //                       Text(
-                                  //                         "Economic Moat"
-                                  //                             .toUpperCase(),
-                                  //                         style:
-                                  //                             styleGeorgiaBold(
-                                  //                                 fontSize: 18),
-                                  //                       ),
-                                  //                       const SpacerVertical(
-                                  //                           height: 5),
-                                  //                       Text(
-                                  //                         "As on - ${morningStar?.updated ?? "N/A"}",
-                                  //                         style:
-                                  //                             stylePTSansRegular(
-                                  //                           fontSize: 12,
-                                  //                           color: ThemeColors
-                                  //                               .white,
-                                  //                         ),
-                                  //                       ),
-                                  //                     ],
-                                  //                   ),
-                                  //                   Row(
-                                  //                     mainAxisAlignment:
-                                  //                         MainAxisAlignment
-                                  //                             .start,
-                                  //                     children: [
-                                  //                       Expanded(
-                                  //                         child: Padding(
-                                  //                           padding:
-                                  //                               const EdgeInsets
-                                  //                                   .only(
-                                  //                                   right:
-                                  //                                       80.0),
-                                  //                           child: Image.asset(
-                                  //                             Images.economic,
-                                  //                             // fit: BoxFit.fill,
-                                  //                             height: 50,
-                                  //                             opacity:
-                                  //                                 const AlwaysStoppedAnimation(
-                                  //                                     .5),
-                                  //                             width: MediaQuery
-                                  //                                     .sizeOf(
-                                  //                                         context)
-                                  //                                 .width,
-                                  //                             color:
-                                  //                                 Colors.white,
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
-                                  //                       Expanded(
-                                  //                         child: Padding(
-                                  //                           padding:
-                                  //                               const EdgeInsets
-                                  //                                   .only(
-                                  //                                   top: 6.0),
-                                  //                           child: Container(
-                                  //                             width: constraints
-                                  //                                     .maxWidth *
-                                  //                                 (value / 100),
-                                  //                             height: 40,
-                                  //                             decoration:
-                                  //                                 const BoxDecoration(
-                                  //                               color: Color
-                                  //                                   .fromARGB(
-                                  //                                       255,
-                                  //                                       245,
-                                  //                                       250,
-                                  //                                       245),
-                                  //                               borderRadius:
-                                  //                                   BorderRadius
-                                  //                                       .all(
-                                  //                                 Radius
-                                  //                                     .circular(
-                                  //                                         30),
-                                  //                               ),
-                                  //                             ),
-                                  //                             child: Padding(
-                                  //                               padding:
-                                  //                                   const EdgeInsets
-                                  //                                       .only(
-                                  //                                       top:
-                                  //                                           9.0,
-                                  //                                       right:
-                                  //                                           8.0),
-                                  //                               child: Text(
-                                  //                                 "${morningStar?.quantEconomicMoatLabel}"
-                                  //                                     .toUpperCase(),
-                                  //                                 style: stylePTSansBold(
-                                  //                                     color: Colors
-                                  //                                         .black),
-                                  //                                 textAlign:
-                                  //                                     TextAlign
-                                  //                                         .center,
-                                  //                               ),
-                                  //                             ),
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
-                                  //                     ],
-                                  //                   ),
-                                  //                 ],
-                                  //               ),
-                                  //             ),
-                                  //             // Expanded(
-                                  //             //   child: Column(
-                                  //             //     crossAxisAlignment:
-                                  //             //         CrossAxisAlignment
-                                  //             //             .center,
-                                  //             //     children: [
-                                  //             //       // Text(
-                                  //             //       //   "Economic Moat"
-                                  //             //       //       .toUpperCase(),
-                                  //             //       //   style:
-                                  //             //       //       styleGeorgiaBold(
-                                  //             //       //           fontSize:
-                                  //             //       //               18),
-                                  //             //       // ),
-                                  //             //       // const SpacerVertical(
-                                  //             //       //     height: 5),
-                                  //             //       // Text(
-                                  //             //       //   "As on - ${morningStar?.updated ?? "N/A"}",
-                                  //             //       //   style:
-                                  //             //       //       stylePTSansRegular(
-                                  //             //       //     fontSize: 12,
-                                  //             //       //     color:
-                                  //             //       //         ThemeColors
-                                  //             //       //             .white,
-                                  //             //       //   ),
-                                  //             //       // ),
-                                  //             //       Padding(
-                                  //             //         padding:
-                                  //             //             const EdgeInsets
-                                  //             //                 .only(
-                                  //             //           top: 15.0,
-                                  //             //         ),
-                                  //             //         child: Container(
-                                  //             //           width: constraints
-                                  //             //                   .maxWidth *
-                                  //             //               (value /
-                                  //             //                   100),
-                                  //             //           height: 40,
-                                  //             //           decoration:
-                                  //             //               const BoxDecoration(
-                                  //             //             color: Color
-                                  //             //                 .fromARGB(
-                                  //             //                     255,
-                                  //             //                     245,
-                                  //             //                     250,
-                                  //             //                     245),
-                                  //             //             borderRadius:
-                                  //             //                 BorderRadius
-                                  //             //                     .all(
-                                  //             //               Radius
-                                  //             //                   .circular(
-                                  //             //                       30),
-                                  //             //             ),
-                                  //             //           ),
-                                  //             //           child: Padding(
-                                  //             //             padding: const EdgeInsets
-                                  //             //                 .only(
-                                  //             //                 top: 9.0,
-                                  //             //                 right:
-                                  //             //                     8.0),
-                                  //             //             child: Text(
-                                  //             //               "${morningStar?.quantEconomicMoatLabel}"
-                                  //             //                   .toUpperCase(),
-                                  //             //               style: stylePTSansBold(
-                                  //             //                   color: Colors
-                                  //             //                       .black),
-                                  //             //               textAlign:
-                                  //             //                   TextAlign
-                                  //             //                       .center,
-                                  //             //             ),
-                                  //             //           ),
-                                  //             //         ),
-                                  //             //       ),
-                                  //             //     ],
-                                  //             //   ),
-                                  //             // ),
-                                  //           ],
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  //   // padding: EdgeInsets.all(15),
-                                  // ),
-                                  // Positioned(
-                                  //   top: 120,
-                                  //   bottom: 0,
-                                  //   left: 0,
-                                  //   right: 0,
-                                  //   child: Container(
-                                  //     decoration: const BoxDecoration(
-                                  //       gradient: LinearGradient(
-                                  //         begin: Alignment.topCenter,
-                                  //         end: Alignment.bottomCenter,
-                                  //         colors: [
-                                  //           // Color.fromARGB(255, 2, 71, 12),
-                                  //           // Color.fromARGB(255, 10, 160, 30),
-                                  //           Color(0xff005bef),
-                                  //           Color.fromARGB(255, 26, 24, 24),
-                                  //         ],
-                                  //       ),
-                                  //       borderRadius: BorderRadius.all(
-                                  //         Radius.circular(10),
-                                  //       ),
-                                  //     ),
-                                  //     // padding: const EdgeInsets.all(12),
-                                  //     child: Stack(
-                                  //       children: [
-                                  //         Positioned(
-                                  //           top: 10,
-                                  //           child: Image.asset(
-                                  //             Images.newLineBG,
-                                  //             height: 120,
-                                  //             fit: BoxFit.fill,
-                                  //             width: MediaQuery.sizeOf(context)
-                                  //                 .width,
-                                  //             color: Colors.white,
-                                  //             opacity:
-                                  //                 const AlwaysStoppedAnimation(
-                                  //                     .4),
-                                  //           ),
-                                  //         ),
-                                  //         Padding(
-                                  //           padding: const EdgeInsets.all(12.0),
-                                  //           child: Row(
-                                  //             crossAxisAlignment:
-                                  //                 CrossAxisAlignment.start,
-                                  //             children: [
-                                  //               const SpacerHorizontal(
-                                  //                 width: 10.0,
-                                  //               ),
-                                  //               Expanded(
-                                  //                 child: Column(
-                                  //                   crossAxisAlignment:
-                                  //                       CrossAxisAlignment
-                                  //                           .start,
-                                  //                   children: [
-                                  //                     Text(
-                                  //                         "Valuation"
-                                  //                             .toUpperCase(),
-                                  //                         style:
-                                  //                             styleGeorgiaBold(
-                                  //                                 fontSize:
-                                  //                                     18)),
-                                  //                     const SpacerVertical(
-                                  //                         height: 15),
-                                  //                     Row(
-                                  //                       mainAxisAlignment:
-                                  //                           MainAxisAlignment
-                                  //                               .start,
-                                  //                       children: [
-                                  //                         Expanded(
-                                  //                           child: Padding(
-                                  //                             padding:
-                                  //                                 const EdgeInsets
-                                  //                                     .only(
-                                  //                                     right:
-                                  //                                         80.0),
-                                  //                             child:
-                                  //                                 Image.asset(
-                                  //                               Images
-                                  //                                   .transferMoney,
-                                  //                               opacity:
-                                  //                                   const AlwaysStoppedAnimation(
-                                  //                                       .5),
-                                  //                               // fit: BoxFit.fill,
-                                  //                               height: 50,
-                                  //                               width: MediaQuery
-                                  //                                       .sizeOf(
-                                  //                                           context)
-                                  //                                   .width,
-                                  //                               color: Colors
-                                  //                                   .white,
-                                  //                             ),
-                                  //                           ),
-                                  //                         ),
-                                  //                         Expanded(
-                                  //                           child: Container(
-                                  //                             width: constraints
-                                  //                                     .maxWidth *
-                                  //                                 (value / 100),
-                                  //                             height: 40,
-                                  //                             decoration:
-                                  //                                 BoxDecoration(
-                                  //                               // color: ThemeColors.accent,
-                                  //                               borderRadius:
-                                  //                                   const BorderRadius
-                                  //                                       .all(
-                                  //                                 Radius
-                                  //                                     .circular(
-                                  //                                         30),
-                                  //                               ),
-                                  //                               gradient:
-                                  //                                   LinearGradient(
-                                  //                                 begin: Alignment
-                                  //                                     .centerLeft,
-                                  //                                 end: Alignment
-                                  //                                     .centerRight,
-                                  //                                 colors: morningStar
-                                  //                                             ?.quantValuation ==
-                                  //                                         "Undervalued"
-                                  //                                     ? [
-                                  //                                         const Color
-                                  //                                             .fromARGB(
-                                  //                                             255,
-                                  //                                             242,
-                                  //                                             150,
-                                  //                                             37),
-                                  //                                         const Color
-                                  //                                             .fromARGB(
-                                  //                                             255,
-                                  //                                             144,
-                                  //                                             87,
-                                  //                                             17),
-                                  //                                       ]
-                                  //                                     : morningStar?.quantValuation ==
-                                  //                                             "Fairly Valued"
-                                  //                                         ? [
-                                  //                                             const Color.fromARGB(255, 14, 173, 5),
-                                  //                                             const Color.fromARGB(255, 11, 95, 13),
-                                  //                                           ]
-                                  //                                         // Overvalued
-                                  //                                         : [
-                                  //                                             const Color.fromARGB(255, 231, 41, 41),
-                                  //                                             const Color.fromARGB(255, 243, 88, 88),
-                                  //                                           ],
-                                  //                               ),
-                                  //                             ),
-                                  //                             child: Center(
-                                  //                               child: Text(
-                                  //                                 "${morningStar?.quantValuation}"
-                                  //                                     .toUpperCase(),
-                                  //                                 style: stylePTSansBold(
-                                  //                                     color: Colors
-                                  //                                         .white),
-                                  //                                 textAlign:
-                                  //                                     TextAlign
-                                  //                                         .center,
-                                  //                               ),
-                                  //                             ),
-                                  //                           ),
-                                  //                         ),
-                                  //                       ],
-                                  //                     ),
-                                  //                   ],
-                                  //                 ),
-                                  //               ),
-                                  //               // Expanded(
-                                  //               //   child: Column(
-                                  //               //     crossAxisAlignment:
-                                  //               //         CrossAxisAlignment
-                                  //               //             .center,
-                                  //               //     children: [
-                                  //               //       // const SpacerVertical(
-                                  //               //       //     height: 8),
-                                  //               //       Padding(
-                                  //               //         padding:
-                                  //               //             const EdgeInsets
-                                  //               //                 .only(
-                                  //               //           top: 20.0,
-                                  //               //         ),
-                                  //               //         child:
-                                  //               //             Container(
-                                  //               //           width: constraints
-                                  //               //                   .maxWidth *
-                                  //               //               (value /
-                                  //               //                   100),
-                                  //               //           height: 40,
-                                  //               //           decoration:
-                                  //               //               BoxDecoration(
-                                  //               //             // color: ThemeColors.accent,
-                                  //               //             borderRadius:
-                                  //               //                 const BorderRadius
-                                  //               //                     .all(
-                                  //               //               Radius.circular(
-                                  //               //                   30),
-                                  //               //             ),
-                                  //               //             gradient:
-                                  //               //                 LinearGradient(
-                                  //               //               begin: Alignment
-                                  //               //                   .centerLeft,
-                                  //               //               end: Alignment
-                                  //               //                   .centerRight,
-                                  //               //               colors: morningStar?.quantValuation ==
-                                  //               //                       "Undervalued"
-                                  //               //                   ? [
-                                  //               //                       const Color.fromARGB(255, 242, 150, 37),
-                                  //               //                       const Color.fromARGB(255, 144, 87, 17),
-                                  //               //                     ]
-                                  //               //                   : morningStar?.quantValuation == "Fairly Valued"
-                                  //               //                       ? [
-                                  //               //                           const Color.fromARGB(255, 14, 173, 5),
-                                  //               //                           const Color.fromARGB(255, 11, 95, 13),
-                                  //               //                         ]
-                                  //               //                       // Overvalued
-                                  //               //                       : [
-                                  //               //                           const Color.fromARGB(255, 231, 41, 41),
-                                  //               //                           const Color.fromARGB(255, 243, 88, 88),
-                                  //               //                         ],
-                                  //               //             ),
-                                  //               //           ),
-                                  //               //           child: Center(
-                                  //               //             child: Text(
-                                  //               //               "${morningStar?.quantValuation}"
-                                  //               //                   .toUpperCase(),
-                                  //               //               style: stylePTSansBold(
-                                  //               //                   color:
-                                  //               //                       Colors.white),
-                                  //               //               textAlign:
-                                  //               //                   TextAlign
-                                  //               //                       .center,
-                                  //               //             ),
-                                  //               //           ),
-                                  //               //         ),
-                                  //               //       ),
-                                  //               //     ],
-                                  //               //   ),
-                                  //               // ),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Positioned(
-                                  //   top: 230,
-                                  //   bottom: 0,
-                                  //   left: 0,
-                                  //   right: 0,
-                                  //   child: Container(
-                                  //     decoration: const BoxDecoration(
-                                  //       gradient: LinearGradient(
-                                  //         begin: Alignment.topCenter,
-                                  //         end: Alignment.bottomCenter,
-                                  //         colors: [
-                                  //           Color(0xFFcc3333),
-                                  //           ThemeColors.background,
-                                  //         ],
-                                  //       ),
-                                  //       borderRadius: BorderRadius.all(
-                                  //         Radius.circular(10),
-                                  //       ),
-                                  //     ),
-                                  //     // padding: const EdgeInsets.all(12),
-                                  //     child: Stack(
-                                  //       children: [
-                                  //         Positioned(
-                                  //           top: 10,
-                                  //           // left: ,
-                                  //           child: Image.asset(
-                                  //             Images.newLineBG,
-                                  //             fit: BoxFit.fill,
-                                  //             height: 120,
-                                  //             width: MediaQuery.sizeOf(context)
-                                  //                 .width,
-                                  //             color: Colors.white,
-                                  //             opacity:
-                                  //                 const AlwaysStoppedAnimation(
-                                  //                     .4),
-                                  //           ),
-                                  //         ),
-                                  //         Padding(
-                                  //           padding: const EdgeInsets.all(12.0),
-                                  //           child: Row(
-                                  //             mainAxisAlignment:
-                                  //                 MainAxisAlignment.start,
-                                  //             children: [
-                                  //               const SpacerHorizontal(
-                                  //                 width: 10.0,
-                                  //               ),
-                                  //               Expanded(
-                                  //                 child: Column(
-                                  //                   crossAxisAlignment:
-                                  //                       CrossAxisAlignment
-                                  //                           .start,
-                                  //                   children: [
-                                  //                     Column(
-                                  //                       crossAxisAlignment:
-                                  //                           CrossAxisAlignment
-                                  //                               .start,
-                                  //                       children: [
-                                  //                         Text(
-                                  //                           "Fair Value",
-                                  //                           style:
-                                  //                               styleGeorgiaBold(
-                                  //                                   fontSize:
-                                  //                                       18),
-                                  //                         ),
-                                  //                         const SpacerVertical(
-                                  //                             height: 5),
-                                  //                         Text(
-                                  //                           "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
-                                  //                           style:
-                                  //                               stylePTSansRegular(
-                                  //                                   fontSize:
-                                  //                                       12),
-                                  //                         ),
-                                  //                       ],
-                                  //                     ),
-                                  //                     const SpacerVertical(
-                                  //                         height: 5),
-                                  //                     Row(
-                                  //                       mainAxisAlignment:
-                                  //                           MainAxisAlignment
-                                  //                               .start,
-                                  //                       children: [
-                                  //                         Expanded(
-                                  //                           child: Padding(
-                                  //                             padding:
-                                  //                                 const EdgeInsets
-                                  //                                     .only(
-                                  //                                     right:
-                                  //                                         80.0),
-                                  //                             child:
-                                  //                                 Image.asset(
-                                  //                               Images
-                                  //                                   .objective,
-                                  //                               height: 70,
-                                  //                               opacity:
-                                  //                                   const AlwaysStoppedAnimation(
-                                  //                                       .5),
-                                  //                               width: MediaQuery
-                                  //                                       .sizeOf(
-                                  //                                           context)
-                                  //                                   .width,
-                                  //                               color: Colors
-                                  //                                   .white,
-                                  //                             ),
-                                  //                           ),
-                                  //                         ),
-                                  //                         Expanded(
-                                  //                           child: Padding(
-                                  //                             padding:
-                                  //                                 const EdgeInsets
-                                  //                                     .only(
-                                  //                                     left:
-                                  //                                         40.0),
-                                  //                             child: Text(
-                                  //                               "${morningStar?.quantFairValue ?? "N/A"}",
-                                  //                               style: styleGeorgiaBold(
-                                  //                                   color: ThemeColors
-                                  //                                       .white,
-                                  //                                   fontSize:
-                                  //                                       30),
-                                  //                             ),
-                                  //                           ),
-                                  //                         ),
-                                  //                       ],
-                                  //                     ),
-                                  //                   ],
-                                  //                 ),
-                                  //               ),
-                                  //               // Expanded(
-                                  //               //   child: Padding(
-                                  //               //     padding:
-                                  //               //         const EdgeInsets
-                                  //               //             .only(
-                                  //               //             right:
-                                  //               //                 10.0),
-                                  //               //     child: Column(
-                                  //               //       children: [
-                                  //               //         // ItemRow(
-                                  //               //         //   label: "Fair Value"
-                                  //               //         //       .toUpperCase(),
-                                  //               //         //   value: "${morningStar?.quantFairValue}",
-                                  //               //         // ),
-                                  //               //         // const SpacerVertical(
-                                  //               //         //     height: 5),
-                                  //               //         // Row(
-                                  //               //         //   mainAxisAlignment:
-                                  //               //         //       MainAxisAlignment
-                                  //               //         //           .center,
-                                  //               //         //   children: [
-                                  //               //         //     Flexible(
-                                  //               //         //       child:
-                                  //               //         //           Text(
-                                  //               //         //         "As on - ${morningStar?.quantFairValueDate ?? "N/A"}",
-                                  //               //         //         style: stylePTSansRegular(
-                                  //               //         //             fontSize:
-                                  //               //         //                 12),
-                                  //               //         //       ),
-                                  //               //         //     ),
-                                  //               //         //   ],
-                                  //               //         // ),
-                                  //               //       ],
-                                  //               //     ),
-                                  //               //   ),
-                                  //               // )
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  // ),
-
-                                  ///---------new upadation
                                   Stack(
                                     children: [
                                       Container(
@@ -1553,7 +657,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                   ),
                                   const SpacerVertical(height: 15),
                                   Container(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       // color: ThemeColors.tabBack
@@ -1570,90 +674,81 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        const SpacerHorizontal(width: 8),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                          ),
-                                          margin: const EdgeInsets.only(
-                                              top: 2, left: 2),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Financial Health",
-                                                style: styleGeorgiaBold(
-                                                    fontSize: 18),
-                                              ),
-                                              const SpacerVertical(height: 3),
-                                              Text(
-                                                "As on - ${morningStar?.quantFinancialHealthDate}",
-                                                style: stylePTSansRegular(
-                                                  fontSize: 12,
-                                                  color: ThemeColors.greyText,
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            margin: const EdgeInsets.only(
+                                              top: 2,
+                                              left: 2,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Financial Health",
+                                                  style: styleGeorgiaBold(
+                                                    fontSize: 18,
+                                                  ).copyWith(height: 1),
                                                 ),
-                                              ),
-                                              const SpacerVertical(height: 6),
-                                              Image.asset(
-                                                Images.financialHealth,
-                                                width: 50,
-                                                height: 50,
-                                                opacity:
-                                                    const AlwaysStoppedAnimation(
-                                                        .8),
-                                                color: Colors.white,
-                                              ),
-                                            ],
+                                                const SpacerVertical(height: 3),
+                                                Text(
+                                                  "As on - ${morningStar?.quantFinancialHealthDate}",
+                                                  style: stylePTSansRegular(
+                                                    fontSize: 12,
+                                                    color: ThemeColors.greyText,
+                                                  ),
+                                                ),
+                                                const SpacerVertical(height: 6),
+                                                Image.asset(
+                                                  Images.financialHealth,
+                                                  width: 50,
+                                                  height: 50,
+                                                  opacity:
+                                                      const AlwaysStoppedAnimation(
+                                                          .8),
+                                                  color: Colors.white,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         const SpacerHorizontal(width: 40),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 50.0, right: 10.0),
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 3,
-                                                  vertical: 3,
-                                                ),
-                                                width: 120,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  color: healthLabel == "Weak"
-                                                      ? const Color.fromARGB(
-                                                          255, 244, 67, 54)
-                                                      : healthLabel ==
-                                                              "Moderate"
-                                                          ? const Color
-                                                              .fromARGB(
-                                                              255, 253, 239, 45)
-                                                          : const Color
-                                                              .fromARGB(255, 43,
-                                                              255, 117),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "${morningStar?.quantFinancialHealthLabel}",
-                                                    style: styleGeorgiaBold(
-                                                      fontSize: 16,
-                                                      color: healthLabel ==
-                                                              "Weak"
-                                                          ? Colors.white
-                                                          : healthLabel ==
-                                                                  "Moderate"
-                                                              ? Colors.black
-                                                              : Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 3,
+                                            vertical: 3,
+                                          ),
+                                          width: 120,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: healthLabel == "Weak"
+                                                ? const Color.fromARGB(
+                                                    255, 244, 67, 54)
+                                                : healthLabel == "Moderate"
+                                                    ? const Color.fromARGB(
+                                                        255, 253, 239, 45)
+                                                    : const Color.fromARGB(
+                                                        255, 43, 255, 117),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "${morningStar?.quantFinancialHealthLabel}",
+                                              style: styleGeorgiaBold(
+                                                fontSize: 16,
+                                                color: healthLabel == "Weak"
+                                                    ? Colors.white
+                                                    : healthLabel == "Moderate"
+                                                        ? Colors.black
+                                                        : Colors.black,
                                               ),
                                             ),
                                           ),
@@ -1672,13 +767,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           ),
                                         ),
                                       );
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (_) => WebviewLink(
-                                      //         stringURL: morningStar?.pdfUrl),
-                                      //   ),
-                                      // );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -1712,7 +800,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                                 ),
                                                 const SpacerVertical(height: 5),
                                                 Text(
-                                                  "Powered by Morningstar",
+                                                  "Powered by MORNINGSTAR",
                                                   style: stylePTSansRegular(
                                                       fontSize: 12),
                                                 ),
@@ -1748,7 +836,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                     },
                                     child: Center(
                                       child: Text(
-                                        "Read your all Morning Star Reports",
+                                        "${morningStar?.viewAllText}",
                                         style: stylePTSansBold(
                                             color: ThemeColors.accent),
                                       ),
@@ -1756,222 +844,6 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                   ),
                                 ],
                               ),
-                              // Positioned(
-                              //   bottom: -8,
-                              //   right: 8,
-                              //   // child: FloatingActionButton(
-                              //   //   backgroundColor: ThemeColors.accent,
-                              //   //   child: const Icon(Icons.share),
-                              //   //   onPressed: () {
-                              //   //     commonShare(
-                              //   //       title: provider.data?.postDetail?.title ?? "",
-                              //   //       url: provider.data?.postDetail?.slug ?? "",
-                              //   //     );
-                              //   //   },
-                              //   // ),
-                              //   child: ThemeButtonSmall(
-                              //     onPressed: () {
-                              //       commonShare(
-                              //         title: provider.overviewRes!.morningStart!
-                              //                 .lockInformation?.title ??
-                              //             "",
-                              //         url: provider.overviewRes!.morningStart!
-                              //                 .lockInformation?.readingSubtitle ??
-                              //             "",
-                              //       );
-                              //     },
-                              //     text: "Share Story",
-                              //     fontBold: true,
-                              //     icon: Icons.share,
-                              //   ),
-                              // ),
-                              // if ((provider.overviewRes!.morningStart!
-                              //             .lockInformation?.readingStatus ==
-                              //         false) &&
-                              //     !provider.isLoadingOverview)
-                              //   Column(
-                              //     crossAxisAlignment:
-                              //         CrossAxisAlignment.stretch,
-                              //     mainAxisSize: MainAxisSize.min,
-                              //     children: [
-                              //       Container(
-                              //         height: height / 1.2,
-                              //         // height: MediaQuery.of(context).size.height / 2,
-                              //         // height: double.infinity,
-                              //         // width: double.infinity,
-                              //         decoration: const BoxDecoration(
-                              //           gradient: LinearGradient(
-                              //             begin: Alignment.topCenter,
-                              //             end: Alignment.bottomCenter,
-                              //             colors: [
-                              //               Colors.transparent,
-                              //               ThemeColors.tabBack,
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       Container(
-                              //         // height: height / 1.2,
-                              //         height:
-                              //             MediaQuery.of(context).size.height,
-                              //         width: double.infinity,
-                              //         alignment: Alignment.center,
-                              //         decoration: const BoxDecoration(
-                              //           color: ThemeColors.tabBack,
-                              //         ),
-                              //         child: context
-                              //                     .watch<UserProvider>()
-                              //                     .user ==
-                              //                 null
-                              //             ? Padding(
-                              //                 padding:
-                              //                     const EdgeInsets.symmetric(
-                              //                   horizontal: 20,
-                              //                   vertical: 10,
-                              //                 ),
-                              //                 child: Column(
-                              //                   mainAxisAlignment:
-                              //                       MainAxisAlignment.center,
-                              //                   children: [
-                              //                     const Icon(Icons.lock,
-                              //                         size: 40),
-                              //                     const SpacerVertical(),
-                              //                     Text(
-                              //                       "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
-                              //                       style: stylePTSansBold(
-                              //                           fontSize: 18),
-                              //                     ),
-                              //                     const SpacerVertical(
-                              //                         height: 10),
-                              //                     Text(
-                              //                       "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
-                              //                       style: stylePTSansRegular(
-                              //                         fontSize: 14,
-                              //                         height: 1.3,
-                              //                       ),
-                              //                       textAlign: TextAlign.center,
-                              //                     ),
-                              //                     const SpacerVertical(
-                              //                         height: 10),
-                              //                     // if (context.watch<UserProvider>().user == null)
-                              //                     ThemeButtonSmall(
-                              //                       onPressed: () {
-                              //                         _onLoginClick(context);
-                              //                       },
-                              //                       text: "Login to continue",
-                              //                       showArrow: false,
-                              //                     ),
-                              //                     const SpacerVertical(),
-                              //                   ],
-                              //                 ),
-                              //               )
-                              //             : provider
-                              //                             .overviewRes
-                              //                             ?.morningStart
-                              //                             ?.lockInformation
-                              //                             ?.balanceStatus ==
-                              //                         null ||
-                              //                     provider
-                              //                             .overviewRes
-                              //                             ?.morningStart
-                              //                             ?.lockInformation
-                              //                             ?.balanceStatus ==
-                              //                         false
-                              //                 ? Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(
-                              //                       horizontal: 20,
-                              //                       vertical: 10,
-                              //                     ),
-                              //                     child: Column(
-                              //                       mainAxisAlignment:
-                              //                           MainAxisAlignment
-                              //                               .center,
-                              //                       children: [
-                              //                         const Icon(Icons.lock,
-                              //                             size: 40),
-                              //                         const SpacerVertical(),
-                              //                         Text(
-                              //                           "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
-                              //                           style: stylePTSansBold(
-                              //                               fontSize: 18),
-                              //                         ),
-                              //                         const SpacerVertical(
-                              //                             height: 10),
-                              //                         Text(
-                              //                           "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
-                              //                           style:
-                              //                               stylePTSansRegular(
-                              //                             fontSize: 14,
-                              //                             height: 1.3,
-                              //                           ),
-                              //                           textAlign:
-                              //                               TextAlign.center,
-                              //                         ),
-                              //                         const SpacerVertical(
-                              //                             height: 10),
-                              //                         ThemeButtonSmall(
-                              //                           onPressed: () async {
-                              //                             // Share.share(
-                              //                             //   "${navigatorKey.currentContext!.read<HomeProvider>().extra?.referral?.shareText}${"\n\n"}${shareUri.toString()}",
-                              //                             // );
-                              //                             await _onReferClick(
-                              //                                 context);
-                              //                           },
-                              //                           text: "Refer and Earn",
-                              //                           showArrow: false,
-                              //                         )
-                              //                       ],
-                              //                     ),
-                              //                   )
-                              //                 : Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(
-                              //                       horizontal: 20,
-                              //                       vertical: 10,
-                              //                     ),
-                              //                     child: Column(
-                              //                       mainAxisAlignment:
-                              //                           MainAxisAlignment
-                              //                               .center,
-                              //                       children: [
-                              //                         const Icon(Icons.lock,
-                              //                             size: 40),
-                              //                         const SpacerVertical(),
-                              //                         Text(
-                              //                           "${provider.overviewRes?.morningStart?.lockInformation?.readingTitle}",
-                              //                           style: stylePTSansBold(
-                              //                               fontSize: 18),
-                              //                         ),
-                              //                         const SpacerVertical(
-                              //                             height: 10),
-                              //                         Text(
-                              //                           "${provider.overviewRes?.morningStart?.lockInformation?.readingSubtitle}",
-                              //                           style:
-                              //                               stylePTSansRegular(
-                              //                             fontSize: 14,
-                              //                             height: 1.3,
-                              //                           ),
-                              //                           textAlign:
-                              //                               TextAlign.center,
-                              //                         ),
-                              //                         const SpacerVertical(
-                              //                             height: 10),
-                              //                         ThemeButtonSmall(
-                              //                           // onPressed: () =>
-                              //                           //     _onViewBlogClick(context),
-                              //                           onPressed: () =>
-                              //                               _onViewNewsClick(
-                              //                                   context),
-                              //                           text: "View News",
-                              //                           showArrow: false,
-                              //                         ),
-                              //                       ],
-                              //                     ),
-                              //                   ),
-                              //       ),
-                              //     ],
-                              //   ),
                             ],
                           ),
                         ),

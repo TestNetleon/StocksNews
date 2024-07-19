@@ -22,11 +22,7 @@ class SdStockScore extends StatelessWidget {
           title: 'Stock Score/grades',
           subTitle: provider.overviewRes?.stockScore?.text,
         ),
-        // StateItem(
-        //     label: "Altman Z Score ", value: score?.altmanZScore ?? "N/A"),
-        // StateItem(
-        //     label: "Piotroski Score", value: score?.piotroskiScore ?? "N/A"),
-        // StateItem(label: "Grade", value: score?.mostRepeatedGrade ?? "N/A"),
+
         Row(
           children: [
             Expanded(
@@ -129,7 +125,7 @@ class SdStockScore extends StatelessWidget {
 
         Container(
           color: ThemeColors.background,
-          margin: const EdgeInsets.only(top: 0),
+          margin: const EdgeInsets.only(top: 8),
           width: double.infinity,
           child: stockDOverviewItem(
               title: "Grade", value: score?.mostRepeatedGrade),

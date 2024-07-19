@@ -89,7 +89,7 @@ class _NewMembershipUpgradeCurrentPlanState
                     ),
                   ],
                 ),
-               
+
                 const SpacerVertical(
                   height: 15,
                 ),
@@ -324,7 +324,7 @@ class _NewMembershipUpgradeCurrentPlanState
                 //                 ),
                 //                 TextSpan(
                 //                   text:
-                //                       ' “Morning Star Reports” “Insider  Trades” “Congressional Trades” “High/Low PE” “Compare Stocks”',
+                //                       ' MORNINGSTAR Reports” “Insider  Trades” “Congressional Trades” “High/Low PE” “Compare Stocks”',
                 //                   style: stylePTSansBold(
                 //                       fontSize: 16, color: Colors.white),
                 //                 ),

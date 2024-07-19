@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
-import 'package:stocks_news_new/screens/affiliate/referFriend/trasnsaction.dart';
+import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -9,22 +9,22 @@ import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class PointsSummary extends StatelessWidget {
-  const PointsSummary({super.key});
-
+  const PointsSummary({super.key, this.fromDrawer = true});
+  final bool fromDrawer;
   @override
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
-
     return Visibility(
       visible: (provider.extra?.totalActivityPoints ?? 0) != 0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Points Summary",
-            style: stylePTSansBold(fontSize: 25),
-          ),
-          const SpacerVertical(height: 15),
+          if (!fromDrawer)
+            Text(
+              "Points Summary",
+              style: stylePTSansBold(fontSize: 25),
+            ),
+          if (!fromDrawer) const SpacerVertical(height: 15),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
@@ -143,60 +143,61 @@ class PointsSummary extends StatelessWidget {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AffiliateTransaction(),
-                    ),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 0,
-                      vertical: 12,
-                    ),
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Color.fromARGB(255, 29, 29, 29),
-                        ),
-                        left: BorderSide(
-                          color: Color.fromARGB(255, 29, 29, 29),
-                        ),
-                        right: BorderSide(
-                          color: Color.fromARGB(255, 29, 29, 29),
-                        ),
-                      ),
-                      color: Color.fromARGB(255, 25, 25, 25),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                        bottomRight: Radius.circular(5),
+                if (!fromDrawer)
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AffiliateTransaction(),
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Images.transaction,
-                          height: 20,
-                          width: 20,
-                          color: ThemeColors.accent,
-                        ),
-                        const SpacerHorizontal(width: 5),
-                        Flexible(
-                          child: Text(
-                            "View Points Transactions",
-                            style: stylePTSansBold(
-                              fontSize: 16,
-                              color: ThemeColors.accent,
-                              decoration: TextDecoration.underline,
-                            ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 0,
+                        vertical: 12,
+                      ),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color.fromARGB(255, 29, 29, 29),
+                          ),
+                          left: BorderSide(
+                            color: Color.fromARGB(255, 29, 29, 29),
+                          ),
+                          right: BorderSide(
+                            color: Color.fromARGB(255, 29, 29, 29),
                           ),
                         ),
-                      ],
+                        color: Color.fromARGB(255, 25, 25, 25),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            Images.transaction,
+                            height: 20,
+                            width: 20,
+                            color: ThemeColors.accent,
+                          ),
+                          const SpacerHorizontal(width: 5),
+                          Flexible(
+                            child: Text(
+                              "View Points Transactions",
+                              style: stylePTSansBold(
+                                fontSize: 16,
+                                color: ThemeColors.accent,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

@@ -238,6 +238,7 @@ class Images {
   static const congrationTextImage = "assets/images/congration_text_image.jpeg";
   static const congratsGIF = "assets/images/Congrats.gif";
   static const congratsGIF1 = "assets/images/Congrats.png";
+  static const pointWithStar = "assets/images/coin_with_star.png";
 
   //svg
   // static const share = "assets/svg/share.svg";

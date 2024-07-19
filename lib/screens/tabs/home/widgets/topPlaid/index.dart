@@ -64,11 +64,11 @@ class TopPlaidIndex extends StatelessWidget {
               ),
             ],
           ),
-          const SpacerVertical(height: 5),
+          const SpacerVertical(height: 4),
           CustomGridView(
             paddingHorizontal: 0,
-            itemSpace: 5,
-            paddingVertical: 5,
+            itemSpace: 9,
+            paddingVertical: 7,
             length: 4,
             getChild: (index) {
               MostPurchasedRes? data = provider.mostPurchased?[index];
@@ -153,25 +153,39 @@ class TopPlaidItem extends StatelessWidget {
                   ),
                   const SpacerHorizontal(width: 12),
                   Expanded(
-                    child: Text(
-                      data?.symbol ?? '',
-                      style: stylePTSansBold(fontSize: 14),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data?.symbol ?? '',
+                          style: stylePTSansBold(fontSize: 14),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          data?.name ?? '',
+                          style: stylePTSansRegular(
+                            color: ThemeColors.greyText,
+                            fontSize: 12,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SpacerVertical(height: 8),
-              Text(
-                data?.name ?? '',
-                style: stylePTSansRegular(
-                  color: ThemeColors.greyText,
-                  fontSize: 12,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+              // const SpacerVertical(height: 8),
+              // Text(
+              //   data?.name ?? '',
+              //   style: stylePTSansRegular(
+              //     color: ThemeColors.greyText,
+              //     fontSize: 12,
+              //   ),
+              //   maxLines: 2,
+              //   overflow: TextOverflow.ellipsis,
+              // ),
               const SpacerVertical(height: 8),
               Text(
                 data?.price ?? '',

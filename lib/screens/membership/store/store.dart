@@ -114,22 +114,25 @@ class _StoreState extends State<Store> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${data?.title}",
-                        style: stylePTSansBold(
-                          color: Colors.white,
-                          fontSize: 28,
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${data?.title}",
+                          style: stylePTSansBold(
+                            color: Colors.white,
+                            fontSize: 28,
+                          ),
                         ),
-                      ),
-                      const SpacerVertical(height: 5),
-                      Text(
-                        "${data?.subTitle}",
-                        style: stylePTSansRegular(color: Colors.white),
-                      ),
-                    ],
+                        const SpacerVertical(height: 5),
+                        Text(
+                          "${data?.subTitle}",
+                          style: stylePTSansRegular(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                   const SpacerVertical(),
                   Container(
@@ -143,9 +146,10 @@ class _StoreState extends State<Store> {
                       gradient: const LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
+                        stops: [0.0, 0.4],
                         colors: [
-                          Color.fromARGB(255, 215, 255, 221),
-                          Colors.white
+                          Color.fromARGB(255, 138, 255, 156),
+                          Colors.white,
                         ],
                       ),
                     ),
@@ -238,6 +242,39 @@ class _StoreState extends State<Store> {
                                   ),
                                 ],
                               );
+
+                              // return Container(
+                              //   width: double.infinity,
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 40),
+                              //   color: index % 2 == 0
+                              //       ? Colors.black
+                              //       : const Color.fromARGB(255, 22, 22, 22),
+                              //   child: Column(
+                              //     children: [
+                              //       // const SpacerVertical(height: 10),
+                              //       Text(
+                              //         "${data?.benefits?[index].question}",
+                              //         textAlign: TextAlign.center,
+                              //         style: styleSansBold(
+                              //           // color: Colors.black,
+                              //           color: ThemeColors.themeGreen,
+                              //           fontSize: 20,
+                              //         ),
+                              //       ),
+                              //       const SpacerVertical(height: 10),
+                              //       Text(
+                              //         textAlign: TextAlign.center,
+                              //         "${data?.benefits?[index].answer}",
+                              //         style: stylePTSansRegular(
+                              //           // color: Colors.black,
+                              //           color: Colors.white,
+                              //           fontSize: 16,
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // );
                             },
                             separatorBuilder: (context, index) {
                               return const SpacerVertical(height: 8);
@@ -266,6 +303,7 @@ class _StoreState extends State<Store> {
                               openIndex: provider.faqOpenIndex,
                               index: index,
                               provider: provider,
+                              textColor: Colors.black,
                             );
                           },
                           separatorBuilder: (context, index) {
@@ -464,28 +502,17 @@ class PointsItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 0,
+            top: 5,
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
-              // decoration: const BoxDecoration(
-              //   color: ThemeColors.tabBack,
-              //   // borderRadius: BorderRadius.circular(6),
-              //   shape: BoxShape.circle,
-              //   gradient: LinearGradient(
-              //     begin: Alignment.topCenter,
-              //     end: Alignment.bottomCenter,
-              //     colors: [
-              //       Color.fromARGB(255, 1, 87, 15),
-              //       Color.fromARGB(255, 128, 197, 151),
-              //     ],
-              //   ),
-              // ),
-              // child: const Icon(Icons.star, size: 36),
-              child: Image.asset(
-                Images.pointIcon,
-                width: 60,
-                height: 60,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(
+                  Images.pointIcon2,
+                  width: 55,
+                  height: 55,
+                ),
               ),
             ),
           ),

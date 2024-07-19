@@ -14,10 +14,8 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/blog_lock.dart';
 import 'package:stocks_news_new/screens/blogs/index.dart';
-import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsAuthor/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/article_feedback.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -30,7 +28,6 @@ import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/cache_network_image.dart';
-import '../auth/membershipAsk/ask.dart';
 import '../tabs/news/newsDetail/news_details_body.dart';
 import 'blog_mention_by.dart';
 
@@ -75,7 +72,8 @@ class BlogDetailContainer extends StatelessWidget {
   Future _onReferClick(BuildContext context) async {
     UserProvider userProvider = context.read<UserProvider>();
 
-    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    if (userProvider.user?.affiliateStatus != 1) {
       await referLogin();
     } else {
       if (userProvider.user != null) {
@@ -106,21 +104,21 @@ class BlogDetailContainer extends StatelessWidget {
   //   );
   // }
 
-  Future _membership() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
-    if (provider.user?.phone == null || provider.user?.phone == '') {
-      await membershipLogin();
-    }
-    if (provider.user?.phone != null && provider.user?.phone != '') {
-      // await RevenueCatService.initializeSubscription();
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(
-          builder: (_) => const NewMembership(),
-        ),
-      );
-    }
-  }
+  // Future _membership() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  //   if (provider.user?.phone == null || provider.user?.phone == '') {
+  //     await membershipLogin();
+  //   }
+  //   if (provider.user?.phone != null && provider.user?.phone != '') {
+  //     // await RevenueCatService.initializeSubscription();
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(
+  //         builder: (_) => const NewMembership(),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

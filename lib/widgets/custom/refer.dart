@@ -126,30 +126,46 @@ class ReferApp extends StatelessWidget {
           //     // Color.fromARGB(255, 10, 114, 24),
           //   ],.
           // ),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 2,
-            stops: [0.0, 0.6],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              Color.fromARGB(255, 6, 41, 1),
-            ],
-          ),
           // gradient: const RadialGradient(
           //   center: Alignment.bottomCenter,
-          //   radius: 3,
-          //   stops: [0.0, 0.2, 1.0],
+          //   radius: 2,
+          //   stops: [0.0, 0.6],
           //   colors: [
-          //     Color.fromARGB(255, 20, 156, 10),
           //     Color.fromARGB(255, 0, 93, 12),
-          //     Color.fromARGB(255, 4, 34, 0),
+          //     Color.fromARGB(255, 6, 41, 1),
           //   ],
           // ),
+
+          // gradient: const SweepGradient(
+          //   colors: [
+          //     Color.fromARGB(255, 222, 69, 9),
+          //     Color.fromARGB(255, 227, 209, 18),
+          //     Color.fromARGB(255, 11, 199, 29),
+          //     Color.fromARGB(255, 227, 209, 18),
+          //     Color.fromARGB(255, 222, 69, 9)
+          //   ],
+          //   stops: [0.0, 0.25, 0.5, 0.75, 1],
+          //   center: Alignment.center,
+          //   startAngle: 0.0,
+          //   transform: GradientRotation(2),
+          //   endAngle: 3.14 * 2,
+          // ),
+
+          gradient: const RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 3,
+            stops: [0.0, 0.2, 1.0],
+            colors: [
+              Color.fromARGB(255, 20, 156, 10),
+              Color.fromARGB(255, 0, 93, 12),
+              Color.fromARGB(255, 4, 34, 0),
+            ],
+          ),
         ),
         child: Row(
           children: [
             Image.asset(
-              Images.pointIcon,
+              Images.pointIcon2,
               // Images.reward,
               // Images.flames,
 

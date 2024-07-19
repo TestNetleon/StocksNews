@@ -1,16 +1,12 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/most_bullish_item.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom_readmore_text.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../../../../widgets/spacer_vertical.dart';
@@ -54,95 +50,94 @@ class MostBullish extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             MostBullishData? bullishData = data?.mostBullish![index];
-            if (index == 0) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 15.sp,
-                    thickness: 1,
-                  ),
-                  Row(
-                    children: [
-                      const SpacerHorizontal(width: 5),
-                      Expanded(
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          "COMPANY",
-                          style: stylePTSansRegular(
-                            fontSize: 12,
-                            color: ThemeColors.greyText,
-                          ),
-                        ),
-                      ),
-                      // const SpacerHorizontal(width: 24),
-                      const SpacerHorizontal(width: 10),
-
-                      Expanded(
-                        // flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(
-                              maxLines: 1,
-                              "PRICE",
-                              style: stylePTSansRegular(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
-                            AutoSizeText(
-                              maxLines: 1,
-                              "(% Change)",
-                              style: stylePTSansRegular(
-                                fontSize: 12,
-                                color: ThemeColors.greyText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          AutoSizeText(
-                            maxLines: 1,
-                            "MENTIONS",
-                            textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
-                          ),
-                          AutoSizeText(
-                            maxLines: 1,
-                            "(% Change)",
-                            textAlign: TextAlign.end,
-                            style: stylePTSansRegular(
-                              fontSize: 12,
-                              color: ThemeColors.greyText,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SpacerHorizontal(width: 10),
-                    ],
-                  ),
-                  Divider(
-                    color: ThemeColors.greyBorder,
-                    height: 15.sp,
-                    thickness: 1,
-                  ),
-                  MostBullishItem(
-                    alertForBullish: bullishData?.isAlertAdded ?? 0,
-                    watlistForBullish: bullishData?.isWatchlistAdded ?? 0,
-                    data: bullishData!,
-                    up: true,
-                    index: index,
-                  ),
-                ],
-              );
-            }
+            // if (index == 0) {
+            //   return Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Divider(
+            //         color: ThemeColors.greyBorder,
+            //         height: 15.sp,
+            //         thickness: 1,
+            //       ),
+            //       Row(
+            //         children: [
+            //           const SpacerHorizontal(width: 5),
+            //           Expanded(
+            //             child: AutoSizeText(
+            //               maxLines: 1,
+            //               "COMPANY",
+            //               style: stylePTSansRegular(
+            //                 fontSize: 12,
+            //                 color: ThemeColors.greyText,
+            //               ),
+            //             ),
+            //           ),
+            //           // const SpacerHorizontal(width: 24),
+            //           const SpacerHorizontal(width: 10),
+            //           Expanded(
+            //             // flex: 3,
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 AutoSizeText(
+            //                   maxLines: 1,
+            //                   "PRICE",
+            //                   style: stylePTSansRegular(
+            //                     fontSize: 12,
+            //                     color: ThemeColors.greyText,
+            //                   ),
+            //                 ),
+            //                 AutoSizeText(
+            //                   maxLines: 1,
+            //                   "(% Change)",
+            //                   style: stylePTSansRegular(
+            //                     fontSize: 12,
+            //                     color: ThemeColors.greyText,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //           Column(
+            //             children: [
+            //               AutoSizeText(
+            //                 maxLines: 1,
+            //                 "MENTIONS",
+            //                 textAlign: TextAlign.end,
+            //                 style: stylePTSansRegular(
+            //                   fontSize: 12,
+            //                   color: ThemeColors.greyText,
+            //                 ),
+            //               ),
+            //               AutoSizeText(
+            //                 maxLines: 1,
+            //                 "(% Change)",
+            //                 textAlign: TextAlign.end,
+            //                 style: stylePTSansRegular(
+            //                   fontSize: 12,
+            //                   color: ThemeColors.greyText,
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //           const SpacerHorizontal(width: 10),
+            //         ],
+            //       ),
+            //       Divider(
+            //         color: ThemeColors.greyBorder,
+            //         height: 15.sp,
+            //         thickness: 1,
+            //       ),
+            //       MostBullishItem(
+            //         alertForBullish: bullishData?.isAlertAdded ?? 0,
+            //         watlistForBullish: bullishData?.isWatchlistAdded ?? 0,
+            //         data: bullishData!,
+            //         up: true,
+            //         index: index,
+            //       ),
+            //     ],
+            //   );
+            // }
 
             return MostBullishItem(
               alertForBullish: bullishData?.isAlertAdded ?? 0,
@@ -153,11 +148,11 @@ class MostBullish extends StatelessWidget {
             );
           },
           separatorBuilder: (BuildContext context, int index) {
-            // return const SpacerVertical(height: 12);
-            return const Divider(
-              color: ThemeColors.greyBorder,
-              height: 12,
-            );
+            return const SpacerVertical(height: 12);
+            // return const Divider(
+            //   color: ThemeColors.greyBorder,
+            //   height: 12,
+            // );
           },
         ),
         const SpacerVertical(height: Dimen.itemSpacing),

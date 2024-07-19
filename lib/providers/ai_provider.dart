@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
+import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/modals/news_res.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -77,7 +78,7 @@ class AIProvider extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: "/latest-news-v2",
+        url: Apis.aiNewsList,
         request: request,
         showProgress: showProgress,
         onRefresh: onRefresh,
@@ -121,7 +122,7 @@ class AIProvider extends ChangeNotifier {
       };
 
       ApiResponse response = await apiRequest(
-        url: "/news-detail-v2",
+        url: Apis.newsDetails,
         request: request,
         showProgress: showProgress,
       );
