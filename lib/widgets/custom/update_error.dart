@@ -76,8 +76,10 @@ class UpdateError extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   textSize: 15,
                   fontBold: true,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 11,
+                  ),
                 ),
                 // Padding(
                 //   padding: const EdgeInsets.all(15),
