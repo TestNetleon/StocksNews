@@ -71,7 +71,10 @@ Future<ApiResponse> apiRequest({
   }
 
   if (appVersion != null) {
-    Map<String, String> versionHeader = {"appVersion": "$appVersion"};
+    Map<String, String> versionHeader = {
+      "appVersion": "$appVersion",
+      "platform": Platform.operatingSystem,
+    };
     headers.addAll(versionHeader);
   }
 
@@ -86,8 +89,8 @@ Future<ApiResponse> apiRequest({
   } else {
     Utils().showLog("REQUEST  =  ${jsonEncode(request)}");
   }
-  // *********** debug prints only **********
 
+  // *********** debug prints only **********
   Future.delayed(Duration.zero, () {
     if (showProgress) {
       showGlobalProgressDialog(optionalParent: optionalParent);

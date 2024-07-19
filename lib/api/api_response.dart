@@ -116,6 +116,7 @@ class Extra {
   final bool? showMostPurchased;
   final String? storeTitle;
   final String? storeSubTitle;
+  final bool? isOldApp;
 
   Extra({
     this.storeTitle,
@@ -190,6 +191,7 @@ class Extra {
     this.membership,
     this.featuredTitle,
     this.watchlistTitle,
+    this.isOldApp,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -322,6 +324,7 @@ class Extra {
         showAboutStockNews: json['show_about_stocks_news'],
         showWhatWeDo: json['show_what_we_do'],
         showFAQ: json['show_faq'],
+        isOldApp: json['old_app'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -411,6 +414,7 @@ class Extra {
         "show_about_stocks_news": showAboutStockNews,
         "show_what_we_do": showWhatWeDo,
         "show_faq": showFAQ,
+        "old_app": isOldApp,
       };
 }
 

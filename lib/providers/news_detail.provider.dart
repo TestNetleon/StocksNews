@@ -72,18 +72,17 @@ class NewsDetailProvider extends ChangeNotifier {
       );
       if (response.status) {
         _data = newsDetailDataResFromJson(jsonEncode(response.data));
-        _extra = (response.extra is Extra ? response.extra as Extra : null);
         Preference.saveReferInput(_extra?.affiliateInput == 1);
       } else {
         _data = null;
         _error = response.message;
         // showErrorMessage(message: response.message);
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
       _error = Const.errSomethingWrong;
-
       Utils().showLog(e.toString());
       setStatus(Status.loaded);
     }

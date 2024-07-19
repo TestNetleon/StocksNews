@@ -73,7 +73,7 @@ class HomeContainer extends StatelessWidget {
               // ),
               const HomeTopNewsSlider(),
               Visibility(
-                visible: showMembership,
+                visible: showMembership && !provider.isLoadingSlider,
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(
                     Dimen.padding,
