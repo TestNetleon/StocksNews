@@ -55,7 +55,8 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
 
   Future _onReferClick(BuildContext context) async {
     UserProvider userProvider = context.read<UserProvider>();
-    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    if (userProvider.user?.affiliateStatus != 1) {
+      // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
       await referLogin();
     } else {
       if (userProvider.user != null) {

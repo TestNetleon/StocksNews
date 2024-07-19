@@ -41,7 +41,8 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
   Future _onReferClick(BuildContext context) async {
     UserProvider userProvider = context.read<UserProvider>();
 
-    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    if (userProvider.user?.affiliateStatus != 1) {
       await referLogin();
     } else {
       if (userProvider.user != null) {
