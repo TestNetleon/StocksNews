@@ -53,12 +53,11 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            var theme = Theme.of(context);
+            // var theme = Theme.of(context);
             return GestureDetector(
               onTap: () {
                 setState(() {
                   // Toggle visibility of the additional container
-                  print(isSelectedList[index]);
                   isSelectedList[index] = !isSelectedList[index];
                 });
               },
@@ -136,7 +135,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                                     '\$49.91M', // Display the overall value here
                                     style: stylePTSansBold(
                                         color: Colors.green, fontSize: 30)),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_upward,
                                   color: Colors.green,
                                 )
@@ -146,7 +145,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                         ),
                         Expanded(
                           child: Container(
-                            decoration: BoxDecoration(),
+                            decoration: const BoxDecoration(),
                             child: Image.asset(
                               Images.graphHolder,
                               color: Colors.green,
@@ -155,7 +154,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10.0,
                     ),
                     Visibility(
@@ -175,7 +174,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                               controller: controller,
                               indicatorWeight: 0,
                               indicatorSize: TabBarIndicatorSize.tab,
-                              labelPadding: EdgeInsets.all(0),
+                              labelPadding: const EdgeInsets.all(0),
                               tabs: const [
                                 Tab(
                                   text: 'Summary',
@@ -252,7 +251,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                                                   color: Colors.red)),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10.0,
                                       ),
                                       Row(
@@ -361,7 +360,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                                                   color: Colors.red)),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10.0,
                                       ),
                                       Row(

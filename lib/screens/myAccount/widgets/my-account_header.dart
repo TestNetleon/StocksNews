@@ -293,7 +293,10 @@ class MyVerifiedCard extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "Points - ${leaderProvider.extra?.balance ?? 0}",
+                  leaderProvider.extra?.balance == 0 ||
+                          leaderProvider.extra?.balance == 1
+                      ? "Point ${leaderProvider.extra?.balance ?? 0}"
+                      : "Points ${leaderProvider.extra?.balance ?? 0}",
                   textAlign: TextAlign.center,
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),

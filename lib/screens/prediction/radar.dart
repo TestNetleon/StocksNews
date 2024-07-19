@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_charts/multi_charts.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/forecast_chart.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/fundamental.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/header.dart';
-import 'package:stocks_news_new/screens/prediction/Widget/linechart.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/stocks_list.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/technical.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
-import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 // ignore: camel_case_types
 class radar extends StatefulWidget {

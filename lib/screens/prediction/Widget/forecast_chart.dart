@@ -85,7 +85,7 @@ class _ForcastingChartState extends State<ForcastingChart> {
         spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
 
     // Calculate the interval for the y-axis
-    double interval = (maxAmount / 3).ceilToDouble();
+    // double interval = (maxAmount / 3).ceilToDouble();
     double yAxisInterval = 0.5; // Adjust as needed
 
     return AspectRatio(
@@ -122,11 +122,11 @@ class _ForcastingChartState extends State<ForcastingChart> {
             ),
             LineChartBarData(
               spots: [
-                FlSpot(2, 2),
-                FlSpot(3, 3),
+                const FlSpot(2, 2),
+                const FlSpot(3, 3),
               ],
               isCurved: true,
-              color: Color.fromARGB(255, 248, 42, 42),
+              color: const Color.fromARGB(255, 248, 42, 42),
               barWidth: 5,
               isStrokeCapRound: true,
               belowBarData: BarAreaData(show: false),

@@ -100,7 +100,7 @@ class _DividendInnerTabsState extends State<DividendInnerTabs> {
                         ? const DividendPaymentBarchart()
                         : const DividendPaymentLineChart(),
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
         // : Center(
         //     child: ErrorDisplayNewWidget(
         //       error: provider.error,

@@ -73,8 +73,7 @@ class HomeContainer extends StatelessWidget {
               // ),
               const HomeTopNewsSlider(),
               Visibility(
-                visible: showMembership &&
-                    userProvider.user?.membership?.purchased != 1,
+                visible: showMembership,
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(
                     Dimen.padding,
@@ -82,19 +81,9 @@ class HomeContainer extends StatelessWidget {
                     Dimen.padding,
                     0,
                   ),
-                  child: const UpdateMembershipCard(),
-                ),
-              ),
-              Visibility(
-                visible: provider.extra?.referral?.shwReferral ?? false,
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(
-                    Dimen.padding,
-                    Dimen.homeSpacing,
-                    Dimen.padding,
-                    0,
-                  ),
-                  child: const ReferApp(),
+                  child: userProvider.user?.membership?.purchased == 1
+                      ? const UpdateStoreCard()
+                      : const UpdateMembershipCard(),
                 ),
               ),
 
@@ -139,6 +128,18 @@ class HomeContainer extends StatelessWidget {
                       child: const StockInBuzz(),
                     ),
                   const FeaturedStocksIndex(),
+                  Visibility(
+                    visible: provider.extra?.referral?.shwReferral ?? false,
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(
+                        Dimen.padding,
+                        Dimen.homeSpacing,
+                        Dimen.padding,
+                        0,
+                      ),
+                      child: const ReferApp(),
+                    ),
+                  ),
                   Visibility(
                     visible:
                         provider.extraMostPopular?.showMostPurchased == true,
