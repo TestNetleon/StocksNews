@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/modals/trending_res.dart';
+import 'package:stocks_news_new/screens/tabs/news/aiNews/detail.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -14,7 +15,17 @@ class TrendingStoriesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => openUrl(data.url),
+      // onTap: () => openUrl(data.url),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NewsDetailsAI(
+              slug: data.slug,
+            ),
+          ),
+        );
+      },
       child: Row(
         children: [
           Expanded(

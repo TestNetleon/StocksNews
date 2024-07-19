@@ -109,35 +109,7 @@ class _TrendingViewState extends State<TrendingView> {
                     ),
                   );
                 }
-
                 if (index == 2) {
-                  return CommonRefreshIndicator(
-                    onRefresh: () async {
-                      provider.getTrendingStories();
-                    },
-                    child: TrendingTabWidget(
-                      index: 2,
-                      content: TrendingPartialLoading(
-                        loading: provider.isLoadingStories,
-                        error: provider.statusStories != Status.ideal &&
-                                !provider.isLoadingStories &&
-                                (provider.trendingStories?.sectors == null ||
-                                    provider.trendingStories?.sectors
-                                            ?.isEmpty ==
-                                        true)
-                            ? TrendingError.sectors
-                            : null,
-                        onRefresh: provider.refreshWithCheck,
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10.sp),
-                          child: const TrendingSectors(),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-
-                if (index == 3) {
                   return CommonRefreshIndicator(
                     onRefresh: () async {
                       provider.getTrendingStories();
@@ -159,6 +131,32 @@ class _TrendingViewState extends State<TrendingView> {
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 10.sp),
                           child: const TrendingStories(),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                if (index == 3) {
+                  return CommonRefreshIndicator(
+                    onRefresh: () async {
+                      provider.getTrendingStories();
+                    },
+                    child: TrendingTabWidget(
+                      index: 2,
+                      content: TrendingPartialLoading(
+                        loading: provider.isLoadingStories,
+                        error: provider.statusStories != Status.ideal &&
+                                !provider.isLoadingStories &&
+                                (provider.trendingStories?.sectors == null ||
+                                    provider.trendingStories?.sectors
+                                            ?.isEmpty ==
+                                        true)
+                            ? TrendingError.sectors
+                            : null,
+                        onRefresh: provider.refreshWithCheck,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.sp),
+                          child: const TrendingSectors(),
                         ),
                       ),
                     ),

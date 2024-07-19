@@ -30,8 +30,9 @@ class NewsItem extends StatelessWidget {
   });
 
   void _gotoDetail(BuildContext context) {
-    Utils().showLog("GOTO DETAIL");
     if (fromAI && !fromMoreNews) {
+      Utils().showLog("from AI true From more news false");
+
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => NewsDetailsAI(slug: news?.slug)),
@@ -41,6 +42,8 @@ class NewsItem extends StatelessWidget {
     }
 
     if (fromAI && fromMoreNews) {
+      Utils().showLog("from AI true From more news true");
+
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (_) => NewsDetailsAI(slug: news?.slug)),
@@ -50,6 +53,8 @@ class NewsItem extends StatelessWidget {
     }
 
     if (fromMoreNews) {
+      Utils().showLog("From more news true");
+
       Navigator.pushReplacement(
         navigatorKey.currentContext!,
         MaterialPageRoute(
