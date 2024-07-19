@@ -7,6 +7,7 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -61,20 +62,24 @@ class HomeContainer extends StatelessWidget {
           child: Column(
             children: [
               const HomeTopNewsSlider(),
-              Visibility(
-                visible: showMembership && provider.homeSliderRes != null,
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(
-                    Dimen.padding,
-                    Dimen.homeSpacing,
-                    Dimen.padding,
-                    0,
-                  ),
-                  child: userProvider.user?.membership?.purchased == 1
-                      ? const UpdateStoreCard()
-                      : const UpdateMembershipCard(),
-                ),
-              ),
+              const MembershipCoinsOption(),
+
+              // Visibility(
+              //   visible: showMembership && provider.homeSliderRes != null,
+              //   child: Container(
+              //     margin: const EdgeInsets.fromLTRB(
+              //       Dimen.padding,
+              //       Dimen.homeSpacing,
+              //       Dimen.padding,
+              //       0,
+              //     ),
+              //     child: userProvider.user?.membership?.purchased != 1
+              //         ? const UpdateMembershipCard()
+              //         :
+              //         //
+              //         const UpdateStoreCard(),
+              //   ),
+              // ),
 
               // Container(
               //   margin: const EdgeInsets.fromLTRB(
