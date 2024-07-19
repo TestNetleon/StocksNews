@@ -1,14 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/screens/prediction/radar.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
+import 'package:stocks_news_new/screens/tabs/home/referPurchaseSlider/slider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
-// ignore: unused_import
-import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -23,6 +22,7 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
+import '../../../widgets/custom/update_membership.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -72,18 +72,31 @@ class HomeContainer extends StatelessWidget {
               //   },
               // ),
               const HomeTopNewsSlider(),
-              Visibility(
-                visible: provider.extra?.referral?.shwReferral ?? false,
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(
-                    Dimen.padding,
-                    Dimen.homeSpacing,
-                    Dimen.padding,
-                    0,
-                  ),
-                  child: const ReferApp(),
-                ),
-              ),
+              // Visibility(
+              //   visible: provider.extra?.referral?.shwReferral ?? false,
+              //   child: Container(
+              //     margin: const EdgeInsets.fromLTRB(
+              //       Dimen.padding,
+              //       Dimen.homeSpacing,
+              //       Dimen.padding,
+              //       0,
+              //     ),
+              //     child: const ReferApp(),
+              //   ),
+              // ),
+              // Visibility(
+              //   visible: provider.extra?.referral?.shwReferral ?? false,
+              //   child: Container(
+              //     margin: const EdgeInsets.fromLTRB(
+              //       Dimen.padding,
+              //       Dimen.homeSpacing,
+              //       Dimen.padding,
+              //       0,
+              //     ),
+              //     child: const UpdateMembershipCard(),
+              //   ),
+              // ),
+
               Container(
                 margin: const EdgeInsets.fromLTRB(
                   Dimen.padding,
@@ -91,17 +104,27 @@ class HomeContainer extends StatelessWidget {
                   Dimen.padding,
                   0,
                 ),
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const radar(),
-                        ),
-                      );
-                    },
-                    child: const Text('Click me')),
+                child: const ReferPurchaseSlider(),
               ),
+
+              // Container(
+              //   margin: const EdgeInsets.fromLTRB(
+              //     Dimen.padding,
+              //     Dimen.homeSpacing,
+              //     Dimen.padding,
+              //     0,
+              //   ),
+              //   child: GestureDetector(
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (_) => const radar(),
+              //           ),
+              //         );
+              //       },
+              //       child: const Text('Click me')),
+              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

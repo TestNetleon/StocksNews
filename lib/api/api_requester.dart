@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/blogDetail/index.dart';
 import 'package:stocks_news_new/screens/blogNew/blogsNew/index.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
@@ -356,6 +357,19 @@ void navigateToRequiredScreen(InAppNotification? inAppMsg) {
         builder: (_) => BlogDetail(
           slug: inAppMsg!.slug!,
           inAppMsgId: inAppMsg.id,
+        ),
+      ),
+      // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},
+    );
+  } else if (inAppMsg?.redirectOn == 'membership') {
+    Navigator.pop(navigatorKey.currentContext!);
+    Navigator.push(
+      navigatorKey.currentContext!,
+      // BlogDetail.path,
+      MaterialPageRoute(
+        builder: (_) => NewMembership(
+          inAppMsgId: inAppMsg?.id,
+          withClickCondition: true,
         ),
       ),
       // arguments: {"slug": inAppMsg?.slug, "inAppMsgId": inAppMsg?.id},

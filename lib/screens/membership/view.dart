@@ -209,7 +209,10 @@ class _MyMembershipWidgetState extends State<MyMembershipWidget> {
                     padding: const EdgeInsets.only(top: 10),
                     child: Text(
                       "${extra?.tagLine}",
-                      style: styleSansBold(color: ThemeColors.greyText),
+                      style: stylePTSansRegular(
+                        color: ThemeColors.greyText,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),

@@ -36,6 +36,7 @@ enum NotificationType {
   ticketDetail,
   referRegistration,
   appUpdate,
+  membership,
 }
 
 enum MembershipEnum {

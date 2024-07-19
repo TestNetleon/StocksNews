@@ -20,6 +20,7 @@ import '../auth/refer/refer_code.dart';
 import '../blogDetail/index.dart';
 import '../deepLinkScreen/webscreen.dart';
 import '../drawer/widgets/review_app_pop_up.dart';
+import '../membership_new/membership.dart';
 import '../stockDetail/index.dart';
 
 class HomeSplash extends StatefulWidget {
@@ -233,6 +234,15 @@ class _HomeSplashState extends State<HomeSplash> {
         Navigator.push(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const ReferAFriend()),
+        );
+      } else if (type == NotificationType.membership.name) {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+              builder: (_) => NewMembership(
+                    notificationId: notificationId,
+                    withClickCondition: true,
+                  )),
         );
       } else {
         // arguments: {"notificationId": notificationId},

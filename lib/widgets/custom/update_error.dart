@@ -1,30 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
-import '../screens/auth/signup/signup_sheet.dart';
-import '../screens/auth/signup/signup_sheet_tablet.dart';
-import '../utils/colors.dart';
-import '../utils/constants.dart';
 
 //
-class LoginError extends StatelessWidget {
-  const LoginError({
+class UpdateError extends StatelessWidget {
+  const UpdateError({
     this.error,
     this.onRefresh,
-    this.postJobButton,
     this.state,
     this.smallHeight = false,
     super.key,
-    required this.onClick,
     this.title,
   });
-  final Function() onClick;
   final String? error;
   final String? state;
   final Function()? onRefresh;
-  final bool? postJobButton;
   final bool smallHeight;
   final String? title;
 
@@ -44,11 +39,11 @@ class LoginError extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Visibility(
-                  visible: title != null && title != '',
+                  // visible: title != null && title != '',
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
-                      title ?? "",
+                      "Update App!",
                       style: stylePTSansBold(fontSize: 25),
                       textAlign: TextAlign.center,
                     ),
@@ -57,17 +52,26 @@ class LoginError extends StatelessWidget {
                 Visibility(
                   // visible: title != null && title != '',
                   child: Text(
-                    "This page is for registered users. Please log in or sign up to access.",
-                    style: stylePTSansRegular(fontSize: 16),
+                    error ?? "",
+                    style: stylePTSansRegular(fontSize: 19),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 const SpacerVertical(height: 10),
                 ThemeButtonSmall(
-                  onPressed: onClick,
-                  text: "Already have an account? Log in",
+                  onPressed: () {
+                    try {
+                      String url = Platform.isAndroid
+                          ? "https://play.google.com/store/apps/details?id=com.stocks.news"
+                          : "https://apps.apple.com/us/app/stocks-news-market-alerts/id6476615803";
+                      openUrl(url);
+                    } catch (e) {
+                      //
+                    }
+                  },
+                  text: "Update to latest app version",
                   iconFront: true,
-                  icon: Icons.login,
+                  icon: Icons.update,
                   radius: 30,
                   mainAxisSize: MainAxisSize.max,
                   textSize: 15,
@@ -75,26 +79,26 @@ class LoginError extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                        onTap: () async {
-                          Navigator.pop(context);
-                          isPhone
-                              ? await signupSheet()
-                              : await signupSheetTablet();
-                        },
-                        child: Text(
-                          "Don't have an account? Sign up ",
-                          style: stylePTSansRegular(
-                            fontSize: 18,
-                            color: ThemeColors.accent,
-                          ),
-                        )),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(15),
+                //   child: Align(
+                //     alignment: Alignment.center,
+                //     child: GestureDetector(
+                //         onTap: () async {
+                //           Navigator.pop(context);
+                //           isPhone
+                //               ? await signupSheet()
+                //               : await signupSheetTablet();
+                //         },
+                //         child: Text(
+                //           "Don't have an account? Sign up ",
+                //           style: stylePTSansRegular(
+                //             fontSize: 18,
+                //             color: ThemeColors.accent,
+                //           ),
+                //         )),
+                //   ),
+                // ),
               ],
             ),
           ),

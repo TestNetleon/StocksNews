@@ -339,22 +339,24 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     }
 
     // Always Visible
-    visibleAboutTiles.add(
-      DrawerRes(
-        iconData: Icons.topic_sharp,
-        text: "Points Transactions",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (context) => const AffiliateTransaction(
-                fromDrawer: true,
+    if (user != null) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.topic_sharp,
+          text: "Points Transactions",
+          onTap: () {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (context) => const AffiliateTransaction(
+                  fromDrawer: true,
+                ),
               ),
-            ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ),
+      );
+    }
 
     // Portfolio
     if (provider.extra?.showPortfolio == true) {

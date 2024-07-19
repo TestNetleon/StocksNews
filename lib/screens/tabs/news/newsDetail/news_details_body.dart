@@ -31,6 +31,7 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../providers/home_provider.dart';
 import '../../../../providers/user_provider.dart';
+import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../auth/refer/refer_code.dart';
@@ -553,13 +554,14 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                     provider.data?.otherPost?[index];
                                 return NewsDetailList(
                                   moreNewsData: moreNewsData,
+                                  fromAI: moreNewsData?.newsType == "ainews",
                                 );
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) {
                                 // return const SpacerVertical(height: 16);
                                 return Divider(
-                                  color: ThemeColors.greyBorder,
+                                  color: const Color.fromARGB(255, 98, 98, 98),
                                   height: 16.sp,
                                 );
                               },
@@ -845,13 +847,18 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                 ),
               )
             : !provider.isLoading && provider.data == null
-                ? Center(
-                    child: ErrorDisplayWidget(
-                      error: provider.error,
-                      onRefresh: () => provider.getNewsDetailData(
-                          slug: widget.slug, showProgress: false),
-                    ),
-                  )
+                ? provider.error?.contains('Please update your application') ==
+                        true
+                    ? UpdateError(
+                        error: provider.error,
+                      )
+                    : Center(
+                        child: ErrorDisplayWidget(
+                          error: provider.error,
+                          onRefresh: () => provider.getNewsDetailData(
+                              slug: widget.slug, showProgress: false),
+                        ),
+                      )
                 : provider.isLoading
                     ? const Loading()
                     : const SizedBox();
