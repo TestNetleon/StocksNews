@@ -60,20 +60,9 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // ThemeButton(
-              //   onPressed: () {
-              //     showDialog(
-              //       context: navigatorKey.currentContext!,
-              //       barrierColor: Colors.black.withOpacity(0.9),
-              //       builder: (context) {
-              //         return const CoinAnimationWidget();
-              //       },
-              //     );
-              //   },
-              // ),
               const HomeTopNewsSlider(),
               Visibility(
-                visible: showMembership,
+                visible: showMembership && provider.homeSliderRes != null,
                 child: Container(
                   margin: const EdgeInsets.fromLTRB(
                     Dimen.padding,

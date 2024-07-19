@@ -74,7 +74,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
       notificationId: widget.notificationId,
     );
 
-    if (newsProvider.data?.postDetail?.readingStatus == false) {
+    if (newsProvider.data?.postDetail?.readingStatus == false ||
+        newsProvider.extra?.isOldApp == true) {
       return;
     }
 
@@ -585,7 +586,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                         icon: Icons.share,
                       ),
                     ),
-
                     NewsDetailsLock(slug: widget.slug),
                     // if ((provider.data?.postDetail?.readingStatus == false) &&
                     //     !provider.isLoading)
@@ -833,7 +833,6 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                     //       ),
                     //     ],
                     //   ),
-
                     // CommonShare(
                     //   visible: controllerProvider.isVisible,
                     //   linkShare: provider.data?.postDetail?.slug ?? "",
@@ -843,11 +842,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                 ),
               )
             : !provider.isLoading && provider.data == null
-                ? provider.error?.contains('Please update your application') ==
-                        true
-                    ? UpdateError(
-                        error: provider.error,
-                      )
+                ? provider.extra?.isOldApp == true
+                    ? UpdateError(error: provider.error)
                     : Center(
                         child: ErrorDisplayWidget(
                           error: provider.error,

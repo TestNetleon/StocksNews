@@ -53,7 +53,8 @@ class _BlogDetailState extends State<BlogDetail> {
       notificationId: widget.notificationId,
     );
 
-    if (blogProvider.blogsDetail?.readingStatus == false) {
+    if (blogProvider.blogsDetail?.readingStatus == false ||
+        blogProvider.extra?.isOldApp == true) {
       return;
     }
 

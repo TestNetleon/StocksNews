@@ -158,6 +158,7 @@ class BlogProvider extends ChangeNotifier {
         authorsData = null;
         _error = response.message;
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;

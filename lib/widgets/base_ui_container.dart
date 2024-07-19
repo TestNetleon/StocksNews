@@ -19,6 +19,7 @@ class BaseUiContainer extends StatelessWidget {
     this.onNavigate,
     this.navBtnText,
     this.placeholder,
+    this.isOldApp,
     super.key,
   });
 //
@@ -31,6 +32,7 @@ class BaseUiContainer extends StatelessWidget {
   final bool errorDispCommon;
   final String? navBtnText;
   final Widget? placeholder;
+  final bool? isOldApp;
   final dynamic Function()? onRefresh;
   final dynamic Function()? onNavigate;
 
@@ -45,22 +47,14 @@ class BaseUiContainer extends StatelessWidget {
           // const Loading()
           : hasData
               ? isFull
-                  ? Column(
-                      children: [
-                        Expanded(child: child),
-                      ],
-                    )
+                  ? Column(children: [Expanded(child: child)])
                   : child
               : OptionalParent(
                   addParent: errorDispCommon,
                   parentBuilder: (child) {
-                    if (error?.contains("Please update your application") ==
-                        true) {
-                      return UpdateError(
-                        error: error,
-                      );
+                    if (isOldApp == true) {
+                      return UpdateError(error: error);
                     }
-
                     return ErrorDisplayWidget(
                       error: error ?? Const.errNoRecord,
                       onRefresh: onRefresh,
@@ -70,9 +64,7 @@ class BaseUiContainer extends StatelessWidget {
                   },
                   child:
                       error?.contains('Please update your application') == true
-                          ? UpdateError(
-                              error: error,
-                            )
+                          ? UpdateError(error: error)
                           : ErrorDisplayNewWidget(
                               error: error ?? Const.errNoRecord,
                               onRefresh: onRefresh,
