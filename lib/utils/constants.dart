@@ -117,6 +117,9 @@ class Images {
   static const String transaction = "assets/images/transaction.png";
   static const String pointIcon = "assets/images/golden1.png";
   static const String pointIcon2 = "assets/images/golden.png";
+  static const String word = "assets/images/word.png";
+  static const String arrow = "assets/images/arrow.png";
+
   static const String pointIcon3 = "assets/images/3_coins.png";
 
   static const String netflix = "assets/images/nflx.png";

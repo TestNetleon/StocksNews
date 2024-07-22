@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_charts/multi_charts.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/prediction/Widget/faq.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/forecast_chart.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/fundamental.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/header.dart';
@@ -48,10 +49,11 @@ class _radarState extends State<radar> {
                 const PreditionHeader(),
                 SizedBox(
                   width: 450,
-                  height: 300,
+                  height: 320,
                   //Radar Chart
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    padding: const EdgeInsets.only(
+                        left: 10.0, right: 10.0, top: 20.0),
                     child: RadarChart(
                       labelColor: Colors.white,
                       fillColor: Colors.greenAccent,
@@ -69,7 +71,7 @@ class _radarState extends State<radar> {
                         "Debt-to-Equity Ratio",
                       ],
                       maxValue: 54,
-                      chartRadiusFactor: 0.7,
+                      chartRadiusFactor: 0.6,
                     ),
                   ),
                 ),
@@ -81,161 +83,15 @@ class _radarState extends State<radar> {
                 const SizedBox(
                   height: 10.0,
                 ),
-
-                const SizedBox(
-                  height: 8.0,
-                ),
                 const TechnicalAnalaysis(),
-                ForcastingChart(),
-                // SizedBox(
-                //     height: MediaQuery.of(context).size.height * 0.20,
-                //     child: ListView.builder(
-                //         itemCount: Technical.length,
-                //         shrinkWrap: true,
-                //         scrollDirection: Axis.horizontal,
-                //         physics: const AlwaysScrollableScrollPhysics(),
-                //         itemBuilder: (context, index) {
-                //           return Stack(
-                //             children: [
-                //               Container(
-                //                 width: MediaQuery.of(context).size.width * 0.50,
-                //                 decoration: BoxDecoration(
-                //                   color: Colors.white,
-                //                   border: Border.all(color: Colors.white),
-                //                 ),
-                //                 margin: const EdgeInsets.all(8.0),
-                //               ),
-                //               Positioned(
-                //                 left: 75,
-                //                 child: Container(
-                //                     height: 40,
-                //                     width: 50,
-                //                     decoration: BoxDecoration(
-                //                         color: Colors.white,
-                //                         border: Border.all(color: Colors.grey),
-                //                         shape: BoxShape.circle),
-                //                     child: const Icon(Icons.person)),
-                //               ),
-                //               const SizedBox(
-                //                 height: 10.0,
-                //               ),
-                //               Positioned(
-                //                 top: 50,
-                //                 left: 25,
-                //                 child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       Technical[index],
-                //                       style: GoogleFonts.lato(
-                //                         textStyle: Theme.of(context)
-                //                             .textTheme
-                //                             .labelSmall,
-                //                         fontSize: 14,
-                //                         fontWeight: FontWeight.w700,
-                //                         fontStyle: FontStyle.normal,
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 5.0,
-                //                     ),
-                //                     Text(
-                //                       '\$93,48584',
-                //                       style: GoogleFonts.lato(
-                //                         textStyle: Theme.of(context)
-                //                             .textTheme
-                //                             .labelSmall,
-                //                         fontSize: 12,
-                //                         fontWeight: FontWeight.w700,
-                //                         fontStyle: FontStyle.normal,
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 5.0,
-                //                     ),
-                //                     Text(
-                //                       '\$93,48584',
-                //                       style: GoogleFonts.lato(
-                //                         textStyle: Theme.of(context)
-                //                             .textTheme
-                //                             .labelSmall,
-                //                         fontSize: 12,
-                //                         fontWeight: FontWeight.w700,
-                //                         fontStyle: FontStyle.normal,
-                //                       ),
-                //                     )
-                //                   ],
-                //                 ),
-                //               )
-                //             ],
-                //           );
-                //         })),
-                // const SizedBox(
-                //   height: 10.0,
-                // ),
-                // Text(
-                //   'Qualitative Factors',
-                //   style: GoogleFonts.lato(
-                //     textStyle: Theme.of(context).textTheme.bodyMedium,
-                //     fontSize: 20,
-                //     color: Colors.white,
-                //     fontWeight: FontWeight.w700,
-                //     fontStyle: FontStyle.normal,
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 8.0,
-                // ),
-                // Container(
-                //     height: MediaQuery.of(context).size.height * 0.25,
-                //     color: Colors.amber,
-                //     child: ListView.builder(
-                //         itemCount: Qualitative.length,
-                //         shrinkWrap: true,
-                //         scrollDirection: Axis.vertical,
-                //         physics: const AlwaysScrollableScrollPhysics(),
-                //         itemBuilder: (context, index) {
-                //           return Column(
-                //             children: [
-                //               Text(
-                //                 Qualitative[index],
-                //                 style: GoogleFonts.lato(
-                //                   textStyle:
-                //                       Theme.of(context).textTheme.labelSmall,
-                //                   fontSize: 16,
-                //                   fontWeight: FontWeight.w700,
-                //                   fontStyle: FontStyle.normal,
-                //                 ),
-                //               ),
-                //               const SizedBox(
-                //                 height: 5.0,
-                //               ),
-                //               Text(
-                //                 '\$93,48584',
-                //                 style: GoogleFonts.lato(
-                //                   textStyle:
-                //                       Theme.of(context).textTheme.labelSmall,
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.w700,
-                //                   fontStyle: FontStyle.normal,
-                //                 ),
-                //               ),
-                //               const SizedBox(
-                //                 height: 5.0,
-                //               ),
-                //               Text(
-                //                 '\$93,48584',
-                //                 style: GoogleFonts.lato(
-                //                   textStyle:
-                //                       Theme.of(context).textTheme.labelSmall,
-                //                   fontSize: 12,
-                //                   fontWeight: FontWeight.w700,
-                //                   fontStyle: FontStyle.normal,
-                //                 ),
-                //               )
-                //             ],
-                //           );
-                //         })),
+                const ForcastingChart(),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                const Faq(),
+                const SizedBox(
+                  height: 10.0,
+                ),
               ]),
         ),
       ),

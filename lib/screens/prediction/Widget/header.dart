@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class PreditionHeader extends StatefulWidget {
   const PreditionHeader({super.key});
@@ -18,8 +19,8 @@ class _PreditionHeaderState extends State<PreditionHeader> {
         Row(
           children: [
             Container(
-              height: 40,
-              width: 40,
+              height: 50,
+              width: 50,
               decoration: const BoxDecoration(
                   shape: BoxShape.circle, color: Colors.white),
               child: Image.asset(Images.microsoft),
@@ -30,17 +31,24 @@ class _PreditionHeaderState extends State<PreditionHeader> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Microsoft Pvt.Ltd', style: stylePTSansBold()),
-                Text('Val - 20,049594',
+                Text('MSFT', style: stylePTSansBold()),
+                const SpacerVertical(
+                  height: 5.0,
+                ),
+                Text('20,049594',
                     style: stylePTSansBold(fontSize: 12, color: Colors.green)),
-                Text('BDL - 747657489',
-                    style: stylePTSansBold(fontSize: 12, color: Colors.red)),
+                const SpacerVertical(
+                  height: 5.0,
+                ),
+                Text('747657489',
+                    style: stylePTSansBold(fontSize: 12, color: Colors.white)),
               ],
             ),
           ],
         ),
         Container(
-          width: 90,
+          width: 120,
+          height: 70,
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(8.0),
@@ -48,18 +56,22 @@ class _PreditionHeaderState extends State<PreditionHeader> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   stops: [0.0, 0.3],
-                  colors: [Colors.greenAccent, Colors.green])
+                  colors: [Color.fromARGB(255, 32, 240, 139), Colors.green])
               // color: Colors.white
               ),
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Text('Overall',
-                  style: stylePTSansBold(
-                    fontSize: 12,
-                  )),
-              Text('Wait', style: stylePTSansBold()),
-            ],
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Overall',
+                    style: stylePTSansBold(
+                      fontSize: 16,
+                    )),
+                Text('Wait', style: stylePTSansBold(fontSize: 20)),
+              ],
+            ),
           ),
         ),
       ],
