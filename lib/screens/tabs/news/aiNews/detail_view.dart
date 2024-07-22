@@ -18,6 +18,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
@@ -57,7 +58,8 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
   Widget build(BuildContext context) {
     AIProvider provider = context.watch<AIProvider>();
     String date = provider.detail?.postDetail?.postDateString ?? "";
-    bool foundSite = provider.detail?.postDetail?.source != "" && provider.detail?.postDetail?.source != null;
+    bool foundSite = provider.detail?.postDetail?.source != "" &&
+        provider.detail?.postDetail?.source != null;
 
     return provider.detailLoading
         ? const Loading()
@@ -381,7 +383,10 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                               ),
                             ),
                             const SpacerVertical(height: 25),
-                            const ScreenTitle(title: "More News to Read"),
+                            const ScreenTitle(
+                              title: "More News to Read",
+                              dividerPadding: EdgeInsets.zero,
+                            ),
                             ListView.separated(
                               itemCount:
                                   provider.detail?.otherPost?.length ?? 0,
@@ -392,7 +397,7 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                                 PostDetail? moreNewsData =
                                     provider.detail?.otherPost?[index];
                                 return NewsDetailList(
-                                  fromAI: true,
+                                  fromAI: moreNewsData?.newsType == "ainews",
                                   moreNewsData: moreNewsData,
                                 );
                               },
@@ -432,13 +437,17 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                 ),
               )
             : !provider.detailLoading && provider.detail == null
-                ? Center(
-                    child: ErrorDisplayWidget(
-                      error: provider.errorDetail,
-                      onRefresh: () => provider.getNewsDetailData(
-                          slug: widget.slug, showProgress: false),
-                    ),
-                  )
+                ? provider.errorDetail?.contains('You are using') == true
+                    ? UpdateError(
+                        error: provider.errorDetail,
+                      )
+                    : Center(
+                        child: ErrorDisplayWidget(
+                          error: provider.errorDetail,
+                          onRefresh: () => provider.getNewsDetailData(
+                              slug: widget.slug, showProgress: false),
+                        ),
+                      )
                 : provider.detailLoading
                     ? const Loading()
                     : const SizedBox();

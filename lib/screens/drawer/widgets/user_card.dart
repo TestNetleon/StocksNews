@@ -5,7 +5,6 @@ import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/membership/index.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
-import 'package:stocks_news_new/service/revenue_cat.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -250,12 +249,13 @@ class _UserCardState extends State<UserCard> {
                         ),
                         onPressed: () {
                           Scaffold.of(context).closeDrawer();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const NewMembership(),
-                            ),
-                          );
+                          _upgradeSubscription();
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (_) => const NewMembership(),
+                          //   ),
+                          // );
                           // askToSubscribe(
                           //   onPressed: () {
                           //     Navigator.pop(navigatorKey.currentContext!);
@@ -380,7 +380,13 @@ class _UserCardState extends State<UserCard> {
       await membershipLogin();
     }
     if (provider.user?.phone != null && provider.user?.phone != '') {
-      await RevenueCatService.initializeSubscription();
+      // await RevenueCatService.initializeSubscription();
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(),
+        ),
+      );
     }
   }
 

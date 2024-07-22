@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -97,8 +98,7 @@ class ReferApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // UserProvider provider = context.read<UserProvider>();
     ReferralRes? referral = context.watch<HomeProvider>().extra?.referral;
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
+    return GestureDetector(
       onTap: () {
         _onShareAppClick();
 
@@ -112,7 +112,7 @@ class ReferApp extends StatelessWidget {
         //   "${referral?.shareText}${"\n\n"}${provider.user?.referralUrl}",
         // );
       },
-      child: Ink(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -126,30 +126,46 @@ class ReferApp extends StatelessWidget {
           //     // Color.fromARGB(255, 10, 114, 24),
           //   ],.
           // ),
-          gradient: const RadialGradient(
-            center: Alignment.bottomCenter,
-            radius: 2,
-            stops: [0.0, 0.6],
-            colors: [
-              Color.fromARGB(255, 0, 93, 12),
-              Color.fromARGB(255, 6, 41, 1),
-            ],
-          ),
           // gradient: const RadialGradient(
           //   center: Alignment.bottomCenter,
-          //   radius: 3,
-          //   stops: [0.0, 0.2, 1.0],
+          //   radius: 2,
+          //   stops: [0.0, 0.6],
           //   colors: [
-          //     Color.fromARGB(255, 20, 156, 10),
           //     Color.fromARGB(255, 0, 93, 12),
-          //     Color.fromARGB(255, 4, 34, 0),
+          //     Color.fromARGB(255, 6, 41, 1),
           //   ],
           // ),
+
+          // gradient: const SweepGradient(
+          //   colors: [
+          //     Color.fromARGB(255, 222, 69, 9),
+          //     Color.fromARGB(255, 227, 209, 18),
+          //     Color.fromARGB(255, 11, 199, 29),
+          //     Color.fromARGB(255, 227, 209, 18),
+          //     Color.fromARGB(255, 222, 69, 9)
+          //   ],
+          //   stops: [0.0, 0.25, 0.5, 0.75, 1],
+          //   center: Alignment.center,
+          //   startAngle: 0.0,
+          //   transform: GradientRotation(2),
+          //   endAngle: 3.14 * 2,
+          // ),
+
+          gradient: const RadialGradient(
+            center: Alignment.bottomCenter,
+            radius: 3,
+            stops: [0.0, 0.2, 1.0],
+            colors: [
+              Color.fromARGB(255, 20, 156, 10),
+              Color.fromARGB(255, 0, 93, 12),
+              Color.fromARGB(255, 4, 34, 0),
+            ],
+          ),
         ),
         child: Row(
           children: [
             Image.asset(
-              Images.pointIcon,
+              Images.pointIcon2,
               // Images.reward,
               // Images.flames,
 
@@ -160,6 +176,7 @@ class ReferApp extends StatelessWidget {
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Text(
                   //   referral?.title ?? "Refer and Earn",
@@ -170,7 +187,9 @@ class ReferApp extends StatelessWidget {
                     style: stylePTSansBold(fontSize: 18),
                   ),
                   const SpacerVertical(height: 3),
-                  Text(
+                  AutoSizeText(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     referral?.message ?? "",
                     style: stylePTSansRegular(fontSize: 14, height: 1.4),
                   ),

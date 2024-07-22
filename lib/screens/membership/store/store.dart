@@ -1,4 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/store_info_res.dart';
@@ -114,22 +115,25 @@ class _StoreState extends State<Store> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${data?.title}",
-                        style: stylePTSansBold(
-                          color: Colors.white,
-                          fontSize: 28,
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${data?.title}",
+                          style: stylePTSansBold(
+                            color: Colors.white,
+                            fontSize: 28,
+                          ),
                         ),
-                      ),
-                      const SpacerVertical(height: 5),
-                      Text(
-                        "${data?.subTitle}",
-                        style: stylePTSansRegular(color: Colors.white),
-                      ),
-                    ],
+                        const SpacerVertical(height: 5),
+                        Text(
+                          "${data?.subTitle}",
+                          style: stylePTSansRegular(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                   const SpacerVertical(),
                   Container(
@@ -143,9 +147,10 @@ class _StoreState extends State<Store> {
                       gradient: const LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
+                        stops: [0.0, 0.4],
                         colors: [
-                          Color.fromARGB(255, 215, 255, 221),
-                          Colors.white
+                          Color.fromARGB(255, 138, 255, 156),
+                          Colors.white,
                         ],
                       ),
                     ),
@@ -238,6 +243,39 @@ class _StoreState extends State<Store> {
                                   ),
                                 ],
                               );
+
+                              // return Container(
+                              //   width: double.infinity,
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 15, vertical: 40),
+                              //   color: index % 2 == 0
+                              //       ? Colors.black
+                              //       : const Color.fromARGB(255, 22, 22, 22),
+                              //   child: Column(
+                              //     children: [
+                              //       // const SpacerVertical(height: 10),
+                              //       Text(
+                              //         "${data?.benefits?[index].question}",
+                              //         textAlign: TextAlign.center,
+                              //         style: styleSansBold(
+                              //           // color: Colors.black,
+                              //           color: ThemeColors.themeGreen,
+                              //           fontSize: 20,
+                              //         ),
+                              //       ),
+                              //       const SpacerVertical(height: 10),
+                              //       Text(
+                              //         textAlign: TextAlign.center,
+                              //         "${data?.benefits?[index].answer}",
+                              //         style: stylePTSansRegular(
+                              //           // color: Colors.black,
+                              //           color: Colors.white,
+                              //           fontSize: 16,
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // );
                             },
                             separatorBuilder: (context, index) {
                               return const SpacerVertical(height: 8);
@@ -266,6 +304,7 @@ class _StoreState extends State<Store> {
                               openIndex: provider.faqOpenIndex,
                               index: index,
                               provider: provider,
+                              textColor: Colors.black,
                             );
                           },
                           separatorBuilder: (context, index) {
@@ -305,139 +344,227 @@ class PointsItem extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          AspectRatio(
-            aspectRatio: .88,
+          // AspectRatio(
+          //   aspectRatio: .88,
+          //   child: Container(
+          //     padding: const EdgeInsets.all(2),
+          //     margin: const EdgeInsets.only(top: 50),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       gradient: const LinearGradient(
+          //         begin: Alignment.topLeft,
+          //         end: Alignment.bottomRight,
+          //         colors: [
+          //           Color.fromARGB(255, 23, 254, 42),
+          //           Color.fromARGB(255, 217, 159, 0),
+          //         ],
+          //       ),
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.grey.withOpacity(0.5), // Color of the shadow
+          //           spreadRadius: 5, // Spread radius
+          //           blurRadius: 7, // Blur radius
+          //           offset: const Offset(0, 3), // Offset from the box
+          //         ),
+          //       ],
+          //     ),
+          //     child: Container(
+          //       width: double.infinity,
+          //       padding: const EdgeInsets.all(12),
+          //       // margin: const EdgeInsets.only(top: 50),
+          //       // constraints: const BoxConstraints(
+          //       //   maxWidth: 250,
+          //       //   minWidth: 150,
+          //       // ),
+          //       decoration: BoxDecoration(
+          //         color: ThemeColors.tabBack,
+          //         borderRadius: BorderRadius.circular(10),
+          //         image: const DecorationImage(
+          //           fit: BoxFit.cover,
+          //           opacity: .5,
+          //           image: AssetImage(Images.storeBack),
+          //         ),
+          //         gradient: const LinearGradient(
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //           colors: [
+          //             Color.fromARGB(255, 1, 87, 15),
+          //             Color.fromARGB(255, 128, 197, 151),
+          //           ],
+          //         ),
+          //       ),
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           // const SpacerVertical(height: 20),
+          //           // Text(
+          //           //   "Get",
+          //           //   style: stylePTSansRegular(),
+          //           //   textAlign: TextAlign.center,
+          //           // ),
+          //           // const SpacerVertical(height: 5),
+          //           Expanded(
+          //             child: Column(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               mainAxisAlignment: MainAxisAlignment.end,
+          //               children: [
+          //                 Row(
+          //                   crossAxisAlignment: CrossAxisAlignment.end,
+          //                   children: [
+          //                     Text(
+          //                       points,
+          //                       style: stylePTSansBold(fontSize: 34).copyWith(
+          //                         height: 0,
+          //                         fontWeight: FontWeight.w900,
+          //                         shadows: [
+          //                           Shadow(
+          //                             blurRadius: 10.0,
+          //                             color: Colors.black.withOpacity(0.5),
+          //                             offset: const Offset(2.0, 2.0),
+          //                           ),
+          //                         ],
+          //                       ),
+          //                       textAlign: TextAlign.center,
+          //                     ),
+          //                     const SpacerHorizontal(width: 10),
+          //                     Padding(
+          //                       padding: const EdgeInsets.only(bottom: 5),
+          //                       child: Text(
+          //                         "Points",
+          //                         style:
+          //                             stylePTSansRegular(fontSize: 16).copyWith(
+          //                           fontWeight: FontWeight.w600,
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //                 // const SpacerVertical(height: 2),
+          //                 // Text(
+          //                 //   "Unlimited Validity",
+          //                 //   style: stylePTSansRegular(fontSize: 14),
+          //                 //   textAlign: TextAlign.center,
+          //                 // ),
+          //               ],
+          //             ),
+          //           ),
+          //           const SpacerVertical(height: 12),
+          //           // Text(
+          //           //   "Points",
+          //           //   style: stylePTSansRegular(),
+          //           //   textAlign: TextAlign.center,
+          //           // ),
+          //           // // const SpacerVertical(height: 2),
+          //           // // Text(
+          //           // //   "in Just",
+          //           // //   style: stylePTSansRegular(),
+          //           // //   textAlign: TextAlign.center,
+          //           // // ),
+          //           // const SpacerVertical(height: 5),
+          //           Container(
+          //             width: double.infinity,
+          //             padding: const EdgeInsets.symmetric(
+          //                 vertical: 6, horizontal: 8),
+          //             decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(30),
+          //               color: Colors.black,
+          //             ),
+          //             child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               children: [
+          //                 Flexible(
+          //                   child: Text(
+          //                       maxLines: 1,
+          //                       "Buy @ $price",
+          //                       overflow: TextOverflow.ellipsis,
+          //                       style: stylePTSansRegular(
+          //                           fontSize: Platform.isAndroid ? 12 : 16)),
+          //                 ),
+          //                 const SpacerHorizontal(width: 2),
+          //                 Image.asset(
+          //                   Images.buyPoints,
+          //                   color: Colors.white,
+          //                   width: 15,
+          //                   height: 15,
+          //                 )
+          //               ],
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
+          Container(
+            padding: const EdgeInsets.all(2),
+            margin: const EdgeInsets.only(top: 50),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 23, 254, 42),
+                  Color.fromARGB(255, 217, 159, 0),
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5), // Color of the shadow
+                  spreadRadius: 5, // Spread radius
+                  blurRadius: 7, // Blur radius
+                  offset: const Offset(0, 3), // Offset from the box
+                ),
+              ],
+            ),
             child: Container(
-              padding: const EdgeInsets.all(2),
-              margin: const EdgeInsets.only(top: 50),
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+              // margin: const EdgeInsets.only(top: 50),
+              // constraints: const BoxConstraints(
+              //   maxWidth: 250,
+              //   minWidth: 150,
+              // ),
               decoration: BoxDecoration(
+                color: ThemeColors.tabBack,
                 borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  opacity: .5,
+                  image: AssetImage(Images.storeBack),
+                ),
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color.fromARGB(255, 23, 254, 42),
-                    Color.fromARGB(255, 217, 159, 0),
+                    Color.fromARGB(255, 1, 87, 15),
+                    Color.fromARGB(255, 128, 197, 151),
                   ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5), // Color of the shadow
-                    spreadRadius: 5, // Spread radius
-                    blurRadius: 7, // Blur radius
-                    offset: const Offset(0, 3), // Offset from the box
-                  ),
-                ],
               ),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                // margin: const EdgeInsets.only(top: 50),
-                // constraints: const BoxConstraints(
-                //   maxWidth: 250,
-                //   minWidth: 150,
-                // ),
-                decoration: BoxDecoration(
-                  color: ThemeColors.tabBack,
-                  borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    opacity: .5,
-                    image: AssetImage(Images.storeBack),
-                  ),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color.fromARGB(255, 1, 87, 15),
-                      Color.fromARGB(255, 128, 197, 151),
-                    ],
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // const SpacerVertical(height: 20),
-                    // Text(
-                    //   "Get",
-                    //   style: stylePTSansRegular(),
-                    //   textAlign: TextAlign.center,
-                    // ),
-                    // const SpacerVertical(height: 5),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                points,
-                                style: stylePTSansBold(fontSize: 34).copyWith(
-                                  height: 0,
-                                  fontWeight: FontWeight.w900,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 10.0,
-                                      color: Colors.black.withOpacity(0.5),
-                                      offset: const Offset(2.0, 2.0),
-                                    ),
-                                  ],
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SpacerHorizontal(width: 10),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Text(
-                                  "Points",
-                                  style:
-                                      stylePTSansRegular(fontSize: 16).copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          // const SpacerVertical(height: 2),
-                          // Text(
-                          //   "Unlimited Validity",
-                          //   style: stylePTSansRegular(fontSize: 14),
-                          //   textAlign: TextAlign.center,
-                          // ),
-                        ],
-                      ),
-                    ),
-                    const SpacerVertical(height: 12),
-                    // Text(
-                    //   "Points",
-                    //   style: stylePTSansRegular(),
-                    //   textAlign: TextAlign.center,
-                    // ),
-                    // // const SpacerVertical(height: 2),
-                    // // Text(
-                    // //   "in Just",
-                    // //   style: stylePTSansRegular(),
-                    // //   textAlign: TextAlign.center,
-                    // // ),
-                    // const SpacerVertical(height: 5),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.black,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: AutoSizeText(
-                              maxLines: 1,
-                              "Buy @ $price",
-                              style: stylePTSansRegular(fontSize: 16).copyWith(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const SpacerVertical(height: 20),
+                  // Text(
+                  //   "Get",
+                  //   style: stylePTSansRegular(),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // const SpacerVertical(height: 5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                              text: points,
+                              style: stylePTSansBold(fontSize: 34).copyWith(
+                                height: 0,
+                                fontWeight: FontWeight.w900,
                                 shadows: [
                                   Shadow(
                                     blurRadius: 10.0,
@@ -446,46 +573,123 @@ class PointsItem extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              children: [
+                                TextSpan(
+                                  text: "  Points",
+                                  style:
+                                      stylePTSansRegular(fontSize: 16).copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ]),
+                        ),
+
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   children: [
+                        //     Text(
+                        //       points,
+                        //       style: stylePTSansBold(fontSize: 34).copyWith(
+                        //         height: 0,
+                        //         fontWeight: FontWeight.w900,
+                        //         shadows: [
+                        //           Shadow(
+                        //             blurRadius: 10.0,
+                        //             color: Colors.black.withOpacity(0.5),
+                        //             offset: const Offset(2.0, 2.0),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       textAlign: TextAlign.center,
+                        //     ),
+                        //     const SpacerHorizontal(width: 10),
+                        //     Flexible(
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.only(bottom: 5),
+                        //         child: Text(
+                        //           "Points",
+                        //           maxLines: 1,
+                        //           overflow: TextOverflow.ellipsis,
+                        //           style:
+                        //               stylePTSansRegular(fontSize: 16).copyWith(
+                        //             fontWeight: FontWeight.w600,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+
+                        // const SpacerVertical(height: 2),
+                        // Text(
+                        //   "Unlimited Validity",
+                        //   style: stylePTSansRegular(fontSize: 14),
+                        //   textAlign: TextAlign.center,
+                        // ),
+                      ],
+                    ),
+                  ),
+                  const SpacerVertical(height: 12),
+                  // Text(
+                  //   "Points",
+                  //   style: stylePTSansRegular(),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // // const SpacerVertical(height: 2),
+                  // // Text(
+                  // //   "in Just",
+                  // //   style: stylePTSansRegular(),
+                  // //   textAlign: TextAlign.center,
+                  // // ),
+                  // const SpacerVertical(height: 5),
+                  Container(
+                    width: double.infinity,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.black,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            "Buy @ $price",
+                            textAlign: TextAlign.center,
+                            style: stylePTSansRegular(
+                              // fontSize: Platform.isAndroid ? 12 : 16,
+                              fontSize: Platform.isAndroid ? 12 : 16,
                             ),
                           ),
-                          const SpacerHorizontal(width: 10),
-                          Image.asset(
-                            Images.buyPoints,
-                            color: Colors.white,
-                            width: 18,
-                            height: 18,
-                          )
-                        ],
-                      ),
+                        ),
+                        const SpacerHorizontal(width: 2),
+                        Image.asset(
+                          Images.buyPoints,
+                          color: Colors.white,
+                          width: 15,
+                          height: 15,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
           Positioned(
-            top: 0,
+            top: 5,
             child: Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
-              // decoration: const BoxDecoration(
-              //   color: ThemeColors.tabBack,
-              //   // borderRadius: BorderRadius.circular(6),
-              //   shape: BoxShape.circle,
-              //   gradient: LinearGradient(
-              //     begin: Alignment.topCenter,
-              //     end: Alignment.bottomCenter,
-              //     colors: [
-              //       Color.fromARGB(255, 1, 87, 15),
-              //       Color.fromARGB(255, 128, 197, 151),
-              //     ],
-              //   ),
-              // ),
-              // child: const Icon(Icons.star, size: 36),
-              child: Image.asset(
-                Images.pointIcon,
-                width: 60,
-                height: 60,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(
+                  Images.pointIcon2,
+                  width: 55,
+                  height: 55,
+                ),
               ),
             ),
           ),

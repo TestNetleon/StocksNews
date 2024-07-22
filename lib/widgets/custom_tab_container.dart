@@ -38,7 +38,7 @@ class CustomTabContainer extends StatefulWidget {
 }
 
 class _CustomState extends State<CustomTabContainer>
-    with SingleTickerProviderStateMixin {
+  with SingleTickerProviderStateMixin {
   bool sync = true;
   TabController? _controller;
   int _selectedIndex = 0;
@@ -209,8 +209,7 @@ class _CustomTabContainerNEWState extends State<CustomTabContainerNEW>
           // ),
           // SpacerVertical(height: 5),
           Padding(
-            padding:
-                widget.tabsPadding ?? EdgeInsets.symmetric(horizontal: 10.sp),
+            padding: widget.tabsPadding ?? EdgeInsets.symmetric(horizontal: 10.sp),
             child: TabBar(
               tabAlignment: widget.scrollable == true
                   ? TabAlignment.start

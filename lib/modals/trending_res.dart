@@ -75,6 +75,7 @@ class TrendingRes {
 class GeneralNew {
   final DateTime? publishedDate;
   final String? title;
+  final String? slug;
   final String? image;
   final String? site;
   final String? text;
@@ -82,6 +83,7 @@ class GeneralNew {
   final List<DetailListType>? authors;
 
   GeneralNew({
+    this.slug,
     this.publishedDate,
     this.title,
     this.image,
@@ -96,6 +98,7 @@ class GeneralNew {
         title: json["title"],
         image: json["image"],
         site: json["site"],
+        slug: json['slug'],
         text: json["text"],
         url: json["url"],
         authors: json["authors"] == null
@@ -108,6 +111,7 @@ class GeneralNew {
         "publishedDate": publishedDate?.toIso8601String(),
         "title": title,
         "image": image,
+        "slug": slug,
         "site": site,
         "text": text,
         "url": url,

@@ -1,9 +1,4 @@
-// To parse this JSON data, do
-//
-//     final blogsDetailRes = blogsDetailResFromJson(jsonString);
-
 import 'dart:convert';
-
 import 'news_datail_res.dart';
 
 BlogsDetailRes blogsDetailResFromJson(String str) =>
@@ -31,6 +26,8 @@ class BlogsDetailRes {
   String? readingTitle;
   String? readingSubtitle;
   bool? balanceStatus;
+  dynamic totalPoints;
+  dynamic pointsRequired;
 
   BlogsDetailRes({
     required this.id,
@@ -50,14 +47,17 @@ class BlogsDetailRes {
     this.readingTitle,
     this.readingSubtitle,
     this.balanceStatus,
+    this.totalPoints,
+    this.pointsRequired,
   });
 
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
         id: json["_id"],
         name: json["name"],
         tickers: json["tickers"] == null
-        ? []
-        : List<NewsTicker>.from(json["tickers"]!.map((x) => NewsTicker.fromJson(x))),
+            ? []
+            : List<NewsTicker>.from(
+                json["tickers"]!.map((x) => NewsTicker.fromJson(x))),
         description: json["description"],
         slug: json["slug"],
         authors: json["authors"] == null
@@ -79,6 +79,8 @@ class BlogsDetailRes {
         readingTitle: json["reading_title"],
         readingSubtitle: json["reading_subtitle"],
         balanceStatus: json["balance_status"],
+        totalPoints: json["total_points"],
+        pointsRequired: json["point_required"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,7 +89,9 @@ class BlogsDetailRes {
         "description": description,
         'published_date_string': postDateString,
         "slug": slug,
-        "tickers": tickers == null ? [] : List<dynamic>.from(tickers!.map((x) => x.toJson())),
+        "tickers": tickers == null
+            ? []
+            : List<dynamic>.from(tickers!.map((x) => x.toJson())),
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),
@@ -101,6 +105,7 @@ class BlogsDetailRes {
         "reading_title": readingTitle,
         "reading_subtitle": readingSubtitle,
         "balance_status": balanceStatus,
+        "total_points": totalPoints,
+        "point_required": pointsRequired,
       };
 }
-

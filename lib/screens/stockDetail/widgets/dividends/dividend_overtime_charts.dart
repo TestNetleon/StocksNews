@@ -19,12 +19,10 @@ class DividendPaymentLineChart extends StatelessWidget {
       return const Center(child: SizedBox.shrink());
     }
 
-    List<FlSpot> spots =
-        provider.dividends!.chartInfo!.asMap().entries.map((entry) {
+    List<FlSpot> spots = provider.dividends!.chartInfo!.asMap().entries.map((entry) {
       int index = entry.key;
       DividendCharts data = entry.value;
-      double yield =
-          double.tryParse(data.chartInfoYield!.replaceAll('%', '')) ?? 0;
+      double yield = double.tryParse(data.chartInfoYield!.replaceAll('%', '')) ?? 0;
       return FlSpot(index.toDouble(), yield);
     }).toList();
 

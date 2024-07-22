@@ -29,9 +29,9 @@ class _Snp500StocksState extends State<Snp500Stocks> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       SnP500Provider provider = context.read<SnP500Provider>();
-      if (provider.data != null) {
-        return;
-      }
+      // if (provider.data != null) {
+      //   return;
+      // }
       provider.resetFilter();
       provider.getData();
     });

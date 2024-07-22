@@ -117,9 +117,10 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
                   onPressed: () {
                     // Navigator.pop(context);
                     Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Tabs()),
-                        (routes) => false);
+                      context,
+                      MaterialPageRoute(builder: (context) => const Tabs()),
+                      (routes) => false,
+                    );
                   },
                 ),
               )

@@ -189,9 +189,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                     // ),
                     const Padding(
                       padding: EdgeInsets.only(top: 13),
-                      child: MyVerifiedCard(
-                        gotoProfile: false,
-                      ),
+                      child: MyVerifiedCard(gotoProfile: false),
                     ),
                   ],
                 ),
@@ -278,19 +276,25 @@ class MyVerifiedCard extends StatelessWidget {
                 message: homeProvider.extra?.profileText?.points ??
                     "Points are earned by referring the app to friends and family who join and verify their contact information, with the referring user receiving points for each verified referral.",
                 title: "Points",
-                icon: Images.pointIcon,
+                icon: Images.pointIcon2,
               );
             },
             child: Column(
               children: [
-                Image.asset(
-                  Images.pointIcon,
-                  height: 30,
-                  width: 30,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    Images.pointIcon2,
+                    height: 25,
+                    width: 25,
+                  ),
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "Points - ${leaderProvider.extra?.balance ?? 0}",
+                  leaderProvider.extra?.balance == 0 ||
+                          leaderProvider.extra?.balance == 1
+                      ? "${leaderProvider.extra?.balance ?? 0} Point"
+                      : "${leaderProvider.extra?.balance ?? 0} Points",
                   textAlign: TextAlign.center,
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),

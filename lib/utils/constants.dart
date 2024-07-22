@@ -36,6 +36,7 @@ enum NotificationType {
   ticketDetail,
   referRegistration,
   appUpdate,
+  membership,
 }
 
 enum MembershipEnum {
@@ -116,7 +117,17 @@ class Images {
   static const String rankAffiliate = "assets/images/award.png";
   static const String transaction = "assets/images/transaction.png";
   static const String pointIcon = "assets/images/golden1.png";
-  static const String pointIcon2 = "assets/images/01.png";
+  static const String pointIcon2 = "assets/images/golden.png";
+  static const String pointIcon3 = "assets/images/3_coins.png";
+
+  static const String netflix = "assets/images/nflx.png";
+  static const String amazon = "assets/images/amzn.png";
+  static const String spotify = "assets/images/spot.pngv";
+  static const String fb = "assets/images/fb.png";
+  static const String microsoft = "assets/images/msft.png";
+  static const String download = "assets/images/download.png";
+  static const String edit = "assets/images/edit.png";
+  static const String report = "assets/images/report2.png";
 
   //Market Data icons
   static const String gainerLoser = "assets/images/gain_lose.png";
@@ -176,6 +187,10 @@ class Images {
   static const String start3 = "assets/images/3rd_page.png";
   static const String referAndEarn = "assets/images/refer_and_earn.png";
   static const String membership = "assets/images/membership.png";
+  static const String newLineBG = "assets/images/newLineBG.png";
+  static const String objective = "assets/images/objective.png";
+  static const String transferMoney = "assets/images/transfer-money.png";
+  static const String economic = "assets/images/ecom.png";
 
   static const String tickS = "assets/images/tick.png";
   static const String reportS = "assets/images/report.png";
@@ -198,6 +213,9 @@ class Images {
   static const marketing = "assets/images/marketing.jpeg";
 
   static const health = "assets/images/health.png";
+  static const heart = "assets/images/heart.png";
+  static const financialHealth = "assets/images/financial-health.png";
+  static const viewReport = "assets/images/research.png";
   static const viewFile = "assets/images/view_file.png";
   static const totalPoints = "assets/images/total_points.png";
   static const activityPoints = "assets/images/activity_point.png";
@@ -218,8 +236,10 @@ class Images {
   static const storeBanner = "assets/images/store_banner.png";
   static const storeBack = "assets/images/store_back.png";
   static const buyPoints = "assets/images/buy_points.png";
-  static const coinWin = "assets/images/coin_win.png";
   static const congrationTextImage = "assets/images/congration_text_image.jpeg";
+  static const congratsGIF = "assets/images/Congrats.gif";
+  static const congratsGIF1 = "assets/images/Congrats.png";
+  static const pointWithStar = "assets/images/coin_with_star.png";
   static const tringle = "assets/images/tringle.png";
 
   //svg
@@ -237,7 +257,7 @@ class Images {
 class AudioFiles {
   static const alertWeathlist = "audios/alert_watchlist.mp3";
   static const coinWinAudio = "audios/coin_win.wav";
-
+  static const successCoin = "audios/success_coin.mp3";
   static const refresh = "audios/refresh.wav";
 }
 

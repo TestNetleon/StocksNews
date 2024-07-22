@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/custom/update_error.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/error_display_widget.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
@@ -18,6 +19,7 @@ class BaseUiContainer extends StatelessWidget {
     this.onNavigate,
     this.navBtnText,
     this.placeholder,
+    this.isOldApp,
     super.key,
   });
 //
@@ -30,6 +32,7 @@ class BaseUiContainer extends StatelessWidget {
   final bool errorDispCommon;
   final String? navBtnText;
   final Widget? placeholder;
+  final bool? isOldApp;
   final dynamic Function()? onRefresh;
   final dynamic Function()? onNavigate;
 
@@ -44,15 +47,14 @@ class BaseUiContainer extends StatelessWidget {
           // const Loading()
           : hasData
               ? isFull
-                  ? Column(
-                      children: [
-                        Expanded(child: child),
-                      ],
-                    )
+                  ? Column(children: [Expanded(child: child)])
                   : child
               : OptionalParent(
                   addParent: errorDispCommon,
                   parentBuilder: (child) {
+                    if (isOldApp == true) {
+                      return UpdateError(error: error);
+                    }
                     return ErrorDisplayWidget(
                       error: error ?? Const.errNoRecord,
                       onRefresh: onRefresh,
@@ -60,12 +62,15 @@ class BaseUiContainer extends StatelessWidget {
                       navBtnText: navBtnText,
                     );
                   },
-                  child: ErrorDisplayNewWidget(
-                    error: error ?? Const.errNoRecord,
-                    onRefresh: onRefresh,
-                    onNavigate: onNavigate,
-                    navBtnText: navBtnText,
-                  ),
+                  child:
+                      error?.contains('Please update your application') == true
+                          ? UpdateError(error: error)
+                          : ErrorDisplayNewWidget(
+                              error: error ?? Const.errNoRecord,
+                              onRefresh: onRefresh,
+                              onNavigate: onNavigate,
+                              navBtnText: navBtnText,
+                            ),
                 ),
     );
   }

@@ -57,7 +57,7 @@ class PostDetail {
   final String? image;
   final String? site;
   final String? source;
-
+  final String? newsType;
   final String? text;
   final String? url;
   final List<DetailListType>? authors;
@@ -67,6 +67,8 @@ class PostDetail {
   String? readingTitle;
   String? readingSubtitle;
   bool? balanceStatus;
+  dynamic totalPoints;
+  dynamic pointsRequired;
 
   // final int? status;
   // final String? sector;
@@ -79,6 +81,7 @@ class PostDetail {
   PostDetail({
     this.id,
     this.summary,
+    this.newsType,
     // this.api,
     // this.symbol,
     this.publishedDate,
@@ -99,6 +102,8 @@ class PostDetail {
     this.readingTitle,
     this.readingSubtitle,
     this.balanceStatus,
+    this.totalPoints,
+    this.pointsRequired,
     // this.status,
     // this.sector,
     // this.mentionStatus,
@@ -110,6 +115,7 @@ class PostDetail {
 
   factory PostDetail.fromJson(Map<String, dynamic> json) => PostDetail(
         id: json["_id"],
+        newsType: json['news_type'],
         // api: json["api"],
         // symbol: json["symbol"],
         publishedDate: json["published_date"] == null
@@ -146,6 +152,8 @@ class PostDetail {
         site: json["site"],
         text: json["text"],
         url: json["url"],
+        totalPoints: json["total_points"],
+        pointsRequired: json["point_required"],
         // status: json["status"],
         // sector: json["sector"],
         // mentionStatus: json["mention_status"],
@@ -166,6 +174,7 @@ class PostDetail {
         "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
+        "news_type": newsType,
         "permalink": permalink,
         "reading_status": readingStatus,
         "reading_title": readingTitle,
@@ -198,6 +207,8 @@ class PostDetail {
         // "updated_at": updatedAt?.toIso8601String(),
         // "created_at": createdAt?.toIso8601String(),
         // "views": views,
+        "total_points": totalPoints,
+        "point_required": pointsRequired,
       };
 }
 

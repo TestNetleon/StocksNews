@@ -1,18 +1,29 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import '../../../providers/user_provider.dart';
+import '../../../route/my_app.dart';
 import '../../../service/revenue_cat.dart';
 import '../../../widgets/my_evaluvated_button.dart';
+import '../../auth/membershipAsk/ask.dart';
 
 class NewMembershipUpgradeCurrentPlan extends StatefulWidget {
-  const NewMembershipUpgradeCurrentPlan({super.key});
+  final bool withClickCondition;
+
+  const NewMembershipUpgradeCurrentPlan(
+      {super.key, this.withClickCondition = false});
 
   @override
   State<NewMembershipUpgradeCurrentPlan> createState() =>
@@ -23,6 +34,35 @@ class _NewMembershipUpgradeCurrentPlanState
     extends State<NewMembershipUpgradeCurrentPlan> {
   List<bool> isSelectedList = List.generate(3, (_) => false);
   int selectedIndex = -1;
+
+  Future _subscribe() async {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    if (provider.user == null) {
+      Utils().showLog("---ask to login----");
+      isPhone ? await loginSheet() : await loginSheetTablet();
+    }
+    if (provider.user == null) {
+      Utils().showLog("---still user not found----");
+
+      return;
+    }
+    if (provider.user?.membership?.purchased == 1) {
+      Utils().showLog("---found user is already having membership----");
+
+      Navigator.pop(context);
+    }
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      Utils().showLog("---asking for phone number verification----");
+
+      await membershipLogin();
+    }
+
+    if (provider.user?.phone != null &&
+        provider.user?.phone != '' &&
+        provider.user?.membership?.purchased == 0) {
+      await RevenueCatService.initializeSubscription();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +127,7 @@ class _NewMembershipUpgradeCurrentPlanState
                     ),
                   ],
                 ),
-                const SpacerVertical(
-                  height: 10,
-                ),
-                const SpacerVertical(
-                  height: 10,
-                ),
+
                 const SpacerVertical(
                   height: 15,
                 ),
@@ -152,7 +187,12 @@ class _NewMembershipUpgradeCurrentPlanState
                 MyElevatedButton(
                   width: double.infinity,
                   onPressed: () {
-                    RevenueCatService.initializeSubscription();
+                    if (widget.withClickCondition) {
+                      _subscribe();
+                    } else {
+                      RevenueCatService.initializeSubscription();
+                    }
+
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
@@ -168,7 +208,15 @@ class _NewMembershipUpgradeCurrentPlanState
                   ),
                 ),
                 const SpacerVertical(height: 10),
-
+                Center(
+                  child: Text(
+                    Platform.isAndroid
+                        ? 'Cancel anytime. Secured by the Play Store.'
+                        : 'Cancel anytime. Secured by the App Store.',
+                    textAlign: TextAlign.center,
+                    style: stylePTSansRegular(fontSize: 12, color: Colors.grey),
+                  ),
+                ),
                 // Column(
                 //   crossAxisAlignment: CrossAxisAlignment.start,
                 //   children: [
@@ -319,7 +367,7 @@ class _NewMembershipUpgradeCurrentPlanState
                 //                 ),
                 //                 TextSpan(
                 //                   text:
-                //                       ' “Morning Star Reports” “Insider  Trades” “Congressional Trades” “High/Low PE” “Compare Stocks”',
+                //                       ' MORNINGSTAR Reports” “Insider  Trades” “Congressional Trades” “High/Low PE” “Compare Stocks”',
                 //                   style: stylePTSansBold(
                 //                       fontSize: 16, color: Colors.white),
                 //                 ),

@@ -12,14 +12,14 @@ import 'widgets/points.dart';
 
 class HowToEarn extends StatefulWidget {
   final String? images;
-  final String? description;
+  // final String? description;
   final Function() onTap;
 
   const HowToEarn({
     required this.onTap,
     super.key,
     this.images,
-    this.description,
+    // this.description,
   });
 
   @override

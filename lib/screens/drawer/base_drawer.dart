@@ -154,8 +154,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
                           Visibility(
-                            visible: userProvider.user != null &&
-                                userProvider.user?.membership?.purchased == 1,
+                            // visible: userProvider.user != null &&
+                            //     userProvider.user?.membership?.purchased == 1,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -189,7 +189,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Image.asset(
-                                          Images.storeIcon,
+                                          Images.pointWithStar,
                                           height: 60,
                                           fit: BoxFit.contain,
                                         ),
@@ -207,14 +207,17 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Store",
+                                                  provider.extra?.storeTitle ??
+                                                      "",
                                                   style: stylePTSansBold(
                                                     fontSize: 18,
                                                   ),
                                                 ),
                                                 const SpacerVertical(height: 3),
                                                 Text(
-                                                  "Buy points to unlock news and blogs",
+                                                  provider.extra
+                                                          ?.storeSubTitle ??
+                                                      "",
                                                   style: stylePTSansRegular(
                                                     fontSize: 14,
                                                   ),

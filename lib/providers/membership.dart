@@ -137,17 +137,26 @@ class MembershipProvider extends ChangeNotifier {
     }
   }
 
-  Future getMembershipInfo() async {
+  Future getMembershipInfo({
+    String? inAppMsgId,
+    String? notificationId,
+  }) async {
     setStatus(Status.loading);
 
     try {
-      FormData request = FormData.fromMap({
+      Map request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-      });
+      };
+      if (inAppMsgId != null) {
+        request.addAll({"in_app_id": inAppMsgId});
+      }
+      if (notificationId != null) {
+        request.addAll({"notification_id": notificationId});
+      }
       ApiResponse response = await apiRequest(
         url: Apis.membershipInfo,
-        formData: request,
+        request: request,
         showProgress: false,
       );
       //  setStatus(Status.loaded);

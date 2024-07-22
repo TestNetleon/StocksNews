@@ -60,6 +60,7 @@ class RevenueCatService {
         Offerings? offerings;
 
         offerings = await Purchases.getOfferings();
+
         closeGlobalProgressDialog();
 
         PaywallResult result = await RevenueCatUI.presentPaywall(

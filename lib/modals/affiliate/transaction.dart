@@ -16,6 +16,8 @@ class AffiliateTransactionRes {
   final String? txnType;
   final int? earn;
   final int? spent;
+  final dynamic label;
+  final dynamic duration;
 
   AffiliateTransactionRes({
     this.createdAt,
@@ -26,6 +28,8 @@ class AffiliateTransactionRes {
     this.txnType,
     this.earn,
     this.spent,
+    this.label,
+    this.duration,
   });
 
   factory AffiliateTransactionRes.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +42,8 @@ class AffiliateTransactionRes {
         txnType: json["txn_type"],
         earn: json["earn"],
         spent: json["spent"],
+        label: json["label"],
+        duration: json["duration"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +55,7 @@ class AffiliateTransactionRes {
         "txn_type": txnType,
         "earn": earn,
         "spent": spent,
+        "label": label,
+        "duration": duration,
       };
 }

@@ -10,7 +10,15 @@ import 'widgtes/reviews.dart';
 import 'widgtes/upgrade_plan.dart';
 
 class NewMembershipContainer extends StatefulWidget {
-  const NewMembershipContainer({super.key});
+  final String? inAppMsgId;
+  final String? notificationId;
+  final bool withClickCondition;
+
+  const NewMembershipContainer(
+      {super.key,
+      this.withClickCondition = false,
+      this.inAppMsgId,
+      this.notificationId});
 
   @override
   State<NewMembershipContainer> createState() => _NewMembershipContainerState();
@@ -25,7 +33,10 @@ class _NewMembershipContainerState extends State<NewMembershipContainer> {
 
   void _getMembershipInfo() {
     MembershipProvider provider = context.read<MembershipProvider>();
-    provider.getMembershipInfo();
+    provider.getMembershipInfo(
+      inAppMsgId: widget.inAppMsgId,
+      notificationId: widget.notificationId,
+    );
   }
 
   @override
@@ -63,7 +74,9 @@ class _NewMembershipContainerState extends State<NewMembershipContainer> {
               padding: const EdgeInsets.only(bottom: 50),
               child: Column(
                 children: [
-                  const NewMembershipUpgradeCurrentPlan(),
+                  NewMembershipUpgradeCurrentPlan(
+                    withClickCondition: widget.withClickCondition,
+                  ),
                   const SpacerVertical(height: 10),
                   Visibility(
                     visible: data?.testimonials != null,
@@ -82,20 +95,6 @@ class _NewMembershipContainerState extends State<NewMembershipContainer> {
               ),
             ),
           ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: Container(
-          //       color: Colors.white,
-          //       padding: const EdgeInsets.all(12.0),
-          //       child: MyElevatedButton(
-          //         width: double.infinity,
-          //         onPressed: () {},
-          //         borderRadius: BorderRadius.circular(10),
-          //         child: const Text('Purchase Membership'),
-          //       )),
-          // ),
         ],
       ),
     );

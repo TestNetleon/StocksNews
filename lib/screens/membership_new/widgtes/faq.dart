@@ -33,7 +33,8 @@ class _NewMembershipFaqState extends State<NewMembershipFaq> {
         ),
         // const SpacerVertical(height: 10),
         Container(
-          color: Colors.white,
+          color: Colors.black,
+          // color: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: ListView.separated(
             shrinkWrap: true,

@@ -26,20 +26,12 @@ class BlogProvider extends ChangeNotifier {
   int _page = 1;
   BlogsRes? blogRes;
   BlogsRes? authorRes;
-  // BlogsRes? categoryRes;
-  // BlogsRes? tagsRes;
-
-  BlogsDetailRes? _blog;
-  BlogsDetailRes? get newBlog => _blog;
 
   List<BlogItemRes>? blogData;
   List<BlogItemRes>? authorsData;
-  // List<BlogItemRes>? categoryData;
-  // List<BlogItemRes>? tagsData;
 
   bool get canLoadMore => _page < (_data?.data.lastPage ?? 1);
   String? get error => _error ?? Const.errSomethingWrong;
-  // int? get page => _page;
 
   BlogsDetailRes? _blogsDetail;
   BlogsDetailRes? get blogsDetail => _blogsDetail;
@@ -166,6 +158,7 @@ class BlogProvider extends ChangeNotifier {
         authorsData = null;
         _error = response.message;
       }
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
@@ -175,17 +168,15 @@ class BlogProvider extends ChangeNotifier {
   }
 
   Future getBlogDetailData({
-    // required String blogId,
     String? slug,
     inAppMsgId,
     notificationId,
-    point_deduction,
+    pointsDeducted,
   }) async {
-    // setStatus(Status.loading);
     _statusDetail = Status.loading;
     notifyListeners();
     try {
-      Map request = point_deduction != null
+      Map request = pointsDeducted != null
           ? {
               "token": navigatorKey.currentContext!
                       .read<UserProvider>()
@@ -194,7 +185,7 @@ class BlogProvider extends ChangeNotifier {
                   "",
               // "blog_id": blogId,
               "slug": slug ?? "",
-              "point_deduction": "$point_deduction",
+              "point_deduction": "$pointsDeducted",
             }
           : {
               "token": navigatorKey.currentContext!

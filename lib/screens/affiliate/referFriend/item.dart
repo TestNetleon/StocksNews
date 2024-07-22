@@ -224,8 +224,7 @@ class AffiliateReferItem extends StatelessWidget {
             ),
             Visibility(
               visible: data?.status == 0,
-              // visible:
-              //     context.watch<LeaderBoardProvider>().data?[index].timer != 0,
+              // visible: context.watch<LeaderBoardProvider>().data?[index].timer != 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

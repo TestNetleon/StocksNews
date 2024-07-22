@@ -13,6 +13,7 @@ import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/refer/refer_code.dart';
+import 'package:stocks_news_new/screens/membership/store/store.dart';
 import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -46,13 +47,16 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
     UserProvider userProvider = context.read<UserProvider>();
     if (userProvider.user != null) {
       LeaderBoardProvider lbProvider = context.read<LeaderBoardProvider>();
-      lbProvider.getReferData();
+      if (lbProvider.extra == null) {
+        lbProvider.getReferData();
+      }
     }
   }
 
   Future _onReferClick(BuildContext context) async {
     UserProvider userProvider = context.read<UserProvider>();
-    if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
+    if (userProvider.user?.affiliateStatus != 1) {
+      // if (userProvider.user?.phone == null || userProvider.user?.phone == '') {
       await referLogin();
     } else {
       if (userProvider.user != null) {
@@ -98,26 +102,66 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
     await provider.getOverviewData(symbol: widget.symbol, pointsDeducted: true);
   }
 
+  Future _navigateToStore() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const Store(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // bool isLogin = userProvider.user != null;
+    // bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+    // bool havePoints = provider.data?.postDetail?.totalPoints != null &&
+    //     (provider.data?.postDetail?.totalPoints > 0);
+
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
-
     UserProvider userProvider = context.watch<UserProvider>();
+    // LeaderBoardProvider lbProvider = context.watch<LeaderBoardProvider>();
 
-    LeaderBoardProvider lbProvider = context.watch<LeaderBoardProvider>();
-
-    bool hasMembership = userProvider.extra?.user?.membership?.purchased == 1;
+    bool isLogin = userProvider.user != null;
+    bool hasMembership = userProvider.user?.membership?.purchased == 1;
+    // bool havePoints = lbProvider.extra?.balance != null &&
+    //     ((lbProvider.extra?.balance ?? 0) > 0);
 
     MorningStar? morningStar = provider.overviewRes?.morningStart;
+    bool havePoints = morningStar?.lockInformation?.balanceStatus ?? false;
 
-    bool showReferAndUpgrade =
-        (morningStar?.lockInformation?.balanceStatus == null ||
-                morningStar?.lockInformation?.balanceStatus == false) &&
-            userProvider.user != null;
+    bool haveEnoughPoints =
+        (morningStar?.lockInformation?.totalPoints == null ||
+                morningStar?.lockInformation?.pointRequired == null)
+            ? false
+            : (morningStar!.lockInformation!.totalPoints! >
+                morningStar.lockInformation!.pointRequired!);
 
-    bool showViewOption = userProvider.user != null && !showReferAndUpgrade;
+    // bool showLoginButton = !isLogin;
+    // bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    // bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    // bool showSubscribe =
+    //     isLogin && !hasMembership && showMembership && !havePoints;
+    // bool showStore = isLogin && hasMembership && showMembership && !havePoints;
 
-    num? points = lbProvider.extra?.balance;
+    bool showLoginButton = !isLogin;
+    bool showViewReport = isLogin && havePoints && haveEnoughPoints;
+    bool showRefer = isLogin && (!havePoints || !haveEnoughPoints);
+    bool showSubscribe = isLogin &&
+        !hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+    bool showStore = isLogin &&
+        hasMembership &&
+        showMembership &&
+        (!havePoints || !haveEnoughPoints);
+
+    // MorningStar? morningStar = provider.overviewRes?.morningStart;
+    // bool showReferAndUpgrade =
+    //     (morningStar?.lockInformation?.balanceStatus == null ||
+    //             morningStar?.lockInformation?.balanceStatus == false) &&
+    //         userProvider.user != null;
+    // bool showViewOption = userProvider.user != null && !showReferAndUpgrade;
 
     return Container(
       padding: const EdgeInsets.all(15),
@@ -193,82 +237,26 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Login
-                    ThemeButtonSmall(
-                      onPressed: () {
-                        _onLoginClick(context);
-                      },
-                      text: "Register/Login to Continue",
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconFront: true,
-                      icon: Icons.lock,
-                      radius: 30,
-                    ),
-
-                    // Refer
-                    ThemeButtonSmall(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconFront: true,
-                      icon: Icons.earbuds_rounded,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.referAndEarn,
-                          height: 18,
-                          width: 18,
-                          color: ThemeColors.white,
+                    if (showLoginButton)
+                      ThemeButtonSmall(
+                        onPressed: () {
+                          _onLoginClick(context);
+                        },
+                        text: "Register/Login to Continue",
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
                         ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconFront: true,
+                        icon: Icons.lock,
+                        radius: 30,
+                        margin: const EdgeInsets.only(top: 10),
                       ),
-                      onPressed: () async {
-                        await _onReferClick(context);
-                      },
-                      text: "Refer and Earn",
-                      radius: 30,
-                      // showArrow: false,
-                    ),
-
-                    // Subscribe
-                    ThemeButtonSmall(
-                      color: const Color.fromARGB(255, 194, 216, 51),
-                      textColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 11,
-                      ),
-                      textSize: 15,
-                      fontBold: true,
-                      iconWidget: Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Image.asset(
-                          Images.membership,
-                          height: 20,
-                          width: 20,
-                        ),
-                      ),
-                      iconFront: true,
-                      radius: 30,
-                      icon: Icons.card_membership,
-                      onPressed: () async => _membership(),
-                      textAlign: TextAlign.start,
-                      mainAxisSize: MainAxisSize.max,
-                      text: "Upgrade Membership for more points",
-                      // showArrow: false,
-                    ),
-
                     // Spend Point and View
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(top: 10),
-                      child: ThemeButtonSmall(
+                    if (showViewReport)
+                      ThemeButtonSmall(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 11,
@@ -280,8 +268,95 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
                         icon: Icons.visibility,
                         onPressed: () => _onViewNewsClick(context),
                         text: "View Research Report",
+                        margin: const EdgeInsets.only(top: 10),
                       ),
-                    ),
+                    // Refer
+                    if (showRefer)
+                      ThemeButtonSmall(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
+                        ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconFront: true,
+                        icon: Icons.earbuds_rounded,
+                        iconWidget: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Image.asset(
+                            Images.referAndEarn,
+                            height: 18,
+                            width: 18,
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                        onPressed: () async {
+                          await _onReferClick(context);
+                        },
+                        text: "Refer and Earn",
+                        radius: 30,
+                        margin: const EdgeInsets.only(top: 10),
+                        // showArrow: false,
+                      ),
+                    // Subscribe
+                    if (showSubscribe)
+                      ThemeButtonSmall(
+                        color: const Color.fromARGB(255, 194, 216, 51),
+                        textColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 11,
+                        ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconWidget: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Image.asset(
+                            Images.membership,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                        iconFront: true,
+                        radius: 30,
+                        icon: Icons.card_membership,
+                        onPressed: () async => _membership(),
+                        textAlign: TextAlign.start,
+                        mainAxisSize: MainAxisSize.max,
+                        text: "Become a Premium Member",
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
+                    if (showStore)
+                      ThemeButtonSmall(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        textColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 7,
+                        ),
+                        textSize: 15,
+                        fontBold: true,
+                        iconFront: true,
+                        radius: 30,
+                        icon: Icons.card_membership,
+                        textAlign: TextAlign.start,
+                        iconWidget: Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10,
+                          ),
+                          child: Image.asset(
+                            Images.pointIcon3,
+                            height: 28,
+                            width: 28,
+                            // color: Colors.black,
+                          ),
+                        ),
+                        mainAxisSize: MainAxisSize.max,
+                        onPressed: _navigateToStore,
+                        text: "Buy Points",
+                        showArrow: false,
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
                   ],
                 ),
 

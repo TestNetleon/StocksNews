@@ -30,9 +30,9 @@ class _Dow30StocksState extends State<Dow30Stocks> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Dow30Provider provider = context.read<Dow30Provider>();
-      if (provider.data != null) {
-        return;
-      }
+      // if (provider.data != null) {
+      //   return;
+      // }
       provider.resetFilter();
       provider.getData();
     });

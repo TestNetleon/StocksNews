@@ -34,7 +34,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool _initialDeepLinks = false;
 
   bool connection = true;
@@ -46,9 +46,21 @@ class _MyAppState extends State<MyApp> {
       getInitialDeeplinkWhenAppOpen();
       startListeningForDeepLinks();
     });
+    WidgetsBinding.instance.addObserver(this);
   }
 
-// -------- Initial Deeplinks For Referral STARTED ---------------
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    isAppInForeground = state == AppLifecycleState.resumed;
+  }
+
+  // -------- Initial Deeplinks For Referral STARTED ---------------
   void getInitialReferralsIfAny() async {
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinks.instance.getInitialLink();
