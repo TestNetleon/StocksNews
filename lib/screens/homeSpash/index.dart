@@ -222,7 +222,6 @@ class _HomeSplashState extends State<HomeSplash> {
       } else if (slug != '' && type == NotificationType.nudgeFriend.name) {
         Navigator.popUntil(
             navigatorKey.currentContext!, (route) => route.isFirst);
-
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const Tabs()),
@@ -231,18 +230,19 @@ class _HomeSplashState extends State<HomeSplash> {
           referLogin();
         });
       } else if (type == NotificationType.referRegistration.name) {
-        Navigator.push(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => const ReferAFriend()),
         );
       } else if (type == NotificationType.membership.name) {
-        Navigator.push(
+        Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-              builder: (_) => NewMembership(
-                    notificationId: notificationId,
-                    withClickCondition: true,
-                  )),
+            builder: (_) => NewMembership(
+              notificationId: notificationId,
+              withClickCondition: true,
+            ),
+          ),
         );
       } else {
         // arguments: {"notificationId": notificationId},
