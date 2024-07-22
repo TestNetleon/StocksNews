@@ -154,8 +154,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             ),
                           ),
                           Visibility(
-                            visible: userProvider.user != null &&
-                                userProvider.user?.membership?.purchased == 1,
+                            // visible: userProvider.user != null &&
+                            //     userProvider.user?.membership?.purchased == 1,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(

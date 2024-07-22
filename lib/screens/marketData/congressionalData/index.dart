@@ -5,6 +5,8 @@ import 'package:stocks_news_new/screens/marketData/congressionalData/container.d
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
+import '../../../utils/colors.dart';
+
 class CongressionalIndex extends StatelessWidget {
   static const path = "CongressionalIndex";
   const CongressionalIndex({super.key});
@@ -12,6 +14,7 @@ class CongressionalIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
+      bottomSafeAreaColor: ThemeColors.background,
       appBar: AppBarHome(isPopback: true, canSearch: true),
       body: CongressionalContainer(),
     );
