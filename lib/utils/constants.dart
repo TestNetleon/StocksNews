@@ -220,6 +220,7 @@ class Images {
   static const buyPoints = "assets/images/buy_points.png";
   static const coinWin = "assets/images/coin_win.png";
   static const congrationTextImage = "assets/images/congration_text_image.jpeg";
+  static const tringle = "assets/images/tringle.png";
 
   //svg
   // static const share = "assets/svg/share.svg";

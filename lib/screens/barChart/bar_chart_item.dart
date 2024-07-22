@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -132,8 +136,12 @@ class BarChartSampleState extends State<BarChartSample> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
+              // minY: minTotalAssets != null || minTotalLiabilities != null
+              //     ? -double.parse("$maxAbsValue")
+              //     : null,
               minY: minTotalAssets != null || minTotalLiabilities != null
-                  ? -double.parse("$maxAbsValue")
+                  ? double.parse(
+                      "${min(double.parse("${minTotalAssets ?? 0.0}"), double.parse("${minTotalLiabilities ?? 0.0}"))}")
                   : null,
               titlesData: FlTitlesData(
                 show: true,
@@ -157,6 +165,14 @@ class BarChartSampleState extends State<BarChartSample> {
                     interval: maxAbsValue /
                         5, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
+                      StockDetailProviderNew provider =
+                          context.watch<StockDetailProviderNew>();
+
+                      if (!provider.firstValueNotShowTwo && value < 0) {
+                        provider.firstValueNotShowTwoD(false);
+
+                        return Text("");
+                      }
                       if (charts?[0].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);
                         return Text(

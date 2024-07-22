@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -37,6 +41,7 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
   dynamic minRevenue;
   dynamic minNetIncome;
   dynamic minNetFin;
+  bool firstValue = true;
 
   @override
   void initState() {
@@ -160,10 +165,14 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
         : BarChart(
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
-              minY: minRevenue != null ||
-                      minNetIncome != null ||
-                      minNetFin != null
-                  ? -double.parse("$maxAbsValue")
+              // minY: minRevenue != null ||
+              //         minNetIncome != null ||
+              //         minNetFin != null
+              //     ? -double.parse("$maxAbsValue")
+              //     : null,
+              minY: minRevenue != null || minNetIncome != null
+                  ? double.parse(
+                      "${min(double.parse("${minNetFin ?? 0.0}"), min(double.parse("${minRevenue ?? 0.0}"), double.parse("${minNetIncome ?? 0.0}")))}")
                   : null,
               // minY: minAbsValue == 0 ? null : -double.parse("$maxAbsValue"),
               titlesData: FlTitlesData(
@@ -188,6 +197,14 @@ class BarChartThreeLineState extends State<BarChartThreeLine> {
                     interval: maxAbsValue /
                         2, // Default value to avoid division by zero
                     getTitlesWidget: (value, meta) {
+                      StockDetailProviderNew provider =
+                          context.watch<StockDetailProviderNew>();
+
+                      if (provider.firstValueNotShow && value < 0) {
+                        provider.firstValueNotShowD(false);
+
+                        return Text("");
+                      }
                       // if (charts?[4].operatingCashFlow1 == null) {
                       String formattedValue = convertToReadableValue(value);
                       return Text(
