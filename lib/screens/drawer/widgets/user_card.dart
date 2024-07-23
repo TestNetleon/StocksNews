@@ -12,7 +12,6 @@ import '../../../providers/leaderboard.dart';
 import '../../../utils/colors.dart';
 
 import '../../../utils/constants.dart';
-import '../../auth/membershipAsk/ask.dart';
 import '../../myAccount/widgets/my-account_header.dart';
 import 'profile_image.dart';
 
@@ -36,8 +35,12 @@ class _UserCardState extends State<UserCard> {
   }
 
   _callAPI() {
-    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    provider.getReferData(checkAppUpdate: false);
+    // HomeProvider provider = context.read<HomeProvider>();
+    UserProvider provider = context.read<UserProvider>();
+    if (provider.user?.affiliateStatus == 1) {
+      LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+      provider.getReferData(checkAppUpdate: false);
+    }
   }
 
   @override
