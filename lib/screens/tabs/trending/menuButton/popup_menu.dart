@@ -36,7 +36,9 @@ class PopUpMenuButtonCommon extends StatelessWidget {
     if (provider.user?.phone == null || provider.user?.phone == '') {
       await membershipLogin();
     }
-    if (provider.user?.phone != null && provider.user?.phone != '') {
+    if (provider.user?.phone != null &&
+        provider.user?.phone != '' &&
+        provider.user?.membership?.purchased == 0) {
       // await RevenueCatService.initializeSubscription();
       Navigator.push(
         navigatorKey.currentContext!,

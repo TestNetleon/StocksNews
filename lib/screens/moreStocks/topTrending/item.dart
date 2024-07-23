@@ -122,36 +122,40 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SpacerHorizontal(width: 8),
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "(",
-                                        style: stylePTSansBold(fontSize: 12),
-                                      ),
-                                      WidgetSpan(
-                                        child: Padding(
-                                          padding: EdgeInsets.zero,
-                                          child: (widget.data.sentiment ?? 0) >
-                                                  (widget.data.lastSentiment ??
-                                                      0)
-                                              ? Icon(
-                                                  Icons.arrow_drop_up,
-                                                  color: ThemeColors.accent,
-                                                  size: 14.sp,
-                                                )
-                                              : Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: ThemeColors.sos,
-                                                  size: 14.sp,
-                                                ),
+                                Flexible(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "(",
+                                          style: stylePTSansBold(fontSize: 12),
                                         ),
-                                      ),
-                                      TextSpan(
-                                        text: "${widget.data.rank})",
-                                        style: stylePTSansBold(fontSize: 12),
-                                      ),
-                                    ],
+                                        WidgetSpan(
+                                          child: Padding(
+                                            padding: EdgeInsets.zero,
+                                            child: (widget.data.sentiment ??
+                                                        0) >
+                                                    (widget.data
+                                                            .lastSentiment ??
+                                                        0)
+                                                ? Icon(
+                                                    Icons.arrow_drop_up,
+                                                    color: ThemeColors.accent,
+                                                    size: 14.sp,
+                                                  )
+                                                : Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: ThemeColors.sos,
+                                                    size: 14.sp,
+                                                  ),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: "${widget.data.rank})",
+                                          style: stylePTSansBold(fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
