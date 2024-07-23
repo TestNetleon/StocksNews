@@ -228,6 +228,18 @@ List<DrawerRes> marketData = [
       );
     },
   ),
+
+  // DrawerRes(
+  //   iconData: Icons.travel_explore_rounded,
+  //   text: "Paper Trade",
+  //   onTap: () {
+  //     Navigator.push(
+  //       navigatorKey.currentContext!,
+  //       MaterialPageRoute(builder: (_) => const PaperTradeIndex()),
+  //     );
+  //   },
+  // ),
+
   // DrawerRes(
   //   iconData: Icons.screen_search_desktop_outlined,
   //   text: "Stock Screener",

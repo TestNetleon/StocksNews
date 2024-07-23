@@ -152,7 +152,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
     //   );
     // }
 
-    else if (mobile.text.isEmpty || mobile.text.length < 10) {
+    else if (mobile.text.isEmpty || mobile.text.length < 6) {
       popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",
@@ -423,7 +423,7 @@ class _MembershipLoginAskState extends State<MembershipLoginAsk> {
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     _formatter,
-                                    LengthLimitingTextInputFormatter(10)
+                                    LengthLimitingTextInputFormatter(15)
                                   ],
                                   textCapitalization: TextCapitalization.none,
                                 ),

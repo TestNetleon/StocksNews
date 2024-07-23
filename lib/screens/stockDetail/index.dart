@@ -156,11 +156,9 @@ class _StockDetailState extends State<StockDetail> {
                 ],
               ),
             ),
+            // const SdTrade(),
             Container(
               decoration: BoxDecoration(
-                border: const Border(
-                  top: BorderSide(color: ThemeColors.greyBorder),
-                ),
                 color: ThemeColors.background.withOpacity(0.8),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 10),

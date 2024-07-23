@@ -27,15 +27,15 @@ class MembershipButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 66.0,
+      decoration: kGradientBoxDecoration,
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Container(
-          child: Text("Button Title with your style"),
           decoration: kInnerDecoration,
+          child: const Text("Button Title with your style"),
         ),
       ),
-      height: 66.0,
-      decoration: kGradientBoxDecoration,
     );
   }
 }

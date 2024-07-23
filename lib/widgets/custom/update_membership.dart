@@ -17,6 +17,7 @@ class UpdateMembershipCard extends StatelessWidget {
     Extra? extra = context.watch<HomeProvider>().extra;
 
     return MembershipStoreCard(
+      isMembership: true,
       data: extra?.membershipText?.card,
       onTap: () {
         Navigator.push(
@@ -55,8 +56,14 @@ class UpdateStoreCard extends StatelessWidget {
 
 class MembershipStoreCard extends StatelessWidget {
   final MembershipCardRes? data;
+  final bool isMembership;
   final Function() onTap;
-  const MembershipStoreCard({super.key, this.data, required this.onTap});
+  const MembershipStoreCard({
+    super.key,
+    this.data,
+    required this.onTap,
+    this.isMembership = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -135,13 +142,27 @@ class MembershipStoreCard extends StatelessWidget {
                   text: data?.button ?? "",
                   textColor: ThemeColors.background,
                   fontBold: true,
+                  // iconWidget: Padding(
+                  //   padding: const EdgeInsets.only(right: 10),
+                  //   child: Image.asset(
+                  //     Images.membership,
+                  //     height: 25,
+                  //   ),
+                  // ),
                   iconWidget: Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Image.asset(
-                      Images.membership,
-                      height: 25,
-                    ),
+                    child: isMembership
+                        ? Image.asset(
+                            Images.membership,
+                            height: 25,
+                          )
+                        : const Icon(
+                            Icons.store,
+                            size: 20,
+                            color: ThemeColors.background,
+                          ),
                   ),
+
                   showArrow: false,
                   mainAxisSize: MainAxisSize.max,
                 ),
