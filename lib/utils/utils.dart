@@ -869,6 +869,15 @@ void handleNavigation({
           ),
         ),
       );
+    } else {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const Tabs(),
+        ),
+      );
     }
   } else if (type == DeeplinkEnum.trendingIndustries) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
@@ -897,8 +906,9 @@ void handleNavigation({
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (context) =>
-            const GainersLosersIndex(type: StocksType.gainers),
+        builder: (context) => const GainersLosersIndex(
+          type: StocksType.gainers,
+        ),
       ),
     );
   } else if (type == DeeplinkEnum.gapUpDown) {

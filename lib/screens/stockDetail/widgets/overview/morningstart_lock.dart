@@ -134,7 +134,7 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
         (morningStar?.lockInformation?.totalPoints == null ||
                 morningStar?.lockInformation?.pointRequired == null)
             ? false
-            : (morningStar!.lockInformation!.totalPoints! >
+            : (morningStar!.lockInformation!.totalPoints! >=
                 morningStar.lockInformation!.pointRequired!);
 
     // bool showLoginButton = !isLogin;

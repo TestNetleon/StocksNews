@@ -96,7 +96,7 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
     bool haveEnoughPoints = (provider.blogsDetail?.totalPoints == null ||
             provider.blogsDetail?.pointsRequired == null)
         ? false
-        : (provider.blogsDetail!.totalPoints! >
+        : (provider.blogsDetail!.totalPoints! >=
             provider.blogsDetail!.pointsRequired!);
 
     // bool showLoginButton = !isLogin;
