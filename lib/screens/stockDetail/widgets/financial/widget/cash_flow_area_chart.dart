@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -107,14 +106,14 @@ class _CashFlowAreaChartState extends State<CashFlowAreaChart> {
 
     maxAbsValue = double.parse("$maxAbsValueValue");
 
-    final minAbsValueItem = (minRevenue != null && minNetIncome != null)
-        ? (minRevenue.abs() < minNetIncome.abs() ? minRevenue : minNetIncome)
-        : 0;
-    final minAbsValueValue = (minEbitda != null)
-        ? (minAbsValueItem.abs() < minEbitda.abs()
-            ? minAbsValueItem
-            : minEbitda)
-        : 0;
+    // final minAbsValueItem = (minRevenue != null && minNetIncome != null)
+    //     ? (minRevenue.abs() < minNetIncome.abs() ? minRevenue : minNetIncome)
+    //     : 0;
+    // final minAbsValueValue = (minEbitda != null)
+    //     ? (minAbsValueItem.abs() < minEbitda.abs()
+    //         ? minAbsValueItem
+    //         : minEbitda)
+    //     : 0;
     minAbsValue = double.parse(
         "${min(double.parse("${minRevenue ?? 0.0}"), min(double.parse("${minNetIncome ?? 0.0}"), double.parse("${minEbitda ?? 0.0}")))}");
     final maxPeriodItem = provider.areaIncomeChartCashFlow?.isNotEmpty == true
@@ -343,7 +342,7 @@ class _CashFlowAreaChartState extends State<CashFlowAreaChart> {
         Container(
           decoration: BoxDecoration(
             color: ThemeColors.greyBorder.withOpacity(0.4),
-            borderRadius: const BorderRadius.all(const Radius.circular(5)),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
