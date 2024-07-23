@@ -8,6 +8,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
+import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
 import 'package:stocks_news_new/screens/help/help_desk.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
@@ -22,6 +24,7 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
@@ -838,6 +841,42 @@ void handleNavigation({
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
+  } else if (type == DeeplinkEnum.membership) {
+    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user == null) {
+      Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () async {
+        isPhone ? await loginSheet() : await loginSheetTablet();
+      });
+      return;
+    }
+
+    if (provider.user == null) {
+      return;
+    }
+
+    if (provider.user?.membership?.purchased == 1) {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Tabs()),
+      );
+      return;
+    }
+
+    if (provider.user?.phone == null || provider.user?.phone == '') {
+      await membershipLogin();
+    }
+
+    if (provider.user?.phone != null &&
+        provider.user?.phone != '' &&
+        provider.user?.membership?.purchased == 0) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const NewMembership()),
+      );
+    }
   } else if (type == DeeplinkEnum.trendingIndustries) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(

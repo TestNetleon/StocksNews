@@ -447,6 +447,7 @@ enum DeeplinkEnum {
   trendingIndustries,
   sentiments,
   helpdesk,
+  membership,
 
   //below add for Market data only else add above
   gainerLoser,
@@ -491,8 +492,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
     // return 'page';
     return DeeplinkEnum.page;
   } else if (uri.path.contains('/trending-industries')) {
-    // return 'page';
     return DeeplinkEnum.trendingIndustries;
+  } else if (uri.path.contains('/membership')) {
+    return DeeplinkEnum.membership;
   }
 
   // Only Market data goes here set else above
