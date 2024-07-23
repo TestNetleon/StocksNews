@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stocks_news_new/database/preference.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/modals/user_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/auth/membershipAsk/ask.dart';
@@ -842,39 +845,29 @@ void handleNavigation({
       MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
   } else if (type == DeeplinkEnum.membership) {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+    // UserProvider userProvider =
+    //     navigatorKey.currentContext!.read<UserProvider>();
+    // if (userProvider.user == null) {
+    //   UserRes? user = await Preference.getUser();
+    //   if (user != null) {
+    //     provider.setUser(user);
+    //   }
+    //   await navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider(
+    //         showProgress: true,
+    //       );
+    // }
 
-    if (provider.user == null) {
-      Timer(Duration(milliseconds: splashLoaded ? 0 : 3500), () async {
-        isPhone ? await loginSheet() : await loginSheetTablet();
-      });
-      return;
-    }
+    // UserProvider userProvider =
+    //     navigatorKey.currentContext!.read<UserProvider>();
 
-    if (provider.user == null) {
-      return;
-    }
-
-    if (provider.user?.membership?.purchased == 1) {
-      Navigator.popUntil(
-          navigatorKey.currentContext!, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const Tabs()),
-      );
-      return;
-    }
-
-    if (provider.user?.phone == null || provider.user?.phone == '') {
-      await membershipLogin();
-    }
-
-    if (provider.user?.phone != null &&
-        provider.user?.phone != '' &&
-        provider.user?.membership?.purchased == 0) {
+    if (provider.user == null || provider.user?.membership?.purchased != 1) {
       Navigator.push(
         navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => const NewMembership()),
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(
+            withClickCondition: true,
+          ),
+        ),
       );
     }
   } else if (type == DeeplinkEnum.trendingIndustries) {
