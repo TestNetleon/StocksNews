@@ -116,6 +116,7 @@ class Extra {
   final bool? showMostPurchased;
   final String? storeTitle;
   final String? storeSubTitle;
+  final bool? isOldApp;
 
   Extra({
     this.storeTitle,
@@ -190,6 +191,7 @@ class Extra {
     this.membership,
     this.featuredTitle,
     this.watchlistTitle,
+    this.isOldApp,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -322,6 +324,7 @@ class Extra {
         showAboutStockNews: json['show_about_stocks_news'],
         showWhatWeDo: json['show_what_we_do'],
         showFAQ: json['show_faq'],
+        isOldApp: json['old_app'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -345,6 +348,7 @@ class Extra {
         'total_points_received': received,
         "total_balance": balance,
         "total_spent": spent,
+
         "text1": text1,
         "tag_line": tagLine,
         "text2": text2,
@@ -410,6 +414,36 @@ class Extra {
         "show_about_stocks_news": showAboutStockNews,
         "show_what_we_do": showWhatWeDo,
         "show_faq": showFAQ,
+        "old_app": isOldApp,
+      };
+}
+
+class MembershipCardRes {
+  final String? text1;
+  final String? text2;
+  final String? text3;
+  final String? button;
+
+  MembershipCardRes({
+    this.text1,
+    this.text2,
+    this.text3,
+    this.button,
+  });
+
+  factory MembershipCardRes.fromJson(Map<String, dynamic> json) =>
+      MembershipCardRes(
+        text1: json["text1"],
+        text2: json["text2"],
+        text3: json["text3"],
+        button: json["button"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "text1": text1,
+        "text2": text2,
+        "text3": text3,
+        "button": button,
       };
 }
 
@@ -514,18 +548,27 @@ class RevenueCatKeyRes {
 class HowItWorkRes {
   final String? title;
   final String? subTitle;
-
+  final MembershipCardRes? card;
+  final MembershipCardRes? storeCard;
   final List<StepRes>? steps;
 
   HowItWorkRes({
     this.title,
     this.subTitle,
     this.steps,
+    this.card,
+    this.storeCard,
   });
 
   factory HowItWorkRes.fromJson(Map<String, dynamic> json) => HowItWorkRes(
         title: json["title"],
         subTitle: json["sub_title"],
+        card: json["card"] == null
+            ? null
+            : MembershipCardRes.fromJson(json["card"]),
+        storeCard: json["store_card"] == null
+            ? null
+            : MembershipCardRes.fromJson(json["store_card"]),
         steps: json["steps"] == null
             ? []
             : List<StepRes>.from(
@@ -535,6 +578,8 @@ class HowItWorkRes {
   Map<String, dynamic> toJson() => {
         "title": title,
         "sub_title": subTitle,
+        "card": card?.toJson(),
+        "store_card": storeCard?.toJson(),
         "steps": steps == null
             ? []
             : List<dynamic>.from(steps!.map((x) => x.toJson())),

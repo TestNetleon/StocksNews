@@ -57,7 +57,7 @@ class PostDetail {
   final String? image;
   final String? site;
   final String? source;
-
+  final String? newsType;
   final String? text;
   final String? url;
   final List<DetailListType>? authors;
@@ -81,6 +81,7 @@ class PostDetail {
   PostDetail({
     this.id,
     this.summary,
+    this.newsType,
     // this.api,
     // this.symbol,
     this.publishedDate,
@@ -114,6 +115,7 @@ class PostDetail {
 
   factory PostDetail.fromJson(Map<String, dynamic> json) => PostDetail(
         id: json["_id"],
+        newsType: json['news_type'],
         // api: json["api"],
         // symbol: json["symbol"],
         publishedDate: json["published_date"] == null
@@ -172,6 +174,7 @@ class PostDetail {
         "published_date": publishedDate?.toIso8601String(),
         "title": title,
         "slug": slug,
+        "news_type": newsType,
         "permalink": permalink,
         "reading_status": readingStatus,
         "reading_title": readingTitle,

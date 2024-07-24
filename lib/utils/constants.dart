@@ -36,6 +36,7 @@ enum NotificationType {
   ticketDetail,
   referRegistration,
   appUpdate,
+  membership,
 }
 
 enum MembershipEnum {
@@ -124,7 +125,7 @@ class Images {
 
   static const String netflix = "assets/images/nflx.png";
   static const String amazon = "assets/images/amzn.png";
-  static const String spotify = "assets/images/spot.pngv";
+  static const String spotify = "assets/images/spot.png";
   static const String fb = "assets/images/fb.png";
   static const String microsoft = "assets/images/msft.png";
   static const String download = "assets/images/download.png";

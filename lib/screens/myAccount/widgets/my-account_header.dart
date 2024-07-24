@@ -189,9 +189,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                     // ),
                     const Padding(
                       padding: EdgeInsets.only(top: 13),
-                      child: MyVerifiedCard(
-                        gotoProfile: false,
-                      ),
+                      child: MyVerifiedCard(gotoProfile: false),
                     ),
                   ],
                 ),
@@ -293,7 +291,10 @@ class MyVerifiedCard extends StatelessWidget {
                 ),
                 const SpacerVertical(height: 5),
                 Text(
-                  "Points - ${leaderProvider.extra?.balance ?? 0}",
+                  leaderProvider.extra?.balance == 0 ||
+                          leaderProvider.extra?.balance == 1
+                      ? "${leaderProvider.extra?.balance ?? 0} Point"
+                      : "${leaderProvider.extra?.balance ?? 0} Points",
                   textAlign: TextAlign.center,
                   style: stylePTSansBold(color: Colors.white, fontSize: 14),
                 ),

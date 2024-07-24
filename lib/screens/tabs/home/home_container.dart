@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/screens/prediction/radar.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/screens/stockAnalysis/stock_analysis.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
-// ignore: unused_import
-import 'package:stocks_news_new/screens/tabs/home/widgets/myAlerts/index.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -23,6 +23,7 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
+import '../../../widgets/custom/update_membership.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -35,6 +36,7 @@ class HomeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
 
     if (!provider.isLoadingSlider &&
         provider.statusSlider != Status.ideal &&
@@ -60,48 +62,54 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              // ThemeButton(
-              //   onPressed: () {
-              //     showDialog(
-              //       context: navigatorKey.currentContext!,
-              //       barrierColor: Colors.black.withOpacity(0.9),
-              //       builder: (context) {
-              //         return const CoinAnimationWidget();
-              //       },
-              //     );
-              //   },
-              // ),
               const HomeTopNewsSlider(),
-              Visibility(
-                visible: provider.extra?.referral?.shwReferral ?? false,
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(
-                    Dimen.padding,
-                    Dimen.homeSpacing,
-                    Dimen.padding,
-                    0,
-                  ),
-                  child: const ReferApp(),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(
-                  Dimen.padding,
-                  Dimen.homeSpacing,
-                  Dimen.padding,
-                  0,
-                ),
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const radar(),
-                        ),
-                      );
-                    },
-                    child: const Text('Click me')),
-              ),
+              const MembershipCoinsOption(),
+
+              // Visibility(
+              //   visible: showMembership && provider.homeSliderRes != null,
+              //   child: Container(
+              //     margin: const EdgeInsets.fromLTRB(
+              //       Dimen.padding,
+              //       Dimen.homeSpacing,
+              //       Dimen.padding,
+              //       0,
+              //     ),
+              //     child: userProvider.user?.membership?.purchased != 1
+              //         ? const UpdateMembershipCard()
+              //         :
+              //         //
+              //         const UpdateStoreCard(),
+              //   ),
+              // ),
+
+              // Container(
+              //   margin: const EdgeInsets.fromLTRB(
+              //     Dimen.padding,
+              //     Dimen.homeSpacing,
+              //     Dimen.padding,
+              //     0,
+              //   ),
+              //   child: const ReferPurchaseSlider(),
+              // ),
+
+              // Container(
+              //   margin: const EdgeInsets.fromLTRB(
+              //     Dimen.padding,
+              //     Dimen.homeSpacing,
+              //     Dimen.padding,
+              //     0,
+              //   ),
+              //   child: GestureDetector(
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (_) => const radar(),
+              //           ),
+              //         );
+              //       },
+              //       child: const Text('Click me')),
+              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -115,6 +123,36 @@ class HomeContainer extends StatelessWidget {
                       child: const StockInBuzz(),
                     ),
                   const FeaturedStocksIndex(),
+                  Visibility(
+                    visible: provider.extra?.referral?.shwReferral ?? false,
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(
+                        Dimen.padding,
+                        Dimen.homeSpacing,
+                        Dimen.padding,
+                        0,
+                      ),
+                      child: const ReferApp(),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(
+                      Dimen.padding,
+                      Dimen.homeSpacing,
+                      Dimen.padding,
+                      0,
+                    ),
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const StockAnalysis(),
+                            ),
+                          );
+                        },
+                        child: const Text('Click me')),
+                  ),
                   Visibility(
                     visible:
                         provider.extraMostPopular?.showMostPurchased == true,

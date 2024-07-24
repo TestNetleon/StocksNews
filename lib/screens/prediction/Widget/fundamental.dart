@@ -40,7 +40,7 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                           Icons.radar,
                           color: Colors.green,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8.0,
                         ),
                         Text('AI Satisfation Scan',
@@ -53,10 +53,10 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                     children: [
                       Image.asset(
                         Images.edit,
-                        opacity: AlwaysStoppedAnimation(.5),
+                        opacity: const AlwaysStoppedAnimation(.5),
                         height: 20,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20.0,
                       ),
                       Image.asset(

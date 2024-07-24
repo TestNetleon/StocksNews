@@ -78,11 +78,11 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
     MorningStar? morningStar =
         context.watch<StockDetailProviderNew>().overviewRes?.morningStart;
-    int value = morningStar?.quantEconomicMoatLabel == "Narrow"
-        ? 70
-        : morningStar?.quantEconomicMoatLabel == "Wide"
-            ? 99
-            : 0;
+    // int value = morningStar?.quantEconomicMoatLabel == "Narrow"
+    //     ? 70
+    //     : morningStar?.quantEconomicMoatLabel == "Wide"
+    //         ? 99
+    //         : 0;
 
     String? healthLabel = morningStar?.quantFinancialHealthLabel;
     String? unCerLabel = morningStar?.quantFairValueUncertaintyLabel;
@@ -202,9 +202,7 @@ class _StockDetailAnalystDataState extends State<StockDetailAnalystData> {
                                           Icons.star,
                                           color: ThemeColors.ratingIconColor,
                                         ),
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
+                                        onRatingUpdate: (rating) {},
                                       ),
                                     ],
                                   ),

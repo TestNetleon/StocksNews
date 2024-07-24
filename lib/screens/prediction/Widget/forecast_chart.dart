@@ -86,153 +86,122 @@ class _ForcastingChartState extends State<ForcastingChart> {
         spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
 
     // Calculate the interval for the y-axis
-    double interval = (maxAmount / 3).ceilToDouble();
+    // double interval = (maxAmount / 3).ceilToDouble();
     double yAxisInterval = 0.5; // Adjust as needed
 
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(18.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Forcasting Analysis Metrics',
-              style: stylePTSansBold(fontSize: 18, color: Colors.black)),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Expanded(
-            child: LineChart(
-              LineChartData(
-                maxY: maxAmount,
-                minY: 0.0,
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: const [
-                      FlSpot(0, 1),
-                      FlSpot(1, 3),
-                      FlSpot(2, 2),
-                      FlSpot(3, 2),
-                      FlSpot(4, 3),
-                    ],
-                    isCurved: true,
-                    color: Colors.blue,
-                    barWidth: 5,
-                    isStrokeCapRound: true,
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                  LineChartBarData(
-                    spots: const [
-                      FlSpot(4, 3),
-                      FlSpot(5, 4),
-                      FlSpot(6, 3),
-                      FlSpot(7, 5),
-                    ],
-                    isCurved: false,
-                    color: Colors.green,
-                    barWidth: 2,
-                    isStrokeCapRound: true,
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                  LineChartBarData(
-                    spots: const [
-                      FlSpot(4, 3),
-                      FlSpot(5, 3),
-                      FlSpot(6, 2),
-                      FlSpot(7, 1),
-                    ],
-                    isCurved: false,
-                    color: Colors.red,
-                    barWidth: 2,
-                    isStrokeCapRound: true,
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                  LineChartBarData(
-                    spots: [
-                      // FlSpot(3, 2),
-                      FlSpot(4, 3),
-                      FlSpot(4, 3),
-                      FlSpot(6, 2),
-                      FlSpot(7, 3),
-                    ],
-                    isCurved: false,
-                    color: Colors.yellow,
-                    barWidth: 2,
-                    isStrokeCapRound: true,
-                    belowBarData: BarAreaData(show: false),
-                  ),
-                ],
-                titlesData: FlTitlesData(
-                  show: true,
-                  bottomTitles: AxisTitles(
-                    axisNameWidget: Text('Yearly Record',
-                        style:
-                            stylePTSansBold(fontSize: 14, color: Colors.black)),
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 15,
-                      getTitlesWidget: (value, meta) {
-                        final year = value.toInt();
-
-                        return Text(
-                          combinedChart[value.toInt()]['year'].toString(),
-                          style: TextStyle(color: Colors.black),
-                        );
-                      },
-                      interval: 1.20,
+    return AspectRatio(
+      aspectRatio: 1.10,
+      child: LineChart(
+        LineChartData(
+          maxY: maxAmount + yAxisInterval,
+          minY: 0.0,
+          lineBarsData: [
+            LineChartBarData(
+              spots: const [
+                FlSpot(0, 1),
+                FlSpot(1, 3),
+                FlSpot(2, 2),
+                FlSpot(4, 3),
+              ],
+              isCurved: true,
+              // colors: [Colors.red],
+              color: Colors.blue,
+              barWidth: 5,
+              isStrokeCapRound: true,
+              belowBarData: BarAreaData(show: false),
+            ),
+            LineChartBarData(
+              spots: [
+                const FlSpot(2, 2),
+                const FlSpot(5, 3),
+              ],
+              isCurved: true,
+              color: Colors.green,
+              barWidth: 5,
+              isStrokeCapRound: true,
+              belowBarData: BarAreaData(show: false),
+            ),
+            LineChartBarData(
+              spots: [
+                const FlSpot(2, 2),
+                const FlSpot(3, 3),
+              ],
+              isCurved: true,
+              color: const Color.fromARGB(255, 248, 42, 42),
+              barWidth: 5,
+              isStrokeCapRound: true,
+              belowBarData: BarAreaData(show: false),
+            ),
+          ],
+          titlesData: FlTitlesData(
+            show: true,
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: 1,
+                reservedSize: 40,
+                getTitlesWidget: (value, meta) {
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    space: 1.0,
+                    child: RotatedBox(
+                      quarterTurns: 3,
+                      child: Text(
+                        combinedChart[value.toInt()]['year'].toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10,
+                        ),
+                      ),
                     ),
-                  ),
-                  rightTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  topTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  leftTitles: AxisTitles(
-                    axisNameWidget: Text('Stock Amount',
-                        style:
-                            stylePTSansBold(fontSize: 14, color: Colors.black)),
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 15,
-                      getTitlesWidget: (value, meta) {
-                        final amount = value.toInt();
-                        return Text(
-                          combinedChart[value.toInt()]['amount'].toString(),
-                          style: TextStyle(color: Colors.black),
-                        );
-                      },
-                      interval: 1,
+                  );
+                },
+              ),
+            ),
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                interval: yAxisInterval,
+                reservedSize: 30,
+                getTitlesWidget: (value, meta) {
+                  return Text(
+                    combinedChart[value.toInt()]['amount'].toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
                     ),
-                  ),
-                ),
-                borderData: FlBorderData(
-                  show: true,
-                  border: Border.all(
-                      color: Color.fromARGB(255, 236, 231, 231), width: 0.50),
-                ),
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: true,
-                  horizontalInterval: 1,
-                  verticalInterval: 1,
-                  getDrawingHorizontalLine: (value) {
-                    return const FlLine(
-                      color: Color.fromARGB(255, 236, 231, 231),
-                      strokeWidth: 0.50,
-                    );
-                  },
-                  getDrawingVerticalLine: (value) {
-                    return const FlLine(
-                      color: Color.fromARGB(255, 236, 231, 231),
-                      strokeWidth: 0.50,
-                    );
-                  },
-                ),
+                  );
+                },
               ),
             ),
           ),
-        ],
+          borderData: FlBorderData(
+            show: true,
+            border: Border.all(color: const Color(0xff37434d)),
+          ),
+          gridData: FlGridData(
+            show: true,
+            drawVerticalLine: true,
+            horizontalInterval: 1,
+            verticalInterval: 1,
+            getDrawingHorizontalLine: (value) {
+              return const FlLine(
+                color: Colors.green,
+                strokeWidth: 1,
+              );
+            },
+            getDrawingVerticalLine: (value) {
+              return const FlLine(
+                color: Colors.green,
+                strokeWidth: 1,
+              );
+            },
+          ),
+          // Other chart configurations
+          // ...
+        ),
       ),
     );
   }

@@ -142,6 +142,7 @@ class BlogDetailContainer extends StatelessWidget {
             hasData: provider.blogsDetail != null && !provider.isLoadingDetail,
             isLoading: provider.isLoadingDetail,
             showPreparingText: true,
+            isOldApp: provider.extra?.isOldApp,
             onRefresh: () => provider.getBlogDetailData(slug: slug),
             child: CommonRefreshIndicator(
               onRefresh: () => provider.getBlogDetailData(slug: slug),
@@ -158,7 +159,6 @@ class BlogDetailContainer extends StatelessWidget {
                           provider.blogsDetail?.name ?? "",
                           style: styleGeorgiaBold(fontSize: 25),
                         ),
-
                         const SpacerVertical(height: 5),
                         // Padding(
                         //   padding: EdgeInsets.only(bottom: 15.sp),
@@ -183,7 +183,6 @@ class BlogDetailContainer extends StatelessWidget {
                         //     // fit: BoxFit.contain,
                         //   ),
                         // ),
-
                         CachedNetworkImagesWidget(
                           provider.blogsDetail?.image ?? "",
                           height: ScreenUtil().screenHeight * 0.27,
@@ -205,7 +204,6 @@ class BlogDetailContainer extends StatelessWidget {
                         //Text("shwoing ticker Data", style: TextStyle(color: Colors.white),),
                         //New Blog Tickers Widget
                         const BlogDetailMentionBy(),
-
                         SpacerVertical(height: Dimen.itemSpacing.sp),
                         // const BlogDetailAuthor(),
                         // const SpacerVertical(height: 5),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -97,8 +98,7 @@ class ReferApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // UserProvider provider = context.read<UserProvider>();
     ReferralRes? referral = context.watch<HomeProvider>().extra?.referral;
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
+    return GestureDetector(
       onTap: () {
         _onShareAppClick();
 
@@ -112,7 +112,7 @@ class ReferApp extends StatelessWidget {
         //   "${referral?.shareText}${"\n\n"}${provider.user?.referralUrl}",
         // );
       },
-      child: Ink(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -176,6 +176,7 @@ class ReferApp extends StatelessWidget {
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Text(
                   //   referral?.title ?? "Refer and Earn",
@@ -186,7 +187,9 @@ class ReferApp extends StatelessWidget {
                     style: stylePTSansBold(fontSize: 18),
                   ),
                   const SpacerVertical(height: 3),
-                  Text(
+                  AutoSizeText(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     referral?.message ?? "",
                     style: stylePTSansRegular(fontSize: 14, height: 1.4),
                   ),

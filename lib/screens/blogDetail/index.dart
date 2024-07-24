@@ -53,7 +53,8 @@ class _BlogDetailState extends State<BlogDetail> {
       notificationId: widget.notificationId,
     );
 
-    if (blogProvider.blogsDetail?.readingStatus == false) {
+    if (blogProvider.blogsDetail?.readingStatus == false ||
+        blogProvider.extra?.isOldApp == true) {
       return;
     }
 
@@ -62,7 +63,7 @@ class _BlogDetailState extends State<BlogDetail> {
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          if (mounted) {
+          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(BlogDetail.path);
             loginSheet();
           }
@@ -73,7 +74,7 @@ class _BlogDetailState extends State<BlogDetail> {
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {
         Timer(const Duration(seconds: 3), () {
-          if (mounted) {
+          if (mounted && (ModalRoute.of(context)?.isCurrent ?? false)) {
             helper.update(BlogDetail.path);
             verifyIdentitySheet();
           }
