@@ -35,7 +35,7 @@ class SdFinancialRes {
 }
 
 class Chart {
-  final String? period;
+  final dynamic period;
   final dynamic revenue;
   final dynamic netIncome;
   final dynamic totalAssets;
@@ -43,6 +43,8 @@ class Chart {
   final dynamic operatingCashFlow1;
   final dynamic operatingCashFlow2;
   final dynamic operatingCashFlow3;
+  final dynamic ebitda;
+  final dynamic totalEquity;
 
   Chart({
     this.period,
@@ -53,6 +55,8 @@ class Chart {
     this.operatingCashFlow1,
     this.operatingCashFlow2,
     this.operatingCashFlow3,
+    this.ebitda,
+    this.totalEquity,
   });
 
   factory Chart.fromJson(Map<String, dynamic> json) => Chart(
@@ -64,6 +68,8 @@ class Chart {
         operatingCashFlow1: json["Operating Cash Flow"],
         operatingCashFlow2: json["Investing Cash Flow"],
         operatingCashFlow3: json["Financing Cash Flow"],
+        ebitda: json["EBITDA"],
+        totalEquity: json["Total Equity"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,55 +81,63 @@ class Chart {
         "Operating Cash Flow": operatingCashFlow1,
         "Investing Cash Flow": operatingCashFlow2,
         "Financing Cash Flow": operatingCashFlow3,
+        "EBITDA": ebitda,
+        "Total Equity": totalEquity,
       };
 }
 
 class FinanceStatement {
-  final String? period;
-  final String? periodEnded;
-  final String? operatingRevenue;
-  final String? costOfRevenue;
-  final String? grossProfit;
-  final num? grossProfitRatio;
-  final String? researchAndDevelopmentExpenses;
-  final String? generalAdministrativeExpenses;
-  final String? sellingMarketingExpenses;
-  final String? sellingGeneralAdministrativeExpenses;
-  final String? otherExpenses;
-  final String? operatingExpenses;
-  final String? costAndExpenses;
-  final String? interestIncome;
-  final String? interestExpense;
-  final String? depreciationAmortization;
-  final String? ebitda;
+  final dynamic period;
+  final dynamic periodEnded;
+  final dynamic operatingRevenue;
+  final dynamic costOfRevenue;
+  final dynamic grossProfit;
+  final dynamic grossProfitRatio;
+  final dynamic researchAndDevelopmentExpenses;
+  final dynamic generalAdministrativeExpenses;
+  final dynamic sellingMarketingExpenses;
+  final dynamic sellingGeneralAdministrativeExpenses;
+  final dynamic otherExpenses;
+  final dynamic operatingExpenses;
+  final dynamic costAndExpenses;
+  final dynamic interestIncome;
+  final dynamic interestExpense;
+  final dynamic depreciationAmortization;
+  final dynamic ebitda;
   final num? ebitdaRatio;
-  final String? operatingIncome;
+  final dynamic operatingIncome;
   final num? operatingIncomeRatio;
-  final String? totalOtherIncomeExpensesNet;
-  final String? incomeBeforeTax;
-  final String? incomeBeforeTaxRatio;
-  final String? incomeTaxExpense;
-  final String? netIncome;
-  final String? netIncomeRatio;
+  final dynamic totalOtherIncomeExpensesNet;
+  final dynamic incomeBeforeTax;
+  final dynamic incomeBeforeTaxRatio;
+  final dynamic incomeTaxExpense;
+  final dynamic netIncome;
+  final dynamic netIncomeRatio;
   final num? eps;
   final num? epsDiluted;
-  final String? weightedAverageSharesOut;
-  final String? weightedAverageSharesOutDiluted;
-  final String? link;
-  final String? revenue;
-  final String? totalAssets;
-  final String? totalLiabilities;
-  final String? revenueChangePercentage;
-  final String? totalAssetsChangePercentage;
-  final String? totalLiabilitiesChangePercentage;
-  final String? netIncomeChangePercentage;
+  final dynamic weightedAverageSharesOut;
+  final dynamic weightedAverageSharesOutDiluted;
+  final dynamic link;
+  final dynamic revenue;
+  final dynamic totalAssets;
+  final dynamic totalLiabilities;
+  final dynamic revenueChangePercentage;
+  final dynamic totalAssetsChangePercentage;
+  final dynamic totalLiabilitiesChangePercentage;
+  final dynamic netIncomeChangePercentage;
 
-  final String? operatingCashFlow;
-  final String? investingCashFlow;
-  final String? financingCashFlow;
-  final String? operatingCashFlowChangePercentage;
-  final String? investingCashFlowChangePercentage;
-  final String? financingCashFlowChangePercentage;
+  final dynamic operatingCashFlow;
+  final dynamic investingCashFlow;
+  final dynamic financingCashFlow;
+  final dynamic operatingCashFlowChangePercentage;
+  final dynamic investingCashFlowChangePercentage;
+  final dynamic financingCashFlowChangePercentage;
+  final dynamic eBITDAChangePercentage;
+  final dynamic totalEquity;
+  final dynamic totalEquityChangePercentage;
+  final dynamic cep;
+  final dynamic cashAtBeginningOfPeriod;
+  final dynamic investingCashFlowChange;
 
   FinanceStatement({
     this.period,
@@ -170,6 +184,12 @@ class FinanceStatement {
     this.operatingCashFlowChangePercentage,
     this.investingCashFlowChangePercentage,
     this.financingCashFlowChangePercentage,
+    this.eBITDAChangePercentage,
+    this.totalEquity,
+    this.totalEquityChangePercentage,
+    this.cep,
+    this.cashAtBeginningOfPeriod,
+    this.investingCashFlowChange,
   });
 
   factory FinanceStatement.fromJson(Map<String, dynamic> json) =>
@@ -226,6 +246,12 @@ class FinanceStatement {
             json["Investing Cash Flow Change Percentage"],
         financingCashFlowChangePercentage:
             json["Financing Cash Flow Change Percentage"],
+        eBITDAChangePercentage: json["EBITDA Change Percentage"],
+        totalEquity: json["Total Equity"],
+        totalEquityChangePercentage: json["Total Equity Change Percentage"],
+        cep: json["Cash at End of Period"],
+        cashAtBeginningOfPeriod: json["Cash at Beginning of Period"],
+        investingCashFlowChange: json["Investing Cash Flow Change"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -277,6 +303,12 @@ class FinanceStatement {
             investingCashFlowChangePercentage,
         "Financing Cash Flow Change Percentage":
             financingCashFlowChangePercentage,
+        "EBITDA Change Percentage": eBITDAChangePercentage,
+        "Total Equity": totalEquity,
+        "Total Equity Change Percentage": totalEquityChangePercentage,
+        "Cash at End of Period": cep,
+        "Cash at Beginning of Period": cashAtBeginningOfPeriod,
+        "Investing Cash Flow Change": investingCashFlowChange,
       };
   Map<String, dynamic> toMap() => {
         "Period": period,
@@ -327,5 +359,11 @@ class FinanceStatement {
             investingCashFlowChangePercentage,
         "Financing Cash Flow Change Percentage":
             financingCashFlowChangePercentage,
+        "EBITDA Change Percentage": eBITDAChangePercentage,
+        "Total Equity": totalEquity,
+        "Total Equity Change Percentage": totalEquityChangePercentage,
+        "Cash at End of Period": cep,
+        "Cash at Beginning of Period": cashAtBeginningOfPeriod,
+        "Investing Cash Flow Change": investingCashFlowChange,
       };
 }

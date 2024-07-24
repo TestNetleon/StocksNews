@@ -243,6 +243,7 @@ class Images {
   static const congratsGIF = "assets/images/Congrats.gif";
   static const congratsGIF1 = "assets/images/Congrats.png";
   static const pointWithStar = "assets/images/coin_with_star.png";
+  static const tringle = "assets/images/tringle.png";
 
   //svg
   // static const share = "assets/svg/share.svg";
@@ -449,6 +450,7 @@ enum DeeplinkEnum {
   trendingIndustries,
   sentiments,
   helpdesk,
+  membership,
 
   //below add for Market data only else add above
   gainerLoser,
@@ -493,8 +495,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
     // return 'page';
     return DeeplinkEnum.page;
   } else if (uri.path.contains('/trending-industries')) {
-    // return 'page';
     return DeeplinkEnum.trendingIndustries;
+  } else if (uri.path.contains('/membership')) {
+    return DeeplinkEnum.membership;
   }
 
   // Only Market data goes here set else above

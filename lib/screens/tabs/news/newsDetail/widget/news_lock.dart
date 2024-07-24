@@ -145,7 +145,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
     bool haveEnoughPoints = (provider.data?.postDetail?.totalPoints == null ||
             provider.data?.postDetail?.pointsRequired == null)
         ? false
-        : (provider.data?.postDetail?.totalPoints! >
+        : (provider.data?.postDetail?.totalPoints! >=
             provider.data?.postDetail?.pointsRequired!);
 
     bool showLoginButton = !isLogin;

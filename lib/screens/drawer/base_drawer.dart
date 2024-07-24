@@ -242,7 +242,8 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                   Navigator.push(
                                     navigatorKey.currentContext!,
                                     MaterialPageRoute(
-                                        builder: (_) => const Alerts()),
+                                      builder: (_) => const Alerts(),
+                                    ),
                                   );
                                 },
                                 child: Column(

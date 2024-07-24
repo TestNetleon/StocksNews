@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -31,6 +35,7 @@ class BarChartIncomeState extends State<BarChartIncome> {
   int minAbsValue = 0;
   dynamic minRevenue;
   dynamic minNetIncome;
+  bool firstValue = true;
 
   bool valueNegative = true;
   List<Chart>? charts;
@@ -103,8 +108,6 @@ class BarChartIncomeState extends State<BarChartIncome> {
     maxAbsValue = (maxRevenue!.abs() > maxNetIncome!.abs())
         ? maxRevenue.abs()
         : maxNetIncome.abs();
-
-    setState(() {});
   }
 
   @override
@@ -126,7 +129,8 @@ class BarChartIncomeState extends State<BarChartIncome> {
             BarChartData(
               maxY: double.parse("$maxAbsValue"),
               minY: minRevenue != null || minNetIncome != null
-                  ? -double.parse("$maxAbsValue")
+                  ? double.parse(
+                      "${min(double.parse("${minRevenue ?? 0.0}"), double.parse("${minNetIncome ?? 0.0}"))}")
                   : null,
               titlesData: FlTitlesData(
                 show: true,
@@ -144,12 +148,21 @@ class BarChartIncomeState extends State<BarChartIncome> {
                   ),
                 ),
                 rightTitles: AxisTitles(
+                  drawBelowEverything: false,
                   sideTitles: SideTitles(
-                    reservedSize: 52,
+                    reservedSize: 40,
                     showTitles: true,
-                    interval: maxAbsValue /
-                        5, // Default value to avoid division by zero
+                    interval: maxAbsValue / 5,
                     getTitlesWidget: (value, meta) {
+                      StockDetailProviderNew provider =
+                          context.watch<StockDetailProviderNew>();
+
+                      if (!provider.firstValueNotShowOne && value < 0) {
+                        provider.firstValueNotShowOneD(false);
+
+                        return Text("");
+                      }
+
                       if (charts?[0].operatingCashFlow1 == null) {
                         String formattedValue = convertToReadableValue(value);
                         return Text(

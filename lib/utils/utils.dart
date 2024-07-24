@@ -22,6 +22,7 @@ import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/lowPriceStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
 import 'package:stocks_news_new/screens/marketData/pennyStocks/index.dart';
+import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/screens/stocks/index.dart';
 import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 // import 'package:stocks_news_new/route/my_app.dart';
@@ -838,6 +839,41 @@ void handleNavigation({
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => const Tabs(index: 2)),
     );
+  } else if (type == DeeplinkEnum.membership) {
+    // UserProvider userProvider =
+    //     navigatorKey.currentContext!.read<UserProvider>();
+    // if (userProvider.user == null) {
+    //   UserRes? user = await Preference.getUser();
+    //   if (user != null) {
+    //     provider.setUser(user);
+    //   }
+    //   await navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider(
+    //         showProgress: true,
+    //       );
+    // }
+
+    // UserProvider userProvider =
+    //     navigatorKey.currentContext!.read<UserProvider>();
+
+    if (provider.user == null || provider.user?.membership?.purchased != 1) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const NewMembership(
+            withClickCondition: true,
+          ),
+        ),
+      );
+    } else {
+      Navigator.popUntil(
+          navigatorKey.currentContext!, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(
+          builder: (_) => const Tabs(),
+        ),
+      );
+    }
   } else if (type == DeeplinkEnum.trendingIndustries) {
     Navigator.popUntil(navigatorKey.currentContext!, (route) => route.isFirst);
     Navigator.pushReplacement(
@@ -865,8 +901,9 @@ void handleNavigation({
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (context) =>
-            const GainersLosersIndex(type: StocksType.gainers),
+        builder: (context) => const GainersLosersIndex(
+          type: StocksType.gainers,
+        ),
       ),
     );
   } else if (type == DeeplinkEnum.gapUpDown) {

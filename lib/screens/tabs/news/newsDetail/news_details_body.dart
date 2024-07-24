@@ -90,7 +90,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
           }
         });
       }
-    } else if (userProvider.user != null && userProvider.user?.phone == null) {
+    } else if (userProvider.user != null &&
+        (userProvider.user?.phone == null || userProvider.user?.phone == "")) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
       if (visible) {

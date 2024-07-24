@@ -173,6 +173,13 @@ class StockDetailProviderNew extends ChangeNotifier {
   int selectedTab = 0;
   int _openIndex = -1;
   int get openIndex => _openIndex;
+  bool _firstValueNotShow = true;
+  bool get firstValueNotShow => _firstValueNotShow;
+  bool _firstValueNotShowOne = false;
+  bool get firstValueNotShowOne => _firstValueNotShowOne;
+
+  bool _firstValueNotShowTwo = false;
+  bool get firstValueNotShowTwo => _firstValueNotShowTwo;
 
   void setOpenIndex(index) {
     _openIndex = index;
@@ -186,6 +193,21 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   void changeWatchList(value) {
     _tabRes?.isWatchListAdded = value;
+    notifyListeners();
+  }
+
+  void firstValueNotShowD(value) {
+    _firstValueNotShow = value;
+    notifyListeners();
+  }
+
+  void firstValueNotShowOneD(value) {
+    _firstValueNotShowOne = value;
+    notifyListeners();
+  }
+
+  void firstValueNotShowTwoD(value) {
+    _firstValueNotShowTwo = value;
     notifyListeners();
   }
 
@@ -1440,6 +1462,9 @@ class StockDetailProviderNew extends ChangeNotifier {
   SdFinancialRes? _cashSdFinancialChartRes;
   SdFinancialRes? get cashSdFinancialChartRes => _cashSdFinancialChartRes;
 
+  String _changeTabAreaValue = "1";
+  String get changeTabAreaValue => _changeTabAreaValue;
+
   int _openIndexInsider = -1;
   int get openIndexInsider => _openIndexInsider;
 
@@ -1465,6 +1490,21 @@ class StockDetailProviderNew extends ChangeNotifier {
 
   int changePeriodTypeIndex = 0;
 
+  List<Chart>? _areaIncomeChart;
+  List<Chart>? get areaIncomeChart => _areaIncomeChart;
+
+  List<Chart>? _areaIncomeChartBalance;
+  List<Chart>? get areaIncomeChartBalance => _areaIncomeChartBalance;
+
+  String _changeTabAreaValueBalance = "1";
+  String get changeTabAreaValueBalance => _changeTabAreaValueBalance;
+
+  List<Chart>? _areaIncomeChartCashFlow;
+  List<Chart>? get areaIncomeChartCashFlow => _areaIncomeChartCashFlow;
+
+  String _changeTabAreaValueCashFlow = "1";
+  String get changeTabAreaValueCashFlow => _changeTabAreaValueCashFlow;
+
   void changeTabType(index, {String? symbol}) {
     if (typeIndex != index) {
       typeIndex = index;
@@ -1476,6 +1516,78 @@ class StockDetailProviderNew extends ChangeNotifier {
         tabProgress: true,
       );
     }
+  }
+
+  void changeTabAreaIncomeSix(value, data) {
+    _changeTabAreaValue = value;
+    if (data == null) return;
+    _areaIncomeChart = data?.sublist(0, 6);
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaIncomeTen(value, data) {
+    _changeTabAreaValue = value;
+    if (data == null) return;
+    _areaIncomeChart = data?.sublist(0, 10);
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaIncomeTenInt(value, data) {
+    _changeTabAreaValue = value;
+    if (data == null) return;
+    _areaIncomeChart = data;
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaBalanceSix(value, data) {
+    _changeTabAreaValueBalance = value;
+    if (data == null) return;
+    _areaIncomeChartBalance = data?.sublist(0, 6);
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaBalanceTen(value, data) {
+    _changeTabAreaValueBalance = value;
+    if (data == null) return;
+    _areaIncomeChartBalance = data?.sublist(0, 10);
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaBalanceTenInt(value, data) {
+    _changeTabAreaValueBalance = value;
+    if (data == null) return;
+    _areaIncomeChartBalance = data;
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaCashFlowSix(value, data) {
+    _changeTabAreaValueCashFlow = value;
+    if (data == null) return;
+    _areaIncomeChartCashFlow = data?.sublist(0, 6);
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaCashFlowTen(value, data) {
+    _changeTabAreaValueCashFlow = value;
+    if (data == null) return;
+    _areaIncomeChartCashFlow = data?.sublist(0, 10);
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
+  }
+
+  void changeTabAreaCashFlowTenInt(value, data) {
+    _changeTabAreaValueCashFlow = value;
+    if (data == null) return;
+    _areaIncomeChartCashFlow = data;
+    Utils().showLog('Error initializing Firebase: $data');
+    notifyListeners();
   }
 
   void changeTabTypeChartData(index, {String? symbol}) {

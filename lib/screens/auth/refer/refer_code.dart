@@ -139,7 +139,7 @@ class _ReferLoginState extends State<ReferLogin> {
         title: "Alert",
         icon: Images.alertPopGIF,
       );
-    } else if (mobile.text.isEmpty || mobile.text.length < 10) {
+    } else if (mobile.text.isEmpty || mobile.text.length < 6) {
       popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",
@@ -521,11 +521,7 @@ class _ReferLoginState extends State<ReferLogin> {
                                       user?.phone == '' || user?.phone == null
                                           ? ThemeColors.white
                                           : const Color.fromARGB(
-                                              255,
-                                              188,
-                                              188,
-                                              188,
-                                            ),
+                                              255, 188, 188, 188),
                                   editable:
                                       user?.phone == '' || user?.phone == null,
                                   style: stylePTSansBold(
