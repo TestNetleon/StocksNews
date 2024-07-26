@@ -74,7 +74,7 @@ class _UserCardState extends State<UserCard> {
                           url: userProvider.user?.image,
                           showCameraIcon: false,
                           imageSize: 70,
-                          roundImage: false,
+                          roundImage: true,
                         ),
                       ),
                       const SpacerHorizontal(width: 10),

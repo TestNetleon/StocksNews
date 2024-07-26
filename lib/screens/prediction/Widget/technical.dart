@@ -66,7 +66,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            var theme = Theme.of(context);
+            // var theme = Theme.of(context);
             return GestureDetector(
               onTap: () {
                 setState(() {

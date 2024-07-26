@@ -275,7 +275,7 @@ class _HomeSplashState extends State<HomeSplash> {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-      appBar: AppBarHome(canSearch: true, showTrailing: true),
+      appBar: AppBarHome(canSearch: true),
       body: SizedBox(),
     );
   }

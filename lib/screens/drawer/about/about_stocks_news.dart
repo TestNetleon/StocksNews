@@ -409,20 +409,20 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     }
 
     // What We Do is always visible
-    if (provider.extra?.showWhatWeDo == true) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.featured_play_list_outlined,
-          text: "What We Do",
-          onTap: () {
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
-            );
-          },
-        ),
-      );
-    }
+    // if (provider.extra?.showWhatWeDo == true) {
+    visibleAboutTiles.add(
+      DrawerRes(
+        iconData: Icons.featured_play_list_outlined,
+        text: "What We Do",
+        onTap: () {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
+          );
+        },
+      ),
+    );
+    // }
 
     // Helpdesk
     visibleAboutTiles.add(

@@ -1,20 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dash/flutter_dash.dart';
 import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
-class PerformaceTabbar extends StatefulWidget {
-  const PerformaceTabbar({super.key});
+class PerformanceTabBar extends StatefulWidget {
+  const PerformanceTabBar({super.key});
 
   @override
-  State<PerformaceTabbar> createState() => _PerformaceTabbarState();
+  State<PerformanceTabBar> createState() => _PerformanceTabBarState();
 }
 
-class _PerformaceTabbarState extends State<PerformaceTabbar>
+class _PerformanceTabBarState extends State<PerformanceTabBar>
     with SingleTickerProviderStateMixin {
   late TabController controller;
 
@@ -79,7 +76,6 @@ class _PerformaceTabbarState extends State<PerformaceTabbar>
               ),
           },
         ),
-
         selectedIndex == 0
             ? PerformanceOverview()
             : selectedIndex == 1
@@ -87,7 +83,6 @@ class _PerformaceTabbarState extends State<PerformaceTabbar>
                 : selectedIndex == 2
                     ? Text('hiii')
                     : PerformanceOverview(),
-
         // DefaultTabController(
         //   length: 3,
         //   initialIndex: 1,

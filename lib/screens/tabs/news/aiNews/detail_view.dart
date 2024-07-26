@@ -353,8 +353,7 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                                                     ),
                                                     style: stylePTSansRegular(
                                                       height: 1.3,
-                                                      color:
-                                                          ThemeColors.greyText,
+                                                      color: ThemeColors.white,
                                                     ),
                                                   ),
                                                 ),

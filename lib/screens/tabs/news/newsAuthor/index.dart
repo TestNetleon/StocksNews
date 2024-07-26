@@ -12,7 +12,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 //
 import '../../home/widgets/app_bar_home.dart';
 
@@ -29,21 +28,27 @@ class NewsAuthorIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(canSearch: true, isPopback: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: type == BlogsType.author
+            ? "Articles by ${data?.name}"
+            : "News Under - ${data?.name}",
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          // Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
         child: Column(
           children: [
             // const NewsHeaderStocks(),
-            ScreenTitle(
-                title: type == BlogsType.author
-                    ? "Articles by ${data?.name}"
-                    : "News Under - ${data?.name}"),
+            // ScreenTitle(
+            //     title: type == BlogsType.author
+            //         ? "Articles by ${data?.name}"
+            //         : "News Under - ${data?.name}"),
             Expanded(child: NewsAuthorContainer(type: type, data: data)),
           ],
         ),

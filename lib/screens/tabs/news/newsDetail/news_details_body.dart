@@ -511,8 +511,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                     ),
                                                     style: stylePTSansRegular(
                                                       height: 1.3,
-                                                      color:
-                                                          ThemeColors.greyText,
+                                                      color: ThemeColors.white,
                                                     ),
                                                   ),
                                                 ),

@@ -12,7 +12,7 @@ class AddCompanyContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Ink(
+      child: Container(
         width: 100.sp,
         height: 100.sp,
         // alignment: Alignment.center,

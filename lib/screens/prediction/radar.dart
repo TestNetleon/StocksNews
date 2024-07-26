@@ -29,11 +29,7 @@ class _radarState extends State<radar> {
   Widget build(BuildContext context) {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(14.0),

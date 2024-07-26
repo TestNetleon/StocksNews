@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/container.dart';
 
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -13,8 +15,10 @@ class CongressionalDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CongressionalDetailProvider provider =
+        context.watch<CongressionalDetailProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: AppBarHome(isPopback: true, title: provider.extra?.title),
       body: CongressionalDetailContainer(slug: slug),
     );
   }

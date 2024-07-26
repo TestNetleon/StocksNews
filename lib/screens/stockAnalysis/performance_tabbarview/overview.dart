@@ -20,7 +20,7 @@ class _PerformanceOverviewState extends State<PerformanceOverview> {
       // physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: const [
-          Performancewidget(),
+          PerformanceWidget(),
           FundamentalWidget(),
           PriceWidget(),
           FinancialWidget(),

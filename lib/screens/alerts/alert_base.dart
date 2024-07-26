@@ -173,7 +173,6 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import '../../widgets/screen_title.dart';
 import 'alert_container.dart';
 
 class AlertBase extends StatefulWidget {
@@ -210,7 +209,15 @@ class _AlertBaseState extends State<AlertBase> {
     HomeProvider homeProvider = context.watch<HomeProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: userProvider.user == null
+            ? null
+            : provider.textRes?.title ??
+                (homeProvider.totalAlerts == 1
+                    ? "Stock Alert"
+                    : "Stock Alerts"),
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
@@ -220,14 +227,14 @@ class _AlertBaseState extends State<AlertBase> {
         ),
         child: Column(
           children: [
-            userProvider.user == null
-                ? const SizedBox()
-                : ScreenTitle(
-                    title: provider.textRes?.title ??
-                        (homeProvider.totalAlerts == 1
-                            ? "Stock Alert"
-                            : "Stock Alerts"),
-                  ),
+            // userProvider.user == null
+            //     ? const SizedBox()
+            //     : ScreenTitle(
+            //         title: provider.textRes?.title ??
+            //             (homeProvider.totalAlerts == 1
+            //                 ? "Stock Alert"
+            //                 : "Stock Alerts"),
+            //       ),
             userProvider.user == null
                 ? Expanded(
                     child: LoginError(

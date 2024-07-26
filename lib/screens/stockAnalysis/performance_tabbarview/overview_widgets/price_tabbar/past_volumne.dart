@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class PastVolumne extends StatelessWidget {
   const PastVolumne({super.key});
@@ -25,7 +24,7 @@ class PastVolumne extends StatelessWidget {
 
     double _parsePercentage(String percentage) {
       final cleanedPercentage = percentage.replaceAll('%', '');
-      return double.tryParse(cleanedPercentage)! / 100 ?? 0;
+      return double.tryParse(cleanedPercentage)! / 100;
     }
 
     return Column(

@@ -83,7 +83,6 @@ import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
-import 'package:stocks_news_new/screens/marketData/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
@@ -148,7 +147,6 @@ class Routes {
     DividendsScreen.path: (_) => const DividendsScreen(),
     CompareNew.path: (_) => const CompareNew(),
     EarningsScreen.path: (_) => const EarningsScreen(),
-    StockScreenerScreen.path: (_) => const StockScreenerScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
     ReferAFriend.path: (_) => const ReferAFriend(),
   };

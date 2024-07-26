@@ -10,7 +10,7 @@ class LeaderBoardNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.all(Dimen.padding.sp),
         child: const Column(

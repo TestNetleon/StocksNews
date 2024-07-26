@@ -125,16 +125,19 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
       drawer: const BaseDrawer(),
       appBar: AppBarHome(
         isPopback: true,
-        canSearch: true,
-        filterClick: () => _filterClick(
+        canSearch: false,
+        showTrailing: false,
+        onFilterClick: () => _filterClick(
           companySlug: widget.companySlug,
           reportingSlug: widget.reportingSlug,
         ),
+        title: "Insider Trading - ${widget.companyName ?? ""}",
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          // Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
@@ -145,25 +148,25 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
               visible: widget.companyName != "" &&
                   (widget.reportingSlug == "" || widget.reportingSlug == null),
               child: ScreenTitle(
-                title: "Insider Trading - ${widget.companyName ?? ""}",
+                // title: "Insider Trading - ${widget.companyName ?? ""}",
                 subTitle: provider.textRes?.subTitle,
-                optionalWidget: GestureDetector(
-                  onTap: () => _filterClick(
-                    companySlug: widget.companySlug,
-                    reportingSlug: widget.reportingSlug,
-                  ),
-                  child: const Icon(
-                    Icons.filter_alt,
-                    color: ThemeColors.accent,
-                  ),
-                ),
+                // optionalWidget: GestureDetector(
+                //   onTap: () => _filterClick(
+                //     companySlug: widget.companySlug,
+                //     reportingSlug: widget.reportingSlug,
+                //   ),
+                //   child: const Icon(
+                //     Icons.filter_alt,
+                //     color: ThemeColors.accent,
+                //   ),
+                // ),
               ),
             ),
             Visibility(
               visible:
                   widget.reportingName != "" && widget.reportingName != null,
               child: ScreenTitle(
-                title: "Insider Trading - ${widget.reportingName ?? ""}",
+                // title: "Insider Trading - ${widget.reportingName ?? ""}",
                 subTitle: provider.textResI?.subTitle,
                 optionalWidget: GestureDetector(
                   onTap: () => _filterClick(
@@ -199,7 +202,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
                 editable: true,
               ),
             ),
-            const SpacerVertical(height: 10),
+            // const SpacerVertical(height: 10),
 
             Expanded(
               child: widget.reportingSlug == "" || widget.reportingSlug == null

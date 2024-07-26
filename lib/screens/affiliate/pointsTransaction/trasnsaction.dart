@@ -45,10 +45,9 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(
-        canSearch: true,
-        showTrailing: true,
+      appBar: AppBarHome(
         isPopback: true,
+        title: provider.extraNew?.title.toString() ?? "",
       ),
       body: CommonEmptyError(
         hasData: provider.tnxData == null || provider.tnxData?.isEmpty == true,
@@ -83,7 +82,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                   return Column(
                     children: [
                       ScreenTitle(
-                        title: provider.extraNew?.title.toString() ?? "",
+                        // title: provider.extraNew?.title.toString() ?? "",
                         subTitle: provider.extraNew?.subTitle.toString() ?? "",
                       ),
                       const PointsSummary(fromDrawer: true),

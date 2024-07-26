@@ -123,7 +123,9 @@ class LeaderBoardProvider extends ChangeNotifier {
         _error = response.message;
       }
       _extra = (response.extra is Extra ? response.extra as Extra : null);
-
+      UserProvider userProvider =
+          Provider.of(navigatorKey.currentContext!, listen: false);
+      userProvider.updateBalance(_extra?.balance ?? 0);
       setStatus(Status.loaded);
     } catch (e) {
       _data = null;
@@ -197,7 +199,7 @@ class LeaderBoardProvider extends ChangeNotifier {
     }
   }
 
-//Transaction
+  // Transaction
   String? _errorT;
   String? get errorT => _errorT ?? Const.errSomethingWrong;
 

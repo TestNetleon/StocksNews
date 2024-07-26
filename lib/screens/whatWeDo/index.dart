@@ -11,7 +11,7 @@ import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
+// import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/constants.dart';
@@ -24,10 +24,7 @@ class WhatWeDoIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-      appBar: AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: AppBarHome(isPopback: true, title: "What We Do"),
       body: WhatWeDoContainer(),
     );
   }
@@ -72,10 +69,15 @@ class _WhatWeDoContainerState extends State<WhatWeDoContainer> {
               )
             : Padding(
                 padding: EdgeInsets.fromLTRB(
-                    Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+                  Dimen.padding.sp,
+                  // Dimen.padding.sp,
+                  0,
+                  Dimen.padding.sp,
+                  0,
+                ),
                 child: Column(
                   children: [
-                    const ScreenTitle(title: "What We Do"),
+                    // const ScreenTitle(title: "What We Do"),
                     Expanded(
                       child: CommonTabContainer(
                         tabPaddingNew: false,

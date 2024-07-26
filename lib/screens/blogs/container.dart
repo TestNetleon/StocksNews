@@ -23,11 +23,14 @@ class BlogContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(
+        isPopback: true,
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          // Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
@@ -90,10 +93,7 @@ class AuthorContainer extends StatelessWidget {
     BlogProvider provider = context.watch<BlogProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),

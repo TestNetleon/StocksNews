@@ -108,9 +108,18 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                         text: "Log in",
                                         onPressed: () {
                                           Scaffold.of(context).closeDrawer();
+                                          // TODO: Uncomment this ---
                                           isPhone
                                               ? loginSheet()
                                               : loginSheetTablet();
+                                          // TODO: Delete Below code this ---
+                                          // loginFirstSheet();
+                                          // Navigator.push(context,
+                                          //     createRoute(CompleteAuth())
+                                          //     // MaterialPageRoute(
+                                          //     //   builder: (_) => CompleteAuth(),
+                                          //     // ),
+                                          //     );
                                         },
                                       ),
                                     ),

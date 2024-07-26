@@ -13,11 +13,7 @@ class PaperTradeListing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(
           horizontal: Dimen.padding,

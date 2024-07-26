@@ -21,7 +21,7 @@ class ChatScreen extends StatelessWidget {
     return BaseContainer(
       // bottomSafeAreaColor:
       //     provider.slug == "0" ? ThemeColors.primaryLight : null,
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true),
       body: ChatScreenList(
         slug: slug,
         ticketId: ticketId,

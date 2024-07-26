@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview_widgets/price_tabbar/past_returns.dart';
 import 'package:stocks_news_new/screens/stockAnalysis/performance_tabbarview/overview_widgets/price_tabbar/past_volumne.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';

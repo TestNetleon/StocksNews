@@ -64,7 +64,7 @@ class PastReturns extends StatelessWidget {
           separatorBuilder: (context, index) {
             return const SpacerVertical(height: 0);
           },
-          itemCount: pastReturns.length ?? 0,
+          itemCount: pastReturns.length,
         ),
       ],
     );

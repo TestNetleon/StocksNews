@@ -43,19 +43,23 @@ class _CongressionalDetailContainerState
     CongressionalDetailProvider provider =
         context.watch<CongressionalDetailProvider>();
 
-    return Padding(
+    return Container(
       padding: const EdgeInsets.fromLTRB(
         Dimen.padding,
-        Dimen.padding,
+        // Dimen.padding,
+        0,
         Dimen.padding,
         0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (provider.data != null || provider.extra != null)
+          // if (provider.data != null || provider.extra != null ||)
+          if (provider.extra != null &&
+              (provider.extra?.subTitle != null &&
+                  provider.extra?.subTitle != ""))
             ScreenTitle(
-              title: provider.extra?.title,
+              // title: provider.extra?.title,
               subTitle: provider.extra?.subTitle,
               subTitleHtml: true,
             ),

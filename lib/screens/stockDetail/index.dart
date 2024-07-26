@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compititor.dart';
@@ -13,9 +14,12 @@ import 'package:stocks_news_new/screens/stockDetail/widgets/ownership/ownership.
 import 'package:stocks_news_new/screens/stockDetail/widgets/secFiling/sd_sec_filing.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../../socket/socket.dart';
 import '../../utils/constants.dart';
 import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
@@ -112,9 +116,73 @@ class _StockDetailState extends State<StockDetail> {
   @override
   Widget build(BuildContext context) {
     StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+
+    KeyStats? keyStats = provider.tabRes?.keyStats;
+    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
+
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
-      bottomSafeAreaColor: ThemeColors.background.withOpacity(0.8),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: keyStats?.symbol ?? "",
+        subTitle: keyStats?.name ?? "",
+        widget: keyStats?.symbol == null
+            ? null
+            : Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    width: 48,
+                    height: 48,
+                    child: ThemeImageView(
+                      url: companyInfo?.image ?? "",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SpacerHorizontal(width: 8),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              keyStats?.symbol ?? "",
+                              style: stylePTSansBold(fontSize: 18),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: ThemeColors.greyBorder,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 8),
+                              margin: EdgeInsets.only(left: 5),
+                              child: Text(
+                                keyStats?.exchange ?? "",
+                                style: stylePTSansRegular(fontSize: 11),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          keyStats?.name ?? "",
+                          style: stylePTSansRegular(
+                            fontSize: 14,
+                            color: ThemeColors.greyText,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+      ),
       body: BaseUiContainer(
         hasData: !provider.isLoadingTab && provider.tabRes != null,
         isLoading: provider.isLoadingTab,
@@ -124,36 +192,40 @@ class _StockDetailState extends State<StockDetail> {
         child: Column(
           children: [
             Expanded(
-              child: CommonTabContainer(
-                onChange: (index) {
-                  provider.setOpenIndex(-1);
-                },
-                padding: const EdgeInsets.only(bottom: 10),
-                physics: const NeverScrollableScrollPhysics(),
-                scrollable: true,
-                tabs: List.generate(
-                  provider.tabRes?.tabs?.length ?? 0,
-                  (index) => provider.tabRes?.tabs?[index].name ?? "",
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: CommonTabContainer(
+                  onChange: (index) {
+                    provider.setOpenIndex(-1);
+                  },
+                  padding: const EdgeInsets.only(bottom: 10),
+                  physics: const NeverScrollableScrollPhysics(),
+                  tabPaddingNew: false,
+                  scrollable: true,
+                  tabs: List.generate(
+                    provider.tabRes?.tabs?.length ?? 0,
+                    (index) => provider.tabRes?.tabs?[index].name ?? "",
+                  ),
+                  widgets: [
+                    SdOverview(symbol: widget.symbol),
+                    const SdKeyStats(),
+                    SdAnalysis(symbol: widget.symbol),
+                    SdTechnical(symbol: widget.symbol),
+                    SdForecast(symbol: widget.symbol),
+                    // SdSocialActivities(symbol: widget.symbol),
+                    // SdNews(symbol: widget.symbol),
+                    SdNewsN(symbol: widget.symbol),
+                    SdEarnings(symbol: widget.symbol),
+                    SdDividends(symbol: widget.symbol),
+                    SdInsiderTrade(symbol: widget.symbol),
+                    SdCompetitor(symbol: widget.symbol),
+                    SdOwnership(symbol: widget.symbol),
+                    SdCharts(symbol: widget.symbol),
+                    SdFinancial(symbol: widget.symbol),
+                    SdSecFilings(symbol: widget.symbol),
+                    SdMergers(symbol: widget.symbol),
+                  ],
                 ),
-                widgets: [
-                  SdOverview(symbol: widget.symbol),
-                  const SdKeyStats(),
-                  SdAnalysis(symbol: widget.symbol),
-                  SdTechnical(symbol: widget.symbol),
-                  SdForecast(symbol: widget.symbol),
-                  // SdSocialActivities(symbol: widget.symbol),
-                  // SdNews(symbol: widget.symbol),
-                  SdNewsN(symbol: widget.symbol),
-                  SdEarnings(symbol: widget.symbol),
-                  SdDividends(symbol: widget.symbol),
-                  SdInsiderTrade(symbol: widget.symbol),
-                  SdCompetitor(symbol: widget.symbol),
-                  SdOwnership(symbol: widget.symbol),
-                  SdCharts(symbol: widget.symbol),
-                  SdFinancial(symbol: widget.symbol),
-                  SdSecFilings(symbol: widget.symbol),
-                  SdMergers(symbol: widget.symbol),
-                ],
               ),
             ),
             // const SdTrade(),

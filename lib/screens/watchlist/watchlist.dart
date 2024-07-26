@@ -14,7 +14,7 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/login_error.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
+// import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class WatchList extends StatefulWidget {
@@ -55,24 +55,25 @@ class _WatchListState extends State<WatchList> {
 
     return BaseContainer(
       drawer: const BaseDrawer(),
-      appBar: const AppBarHome(
+      appBar: AppBarHome(
         isPopback: true,
-        canSearch: true,
+        title: provider.extra?.title ?? "Stock Watchlist",
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          // Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            userProvider.user == null
-                ? const SizedBox()
-                : ScreenTitle(
-                    title: provider.extra?.title ?? "Stock Watchlist"),
+            // userProvider.user == null
+            //     ? const SizedBox()
+            //     : ScreenTitle(
+            //         title: provider.extra?.title ?? "Stock Watchlist"),
             // TextInputFieldSearch(
             //   hintText: "Add ticker in watchlist",
             //   onChanged: (text) {},

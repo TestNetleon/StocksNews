@@ -51,6 +51,7 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
       context
           .read<TermsAndPolicyProvider>()
           .getTermsPolicy(type: widget.policyType, slug: widget.slug);
+      _triggerEvents();
     });
   }
 
@@ -75,7 +76,20 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
     TermsAndPolicyProvider provider = context.watch<TermsAndPolicyProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: widget.slug == "about-us"
+            ? "About Stocks.News"
+            : widget.slug == "referral-terms"
+                ? "Referral Program Terms and Conditions"
+                : widget.slug == "terms-of-service"
+                    ? "Terms of Service"
+                    : widget.slug == "privacy-policy"
+                        ? "Privacy Policy"
+                        : widget.slug == "membership-terms"
+                            ? "Membership Terms"
+                            : "Disclaimer",
+      ),
       body:
           // Column(
           //   children: [
@@ -94,37 +108,38 @@ class _TermsPolicyContainerState extends State<TermsPolicyContainer> {
           Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          // Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: _triggerEvents,
-              child: ScreenTitle(
-                title: widget.slug == "about-us"
-                    ? "About Stocks.News"
-                    : widget.slug == "referral-terms"
-                        ? "Referral Program Terms and Conditions"
-                        : widget.slug == "terms-of-service"
-                            ? "Terms of Service"
-                            : widget.slug == "privacy-policy"
-                                ? "Privacy Policy"
-                                : widget.slug == "membership-terms"
-                                    ? "Membership Terms"
-                                    : "Disclaimer",
-                // title: widget.policyType == PolicyType.aboutUs
-                //     ? "About Stocks.News"
-                //     : widget.policyType == PolicyType.tC
-                //         ? "Terms of Service"
-                //         : widget.policyType == PolicyType.privacy
-                //             ? "Privacy Policy"
-                //             : "Disclaimer",
-                // optionalText: 'Last Updated: 5/12/2022',
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: _triggerEvents,
+            //   child: ScreenTitle(
+            //     title: widget.slug == "about-us"
+            //         ? "About Stocks.News"
+            //         : widget.slug == "referral-terms"
+            //             ? "Referral Program Terms and Conditions"
+            //             : widget.slug == "terms-of-service"
+            //                 ? "Terms of Service"
+            //                 : widget.slug == "privacy-policy"
+            //                     ? "Privacy Policy"
+            //                     : widget.slug == "membership-terms"
+            //                         ? "Membership Terms"
+            //                         : "Disclaimer",
+            //     // title: widget.policyType == PolicyType.aboutUs
+            //     //     ? "About Stocks.News"
+            //     //     : widget.policyType == PolicyType.tC
+            //     //         ? "Terms of Service"
+            //     //         : widget.policyType == PolicyType.privacy
+            //     //             ? "Privacy Policy"
+            //     //             : "Disclaimer",
+            //     // optionalText: 'Last Updated: 5/12/2022',
+            //   ),
+            // ),
             _getWidget(provider),
           ],
         ),

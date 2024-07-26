@@ -36,8 +36,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   bool _initialDeepLinks = false;
-
   bool connection = true;
+
   @override
   void initState() {
     super.initState();

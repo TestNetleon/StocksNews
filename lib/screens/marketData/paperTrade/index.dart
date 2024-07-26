@@ -23,14 +23,8 @@ class PaperTradeIndex extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: true,
-        canSearch: true,
-      ),
-      body: SdTypeBuySell(
-        buy: buy,
-      ),
+      appBar: const AppBarHome(isPopback: true),
+      body: SdTypeBuySell(buy: buy),
     );
   }
 }

@@ -8,7 +8,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class AllFeaturedIndex extends StatefulWidget {
   const AllFeaturedIndex({super.key});
@@ -32,11 +31,7 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
   Widget build(BuildContext context) {
     FeaturedTickerProvider provider = context.watch<FeaturedTickerProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-        showTrailing: true,
-      ),
+      appBar: const AppBarHome(isPopback: true, title: "Featured Stocks"),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           Dimen.itemSpacing,
@@ -46,7 +41,7 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
         ),
         child: Column(
           children: [
-            const ScreenTitle(title: "Featured Stocks"),
+            // const ScreenTitle(title: "Featured Stocks"),
             Expanded(
               child: BaseUiContainer(
                 showPreparingText: true,

@@ -99,7 +99,10 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
   void _onViewNewsClick(context) async {
     StockDetailProviderNew provider =
         Provider.of<StockDetailProviderNew>(context, listen: false);
+    HomeProvider homeProvider =
+        Provider.of<HomeProvider>(context, listen: false);
     await provider.getOverviewData(symbol: widget.symbol, pointsDeducted: true);
+    homeProvider.getHomeSlider();
   }
 
   Future _navigateToStore() async {

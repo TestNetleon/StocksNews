@@ -8,7 +8,6 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/common_stock_item.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class TopPlaidIndexView extends StatefulWidget {
@@ -32,24 +31,24 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
     HomeProvider provider = context.watch<HomeProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(
-        canSearch: true,
-        showTrailing: true,
+      appBar: AppBarHome(
         isPopback: true,
+        title: provider.extraMostPopular?.title ?? "",
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           Dimen.padding,
-          Dimen.padding,
+          // Dimen.padding,
+          0,
           Dimen.padding,
           0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ScreenTitle(
-              title: provider.extraMostPopular?.title ?? "",
-            ),
+            // ScreenTitle(
+            //   title: provider.extraMostPopular?.title ?? "",
+            // ),
             Expanded(
               child: BaseUiContainer(
                 hasData: !provider.isLoadingMostPurchased &&

@@ -244,6 +244,7 @@ class Images {
   static const congratsGIF1 = "assets/images/Congrats.png";
   static const pointWithStar = "assets/images/coin_with_star.png";
   static const tringle = "assets/images/tringle.png";
+  static const k = "assets/images/k.png";
 
   //svg
   // static const share = "assets/svg/share.svg";
@@ -279,7 +280,7 @@ class Dimen {
 }
 
 class Fonts {
-  static const String roboto = 'Roboto';
+  // static const String roboto = 'Roboto';
   static const String georgia = 'Georgia';
   static const String ptSans = "PTSans";
   static const String merriWeather = "Merriweather";

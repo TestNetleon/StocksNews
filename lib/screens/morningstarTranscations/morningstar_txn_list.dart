@@ -40,13 +40,17 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
 
     return Padding(
       padding: const EdgeInsets.only(
-          left: Dimen.padding, right: Dimen.padding, bottom: 40),
+        left: Dimen.padding,
+        right: Dimen.padding,
+        bottom: 40,
+        top: Dimen.padding,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ScreenTitle(
-            title: provider.extra?.title.toString(),
+            // title: provider.extra?.title.toString(),
             subTitle: provider.extra?.subTitle.toString(),
           ),
           Expanded(

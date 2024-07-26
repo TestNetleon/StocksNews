@@ -16,9 +16,11 @@ class PriceVolatility extends StatelessWidget {
         height: 8.0,
       ),
       Container(
-        height: 150,
+        // height: 150,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0), color: Colors.black38),
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.black38,
+        ),
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
@@ -29,11 +31,14 @@ class PriceVolatility extends StatelessWidget {
                   child: Container(
                     height: 35,
                     decoration: const BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                      Color.fromARGB(255, 24, 189, 33),
-                      Colors.yellow,
-                      Colors.orange,
-                    ])),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 24, 189, 33),
+                          Colors.yellow,
+                          Colors.orange,
+                        ],
+                      ),
+                    ),
                     padding: const EdgeInsets.all(8.0),
                   ),
                 ),
@@ -46,9 +51,13 @@ class PriceVolatility extends StatelessWidget {
                         color: Color.fromARGB(255, 122, 219, 43),
                         borderRadius: BorderRadius.circular(20.0)),
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('TVSELECT',
-                        style: stylePTSansRegular(
-                            fontSize: 12.0, color: Colors.white)),
+                    child: Text(
+                      'TVSELECT',
+                      style: stylePTSansRegular(
+                        fontSize: 12.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
@@ -102,9 +111,7 @@ class PriceVolatility extends StatelessWidget {
                 ),
               ],
             ),
-            const SpacerVertical(
-              height: 8.0,
-            ),
+            const SpacerVertical(height: 12),
             Container(
               decoration: BoxDecoration(
                   color: Color.fromARGB(66, 77, 73, 73),

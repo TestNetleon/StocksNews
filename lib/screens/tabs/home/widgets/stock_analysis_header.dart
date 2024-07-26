@@ -14,7 +14,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
-import 'package:svg_flutter/svg.dart';
 
 class AppBarStockAnalysis extends StatefulWidget
     implements PreferredSizeWidget {

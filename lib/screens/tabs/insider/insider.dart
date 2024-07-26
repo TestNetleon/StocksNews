@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/insider_trading_provider.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/filter/filter.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider_content.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/utils/utils.dart';
@@ -22,24 +23,9 @@ import '../../marketData/lock/common_lock.dart';
 class Insider extends StatelessWidget {
   const Insider({super.key});
 
-  // void _filterClick() {
-  //   showPlatformBottomSheet(
-  //     backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-  //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-  //     context: navigatorKey.currentContext!,
-  //     content: const FilterInsiders(),
-  //   );
-  // }
-
   void _filterClick() {
-    // showPlatformBottomSheet(
-    //   backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-    //   padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
-    //   context: navigatorKey.currentContext!,
-    //   content: const FilterInsiders(),
-    // );
     BaseBottomSheets().gradientBottomSheet(
-      title: "All Transactions",
+      title: "Filter Insider Trading",
       child: const FilterInsiders(),
     );
   }
@@ -69,17 +55,17 @@ class Insider extends StatelessWidget {
               (element) =>
                   (element.key == "insider-trading" && element.status == 1)) ??
           false;
-
       isLocked = !havePermissions;
     }
-    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
 
     return BaseContainer(
-      // drawer: const BaseDrawer(),
-      // appBar: AppBarHome(
-      //   filterClick: _filterClick,
-      //   canSearch: true,
-      // ),
+      drawer: const BaseDrawer(),
+      appBar: AppBarHome(
+        showTrailing: false,
+        canSearch: false,
+        title: "Insider Trading",
+        onFilterClick: _filterClick,
+      ),
       body: Stack(
         children: [
           Padding(
@@ -95,15 +81,15 @@ class Insider extends StatelessWidget {
                 provider.isLoading
                     ? const SizedBox()
                     : ScreenTitle(
-                        title: "Insider Trading",
+                        // title: "Insider Trading",
                         subTitle: provider.textRes?.subTitle,
-                        optionalWidget: GestureDetector(
-                          onTap: _filterClick,
-                          child: const Icon(
-                            Icons.filter_alt,
-                            color: ThemeColors.accent,
-                          ),
-                        ),
+                        // optionalWidget: GestureDetector(
+                        //   onTap: _filterClick,
+                        //   child: const Icon(
+                        //     Icons.filter_alt,
+                        //     color: ThemeColors.accent,
+                        //   ),
+                        // ),
                       ),
                 if (provider.isLoading == false)
                   TextInputFieldSearch(
@@ -119,11 +105,7 @@ class Insider extends StatelessWidget {
               ],
             ),
           ),
-          if (isLocked)
-            CommonLock(
-              showLogin: true,
-              isLocked: isLocked,
-            ),
+          if (isLocked) CommonLock(showLogin: true, isLocked: isLocked),
         ],
       ),
     );

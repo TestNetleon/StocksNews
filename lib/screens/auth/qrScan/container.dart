@@ -73,8 +73,7 @@ class _QRcodeContainerState extends State<QRcodeContainer> {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-        appBar: AppBarHome(isPopback: true, showTrailing: false),
-        body: SizedBox()
+        appBar: AppBarHome(isPopback: true), body: SizedBox()
         //  QRView(
         //   onPermissionSet: (p0, p1) {
         //     if (!p1) {
