@@ -356,88 +356,88 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                                 alignment: Alignment.center,
                                 children: [
                                   Container(
-                                      // padding: const EdgeInsets.symmetric(
-                                      //     // horizontal: 12,
-                                      //     // horizontal: 20,
-                                      //     ),
-                                      decoration: const BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: ThemeColors.white,
-                                          ),
-                                        ),
-                                        color: ThemeColors.white,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(4),
-                                          bottomLeft: Radius.circular(4),
+                                    // padding: const EdgeInsets.symmetric(
+                                    //     // horizontal: 12,
+                                    //     // horizontal: 20,
+                                    //     ),
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: ThemeColors.white,
                                         ),
                                       ),
-                                      child: CountryPickerWidget(
-                                        onChanged: (CountryCode value) {
-                                          countryCode = value.dialCode;
-                                        },
-                                        enabled: user?.phoneCode == null ||
-                                            user?.phoneCode == "",
-                                      )
-                                      // CountryCodePicker(
-                                      //   padding: EdgeInsets.zero,
-                                      //   onChanged: (CountryCode value) {
-                                      //     countryCode = value.dialCode;
-                                      //     // log("Selected Log => ${value.dialCode}");
-                                      //   },
-                                      //   initialSelection: locale,
-                                      //   showCountryOnly: false,
-                                      //   flagWidth: 24,
-                                      //   showOnlyCountryWhenClosed: false,
-                                      //   alignLeft: false,
-                                      //   boxDecoration: const BoxDecoration(
-                                      //     color: ThemeColors.tabBack,
-                                      //   ),
-                                      //   // builder: (CountryCode? country) {
-                                      //   //   log("Selected Log => ${country?.code}");
-                                      //   // },
-                                      //   dialogTextStyle: styleGeorgiaBold(),
-                                      //   barrierColor: Colors.black26,
-                                      //   searchDecoration: InputDecoration(
-                                      //     iconColor: Colors.white,
-                                      //     fillColor: Colors.white,
-                                      //     prefixIcon: const Icon(
-                                      //       Icons.search,
-                                      //       size: 22,
-                                      //     ),
-                                      //     filled: true,
-                                      //     hintStyle: stylePTSansRegular(
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //     hintText: "Search country",
-                                      //     border: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //     enabledBorder: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //     focusedBorder: OutlineInputBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(4.0),
-                                      //       borderSide: BorderSide.none,
-                                      //     ),
-                                      //   ),
-                                      // )
-                                      // Text(
-                                      //   "+1",
-                                      //   style: stylePTSansBold(
-                                      //     color: user?.phone == '' ||
-                                      //             user?.phone == null
-                                      //         ? ThemeColors.greyText
-                                      //         : ThemeColors.greyBorder,
-                                      //     fontSize: 18,
-                                      //   ),
-                                      // ),
+                                      color: ThemeColors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(4),
+                                        bottomLeft: Radius.circular(4),
                                       ),
+                                    ),
+                                    child: CountryPickerWidget(
+                                      onChanged: (CountryCode value) {
+                                        countryCode = value.dialCode;
+                                      },
+                                      enabled: user?.phoneCode == null ||
+                                          user?.phoneCode == "",
+                                    ),
+                                    // CountryCodePicker(
+                                    //   padding: EdgeInsets.zero,
+                                    //   onChanged: (CountryCode value) {
+                                    //     countryCode = value.dialCode;
+                                    //     // log("Selected Log => ${value.dialCode}");
+                                    //   },
+                                    //   initialSelection: locale,
+                                    //   showCountryOnly: false,
+                                    //   flagWidth: 24,
+                                    //   showOnlyCountryWhenClosed: false,
+                                    //   alignLeft: false,
+                                    //   boxDecoration: const BoxDecoration(
+                                    //     color: ThemeColors.tabBack,
+                                    //   ),
+                                    //   // builder: (CountryCode? country) {
+                                    //   //   log("Selected Log => ${country?.code}");
+                                    //   // },
+                                    //   dialogTextStyle: styleGeorgiaBold(),
+                                    //   barrierColor: Colors.black26,
+                                    //   searchDecoration: InputDecoration(
+                                    //     iconColor: Colors.white,
+                                    //     fillColor: Colors.white,
+                                    //     prefixIcon: const Icon(
+                                    //       Icons.search,
+                                    //       size: 22,
+                                    //     ),
+                                    //     filled: true,
+                                    //     hintStyle: stylePTSansRegular(
+                                    //       color: Colors.grey,
+                                    //     ),
+                                    //     hintText: "Search country",
+                                    //     border: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(4.0),
+                                    //       borderSide: BorderSide.none,
+                                    //     ),
+                                    //     enabledBorder: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(4.0),
+                                    //       borderSide: BorderSide.none,
+                                    //     ),
+                                    //     focusedBorder: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(4.0),
+                                    //       borderSide: BorderSide.none,
+                                    //     ),
+                                    //   ),
+                                    // )
+                                    // Text(
+                                    //   "+1",
+                                    //   style: stylePTSansBold(
+                                    //     color: user?.phone == '' ||
+                                    //             user?.phone == null
+                                    //         ? ThemeColors.greyText
+                                    //         : ThemeColors.greyBorder,
+                                    //     fontSize: 18,
+                                    //   ),
+                                    // ),
+                                  ),
                                   // Text(
                                   //   "+1",
                                   //   style: stylePTSansBold(
@@ -498,7 +498,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     _formatter,
-                                    LengthLimitingTextInputFormatter(15)
+                                    LengthLimitingTextInputFormatter(15),
                                   ],
                                   textCapitalization: TextCapitalization.none,
                                 ),

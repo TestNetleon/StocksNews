@@ -40,9 +40,7 @@ class _AppBarHomeState extends State<AppBarHome> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Utils().showLog("App bar init called-------");
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override
@@ -149,6 +147,7 @@ class _AppBarHomeState extends State<AppBarHome> {
             margin: isPhone ? EdgeInsets.all(8.sp) : null,
             child: Image.asset(
               Images.logo,
+              // Images.logoGIF,
               fit: BoxFit.contain,
             ),
           ),

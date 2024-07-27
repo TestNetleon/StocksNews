@@ -16,6 +16,7 @@ Future popUpAlert({
   bool canPop = true,
   bool showButton = true,
   bool showOk = true,
+  Widget? child,
   Widget? iconWidget,
   TextAlign? messageTextAlign = TextAlign.center,
 }) async {
@@ -36,6 +37,7 @@ Future popUpAlert({
         messageTextAlign: messageTextAlign,
         padding: padding,
         iconWidget: iconWidget,
+        child: child,
       );
     },
   );
@@ -53,6 +55,7 @@ class AlertPopupCustom extends StatelessWidget {
   final bool canPop;
   final bool showOk;
   final Widget? iconWidget;
+  final Widget? child;
   const AlertPopupCustom(
       {super.key,
       required this.message,
@@ -65,6 +68,7 @@ class AlertPopupCustom extends StatelessWidget {
       this.cancel = false,
       this.onTap,
       this.okText,
+      this.child,
       this.canPop = true,
       this.messageTextAlign});
 
@@ -102,20 +106,29 @@ class AlertPopupCustom extends StatelessWidget {
                         ),
                         iconWidget ?? const SizedBox(),
                         // const SpacerVertical(height: 5),
-                        Text(
-                          title,
-                          style: stylePTSansBold(
-                            color: ThemeColors.background,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SpacerVertical(height: 8),
-                        Text(
-                          message,
-                          textAlign: messageTextAlign ?? TextAlign.center,
-                          style: stylePTSansRegular(
-                              color: ThemeColors.background, height: 1.4),
-                        ),
+                        child ??
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  title,
+                                  style: stylePTSansBold(
+                                    color: ThemeColors.background,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                const SpacerVertical(height: 8),
+                                Text(
+                                  message,
+                                  textAlign:
+                                      messageTextAlign ?? TextAlign.center,
+                                  style: stylePTSansRegular(
+                                      color: ThemeColors.background,
+                                      height: 1.4),
+                                ),
+                              ],
+                            ),
                         const SpacerVertical(height: 5),
                         Visibility(
                           visible: showButton,

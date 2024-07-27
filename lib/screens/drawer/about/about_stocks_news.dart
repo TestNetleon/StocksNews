@@ -35,6 +35,7 @@ import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../../affiliate/index.dart';
 import '../../help/help_desk.dart';
+import '../../stockDetail/summary/index.dart';
 import '../widgets/drawer_top_new.dart';
 import 'refer_dialog.dart';
 
@@ -368,6 +369,24 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
             Navigator.push(
               navigatorKey.currentContext!,
               MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
+            );
+          },
+        ),
+      );
+    }
+
+    // Trading Simulator
+    if (user != null) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.bakery_dining_outlined,
+          text: "Trading Simulator",
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SdSummaryOrders(),
+              ),
             );
           },
         ),
