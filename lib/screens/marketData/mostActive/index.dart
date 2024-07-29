@@ -82,10 +82,7 @@ class MostActiveIndex extends StatelessWidget {
     Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
       body: Stack(
         children: [
           const CommonTabContainer(

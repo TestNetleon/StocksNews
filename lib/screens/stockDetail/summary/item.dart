@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stocks_news_new/providers/trade_provider.dart';
-import 'package:stocks_news_new/screens/stockDetail/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 
 import '../../../utils/colors.dart';
@@ -12,19 +11,13 @@ import '../../../widgets/theme_image_view.dart';
 
 class SdSummaryItem extends StatelessWidget {
   final SummaryOrderNew? order;
-  const SdSummaryItem({super.key, this.order});
+  final Function()? onTap;
+  const SdSummaryItem({super.key, this.order, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => StockDetail(symbol: order?.symbol ?? ""),
-          ),
-        );
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
@@ -50,11 +43,30 @@ class SdSummaryItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        order?.symbol ?? "",
-                        style: styleGeorgiaBold(fontSize: 18),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      Row(
+                        children: [
+                          Text(
+                            order?.symbol ?? "",
+                            style: styleGeorgiaBold(fontSize: 18),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SpacerHorizontal(width: 5),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: order?.buy == true
+                                  ? ThemeColors.accent
+                                  : ThemeColors.sos,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 2),
+                            child: Text(
+                              order?.buy == true ? "Buy" : "Sell",
+                              style: stylePTSansBold(fontSize: 12),
+                            ),
+                          ),
+                        ],
                       ),
                       const SpacerVertical(height: 5),
                       Text(

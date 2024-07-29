@@ -55,7 +55,7 @@ class _SdSearchContainerState extends State<SdSearchContainer> {
                 ? SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(
-                          Dimen.padding, Dimen.padding, Dimen.padding, 0),
+                          Dimen.padding, 0, Dimen.padding, 0),
                       child: Column(
                         children: [
                           SdTradeSearchField(

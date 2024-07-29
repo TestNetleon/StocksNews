@@ -92,10 +92,7 @@ class ChatScreenItem extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (_) => Scaffold(
-                              appBar: const AppBarHome(
-                                isPopback: true,
-                                showTrailing: false,
-                              ),
+                              appBar: const AppBarHome(isPopback: true),
                               backgroundColor: Colors.transparent,
                               body: Center(
                                 child: PhotoView(

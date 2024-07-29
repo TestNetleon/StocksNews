@@ -19,11 +19,7 @@ class NewMembership extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: NewMembershipContainer(
         withClickCondition: withClickCondition,
       ),

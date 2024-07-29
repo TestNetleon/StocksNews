@@ -5,7 +5,6 @@ import 'package:stocks_news_new/screens/membership/view.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 
 class MembershipIndex extends StatefulWidget {
   const MembershipIndex({super.key});
@@ -26,19 +25,14 @@ class _MembershipIndexState extends State<MembershipIndex> {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-      appBar: AppBarHome(
-        canSearch: true,
-        showTrailing: true,
-        isPopback: true,
-      ),
+      appBar: AppBarHome(isPopback: true, title: "My Membership"),
       body: Padding(
-        padding:
-            EdgeInsets.fromLTRB(Dimen.padding, Dimen.padding, Dimen.padding, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: Column(
           children: [
-            ScreenTitle(
-              title: "My Membership",
-            ),
+            // ScreenTitle(
+            //   title: "My Membership",
+            // ),
             Expanded(child: MembershipView()),
           ],
         ),

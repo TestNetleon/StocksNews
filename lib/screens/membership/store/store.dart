@@ -84,9 +84,7 @@ class _StoreState extends State<Store> {
     // ];
 
     return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: BaseUiContainer(
         hasData: !provider.isLoading && data != null,
         isLoading: provider.isLoading,

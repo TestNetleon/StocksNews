@@ -20,6 +20,8 @@ class HomeTrendingRes {
   final List<Top>? losers;
   final List<News>? trendingNews;
   final TextRes? text;
+  final BannerBlogRes? bannerBlog;
+
   HomeTrendingRes({
     required this.trending,
     this.gainers,
@@ -27,6 +29,7 @@ class HomeTrendingRes {
     required this.popular,
     this.text,
     this.trendingNews,
+    this.bannerBlog,
   });
 
   factory HomeTrendingRes.fromJson(Map<String, dynamic> json) =>
@@ -45,6 +48,9 @@ class HomeTrendingRes {
         losers: json["gainers"] == null
             ? null
             : List<Top>.from(json["losers"].map((x) => Top.fromJson(x))),
+        bannerBlog: json["banner_blog"] == null
+            ? null
+            : BannerBlogRes.fromJson(json["banner_blog"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +66,7 @@ class HomeTrendingRes {
         "losers": losers == null
             ? null
             : List<dynamic>.from(losers!.map((x) => x.toJson())),
+        "banner_blog": bannerBlog?.toJson(),
       };
 }
 
@@ -185,5 +192,53 @@ class Top {
         "display_change": displayChange,
         "changesPercentage": changesPercentage,
         "image": image,
+      };
+}
+
+class BannerBlogRes {
+  // final String id;
+  // final String blogId;
+  final String? name;
+  final String? image;
+  final String? publishedDateString;
+  final String? slug;
+  final int? isPremium;
+  // final DateTime updatedAt;
+  // final DateTime createdAt;
+
+  BannerBlogRes({
+    // required this.id,
+    // required this.blogId,
+    required this.name,
+    required this.image,
+    required this.publishedDateString,
+    required this.slug,
+    required this.isPremium,
+    // required this.updatedAt,
+    // required this.createdAt,
+  });
+
+  factory BannerBlogRes.fromJson(Map<String, dynamic> json) => BannerBlogRes(
+        // id: json["_id"],
+        // blogId: json["blog_id"],
+        name: json["name"],
+        image: json["image"],
+        publishedDateString: json["published_date_string"],
+        slug: json["slug"],
+        isPremium: json["is_premium"],
+        // updatedAt: DateTime.parse(json["updated_at"]),
+        // createdAt: DateTime.parse(json["created_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        // "_id": id,
+        // "blog_id": blogId,
+        "name": name,
+        "image": image,
+        "published_date_string": publishedDateString,
+        "slug": slug,
+        "is_premium": isPremium,
+        // "updated_at": updatedAt.toIso8601String(),
+        // "created_at": createdAt.toIso8601String(),
       };
 }

@@ -498,8 +498,8 @@ class _DemoWebState extends State<DemoWeb> {
       backgroundColor: Colors.white,
       appBar: const AppBarHome(
         isHome: false,
-        showQR: false,
-        showTrailing: false,
+        // showQR: false,
+        // showTrailing: false,
       ),
       body: Center(
         child: TextButton(

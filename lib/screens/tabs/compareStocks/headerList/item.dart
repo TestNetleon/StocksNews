@@ -17,7 +17,7 @@ class HeaderItem extends StatelessWidget {
 //
   @override
   Widget build(BuildContext context) {
-    return Ink(
+    return Container(
       decoration: BoxDecoration(
           color: ThemeColors.primaryLight,
           borderRadius: BorderRadius.circular(5.sp),

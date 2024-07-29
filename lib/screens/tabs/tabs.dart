@@ -21,7 +21,6 @@ import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 // ignore: unused_import
 import 'package:stocks_news_new/screens/tabs/compareStocks/compare_stocks.dart';
 import 'package:stocks_news_new/screens/tabs/home/home.dart';
-import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/insider/insider.dart';
 import 'package:stocks_news_new/screens/tabs/news/news.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/reddit_twitter.dart';
@@ -29,7 +28,7 @@ import 'package:stocks_news_new/screens/tabs/trending/trending.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/base_container.dart';
+
 import 'package:vibration/vibration.dart';
 
 class Tabs extends StatefulWidget {
@@ -83,13 +82,13 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseContainer(
-      appBar: AppBarHome(
-        canSearch: true,
-        showTrailing: true,
-        isHome: _selectedIndex == 0,
-      ),
-      drawer: const BaseDrawer(),
+    return Scaffold(
+      // appBar: AppBarHome(
+      //   canSearch: true,
+      //   showTrailing: true,
+      //   isHome: _selectedIndex == 0,
+      // ),
+      // drawer: const BaseDrawer(),
       body: Screens.screens(widget.trendingIndex).elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: ThemeColors.white,
@@ -200,7 +199,6 @@ class Screens {
       const RedditTwitter(),
       const News(),
       const CompareStocks(),
-      // const CompareNew(),
     ];
   }
 }

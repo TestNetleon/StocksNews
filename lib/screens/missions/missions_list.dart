@@ -4,7 +4,6 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:stocks_news_new/screens/missions/missions_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -46,9 +45,7 @@ class _MissionsListState extends State<MissionsList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const ScreenTitle(
-                title: "Missions",
-              ),
+              // const ScreenTitle(title: "Missions"),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(

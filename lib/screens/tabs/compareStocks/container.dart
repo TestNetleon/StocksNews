@@ -6,10 +6,13 @@ import 'package:stocks_news_new/providers/compare_stocks_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/footerList/footer_list.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/headerList/header.dart';
 import 'package:stocks_news_new/screens/tabs/compareStocks/widgets/add_company_container.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/disclaimer_widget.dart';
@@ -65,80 +68,87 @@ class CompareStocksContainer extends StatelessWidget {
       parameters: {'screen_name': "Compare Stocks"},
     );
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        Dimen.padding.sp,
-        isPhone ? 0 : Dimen.paddingTablet.sp,
-        Dimen.padding.sp,
-        0,
-      ),
-      child: userProvider.user == null
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // const ScreenTitle(title: "Compare Stocks"),
-                Expanded(
-                  child: LoginError(
-                    state: "compare",
-                    title: "Compare Stocks",
-                    onClick: () async {
-                      isPhone ? await loginSheet() : await loginSheetTablet();
+    return BaseContainer(
+      appBar: AppBarHome(isHome: false, title: "Compare Stocks"),
+      drawer: const BaseDrawer(),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(
+          Dimen.padding.sp,
+          // isPhone ? 0 : Dimen.paddingTablet.sp,
+          0,
+          Dimen.padding.sp,
+          0,
+        ),
+        child: userProvider.user == null
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const ScreenTitle(title: "Compare Stocks"),
+                  Expanded(
+                    child: LoginError(
+                      state: "compare",
+                      title: "Compare Stocks",
+                      onClick: () async {
+                        isPhone ? await loginSheet() : await loginSheetTablet();
 
-                      await provider.getCompareStock(showProgress: false);
-                    },
+                        await provider.getCompareStock(showProgress: false);
+                      },
+                    ),
                   ),
-                ),
-              ],
-            )
-          : BaseUiContainer(
-              isLoading: provider.isLoading && provider.company.isEmpty,
-              hasData: true,
-              error: provider.error,
-              errorDispCommon: true,
-              showPreparingText: true,
-              child: CommonRefreshIndicator(
-                onRefresh: () => provider.getCompareStock(),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ScreenTitle(
-                        title: "Compare Stocks",
-                        subTitle: provider.textRes?.subTitle,
-                      ),
-                      Visibility(
-                        visible: company.isEmpty,
-                        child: AddCompanyContainer(
-                            onTap: () => company.length < 4
-                                ? _showPopUp(context)
-                                // ? _showBottomSheet()
-                                : null),
-                      ),
-                      HeaderList(
-                        onTap: () => company.length < 5
-                            ? _showPopUp(context)
-                            // _showBottomSheet()
-                            : null,
-                      ),
-                      const FooterList(),
-                      if (context
+                ],
+              )
+            : BaseUiContainer(
+                isLoading: provider.isLoading && provider.company.isEmpty,
+                hasData: true,
+                error: provider.error,
+                errorDispCommon: true,
+                showPreparingText: true,
+                child: CommonRefreshIndicator(
+                  onRefresh: () => provider.getCompareStock(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (provider.textRes?.subTitle != null &&
+                            provider.textRes?.subTitle != "")
+                          ScreenTitle(
+                            // title: "Compare Stocks",
+                            subTitle: provider.textRes?.subTitle,
+                          ),
+                        Visibility(
+                          visible: company.isEmpty,
+                          child: AddCompanyContainer(
+                              onTap: () => company.length < 4
+                                  ? _showPopUp(context)
+                                  // ? _showBottomSheet()
+                                  : null),
+                        ),
+                        HeaderList(
+                          onTap: () => company.length < 5
+                              ? _showPopUp(context)
+                              // _showBottomSheet()
+                              : null,
+                        ),
+                        const FooterList(),
+                        if (context
+                                    .read<CompareStocksProvider>()
+                                    .extra
+                                    ?.disclaimer !=
+                                null &&
+                            !context
+                                .watch<CompareStocksProvider>()
+                                .wholeListEmpty)
+                          DisclaimerWidget(
+                              data: context
                                   .read<CompareStocksProvider>()
-                                  .extra
-                                  ?.disclaimer !=
-                              null &&
-                          !context
-                              .watch<CompareStocksProvider>()
-                              .wholeListEmpty)
-                        DisclaimerWidget(
-                            data: context
-                                .read<CompareStocksProvider>()
-                                .extra!
-                                .disclaimer!)
-                    ],
+                                  .extra!
+                                  .disclaimer!)
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 }

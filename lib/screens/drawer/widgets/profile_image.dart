@@ -31,13 +31,18 @@ class ProfileImage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 4),
           child: roundImage
-              ? ClipOval(
-                  child: CachedNetworkImagesWidget(
-                    url,
-                    height: imageSize,
-                    width: imageSize,
-                    showLoading: true,
-                    placeHolder: Images.userPlaceholder,
+              ? Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ThemeColors.white, width: 3),
+                      shape: BoxShape.circle),
+                  child: ClipOval(
+                    child: CachedNetworkImagesWidget(
+                      url,
+                      height: imageSize,
+                      width: imageSize,
+                      showLoading: true,
+                      placeHolder: Images.userPlaceholder,
+                    ),
                   ),
                 )
               : Container(

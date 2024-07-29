@@ -120,11 +120,14 @@ class Images {
   static const String transaction = "assets/images/transaction.png";
   static const String pointIcon = "assets/images/golden1.png";
   static const String pointIcon2 = "assets/images/golden.png";
+  static const String word = "assets/images/word.png";
+  static const String arrow = "assets/images/arrow.png";
+
   static const String pointIcon3 = "assets/images/3_coins.png";
 
   static const String netflix = "assets/images/nflx.png";
   static const String amazon = "assets/images/amzn.png";
-  static const String spotify = "assets/images/spot.pngv";
+  static const String spotify = "assets/images/spot.png";
   static const String fb = "assets/images/fb.png";
   static const String microsoft = "assets/images/msft.png";
   static const String download = "assets/images/download.png";
@@ -244,6 +247,7 @@ class Images {
   static const congratsGIF1 = "assets/images/Congrats.png";
   static const pointWithStar = "assets/images/coin_with_star.png";
   static const tringle = "assets/images/tringle.png";
+  static const k = "assets/images/k.png";
 
   //svg
   // static const share = "assets/svg/share.svg";
@@ -279,7 +283,7 @@ class Dimen {
 }
 
 class Fonts {
-  static const String roboto = 'Roboto';
+  // static const String roboto = 'Roboto';
   static const String georgia = 'Georgia';
   static const String ptSans = "PTSans";
   static const String merriWeather = "Merriweather";
@@ -450,6 +454,7 @@ enum DeeplinkEnum {
   trendingIndustries,
   sentiments,
   helpdesk,
+  membership,
 
   //below add for Market data only else add above
   gainerLoser,
@@ -494,8 +499,9 @@ DeeplinkEnum containsSpecificPath(Uri uri) {
     // return 'page';
     return DeeplinkEnum.page;
   } else if (uri.path.contains('/trending-industries')) {
-    // return 'page';
     return DeeplinkEnum.trendingIndustries;
+  } else if (uri.path.contains('/membership')) {
+    return DeeplinkEnum.membership;
   }
 
   // Only Market data goes here set else above

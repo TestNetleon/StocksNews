@@ -84,7 +84,12 @@ class SectorIndustryBase extends StatelessWidget {
     SectorIndustryProvider provider = context.watch<SectorIndustryProvider>();
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: stockStates == StockStates.sector
+            ? "Sector Performance - $titleName"
+            : "Industry - $titleName",
+      ),
       body: BaseUiContainer(
         isLoading: provider.isLoading,
         hasData: provider.data != null,
@@ -93,15 +98,18 @@ class SectorIndustryBase extends StatelessWidget {
         onRefresh: onRefresh,
         child: Padding(
           padding: EdgeInsets.fromLTRB(
-              Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+            Dimen.padding.sp,
+            0,
+            Dimen.padding.sp,
+            0,
+          ),
           child: Column(
             children: [
-              ScreenTitle(
-                title: stockStates == StockStates.sector
-                    ? "Sector Performance - $titleName"
-                    : "Industry - $titleName",
-                // optionalText: 'Last Updated: 5/12/2022',
-              ),
+              // ScreenTitle(
+              //   title: stockStates == StockStates.sector
+              //       ? "Sector Performance - $titleName"
+              //       : "Industry - $titleName",
+              // ),
               Expanded(
                 child: SectorIndustryList(
                   stockStates: stockStates,

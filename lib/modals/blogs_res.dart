@@ -91,7 +91,8 @@ class BlogItemRes {
         authors: json["authors"] == null
             ? []
             : List<DetailListType>.from(
-                json["authors"]!.map((x) => DetailListType.fromJson(x))),
+                json["authors"]!.map((x) => DetailListType.fromJson(x)),
+              ),
         publishedDate: json["published_date"] == null
             ? null
             : DateTime.parse(json["published_date"]),

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/affiliate/pointsTransaction/trasnsaction
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
 import 'package:stocks_news_new/screens/drawer/about/tile.dart';
+import 'package:stocks_news_new/screens/drawer/settings/index.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/membership/index.dart';
@@ -428,20 +429,20 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     }
 
     // What We Do is always visible
-    if (provider.extra?.showWhatWeDo == true) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.featured_play_list_outlined,
-          text: "What We Do",
-          onTap: () {
-            Navigator.push(
-              navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
-            );
-          },
-        ),
-      );
-    }
+    // if (provider.extra?.showWhatWeDo == true) {
+    visibleAboutTiles.add(
+      DrawerRes(
+        iconData: Icons.featured_play_list_outlined,
+        text: "What We Do",
+        onTap: () {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
+          );
+        },
+      ),
+    );
+    // }
 
     // Helpdesk
     visibleAboutTiles.add(
@@ -478,6 +479,21 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
+
+    visibleAboutTiles.add(
+      DrawerRes(
+        iconData: Icons.help_outline_rounded,
+        text: "Setting",
+        onTap: () {
+          Navigator.push(
+            navigatorKey.currentContext!,
+            MaterialPageRoute(
+              builder: (_) => const NotificationSetting(),
+            ),
+          );
+        },
+      ),
+    );
 
     return Scaffold(
       backgroundColor: ThemeColors.background,

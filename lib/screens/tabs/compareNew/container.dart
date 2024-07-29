@@ -54,7 +54,11 @@ class CompareStockNewContainer extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          Dimen.padding, Dimen.padding, Dimen.padding, 0),
+        Dimen.padding,
+        Dimen.padding,
+        Dimen.padding,
+        0,
+      ),
       child: Column(
         children: [
           const Align(

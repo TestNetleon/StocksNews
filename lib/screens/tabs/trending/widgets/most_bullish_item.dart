@@ -466,32 +466,16 @@ class _MostBullishItemState extends State<MostBullishItem> {
                 builder: (_) => StockDetail(symbol: widget.data.symbol)),
           );
         },
-        child: Row(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => StockDetail(symbol: widget.data.symbol),
-                  ),
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(0.sp),
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  width: 43,
-                  height: 43,
-                  child: ThemeImageView(url: widget.data.image ?? ""),
-                ),
-              ),
-            ),
-            const SpacerHorizontal(width: 10),
-            SizedBox(
-              width: ctrt.maxWidth * .16,
-              child: GestureDetector(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            color: ThemeColors.background,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Row(
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
@@ -500,104 +484,127 @@ class _MostBullishItemState extends State<MostBullishItem> {
                     ),
                   );
                 },
-                child: Text(
-                  widget.data.symbol,
-                  style: stylePTSansBold(fontSize: 14),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(0.sp),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 43,
+                    height: 43,
+                    child: ThemeImageView(url: widget.data.image ?? ""),
+                  ),
                 ),
               ),
-            ),
-            const SpacerHorizontal(width: 2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          // "\$201.99",
-                          widget.data.price ?? "",
-                          style: stylePTSansBold(fontSize: 13),
-                          maxLines: 1,
-                          textAlign: TextAlign.end,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+              const SpacerHorizontal(width: 10),
+              SizedBox(
+                width: ctrt.maxWidth * .16,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => StockDetail(symbol: widget.data.symbol),
                       ),
-                      const SpacerHorizontal(width: 4),
-                      Expanded(
-                        child: Text(
-                          // "\$201.99",
-                          textAlign: TextAlign.end,
-                          "${widget.data.mention}",
-                          style: stylePTSansBold(fontSize: 11),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                    );
+                  },
+                  child: Text(
+                    widget.data.symbol,
+                    style: stylePTSansBold(fontSize: 14),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "${widget.data.displayChange} (${widget.data.changesPercentage}%)",
-                          style: stylePTSansRegular(
-                            color: widget.data.changesPercentage == 0
-                                ? Colors.white
-                                : widget.data.changesPercentage > 0
-                                    ? ThemeColors.accent
-                                    : Colors.red,
-                            fontSize: 11,
-                          ),
-                          maxLines: 1,
-                          textAlign: TextAlign.end,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SpacerHorizontal(width: 4),
-                      Expanded(
-                        child: Text(
-                          "(${widget.data.mentionChange.toCurrency()}%)",
-                          style: stylePTSansRegular(
-                            color: widget.data.mentionChange == 0
-                                ? Colors.white
-                                : widget.data.mentionChange > 0
-                                    ? ThemeColors.accent
-                                    : Colors.red,
-                            fontSize: 11,
-                          ),
-                          textAlign: TextAlign.end,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
-            PopUpMenuButtonCommon(
-              symbol: widget.data.symbol,
-              onClickAlert: () => _alertElse(),
-              onClickWatchlist: () => _watchlistElse(),
-              watchlistString: widget.up
-                  ? widget.watlistForBullish == 1
-                      ? 'Watchlist Added'
-                      : 'Add to Watchlist'
-                  : widget.watlistForBearish == 1
-                      ? 'Watchlist Added'
-                      : 'Add to Watchlist',
-              alertString: widget.up
-                  ? widget.alertForBullish == 1
-                      ? 'Alert Added'
-                      : 'Add to Alert'
-                  : widget.alertForBearish == 1
-                      ? 'Alert Added'
-                      : 'Add to Alert',
-            ),
-          ],
+              const SpacerHorizontal(width: 2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            // "\$201.99",
+                            widget.data.price ?? "",
+                            style: stylePTSansBold(fontSize: 13),
+                            maxLines: 1,
+                            textAlign: TextAlign.end,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SpacerHorizontal(width: 4),
+                        Expanded(
+                          child: Text(
+                            // "\$201.99",
+                            textAlign: TextAlign.end,
+                            "${widget.data.mention}",
+                            style: stylePTSansBold(fontSize: 11),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "${widget.data.displayChange} (${widget.data.changesPercentage}%)",
+                            style: stylePTSansRegular(
+                              color: widget.data.changesPercentage == 0
+                                  ? Colors.white
+                                  : widget.data.changesPercentage > 0
+                                      ? ThemeColors.accent
+                                      : Colors.red,
+                              fontSize: 11,
+                            ),
+                            maxLines: 1,
+                            textAlign: TextAlign.end,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SpacerHorizontal(width: 4),
+                        Expanded(
+                          child: Text(
+                            "(${widget.data.mentionChange.toCurrency()}%)",
+                            style: stylePTSansRegular(
+                              color: widget.data.mentionChange == 0
+                                  ? Colors.white
+                                  : widget.data.mentionChange > 0
+                                      ? ThemeColors.accent
+                                      : Colors.red,
+                              fontSize: 11,
+                            ),
+                            textAlign: TextAlign.end,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              PopUpMenuButtonCommon(
+                symbol: widget.data.symbol,
+                onClickAlert: () => _alertElse(),
+                onClickWatchlist: () => _watchlistElse(),
+                watchlistString: widget.up
+                    ? widget.watlistForBullish == 1
+                        ? 'Watchlist Added'
+                        : 'Add to Watchlist'
+                    : widget.watlistForBearish == 1
+                        ? 'Watchlist Added'
+                        : 'Add to Watchlist',
+                alertString: widget.up
+                    ? widget.alertForBullish == 1
+                        ? 'Alert Added'
+                        : 'Add to Alert'
+                    : widget.alertForBearish == 1
+                        ? 'Alert Added'
+                        : 'Add to Alert',
+              ),
+            ],
+          ),
         ),
       );
 

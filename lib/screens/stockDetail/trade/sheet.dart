@@ -26,10 +26,15 @@ class SuccessTradeSheet extends StatelessWidget {
           topLeft: Radius.circular(10.sp),
           topRight: Radius.circular(10.sp),
         ),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [ThemeColors.bottomsheetGradient, Colors.black],
+          colors: [
+            buy
+                ? ThemeColors.bottomsheetGradient
+                : const Color.fromARGB(255, 35, 0, 0),
+            Colors.black,
+          ],
         ),
         color: ThemeColors.background,
         border: const Border(
@@ -39,7 +44,7 @@ class SuccessTradeSheet extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
           Dimen.padding,
-          Dimen.padding,
+          0,
           Dimen.padding,
           0,
         ),
@@ -47,6 +52,7 @@ class SuccessTradeSheet extends StatelessWidget {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
+            SpacerVertical(height: 20),
             Column(
               children: [
                 SizedBox(

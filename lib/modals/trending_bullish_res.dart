@@ -11,9 +11,7 @@ String trendingBullishResToJson(TrendingBullishRes data) =>
 class TrendingBullishRes {
   final List<MostBullishData>? mostBullish;
 
-  TrendingBullishRes({
-    required this.mostBullish,
-  });
+  TrendingBullishRes({required this.mostBullish});
 //
   factory TrendingBullishRes.fromJson(Map<String, dynamic> json) =>
       TrendingBullishRes(

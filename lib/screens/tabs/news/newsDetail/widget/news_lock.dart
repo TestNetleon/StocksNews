@@ -89,7 +89,10 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
   void _onViewNewsClick(context) async {
     NewsDetailProvider provider =
         Provider.of<NewsDetailProvider>(context, listen: false);
+    HomeProvider homeProvider =
+        Provider.of<HomeProvider>(context, listen: false);
     await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
+    homeProvider.getHomeSlider();
   }
 
   Future _membership() async {
@@ -145,7 +148,7 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
     bool haveEnoughPoints = (provider.data?.postDetail?.totalPoints == null ||
             provider.data?.postDetail?.pointsRequired == null)
         ? false
-        : (provider.data?.postDetail?.totalPoints! >
+        : (provider.data?.postDetail?.totalPoints! >=
             provider.data?.postDetail?.pointsRequired!);
 
     bool showLoginButton = !isLogin;

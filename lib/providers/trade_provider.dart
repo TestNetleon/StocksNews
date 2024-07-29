@@ -18,7 +18,7 @@ class TradeProviderNew extends ChangeNotifier {
   List<SummaryOrderNew> orders = [];
 
   UserBalanceDataNew data = UserBalanceDataNew(
-    availableBalance: 50000,
+    availableBalance: 100000,
     invested: 0,
   );
 
@@ -67,6 +67,7 @@ class TradeProviderNew extends ChangeNotifier {
             changePercentage: order.changePercentage,
             invested: totalInvested,
             isShare: order.isShare,
+            buy: order.buy,
           );
         } else {
           orders.add(order);
@@ -86,6 +87,11 @@ class TradeProviderNew extends ChangeNotifier {
     }
   }
 
+  void addAmount(num amount) {
+    data.availableBalance = data.availableBalance + amount;
+    notifyListeners();
+  }
+
   void sellOrderData(SummaryOrderNew? order) {
     Utils().showLog("------Sell order");
     try {
@@ -93,6 +99,7 @@ class TradeProviderNew extends ChangeNotifier {
         int existingOrderIndex =
             orders.indexWhere((o) => o.symbol == order.symbol);
         if (existingOrderIndex != -1) {
+          Utils().showLog("----$existingOrderIndex");
           SummaryOrderNew existingOrder = orders[existingOrderIndex];
           num existingShares = existingOrder.shares ?? 0;
           num soldShares = order.shares ?? 0;
@@ -110,17 +117,17 @@ class TradeProviderNew extends ChangeNotifier {
             orders.removeAt(existingOrderIndex);
           } else {
             orders[existingOrderIndex] = SummaryOrderNew(
-              image: order.image,
-              symbol: order.symbol,
-              name: order.name,
-              shares: remainingShares,
-              dollars: remainingDollars,
-              price: order.price,
-              change: order.change,
-              changePercentage: order.changePercentage,
-              invested: totalInvested,
-              isShare: order.isShare,
-            );
+                image: order.image,
+                symbol: order.symbol,
+                name: order.name,
+                shares: remainingShares,
+                dollars: remainingDollars,
+                price: order.price,
+                change: order.change,
+                changePercentage: order.changePercentage,
+                invested: totalInvested,
+                isShare: order.isShare,
+                buy: order.buy);
           }
 
           num sharesToSell = order.shares ?? 0;
@@ -136,6 +143,7 @@ class TradeProviderNew extends ChangeNotifier {
             invested: data.invested - invested,
           );
         } else {
+          orders.add(order);
           Utils().showLog("Order not found for symbol: ${order.symbol}");
         }
 
@@ -245,6 +253,7 @@ class SummaryOrderNew {
   String? image, symbol, name, change, price;
   num? changePercentage, invested, shares, dollars;
   bool isShare;
+  bool buy;
   SummaryOrderNew({
     this.image,
     this.symbol,
@@ -255,6 +264,7 @@ class SummaryOrderNew {
     this.price,
     this.changePercentage,
     this.invested,
+    required this.buy,
     this.isShare = false,
   });
 }

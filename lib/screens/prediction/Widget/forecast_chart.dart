@@ -20,44 +20,44 @@ class _ForcastingChartState extends State<ForcastingChart> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> combinedChart = [
       {
-        "year": 2022,
+        "year": 2023,
         "amount": 3,
         "month": "MAY",
       },
       {
-        "year": 2022,
+        "year": 2023,
         "amount": 4,
         "month": "OCT",
       },
       {
-        "year": 2023,
+        "year": 2024,
         "amount": 2,
         "month": "MAY",
       },
       {
-        "year": 2023,
+        "year": 2024,
         "amount": 5,
         "month": "OCT",
       },
       {
-        "year": 2024,
+        "year": 2025,
         "amount": 2,
-        "month": "MAY",
+        "month": "JAN",
       },
       {
-        "year": 2024,
+        "year": 2025,
         "amount": 4,
-        "month": "may",
+        "month": "MAR",
       },
       {
         "year": 2025,
         "amount": 3,
-        "month": "may",
+        "month": "MAY",
       },
       {
         "year": 2025,
         "amount": 1,
-        "month": "may",
+        "month": "OCT",
       },
     ];
 

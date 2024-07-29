@@ -31,8 +31,8 @@ class _StocksListState extends State<StocksList> {
       "logo": "assets/images/amzn.png",
     },
     {
-      "title": "NFlx",
-      "logo": "assets/images/nflx.png",
+      "title": "NFlX",
+      "logo": "assets/images/word.png",
     },
     {
       "title": "SPOT",
@@ -43,8 +43,8 @@ class _StocksListState extends State<StocksList> {
       "logo": "assets/images/amzn.png",
     },
     {
-      "title": "NFlx",
-      "logo": "assets/images/nflx.png",
+      "title": "NFLX",
+      "logo": "assets/images/word.png",
     },
   ];
   @override
@@ -56,10 +56,10 @@ class _StocksListState extends State<StocksList> {
           scrollDirection: Axis.horizontal,
           physics: const AlwaysScrollableScrollPhysics(),
           shrinkWrap: true,
-          padding: EdgeInsets.only(right: 10.0),
+          padding: const EdgeInsets.only(right: 10.0),
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.only(right: 12.0),
+              padding: const EdgeInsets.only(right: 12.0),
               child: Column(
                 children: [
                   Container(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/modals/stock_details_res.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/paperTrade/text_field.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
@@ -14,34 +15,105 @@ import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button.dart';
 import '../../../providers/trade_provider.dart';
+import '../../../widgets/spacer_horizontal.dart';
+import '../../../widgets/theme_image_view.dart';
+import '../summary/index.dart';
 import '../widgets/common_heading.dart';
 
 class PaperTradeIndex extends StatelessWidget {
   final bool buy;
+  final bool doPop;
   const PaperTradeIndex({
     super.key,
     this.buy = true,
+    this.doPop = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    StockDetailProviderNew provider = context.watch<StockDetailProviderNew>();
+    KeyStats? keyStats = provider.tabRes?.keyStats;
+    CompanyInfo? companyInfo = provider.tabRes?.companyInfo;
+
     return BaseContainer(
-      appBar: const AppBarHome(
+      appBar: AppBarHome(
         isPopback: true,
-        showTrailing: true,
-        canSearch: true,
+        title: keyStats?.symbol ?? "",
+        subTitle: keyStats?.name ?? "",
+        widget: keyStats?.symbol == null
+            ? null
+            : Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    width: 48,
+                    height: 48,
+                    child: ThemeImageView(
+                      url: companyInfo?.image ?? "",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SpacerHorizontal(width: 8),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              keyStats?.symbol ?? "",
+                              style: stylePTSansBold(fontSize: 18),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: ThemeColors.greyBorder,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 8),
+                              margin: EdgeInsets.only(left: 5),
+                              child: Text(
+                                keyStats?.exchange ?? "",
+                                style: stylePTSansRegular(fontSize: 11),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          keyStats?.name ?? "",
+                          style: stylePTSansRegular(
+                            fontSize: 14,
+                            color: ThemeColors.greyText,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
       ),
-      body: SdTypeBuySell(buy: buy),
+      body: SdTypeBuySell(
+        buy: buy,
+        doPop: doPop,
+      ),
     );
   }
 }
 
 class SdTypeBuySell extends StatefulWidget {
   final bool buy;
+  final bool doPop;
 
   const SdTypeBuySell({
     super.key,
     this.buy = true,
+    this.doPop = true,
   });
 
   @override
@@ -113,29 +185,33 @@ class _SdTypeBuySellState extends State<SdTypeBuySell> {
         return;
       }
     } else {
-      int existingOrderIndex = tradeProviderNew.orders
-          .indexWhere((o) => o.symbol == provider.tabRes?.keyStats?.symbol);
-      if (existingOrderIndex < 0) {
-        Utils().showLog("$existingOrderIndex");
-        popUpAlert(
-            message:
-                "You have not bought any shares of ${provider.tabRes?.keyStats?.symbol}. ",
-            title: "Alert");
-        return;
-      }
+      // int existingOrderIndex = tradeProviderNew.orders
+      //     .indexWhere((o) => o.symbol == provider.tabRes?.keyStats?.symbol);
+      // if (existingOrderIndex < 0) {
+      //   Utils().showLog("$existingOrderIndex");
+      //   popUpAlert(
+      //       message:
+      //           "You have not bought any shares of ${provider.tabRes?.keyStats?.symbol}. ",
+      //       title: "Alert");
+      //   return;
+      // }
 
-      SummaryOrderNew existingOrder =
-          tradeProviderNew.orders[existingOrderIndex];
+      // try {
+      //   SummaryOrderNew existingOrder =
+      //       tradeProviderNew.orders[existingOrderIndex];
 
-      num existingInvested = existingOrder.invested ?? 0;
-      num newInvested = invested;
+      //   num existingInvested = existingOrder.invested ?? 0;
+      //   num newInvested = invested;
 
-      if (newInvested > existingInvested) {
-        popUpAlert(
-            message: "Attempted to sell more investment than available.",
-            title: "Alert");
-        return;
-      }
+      //   if (newInvested > existingInvested) {
+      //     popUpAlert(
+      //         message: "Attempted to sell more investment than available.",
+      //         title: "Alert");
+      //     return;
+      //   }
+      // } catch (e) {
+      //   //
+      // }
     }
 
     popUpAlert(
@@ -230,6 +306,7 @@ class _SdTypeBuySellState extends State<SdTypeBuySell> {
       ),
       onTap: () {
         Navigator.pop(context);
+
         Navigator.pop(
           context,
           SummaryOrderNew(
@@ -247,6 +324,7 @@ class _SdTypeBuySellState extends State<SdTypeBuySell> {
             price: provider.tabRes?.keyStats?.price,
             symbol: provider.tabRes?.keyStats?.symbol,
             invested: invested,
+            buy: widget.buy,
           ),
         );
         _clear();
@@ -305,8 +383,7 @@ class _SdTypeBuySellState extends State<SdTypeBuySell> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-          Dimen.padding, Dimen.padding, Dimen.padding, 0),
+      padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
       child: Column(
         children: [
           Expanded(
@@ -555,7 +632,7 @@ class _SdTypeBuySellState extends State<SdTypeBuySell> {
                     children: [
                       TextSpan(
                         text:
-                            "\$${context.read<TradeProviderNew>().data.availableBalance.toCurrency()}",
+                            "\$${formatBalance(num.parse(context.read<TradeProviderNew>().data.availableBalance.toCurrency()))}",
                         style: stylePTSansRegular(fontSize: 14),
                       ),
                     ],

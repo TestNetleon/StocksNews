@@ -13,7 +13,6 @@ import 'package:stocks_news_new/screens/marketData/widget/market_data_title.dart
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 
@@ -80,31 +79,14 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
 
       isLocked = !havePermissions;
     }
-    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
 
-    // bool isLocked = false;
-
-    // if (purchased) {
-    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
-    //           (element) =>
-    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //       false;
-    //   isLocked = !havePermissions;
-    // } else {
-    //   if (!isLocked) {
-    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //         false;
-    //   }
-    // }
-
-    // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return Stack(
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(
             Dimen.padding,
-            Dimen.padding,
+            // Dimen.padding,
+            0,
             Dimen.padding,
             0,
           ),
@@ -114,12 +96,12 @@ class _CongressionalContainerState extends State<CongressionalContainer> {
               if (provider.data != null || provider.filterParams != null)
                 MarketDataTitle(
                   htmlTitle: true,
-                  title: provider.extra?.title,
+                  // title: provider.extra?.title,
                   subTitleHtml: true,
                   subTitle: provider.extra?.subTitle,
                   provider: provider,
                   // onDeleteExchange: (exchange) => provider.exchangeFilter(exchange),
-                  onFilterClick: _onFilterClick,
+                  // onFilterClick: _onFilterClick,
                 ),
               // if (!(provider.data == null &&
               //     provider.filterParams == null &&

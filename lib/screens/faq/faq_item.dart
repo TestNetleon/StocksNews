@@ -10,7 +10,6 @@ import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 class FAQItem extends StatelessWidget {
   final int index;
-//
   const FAQItem({super.key, required this.index});
 
   @override
@@ -21,6 +20,7 @@ class FAQItem extends StatelessWidget {
     if (faq == null) {
       return const SizedBox();
     }
+    
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Dimen.radius.r),
