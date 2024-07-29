@@ -84,13 +84,14 @@ class StocksContainer extends StatelessWidget {
     //         false;
     //   }
     // }
-
     // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
-        filterClick: _filterClick,
-        canSearch: true,
+        showTrailing: false,
+        canSearch: false,
+        title: "Stocks",
+        onFilterClick: _filterClick,
       ),
       body: Stack(
         children: [
@@ -104,16 +105,16 @@ class StocksContainer extends StatelessWidget {
             child: Column(
               children: [
                 ScreenTitle(
-                  title: "Stocks",
+                  // title: "Stocks",
                   subTitle: provider.textRes?.subTitle,
                   dividerPadding: const EdgeInsets.only(bottom: 12),
-                  optionalWidget: GestureDetector(
-                    onTap: _filterClick,
-                    child: const Icon(
-                      Icons.filter_alt,
-                      color: ThemeColors.accent,
-                    ),
-                  ),
+                  // optionalWidget: GestureDetector(
+                  //   onTap: _filterClick,
+                  //   child: const Icon(
+                  //     Icons.filter_alt,
+                  //     color: ThemeColors.accent,
+                  //   ),
+                  // ),
                 ),
                 TextInputFieldSearch(
                   hintText: "Search by symbol or company name",

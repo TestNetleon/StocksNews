@@ -647,7 +647,7 @@ class _MyAccountContainerState extends State<MyAccountContainer>
   Future _onPhoneUpdateClick(String phone) async {
     // UserProvider provider = context.read<UserProvider>();
 
-    if (mobileController.text.isEmpty || mobileController.text.length < 10) {
+    if (mobileController.text.isEmpty || mobileController.text.length < 6) {
       popUpAlert(
         message: "Please enter a valid phone number.",
         title: "Alert",

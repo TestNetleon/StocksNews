@@ -11,10 +11,7 @@ class MissionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: AppBarHome(isPopback: true, title: "Missions"),
       body: MissionsList(),
     );
   }

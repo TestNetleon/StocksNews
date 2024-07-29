@@ -90,7 +90,8 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
           }
         });
       }
-    } else if (userProvider.user != null && userProvider.user?.phone == null) {
+    } else if (userProvider.user != null &&
+        (userProvider.user?.phone == null || userProvider.user?.phone == "")) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(NewsDetails.path);
       if (visible) {
@@ -510,8 +511,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                                     ),
                                                     style: stylePTSansRegular(
                                                       height: 1.3,
-                                                      color:
-                                                          ThemeColors.greyText,
+                                                      color: ThemeColors.white,
                                                     ),
                                                   ),
                                                 ),

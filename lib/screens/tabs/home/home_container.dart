@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
-import 'package:stocks_news_new/providers/user_provider.dart';
-import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/leader_board_new.dart/leader_board_new.dart';
 import 'package:stocks_news_new/screens/tabs/home/benefits/benefits_affiliate.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/blog_item_home.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/featured/index.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/home_partial_loading_widget.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/membership_coins_option.dart';
@@ -24,7 +22,6 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
-import '../../../widgets/custom/update_membership.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -37,7 +34,7 @@ class HomeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
-    UserProvider userProvider = context.watch<UserProvider>();
+    // UserProvider userProvider = context.watch<UserProvider>();
 
     if (!provider.isLoadingSlider &&
         provider.statusSlider != Status.ideal &&
@@ -63,9 +60,9 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              BlogItemHome(),
               const HomeTopNewsSlider(),
               const MembershipCoinsOption(),
-
               // Visibility(
               //   visible: showMembership && provider.homeSliderRes != null,
               //   child: Container(
@@ -82,7 +79,6 @@ class HomeContainer extends StatelessWidget {
               //         const UpdateStoreCard(),
               //   ),
               // ),
-
               // Container(
               //   margin: const EdgeInsets.fromLTRB(
               //     Dimen.padding,
@@ -92,7 +88,6 @@ class HomeContainer extends StatelessWidget {
               //   ),
               //   child: const ReferPurchaseSlider(),
               // ),
-
               // Container(
               //   margin: const EdgeInsets.fromLTRB(
               //     Dimen.padding,
@@ -136,6 +131,34 @@ class HomeContainer extends StatelessWidget {
                       child: const ReferApp(),
                     ),
                   ),
+                  // Container(
+                  //   margin: const EdgeInsets.fromLTRB(
+                  //     Dimen.padding,
+                  //     Dimen.homeSpacing,
+                  //     Dimen.padding,
+                  //     0,
+                  //   ),
+                  //   padding: EdgeInsets.all(20),
+                  //   decoration: BoxDecoration(
+                  //       color: ThemeColors.accent,
+                  //       borderRadius: BorderRadius.circular(12)),
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (_) => const StockAnalysis(),
+                  //         ),
+                  //       );
+
+                  //       // showMaintenanceDialog(
+                  //       //     title: "Under Maintenance",
+                  //       //     description: "We will be back shortly",
+                  //       //     onClick: () {});
+                  //     },
+                  //     child: const Text('Click me'),
+                  //   ),
+                  // ),
                   Visibility(
                     visible:
                         provider.extraMostPopular?.showMostPurchased == true,

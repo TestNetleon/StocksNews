@@ -93,7 +93,7 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                           endAngle: 270,
                           axisLineStyle: const AxisLineStyle(
                             thickness: 1,
-                            color: Color.fromARGB(255, 116, 224, 94),
+                            color: Color.fromARGB(255, 60, 209, 30),
                             thicknessUnit: GaugeSizeUnit.factor,
                           ),
                           pointers: const <GaugePointer>[

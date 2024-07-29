@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/news/typeData/index.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
@@ -33,6 +35,8 @@ class News extends StatelessWidget {
     }
 
     return BaseContainer(
+      appBar: AppBarHome(isHome: false, title: "News"),
+      drawer: const BaseDrawer(),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,

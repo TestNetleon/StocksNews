@@ -43,10 +43,6 @@ class _SubscriptionPurchasedState extends State<SubscriptionPurchased> {
       appBar: AppBarHome(
         isPopback: true,
         onTap: () {
-          // Navigator.pushAndRemoveUntil(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => const Tabs()),
-          //     (route) => false);
           Navigator.popUntil(
               navigatorKey.currentContext!, (route) => route.isFirst);
           Navigator.pushReplacement(

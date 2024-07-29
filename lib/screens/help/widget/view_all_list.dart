@@ -40,7 +40,7 @@ class _ViewAllListState extends State<ViewAllList> {
     HelpDeskProvider provider = context.watch<HelpDeskProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.all(Dimen.padding.sp),
         child: CommonEmptyError(

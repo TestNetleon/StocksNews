@@ -69,7 +69,8 @@ class _BlogDetailState extends State<BlogDetail> {
           }
         });
       }
-    } else if (userProvider.user != null && userProvider.user?.phone == null) {
+    } else if (userProvider.user != null &&
+        (userProvider.user?.phone == null || userProvider.user?.phone == "")) {
       DatabaseHelper helper = DatabaseHelper();
       bool visible = await helper.fetchLoginDialogData(BlogDetail.path);
       if (visible) {
@@ -90,10 +91,7 @@ class _BlogDetailState extends State<BlogDetail> {
           context.watch<BlogProvider>().blogsDetail?.readingStatus == false
               ? ThemeColors.tabBack
               : null,
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: BlogDetailContainer(slug: widget.slug ?? ""),
     );
   }

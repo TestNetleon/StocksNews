@@ -23,9 +23,13 @@ class HelpDesk extends StatelessWidget {
     UserRes? user = context.watch<UserProvider>().user;
     HelpDeskProvider provider = context.read<HelpDeskProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: provider.extra?.title ?? "Helpdesk",
+      ),
       body: Padding(
-        padding: EdgeInsets.all(Dimen.padding.sp),
+        // padding: EdgeInsets.all(Dimen.padding.sp),
+        padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
         child: user == null
             ? Column(
                 children: [
@@ -42,9 +46,7 @@ class HelpDesk extends StatelessWidget {
                   ))
                 ],
               )
-            : HelpDeskList(
-                slug: slug,
-              ),
+            : HelpDeskList(slug: slug),
       ),
     );
   }

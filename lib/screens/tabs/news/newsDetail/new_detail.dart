@@ -22,13 +22,10 @@ class NewsDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.sp, 10.sp, 10.sp, 0),
+        // padding: EdgeInsets.fromLTRB(10.sp, 10.sp, 10.sp, 0),
+        padding: EdgeInsets.fromLTRB(10.sp, 0.sp, 10.sp, 0),
         child: NewsDetailsBody(
           slug: slug,
           inAppMsgId: inAppMsgId,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/providers/membership.dart';
-import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'widgtes/faq.dart';
@@ -52,23 +51,23 @@ class _NewMembershipContainerState extends State<NewMembershipContainer> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Positioned(
-            top: 0,
-            child: Container(
-              height: 400,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              child: Image.asset(
-                Images.start3,
-                fit: BoxFit.fill,
-                height: 350,
-                opacity: const AlwaysStoppedAnimation(.5),
-              ),
-              // height: 350.0,
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   child: Container(
+          //     height: 400,
+          //     width: MediaQuery.of(context).size.width,
+          //     decoration: const BoxDecoration(
+          //       color: Colors.transparent,
+          //     ),
+          //     child: Image.asset(
+          //       Images.start3,
+          //       fit: BoxFit.fill,
+          //       height: 350,
+          //       opacity: const AlwaysStoppedAnimation(.5),
+          //     ),
+          //     // height: 350.0,
+          //   ),
+          // ),
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 50),

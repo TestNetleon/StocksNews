@@ -80,9 +80,6 @@ class SearchProvider extends ChangeNotifier {
   Future searchSymbolsAndNews(request, {showProgress = false}) async {
     setStatus(Status.loading);
     try {
-      // Map request = {
-      //   "token": navigatorKey.currentContext!.read<UserProvider>().user?.token??""
-      // };
       ApiResponse response = await apiRequest(
         url: Apis.searchWithNews,
         request: request,
@@ -93,7 +90,6 @@ class SearchProvider extends ChangeNotifier {
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _dataNew = null;
-        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {

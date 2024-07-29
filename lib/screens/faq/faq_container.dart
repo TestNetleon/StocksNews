@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/faqs_res.dart';
 import 'package:stocks_news_new/providers/faq_provider.dart';
@@ -24,7 +23,8 @@ class FAQContainer extends StatelessWidget {
             itemCount: faqs.length,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            padding: EdgeInsets.symmetric(vertical: 16.sp),
+            // padding: EdgeInsets.symmetric(vertical: 16.sp),
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) {
               return FAQItem(index: index);
             },
@@ -34,7 +34,8 @@ class FAQContainer extends StatelessWidget {
           ),
           if (context.read<FaqProvide>().extra?.disclaimer != null)
             DisclaimerWidget(
-                data: context.read<FaqProvide>().extra!.disclaimer!)
+              data: context.read<FaqProvide>().extra!.disclaimer!,
+            )
         ],
       ),
     );

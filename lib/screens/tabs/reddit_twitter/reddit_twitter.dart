@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/reddit_twitter_res.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
+import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/days.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/recent_mention_item.dart';
 import 'package:stocks_news_new/utils/colors.dart';
@@ -55,11 +57,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
       name: 'ScreensVisit',
       parameters: {'screen_name': "Sentiments"},
     );
-
     HomeProvider homeProvider = context.watch<HomeProvider>();
     UserProvider userProvider = context.watch<UserProvider>();
     bool purchased = userProvider.user?.membership?.purchased == 1;
-
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
                 (element.key == "reddit-twitter" && element.status == 0)) ??
@@ -78,8 +78,8 @@ class _RedditTwitterState extends State<RedditTwitter> {
     Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
 
     return BaseContainer(
-      // drawer: const BaseDrawer(),
-      // appBar: const AppBarHome(canSearch: true),
+      appBar: AppBarHome(isHome: false, title: "Sentiments"),
+      drawer: const BaseDrawer(),
       body: Stack(
         children: [
           Padding(
@@ -117,11 +117,7 @@ class _RedditTwitterState extends State<RedditTwitter> {
               ],
             ),
           ),
-          if (isLocked)
-            CommonLock(
-              showLogin: true,
-              isLocked: isLocked,
-            ),
+          if (isLocked) CommonLock(showLogin: true, isLocked: isLocked),
         ],
       ),
     );

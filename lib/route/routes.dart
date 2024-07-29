@@ -42,6 +42,7 @@ import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
+import 'package:stocks_news_new/providers/trade_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
 import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
@@ -83,7 +84,6 @@ import 'package:stocks_news_new/screens/marketData/highLowPE/index.dart';
 import 'package:stocks_news_new/screens/marketData/highsLowsBetaStocks/index.dart';
 import 'package:stocks_news_new/screens/marketData/indices/index.dart';
 import 'package:stocks_news_new/screens/marketData/mostActive/index.dart';
-import 'package:stocks_news_new/screens/marketData/stockScreener/stock_screener.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
 import 'package:stocks_news_new/screens/homeSpash/index.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
@@ -148,7 +148,6 @@ class Routes {
     DividendsScreen.path: (_) => const DividendsScreen(),
     CompareNew.path: (_) => const CompareNew(),
     EarningsScreen.path: (_) => const EarningsScreen(),
-    StockScreenerScreen.path: (_) => const StockScreenerScreen(),
     HomePlaidAdded.path: (_) => const HomePlaidAdded(),
     ReferAFriend.path: (_) => const ReferAFriend(),
   };
@@ -586,6 +585,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => MorningstarTxnProvider()),
       ChangeNotifierProvider(create: (_) => AIProvider()),
       ChangeNotifierProvider(create: (_) => StoreProvider()),
+      ChangeNotifierProvider(create: (_) => TradeProviderNew()),
     ];
   }
 }

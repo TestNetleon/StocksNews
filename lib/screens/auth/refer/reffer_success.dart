@@ -30,10 +30,7 @@ class _ReferSuccessState extends State<ReferSuccess> {
   Widget build(BuildContext context) {
     ReferSuccessRes? referData = context.watch<UserProvider>().refer;
     return BaseContainer(
-      appBar: const AppBarHome(
-        isPopback: true,
-        showTrailing: false,
-      ),
+      appBar: const AppBarHome(isPopback: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

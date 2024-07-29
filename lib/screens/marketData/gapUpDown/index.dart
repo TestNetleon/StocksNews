@@ -47,10 +47,7 @@ class GapUpDownStocks extends StatelessWidget {
 
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
       body: Stack(
         children: [
           const CommonTabContainer(

@@ -39,7 +39,7 @@ class _IndicesIndexState extends State<IndicesIndex> {
     IndicesProvider provider = context.watch<IndicesProvider>();
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(canSearch: true, isPopback: true),
+      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
       body: provider.tabLoading ? const Loading() : _getWidget(provider),
     );
   }
@@ -77,13 +77,6 @@ class IndicesData extends StatelessWidget {
                 (element.key == "sp-500-stocks" && element.status == 0) ||
                 (element.key == "indices" && element.status == 0)) ??
         false;
-    ;
-    // bool isLocked = homeProvider.extra?.membership?.permissions?.any(
-    //         (element) =>
-    //             element == "exchanage" ||
-    //             element == "sp-500-stocks" ||
-    //             element == "indices") ??
-    //     false;
 
     if (purchased && isLocked) {
       bool havePermissions = userProvider.user?.membership?.permissions?.any(
@@ -92,32 +85,10 @@ class IndicesData extends StatelessWidget {
                   (element.key == "sp-500-stocks" && element.status == 1) ||
                   (element.key == "indices" && element.status == 1)) ??
           false;
-      // bool havePermissions = userProvider.user?.membership?.permissions?.any(
-      //         (element) =>
-      //             element == "exchanage" ||
-      //             element == "sp-500-stocks" ||
-      //             element == "indices") ??
-      //     false;
 
       isLocked = !havePermissions;
     }
     Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
-
-    // bool isLocked = false;
-
-    // if (purchased) {
-    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
-    //           (element) =>
-    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //       false;
-    //   isLocked = !havePermissions;
-    // } else {
-    //   if (!isLocked) {
-    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //         false;
-    //   }
-    // }
 
     return provider.tabLoading
         ? const Loading()

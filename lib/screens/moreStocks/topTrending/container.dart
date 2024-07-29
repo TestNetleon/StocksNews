@@ -42,7 +42,7 @@ class TopTrendingContainer extends StatelessWidget {
     ];
     return BaseContainer(
       drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true),
       body: Padding(
         padding: EdgeInsets.zero,
         // padding: EdgeInsets.fromLTRB(

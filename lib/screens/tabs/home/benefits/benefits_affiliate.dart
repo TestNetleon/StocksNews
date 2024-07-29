@@ -32,11 +32,7 @@ class _BenefitsMarketingState extends State<BenefitsMarketing> {
 
     return BaseContainer(
         drawer: const BaseDrawer(resetIndex: true),
-        appBar: const AppBarHome(
-          isPopback: true,
-          showTrailing: true,
-          canSearch: true,
-        ),
+        appBar: const AppBarHome(isPopback: true),
         body: Column(
           children: [
             Expanded(

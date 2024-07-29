@@ -15,6 +15,7 @@ class AffiliateTransactionRes {
   final String? slug;
   final String? txnType;
   final int? earn;
+  final String? icon;
   final int? spent;
   final dynamic label;
   final dynamic duration;
@@ -28,6 +29,7 @@ class AffiliateTransactionRes {
     this.txnType,
     this.earn,
     this.spent,
+    this.icon,
     this.label,
     this.duration,
   });
@@ -42,6 +44,7 @@ class AffiliateTransactionRes {
         txnType: json["txn_type"],
         earn: json["earn"],
         spent: json["spent"],
+        icon: json["icon"],
         label: json["label"],
         duration: json["duration"],
       );
@@ -55,6 +58,7 @@ class AffiliateTransactionRes {
         "txn_type": txnType,
         "earn": earn,
         "spent": spent,
+        "icon": icon,
         "label": label,
         "duration": duration,
       };

@@ -7,7 +7,6 @@ import 'package:stocks_news_new/screens/blogNew/blogsNew/container.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
@@ -54,36 +53,16 @@ class _BlogIndexNewState extends State<BlogIndexNew> {
 
       isLocked = !havePermissions;
     }
-    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
-
-    // bool isLocked = false;
-
-    // if (purchased) {
-    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
-    //           (element) =>
-    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //       false;
-    //   isLocked = !havePermissions;
-    // } else {
-    //   if (!isLocked) {
-    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //         false;
-    //   }
-    // }
 
     return BaseContainer(
-      appBar: const AppBarHome(
-        canSearch: true,
-        showTrailing: true,
-        isPopback: true,
-      ),
+      appBar: const AppBarHome(isPopback: true, title: "Blogs"),
       body: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(
               Dimen.padding,
-              Dimen.padding,
+              // Dimen.padding,
+              0,
               Dimen.padding,
               0,
             ),

@@ -132,17 +132,17 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
 
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Opacity(
-            opacity: 0.2,
-            child: Image.asset(
-              Images.profileBg,
-              height: 230,
-              width: double.infinity,
-            ),
-          ),
-        ),
+        // ClipRRect(
+        //   borderRadius: BorderRadius.circular(10),
+        //   child: Opacity(
+        //     opacity: 0.2,
+        //     child: Image.asset(
+        //       Images.profileBg,
+        //       height: 230,
+        //       width: double.infinity,
+        //     ),
+        //   ),
+        // ),
         SizedBox(
           width: double.infinity,
           child: Container(

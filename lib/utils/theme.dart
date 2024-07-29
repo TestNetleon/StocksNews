@@ -18,12 +18,13 @@ final lightTheme = ThemeData(
     // iconTheme: IconThemeData(color: Colors.black),
     // backgroundColor: Colors.white,
     // foregroundColor: Colors.transparent,
+    backgroundColor: Colors.transparent,
     elevation: 0,
     titleTextStyle: const TextStyle(
       color: Colors.white,
       fontSize: 18,
       fontWeight: FontWeight.w700,
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.ptSans,
     ),
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: Colors.black,
@@ -33,12 +34,12 @@ final lightTheme = ThemeData(
           Platform.isAndroid ? Brightness.light : Brightness.dark,
     ),
   ),
-  fontFamily: Fonts.roboto,
+  fontFamily: Fonts.ptSans,
   iconTheme: const IconThemeData(color: Colors.white),
   textTheme: ThemeData.light().textTheme.apply(
         displayColor: Colors.white,
         bodyColor: Colors.black,
-        fontFamily: Fonts.roboto,
+        fontFamily: Fonts.ptSans,
       ),
 );
 

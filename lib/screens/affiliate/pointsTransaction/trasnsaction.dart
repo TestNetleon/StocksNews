@@ -11,6 +11,7 @@ import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom/refresh_indicator.dart';
 import 'package:stocks_news_new/widgets/helpdesk_error.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 import '../../../modals/affiliate/transaction.dart';
@@ -44,10 +45,9 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
   Widget build(BuildContext context) {
     LeaderBoardProvider provider = context.watch<LeaderBoardProvider>();
     return BaseContainer(
-      appBar: const AppBarHome(
-        canSearch: true,
-        showTrailing: true,
+      appBar: AppBarHome(
         isPopback: true,
+        title: provider.extraNew?.title.toString() ?? "",
       ),
       body: CommonEmptyError(
         hasData: provider.tnxData == null || provider.tnxData?.isEmpty == true,
@@ -75,15 +75,16 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
-                vertical: 10,
+                vertical: 0,
               ),
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Column(
                     children: [
                       ScreenTitle(
-                        title: provider.extraNew?.title.toString() ?? "",
+                        // title: provider.extraNew?.title.toString() ?? "",
                         subTitle: provider.extraNew?.subTitle.toString() ?? "",
+                        dividerPadding: EdgeInsets.only(bottom: 5),
                       ),
                       const PointsSummary(fromDrawer: true),
                       const SpacerVertical(height: 10),
@@ -118,7 +119,6 @@ class AffiliateTranItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
             // color: ThemeColors.greyBorder.withOpacity(0.4),
-
             color: data?.spent != null && data?.spent != 0
                 ? ThemeColors.sos.withOpacity(0.4)
                 : ThemeColors.accent.withOpacity(0.4)),
@@ -131,10 +131,10 @@ class AffiliateTranItem extends StatelessWidget {
             Color.fromARGB(255, 39, 39, 39),
           ],
         ),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Visibility(
           //   visible: data?.spent != null && data?.spent != 0,
@@ -175,83 +175,122 @@ class AffiliateTranItem extends StatelessWidget {
           //     ),
           //   ),
           // ),
-
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  data?.label ?? "",
-                  style: styleGeorgiaBold(fontSize: 16),
+          Row(
+            children: [
+              Expanded(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Image.network(data?.icon ?? "",
+                          height: 30, color: Colors.green),
+                    ),
+                    const SpacerHorizontal(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data?.label ?? "",
+                            style: styleGeorgiaBold(fontSize: 16),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: data?.txnDetail ?? "",
+                                  style: stylePTSansRegular(height: 1.5),
+                                ),
+                                TextSpan(
+                                  text: " ${data?.title ?? ""}",
+                                  style: stylePTSansRegular(
+                                    height: 1.5,
+                                    color:
+                                        data?.txnType != "" && data?.slug != ""
+                                            ? ThemeColors.accent
+                                            : ThemeColors.white,
+                                    // data?.spent != null && data?.spent != 0
+                                    //     ? ThemeColors.accent
+                                    //     : ThemeColors.white,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap =
+                                        data?.spent != null && data?.spent != 0
+                                            ? () {
+                                                _onTap(context);
+                                              }
+                                            : null,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            data?.createdAt ?? "",
+                            style: stylePTSansRegular(
+                                color: ThemeColors.greyText, fontSize: 13),
+                          ),
+                          const SpacerVertical(
+                            height: 10.0,
+                          ),
+                          Text(
+                            (data?.spent != null && (data?.spent ?? 0) > 0)
+                                ? "-${data?.spent}"
+                                : (data?.earn != null && (data?.earn ?? 0) > 0)
+                                    ? "+${data?.earn}"
+                                    : "",
+                            style: styleGeorgiaBold(
+                                fontSize: 20,
+                                color: data?.earn != null
+                                    ? Colors.green
+                                    : Colors.red),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  (data?.spent != null && (data?.spent ?? 0) > 0)
-                      ? "-${data?.spent}"
-                      : (data?.earn != null && (data?.earn ?? 0) > 0)
-                          ? "+${data?.earn}"
-                          : "",
-                  style: styleGeorgiaBold(fontSize: 16),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const Divider(
-            color: ThemeColors.greyBorder,
-            height: 20,
-          ),
+          // const Divider(
+          //   color: ThemeColors.greyBorder,
+          //   height: 20,
+          // ),
           // Text(
           //   "${data?.txnDetail ?? ""} - ${data?.title}",
           //   style: stylePTSansRegular(height: 1.5),
           // ),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: data?.txnDetail ?? "",
-                  style: stylePTSansRegular(height: 1.5),
-                ),
-                TextSpan(
-                  text: " ${data?.title ?? ""}",
-                  style: stylePTSansRegular(
-                    height: 1.5,
-                    color: data?.txnType != "" && data?.slug != ""
-                        ? ThemeColors.accent
-                        : ThemeColors.white,
-                    // data?.spent != null && data?.spent != 0
-                    //     ? ThemeColors.accent
-                    //     : ThemeColors.white,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = data?.spent != null && data?.spent != 0
-                        ? () {
-                            _onTap(context);
-                          }
-                        : null,
-                ),
-              ],
-            ),
-          ),
+
           // const SpacerVertical(height: 10),
-          Visibility(
-            visible: data?.duration != null && data?.duration != "",
-            child: Container(
-              margin: const EdgeInsets.only(top: 3),
-              child: Text(
-                data?.duration ?? "",
-                style: stylePTSansRegular(height: 1.5),
-              ),
-            ),
-          ),
-          const SpacerVertical(height: 10),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data?.createdAt ?? "",
-              style:
-                  stylePTSansRegular(color: ThemeColors.greyText, fontSize: 13),
-            ),
-          ),
+          // Visibility(
+          //   visible: data?.duration != null && data?.duration != "",
+          //   child: Container(
+          //     margin: const EdgeInsets.only(top: 3),
+          //     child: Text(
+          //       data?.duration ?? "",
+          //       style: stylePTSansRegular(height: 1.5),
+          //     ),
+          //   ),
+          // ),
+          // const SpacerVertical(height: 10),
+          // Align(
+          //   alignment: Alignment.centerRight,
+          //   child: Text(
+          //     data?.createdAt ?? "",
+          //     style:
+          //         stylePTSansRegular(color: ThemeColors.greyText, fontSize: 13),
+          //   ),
+          // ),
         ],
       ),
     );

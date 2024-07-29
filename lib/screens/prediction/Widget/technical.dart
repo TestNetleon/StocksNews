@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stocks_news_new/screens/prediction/Widget/linechart.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 class TechnicalAnalaysis extends StatefulWidget {
   const TechnicalAnalaysis({super.key});
@@ -27,12 +28,24 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
     super.dispose();
   }
 
-  List<String> Technical = [
-    "Moving Averages (MA)",
-    "Relative Strength Index (RSI)",
-    "Bollinger Bands",
-    "MACD (Moving Average Convergence Divergence)"
+  // ignore: non_constant_identifier_names
+  List<Map<String, dynamic>> Technical = [
+    {
+      "title": "Moving Averages (MA)",
+      "amount": "50.91M",
+    },
+    {
+      "title": "Relative Strength Index (RSI)",
+      "amount": "40.61M",
+    },
+    {"title": "Bollinger Bands", "amount": "20.16M"},
+    {
+      "title": "MACD (Moving Average Convergence Divergence)",
+      "amount": "80.12M"
+    },
   ];
+
+  List colors = [Colors.green, Colors.red, Colors.red, Colors.green];
 
   List<bool> isSelectedList = List.generate(4, (_) => false);
   int selectedIndex = -1;
@@ -57,7 +70,6 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  // Toggle visibility of the additional container
                   isSelectedList[index] = !isSelectedList[index];
                 });
               },
@@ -67,7 +79,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                   color: Colors.white,
                 ),
                 padding: const EdgeInsets.all(10.0),
-                margin: const EdgeInsets.all(8.0),
+                margin: const EdgeInsets.only(bottom: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -80,8 +92,8 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                  Technical[
-                                      index], // Display the overall value here
+                                  Technical[index]['title']
+                                      .toString(), // Display the overall value here
                                   style: stylePTSansBold(color: Colors.black)),
                               const SizedBox(
                                 height: 10,
@@ -128,26 +140,31 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                             Text(
                                 'Total Revenue of 2024', // Display the overall value here
                                 style: stylePTSansBold(
-                                    fontSize: 14, color: Colors.green)),
+                                    fontSize: 14, color: colors[index])),
                             Row(
                               children: [
                                 Text(
-                                    '\$49.91M', // Display the overall value here
+                                    Technical[index]['amount']
+                                        .toString(), // Display the overall value here
                                     style: stylePTSansBold(
-                                        color: Colors.green, fontSize: 30)),
-                                const Icon(
-                                  Icons.arrow_upward,
-                                  color: Colors.green,
+                                        color: colors[index], fontSize: 30)),
+                                Icon(
+                                  colors[index] == "red"
+                                      ? Icons.arrow_downward
+                                      : Icons.arrow_upward,
+                                  color: colors[index],
                                 )
                               ],
                             ),
                           ],
                         ),
+                        const SpacerHorizontal(width: 20),
                         Expanded(
-                          child: Container(
-                            decoration: const BoxDecoration(),
+                          child: SizedBox(
+                            height: 50,
                             child: Image.asset(
-                              Images.graphHolder,
+                              Images.graphBG3,
+                              fit: BoxFit.cover,
                               color: Colors.green,
                             ),
                           ),
@@ -174,7 +191,7 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                               controller: controller,
                               indicatorWeight: 0,
                               indicatorSize: TabBarIndicatorSize.tab,
-                              labelPadding: const EdgeInsets.all(0),
+                              labelPadding: EdgeInsets.all(0),
                               tabs: const [
                                 Tab(
                                   text: 'Summary',

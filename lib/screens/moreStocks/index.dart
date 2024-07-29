@@ -17,7 +17,6 @@ class MoreStocks extends StatelessWidget {
         : const TopTrendingContainer();
     //  ChangeNotifierProvider.value(
     //     value: TopTrendingProvider(), child: const TopTrendingContainer());
-
     // MoreStocksContainer(type: type);
   }
 }

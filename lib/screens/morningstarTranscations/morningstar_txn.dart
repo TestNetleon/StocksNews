@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/morningstar_txn_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet_tablet.dart';
@@ -15,14 +16,15 @@ class MorningStarTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider provider = context.watch<UserProvider>();
+    UserProvider userProvider = context.watch<UserProvider>();
+    MorningstarTxnProvider provider = context.watch<MorningstarTxnProvider>();
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(
+      appBar: AppBarHome(
         isPopback: true,
-        canSearch: true,
+        title: provider.extra?.title.toString(),
       ),
-      body: provider.user == null
+      body: userProvider.user == null
           ? Column(
               children: [
                 // const ScreenTitle(title: "My Profile"),

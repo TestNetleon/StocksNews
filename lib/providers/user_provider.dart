@@ -91,6 +91,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateBalance(newBalance) {
+    _user?.pointEarn = newBalance;
+    notifyListeners();
+  }
+
   void setEmailClickText() {
     _emailClickText = "update";
     _emailEditable = true;

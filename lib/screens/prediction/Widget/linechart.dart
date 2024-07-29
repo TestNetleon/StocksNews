@@ -114,14 +114,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: Colors.green,
-            strokeWidth: 1,
+            color: Color.fromARGB(255, 236, 231, 231),
+            strokeWidth: 0.50,
           );
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Colors.green,
-            strokeWidth: 1,
+            color: Color.fromARGB(255, 236, 231, 231),
+            strokeWidth: 0.50,
           );
         },
       ),
@@ -152,7 +152,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d)),
+        border: Border.all(
+            color: const Color.fromARGB(255, 236, 231, 231), width: 0.50),
       ),
       minX: 0,
       maxX: 11,
@@ -201,13 +202,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
         horizontalInterval: 1,
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Color(0xff37434d),
+            color: const Color.fromARGB(255, 223, 213, 213),
             strokeWidth: 1,
           );
         },
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: Color(0xff37434d),
+            color: const Color.fromARGB(255, 223, 213, 213),
             strokeWidth: 1,
           );
         },
@@ -239,7 +240,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: const Color(0xff37434d)),
+        border: Border.all(
+          color: const Color.fromARGB(255, 223, 213, 213),
+        ),
       ),
       minX: 0,
       maxX: 11,

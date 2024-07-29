@@ -27,7 +27,7 @@ class MyAccount extends StatelessWidget {
       parameters: {'screen_name': 'My Account'},
     );
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(isPopback: true, title: "My Account"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimen.padding.sp),
         child: provider.user == null

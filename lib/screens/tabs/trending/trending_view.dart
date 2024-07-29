@@ -83,7 +83,6 @@ class _TrendingViewState extends State<TrendingView> {
                     ),
                   );
                 }
-
                 if (index == 1) {
                   return CommonRefreshIndicator(
                     onRefresh: () async {
@@ -163,14 +162,12 @@ class _TrendingViewState extends State<TrendingView> {
                     ),
                   );
                 }
-
                 if (index == 4) {
                   return const TrendingTabWidget(
                     index: 4,
                     content: TrendingIndustries(),
                   );
                 }
-
                 return Container();
               },
             ),

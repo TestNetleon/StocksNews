@@ -18,6 +18,7 @@ class BaseContainer extends StatefulWidget {
     this.resizeToAvoidBottomInset,
     this.bottomSafeAreaColor,
     this.floatingActionButton,
+    this.isHome = false,
   });
 
   final Widget? drawer;
@@ -31,6 +32,7 @@ class BaseContainer extends StatefulWidget {
   final bool? resizeToAvoidBottomInset;
   final bool moreGradient;
   final Color? bottomSafeAreaColor;
+  final bool isHome;
 
   @override
   State<BaseContainer> createState() => _BaseContainerState();
@@ -46,112 +48,65 @@ class _BaseContainerState extends State<BaseContainer> {
         closeKeyboard();
       },
       child: Container(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment.bottomCenter,
-            // radius: 0.6,
-            // stops: [
-            //   0.0,
-            //   0.9,
-            // ],
-            radius: widget.moreGradient ? 0.7 : 0.6,
-            stops: const [
-              0.0,
-              0.9,
-            ],
-            colors: const [
-              Color.fromARGB(255, 0, 125, 17),
-              Colors.black,
-            ],
-          ),
-        ),
-        child:
-            // onPopInvoked: (didPop) {
-            //   log("POPDPODPODPODPO  ===>  $didPop  NAVI =>$isNavigating  popHONE => $popHome");
-            //   if (isNavigating) {
-            //     // if (!didPop) return;
-            //     Preference.saveDataList(
-            //       DeeplinkData(
-            //         uri: null,
-            //         from: "POP Scope => didPop => $didPop",
-            //         onDeepLink: onDeepLinking,
-            //       ),
-            //     );
-            //     if (popHome) {
-            //       Navigator.popUntil(
-            //           navigatorKey.currentContext!, (route) => route.isFirst);
-            //       Navigator.pushReplacement(
-            //         navigatorKey.currentContext!,
-            //         MaterialPageRoute(builder: (_) => const Tabs()),
-            //       );
-            //     } else {
-            //       log("HERE ******* ");
-            //       try {
-            //         Navigator.pop(context);
-            //       } catch (e) {
-            //         log("HERE ERROR  ******* ${e.toString()}");
-            //       }
-            //     }
-            //     isNavigating = false;
-            //   }
-            // },
-            Scaffold(
-                extendBodyBehindAppBar: widget.showBehind,
-                backgroundColor: ThemeColors.transparent,
-                appBar: widget.appBar,
-                resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-                drawer: widget.drawer,
-                body: PopScope(
-                  canPop: false,
-                  // onPopInvoked: (didPop) {
-                  //   log("POPDPODPODPODPO  ===>  $didPop  NAVI =>$isNavigating  popHONE => $popHome");
-                  //   if (isNavigating) {
-                  //     try {
-                  //       // if (!didPop) return;
-                  //       Preference.saveDataList(
-                  //         DeeplinkData(
-                  //           uri: null,
-                  //           from: "POP Scope => didPop => $didPop",
-                  //           onDeepLink: onDeepLinking,
-                  //         ),
-                  //       );
-                  //       if (popHome) {
-                  //         // Navigator.popUntil(
-                  //         //     navigatorKey.currentContext!, (route) => route.isFirst);
-                  //         Navigator.pushReplacement(
-                  //           navigatorKey.currentContext!,
-                  //           MaterialPageRoute(builder: (_) => const Tabs()),
-                  //         );
-                  //       } else {
-                  //         log("HERE ******* ");
-                  //         Navigator.pop(navigatorKey.currentContext!);
-                  //       }
-                  //       isNavigating = false;
-                  //     } catch (e) {
-                  //       log("HERE ERROR  ******* ${e.toString()}");
-                  //     }
-                  //   }
-                  // },
-                  child: widget.bottomSafeAreaColor != null
-                      ? Column(
-                          children: [
-                            Container(
-                              color: widget.bottomSafeAreaColor,
-                              height: MediaQuery.of(context).padding.top +
-                                  (widget.appBar?.preferredSize.height ?? 0),
-                            ),
-                            Expanded(child: widget.body),
-                            Container(
-                              color: widget.bottomSafeAreaColor,
-                              height: MediaQuery.of(context).padding.bottom,
-                            ),
-                          ],
-                        )
-                      : SafeArea(child: widget.body),
+        decoration: !widget.isHome
+            ? BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.topRight,
+                  // radius: widget.moreGradient ? 0.7 : 0.6,
+                  radius: widget.moreGradient ? 2.0 : 1.4,
+                  stops: const [
+                    0.0,
+                    0.9,
+                  ],
+                  colors: const [
+                    Color.fromARGB(255, 0, 125, 17),
+                    Colors.black,
+                  ],
                 ),
-                bottomNavigationBar: widget.bottomNavigationBar,
-                floatingActionButton: widget.floatingActionButton,
-                floatingActionButtonLocation: widget.floatingAlingment),
+              )
+            : BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.bottomCenter,
+                  radius: widget.moreGradient ? 0.7 : 0.6,
+                  stops: const [
+                    0.0,
+                    0.9,
+                  ],
+                  colors: const [
+                    Color.fromARGB(255, 0, 125, 17),
+                    Colors.black,
+                  ],
+                ),
+              ),
+        child: Scaffold(
+          extendBodyBehindAppBar: widget.showBehind,
+          backgroundColor: ThemeColors.transparent,
+          appBar: widget.appBar,
+          resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+          drawer: widget.drawer,
+          body: PopScope(
+            canPop: false,
+            child: widget.bottomSafeAreaColor != null
+                ? Column(
+                    children: [
+                      Container(
+                        // color: widget.bottomSafeAreaColor,
+                        height: MediaQuery.of(context).padding.top +
+                            (widget.appBar?.preferredSize.height ?? 0),
+                      ),
+                      Expanded(child: widget.body),
+                      Container(
+                        color: widget.bottomSafeAreaColor,
+                        height: MediaQuery.of(context).padding.bottom,
+                      ),
+                    ],
+                  )
+                : SafeArea(child: widget.body),
+          ),
+          bottomNavigationBar: widget.bottomNavigationBar,
+          floatingActionButton: widget.floatingActionButton,
+          floatingActionButtonLocation: widget.floatingAlingment,
+        ),
       ),
     );
   }

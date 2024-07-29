@@ -8,7 +8,6 @@ import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
-import 'package:stocks_news_new/widgets/screen_title.dart';
 
 import '../../widgets/custom/refresh_indicator.dart';
 
@@ -38,18 +37,22 @@ class _FAQBaseState extends State<FAQBase> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(
+        isPopback: true,
+        title: "Frequently Asked Questions",
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          // Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const ScreenTitle(title: "Frequently Asked Questions"),
+            // const ScreenTitle(title: "Frequently Asked Questions"),
             Expanded(child: _getWidget()),
           ],
         ),

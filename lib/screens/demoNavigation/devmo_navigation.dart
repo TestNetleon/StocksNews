@@ -27,7 +27,7 @@ class _NavigationDemoState extends State<NavigationDemo> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-        appBar: const AppBarHome(isPopback: true, canSearch: true),
+        appBar: const AppBarHome(isPopback: true),
         body: Column(
           children: [
             ScreenTitle(

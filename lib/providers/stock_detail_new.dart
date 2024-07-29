@@ -408,7 +408,10 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
-  Future getTabData({String? symbol}) async {
+  Future getTabData({
+    String? symbol,
+    showProgress = false,
+  }) async {
     clearAll();
     setStatusTab(Status.loading);
     try {
@@ -420,7 +423,7 @@ class StockDetailProviderNew extends ChangeNotifier {
       ApiResponse response = await apiRequest(
         url: Apis.stockDetailTab,
         formData: request,
-        showProgress: false,
+        showProgress: showProgress,
       );
       if (response.status) {
         _tabRes = stockDetailTabResFromJson(jsonEncode(response.data));
@@ -436,7 +439,7 @@ class StockDetailProviderNew extends ChangeNotifier {
         _errorTab = response.message;
       }
       setStatusTab(Status.loaded);
-      return ApiResponse(status: response.session);
+      return ApiResponse(status: response.status);
     } catch (e) {
       Utils().showLog(e.toString());
       setStatusTab(Status.loaded);

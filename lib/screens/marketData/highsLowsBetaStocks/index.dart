@@ -10,7 +10,6 @@ import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 
-import '../../../utils/utils.dart';
 import '../../../widgets/custom_tab_container.dart';
 
 class HighLowsBetaStocksIndex extends StatelessWidget {
@@ -21,11 +20,7 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
   Widget build(BuildContext context) {
     UserProvider provider = context.watch<UserProvider>();
     HomeProvider homeProvider = context.watch<HomeProvider>();
-    // HighBetaStocksProvider highBetaStocksProvider =
-    //     context.watch<HighBetaStocksProvider>();
-
     bool purchased = provider.user?.membership?.purchased == 1;
-
     bool isLocked = homeProvider.extra?.membership?.permissions?.any(
             (element) =>
                 (element.key == "high-beta-stocks" && element.status == 0) ||
@@ -33,13 +28,6 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
                 (element.key == "negative-beta-stocks" &&
                     element.status == 0)) ??
         false;
-    // bool isLocked = homeProvider.extra?.membership?.permissions?.any(
-    //         (element) =>
-    //             element == "high-beta-stocks" ||
-    //             element == "low-beta-stocks" ||
-    //             element == "negative-beta-stocks") ??
-    //     false;
-
     if (purchased && isLocked) {
       bool havePermissions = provider.user?.membership?.permissions?.any(
               (element) =>
@@ -48,39 +36,13 @@ class HighLowsBetaStocksIndex extends StatelessWidget {
                   (element.key == "negative-beta-stocks" &&
                       element.status == 1)) ??
           false;
-      // bool havePermissions = provider.user?.membership?.permissions?.any(
-      //         (element) =>
-      //             element == "high-beta-stocks" ||
-      //             element == "low-beta-stocks" ||
-      //             element == "negative-beta-stocks") ??
-      //     false;
 
       isLocked = !havePermissions;
     }
-    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
-
-    // bool isLocked = false;
-
-    // if (purchased) {
-    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
-    //           (element) =>
-    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //       false;
-    //   isLocked = !havePermissions;
-    // } else {
-    //   if (!isLocked) {
-    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //         false;
-    //   }
-    // }
 
     return BaseContainer(
       bottomSafeAreaColor: ThemeColors.background,
-      appBar: const AppBarHome(
-        isPopback: true,
-        canSearch: true,
-      ),
+      appBar: const AppBarHome(isPopback: true, title: "Market Data"),
       body: Stack(
         children: [
           const CommonTabContainer(

@@ -68,7 +68,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       // Navigator.pushAndRemoveUntil(context, Tabs.path, (route) => false);
     }
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 0), () {
       _getDeviceType();
     });
   }
@@ -110,7 +110,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     } catch (e) {
       //
     }
-    _navigateToRequiredScreen();
+    // _navigateToRequiredScreen();
+    Timer(const Duration(seconds: 3), () {
+      _navigateToRequiredScreen();
+    });
   }
 
   Future _navigateToRequiredScreen() async {
@@ -208,6 +211,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
           width: MediaQuery.of(context).size.width * .6,
           height: MediaQuery.of(context).size.width * .6,
           child: Image.asset(Images.logo),
+          // child: Image.asset(Images.splashLogoGIF),
         ),
       ),
     );

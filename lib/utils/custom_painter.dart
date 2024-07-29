@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_initializing_formals
+
 import 'package:flutter/material.dart';
 
 class UnicornOutlineButton extends StatelessWidget {
@@ -7,16 +9,17 @@ class UnicornOutlineButton extends StatelessWidget {
   final double _radius;
 
   UnicornOutlineButton({
+    super.key,
     required double strokeWidth,
     required double radius,
     required Gradient gradient,
     required Widget child,
     required VoidCallback onPressed,
-  })  : this._painter = _GradientPainter(
+  })  : _painter = _GradientPainter(
             strokeWidth: strokeWidth, radius: radius, gradient: gradient),
-        this._child = child,
-        this._callback = onPressed,
-        this._radius = radius;
+        _child = child,
+        _callback = onPressed,
+        _radius = radius;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +31,12 @@ class UnicornOutlineButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(_radius),
           onTap: _callback,
-          child: Container(
-            // constraints: BoxConstraints(minWidth: 88, minHeight: 48),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _child,
-              ],
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _child,
+            ],
           ),
         ),
       ),
@@ -54,9 +54,9 @@ class _GradientPainter extends CustomPainter {
       {required double strokeWidth,
       required double radius,
       required Gradient gradient})
-      : this.strokeWidth = strokeWidth,
-        this.radius = radius,
-        this.gradient = gradient;
+      : strokeWidth = strokeWidth,
+        radius = radius,
+        gradient = gradient;
 
   @override
   void paint(Canvas canvas, Size size) {

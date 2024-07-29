@@ -44,13 +44,16 @@ class _ContactUsBaseState extends State<ContactUsBase> {
     TermsAndPolicyProvider provider = context.watch<TermsAndPolicyProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(
+        isPopback: true,
+        title: "Contact Us",
+      ),
       body: Padding(
         padding: EdgeInsets.all(Dimen.padding.sp),
         child: Column(
           children: [
             ScreenTitle(
-              title: "Contact Us",
+              // title: "Contact Us",
               subTitleHtml: true,
               subTitle: provider.data?.subTitle ?? "",
             ),

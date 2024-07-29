@@ -21,7 +21,6 @@ import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -99,25 +98,6 @@ class _EarningsListState extends State<EarningsList> {
 
       isLocked = !havePermissions;
     }
-    Utils().showLog("isLocked? $isLocked, Purchased? $purchased");
-
-    // bool isLocked = false;
-
-    // if (purchased) {
-    //   bool havePermissions = userProvider.user?.membership?.permissions?.any(
-    //           (element) =>
-    //               element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //       false;
-    //   isLocked = !havePermissions;
-    // } else {
-    //   if (!isLocked) {
-    //     isLocked = homeProvider.extra?.membership?.permissions?.any((element) =>
-    //             element == "gap-up-stocks" || element == "gap-down-stocks") ??
-    //         false;
-    //   }
-    // }
-
-    // Utils().showLog("GAP UP DOWN OPEN? $isLocked");
 
     return Stack(
       children: [
@@ -133,7 +113,7 @@ class _EarningsListState extends State<EarningsList> {
               if (provider.data != null || provider.filterParams != null)
                 MarketDataTitle(
                   htmlTitle: true,
-                  title: provider.extra?.title,
+                  // title: provider.extra?.title,
                   subTitleHtml: true,
                   subTitle: provider.extra?.subTitle,
                   provider: provider,

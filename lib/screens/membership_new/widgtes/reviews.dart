@@ -54,9 +54,7 @@ class NewMembershipReviews extends StatelessWidget {
                         Icons.star,
                         color: Color.fromARGB(255, 251, 181, 5),
                       ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
+                      onRatingUpdate: (rating) {},
                     ),
                     const SpacerVertical(height: 10),
                     Text(
