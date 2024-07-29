@@ -35,6 +35,8 @@ class Result {
   final dynamic consensusAnalystRating;
   final dynamic peRatio;
   final dynamic analystRatingConsensusPriceTarget;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   Result({
     this.symbol,
@@ -54,6 +56,8 @@ class Result {
     this.consensusAnalystRating,
     this.peRatio,
     this.analystRatingConsensusPriceTarget,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
@@ -75,6 +79,8 @@ class Result {
         peRatio: json["pe_ratio"],
         analystRatingConsensusPriceTarget:
             json["analyst_rating_consensus_price_target"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -96,5 +102,7 @@ class Result {
         "pe_ratio": peRatio,
         "analyst_rating_consensus_price_target":
             analystRatingConsensusPriceTarget,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

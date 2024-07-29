@@ -24,6 +24,8 @@ class BreakoutStocksRes {
   final dynamic percentageMovingAverage;
   final dynamic volume;
   final dynamic avgVolume;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   BreakoutStocksRes({
     this.symbol,
@@ -37,6 +39,8 @@ class BreakoutStocksRes {
     this.percentageMovingAverage,
     this.volume,
     this.avgVolume,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory BreakoutStocksRes.fromJson(Map<String, dynamic> json) =>
@@ -52,6 +56,8 @@ class BreakoutStocksRes {
         percentageMovingAverage: json["percentageMovingAverage"],
         volume: json["volume"],
         avgVolume: json["avgVolume"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,5 +72,7 @@ class BreakoutStocksRes {
         "percentageMovingAverage": percentageMovingAverage,
         "volume": volume,
         "avgVolume": avgVolume,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

@@ -87,7 +87,8 @@ class TopTrendingProvider extends ChangeNotifier {
   }) async {
     setAdd(Status.loading);
     Map request = {
-      "token":navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
       "symbol": symbol,
       "alert_name": alertName,
       "sentiment_spike": selectedOne ? "yes" : "no",

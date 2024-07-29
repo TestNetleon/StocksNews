@@ -11,11 +11,12 @@ import 'package:stocks_news_new/screens/search/search.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
-  final bool showTrailing, isPopback, showQR, canSearch;
+  final bool showTrailing, isPopback, showQR, canSearch, shareClick;
   final void Function()? filterClick;
   final void Function()? onTap;
 //
@@ -27,6 +28,7 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
     this.filterClick,
     this.isHome = false,
     this.canSearch = false,
+    this.shareClick = false,
     this.onTap,
   });
 
@@ -193,6 +195,37 @@ class _AppBarHomeState extends State<AppBarHome> {
         //     ),
         //   ),
         // ),
+
+        Visibility(
+          visible: widget.shareClick,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: ThemeColors.greyBorder),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8))),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    child: Center(
+                      child: Text(
+                        "Share",
+                        style: stylePTSansBold(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         Visibility(
           visible: widget.canSearch,
           child: IconButton(

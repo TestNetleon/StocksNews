@@ -158,6 +158,8 @@ class Top {
   final String? image;
   final bool gained;
   final String displayChange;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   Top({
     required this.name,
@@ -167,6 +169,8 @@ class Top {
     required this.image,
     this.gained = false,
     required this.displayChange,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory Top.fromJson(Map<String, dynamic> json) => Top(
@@ -176,6 +180,8 @@ class Top {
         displayChange: json["display_change"],
         changesPercentage: json["changesPercentage"],
         image: json["image"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -185,5 +191,7 @@ class Top {
         "display_change": displayChange,
         "changesPercentage": changesPercentage,
         "image": image,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

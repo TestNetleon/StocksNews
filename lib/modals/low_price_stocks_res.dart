@@ -36,6 +36,8 @@ class LowPriceStocksRes {
   final dynamic percentageChange;
   final dynamic the52WeekHigh;
   final dynamic discount52Weeks;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   LowPriceStocksRes({
     this.symbol,
@@ -55,6 +57,8 @@ class LowPriceStocksRes {
     this.percentageChange,
     this.the52WeekHigh,
     this.discount52Weeks,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory LowPriceStocksRes.fromJson(Map<String, dynamic> json) =>
@@ -76,6 +80,8 @@ class LowPriceStocksRes {
         percentageChange: json["percentage_change"],
         the52WeekHigh: json["52WeekHigh"],
         discount52Weeks: json["discount52Weeks"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -96,5 +102,7 @@ class LowPriceStocksRes {
         "percentage_change": percentageChange,
         "52WeekHigh": the52WeekHigh,
         "discount52Weeks": discount52Weeks,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

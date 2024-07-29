@@ -65,6 +65,8 @@ class PeersDatum {
   final String price;
   final String change;
   final num changesPercentage;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   PeersDatum({
     required this.symbol,
@@ -73,6 +75,8 @@ class PeersDatum {
     required this.price,
     required this.change,
     required this.changesPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory PeersDatum.fromJson(Map<String, dynamic> json) => PeersDatum(
@@ -82,6 +86,8 @@ class PeersDatum {
         price: json["price"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -91,5 +97,7 @@ class PeersDatum {
         "price": price,
         "change": change,
         "changesPercentage": changesPercentage,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

@@ -139,6 +139,9 @@ class FinanceStatement {
   final dynamic cashAtBeginningOfPeriod;
   final dynamic investingCashFlowChange;
 
+  final dynamic netIncomePerRatio;
+  final dynamic investingPerRatio;
+
   FinanceStatement({
     this.period,
     this.periodEnded,
@@ -190,6 +193,8 @@ class FinanceStatement {
     this.cep,
     this.cashAtBeginningOfPeriod,
     this.investingCashFlowChange,
+    this.netIncomePerRatio,
+    this.investingPerRatio,
   });
 
   factory FinanceStatement.fromJson(Map<String, dynamic> json) =>
@@ -252,6 +257,8 @@ class FinanceStatement {
         cep: json["Cash at End of Period"],
         cashAtBeginningOfPeriod: json["Cash at Beginning of Period"],
         investingCashFlowChange: json["Investing Cash Flow Change"],
+        investingPerRatio: json["Investing Cash Flow Change"],
+        netIncomePerRatio: json["Net Income percentage"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -309,6 +316,8 @@ class FinanceStatement {
         "Cash at End of Period": cep,
         "Cash at Beginning of Period": cashAtBeginningOfPeriod,
         "Investing Cash Flow Change": investingCashFlowChange,
+        "Net Income percentage": netIncomePerRatio,
+        "Investing Cash Flow Change": investingPerRatio,
       };
   Map<String, dynamic> toMap() => {
         "Period": period,
@@ -365,5 +374,7 @@ class FinanceStatement {
         "Cash at End of Period": cep,
         "Cash at Beginning of Period": cashAtBeginningOfPeriod,
         "Investing Cash Flow Change": investingCashFlowChange,
+        "Net Income percentage": netIncomePerRatio,
+        "Investing Cash Flow Change": investingPerRatio,
       };
 }

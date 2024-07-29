@@ -51,6 +51,8 @@ class AllStocks {
   final String? open;
   final String? previousClose;
   final String displayChange;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   AllStocks({
     this.id,
@@ -66,6 +68,8 @@ class AllStocks {
     this.dayLow,
     this.open,
     this.previousClose,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory AllStocks.fromJson(Map<String, dynamic> json) => AllStocks(
@@ -82,6 +86,8 @@ class AllStocks {
         dayLow: json["dayLow"],
         open: json["open"],
         previousClose: json["previousClose"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,5 +104,7 @@ class AllStocks {
         "dayLow": dayLow,
         "open": open,
         "previousClose": previousClose,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

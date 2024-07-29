@@ -27,6 +27,8 @@ class MostActiveStocksRes {
   final dynamic dayHigh;
   final dynamic volatility;
   final dynamic volumeGrowth;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   MostActiveStocksRes({
     this.symbol,
@@ -44,6 +46,8 @@ class MostActiveStocksRes {
     this.dayHigh,
     this.volatility,
     this.volumeGrowth,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory MostActiveStocksRes.fromJson(Map<String, dynamic> json) =>
@@ -63,6 +67,8 @@ class MostActiveStocksRes {
         dayHigh: json["dayHigh"],
         volatility: json["volatility"],
         volumeGrowth: json["volumeGrowth"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,5 +87,7 @@ class MostActiveStocksRes {
         "dayHigh": dayHigh,
         "volatility": volatility,
         "volumeGrowth": volumeGrowth,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

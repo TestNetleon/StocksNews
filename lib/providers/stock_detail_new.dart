@@ -25,6 +25,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/sec_filing_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/tab.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/database/preference.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:vibration/vibration.dart';
 
@@ -224,10 +225,104 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
+  Future createAlertSendPeer({
+    required String alertName,
+    required String symbol,
+    required int index,
+    bool selectedOne = false,
+    bool selectedTwo = false,
+  }) async {
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": symbol,
+      "alert_name": alertName,
+      "sentiment_spike": selectedOne ? "yes" : "no",
+      "mention_spike": selectedTwo ? "yes" : "no",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.createAlert,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      _analysis?.peersData?[index].isAlertAdded = 1;
+      notifyListeners();
+
+      _extra = (response.extra is Extra ? response.extra as Extra : null);
+      await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+      navigatorKey.currentContext!
+          .read<HomeProvider>()
+          .setTotalsAlerts(response.data['total_alerts']);
+      notifyListeners();
+
+      Navigator.pop(navigatorKey.currentContext!);
+      Navigator.pop(navigatorKey.currentContext!);
+
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
+  }
+
+  Future addToWishListPeer({
+    required String symbol,
+    required bool up,
+    required int index,
+  }) async {
+    showGlobalProgressDialog();
+
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": symbol
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.addWatchlist,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        //
+        _analysis?.peersData?[index].isWatchlistAdded = 1;
+        notifyListeners();
+
+        // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
+
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
+      }
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      closeGlobalProgressDialog();
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      closeGlobalProgressDialog();
+
+      Utils().showLog(e.toString());
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
+  }
+
   Future createAlertSend({
     required String alertName,
     bool selectedOne = false,
     bool selectedTwo = false,
+    int? index,
   }) async {
     Map request = {
       "token":
@@ -245,7 +340,13 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        _tabRes?.isAlertAdded = 1;
+        if (index == null) {
+          _tabRes?.isAlertAdded = 1;
+        }
+        if (index != null) {
+          _analysis?.peersData?[index].isAlertAdded = 1;
+        }
+
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
         navigatorKey.currentContext!
@@ -264,7 +365,7 @@ class StockDetailProviderNew extends ChangeNotifier {
     }
   }
 
-  Future addToWishList() async {
+  Future addToWishList({int? index}) async {
     notifyListeners();
 
     Map request = {
@@ -280,7 +381,12 @@ class StockDetailProviderNew extends ChangeNotifier {
         removeForceLogin: true,
       );
       if (response.status) {
-        _tabRes?.isWatchListAdded = 1;
+        if (index == null) {
+          _tabRes?.isWatchListAdded = 1;
+        }
+        if (index != null) {
+          _analysis?.peersData?[index].isWatchlistAdded = 1;
+        }
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
         navigatorKey.currentContext!

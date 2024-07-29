@@ -426,6 +426,8 @@ class HomeTrendingData {
   final String image;
   final String displayChange;
   final num displayPercentage;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   HomeTrendingData({
     required this.symbol,
@@ -438,6 +440,8 @@ class HomeTrendingData {
     required this.image,
     required this.displayChange,
     required this.displayPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory HomeTrendingData.fromJson(Map<String, dynamic> json) =>
@@ -452,6 +456,8 @@ class HomeTrendingData {
         displayPercentage: json["changesPercentage"],
         // change: json["change"]?.toDouble(),
         image: json["image"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -465,6 +471,8 @@ class HomeTrendingData {
         "price": price,
         // "change": change,
         "image": image,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }
 //

@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -153,6 +155,7 @@ class HomeProvider extends ChangeNotifier {
 
   int totalAlerts = 0;
   int totalWatchList = 0;
+  final AudioPlayer _player = AudioPlayer();
 
   void setSheetText({String? loginText, String? signupText}) {
     loginTxt = loginText;
@@ -178,6 +181,120 @@ class HomeProvider extends ChangeNotifier {
   void open(int index) {
     _openIndex = index;
     notifyListeners();
+  }
+
+  Future createAlertSend({
+    required String alertName,
+    required String symbol,
+    required int index,
+    bool selectedOne = false,
+    bool selectedTwo = false,
+    type,
+  }) async {
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": symbol,
+      "alert_name": alertName,
+      "sentiment_spike": selectedOne ? "yes" : "no",
+      "mention_spike": selectedTwo ? "yes" : "no",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.createAlert,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        if (type == "homeTrending") {
+          _homeTrendingRes?.trending[index].isAlertAdded = 1;
+          notifyListeners();
+        } else if (type == "homeTopGainers") {
+          _homeTopGainerRes?.gainers?[index].isAlertAdded = 1;
+          notifyListeners();
+        } else if (type == "homeTopLosers") {
+          _homeTopLosersRes?.losers?[index].isAlertAdded = 1;
+        } else if (type == "homeMostBoughtMembers") {
+          _mostPurchasedView?[index].isAlertAdded = 1;
+        }
+
+        _extra = (response.extra is Extra ? response.extra as Extra : null);
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
+      Navigator.pop(navigatorKey.currentContext!);
+      Navigator.pop(navigatorKey.currentContext!);
+
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
+  }
+
+  Future addToWishList({
+    required String symbol,
+    required bool up,
+    required int index,
+    type,
+  }) async {
+    showGlobalProgressDialog();
+
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": symbol
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.addWatchlist,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        //
+        if (type == "homeTrending") {
+          _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
+          notifyListeners();
+        } else if (type == "homeTopGainers") {
+          _homeTopGainerRes?.gainers?[index].isWatchlistAdded = 1;
+          notifyListeners();
+        } else if (type == "homeTopLosers") {
+          _homeTopLosersRes?.losers?[index].isWatchlistAdded = 1;
+        } else if (type == "homeMostBoughtMembers") {
+          _mostPurchasedView?[index].isWatchlistAdded = 1;
+        }
+
+        // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
+
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
+      }
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      closeGlobalProgressDialog();
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      closeGlobalProgressDialog();
+
+      Utils().showLog(e.toString());
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
   }
 
   Future refreshData(String? inAppMsgId) async {

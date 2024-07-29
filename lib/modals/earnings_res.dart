@@ -25,6 +25,8 @@ class EarningsRes {
   final dynamic image;
   final dynamic percentageChange;
   final dynamic priceChange;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   EarningsRes({
     this.symbol,
@@ -41,6 +43,8 @@ class EarningsRes {
     this.image,
     this.percentageChange,
     this.priceChange,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory EarningsRes.fromJson(Map<String, dynamic> json) => EarningsRes(
@@ -58,6 +62,8 @@ class EarningsRes {
         image: json["image"],
         percentageChange: json["percentage_change"],
         priceChange: json["price_change"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,5 +81,7 @@ class EarningsRes {
         "image": image,
         "percentage_change": percentageChange,
         "price_change": priceChange,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

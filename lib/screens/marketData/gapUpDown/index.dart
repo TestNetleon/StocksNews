@@ -54,6 +54,7 @@ class GapUpDownStocks extends StatelessWidget {
       body: Stack(
         children: [
           const CommonTabContainer(
+            physics: NeverScrollableScrollPhysics(),
             scrollable: false,
             padding: EdgeInsets.zero,
             tabs: ["Gap Up Stocks", "Gap Down Stocks"],

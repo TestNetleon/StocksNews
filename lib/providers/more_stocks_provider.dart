@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
@@ -8,9 +10,11 @@ import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/breakout_stocks_res.dart';
 import 'package:stocks_news_new/modals/gainers_losers_res.dart';
 import 'package:stocks_news_new/modals/more_stocks_res.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
 class MoreStocksProvider extends ChangeNotifier {
@@ -71,6 +75,8 @@ class MoreStocksProvider extends ChangeNotifier {
   Extra? _extraUpLosers;
   Extra? get extraUpLosers => _extraUpLosers;
 
+  final AudioPlayer _player = AudioPlayer();
+
   void setStatus(status) {
     _status = status;
     notifyListeners();
@@ -89,6 +95,109 @@ class MoreStocksProvider extends ChangeNotifier {
   void setOpenIndexLosers(index) {
     _openIndexLosers = index;
     notifyListeners();
+  }
+
+  Future createAlertSend({
+    required String alertName,
+    required String symbol,
+    required int index,
+    bool selectedOne = false,
+    bool selectedTwo = false,
+    type,
+  }) async {
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": symbol,
+      "alert_name": alertName,
+      "sentiment_spike": selectedOne ? "yes" : "no",
+      "mention_spike": selectedTwo ? "yes" : "no",
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.createAlert,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        if (type == StocksType.gainers) {
+          _gainersLosers?.data?[index].isAlertAdded = 1;
+
+          notifyListeners();
+        } else if (type == StocksType.losers) {
+          _gainersLosers?.data?[index].isAlertAdded = 1;
+          notifyListeners();
+        } else if (type == StocksType.actives) {
+          _gainersLosers?.data?[index].isAlertAdded = 1;
+        }
+
+        _extraUpGainers = response.extra is Extra ? response.extra : null;
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsAlerts(response.data['total_alerts']);
+        notifyListeners();
+      }
+      Navigator.pop(navigatorKey.currentContext!);
+      Navigator.pop(navigatorKey.currentContext!);
+
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
+  }
+
+  Future addToWishList({
+    required String symbol,
+    required bool up,
+    required int index,
+    type,
+  }) async {
+    showGlobalProgressDialog();
+
+    Map request = {
+      "token":
+          navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+      "symbol": symbol
+    };
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.addWatchlist,
+        request: request,
+        showProgress: true,
+        removeForceLogin: true,
+      );
+      if (response.status) {
+        //
+
+        _gainersLosers?.data?[index].isWatchlistAdded = 1;
+        notifyListeners();
+
+        await _player.play(AssetSource(AudioFiles.alertWeathlist));
+
+        navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .setTotalsWatchList(response.data['total_watchlist']);
+      }
+      showErrorMessage(
+          message: response.message,
+          type: response.status ? SnackbarType.info : SnackbarType.error);
+
+      closeGlobalProgressDialog();
+      return ApiResponse(status: response.status);
+    } catch (e) {
+      closeGlobalProgressDialog();
+
+      Utils().showLog(e.toString());
+      // showErrorMessage(message: Const.errSomethingWrong);
+    }
   }
 
   // Future getData(

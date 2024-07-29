@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stocks_news_new/screens/leader_board_new.dart/leader_ship_new.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -10,12 +11,14 @@ class LeaderBoardNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true, canSearch: true),
+      appBar: const AppBarHome(
+        isPopback: true,
+        showTrailing: false,
+        shareClick: true,
+      ),
       body: Padding(
         padding: EdgeInsets.all(Dimen.padding.sp),
-        child: const Column(
-          children: [],
-        ),
+        child: const AffiliateLeaderBoardNew(),
       ),
     );
   }

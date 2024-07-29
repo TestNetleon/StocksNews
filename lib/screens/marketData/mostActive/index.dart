@@ -89,6 +89,7 @@ class MostActiveIndex extends StatelessWidget {
       body: Stack(
         children: [
           const CommonTabContainer(
+            physics: NeverScrollableScrollPhysics(),
             scrollable: true,
             // tabsPadding: EdgeInsets.only(bottom: 10.sp),
             tabs: [

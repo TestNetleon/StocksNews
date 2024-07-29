@@ -25,6 +25,8 @@ class PennyStocksRes {
   final dynamic pe;
   final dynamic mktCap;
   final dynamic watchlistandalertlistCount;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   PennyStocksRes({
     this.symbol,
@@ -40,6 +42,8 @@ class PennyStocksRes {
     this.pe,
     this.mktCap,
     this.watchlistandalertlistCount,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory PennyStocksRes.fromJson(Map<String, dynamic> json) => PennyStocksRes(
@@ -56,6 +60,8 @@ class PennyStocksRes {
         pe: json["pe"],
         mktCap: json["mktCap"],
         watchlistandalertlistCount: json["watchlistandalertlistCount"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
