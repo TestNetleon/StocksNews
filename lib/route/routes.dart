@@ -105,6 +105,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
+import '../providers/notification_settings.dart';
+import '../providers/trading_simulator.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
@@ -586,6 +588,8 @@ class Routes {
       ChangeNotifierProvider(create: (_) => AIProvider()),
       ChangeNotifierProvider(create: (_) => StoreProvider()),
       ChangeNotifierProvider(create: (_) => TradeProviderNew()),
+      ChangeNotifierProvider(create: (_) => NotificationsSettingProvider()),
+      ChangeNotifierProvider(create: (_) => TradingSimulatorProvider()),
     ];
   }
 }

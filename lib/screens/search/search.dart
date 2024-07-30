@@ -28,7 +28,6 @@ class _SearchState extends State<Search> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<SearchProvider>().getSearchDefaults();
       _callAPI();
       FirebaseAnalytics.instance.logEvent(
         name: 'ScreensVisit',
@@ -39,6 +38,13 @@ class _SearchState extends State<Search> {
 
   _callAPI() {
     HomeProvider provider = context.read<HomeProvider>();
+    SearchProvider searchProvider = context.read<SearchProvider>();
+
+    if (searchProvider.topSearch == null ||
+        searchProvider.topSearch?.isEmpty == true) {
+      searchProvider.getSearchDefaults();
+    }
+
     if (provider.homeInsiderRes == null) {
       context.read<HomeProvider>().getHomeInsiderData(null);
     }
@@ -54,7 +60,11 @@ class _SearchState extends State<Search> {
       },
       child: BaseContainer(
         drawer: const BaseDrawer(),
-        appBar: const AppBarHome(isPopback: true, title: "Search"),
+        appBar: const AppBarHome(
+          isPopback: true,
+          title: "Search",
+          canSearch: false,
+        ),
         body: provider.isLoading && provider.topSearch == null
             ? const Loading()
             : SingleChildScrollView(
@@ -63,9 +73,9 @@ class _SearchState extends State<Search> {
                   child: Column(
                     children: [
                       TextInputFieldSearchCommon(
-                        searchFocusNode: provider.searchFocusNode,
+                        // searchFocusNode: provider.searchFocusNode,
                         hintText: "Search symbol, company name or news",
-                        searching: context.watch<SearchProvider>().isLoading,
+                        // searching: context.watch<SearchProvider>().isLoading,
                         onChanged: (text) {},
                         editable: true,
                       ),

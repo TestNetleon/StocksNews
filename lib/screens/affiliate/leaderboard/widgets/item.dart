@@ -4,6 +4,7 @@ import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../modals/affiliate/refer_friend_res.dart';
 import '../../../../widgets/cache_network_image.dart';
@@ -44,10 +45,21 @@ class AffiliateLeaderBoardItem extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: CachedNetworkImagesWidget(
-                data?.image,
-                placeHolder: Images.userPlaceholder,
-              ),
+              child: data?.imageType == "svg"
+                  ? SvgPicture.network(
+                      fit: BoxFit.cover,
+                      data?.image ?? "",
+                      placeholderBuilder: (BuildContext context) => Container(
+                        padding: const EdgeInsets.all(30.0),
+                        child: const CircularProgressIndicator(
+                          color: ThemeColors.accent,
+                        ),
+                      ),
+                    )
+                  : CachedNetworkImagesWidget(
+                      data?.image,
+                      placeHolder: Images.userPlaceholder,
+                    ),
             ),
           ),
           const SpacerHorizontal(width: 5),

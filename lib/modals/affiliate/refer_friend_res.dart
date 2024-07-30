@@ -8,6 +8,7 @@ String affiliateReferResToJson(List<AffiliateReferRes> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AffiliateReferRes {
+  final String? imageType;
   final String? displayName;
   final String? name;
   final String? image;
@@ -20,6 +21,7 @@ class AffiliateReferRes {
 
   AffiliateReferRes({
     this.displayName,
+    this.imageType,
     this.name,
     this.image,
     this.email,
@@ -38,6 +40,7 @@ class AffiliateReferRes {
         dbId: json["db_id"],
         email: json["email"],
         phone: json["phone"],
+        imageType: json["image_type"],
         points: json["points"],
         status: json["status"],
       );
@@ -46,6 +49,7 @@ class AffiliateReferRes {
         "display_name": displayName,
         "name": name,
         "image": image,
+        "image_type": imageType,
         "email": email,
         "db_id": dbId,
         "phone": phone,

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+
+import '../../../providers/notification_settings.dart';
 
 class NotificationSetting extends StatefulWidget {
   const NotificationSetting({super.key});
@@ -13,36 +16,10 @@ class NotificationSetting extends StatefulWidget {
 }
 
 class _NotificationSettingState extends State<NotificationSetting> {
-  final List<NotificationTurn> _data = [
-    NotificationTurn(
-      label: "Get Alerts",
-      isOn: true,
-    ),
-    NotificationTurn(
-      label: "Blog",
-      isOn: true,
-    ),
-    NotificationTurn(
-      label: "News",
-      isOn: true,
-    ),
-    NotificationTurn(
-      label: "General Notification",
-      isOn: true,
-    ),
-    NotificationTurn(
-      label: "Email",
-      isOn: true,
-    ),
-  ];
-
-  void onChange(index) {
-    _data[index].isOn = !_data[index].isOn;
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
+    NotificationsSettingProvider provider =
+        context.watch<NotificationsSettingProvider>();
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
@@ -53,16 +30,35 @@ class _NotificationSettingState extends State<NotificationSetting> {
         padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
           itemBuilder: (context, index) {
+            if (index == 0) {
+              return Column(
+                children: [
+                  NotificationSettingItem(
+                    label: provider.allOn
+                        ? "Turn off all notifications"
+                        : "Turn on all notifications",
+                    isOn: provider.allOn,
+                    onChanged: (value) => provider.changeAll(),
+                  ),
+                  SpacerVertical(height: 10),
+                  NotificationSettingItem(
+                    label: provider.data[index].label,
+                    isOn: provider.data[index].isOn,
+                    onChanged: (value) => provider.open(index),
+                  ),
+                ],
+              );
+            }
             return NotificationSettingItem(
-              label: _data[index].label,
-              isOn: _data[index].isOn,
-              onChanged: (value) => onChange(index),
+              label: provider.data[index].label,
+              isOn: provider.data[index].isOn,
+              onChanged: (value) => provider.open(index),
             );
           },
           separatorBuilder: (context, index) {
             return SpacerVertical(height: 10);
           },
-          itemCount: _data.length,
+          itemCount: provider.data.length,
         ),
       ),
     );

@@ -18,8 +18,6 @@ import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 import 'package:stocks_news_new/widgets/theme_input_field.dart';
 
-import '../../../route/my_app.dart';
-
 String formatBalance(num balance) {
   final formatter = NumberFormat('#,##0.00');
   return formatter.format(balance);

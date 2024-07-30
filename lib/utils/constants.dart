@@ -75,6 +75,7 @@ bool showMembership = true;
 bool signUpVisible = false;
 // this is to set default country code for phone number
 String? geoCountryCode;
+bool isSVG = false;
 
 // String? clientId;
 // String? secret;

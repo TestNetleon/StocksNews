@@ -8,6 +8,7 @@ import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../widgets/cache_network_image.dart';
@@ -168,10 +169,22 @@ class AffiliateReferItem extends StatelessWidget {
                   padding: const EdgeInsets.all(5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                    child: CachedNetworkImagesWidget(
-                      data?.image,
-                      placeHolder: Images.userPlaceholder,
-                    ),
+                    child: data?.imageType == "svg"
+                        ? SvgPicture.network(
+                            fit: BoxFit.cover,
+                            data?.image ?? "",
+                            placeholderBuilder: (BuildContext context) =>
+                                Container(
+                              padding: const EdgeInsets.all(30.0),
+                              child: const CircularProgressIndicator(
+                                color: ThemeColors.accent,
+                              ),
+                            ),
+                          )
+                        : CachedNetworkImagesWidget(
+                            data?.image,
+                            placeHolder: Images.userPlaceholder,
+                          ),
                   ),
                 ),
                 const SpacerHorizontal(width: 5),

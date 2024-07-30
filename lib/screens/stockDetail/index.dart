@@ -18,9 +18,11 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+// import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_image_view.dart';
 import '../../socket/socket.dart';
 import '../../utils/constants.dart';
+// import '../simulator/buyAndSell/index.dart';
 import '../stockDetails/widgets/AlertWatchlist/add_alert_watchlist.dart';
 import 'widgets/chart/chart.dart';
 import 'widgets/dividends/dividends.dart';
@@ -227,7 +229,16 @@ class _StockDetailState extends State<StockDetail> {
                 ),
               ),
             ),
-            // const SdTrade(),
+            // ThemeButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => BuyAndSellIndex(),
+            //       ),
+            //     );
+            //   },
+            // ),
             Container(
               decoration: BoxDecoration(
                 color: ThemeColors.background.withOpacity(0.8),

@@ -140,6 +140,7 @@ class UserProvider extends ChangeNotifier {
     _user = user;
     _status = Status.loaded;
     Preference.saveUser(_user);
+    isSVG = isSvgFromUrl(user.image);
     shareUri = await DynamicLinkService.instance.getDynamicLink();
     // shareUri =
     //     await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
@@ -168,6 +169,7 @@ class UserProvider extends ChangeNotifier {
     if (countryCode != null) _user?.phoneCode = countryCode;
 
     Preference.saveUser(_user);
+    isSVG = isSvgFromUrl(_user?.image);
     shareUri = await DynamicLinkService.instance.getDynamicLink();
     // shareUri =
     //     await DynamicLinkService.instance.getDynamicLink(_user?.referralCode);
@@ -379,6 +381,7 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        isSVG = isSvgFromUrl(_user?.image);
 
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         Preference.setShowIntro(false);
@@ -488,6 +491,8 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        isSVG = isSvgFromUrl(_user?.image);
+
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         // shareUri = await DynamicLinkService.instance
         //     .getDynamicLink(_user?.referralCode);
@@ -730,6 +735,8 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        isSVG = await isSvgFromUrl(_user?.image);
+
         Preference.setShowIntro(false);
         Preference.clearReferral();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
@@ -774,6 +781,8 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
+        isSVG = isSvgFromUrl(user?.image);
+
         navigatorKey.currentContext!.read<HomeProvider>().getHomeSlider();
         shareUri = await DynamicLinkService.instance.getDynamicLink();
         // shareUri = await DynamicLinkService.instance
@@ -838,6 +847,7 @@ class UserProvider extends ChangeNotifier {
         // Navigator.pop(navigatorKey.currentContext!);
         // Preference.logout();
         clearUser();
+        isSVG = false;
         // provider.setTotalsAlerts(0);
         // provider.setTotalsWatchList(0);
         // DatabaseHelper helper = DatabaseHelper();

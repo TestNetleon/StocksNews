@@ -124,7 +124,7 @@ class _TextInputFieldSearchCommonState
               children: [
                 TextField(
                   cursorColor: ThemeColors.white,
-                  focusNode: widget.searchFocusNode,
+                  // focusNode: widget.searchFocusNode,
                   autocorrect: false,
                   controller: controller,
                   maxLength: widget.maxLength,
@@ -182,7 +182,7 @@ class _TextInputFieldSearchCommonState
                   right: 10.sp,
                   top: 10.sp,
                   child: Visibility(
-                    visible: !firstTime && widget.searching,
+                    visible: !firstTime && provider.isLoadingS,
                     child: SizedBox(
                       width: 20,
                       height: 20,
@@ -328,7 +328,7 @@ class _TextInputFieldSearchCommonState
             ),
             Visibility(
               visible:
-                  provider.dataNew == null && provider.status == Status.loaded,
+                  provider.dataNew == null && provider.statusS == Status.loaded,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 6.sp),
                 child: Column(

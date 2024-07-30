@@ -24,7 +24,10 @@ class NewMembershipReviews extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10),
             child: Text(
               'Trusted Ratings and Reviews',
-              style: stylePTSansBold(fontSize: 18, color: Colors.white),
+              style: styleSansBold(
+                color: Colors.white,
+                fontSize: 22,
+              ),
             ),
           ),
           const SpacerVertical(height: 10),

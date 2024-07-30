@@ -61,8 +61,14 @@ class _NotificationsContainerState extends State<NotificationsContainer> {
     UserRes? res = context.watch<UserProvider>().user;
 
     return BaseContainer(
-      drawer: const BaseDrawer(resetIndex: true),
-      appBar: const AppBarHome(isPopback: true, title: "Notifications"),
+      drawer: const BaseDrawer(
+        resetIndex: true,
+      ),
+      appBar: const AppBarHome(
+        isPopback: true,
+        title: "Notifications",
+        showTrailing: false,
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding.sp, 0),
         child: Column(

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -45,11 +46,22 @@ class AppBarHome extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _AppBarHomeState extends State<AppBarHome> {
+  // bool isSVG = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // _isSVG();
+    });
   }
+
+  // Future _isSVG() async {
+  //   UserProvider provider = context.read<UserProvider>();
+  //   isSVG = await isSvgFromUrl(provider.user?.image ?? "");
+  //   Utils().showLog("is SVG? $isSVG");
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -146,15 +158,30 @@ class _AppBarHomeState extends State<AppBarHome> {
                           context.read<SearchProvider>().clearSearch();
                           Scaffold.of(context).openDrawer();
                         },
-                        icon: ClipOval(
-                          child: CachedNetworkImagesWidget(
-                            provider.user?.image,
-                            height: 24,
-                            width: 24,
-                            showLoading: true,
-                            placeHolder: Images.userPlaceholder,
-                          ),
-                        )
+                        icon: ClipRRect(
+                          borderRadius: BorderRadius.circular(90),
+                          child: isSVG
+                              ? SvgPicture.network(
+                                  fit: BoxFit.cover,
+                                  height: 24,
+                                  width: 24,
+                                  provider.user?.image ?? "",
+                                  placeholderBuilder: (BuildContext context) =>
+                                      Container(
+                                    padding: const EdgeInsets.all(30.0),
+                                    child: const CircularProgressIndicator(
+                                      color: ThemeColors.accent,
+                                    ),
+                                  ),
+                                )
+                              : CachedNetworkImagesWidget(
+                                  provider.user?.image,
+                                  height: 24,
+                                  width: 24,
+                                  showLoading: true,
+                                  placeHolder: Images.userPlaceholder,
+                                ),
+                        ),
                         // icon: ProfileImage(
                         //   url: provider.user?.image,
                         //   showCameraIcon: false,
@@ -168,7 +195,7 @@ class _AppBarHomeState extends State<AppBarHome> {
                         //   height: 18,
                         //   width: 18,
                         // ),
-                        ),
+                      ),
                 // Title
                 Expanded(
                   child: Visibility(

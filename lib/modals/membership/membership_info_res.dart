@@ -14,6 +14,11 @@ class MembershipInfoRes {
   final Plan plan;
   final List<Testimonial> testimonials;
   final List<FaQsRes> faq;
+  final String? newTitle;
+  final List<String>? newFeatures;
+  final String? selectTitle;
+  final String? selectSubTitle;
+  final List<Plan>? plans;
 
   MembershipInfoRes({
     required this.title,
@@ -21,6 +26,11 @@ class MembershipInfoRes {
     required this.plan,
     required this.testimonials,
     required this.faq,
+    this.newTitle,
+    this.newFeatures,
+    this.selectTitle,
+    this.selectSubTitle,
+    this.plans,
   });
 
   factory MembershipInfoRes.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +42,15 @@ class MembershipInfoRes {
           json["testimonials"].map((x) => Testimonial.fromJson(x)),
         ),
         faq: List<FaQsRes>.from(json["faq"].map((x) => FaQsRes.fromJson(x))),
+        newTitle: json["new_title"],
+        newFeatures: json["new_features"] == null
+            ? []
+            : List<String>.from(json["new_features"]!.map((x) => x)),
+        selectTitle: json["select_title"],
+        selectSubTitle: json["select_sub_title"],
+        plans: json["plans"] == null
+            ? []
+            : List<Plan>.from(json["plans"]!.map((x) => Plan.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,23 +59,43 @@ class MembershipInfoRes {
         "plan": plan.toJson(),
         "testimonials": List<dynamic>.from(testimonials.map((x) => x.toJson())),
         "faq": List<dynamic>.from(faq.map((x) => x.toJson())),
+        "new_title": newTitle,
+        "new_features": newFeatures == null
+            ? []
+            : List<dynamic>.from(newFeatures!.map((x) => x)),
+        "select_title": selectTitle,
+        "select_sub_title": selectSubTitle,
+        "plans": plans == null
+            ? []
+            : List<dynamic>.from(plans!.map((x) => x.toJson())),
       };
 }
 
 class Plan {
   final String name;
   final String price;
+  final String? type;
+  final String? billed;
+  final String? description;
+  bool selected;
   final List<String>? features;
 
   Plan({
     required this.name,
     required this.price,
+    this.description,
+    this.type,
+    this.billed,
+    this.selected = false,
     this.features,
   });
 
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
         name: json["name"],
         price: json["price"],
+        description: json["description"],
+        type: json["type"],
+        billed: json["billed"],
         features: json["features"] == null
             ? []
             : List<String>.from(json["features"]!.map((x) => x)),
@@ -65,6 +104,9 @@ class Plan {
   Map<String, dynamic> toJson() => {
         "name": name,
         "price": price,
+        "description": description,
+        "type": type,
+        "billed": billed,
         "features":
             features == null ? [] : List<dynamic>.from(features!.map((x) => x)),
       };

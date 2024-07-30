@@ -130,7 +130,7 @@ class _SdTypeBuySellState extends State<SdTypeBuySell> {
   int _keyCounter = 0;
   String _previousText = "";
 
-  String text = "";
+  // String text = "";
   @override
   void initState() {
     super.initState();
