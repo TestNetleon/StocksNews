@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../providers/leaderboard.dart';
 import '../../../../utils/theme.dart';
@@ -52,8 +53,20 @@ class LeaderBoardTopItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(200),
                   child: CircleAvatar(
                     radius: index == 1 || index == 2 ? 40 : 60,
-                    child: CachedNetworkImagesWidget(
-                        provider.leaderBoard?[index].image),
+                    child: provider.leaderBoard?[index].imageType == "svg"
+                        ? SvgPicture.network(
+                            fit: BoxFit.cover,
+                            provider.leaderBoard?[index].image ?? "",
+                            placeholderBuilder: (BuildContext context) =>
+                                Container(
+                              padding: const EdgeInsets.all(30.0),
+                              child: const CircularProgressIndicator(
+                                color: ThemeColors.accent,
+                              ),
+                            ),
+                          )
+                        : CachedNetworkImagesWidget(
+                            provider.leaderBoard?[index].image),
                   ),
                 ),
               ),

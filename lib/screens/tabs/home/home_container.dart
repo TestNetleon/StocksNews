@@ -131,34 +131,6 @@ class HomeContainer extends StatelessWidget {
                       child: const ReferApp(),
                     ),
                   ),
-                  // Container(
-                  //   margin: const EdgeInsets.fromLTRB(
-                  //     Dimen.padding,
-                  //     Dimen.homeSpacing,
-                  //     Dimen.padding,
-                  //     0,
-                  //   ),
-                  //   padding: EdgeInsets.all(20),
-                  //   decoration: BoxDecoration(
-                  //       color: ThemeColors.accent,
-                  //       borderRadius: BorderRadius.circular(12)),
-                  //   child: GestureDetector(
-                  //     onTap: () {
-                  //       Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //           builder: (_) => const StockAnalysis(),
-                  //         ),
-                  //       );
-
-                  //       // showMaintenanceDialog(
-                  //       //     title: "Under Maintenance",
-                  //       //     description: "We will be back shortly",
-                  //       //     onClick: () {});
-                  //     },
-                  //     child: const Text('Click me'),
-                  //   ),
-                  // ),
                   Visibility(
                     visible:
                         provider.extraMostPopular?.showMostPurchased == true,
@@ -268,30 +240,15 @@ class HomeContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   margin: const EdgeInsets.only(top: Dimen.homeSpacing),
-                  //   child: const HomeMyAlerts(),
-                  // ),
-                  // Container(
-                  //   margin: const EdgeInsets.only(top: Dimen.homeSpacing),
-                  //   child: const FeaturedStocksIndex(),
-                  // ),
                   Visibility(
                     visible: provider.extra?.showPortfolio ?? false,
                     child: Container(
                       margin: const EdgeInsets.only(
                           top: Dimen.homeSpacing, left: 15, right: 15),
-                      // color: Colors.red,
                       child: HomePartialLoading(
                         loading: provider.isLoadingPortfolio,
                         loadingWidget: Container(
                           height: 110,
-                          // margin: const EdgeInsets.fromLTRB(
-                          //   0,
-                          //   20,
-                          //   0,
-                          //   Dimen.padding,
-                          // ),
                           width: double.infinity,
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),

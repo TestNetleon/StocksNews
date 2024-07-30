@@ -27,6 +27,11 @@ class SearchProvider extends ChangeNotifier {
   String? get error => _error ?? Const.errSomethingWrong;
   final FocusNode searchFocusNode = FocusNode();
 
+  Status _statusS = Status.ideal;
+  Status get statusS => _statusS;
+
+  bool get isLoadingS => _statusS == Status.loading;
+
   SearchNewRes? _dataNew;
   SearchNewRes? get dataNew => _dataNew;
 
@@ -38,8 +43,14 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setStatusS(status) {
+    _statusS = status;
+    notifyListeners();
+  }
+
   void clearSearch() {
     _status = Status.ideal;
+    _statusS = Status.ideal;
     _data = null;
     _dataNew = null;
     notifyListeners();
@@ -78,7 +89,7 @@ class SearchProvider extends ChangeNotifier {
   }
 
   Future searchSymbolsAndNews(request, {showProgress = false}) async {
-    setStatus(Status.loading);
+    setStatusS(Status.loading);
     try {
       ApiResponse response = await apiRequest(
         url: Apis.searchWithNews,
@@ -91,10 +102,11 @@ class SearchProvider extends ChangeNotifier {
       } else {
         _dataNew = null;
       }
-      setStatus(Status.loaded);
+      setStatusS(Status.loaded);
+      Utils().showLog("STATUS => $_statusS");
     } catch (e) {
       Utils().showLog(e.toString());
-      setStatus(Status.loaded);
+      setStatusS(Status.loaded);
     }
   }
 

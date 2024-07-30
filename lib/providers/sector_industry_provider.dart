@@ -106,7 +106,7 @@ class SectorIndustryProvider extends ChangeNotifier {
       );
       if (response.status) {
         //
-        _data?.data?[index].isWatchlistAdded = 1;
+        _data?.data[index].isWatchlistAdded = 1;
         notifyListeners();
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;

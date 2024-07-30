@@ -64,9 +64,7 @@ class RevenueCatService {
         closeGlobalProgressDialog();
 
         PaywallResult result = await RevenueCatUI.presentPaywall(
-          offering: offerings.getOffering(
-            type ?? 'access',
-          ),
+          offering: offerings.getOffering(type ?? 'access'),
         );
 
         await _handlePaywallResult(result,

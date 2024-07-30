@@ -1001,3 +1001,40 @@ void handleNavigation({
     onDeepLinking = false;
   });
 }
+
+// Future<bool> isSvgFromUrl(String? url) async {
+//   try {
+//     if (url == null || url == '') {
+//       return false;
+//     } else {
+//       final response = await http.get(Uri.parse(url));
+//       if (response.statusCode == 200) {
+//         Uint8List bytes = response.bodyBytes;
+//         String content = String.fromCharCodes(bytes);
+//         if (content.startsWith('<svg')) {
+//           return true;
+//         }
+//       }
+//     }
+//   } catch (e) {
+//     //
+//     return false;
+//   }
+//   return false;
+// }
+bool isSvgFromUrl(String? url) {
+  try {
+    if (url == null || url == '') {
+      return false;
+    } else {
+      if (url.contains("stock-news-images")) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  } catch (e) {
+    //
+    return false;
+  }
+}

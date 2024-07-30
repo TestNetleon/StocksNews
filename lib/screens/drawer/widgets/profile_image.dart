@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class ProfileImage extends StatelessWidget {
   final double imageSize;
@@ -12,6 +13,7 @@ class ProfileImage extends StatelessWidget {
   final IconData? icon;
   final bool showCameraIcon;
   final bool roundImage;
+  // final bool isSVG;
 
   const ProfileImage({
     super.key,
@@ -20,6 +22,7 @@ class ProfileImage extends StatelessWidget {
     this.onTap,
     this.url,
     this.icon,
+    // this.isSVG = false,
     this.showCameraIcon = true,
     this.roundImage = true,
   });
@@ -36,13 +39,24 @@ class ProfileImage extends StatelessWidget {
                       border: Border.all(color: ThemeColors.white, width: 3),
                       shape: BoxShape.circle),
                   child: ClipOval(
-                    child: CachedNetworkImagesWidget(
-                      url,
-                      height: imageSize,
-                      width: imageSize,
-                      showLoading: true,
-                      placeHolder: Images.userPlaceholder,
-                    ),
+                    child: isSVG
+                        ? SvgPicture.network(
+                            height: imageSize,
+                            width: imageSize,
+                            url ?? "",
+                            placeholderBuilder: (BuildContext context) =>
+                                Container(
+                              padding: const EdgeInsets.all(30.0),
+                              child: const CircularProgressIndicator(),
+                            ),
+                          )
+                        : CachedNetworkImagesWidget(
+                            url,
+                            height: imageSize,
+                            width: imageSize,
+                            showLoading: true,
+                            placeHolder: Images.userPlaceholder,
+                          ),
                   ),
                 )
               : Container(
@@ -50,13 +64,24 @@ class ProfileImage extends StatelessWidget {
                     border: Border.all(color: ThemeColors.white, width: 3),
                   ),
                   // padding: EdgeInsets.all(3),
-                  child: CachedNetworkImagesWidget(
-                    url,
-                    height: imageSize,
-                    width: imageSize,
-                    showLoading: true,
-                    placeHolder: Images.userPlaceholder,
-                  ),
+                  child: isSVG
+                      ? SvgPicture.network(
+                          height: imageSize,
+                          width: imageSize,
+                          url ?? "",
+                          placeholderBuilder: (BuildContext context) =>
+                              Container(
+                            padding: const EdgeInsets.all(30.0),
+                            child: const CircularProgressIndicator(),
+                          ),
+                        )
+                      : CachedNetworkImagesWidget(
+                          url,
+                          height: imageSize,
+                          width: imageSize,
+                          showLoading: true,
+                          placeHolder: Images.userPlaceholder,
+                        ),
                 ),
         ),
         Positioned(

@@ -5,6 +5,8 @@ import 'package:stocks_news_new/providers/membership.dart';
 import 'package:stocks_news_new/screens/membership/store/faq_item.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
+import '../../../utils/theme.dart';
+
 class NewMembershipFaq extends StatefulWidget {
   const NewMembershipFaq({super.key});
 
@@ -23,17 +25,19 @@ class _NewMembershipFaqState extends State<NewMembershipFaq> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(12),
           child: Text(
             'Frequently asked question',
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            style: styleSansBold(
+              color: Colors.white,
+              fontSize: 22,
+            ),
           ),
         ),
         // const SpacerVertical(height: 10),
         Container(
-          color: Colors.black,
+          // color: Colors.black,
           // color: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: ListView.separated(

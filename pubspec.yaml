@@ -192,5 +192,6 @@ flutter:
     - family: PTSans
       fonts:
         - asset: assets/fonts/ptSans/PTSans-Regular.ttf
+        
         - asset: assets/fonts/ptSans/PTSans-Bold.ttf
           weight: 700

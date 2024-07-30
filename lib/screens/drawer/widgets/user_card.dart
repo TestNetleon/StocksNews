@@ -25,12 +25,13 @@ class UserCard extends StatefulWidget {
 
 class _UserCardState extends State<UserCard> {
   PurchasesConfiguration? configuration;
-
+  // bool isSVG = false;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _callAPI();
+      // _isSVG();
     });
   }
 
@@ -42,6 +43,13 @@ class _UserCardState extends State<UserCard> {
       provider.getReferData(checkAppUpdate: false);
     }
   }
+
+  // Future _isSVG() async {
+  //   UserProvider provider = context.read<UserProvider>();
+  //   isSVG = await isSvgFromUrl(provider.user?.image ?? "");
+  //   Utils().showLog("is SVG? $isSVG");
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +79,7 @@ class _UserCardState extends State<UserCard> {
                         behavior: HitTestBehavior.translucent,
                         onTap: widget.onTap,
                         child: ProfileImage(
+                          // isSVG: isSVG,
                           url: userProvider.user?.image,
                           showCameraIcon: false,
                           imageSize: 70,

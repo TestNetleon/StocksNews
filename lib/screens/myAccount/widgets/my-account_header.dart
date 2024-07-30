@@ -39,8 +39,22 @@ class MyAccountHeader extends StatefulWidget {
 class _MyAccountHeaderState extends State<MyAccountHeader> {
   final picker = ImagePicker();
   File? _image;
-
+  // bool isSVG = false;
   String appSignature = "";
+
+  @override
+  void initState() {
+    super.initState();
+    // _isSVG();
+  }
+
+  // Future _isSVG() async {
+  //   UserProvider provider = context.read<UserProvider>();
+  //   isSVG = await isSvgFromUrl(provider.user?.image ?? "");
+  //   Utils().showLog("is SVG? $isSVG");
+  //   setState(() {});
+  // }
+
   void _selectOption() {
     // showPlatformBottomSheet(
     //     padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 7.sp),
@@ -163,6 +177,7 @@ class _MyAccountHeaderState extends State<MyAccountHeader> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ProfileImage(
+                      // isSVG: isSVG,
                       imageSize: 95,
                       cameraSize: 19,
                       onTap: _selectOption,
