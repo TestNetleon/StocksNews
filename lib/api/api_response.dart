@@ -117,6 +117,7 @@ class Extra {
   final String? storeTitle;
   final String? storeSubTitle;
   final bool? isOldApp;
+  final bool? notificationSetting;
 
   Extra({
     this.storeTitle,
@@ -192,6 +193,7 @@ class Extra {
     this.featuredTitle,
     this.watchlistTitle,
     this.isOldApp,
+    this.notificationSetting,
   });
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
@@ -325,6 +327,7 @@ class Extra {
         showWhatWeDo: json['show_what_we_do'],
         showFAQ: json['show_faq'],
         isOldApp: json['old_app'],
+        notificationSetting: json['show_notification_setting'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -415,6 +418,7 @@ class Extra {
         "show_what_we_do": showWhatWeDo,
         "show_faq": showFAQ,
         "old_app": isOldApp,
+        "show_notification_setting": notificationSetting,
       };
 }
 
