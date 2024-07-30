@@ -20,6 +20,8 @@ class HomeAlertsRes {
   final num changesPercentage;
   final num previousClose;
   List<Chart>? chart;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   HomeAlertsRes({
     required this.symbol,
@@ -30,6 +32,8 @@ class HomeAlertsRes {
     required this.changesPercentage,
     required this.previousClose,
     this.chart,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory HomeAlertsRes.fromJson(Map<String, dynamic> json) => HomeAlertsRes(
@@ -43,6 +47,8 @@ class HomeAlertsRes {
         chart: json["chart"] == null
             ? []
             : List<Chart>.from(json["chart"]!.map((x) => Chart.fromJson(x))),
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,6 +62,8 @@ class HomeAlertsRes {
         "chart": chart == null
             ? []
             : List<dynamic>.from(chart!.map((x) => x.toJson())),
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }
 

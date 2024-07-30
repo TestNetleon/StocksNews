@@ -19,6 +19,8 @@ class GapUpRes {
   final dynamic volume;
   final dynamic image;
   final dynamic changesPercentage;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
   // final dynamic change;
 
   GapUpRes({
@@ -34,6 +36,8 @@ class GapUpRes {
     required this.volume,
     required this.image,
     required this.changesPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
     // required this.change,
   });
 
@@ -49,6 +53,8 @@ class GapUpRes {
         image: json["image"],
         changesPercentage: json["changesPercentage"],
         change: json["change"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +69,7 @@ class GapUpRes {
         "image": image,
         "changesPercentage": changesPercentage,
         "change": change,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

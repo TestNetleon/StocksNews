@@ -83,6 +83,7 @@ class Insider extends StatelessWidget {
                     : ScreenTitle(
                         // title: "Insider Trading",
                         subTitle: provider.textRes?.subTitle,
+                        dividerPadding: EdgeInsets.only(bottom: 5),
                         // optionalWidget: GestureDetector(
                         //   onTap: _filterClick,
                         //   child: const Icon(

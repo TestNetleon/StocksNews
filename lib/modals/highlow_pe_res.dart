@@ -21,6 +21,8 @@ class HIghLowPeRes {
   final dynamic avgVolume;
   final dynamic image;
   final dynamic pegRatio;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   HIghLowPeRes({
     this.symbol,
@@ -33,6 +35,8 @@ class HIghLowPeRes {
     this.avgVolume,
     this.image,
     this.pegRatio,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory HIghLowPeRes.fromJson(Map<String, dynamic> json) => HIghLowPeRes(
@@ -46,6 +50,8 @@ class HIghLowPeRes {
         avgVolume: json["avgVolume"],
         image: json["image"],
         pegRatio: json["pegRatio"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +65,8 @@ class HIghLowPeRes {
         "avgVolume": avgVolume,
         "image": image,
         "pegRatio": pegRatio,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }
 

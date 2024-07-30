@@ -24,6 +24,8 @@ enum StockStates { sector, industry }
 
 enum InsiderTradingName { company, reporter }
 
+enum TypeTrade { shares, dollar }
+
 enum NotificationType {
   dashboard,
   newsDetail,
@@ -194,11 +196,12 @@ class Images {
   static const String objective = "assets/images/objective.png";
   static const String transferMoney = "assets/images/transfer-money.png";
   static const String economic = "assets/images/ecom.png";
-
   static const String tickS = "assets/images/tick.png";
   static const String reportS = "assets/images/report.png";
   static const String bellS = "assets/images/bell.png";
   static const String diamondS = "assets/images/diamond.png";
+  static const String logoGIF = "assets/images/StocksNews_Logo.gif";
+  static const String splashLogoGIF = "assets/images/StocksNews_GIF.gif";
 
   //share
   static const twitter = "assets/images/twitter_share.png";

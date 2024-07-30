@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/home_res.dart';
 import 'package:stocks_news_new/providers/home_provider.dart';
@@ -21,19 +22,21 @@ class HomeTrending extends StatelessWidget {
         CustomReadMoreText(
           text: provider.homeTrendingRes?.text?.trending ?? "",
         ),
-        ListView.separated(
-          itemCount: provider.homeTrendingRes?.trending.length ?? 0,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          padding: EdgeInsets.only(top: 12.sp),
-          itemBuilder: (context, index) {
-            HomeTrendingData trending =
-                provider.homeTrendingRes!.trending[index];
-            return StocksItemTrending(trending: trending);
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const SpacerVertical(height: 12);
-          },
+        SlidableAutoCloseBehavior(
+          child: ListView.separated(
+            itemCount: provider.homeTrendingRes?.trending.length ?? 0,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.only(top: 12.sp),
+            itemBuilder: (context, index) {
+              HomeTrendingData trending =
+                  provider.homeTrendingRes!.trending[index];
+              return StocksItemTrending(trending: trending, index: index);
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const SpacerVertical(height: 12);
+            },
+          ),
         ),
         // Divider(
         //   color: ThemeColors.greyBorder,

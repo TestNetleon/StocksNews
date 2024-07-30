@@ -21,6 +21,8 @@ class DividendsRes {
   final dynamic image;
   final dynamic percentageChange;
   final dynamic priceChange;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   DividendsRes({
     this.symbol,
@@ -37,6 +39,8 @@ class DividendsRes {
     this.image,
     this.percentageChange,
     this.priceChange,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory DividendsRes.fromJson(Map<String, dynamic> json) => DividendsRes(
@@ -54,6 +58,8 @@ class DividendsRes {
         image: json["image"],
         percentageChange: json["percentage_change"],
         priceChange: json["price_change"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +77,7 @@ class DividendsRes {
         "image": image,
         "percentage_change": percentageChange,
         "price_change": priceChange,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

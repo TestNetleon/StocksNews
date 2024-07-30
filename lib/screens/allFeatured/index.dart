@@ -35,7 +35,7 @@ class _AllFeaturedIndexState extends State<AllFeaturedIndex> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           Dimen.itemSpacing,
-          Dimen.itemSpacing,
+          0,
           Dimen.itemSpacing,
           0,
         ),

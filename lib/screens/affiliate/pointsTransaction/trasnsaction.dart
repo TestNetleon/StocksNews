@@ -75,7 +75,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
-                vertical: 10,
+                vertical: 0,
               ),
               itemBuilder: (context, index) {
                 if (index == 0) {
@@ -84,6 +84,7 @@ class _AffiliateTransactionState extends State<AffiliateTransaction> {
                       ScreenTitle(
                         // title: provider.extraNew?.title.toString() ?? "",
                         subTitle: provider.extraNew?.subTitle.toString() ?? "",
+                        dividerPadding: EdgeInsets.only(bottom: 5),
                       ),
                       const PointsSummary(fromDrawer: true),
                       const SpacerVertical(height: 10),

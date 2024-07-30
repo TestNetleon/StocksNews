@@ -45,6 +45,8 @@ class SectorIndustryData {
   final num change;
   final num changesPercentage;
   final String? formattedChange;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   SectorIndustryData({
     // required this.id,
@@ -55,6 +57,8 @@ class SectorIndustryData {
     required this.change,
     required this.changesPercentage,
     this.formattedChange,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory SectorIndustryData.fromJson(Map<String, dynamic> json) =>
@@ -67,6 +71,8 @@ class SectorIndustryData {
         change: json["change"],
         changesPercentage: json["changesPercentage"],
         formattedChange: json["formatted_change"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -78,5 +84,7 @@ class SectorIndustryData {
         "change": change,
         "changesPercentage": changesPercentage,
         "formatted_change": formattedChange,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

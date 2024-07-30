@@ -114,6 +114,7 @@ class LowPriceStocksData extends StatelessWidget {
     return Stack(
       children: [
         CommonTabContainer(
+          physics: const NeverScrollableScrollPhysics(),
           onChange: (index) {
             provider.resetFilter();
             provider.tabChange(index);

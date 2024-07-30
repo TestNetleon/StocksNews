@@ -133,7 +133,7 @@ class BlogDetailContainer extends StatelessWidget {
         Padding(
           padding: EdgeInsets.fromLTRB(
             Dimen.padding.sp,
-            Dimen.padding.sp,
+            0,
             Dimen.padding.sp,
             0,
           ),

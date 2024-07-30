@@ -48,6 +48,7 @@ class FiftyTwoWeeksIndex extends StatelessWidget {
       body: Stack(
         children: [
           const CommonTabContainer(
+            physics: NeverScrollableScrollPhysics(),
             scrollable: false,
             // tabsPadding: EdgeInsets.only(bottom: 10.sp),
             tabs: ["52 Week Highs", "52 Week Lows"],

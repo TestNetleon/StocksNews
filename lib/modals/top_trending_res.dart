@@ -43,7 +43,7 @@ class TopTrendingDataRes {
   final String? price;
   final String? image;
   final String name;
-  final num? change;
+  final dynamic change;
   final num? changePercentage;
 
   final String? cap;
@@ -74,7 +74,7 @@ class TopTrendingDataRes {
           price: json["price"],
           image: json["image"],
           name: json["name"],
-          change: json["change"]?.toDouble(),
+          change: json["change"],
           cap: json["cap"],
           rank: json["rank"],
           sentiment: json["sentiment"],

@@ -48,6 +48,7 @@ class TopTrendingContainer extends StatelessWidget {
         // padding: EdgeInsets.fromLTRB(
         //     Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
         child: CommonTabContainer(
+          physics: const NeverScrollableScrollPhysics(),
           scrollable: true,
           // onChange: (index) =>
           //     provider.onTabChanged(index: index, showProgress: false),

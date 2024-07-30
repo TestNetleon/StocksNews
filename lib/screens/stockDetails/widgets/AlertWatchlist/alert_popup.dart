@@ -1,9 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/all_stocks_provider.dart';
+import 'package:stocks_news_new/providers/dividends_provider.dart';
+import 'package:stocks_news_new/providers/dow_30_provider.dart';
+import 'package:stocks_news_new/providers/earnings_provider.dart';
+import 'package:stocks_news_new/providers/featured_ticker.dart';
+import 'package:stocks_news_new/providers/fifty_two_weeks_high_provider.dart';
+import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
+import 'package:stocks_news_new/providers/gap_down_provider.dart';
+import 'package:stocks_news_new/providers/gap_up_provider.dart';
+import 'package:stocks_news_new/providers/high_beta_stocks_providers.dart';
+import 'package:stocks_news_new/providers/high_pe_growth_provider.dart';
+import 'package:stocks_news_new/providers/high_pe_provider.dart';
+import 'package:stocks_news_new/providers/home_provider.dart';
+import 'package:stocks_news_new/providers/indices_provider.dart';
+import 'package:stocks_news_new/providers/low_beta_stocks_providers.dart';
+import 'package:stocks_news_new/providers/low_pe_growth_provider.dart';
+import 'package:stocks_news_new/providers/low_pe_provider.dart';
+import 'package:stocks_news_new/providers/low_prices_stocks.dart';
+import 'package:stocks_news_new/providers/more_stocks_provider.dart';
+import 'package:stocks_news_new/providers/most_active_penny_stocks_provider.dart';
+import 'package:stocks_news_new/providers/most_active_provider.dart';
+import 'package:stocks_news_new/providers/most_popular_penny_provider.dart';
+import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
+import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
+import 'package:stocks_news_new/providers/sector_industry_provider.dart';
+import 'package:stocks_news_new/providers/snp_500_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
+import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
+import 'package:stocks_news_new/providers/today_top_gainer_provider.dart';
+import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
+import 'package:stocks_news_new/providers/top_today_penny_stocks_provider.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
 import 'package:stocks_news_new/providers/trending_provider.dart';
+import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
@@ -22,7 +53,43 @@ class AlertPopup extends StatefulWidget {
   final bool fromTrending;
   final bool fromTopStock;
   final bool fromStockDetail;
+  final bool homeTrending;
   final int index;
+  final bool homeTopGainers;
+  final bool homeTopLosers;
+  final bool homeMostBoughtMembers;
+  final bool homeFeatureStocks;
+  final bool marketDataTopGainers;
+  final bool marketDataTopLosers;
+  final bool marketDataTodaysBreakOut;
+  final bool marketDataGapUp;
+  final bool marketDataGapDown;
+  final bool marketDataHighPe;
+  final bool marketDataLowPe;
+  final bool marketDataHighPeGrowth;
+  final bool marketDataLowPeGrowth;
+  final bool marketDataFiftyTwoHigh;
+  final bool marketDataFiftyTwoLow;
+  final bool marketDataHighBetaStocks;
+  final bool marketDataLowBetaStocks;
+  final bool marketDataNegativeBetaStocks;
+  final bool marketDataDowStocks;
+  final bool marketDataSP500;
+  final bool marketDataIndices;
+  final bool marketDataLowPriceStocks;
+  final bool marketDataMostActiveStocks;
+  final bool marketDataMostVolatile;
+  final bool marketDataUnusualTradingVolume;
+  final bool marketDataMostActivePenny;
+  final bool marketDataMostPopularPenny;
+  final bool marketDataTopTodayPenny;
+  final bool marketDataDividends;
+  final bool marketDataEarning;
+  final bool marketDataStocks;
+  final bool sectorAndIndustry;
+  final bool stocksAnalysisPeers;
+
+  final StocksType? homeGainersAndLosers;
 
   final EdgeInsets? insetPadding;
   const AlertPopup({
@@ -32,8 +99,43 @@ class AlertPopup extends StatefulWidget {
     this.fromTrending = false,
     this.fromTopStock = false,
     this.fromStockDetail = false,
+    this.homeTrending = false,
     this.index = 0,
     this.insetPadding,
+    this.homeTopGainers = false,
+    this.homeTopLosers = false,
+    this.homeMostBoughtMembers = false,
+    this.homeFeatureStocks = false,
+    this.marketDataTopGainers = false,
+    this.marketDataTopLosers = false,
+    this.marketDataTodaysBreakOut = false,
+    this.marketDataGapUp = false,
+    this.marketDataGapDown = false,
+    this.marketDataHighPe = false,
+    this.marketDataLowPe = false,
+    this.marketDataHighPeGrowth = false,
+    this.marketDataLowPeGrowth = false,
+    this.marketDataFiftyTwoHigh = false,
+    this.marketDataFiftyTwoLow = false,
+    this.marketDataHighBetaStocks = false,
+    this.marketDataLowBetaStocks = false,
+    this.marketDataNegativeBetaStocks = false,
+    this.marketDataDowStocks = false,
+    this.marketDataSP500 = false,
+    this.marketDataIndices = false,
+    this.marketDataLowPriceStocks = false,
+    this.marketDataMostActiveStocks = false,
+    this.marketDataMostVolatile = false,
+    this.marketDataUnusualTradingVolume = false,
+    this.marketDataMostActivePenny = false,
+    this.marketDataMostPopularPenny = false,
+    this.marketDataTopTodayPenny = false,
+    this.marketDataDividends = false,
+    this.marketDataEarning = false,
+    this.marketDataStocks = false,
+    this.sectorAndIndustry = false,
+    this.stocksAnalysisPeers = false,
+    this.homeGainersAndLosers,
   });
 
   @override
@@ -278,6 +380,315 @@ class _AlertPopupState extends State<AlertPopup> {
         context.read<StockDetailProviderNew>();
     TopTrendingProvider topTrendingProvider =
         context.read<TopTrendingProvider>();
+    HomeProvider homeProvider = context.read<HomeProvider>();
+    MoreStocksProvider moreStocksProvider = context.read<MoreStocksProvider>();
+    FeaturedTickerProvider featuredTickerProvider =
+        context.read<FeaturedTickerProvider>();
+
+    if (widget.marketDataTopGainers) {
+      context.read<TodayTopGainerProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataTopLosers) {
+      context.read<TodayTopLoserProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataTodaysBreakOut) {
+      context.read<TodayBreakoutStockProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataGapUp) {
+      context.read<GapUpProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataGapDown) {
+      context.read<GapDownProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataHighPe) {
+      context.read<HighPeProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataLowPe) {
+      context.read<LowPeProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataHighPeGrowth) {
+      context.read<HighPeGrowthProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataLowPeGrowth) {
+      context.read<LowPeGrowthProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataFiftyTwoHigh) {
+      context.read<FiftyTwoWeeksHighProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataFiftyTwoLow) {
+      context.read<FiftyTwoWeeksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataHighBetaStocks) {
+      context.read<HighBetaStocksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataLowBetaStocks) {
+      context.read<LowsBetaStocksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataNegativeBetaStocks) {
+      context.read<NegativeBetaStocksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataDowStocks) {
+      context.read<Dow30Provider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataSP500) {
+      context.read<SnP500Provider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataIndices) {
+      context.read<IndicesProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataLowPriceStocks) {
+      context.read<LowPriceStocksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataMostActiveStocks) {
+      context.read<MostActiveProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataMostVolatile) {
+      context.read<MostVolatileStocksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataUnusualTradingVolume) {
+      context.read<UnusualTradingVolumeProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataMostActivePenny) {
+      context.read<MostActivePennyStocksProviders>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.marketDataMostPopularPenny) {
+      context.read<MostPopularPennyStocksProviders>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataTopTodayPenny) {
+      context.read<TopTodayPennyStocksProviders>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataDividends) {
+      context.read<DividendsProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataEarning) {
+      context.read<EarningsProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.marketDataStocks) {
+      context.read<AllStocksProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+
+    if (widget.sectorAndIndustry) {
+      context.read<SectorIndustryProvider>().createAlertSend(
+            index: widget.index,
+            symbol: widget.symbol,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.stocksAnalysisPeers) {
+      context.read<StockDetailProviderNew>().createAlertSendPeer(
+            symbol: widget.symbol,
+            index: widget.index,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
 
     widget.fromTrending
         ? trendingProvider.createAlertSend(
@@ -300,7 +711,65 @@ class _AlertPopupState extends State<AlertPopup> {
                     symbol: widget.symbol,
                     index: widget.index,
                   )
-                : null;
+                : widget.homeTrending
+                    ? homeProvider.createAlertSend(
+                        type: "homeTrending",
+                        alertName: controller.text,
+                        symbol: widget.symbol,
+                        index: widget.index,
+                      )
+                    : widget.homeTopGainers
+                        ? homeProvider.createAlertSend(
+                            type: "homeTopGainers",
+                            alertName: controller.text,
+                            symbol: widget.symbol,
+                            index: widget.index,
+                          )
+                        : widget.homeTopLosers
+                            ? homeProvider.createAlertSend(
+                                type: "homeTopLosers",
+                                alertName: controller.text,
+                                symbol: widget.symbol,
+                                index: widget.index,
+                              )
+                            : widget.homeGainersAndLosers == StocksType.gainers
+                                ? moreStocksProvider.createAlertSend(
+                                    type: StocksType.gainers,
+                                    alertName: controller.text,
+                                    symbol: widget.symbol,
+                                    index: widget.index,
+                                  )
+                                : widget.homeGainersAndLosers ==
+                                        StocksType.losers
+                                    ? moreStocksProvider.createAlertSend(
+                                        type: StocksType.losers,
+                                        alertName: controller.text,
+                                        symbol: widget.symbol,
+                                        index: widget.index,
+                                      )
+                                    : widget.homeGainersAndLosers ==
+                                            StocksType.actives
+                                        ? moreStocksProvider.createAlertSend(
+                                            type: StocksType.actives,
+                                            alertName: controller.text,
+                                            symbol: widget.symbol,
+                                            index: widget.index,
+                                          )
+                                        : widget.homeMostBoughtMembers
+                                            ? homeProvider.createAlertSend(
+                                                type: "homeMostBoughtMembers",
+                                                alertName: controller.text,
+                                                symbol: widget.symbol,
+                                                index: widget.index,
+                                              )
+                                            : widget.homeFeatureStocks
+                                                ? featuredTickerProvider
+                                                    .createAlertSend(
+                                                    alertName: controller.text,
+                                                    symbol: widget.symbol,
+                                                    index: widget.index,
+                                                  )
+                                                : null;
   }
 
   Widget _typeSelect({

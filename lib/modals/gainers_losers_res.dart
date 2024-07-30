@@ -54,6 +54,8 @@ class GainersLosersDataRes {
   final String displayChange;
   final num displayPercentage;
   final dynamic open;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   GainersLosersDataRes({
     required this.symbol,
@@ -68,22 +70,27 @@ class GainersLosersDataRes {
     this.open,
     required this.displayChange,
     required this.displayPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory GainersLosersDataRes.fromJson(Map<String, dynamic> json) =>
       GainersLosersDataRes(
-          symbol: json["symbol"],
-          name: json["name"],
-          price: json["price"],
-          // changesPercentage: json["changesPercentage"],
-          volume: json["volume"],
-          avgVolume: json["avgVolume"],
-          displayChange: json["display_change"],
-          displayPercentage: json["changesPercentage"],
-          previousClose: json["previousClose"],
-          image: json["image"],
-          range: json["range"],
-          open: json["open"]);
+        symbol: json["symbol"],
+        name: json["name"],
+        price: json["price"],
+        // changesPercentage: json["changesPercentage"],
+        volume: json["volume"],
+        avgVolume: json["avgVolume"],
+        displayChange: json["display_change"],
+        displayPercentage: json["changesPercentage"],
+        previousClose: json["previousClose"],
+        image: json["image"],
+        range: json["range"],
+        open: json["open"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
+      );
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
@@ -98,5 +105,7 @@ class GainersLosersDataRes {
         "image": image,
         "range": range,
         "open": open,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

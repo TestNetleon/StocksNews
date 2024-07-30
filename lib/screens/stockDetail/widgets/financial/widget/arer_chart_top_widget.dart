@@ -230,13 +230,12 @@ class _AreaChartTopWidgetState extends State<AreaChartTopWidget> {
                             child: Container(
                               color: const Color(0xffc0e7ff), // Top color
                               height: 1,
-                              child: const Center(child: Text('60.9%')),
                             ),
                           ),
                           const SpacerHorizontal(width: 8),
                           Center(
                             child: Text(
-                              '${data?.financeStatement?[0].netIncomeChangePercentage}',
+                              '${data?.financeStatement?[0].netIncomePerRatio}',
                               style: stylePTSansBold(fontSize: 12),
                             ),
                           ),
@@ -251,7 +250,6 @@ class _AreaChartTopWidgetState extends State<AreaChartTopWidget> {
                             child: Container(
                               color: const Color(0xffc0e7ff), // Top color
                               height: 1,
-                              child: const Center(child: Text('60.9%')),
                             ),
                           ),
                           const SpacerHorizontal(width: 8),
@@ -362,7 +360,7 @@ class _AreaChartTopWidgetState extends State<AreaChartTopWidget> {
                           ),
                           const SpacerHorizontal(width: 10),
                           Text(
-                            "${data?.financeStatement?[provider.changePeriodTypeIndex].investingCashFlowChange}",
+                            "${data?.financeStatement?[provider.changePeriodTypeIndex].investingPerRatio}",
                             style: stylePTSansBold(fontSize: 12),
                           )
                         ],

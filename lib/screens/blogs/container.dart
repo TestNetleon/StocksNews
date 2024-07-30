@@ -95,8 +95,7 @@ class AuthorContainer extends StatelessWidget {
     return BaseContainer(
       appBar: const AppBarHome(isPopback: true),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(
-            Dimen.padding.sp, Dimen.padding.sp, Dimen.padding.sp, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding.sp, 0, Dimen.padding.sp, 0),
         child: BaseUiContainer(
           isLoading: provider.isLoading,
           hasData: provider.authorsData != null &&

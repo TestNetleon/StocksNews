@@ -107,6 +107,7 @@ class CompareStockNewContainer extends StatelessWidget {
             child: CommonTabContainer(
               // physics: const NeverScrollableScrollPhysics(),
               scrollable: true,
+              tabPaddingNew: false,
               padding: const EdgeInsets.symmetric(
                 horizontal: 0,
                 vertical: 10,
@@ -122,7 +123,6 @@ class CompareStockNewContainer extends StatelessWidget {
                   if (index == 1) {
                     return _onRefresh(const CompareNewAnalysis(), provider);
                   }
-
                   if (index == 2) {
                     return _onRefresh(const CompareNewEarnings(), provider);
                   }

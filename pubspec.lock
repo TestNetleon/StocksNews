@@ -513,6 +513,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.68.0"
+  floating_action_bubble_custom:
+    dependency: "direct main"
+    description:
+      name: floating_action_bubble_custom
+      sha256: ebd9450380250ad7bb1ea3fc68fb040b3648ca9c5e29c20d0ea878c1e081e0d0
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -2101,6 +2109,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.13.1"
+  widget_and_text_animator:
+    dependency: "direct main"
+    description:
+      name: widget_and_text_animator
+      sha256: dafad1df89f3038643f80853e0eb3a7ffc8a0e2abd9b189bff462d9d76d41bca
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.5"
   win32:
     dependency: transitive
     description:

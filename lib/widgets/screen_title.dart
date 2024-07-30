@@ -129,16 +129,13 @@ class ScreenTitle extends StatelessWidget {
                 )
               : Visibility(
                   visible: subTitle != null,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 3.sp),
-                    child: AnimatedSize(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        child: CustomReadMoreText(
-                          text: subTitle ?? "",
-                          textColor: Colors.white,
-                        )),
-                  ),
+                  child: AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: CustomReadMoreText(
+                        text: subTitle ?? "",
+                        textColor: Colors.white,
+                      )),
                 ),
         Padding(
           padding: dividerPadding ??

@@ -19,6 +19,8 @@ class HighLowBetaStocksRes {
   final dynamic image;
   final dynamic change;
   final dynamic changesPercentage;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   HighLowBetaStocksRes({
     this.symbol,
@@ -32,6 +34,8 @@ class HighLowBetaStocksRes {
     this.image,
     required this.change,
     this.changesPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory HighLowBetaStocksRes.fromJson(Map<String, dynamic> json) =>
@@ -47,6 +51,8 @@ class HighLowBetaStocksRes {
         image: json["image"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +67,7 @@ class HighLowBetaStocksRes {
         "image": image,
         "change": change,
         "changesPercentage": changesPercentage,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

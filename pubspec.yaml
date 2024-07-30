@@ -120,6 +120,7 @@ dependencies:
   charts_flutter:
   # syncfusion_flutter_gauges:
   slide_to_act: ^2.0.2 
+  
   # fl_chart:
 
   # flutter_keyboard_visibility: ^6.0.0
@@ -130,6 +131,9 @@ dependencies:
   flutter_animate: ^4.5.0
   flutter_speed_dial: ^7.0.0
   syncfusion_flutter_charts: ^21.2.4
+  widget_and_text_animator: ^1.1.5
+  floating_action_bubble_custom: ^1.0.0+2
+  # flutter_neumorphic_plus: ^3.4.0
 
 dev_dependencies:
   flutter_test:

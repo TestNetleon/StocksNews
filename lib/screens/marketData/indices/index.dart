@@ -95,6 +95,7 @@ class IndicesData extends StatelessWidget {
         : Stack(
             children: [
               CommonTabContainer(
+                physics: const NeverScrollableScrollPhysics(),
                 onChange: (index) {
                   if (index != 0 && index != 1) {
                     provider.tabChange(index);

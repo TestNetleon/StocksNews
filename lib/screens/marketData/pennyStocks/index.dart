@@ -80,6 +80,7 @@ class PennyStocks extends StatelessWidget {
       body: Stack(
         children: [
           const CommonTabContainer(
+            physics: NeverScrollableScrollPhysics(),
             scrollable: true,
             padding: EdgeInsets.zero,
             tabs: [

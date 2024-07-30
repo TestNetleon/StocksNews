@@ -150,6 +150,7 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
               child: ScreenTitle(
                 // title: "Insider Trading - ${widget.companyName ?? ""}",
                 subTitle: provider.textRes?.subTitle,
+                dividerPadding: EdgeInsets.only(bottom: 5),
                 // optionalWidget: GestureDetector(
                 //   onTap: () => _filterClick(
                 //     companySlug: widget.companySlug,
@@ -168,6 +169,8 @@ class _CompanyDetailsBaseState extends State<CompanyDetailsBase> {
               child: ScreenTitle(
                 // title: "Insider Trading - ${widget.reportingName ?? ""}",
                 subTitle: provider.textResI?.subTitle,
+                dividerPadding: EdgeInsets.only(bottom: 5),
+
                 optionalWidget: GestureDetector(
                   onTap: () => _filterClick(
                     companySlug: widget.companySlug,

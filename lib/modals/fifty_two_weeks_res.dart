@@ -23,6 +23,8 @@ class FiftyTwoWeeksRes {
   final dynamic image;
   final dynamic change;
   final dynamic changesPercentage;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   FiftyTwoWeeksRes({
     required this.symbol,
@@ -36,6 +38,8 @@ class FiftyTwoWeeksRes {
     this.image,
     required this.change,
     this.changesPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory FiftyTwoWeeksRes.fromJson(Map<String, dynamic> json) =>
@@ -51,6 +55,8 @@ class FiftyTwoWeeksRes {
         image: json["image"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +71,7 @@ class FiftyTwoWeeksRes {
         "image": image,
         "change": change,
         "changesPercentage": changesPercentage,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

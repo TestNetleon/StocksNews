@@ -14,6 +14,8 @@ class MostPurchasedRes {
   final String? price;
   final String? change;
   final num? changesPercentage;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   MostPurchasedRes({
     this.symbol,
@@ -22,6 +24,8 @@ class MostPurchasedRes {
     this.price,
     this.change,
     this.changesPercentage,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory MostPurchasedRes.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +36,8 @@ class MostPurchasedRes {
         price: json["price"],
         change: json["change"],
         changesPercentage: json["changesPercentage"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,5 +47,7 @@ class MostPurchasedRes {
         "price": price,
         "change": change,
         "changesPercentage": changesPercentage,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

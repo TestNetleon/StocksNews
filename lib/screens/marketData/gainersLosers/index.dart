@@ -58,6 +58,7 @@ class _GainersLosersIndexState extends State<GainersLosersIndex> {
       body: Stack(
         children: [
           const CommonTabContainer(
+            physics: NeverScrollableScrollPhysics(),
             scrollable: true,
             tabs: [
               "Today's Gainers",

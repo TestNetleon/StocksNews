@@ -48,9 +48,7 @@ class _AppBarHomeState extends State<AppBarHome> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Utils().showLog("App bar init called-------");
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override

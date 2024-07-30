@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/top_trending_res.dart';
 import 'package:stocks_news_new/providers/top_trending_provider.dart';
@@ -73,31 +74,33 @@ class _TrendingRecentlyListViewState extends State<TrendingRecentlyListView> {
                         //   ),
                         // ),
                       ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(vertical: 10.sp),
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          TopTrendingDataRes? data = dataList?[index];
-                          if (data == null) {
-                            return const SizedBox();
-                          }
-                          return TopTrendingItem(
-                            type: "Recently",
-                            index: index,
-                            data: data,
-                            alertAdded: data.isAlertAdded == 1,
-                            watchlistAdded: data.isWatchlistAdded == 1,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SpacerVertical(height: 12);
-                          // return Divider(
-                          //   color: ThemeColors.greyBorder,
-                          //   height: 20.sp,
-                          // );
-                        },
-                        itemCount: dataList?.length ?? 0,
+                      SlidableAutoCloseBehavior(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.symmetric(vertical: 10.sp),
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            TopTrendingDataRes? data = dataList?[index];
+                            if (data == null) {
+                              return const SizedBox();
+                            }
+                            return TopTrendingItem(
+                              type: "Recently",
+                              index: index,
+                              data: data,
+                              alertAdded: data.isAlertAdded == 1,
+                              watchlistAdded: data.isWatchlistAdded == 1,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SpacerVertical(height: 12);
+                            // return Divider(
+                            //   color: ThemeColors.greyBorder,
+                            //   height: 20.sp,
+                            // );
+                          },
+                          itemCount: dataList?.length ?? 0,
+                        ),
                       ),
                     ],
                   ),

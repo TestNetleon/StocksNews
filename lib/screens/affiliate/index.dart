@@ -32,7 +32,7 @@ class ReferAFriend extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(
               Dimen.padding,
-              Dimen.padding,
+              0,
               Dimen.padding,
               0,
             ),

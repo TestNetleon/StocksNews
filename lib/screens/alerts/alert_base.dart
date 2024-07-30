@@ -221,7 +221,7 @@ class _AlertBaseState extends State<AlertBase> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           Dimen.padding.sp,
-          Dimen.padding.sp,
+          0,
           Dimen.padding.sp,
           0,
         ),

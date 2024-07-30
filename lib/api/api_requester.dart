@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -43,6 +44,18 @@ Map<String, String> getHeaders() {
   return headers;
 }
 
+Future<ConnectivityResult> _isConnected() async {
+  try {
+    List<ConnectivityResult> connectivityResults =
+        await Connectivity().checkConnectivity();
+    Utils().showLog("${connectivityResults.first}");
+    return connectivityResults.first;
+  } catch (e) {
+    Utils().showLog("Connectivity Error $e");
+    return ConnectivityResult.none;
+  }
+}
+
 Future<ApiResponse> apiRequest({
   RequestType type = RequestType.post,
   required String url,
@@ -60,6 +73,11 @@ Future<ApiResponse> apiRequest({
   removeForceLogin = false,
   updateDatabase = true,
 }) async {
+  // ConnectivityResult type = await _isConnected();
+  // if (type == ConnectivityResult.none) {
+  //   return ApiResponse(status: false, message: Const.noInternet);
+  // }
+
   Map<String, String> headers = getHeaders();
   if (header != null) headers.addAll(header);
   String? fcmToken = fcmTokenGlobal;

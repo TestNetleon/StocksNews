@@ -27,8 +27,7 @@ class _MembershipIndexState extends State<MembershipIndex> {
     return const BaseContainer(
       appBar: AppBarHome(isPopback: true, title: "My Membership"),
       body: Padding(
-        padding:
-            EdgeInsets.fromLTRB(Dimen.padding, Dimen.padding, Dimen.padding, 0),
+        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: Column(
           children: [
             // ScreenTitle(

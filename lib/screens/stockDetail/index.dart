@@ -2,7 +2,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/modals/stock_details_res.dart';
-import 'package:stocks_news_new/providers/leaderboard.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/competitors/compititor.dart';
 import 'package:stocks_news_new/screens/stockDetail/widgets/insider/sd_insider_trade.dart';
@@ -64,10 +63,11 @@ class _StockDetailState extends State<StockDetail> {
 
   _callApi() {
     context.read<StockDetailProviderNew>().getTabData(symbol: widget.symbol);
-    LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
-    if (provider.extra == null) {
-      provider.getLeaderBoardData();
-    }
+
+    // LeaderBoardProvider provider = context.read<LeaderBoardProvider>();
+    // if (provider.extra == null) {
+    //   provider.getLeaderBoardData();
+    // }
   }
 
   WebSocketService? _webSocketService;
@@ -78,7 +78,6 @@ class _StockDetailState extends State<StockDetail> {
 
   _addSocket() {
     StockDetailProviderNew provider = context.read<StockDetailProviderNew>();
-
     try {
       _webSocketService = WebSocketService(
         url: 'wss://websockets.financialmodelingprep.com',
@@ -193,7 +192,7 @@ class _StockDetailState extends State<StockDetail> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 8),
                 child: CommonTabContainer(
                   onChange: (index) {
                     provider.setOpenIndex(-1);
@@ -232,6 +231,9 @@ class _StockDetailState extends State<StockDetail> {
             Container(
               decoration: BoxDecoration(
                 color: ThemeColors.background.withOpacity(0.8),
+                border: const Border(
+                  top: BorderSide(color: ThemeColors.greyBorder),
+                ),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: const AddToAlertWatchlist(),
