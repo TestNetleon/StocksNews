@@ -406,7 +406,22 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
+    if (provider.extra?.notificationSetting == true) {
+      visibleAboutTiles.add(
+        DrawerRes(
+          iconData: Icons.settings,
+          text: "Notification Settings",
+          onTap: () {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => const NotificationSetting(),
+              ),
+            );
+          },
+        ),
+      );
+    }
     // About Stocks.News
     if (provider.extra?.showAboutStockNews == true) {
       visibleAboutTiles.add(
@@ -479,21 +494,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
-    visibleAboutTiles.add(
-      DrawerRes(
-        iconData: Icons.help_outline_rounded,
-        text: "Setting",
-        onTap: () {
-          Navigator.push(
-            navigatorKey.currentContext!,
-            MaterialPageRoute(
-              builder: (_) => const NotificationSetting(),
-            ),
-          );
-        },
-      ),
-    );
 
     return Scaffold(
       backgroundColor: ThemeColors.background,

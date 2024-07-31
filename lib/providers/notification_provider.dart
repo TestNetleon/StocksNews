@@ -4,6 +4,7 @@ import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
 import 'package:stocks_news_new/modals/notification_res.dart';
+import 'package:stocks_news_new/modals/notification_setting_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -24,6 +25,9 @@ class NotificationProvider extends ChangeNotifier {
 
   Extra? _extra;
   Extra? get extra => _extra;
+
+  List<NotificationSettingRes>? _settings;
+  List<NotificationSettingRes>? get settings => _settings;
 
   void setStatus(status) {
     _status = status;

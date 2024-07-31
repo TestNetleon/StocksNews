@@ -173,6 +173,8 @@ class Apis {
   static const storeInfo = "/store-points/list";
   static const membershipInfo = "/membership/plan-data";
   static const aiNewsList = "/latest-news-v2";
+  static const notificationSettings = "/notification-settings";
+  static const updateNotificationSettings = "/update-notification-setting";
 }
 
 //
