@@ -35,6 +35,7 @@ class TopTrendingContainer extends StatelessWidget {
   // @override
   @override
   Widget build(BuildContext context) {
+    TopTrendingProvider provider = context.watch<TopTrendingProvider>();
     List<TabData> tabs = [
       TabData(tabName: "Trending Now"),
       TabData(tabName: "Trending Recently"),
@@ -50,6 +51,7 @@ class TopTrendingContainer extends StatelessWidget {
         child: CommonTabContainer(
           physics: const NeverScrollableScrollPhysics(),
           scrollable: true,
+          onChange: (index) => provider.changeIndex(index),
           // onChange: (index) =>
           //     provider.onTabChanged(index: index, showProgress: false),
           tabs: List.generate(

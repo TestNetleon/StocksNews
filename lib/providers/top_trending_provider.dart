@@ -157,12 +157,15 @@ class TopTrendingProvider extends ChangeNotifier {
       );
       if (response.status) {
         if (_selectedIndex == 0 || _selectedIndex == 1) {
+          Utils().showLog("Helllooooo");
           data?[index].isWatchlistAdded = 1;
         } else if (_selectedIndex == 2) {
-          _capData
-              ?.where((element) =>
-                  element.symbol == symbol && element.isWatchlistAdded == 0)
-              .forEach((element) {
+          Utils().showLog("HIIIIIIi");
+          _capData?.where((element) {
+            Utils().showLog(
+                "----API${element.symbol == symbol}, ${element.isWatchlistAdded == 0}");
+            return element.symbol == symbol && element.isWatchlistAdded == 0;
+          }).forEach((element) {
             element.isWatchlistAdded = 1;
           });
         }
@@ -191,6 +194,11 @@ class TopTrendingProvider extends ChangeNotifier {
     }
   }
 
+  void changeIndex(index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
+
   void onTabChanged({
     required int index,
     bool loadMore = false,
@@ -198,7 +206,7 @@ class TopTrendingProvider extends ChangeNotifier {
   }) {
     if (_selectedIndex != index) {
       _selectedIndex = index;
-
+      Utils().showLog("Selected index $_selectedIndex");
       notifyListeners();
       if (index == 2) {
         getCapData(showProgress: showProgress);

@@ -12,11 +12,10 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/aler
 import 'package:stocks_news_new/screens/stockDetails/widgets/sectorIndustry/sector_industry_item.dart';
 import 'package:stocks_news_new/screens/tabs/trending/menuButton/slidable_menu.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/refresh_controll.dart';
-
+import '../../../../widgets/spacer_vertical.dart';
 import 'graph/graph.dart';
 
 class SectorIndustryList extends StatelessWidget {
@@ -80,11 +79,11 @@ class SectorIndustryList extends StatelessWidget {
             // return SectorIndustryItem(index: index, data: data);
           },
           separatorBuilder: (context, index) {
-            // return const SpacerVertical(height: 20);
-            return Divider(
-              color: ThemeColors.greyBorder,
-              height: 12.sp,
-            );
+            return const SpacerVertical(height: 15);
+            // return Divider(
+            //   color: ThemeColors.greyBorder,
+            //   height: 12.sp,
+            // );
           },
         ),
       ),
