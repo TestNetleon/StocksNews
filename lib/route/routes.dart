@@ -42,7 +42,7 @@ import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/store_provider.dart';
 import 'package:stocks_news_new/providers/today_breackout_stocks_provider.dart';
 import 'package:stocks_news_new/providers/today_top_loser_provider.dart';
-import 'package:stocks_news_new/providers/trade_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
 import 'package:stocks_news_new/providers/unusual_trading_volume_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
 import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
@@ -99,6 +99,9 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/trendingIndustries/index.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 
@@ -106,7 +109,7 @@ import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
 import '../providers/notification_settings.dart';
-import '../providers/trading_simulator.dart';
+import '../tradingSimulator/providers/trading_simulator.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
 import '../screens/marketData/lowPriceStocks/index.dart';
@@ -590,6 +593,9 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradeProviderNew()),
       ChangeNotifierProvider(create: (_) => NotificationsSettingProvider()),
       ChangeNotifierProvider(create: (_) => TradingSimulatorProvider()),
+      ChangeNotifierProvider(create: (_) => TradingSearchProvider()),
+      ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
+      ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
     ];
   }
 }

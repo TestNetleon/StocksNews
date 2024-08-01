@@ -229,11 +229,10 @@ class HomeProvider extends ChangeNotifier {
       }
       Navigator.pop(navigatorKey.currentContext!);
       Navigator.pop(navigatorKey.currentContext!);
-
       showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
-
+        message: response.message,
+        type: response.status ? SnackbarType.info : SnackbarType.error,
+      );
       return ApiResponse(status: response.status);
     } catch (e) {
       Utils().showLog(e.toString());
@@ -352,8 +351,6 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future getHomeSlider({showProgress = false}) async {
-    // showGlobalProgressDialog();
-
     _statusSlider = Status.loading;
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();

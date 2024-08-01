@@ -130,10 +130,7 @@ Future<ApiResponse> apiRequest({
           );
         } else if (file.value is List<int>) {
           request.files.add(
-            http.MultipartFile.fromBytes(
-              file.key,
-              file.value as List<int>,
-            ),
+            http.MultipartFile.fromBytes(file.key, file.value as List<int>),
           );
         }
       }

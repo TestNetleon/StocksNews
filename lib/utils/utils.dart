@@ -1038,3 +1038,8 @@ bool isSvgFromUrl(String? url) {
     return false;
   }
 }
+
+String formatBalance(num balance) {
+  final formatter = NumberFormat('#,##0.00');
+  return formatter.format(balance);
+}
