@@ -43,7 +43,6 @@ class _TopTrendingItemState extends State<TopTrendingItem> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userPresent = context.read<UserProvider>().user != null;
-      Utils().showLog("USER PRESENT $userPresent");
       setState(() {});
     });
   }

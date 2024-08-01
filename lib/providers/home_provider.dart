@@ -350,6 +350,34 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // PurchasesConfiguration? _configuration;
+
+  // void _configureRevenueCat() async {
+  //   Utils().showLog("---CONFIGURE START----");
+  //   try {
+  //     UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
+  //     RevenueCatKeyRes? keys = _extra?.revenueCatKeys;
+  //     if (Platform.isAndroid) {
+  //       _configuration = PurchasesConfiguration(
+  //           keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
+  //         ..appUserID = user?.userId ?? "";
+  //     } else if (Platform.isIOS) {
+  //       _configuration = PurchasesConfiguration(
+  //           keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+  //         ..appUserID = user?.userId ?? "";
+  //     }
+  //     if (_configuration != null) {
+  //       try {
+  //         await Purchases.configure(_configuration!);
+  //       } catch (e) {
+  //         await Purchases.configure(_configuration!);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     //
+  //   }
+  // }
+
   Future getHomeSlider({showProgress = false}) async {
     _statusSlider = Status.loading;
     notifyListeners();
@@ -407,6 +435,7 @@ class HomeProvider extends ChangeNotifier {
           notificationSeen = (response.extra as Extra).notificationCount == 0;
           showMembership = (response.extra as Extra).showMembership == true;
         }
+        // _configureRevenueCat();
 
         notifyListeners();
       } else {

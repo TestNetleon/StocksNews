@@ -66,6 +66,18 @@ class RevenueCatService {
         PaywallResult result = await RevenueCatUI.presentPaywall(
           offering: offerings.getOffering(type ?? 'access'),
         );
+        // Offering? offering = offerings.getOffering(type ?? 'access');
+        // if (offering != null) {
+        //   Utils().showLog(
+        //       "PRICE ${offering.availablePackages.first.storeProduct.price}");
+        //   Utils().showLog(
+        //       "COUNTRY CODE ${offering.availablePackages.first.storeProduct.currencyCode}");
+
+        //   Utils().showLog(
+        //       "COUNTRY CODE ${offering.availablePackages.first.storeProduct.priceString}");
+        // } else {
+        //   //
+        // }
 
         await _handlePaywallResult(result,
             isMembership: type == null || type == '');
@@ -78,6 +90,22 @@ class RevenueCatService {
       Utils().showLog("Error $e");
     }
   }
+
+  // void fetchPrices() async {
+  //   try {
+  //     Offerings offerings = await Purchases.getOfferings();
+  //     if (offerings.current != null &&
+  //         offerings.current?.availablePackages.isNotEmpty == true) {
+  //       // Access the price
+  //       for (var package in offerings.current!.availablePackages) {
+  //         print('Price: ${package.storeProduct.priceString}');
+  //         print('Currency: ${package.storeProduct.currencyCode}');
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching offerings: $e');
+  //   }
+  // }
 
   static Future _handlePaywallResult(PaywallResult result,
       {bool isMembership = false}) async {

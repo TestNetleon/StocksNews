@@ -73,11 +73,12 @@ class MembershipInfoRes {
 
 class Plan {
   final String name;
-  final String price;
+  String price;
   final String? type;
   final String? billed;
   final String? description;
   bool selected;
+  final String? productId;
   final List<String>? features;
 
   Plan({
@@ -85,6 +86,7 @@ class Plan {
     required this.price,
     this.description,
     this.type,
+    this.productId,
     this.billed,
     this.selected = false,
     this.features,
@@ -93,6 +95,7 @@ class Plan {
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
         name: json["name"],
         price: json["price"],
+        productId: json['product_id'],
         description: json["description"],
         type: json["type"],
         billed: json["billed"],
@@ -104,6 +107,7 @@ class Plan {
   Map<String, dynamic> toJson() => {
         "name": name,
         "price": price,
+        "product_id": productId,
         "description": description,
         "type": type,
         "billed": billed,

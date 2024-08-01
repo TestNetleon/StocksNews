@@ -3,18 +3,21 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/modals/membership/membership_info_res.dart';
 import 'package:stocks_news_new/modals/plans_res.dart';
-
 import '../api/api_response.dart';
 import '../api/apis.dart';
 import '../modals/membership.dart';
 import '../modals/membership_success.dart';
+import '../modals/user_res.dart';
 import '../route/my_app.dart';
 import '../utils/constants.dart';
 import '../utils/utils.dart';
+import 'home_provider.dart';
 import 'user_provider.dart';
 
 class MembershipProvider extends ChangeNotifier {
@@ -164,6 +167,57 @@ class MembershipProvider extends ChangeNotifier {
         _membershipInfoRes = membershipInfoResFromJson(
           jsonEncode(response.data),
         );
+        RevenueCatKeyRes? keys = navigatorKey.currentContext!
+            .read<HomeProvider>()
+            .extra
+            ?.revenueCatKeys;
+        UserRes? userRes =
+            navigatorKey.currentContext?.read<UserProvider>().user;
+        Utils().showLog("${userRes?.userId}");
+
+        PurchasesConfiguration? configuration;
+        if (Platform.isAndroid) {
+          configuration = PurchasesConfiguration(
+              keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
+            ..appUserID = userRes?.userId ?? "";
+        } else if (Platform.isIOS) {
+          configuration = PurchasesConfiguration(
+              keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
+            ..appUserID = userRes?.userId ?? "";
+        }
+
+        try {
+          if (configuration != null) {
+            await Purchases.configure(configuration);
+          }
+          Offerings? offerings;
+          offerings = await Purchases.getOfferings();
+          for (var i = 0; i < (_membershipInfoRes?.plans?.length ?? 0); i++) {
+            Offering? offering = offerings
+                .getOffering(_membershipInfoRes?.plans?[i].type ?? 'access');
+
+            if (offering != null) {
+              // List<int> utf8Bytes = utf8.encode(
+              //     offering.availablePackages.first.storeProduct.priceString);
+
+              // String decodedString = utf8.decode(utf8Bytes);
+              // print('Decoded String: $decodedString');
+
+              // String price = offering
+              //     .availablePackages.first.storeProduct.priceString
+              //     .replaceAll(RegExp(r'\s+'), '');
+
+              _membershipInfoRes?.plans?[i].price =
+                  offering.availablePackages.first.storeProduct.priceString;
+            } else {
+              //
+              Utils().showLog("offering null");
+            }
+          }
+        } catch (e) {
+          Utils().showLog("EXCEPTION $e");
+        }
+
         _extra = (response.extra is Extra ? response.extra as Extra : null);
       } else {
         _membershipInfoRes = null;
@@ -179,4 +233,11 @@ class MembershipProvider extends ChangeNotifier {
       setStatus(Status.loaded);
     }
   }
+}
+
+String formatPrice(double amount, String locale) {
+  // Using simpleCurrency to get the correct symbol for the locale
+  final format = NumberFormat.simpleCurrency(locale: locale);
+  Utils().showLog("--!!!${format.format(amount)}");
+  return format.format(amount);
 }

@@ -40,12 +40,10 @@ class SectorIndustryList extends StatelessWidget {
           itemCount: provider.data?.data.length ?? 0,
           itemBuilder: (context, index) {
             SectorIndustryData? data = provider.data?.data[index];
-
             if (index == 0 && stockStates == StockStates.sector) {
               return Column(
                 children: [
                   const SectorGraph(),
-
                   SlidableMenuWidget(
                     alertForBullish: data?.isAlertAdded?.toInt() ?? 0,
                     watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
@@ -67,19 +65,20 @@ class SectorIndustryList extends StatelessWidget {
             }
 
             return SlidableMenuWidget(
-                index: index,
-                alertForBullish: data?.isAlertAdded?.toInt() ?? 0,
-                watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
-                onClickAlert: () => _onAlertClick(
-                    context, data?.symbol ?? "", data?.isAlertAdded, index),
-                onClickWatchlist: () => _onWatchListClick(
-                    context, data?.symbol ?? "", data?.isWatchlistAdded, index),
-                child: SectorIndustryItem(index: index, data: data));
+              index: index,
+              alertForBullish: data?.isAlertAdded?.toInt() ?? 0,
+              watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
+              onClickAlert: () => _onAlertClick(
+                  context, data?.symbol ?? "", data?.isAlertAdded, index),
+              onClickWatchlist: () => _onWatchListClick(
+                  context, data?.symbol ?? "", data?.isWatchlistAdded, index),
+              child: SectorIndustryItem(index: index, data: data),
+            );
 
             // return SectorIndustryItem(index: index, data: data);
           },
           separatorBuilder: (context, index) {
-            return const SpacerVertical(height: 15);
+            return const SpacerVertical(height: 12);
             // return Divider(
             //   color: ThemeColors.greyBorder,
             //   height: 12.sp,
