@@ -386,7 +386,9 @@ class StocksItemTrending extends StatelessWidget {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

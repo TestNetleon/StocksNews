@@ -126,6 +126,7 @@ class MostBullishData {
   // final DateTime publishedDate;
   final String? image;
   final String? price;
+  final String? name;
   final num changes;
   final num? mention;
   final num mentionChange;
@@ -137,6 +138,7 @@ class MostBullishData {
 
   MostBullishData({
     required this.symbol,
+    this.name,
     // required this.publishedDate,
     this.image,
     this.price,
@@ -153,6 +155,7 @@ class MostBullishData {
   factory MostBullishData.fromJson(Map<String, dynamic> json) =>
       MostBullishData(
         symbol: json["symbol"],
+        name: json["name"],
         // publishedDate: DateTime.parse(json["published_date"]),
         image: json["image"],
         displayChange: json["display_change"],
@@ -173,6 +176,7 @@ class MostBullishData {
         //     "${publishedDate.year.toString().padLeft(4, '0')}-${publishedDate.month.toString().padLeft(2, '0')}-${publishedDate.day.toString().padLeft(2, '0')}",
         "image": image,
         "price": price,
+        "name": name,
         "changes": changes,
         "display_change": displayChange,
         "changesPercentage": changesPercentage,

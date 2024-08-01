@@ -12,10 +12,15 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   static const String path = "Home";
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     FirebaseAnalytics.instance.logEvent(

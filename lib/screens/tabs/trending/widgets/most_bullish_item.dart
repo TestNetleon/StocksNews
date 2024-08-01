@@ -453,7 +453,6 @@ class _MostBullishItemState extends State<MostBullishItem> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       userPresent = context.read<UserProvider>().user != null;
-      Utils().showLog("USER PRESENT $userPresent");
       setState(() {});
     });
   }
@@ -970,16 +969,22 @@ class _MostBullishItemState extends State<MostBullishItem> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SpacerVertical(height: 5),
-                          // Text(
-                          //   widget.data.name,
-                          //   style: styleGeorgiaRegular(
-                          //     color: ThemeColors.greyText,
-                          //     fontSize: 12,
-                          //   ),
-                          //   maxLines: 2,
-                          //   overflow: TextOverflow.ellipsis,
-                          // ),
-                          // const SpacerVertical(height: 5),
+                          Visibility(
+                            visible: widget.data.name != null &&
+                                widget.data.name != '',
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Text(
+                                widget.data.name ?? "",
+                                style: styleGeorgiaRegular(
+                                  color: ThemeColors.greyText,
+                                  fontSize: 12,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
                           Row(
                             children: [
                               RichText(

@@ -229,13 +229,14 @@ TextStyle stylePTSansBold({
   color = Colors.white,
   double fontSize = 16,
   letterSpacing = 0.70,
+  String? fontFamily,
   height = 1.2,
   decoration,
 }) {
   return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontFamily: Fonts.ptSans,
+    fontFamily: fontFamily ?? Fonts.ptSans,
     fontWeight: FontWeight.bold,
     decoration: decoration,
     decorationColor: color,

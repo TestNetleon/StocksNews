@@ -390,12 +390,15 @@ class _NewMembershipUpgradeCurrentPlanState
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  if (widget.withClickCondition) {
-                    _subscribe();
-                  } else {
-                    RevenueCatService.initializeSubscription(
-                        type: data?.plans?[index].type);
-                  }
+                  // if (widget.withClickCondition) {
+                  //   _subscribe();
+                  // } else {
+                  //   RevenueCatService.initializeSubscription(
+                  //       type: data?.plans?[index].type);
+                  // }
+
+                  RevenueCatService.initializeSubscription(
+                      type: data?.plans?[index].type);
 
                   for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
                     data?.plans?[i].selected = false;
@@ -468,8 +471,12 @@ class _NewMembershipUpgradeCurrentPlanState
                       const SpacerVertical(height: 12),
                       Text(
                         data?.plans?[index].price ?? "",
-                        style:
-                            stylePTSansBold(fontSize: 30, color: Colors.white),
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SpacerVertical(height: 10),
                       HtmlWidget(
