@@ -218,7 +218,6 @@ class Images {
   static const String downloadFile = "assets/images/download_file.png";
   static const refer = "assets/images/refer.png";
   static const marketing = "assets/images/marketing.jpeg";
-
   static const health = "assets/images/health.png";
   static const heart = "assets/images/heart.png";
   static const financialHealth = "assets/images/financial-health.png";
