@@ -47,11 +47,11 @@ class PointsSummary extends StatelessWidget {
                 ),
               ),
               child: ListView.separated(
-                padding: const EdgeInsets.fromLTRB(
+                padding: EdgeInsets.fromLTRB(
                   20,
                   15,
                   20,
-                  20,
+                  fromDrawer ? 10 : 20,
                 ),
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
