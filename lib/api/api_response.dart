@@ -29,16 +29,18 @@ class ApiResponse {
   final dynamic data;
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(
-        status: json["status"],
+        status: json["status"] ?? json["success"],
         message: json["message"],
         data: json["data"] is List
             ? List<dynamic>.from(json["data"])
             : json["data"],
-        extra: json["extra"] is List
-            ? List<dynamic>.from(json["extra"])
-            : json["extra"] == null
-                ? null
-                : Extra.fromJson(json["extra"]),
+        extra: json["extra"] == null
+            ? null
+            : json["extra"] is List
+                ? List<dynamic>.from(json["extra"])
+                : json["extra"] == null
+                    ? null
+                    : Extra.fromJson(json["extra"]),
       );
 }
 

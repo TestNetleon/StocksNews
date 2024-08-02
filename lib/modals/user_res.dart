@@ -26,6 +26,7 @@ class UserRes {
   bool? signupStatus;
   // int? subscriptionPurchased;
   final UserMembershipRes? membership;
+  final TradeRes? trade;
   int? affiliateStatus;
   String? phoneCode;
   dynamic pointEarn;
@@ -55,6 +56,7 @@ class UserRes {
     this.affiliateStatus,
     this.phoneCode,
     this.pointEarn,
+    this.trade,
   });
 
   factory UserRes.fromJson(Map<String, dynamic> json) => UserRes(
@@ -83,6 +85,7 @@ class UserRes {
         affiliateStatus: json["affiliate_status"],
         phoneCode: json["phone_code"],
         pointEarn: json["point_earn"],
+        trade: json["trade"] == null ? null : TradeRes.fromJson(json["trade"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -109,6 +112,7 @@ class UserRes {
         "affiliate_status": affiliateStatus,
         "phone_code": phoneCode,
         "point_earn": pointEarn,
+        "trade": trade?.toJson(),
       };
 }
 
@@ -168,5 +172,25 @@ class MembershipPermissionRes {
   Map<String, dynamic> toJson() => {
         "key": key,
         "status": status,
+      };
+}
+
+class TradeRes {
+  final num? amount;
+  final num? paid;
+
+  TradeRes({
+    required this.amount,
+    required this.paid,
+  });
+
+  factory TradeRes.fromJson(Map<String, dynamic> json) => TradeRes(
+        amount: json["trade_amount"],
+        paid: json['trade_paid'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "trade_amount": amount,
+        "trade_paid": paid,
       };
 }

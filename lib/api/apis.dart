@@ -175,6 +175,17 @@ class Apis {
   static const aiNewsList = "/latest-news-v2";
   static const notificationSettings = "/notification-settings";
   static const updateNotificationSettings = "/update-notification-setting";
+
+  // ---------   Trading Simulator Start --------------
+  static const tsUserInfo = "/simulator/user-info";
+  static const tsPortfolio = "/simulator/portfolio";
+  static const tsOrderList = "/simulator/order-list";
+  static const tradingMostSearch = "/simulator/most-search-symbol";
+  static const tsRequestBuy = "/simulator/buy";
+  // static const tsRequestBuy = "/simulator/buy-share";
+  static const tsRequestSell = "/simulator/sell-share";
+  static const tsOpenList = "/simulator/list-purchased-shares";
+  // ---------   Trading Simulator End --------------
 }
 
 //
