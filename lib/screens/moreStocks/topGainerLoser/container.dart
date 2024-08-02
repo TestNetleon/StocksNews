@@ -273,7 +273,9 @@ class _GainerLoserContainerState extends State<GainerLoserContainer> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

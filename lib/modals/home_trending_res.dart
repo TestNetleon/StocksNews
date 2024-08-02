@@ -217,11 +217,11 @@ class BannerBlogRes {
   BannerBlogRes({
     // required this.id,
     // required this.blogId,
-    required this.name,
-    required this.image,
-    required this.publishedDateString,
-    required this.slug,
-    required this.isPremium,
+    this.name,
+    this.image,
+    this.publishedDateString,
+    this.slug,
+    this.isPremium,
     // required this.updatedAt,
     // required this.createdAt,
   });

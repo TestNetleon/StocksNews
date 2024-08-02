@@ -195,7 +195,9 @@ class SectorIndustryList extends StatelessWidget {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

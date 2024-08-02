@@ -287,7 +287,9 @@ class _MostActivePennyStocksState extends State<MostActivePennyStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

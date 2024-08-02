@@ -234,7 +234,9 @@ class _TopPlaidIndexViewState extends State<TopPlaidIndexView> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

@@ -1782,7 +1782,9 @@ class StockDetailProviderNew extends ChangeNotifier {
       } else {
         HapticFeedback.lightImpact();
       }
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   void changePeriodType(index, {String? symbol}) {

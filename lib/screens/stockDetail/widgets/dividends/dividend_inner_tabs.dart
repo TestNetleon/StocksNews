@@ -57,7 +57,9 @@ class _DividendInnerTabsState extends State<DividendInnerTabs> {
                     } else {
                       HapticFeedback.lightImpact();
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    //
+                  }
                   setState(() {
                     _selectedIndex = 0;
                   });
@@ -77,7 +79,9 @@ class _DividendInnerTabsState extends State<DividendInnerTabs> {
                     } else {
                       HapticFeedback.lightImpact();
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    //
+                  }
                   setState(() {
                     _selectedIndex = 1;
                   });

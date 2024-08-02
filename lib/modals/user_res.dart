@@ -117,7 +117,7 @@ class UserRes {
 }
 
 class UserMembershipRes {
-  final int? purchased;
+  int? purchased;
   final String? displayName;
   final String? color;
   final bool? canUpgrade;

@@ -260,54 +260,18 @@ refresh all onlogin
 8005547215
 open paywall directonce purchased
 
-
-
-////
-1. membership screen integration
-2. design for paywalls
-3. morning star + content wale page pe membership and points wala kaam 
-4. invoices for in app purchase and refer page transaction
-5. membership ke purchase ke bina koi point purchase ni keystore
-6. affiliate point wali screen UI
-7. morning star ki new design ka integration 
-8. chetan sir ko FAQ lgana h
-9. Remove upgrade membership
-10. Title for My Membership
-11. success screen for points
-
-
 ---------------------------------------
 
-- Ask membership if expired or for points if all used. 
-- jese hi point mile idhr notification ajae, or chan chan baje
-- refer and earn wala case for transaction
-
------- - - - ---
-
-- agar koi news share kri or wapis usko kholo to firse khuljati
 - agli buuild me advantage wala kaam krna h 
-- ab button ke niche text lgane h morning star ke niche ki premium member se kya hoga
 - icons on no data found refresh screen
-- Point transaction pe jana h seedha upar icon ke click pe jo drawer me h
-- store points sai krni h 
 - membership invoice dono ko alag alag krege
 - points transaction me filter lgana h
-- trending design sym krni h 
-- header change 
 - membership kahredte hi notification jana chahie, point khareede to 
-- apne ko author page bnana h 
-- news ke niche author ki detail ani chahie (check) 
 - dark mode light mode theme for whole app 
-- notification settings
-- analyst forcast ka upar ak dabba design
-- symettry stock ke baxe jesi krni h hr UI me 
 - design me financial chart 
 - info sheet for ticker
 - trending sector age, stories piche
 - pagination on point page 
-- work on deep links
-- invoice detail bnani h
-- not updated version
 - points purchased one time box will hide from home
 - trading simulator
 - stock detail check API
@@ -315,9 +279,3 @@ open paywall directonce purchased
 
 case ID -  102348949887
 
- - master setting for notification
- - plaid
- - icon for user profile 
- - revenue cat 
- - search 
- - points design UI

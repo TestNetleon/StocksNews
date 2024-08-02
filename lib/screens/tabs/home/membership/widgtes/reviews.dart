@@ -56,7 +56,6 @@ class _NewMembershipReviewsState extends State<NewMembershipReviews> {
               onPageChanged: (index, reason) {
                 setState(() {
                   _currentHeight = calculateHeight(items[index]);
-                  print('mylist');
                 });
               },
               autoPlayCurve: Curves.fastOutSlowIn,
@@ -101,9 +100,7 @@ class _NewMembershipReviewsState extends State<NewMembershipReviews> {
                         Icons.star,
                         color: ThemeColors.white,
                       ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
+                      onRatingUpdate: (rating) {},
                     ),
                     const SpacerVertical(
                       height: 10,

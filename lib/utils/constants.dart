@@ -218,7 +218,6 @@ class Images {
   static const String downloadFile = "assets/images/download_file.png";
   static const refer = "assets/images/refer.png";
   static const marketing = "assets/images/marketing.jpeg";
-
   static const health = "assets/images/health.png";
   static const heart = "assets/images/heart.png";
   static const financialHealth = "assets/images/financial-health.png";
@@ -237,7 +236,6 @@ class Images {
   static const ultimatePlan = "assets/images/member-card.png";
   static const background = "assets/images/background.png";
   static const bg = "assets/images/sync.png";
-
   static const affWhite = "assets/images/aff_white.png";
   static const storeIcon = "assets/images/store_icon.png";
   static const storeBanner = "assets/images/store_banner.png";

@@ -12,7 +12,7 @@ class PdfViewerWidget extends StatefulWidget {
   const PdfViewerWidget({super.key, required this.url});
 
   @override
-  _PdfViewerWidgetState createState() => _PdfViewerWidgetState();
+  State<PdfViewerWidget> createState() => _PdfViewerWidgetState();
 }
 
 class _PdfViewerWidgetState extends State<PdfViewerWidget> {

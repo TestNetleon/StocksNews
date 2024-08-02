@@ -8,8 +8,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 class DividendPaymentLineChart extends StatelessWidget {
   const DividendPaymentLineChart({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,12 @@ class DividendPaymentLineChart extends StatelessWidget {
       return const Center(child: SizedBox.shrink());
     }
 
-    List<FlSpot> spots = provider.dividends!.chartInfo!.asMap().entries.map((entry) {
+    List<FlSpot> spots =
+        provider.dividends!.chartInfo!.asMap().entries.map((entry) {
       int index = entry.key;
       DividendCharts data = entry.value;
-      double yield = double.tryParse(data.chartInfoYield!.replaceAll('%', '')) ?? 0;
+      double yield =
+          double.tryParse(data.chartInfoYield!.replaceAll('%', '')) ?? 0;
       return FlSpot(index.toDouble(), yield);
     }).toList();
 

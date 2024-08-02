@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:stocks_news_new/utils/theme.dart';
@@ -22,10 +24,10 @@ class PastVolumne extends StatelessWidget {
       {"title": "1 year avg", "amount": "50.67%"},
     ];
 
-    double _parsePercentage(String percentage) {
-      final cleanedPercentage = percentage.replaceAll('%', '');
-      return double.tryParse(cleanedPercentage)! / 100;
-    }
+    // double _parsePercentage(String percentage) {
+    //   final cleanedPercentage = percentage.replaceAll('%', '');
+    //   return double.tryParse(cleanedPercentage)! / 100;
+    // }
 
     return Column(
       children: [

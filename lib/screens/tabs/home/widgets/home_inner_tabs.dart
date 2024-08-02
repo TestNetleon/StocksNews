@@ -75,7 +75,9 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                     } else {
                       HapticFeedback.lightImpact();
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    //
+                  }
                   setState(() {
                     _selectedIndex = 0;
                   });
@@ -95,7 +97,9 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                     } else {
                       HapticFeedback.lightImpact();
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    //
+                  }
                   setState(() {
                     _selectedIndex = 1;
                   });
@@ -115,7 +119,9 @@ class _HomeInnerTabsState extends State<HomeInnerTabs> {
                     } else {
                       HapticFeedback.lightImpact();
                     }
-                  } catch (e) {}
+                  } catch (e) {
+                    //
+                  }
                   setState(() {
                     _selectedIndex = 2;
                   });

@@ -43,7 +43,7 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
         left: Dimen.padding,
         right: Dimen.padding,
         bottom: 40,
-        top: Dimen.padding,
+        top: 0,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -52,6 +52,7 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
           ScreenTitle(
             // title: provider.extra?.title.toString(),
             subTitle: provider.extra?.subTitle.toString(),
+            dividerPadding: EdgeInsets.only(bottom: 5),
           ),
           Expanded(
             child: CommonEmptyError(
