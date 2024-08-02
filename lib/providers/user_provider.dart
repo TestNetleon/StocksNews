@@ -735,7 +735,7 @@ class UserProvider extends ChangeNotifier {
       if (response.status) {
         _user = UserRes.fromJson(response.data);
         Preference.saveUser(response.data);
-        isSVG = await isSvgFromUrl(_user?.image);
+        isSVG = isSvgFromUrl(_user?.image);
 
         Preference.setShowIntro(false);
         Preference.clearReferral();

@@ -190,7 +190,9 @@ class SdStockPeers extends StatelessWidget {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

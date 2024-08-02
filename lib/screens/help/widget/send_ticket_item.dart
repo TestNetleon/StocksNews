@@ -36,7 +36,7 @@ class SendTicketItem extends StatelessWidget {
             constraints: const BoxConstraints(maxHeight: 400),
             decoration: const BoxDecoration(
               color: ThemeColors.primaryLight,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),

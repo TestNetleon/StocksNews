@@ -170,7 +170,9 @@ class _OTPBottomPhoneState extends State<OTPBottomPhone> {
       if (response.status) {
         _otpFocusNode.requestFocus();
       }
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   @override

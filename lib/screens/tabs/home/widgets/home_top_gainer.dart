@@ -217,7 +217,9 @@ class _HomeTopGainerState extends State<HomeTopGainer> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

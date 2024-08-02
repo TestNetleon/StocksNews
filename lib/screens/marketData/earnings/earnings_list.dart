@@ -309,7 +309,9 @@ class _EarningsListState extends State<EarningsList> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

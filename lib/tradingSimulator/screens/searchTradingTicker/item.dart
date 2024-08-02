@@ -120,7 +120,7 @@ class SdTradeDefaultItem extends StatelessWidget {
                       ),
                       const SpacerVertical(height: 5),
                       Row(
-                        children: [
+                        children: const [
                           // RichText(
                           //   text: TextSpan(
                           //     children: [

@@ -1,3 +1,5 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'dart:convert';
 
 SdFinancialRes sdFinancialResFromJson(String str) =>

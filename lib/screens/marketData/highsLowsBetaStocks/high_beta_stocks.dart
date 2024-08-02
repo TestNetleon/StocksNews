@@ -305,7 +305,9 @@ class _HighBetaStocksState extends State<HighBetaStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

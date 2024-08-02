@@ -295,7 +295,9 @@ class _TodaysBreakoutStocksState extends State<TodaysBreakoutStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

@@ -290,7 +290,9 @@ class _GapDownStocksState extends State<GapDownStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

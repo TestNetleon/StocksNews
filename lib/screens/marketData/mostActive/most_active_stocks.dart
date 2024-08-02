@@ -277,7 +277,9 @@ class _MostActiveStocksState extends State<MostActiveStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

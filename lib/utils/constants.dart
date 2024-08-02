@@ -237,7 +237,6 @@ class Images {
   static const ultimatePlan = "assets/images/member-card.png";
   static const background = "assets/images/background.png";
   static const bg = "assets/images/sync.png";
-
   static const affWhite = "assets/images/aff_white.png";
   static const storeIcon = "assets/images/store_icon.png";
   static const storeBanner = "assets/images/store_banner.png";

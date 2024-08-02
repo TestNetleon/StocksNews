@@ -202,13 +202,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
         horizontalInterval: 1,
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: const Color.fromARGB(255, 223, 213, 213),
+            color: Color.fromARGB(255, 223, 213, 213),
             strokeWidth: 1,
           );
         },
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: const Color.fromARGB(255, 223, 213, 213),
+            color: Color.fromARGB(255, 223, 213, 213),
             strokeWidth: 1,
           );
         },

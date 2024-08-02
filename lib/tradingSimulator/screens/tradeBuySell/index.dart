@@ -7,7 +7,6 @@ import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/container.
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
-import 'package:flutter/cupertino.dart';
 import '../../../../widgets/spacer_horizontal.dart';
 import '../../../../widgets/theme_image_view.dart';
 

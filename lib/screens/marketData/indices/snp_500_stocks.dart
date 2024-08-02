@@ -249,7 +249,9 @@ class _Snp500StocksState extends State<Snp500Stocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

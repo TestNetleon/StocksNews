@@ -142,7 +142,7 @@ class _StoreState extends State<Store> {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         stops: [0.0, 0.4],

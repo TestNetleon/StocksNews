@@ -23,7 +23,7 @@ class TsDashboard extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
-        child: Column(
+        child: const Column(
           children: [
             TsDashboardHeader(),
             // Container(
@@ -120,12 +120,12 @@ class TsDashboard extends StatelessWidget {
               child: CommonTabContainer(
                 scrollable: false,
                 tabPaddingNew: false,
-                tabs: const [
+                tabs: [
                   "Open",
                   "Pending",
                   "Closed",
                 ],
-                widgets: const [
+                widgets: [
                   TsOpenList(),
                   // provider.orders.isEmpty
                   //     ? const SummaryErrorWidget(

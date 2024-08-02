@@ -169,7 +169,7 @@ class _AlertPopupState extends State<AlertPopup> {
     return Container(
       padding: EdgeInsets.all(18.sp),
       decoration: const BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [ThemeColors.bottomsheetGradient, Colors.black],

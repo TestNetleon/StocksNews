@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -145,7 +146,9 @@ class AffiliateReferItem extends StatelessWidget {
     if (await canLaunchUrl(params)) {
       await launchUrl(params);
     } else {
-      print('Could not launch $params');
+      if (kDebugMode) {
+        print('Could not launch $params');
+      }
     }
   }
 

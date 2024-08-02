@@ -295,7 +295,9 @@ class _TodaysTopGainerState extends State<TodaysTopGainer> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

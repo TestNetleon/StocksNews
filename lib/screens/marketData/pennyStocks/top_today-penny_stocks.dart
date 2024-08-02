@@ -285,7 +285,9 @@ class _TopTodayPennyStocksState extends State<TopTodayPennyStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

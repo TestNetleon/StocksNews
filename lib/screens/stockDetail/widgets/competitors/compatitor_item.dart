@@ -95,7 +95,7 @@ class SdCompetitorItem extends StatelessWidget {
                                   color: ThemeColors.accent,
                                 ),
                                 onRatingUpdate: (rating) {
-                                  print(rating);
+                                  // print(rating);
                                 },
                               ),
                             ),

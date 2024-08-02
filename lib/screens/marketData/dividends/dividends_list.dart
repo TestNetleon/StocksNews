@@ -309,7 +309,9 @@ class _DividendsListState extends State<DividendsList> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }
