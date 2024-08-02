@@ -83,6 +83,8 @@ class TradeList {
   final dynamic dateFiled;
   final dynamic dateTraded;
   final dynamic image;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   TradeList({
     required this.symbol,
@@ -95,6 +97,8 @@ class TradeList {
     required this.dateFiled,
     required this.dateTraded,
     required this.image,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory TradeList.fromJson(Map<String, dynamic> json) => TradeList(
@@ -108,6 +112,8 @@ class TradeList {
         dateFiled: json["date_filed"],
         dateTraded: json["date_traded"],
         image: json["image"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -121,5 +127,7 @@ class TradeList {
         "date_filed": dateFiled,
         "date_traded": dateTraded,
         "image": image,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

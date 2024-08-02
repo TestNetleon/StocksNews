@@ -56,6 +56,8 @@ class RecentMention {
   final num? changesPercentage;
   final String? name;
   final String? image;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   RecentMention({
     // this.id,
@@ -69,6 +71,8 @@ class RecentMention {
     this.changesPercentage,
     this.name,
     this.image,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory RecentMention.fromJson(Map<String, dynamic> json) => RecentMention(
@@ -89,6 +93,8 @@ class RecentMention {
         changesPercentage: json["changesPercentage"],
         name: json["name"],
         image: json["image"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -104,6 +110,8 @@ class RecentMention {
         "changesPercentage": changesPercentage,
         "name": name,
         "image": image,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }
 

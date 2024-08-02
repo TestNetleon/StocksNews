@@ -158,6 +158,7 @@ class SdStockPeers extends StatelessWidget {
         await navigatorKey.currentContext!
             .read<StockDetailProviderNew>()
             .addToWishListPeer(
+              type: "Peer",
               symbol: symbol,
               index: index,
               up: true,
@@ -179,6 +180,7 @@ class SdStockPeers extends StatelessWidget {
             await navigatorKey.currentContext!
                 .read<StockDetailProviderNew>()
                 .addToWishListPeer(
+                  type: "Peer",
                   symbol: symbol,
                   index: index,
                   up: true,

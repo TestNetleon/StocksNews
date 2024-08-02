@@ -63,6 +63,8 @@ class SocialSentimentItemRes {
   final String name;
   final int totalMentions;
   final String recentMentions;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   SocialSentimentItemRes({
     required this.symbol,
@@ -70,6 +72,8 @@ class SocialSentimentItemRes {
     required this.name,
     required this.totalMentions,
     required this.recentMentions,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory SocialSentimentItemRes.fromJson(Map<String, dynamic> json) =>
@@ -79,6 +83,8 @@ class SocialSentimentItemRes {
         name: json["name"],
         totalMentions: json["total_mentions"],
         recentMentions: json["recent_mentions"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -87,5 +93,7 @@ class SocialSentimentItemRes {
         "name": name,
         "total_mentions": totalMentions,
         "recent_mentions": recentMentions,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }

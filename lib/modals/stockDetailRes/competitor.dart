@@ -34,6 +34,8 @@ class TickerList {
   final dynamic fullTimeEmployees;
   final dynamic revenue;
   final dynamic rating;
+  num? isAlertAdded;
+  num? isWatchlistAdded;
 
   TickerList({
     required this.symbol,
@@ -45,6 +47,8 @@ class TickerList {
     required this.fullTimeEmployees,
     required this.revenue,
     required this.rating,
+    this.isAlertAdded,
+    this.isWatchlistAdded,
   });
 
   factory TickerList.fromJson(Map<String, dynamic> json) => TickerList(
@@ -57,6 +61,8 @@ class TickerList {
         fullTimeEmployees: json["fullTimeEmployees"],
         revenue: json["revenue"],
         rating: json["rating"],
+        isAlertAdded: json["is_alert_added"],
+        isWatchlistAdded: json["is_watchlist_added"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +75,7 @@ class TickerList {
         "fullTimeEmployees": fullTimeEmployees,
         "revenue": revenue,
         "rating": rating,
+        "is_alert_added": isAlertAdded,
+        "is_watchlist_added": isWatchlistAdded,
       };
 }
