@@ -242,8 +242,8 @@ class InsiderTrading {
 class News {
   // final String id;
   // final DateTime publishedDate;
-  final String title;
-  final String image;
+  final String? title;
+  final String? image;
   final String? site;
   final String? url;
   final String? postDate;
@@ -254,8 +254,8 @@ class News {
   News({
     // required this.id,
     // required this.publishedDate,
-    required this.title,
-    required this.image,
+    this.title,
+    this.image,
     this.site,
     this.url,
     this.slug,
