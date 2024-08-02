@@ -194,10 +194,11 @@ class _CongressionalDetailContainerState
                             // );
                           },
                           separatorBuilder: (context, index) {
-                            return Divider(
-                              color: ThemeColors.greyBorder,
-                              height: 15.sp,
-                            );
+                            // return Divider(
+                            //   color: ThemeColors.greyBorder,
+                            //   height: 15.sp,
+                            // );
+                            return SpacerVertical(height: 15);
                           },
                           itemCount: provider.data?.tradeLists.length ?? 0,
                         ),

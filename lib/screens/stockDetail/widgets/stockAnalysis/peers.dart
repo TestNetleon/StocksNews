@@ -13,7 +13,6 @@ import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/aler
 import 'package:stocks_news_new/screens/tabs/trending/menuButton/slidable_menu.dart';
 import 'package:stocks_news_new/screens/tabs/trending/widgets/common_item_ui.dart';
 import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
-import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -74,10 +73,11 @@ class SdStockPeers extends StatelessWidget {
               // );
             },
             separatorBuilder: (context, index) {
-              return const Divider(
-                color: ThemeColors.greyBorder,
-                height: 15,
-              );
+              // return const Divider(
+              //   color: ThemeColors.greyBorder,
+              //   height: 15,
+              // );
+              return SpacerVertical(height: 15);
             },
             itemCount: provider.analysis?.peersData?.length ?? 0,
           ),

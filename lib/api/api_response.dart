@@ -120,7 +120,7 @@ class Extra {
   final String? storeSubTitle;
   final bool? isOldApp;
   final bool? notificationSetting;
-
+  final List<PointsSummaryRes>? pointsSummary;
   Extra({
     this.storeTitle,
     this.storeSubTitle,
@@ -131,6 +131,7 @@ class Extra {
     this.text1,
     this.text2,
     this.text3,
+    this.pointsSummary,
     this.feebackType,
     this.showMorningstar,
     this.search,
@@ -208,6 +209,11 @@ class Extra {
         showWatchlist: json['show_watchlist'],
         showMostPurchased: json['show_most_purchased'],
         text1: json["text1"],
+        pointsSummary: json["points_summary"] == null
+            ? []
+            : List<PointsSummaryRes>.from(json["points_summary"]!
+                .map((x) => PointsSummaryRes.fromJson(x))),
+
         text2: json["text2"],
         text3: json["text3"],
         featuredTitle: json["featured_title"],
@@ -403,6 +409,10 @@ class Extra {
         "login_text": loginText,
         "signup_text": signUpText,
         "ios_build_version": iOSBuildVersion,
+        "points_summary": pointsSummary == null
+            ? []
+            : List<dynamic>.from(pointsSummary!.map((x) => x.toJson())),
+
         "ios_build_code": iOSBuildCode,
         "app_update_title": appUpdateTitle,
         "app_update_msg": appUpdateMsg,
@@ -421,6 +431,35 @@ class Extra {
         "show_faq": showFAQ,
         "old_app": isOldApp,
         "show_notification_setting": notificationSetting,
+      };
+}
+
+class PointsSummaryRes {
+  final String? key;
+  final String? icon;
+  final String? text;
+  final int? value;
+
+  PointsSummaryRes({
+    this.key,
+    this.icon,
+    this.text,
+    this.value,
+  });
+
+  factory PointsSummaryRes.fromJson(Map<String, dynamic> json) =>
+      PointsSummaryRes(
+        key: json["key"],
+        icon: json["icon"],
+        text: json["text"],
+        value: json["value"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "key": key,
+        "icon": icon,
+        "text": text,
+        "value": value,
       };
 }
 
