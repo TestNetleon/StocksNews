@@ -48,22 +48,22 @@ class TsOpenListItem extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SpacerHorizontal(width: 5),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              color: item?.orderType == 'buy'
-                                  ? ThemeColors.accent
-                                  : ThemeColors.sos,
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 2),
-                            child: Text(
-                              // item?.buy == true ? "Buy" : "Sell",
-                              item?.orderType ?? "",
-                              style: stylePTSansBold(fontSize: 12),
-                            ),
-                          ),
+                          // SpacerHorizontal(width: 5),
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(40),
+                          //     color: item?.orderType == 'buy'
+                          //         ? ThemeColors.accent
+                          //         : ThemeColors.sos,
+                          //   ),
+                          //   padding: EdgeInsets.symmetric(
+                          //       horizontal: 10, vertical: 2),
+                          //   child: Text(
+                          //     // item?.buy == true ? "Buy" : "Sell",
+                          //     item?.orderType ?? "",
+                          //     style: stylePTSansBold(fontSize: 12),
+                          //   ),
+                          // ),
                         ],
                       ),
                       const SpacerVertical(height: 5),
@@ -83,25 +83,26 @@ class TsOpenListItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${item?.currentPrice}",
+                    Text("${item?.price}",
                         style: stylePTSansBold(fontSize: 18)),
                     const SpacerVertical(height: 5),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text:
-                    //             "${item?.change} (${item?.changePercentage?.toCurrency()}%)",
-                    //         style: stylePTSansRegular(
-                    //           fontSize: 14,
-                    //           color: (item?.changePercentage ?? 0) > 0
-                    //               ? Colors.green
-                    //               : Colors.red,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                // "${item?.change} (${item?.changePercentage?.toCurrency()}%)",
+                                "(${item?.percentChangeLoss})",
+                            style: stylePTSansRegular(
+                              fontSize: 14,
+                              color: item?.percentChangeLoss.contains('-')
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 )
               ],

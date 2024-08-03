@@ -13,7 +13,7 @@ import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/marketCap/small_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/trending_by_market_cap.dart';
 import 'package:stocks_news_new/screens/moreStocks/topTrending/widgets/trending_recently.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/technicalAnalysis/base.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/technicalAnalysis/base.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';

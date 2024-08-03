@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,8 @@ void main() async {
       statusBarBrightness: Brightness.dark,
     ),
   );
+
+  // await DesktopWindow.setMinWindowSize(Size(800, 600));
 
   try {
     await Firebase.initializeApp(

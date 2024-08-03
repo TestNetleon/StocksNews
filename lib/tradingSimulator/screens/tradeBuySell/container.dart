@@ -5,8 +5,9 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/common_heading.dart';
+import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/common_heading.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/text_field.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
@@ -118,7 +119,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
 
         ApiResponse response = await tradeProviderNew.requestBuyShare(request);
         if (response.status) {
-          context.read<HomeProvider>().getHomeSlider();
+          context.read<TsPortfolioProvider>().getDashboardData();
           context.read<TsOpenListProvider>().getData();
           // Navigator.pop(context);
           Navigator.pop(
@@ -293,7 +294,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
       final request = {
         "token":
             navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        // "order_type": "buy",
+        "trade_type": "sell",
         "symbol": provider.tabRes?.keyStats?.symbol,
         "current_price": provider.tabRes?.keyStats?.price
                 ?.replaceAll(RegExp(r'[^\d.]'), '') ??
@@ -301,7 +302,7 @@ class _BuySellContainerState extends State<BuySellContainer> {
         "type": _selectedSegment == TypeTrade.shares
             ? "1"
             : "2", // 1 = share , 2 = amount
-        "value": controller.text, //entered value
+        "quantity": controller.text, //entered value
         "image": provider.tabRes?.companyInfo?.image, //entered value
       };
 

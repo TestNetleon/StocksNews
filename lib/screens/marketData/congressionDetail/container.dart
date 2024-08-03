@@ -5,7 +5,7 @@ import 'package:stocks_news_new/modals/congress_member_res.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
 import 'package:stocks_news_new/screens/marketData/congressionDetail/item.dart';
-import 'package:stocks_news_new/screens/stockDetail/widgets/sd_top.dart';
+import 'package:stocks_news_new/screens/stockDetail/stockDetailTabs/sd_top.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';

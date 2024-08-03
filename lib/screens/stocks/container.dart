@@ -10,7 +10,7 @@ import 'package:stocks_news_new/providers/home_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/marketData/lock/common_lock.dart';
-import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
+import 'package:stocks_news_new/screens/stockDetail/widgets/AlertWatchlist/alert_popup.dart';
 import 'package:stocks_news_new/screens/stocks/filter.dart';
 import 'package:stocks_news_new/screens/stocks/item.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';

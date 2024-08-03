@@ -4,6 +4,7 @@ import 'package:stocks_news_new/tradingSimulator/modals/ts_open_list_res.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/open/item.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -16,13 +17,13 @@ class TsOpenList extends StatefulWidget {
 }
 
 class _TsOpenListState extends State<TsOpenList> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getData();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _getData();
+  //   });
+  // }
 
   void _getData() {
     TsOpenListProvider provider = context.read<TsOpenListProvider>();
@@ -32,9 +33,10 @@ class _TsOpenListState extends State<TsOpenList> {
   @override
   Widget build(BuildContext context) {
     TsOpenListProvider provider = context.watch<TsOpenListProvider>();
+
     return BaseUiContainer(
       hasData: provider.data != null && !provider.isLoading,
-      isLoading: provider.isLoading,
+      isLoading: provider.isLoading || provider.status == Status.ideal,
       error: provider.error,
       errorDispCommon: false,
       onRefresh: _getData,
