@@ -6,8 +6,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 
 Future popUpAlert({
-  required String message,
-  required String title,
+  String? message,
+  String? title,
   EdgeInsets? padding,
   String? icon,
   Function()? onTap,
@@ -44,7 +44,7 @@ Future popUpAlert({
 }
 
 class AlertPopupCustom extends StatelessWidget {
-  final String message, title;
+  final String? message, title;
   final String? icon;
   final TextAlign? messageTextAlign;
   final EdgeInsets? padding;
@@ -58,8 +58,8 @@ class AlertPopupCustom extends StatelessWidget {
   final Widget? child;
   const AlertPopupCustom(
       {super.key,
-      required this.message,
-      required this.title,
+      this.message,
+      this.title,
       this.iconWidget,
       this.showOk = true,
       this.padding,
@@ -111,22 +111,24 @@ class AlertPopupCustom extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  title,
-                                  style: stylePTSansBold(
-                                    color: ThemeColors.background,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                const SpacerVertical(height: 8),
-                                Text(
-                                  message,
-                                  textAlign:
-                                      messageTextAlign ?? TextAlign.center,
-                                  style: stylePTSansRegular(
+                                if (title != null && title != '')
+                                  Text(
+                                    title ?? "",
+                                    style: stylePTSansBold(
                                       color: ThemeColors.background,
-                                      height: 1.4),
-                                ),
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                const SpacerVertical(height: 8),
+                                if (message != null && message != '')
+                                  Text(
+                                    message ?? "",
+                                    textAlign:
+                                        messageTextAlign ?? TextAlign.center,
+                                    style: stylePTSansRegular(
+                                        color: ThemeColors.background,
+                                        height: 1.4),
+                                  ),
                               ],
                             ),
                         const SpacerVertical(height: 5),

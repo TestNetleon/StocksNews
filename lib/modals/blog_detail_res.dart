@@ -28,7 +28,8 @@ class BlogsDetailRes {
   bool? balanceStatus;
   dynamic totalPoints;
   dynamic pointsRequired;
-
+  final String? popUpMessage;
+  final String? popUpButton;
   BlogsDetailRes({
     required this.id,
     required this.name,
@@ -36,6 +37,8 @@ class BlogsDetailRes {
     this.authors,
     this.postDateString,
     this.tickers,
+    this.popUpMessage,
+    this.popUpButton,
     required this.slug,
     // required this.categories,
     // required this.tags,
@@ -54,6 +57,8 @@ class BlogsDetailRes {
   factory BlogsDetailRes.fromJson(Map<String, dynamic> json) => BlogsDetailRes(
         id: json["_id"],
         name: json["name"],
+        popUpMessage: json["popup_message"],
+        popUpButton: json["popup_button"],
         tickers: json["tickers"] == null
             ? []
             : List<NewsTicker>.from(
@@ -86,6 +91,8 @@ class BlogsDetailRes {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
+        "popup_message": popUpMessage,
+        "popup_button": popUpButton,
         "description": description,
         'published_date_string': postDateString,
         "slug": slug,

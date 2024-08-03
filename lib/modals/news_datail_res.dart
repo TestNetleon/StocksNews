@@ -67,6 +67,8 @@ class PostDetail {
   String? readingTitle;
   String? readingSubtitle;
   bool? balanceStatus;
+  final String? popUpMessage;
+  final String? popUpButton;
   dynamic totalPoints;
   dynamic pointsRequired;
 
@@ -104,6 +106,8 @@ class PostDetail {
     this.balanceStatus,
     this.totalPoints,
     this.pointsRequired,
+    this.popUpMessage,
+    this.popUpButton,
     // this.status,
     // this.sector,
     // this.mentionStatus,
@@ -131,6 +135,8 @@ class PostDetail {
         balanceStatus: json["balance_status"],
         postDateString: json['published_date_string'],
         slug: json["slug"],
+        popUpMessage: json["popup_message"],
+        popUpButton: json["popup_button"],
         authors: json["authors"] == null
             ? []
             : List<DetailListType>.from(
@@ -191,6 +197,8 @@ class PostDetail {
 
         "text": text,
         "url": url,
+        "popup_message": popUpMessage,
+        "popup_button": popUpButton,
         "authors": authors == null
             ? []
             : List<dynamic>.from(authors!.map((x) => x.toJson())),

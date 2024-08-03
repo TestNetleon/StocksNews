@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
@@ -11,6 +10,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
+
+import '../../affiliate/pointsTransaction/trasnsaction.dart';
 
 class Home extends StatefulWidget {
   static const String path = "Home";
@@ -35,38 +36,50 @@ class _HomeState extends State<Home> {
         isHome: true,
         widget: provider.user == null
             ? null
-            : Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: const [
-                        ThemeColors.tabBack,
-                        ThemeColors.blackShade,
+            : GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AffiliateTransaction(
+                        fromDrawer: true,
+                      ),
+                    ),
+                  );
+                },
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: const [
+                          ThemeColors.tabBack,
+                          ThemeColors.blackShade,
+                        ],
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          Images.pointIcon2,
+                          width: 14,
+                        ),
+                        const SpacerHorizontal(width: 8),
+                        Text(
+                          provider.user?.pointEarn != null
+                              ? "${provider.user?.pointEarn}"
+                              : "0",
+                          style: stylePTSansRegular(
+                            fontSize: 14,
+                          ),
+                        )
                       ],
                     ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        Images.pointIcon2,
-                        width: 14,
-                      ),
-                      const SpacerHorizontal(width: 8),
-                      Text(
-                        provider.user?.pointEarn != null
-                            ? "${provider.user?.pointEarn}"
-                            : "0",
-                        style: stylePTSansRegular(
-                          fontSize: 14,
-                        ),
-                      )
-                    ],
                   ),
                 ),
               ),

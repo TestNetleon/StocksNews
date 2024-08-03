@@ -60,7 +60,7 @@ class BlogItemHome extends StatelessWidget {
                   ),
                   const SpacerHorizontal(width: 8),
                   Text(
-                    "Alert of the day",
+                    blogItem.headingText ?? "Alert of the day",
                     style: styleGeorgiaBold(
                       fontSize: 22,
                       color: ThemeColors.golden,

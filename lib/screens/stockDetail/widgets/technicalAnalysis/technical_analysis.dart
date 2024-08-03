@@ -84,15 +84,18 @@ class _SdTechnicalState extends State<SdTechnical> {
                 tabPaddingNew: false,
                 padding: const EdgeInsets.only(bottom: 10),
                 scrollable: true,
+                physics: NeverScrollableScrollPhysics(),
                 onChange: (index) {
                   onChange(index);
                 },
-                tabs: List.generate(tabs.length, (index) => tabs[index].tabName),
+                tabs:
+                    List.generate(tabs.length, (index) => tabs[index].tabName),
                 widgets: List.generate(
                   tabs.length,
                   (index) => BaseUiContainer(
                     isFull: true,
-                    hasData: !provider.isLoadingTech && provider.techRes != null,
+                    hasData:
+                        !provider.isLoadingTech && provider.techRes != null,
                     isLoading: provider.isLoadingTech,
                     showPreparingText: true,
                     error: provider.errorTech,
@@ -104,7 +107,8 @@ class _SdTechnicalState extends State<SdTechnical> {
                         return SingleChildScrollView(
                           child: Column(
                             children: [
-                              SdTechnicalAnalystSummary(constraints: constraints),
+                              SdTechnicalAnalystSummary(
+                                  constraints: constraints),
                               const SpacerVertical(height: 30),
                               Row(
                                 children: [

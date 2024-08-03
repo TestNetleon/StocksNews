@@ -227,7 +227,10 @@ class HomePlaidAdded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BaseContainer(
-      appBar: AppBarHome(isPopback: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: "Portfolio",
+      ),
       body: HomePlaidAddedContainer(),
     );
   }

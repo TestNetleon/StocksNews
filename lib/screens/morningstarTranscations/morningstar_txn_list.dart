@@ -26,9 +26,9 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       MorningstarTxnProvider provider = context.read<MorningstarTxnProvider>();
-      if (provider.data != null) {
-        return;
-      }
+      // if (provider.data != null) {
+      //   return;
+      // }
       provider.getData();
     });
   }
@@ -59,6 +59,7 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
               hasData: data == null || data.isEmpty == true,
               isLoading: provider.isLoading,
               title: "MORNINGSTAR Reports",
+              showRefresh: false,
               subTitle: provider.error,
               onClick: () async {
                 provider.onRefresh();

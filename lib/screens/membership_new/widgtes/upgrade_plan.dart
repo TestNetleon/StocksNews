@@ -323,7 +323,7 @@ class _NewMembershipUpgradeCurrentPlanState
                     Container(
                       height: 7,
                       width: 7,
-                      margin: EdgeInsets.only(top: 6),
+                      margin: EdgeInsets.only(top: 10),
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: ThemeColors.white,
@@ -373,16 +373,16 @@ class _NewMembershipUpgradeCurrentPlanState
               fontSize: 22,
             ),
           ),
-          SpacerVertical(height: 5),
-          HtmlWidget(
-            data?.selectTitle ?? "",
-            textStyle: const TextStyle(
-              color: ThemeColors.white,
-              height: 1.5,
-              fontFamily: Fonts.ptSans,
-              fontSize: 16,
-            ),
-          ),
+          // SpacerVertical(height: 5),
+          // HtmlWidget(
+          //   data?.selectTitle ?? "",
+          //   textStyle: const TextStyle(
+          //     color: ThemeColors.white,
+          //     height: 1.5,
+          //     fontFamily: Fonts.ptSans,
+          //     fontSize: 16,
+          //   ),
+          // ),
           SpacerVertical(height: 25),
           ListView.separated(
             shrinkWrap: true,
