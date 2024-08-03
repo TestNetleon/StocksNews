@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/ts_open_list_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/ts_portfollo_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/dashboard/tradeSheet.dart';
 import 'package:stocks_news_new/utils/colors.dart';
+import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
@@ -25,9 +27,12 @@ class _TsDashboardHeaderState extends State<TsDashboardHeader> {
     });
   }
 
-  void _getData() {
+  void _getData() async {
+    TsOpenListProvider orderProvider = context.read<TsOpenListProvider>();
     TsPortfolioProvider provider = context.read<TsPortfolioProvider>();
-    provider.getDashboardData();
+    orderProvider.setStatus(Status.ideal);
+    await provider.getDashboardData();
+    orderProvider.getData();
   }
 
   @override

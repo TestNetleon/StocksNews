@@ -26,6 +26,8 @@ void main() async {
     ),
   );
 
+  // await DesktopWindow.setMinWindowSize(Size(800, 600));
+
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,

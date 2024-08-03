@@ -182,8 +182,9 @@ class Apis {
   static const tsOrderList = "/simulator/order-list";
   static const tradingMostSearch = "/simulator/most-search-symbol";
   static const tsRequestBuy = "/simulator/buy";
+  static const tsRequestSell = "/simulator/sell";
   // static const tsRequestBuy = "/simulator/buy-share";
-  static const tsRequestSell = "/simulator/sell-share";
+  // static const tsRequestSell = "/simulator/sell-share";
   static const tsOpenList = "/simulator/list-purchased-shares";
   // ---------   Trading Simulator End --------------
 }
