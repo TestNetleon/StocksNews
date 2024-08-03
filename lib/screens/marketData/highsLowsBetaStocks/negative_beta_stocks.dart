@@ -289,7 +289,9 @@ class _NegativeBetaStocksState extends State<NegativeBetaStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

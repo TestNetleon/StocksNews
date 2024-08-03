@@ -26,9 +26,9 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       MorningstarTxnProvider provider = context.read<MorningstarTxnProvider>();
-      if (provider.data != null) {
-        return;
-      }
+      // if (provider.data != null) {
+      //   return;
+      // }
       provider.getData();
     });
   }
@@ -43,7 +43,7 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
         left: Dimen.padding,
         right: Dimen.padding,
         bottom: 40,
-        top: Dimen.padding,
+        top: 0,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -52,12 +52,14 @@ class _MorningStarTxnListState extends State<MorningStarTxnList> {
           ScreenTitle(
             // title: provider.extra?.title.toString(),
             subTitle: provider.extra?.subTitle.toString(),
+            dividerPadding: EdgeInsets.only(bottom: 5),
           ),
           Expanded(
             child: CommonEmptyError(
               hasData: data == null || data.isEmpty == true,
               isLoading: provider.isLoading,
               title: "MORNINGSTAR Reports",
+              showRefresh: false,
               subTitle: provider.error,
               onClick: () async {
                 provider.onRefresh();

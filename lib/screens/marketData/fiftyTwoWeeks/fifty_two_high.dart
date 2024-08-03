@@ -305,7 +305,9 @@ class _FiftyTwoWeeksHighsStocksState extends State<FiftyTwoWeeksHighsStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

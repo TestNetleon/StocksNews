@@ -282,7 +282,9 @@ class _UnusualTradingVolumeState extends State<UnusualTradingVolume> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

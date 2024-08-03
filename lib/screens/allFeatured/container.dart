@@ -208,7 +208,9 @@ class AllFeaturedContainer extends StatelessWidget {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

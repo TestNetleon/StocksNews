@@ -283,7 +283,9 @@ class _MostVolatileStocksState extends State<MostVolatileStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

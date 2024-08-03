@@ -267,7 +267,9 @@ class _LowPriceStocksListState extends State<LowPriceStocksList> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

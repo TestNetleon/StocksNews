@@ -45,6 +45,7 @@ class SectorIndustryList extends StatelessWidget {
                 children: [
                   const SectorGraph(),
                   SlidableMenuWidget(
+                    index: index,
                     alertForBullish: data?.isAlertAdded?.toInt() ?? 0,
                     watlistForBullish: data?.isWatchlistAdded?.toInt() ?? 0,
                     onClickAlert: () => _onAlertClick(
@@ -195,7 +196,9 @@ class SectorIndustryList extends StatelessWidget {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

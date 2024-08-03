@@ -303,6 +303,7 @@ class _ShareholdingWidgetState extends State<ShareholdingWidget> {
                                               ),
                                             ),
                                             linearStrokeCap:
+                                                // ignore: deprecated_member_use
                                                 LinearStrokeCap.butt,
                                             progressColor: holding.color),
                                       ),
@@ -329,7 +330,7 @@ class holdingData {
   String? title;
   double? percent;
   String? subPrecent;
-  final color;
+  final Color color;
 
   holdingData(
       {required this.title,

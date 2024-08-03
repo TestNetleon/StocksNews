@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
@@ -10,7 +9,7 @@ class SimilarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-         Text('Silimilar ',
+        Text('Silimilar ',
             style: stylePTSansBold(fontSize: 16.0, color: Colors.white)),
         SpacerVertical(
           height: 10,

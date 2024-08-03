@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
+import 'package:stocks_news_new/providers/congressional_detail_provider.dart';
 import 'package:stocks_news_new/providers/dividends_provider.dart';
 import 'package:stocks_news_new/providers/dow_30_provider.dart';
 import 'package:stocks_news_new/providers/earnings_provider.dart';
@@ -25,6 +26,7 @@ import 'package:stocks_news_new/providers/most_active_provider.dart';
 import 'package:stocks_news_new/providers/most_popular_penny_provider.dart';
 import 'package:stocks_news_new/providers/most_volatile_stocks.dart';
 import 'package:stocks_news_new/providers/negative_beta_stocks_providers.dart';
+import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
 import 'package:stocks_news_new/providers/sector_industry_provider.dart';
 import 'package:stocks_news_new/providers/snp_500_provider.dart';
 import 'package:stocks_news_new/providers/stock_detail_new.dart';
@@ -88,6 +90,10 @@ class AlertPopup extends StatefulWidget {
   final bool marketDataStocks;
   final bool sectorAndIndustry;
   final bool stocksAnalysisPeers;
+  final bool competitorsDetail;
+  final bool sentimentShowTheLast;
+  final bool sentimentRecent;
+  final bool congresionalImagesClick;
 
   final StocksType? homeGainersAndLosers;
 
@@ -135,6 +141,10 @@ class AlertPopup extends StatefulWidget {
     this.marketDataStocks = false,
     this.sectorAndIndustry = false,
     this.stocksAnalysisPeers = false,
+    this.competitorsDetail = false,
+    this.sentimentShowTheLast = false,
+    this.sentimentRecent = false,
+    this.congresionalImagesClick = false,
     this.homeGainersAndLosers,
   });
 
@@ -169,7 +179,7 @@ class _AlertPopupState extends State<AlertPopup> {
     return Container(
       padding: EdgeInsets.all(18.sp),
       decoration: const BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [ThemeColors.bottomsheetGradient, Colors.black],
@@ -681,6 +691,50 @@ class _AlertPopupState extends State<AlertPopup> {
     }
     if (widget.stocksAnalysisPeers) {
       context.read<StockDetailProviderNew>().createAlertSendPeer(
+            type: "peer",
+            symbol: widget.symbol,
+            index: widget.index,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.competitorsDetail) {
+      context.read<StockDetailProviderNew>().createAlertSendPeer(
+            type: "compititor",
+            symbol: widget.symbol,
+            index: widget.index,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.sentimentShowTheLast) {
+      context.read<RedditTwitterProvider>().createAlertSend(
+            type: "ShowTheLast",
+            symbol: widget.symbol,
+            index: widget.index,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.sentimentRecent) {
+      context.read<RedditTwitterProvider>().createAlertSend(
+            type: "Recent",
+            symbol: widget.symbol,
+            index: widget.index,
+            alertName: controller.text,
+            selectedOne: selectedOne,
+            selectedTwo: selectedTwo,
+          );
+      return;
+    }
+    if (widget.congresionalImagesClick) {
+      context.read<CongressionalDetailProvider>().createAlertSend(
             symbol: widget.symbol,
             index: widget.index,
             alertName: controller.text,

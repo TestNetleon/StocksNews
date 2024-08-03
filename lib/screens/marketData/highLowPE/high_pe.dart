@@ -267,7 +267,9 @@ class _HighPeStocksState extends State<HighPeStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

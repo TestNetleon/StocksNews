@@ -257,7 +257,9 @@ class _IndicesDynamicStocksState extends State<IndicesDynamicStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

@@ -21,6 +21,8 @@ import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
+import '../../../../widgets/custom/confirmation_point_popup.dart';
+
 class SdMorningStarLock extends StatefulWidget {
   final String symbol;
   const SdMorningStarLock({
@@ -96,13 +98,25 @@ class _SdMorningStarLockState extends State<SdMorningStarLock> {
     }
   }
 
-  void _onViewNewsClick(context) async {
+  Future _onViewNewsClick(context) async {
     StockDetailProviderNew provider =
         Provider.of<StockDetailProviderNew>(context, listen: false);
-    HomeProvider homeProvider =
-        Provider.of<HomeProvider>(context, listen: false);
-    await provider.getOverviewData(symbol: widget.symbol, pointsDeducted: true);
-    homeProvider.getHomeSlider();
+
+    confirmationPopUp(
+      points:
+          provider.overviewRes?.morningStart?.lockInformation?.pointRequired,
+      message:
+          provider.overviewRes?.morningStart?.lockInformation?.popUpMessage,
+      buttonText:
+          provider.overviewRes?.morningStart?.lockInformation?.popUpButton,
+      onTap: () async {
+        HomeProvider homeProvider =
+            Provider.of<HomeProvider>(context, listen: false);
+        await provider.getOverviewData(
+            symbol: widget.symbol, pointsDeducted: true);
+        homeProvider.getHomeSlider();
+      },
+    );
   }
 
   Future _navigateToStore() async {

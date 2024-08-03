@@ -262,7 +262,9 @@ class _LowPEStocksState extends State<LowPEStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

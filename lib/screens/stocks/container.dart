@@ -354,7 +354,9 @@ class StocksContainer extends StatelessWidget {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

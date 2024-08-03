@@ -19,7 +19,7 @@ class CustomExpansionTile extends StatefulWidget {
   });
 
   @override
-  _CustomExpansionTileState createState() => _CustomExpansionTileState();
+  State<CustomExpansionTile> createState() => _CustomExpansionTileState();
 }
 
 class _CustomExpansionTileState extends State<CustomExpansionTile> {

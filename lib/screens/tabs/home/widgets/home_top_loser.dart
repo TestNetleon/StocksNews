@@ -215,7 +215,9 @@ class _HomeTopLoserState extends State<HomeTopLoser> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

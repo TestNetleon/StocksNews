@@ -133,7 +133,10 @@ class _StockDetailState extends State<StockDetail> {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white,
+                      // color: Colors.white,
+                      color: Colors.transparent,
+                      // border: Border.all(color: ThemeColors.white),
+                      border: Border.all(color: ThemeColors.accent),
                     ),
                     padding: const EdgeInsets.all(8),
                     width: 48,

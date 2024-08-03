@@ -286,7 +286,9 @@ class _MostPopularPennyStocksState extends State<MostPopularPennyStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

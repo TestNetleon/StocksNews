@@ -452,8 +452,7 @@ class _IncomeAreaChartState extends State<IncomeAreaChart> {
                     color: provider.changeTabAreaValue == "0"
                         ? ThemeColors.accent
                         : Colors.transparent,
-                    borderRadius:
-                        const BorderRadius.all(const Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                   ),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),

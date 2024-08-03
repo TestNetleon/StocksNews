@@ -8,8 +8,8 @@ import 'package:stocks_news_new/utils/utils.dart';
 
 class DividendPaymentBarchart extends StatelessWidget {
   const DividendPaymentBarchart({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
@@ -53,13 +54,21 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
     }
   }
 
-  void _onViewNewsClick(context) async {
+  Future _onBlogClick(context) async {
     BlogProvider provider = Provider.of<BlogProvider>(context, listen: false);
-    HomeProvider homeProvider =
-        Provider.of<HomeProvider>(context, listen: false);
-    await provider.getBlogDetailData(slug: widget.slug, pointsDeducted: true);
+    confirmationPopUp(
+      points: provider.blogsDetail?.pointsRequired,
+      message: provider.blogsDetail?.popUpMessage,
+      buttonText: provider.blogsDetail?.popUpButton,
+      onTap: () async {
+        HomeProvider homeProvider =
+            Provider.of<HomeProvider>(context, listen: false);
+        await provider.getBlogDetailData(
+            slug: widget.slug, pointsDeducted: true);
 
-    homeProvider.getHomeSlider();
+        homeProvider.getHomeSlider();
+      },
+    );
   }
 
   Future _membership() async {
@@ -208,8 +217,8 @@ class _BlogDetailsLockState extends State<BlogDetailsLock> {
                       radius: 30,
                       icon: Icons.visibility,
                       mainAxisSize: MainAxisSize.max,
-                      onPressed: () => _onViewNewsClick(context),
-                      text: "View News",
+                      onPressed: () => _onBlogClick(context),
+                      text: "View Blog",
                       margin: const EdgeInsets.only(bottom: 10),
                     ),
                   if (showRefer)

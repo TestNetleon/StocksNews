@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/home_insider_res.dart';
 import 'package:stocks_news_new/modals/reddit_twitter_res.dart';
 import 'package:stocks_news_new/providers/reddit_twitter_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/alerts/alerts.dart';
 import 'package:stocks_news_new/screens/drawer/base_drawer.dart';
+import 'package:stocks_news_new/screens/stockDetails/widgets/AlertWatchlist/alert_popup.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/days.dart';
 import 'package:stocks_news_new/screens/tabs/reddit_twitter/widgets/recent_mention_item.dart';
+import 'package:stocks_news_new/screens/tabs/trending/menuButton/slidable_menu.dart';
+import 'package:stocks_news_new/screens/watchlist/watchlist.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
+import 'package:stocks_news_new/utils/dialogs.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
@@ -82,29 +90,21 @@ class _RedditTwitterState extends State<RedditTwitter> {
       drawer: const BaseDrawer(),
       body: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              Dimen.padding.sp,
-              0,
-              Dimen.padding.sp,
-              0,
-            ),
-            child: Column(
-              children: [
-                // const ScreenTitle(title: "Social Sentiment"),
-                Expanded(
-                  child: provider.isLoading &&
-                          provider.socialSentimentRes == null
-                      ? const Loading()
-                      : provider.socialSentimentRes == null &&
-                              !provider.isLoading
-                          ? Center(
-                              child: ErrorDisplayNewWidget(
-                                error: provider.error,
-                                onRefresh: _getRedditTwitterData,
-                              ),
-                            )
-                          : CommonRefreshIndicator(
+          Column(
+            children: [
+              // const ScreenTitle(title: "Social Sentiment"),
+              Expanded(
+                child: provider.isLoading && provider.socialSentimentRes == null
+                    ? const Loading()
+                    : provider.socialSentimentRes == null && !provider.isLoading
+                        ? Center(
+                            child: ErrorDisplayNewWidget(
+                              error: provider.error,
+                              onRefresh: _getRedditTwitterData,
+                            ),
+                          )
+                        : SlidableAutoCloseBehavior(
+                            child: CommonRefreshIndicator(
                               onRefresh: () async {
                                 await _getRedditTwitterData();
                               },
@@ -113,9 +113,9 @@ class _RedditTwitterState extends State<RedditTwitter> {
                                 child: _getWidget(),
                               ),
                             ),
-                ),
-              ],
-            ),
+                          ),
+              ),
+            ],
           ),
           if (isLocked) CommonLock(showLogin: true, isLocked: isLocked),
         ],
@@ -133,37 +133,69 @@ class _RedditTwitterState extends State<RedditTwitter> {
           children: [
             Visibility(
               visible: provider.socialSentimentRes?.avgSentiment != null,
-              child: const SocialSentimentsGraph(),
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    Dimen.padding.sp,
+                    0,
+                    Dimen.padding.sp,
+                    0,
+                  ),
+                  child: const SocialSentimentsGraph()),
             ),
             const SpacerVertical(),
-            TextInputFieldSearch(
-              hintText: "Search symbol or company name",
-              onSubmitted: (text) {
-                closeKeyboard();
-                _getRedditTwitterData(search: text, isSearching: true);
-              },
-              searching: provider.isSearching,
-              editable: true,
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                Dimen.padding.sp,
+                0,
+                Dimen.padding.sp,
+                0,
+              ),
+              child: TextInputFieldSearch(
+                hintText: "Search symbol or company name",
+                onSubmitted: (text) {
+                  closeKeyboard();
+                  _getRedditTwitterData(search: text, isSearching: true);
+                },
+                searching: provider.isSearching,
+                editable: true,
+              ),
             ),
             const SpacerVertical(height: 10),
-            Row(
-              children: [
-                Text(
-                  "DATA SOURCE - ",
-                  style: stylePTSansBold(fontSize: 12),
-                ),
-                Flexible(child: RedditTwitterButtons(constraints: constraints)),
-              ],
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                Dimen.padding.sp,
+                0,
+                Dimen.padding.sp,
+                0,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    "DATA SOURCE - ",
+                    style: stylePTSansBold(fontSize: 12),
+                  ),
+                  Flexible(
+                      child: RedditTwitterButtons(constraints: constraints)),
+                ],
+              ),
             ),
             const SpacerVertical(height: 5),
-            Row(
-              children: [
-                Text(
-                  "SHOW THE LAST - ",
-                  style: stylePTSansBold(fontSize: 12),
-                ),
-                RedditTwitterDays(constraints: constraints),
-              ],
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                Dimen.padding.sp,
+                0,
+                Dimen.padding.sp,
+                0,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    "SHOW THE LAST - ",
+                    style: stylePTSansBold(fontSize: 12),
+                  ),
+                  RedditTwitterDays(constraints: constraints),
+                ],
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,19 +239,33 @@ class _RedditTwitterState extends State<RedditTwitter> {
                               SocialSentimentItemRes? data =
                                   provider.socialSentimentRes?.data[index];
 
-                              return RedditTwitterItem(
-                                up: index % 3 == 0,
+                              return SlidableMenuWidget(
                                 index: index,
-                                data: data,
+                                alertForBullish:
+                                    data?.isAlertAdded?.toInt() ?? 0,
+                                watlistForBullish:
+                                    data?.isWatchlistAdded?.toInt() ?? 0,
+                                onClickAlert: () => _onAlertClickLast(
+                                    context,
+                                    data?.symbol ?? "",
+                                    data?.isAlertAdded,
+                                    index),
+                                onClickWatchlist: () => _onWatchListClickLast(
+                                    context,
+                                    data?.symbol ?? "",
+                                    data?.isWatchlistAdded,
+                                    index),
+                                child: RedditTwitterItem(
+                                  up: index % 3 == 0,
+                                  index: index,
+                                  data: data,
+                                ),
                               );
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
                               // return const SpacerVertical(height: 12);
-                              return Divider(
-                                color: ThemeColors.greyBorder,
-                                height: 12.sp,
-                              );
+                              return const SpacerVertical(height: 12);
                             },
                           ),
                 const Divider(
@@ -235,9 +281,17 @@ class _RedditTwitterState extends State<RedditTwitter> {
                 //   style: stylePTSansRegular(),
                 // ),
 
-                ScreenTitle(
-                  title: "Most Recent Mentions",
-                  subTitle: provider.socialSentimentRes?.text?.mentionText,
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    Dimen.padding.sp,
+                    0,
+                    Dimen.padding.sp,
+                    0,
+                  ),
+                  child: ScreenTitle(
+                    title: "Most Recent Mentions",
+                    subTitle: provider.socialSentimentRes?.text?.mentionText,
+                  ),
                 ),
                 ListView.separated(
                   itemCount:
@@ -251,16 +305,25 @@ class _RedditTwitterState extends State<RedditTwitter> {
                     if (data == null) {
                       return const SizedBox();
                     }
-                    return SocialSentimentMentions(
-                      data: data,
+                    return SlidableMenuWidget(
+                      index: index,
+                      alertForBullish: data.isAlertAdded?.toInt() ?? 0,
+                      watlistForBullish: data.isWatchlistAdded?.toInt() ?? 0,
+                      onClickAlert: () => _onAlertClickRecent(
+                          context, data.symbol, data.isAlertAdded, index),
+                      onClickWatchlist: () => _onWatchListClickRecent(
+                          context, data.symbol, data.isWatchlistAdded, index),
+                      child: SocialSentimentMentions(
+                        data: data,
+                      ),
                     );
+                    // return SocialSentimentMentions(
+                    //   data: data,
+                    // );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     // return const SpacerVertical(height: 12);
-                    return Divider(
-                      color: ThemeColors.greyBorder,
-                      height: 12.sp,
-                    );
+                    return const SpacerVertical(height: 12);
                   },
                 ),
                 if (provider.extra?.disclaimer != null &&
@@ -275,5 +338,223 @@ class _RedditTwitterState extends State<RedditTwitter> {
         );
       },
     );
+  }
+
+  void _onAlertClickRecent(BuildContext context, String symbol,
+      num? isAlertAdded, int? index) async {
+    if ((isAlertAdded?.toInt() ?? 0) == 1) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Alerts()),
+      );
+    } else {
+      if (context.read<UserProvider>().user != null) {
+        showPlatformBottomSheet(
+          backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+          context: context,
+          showClose: false,
+          content: AlertPopup(
+            insetPadding:
+                EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+            symbol: symbol,
+            index: index ?? 0,
+            sentimentRecent: true,
+          ),
+        );
+
+        return;
+      }
+      try {
+        ApiResponse res =
+            await context.read<RedditTwitterProvider>().getRedditTwitterData();
+        if (res.status) {
+          num alertOn = navigatorKey.currentContext!
+                  .read<RedditTwitterProvider>()
+                  .socialSentimentRes
+                  ?.data[index ?? 0]
+                  .isAlertAdded ??
+              0;
+          if (alertOn == 0) {
+            showPlatformBottomSheet(
+              backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+              context: context,
+              showClose: false,
+              content: AlertPopup(
+                insetPadding:
+                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+                symbol: symbol,
+                index: index ?? 0,
+                sentimentRecent: true,
+              ),
+            );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const Alerts()),
+            );
+          }
+        }
+        // ignore: empty_catches
+      } catch (e) {}
+    }
+  }
+
+  void _onWatchListClickRecent(BuildContext context, String symbol,
+      num? isWatchlistAdded, int index) async {
+    if (isWatchlistAdded == 1) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const WatchList()),
+      );
+    } else {
+      if (context.read<UserProvider>().user != null) {
+        await navigatorKey.currentContext!
+            .read<RedditTwitterProvider>()
+            .addToWishList(
+              type: "Recent",
+              symbol: symbol,
+              index: index,
+              up: true,
+            );
+        return;
+      }
+      try {
+        ApiResponse res = await navigatorKey.currentContext!
+            .read<RedditTwitterProvider>()
+            .getRedditTwitterData();
+        if (res.status) {
+          num alertOn = navigatorKey.currentContext!
+                  .read<RedditTwitterProvider>()
+                  .socialSentimentRes
+                  ?.data[index]
+                  .isWatchlistAdded ??
+              0;
+          if (alertOn == 0) {
+            await navigatorKey.currentContext!
+                .read<RedditTwitterProvider>()
+                .addToWishList(
+                  type: "Recent",
+                  symbol: symbol,
+                  index: index,
+                  up: true,
+                );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const WatchList()),
+            );
+          }
+        }
+      } catch (e) {}
+    }
+  }
+
+  void _onAlertClickLast(BuildContext context, String symbol, num? isAlertAdded,
+      int? index) async {
+    if ((isAlertAdded?.toInt() ?? 0) == 1) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const Alerts()),
+      );
+    } else {
+      if (context.read<UserProvider>().user != null) {
+        showPlatformBottomSheet(
+          backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+          context: context,
+          showClose: false,
+          content: AlertPopup(
+            insetPadding:
+                EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+            symbol: symbol,
+            index: index ?? 0,
+            sentimentShowTheLast: true,
+          ),
+        );
+
+        return;
+      }
+      try {
+        ApiResponse res =
+            await context.read<RedditTwitterProvider>().getRedditTwitterData();
+        if (res.status) {
+          num alertOn = navigatorKey.currentContext!
+                  .read<RedditTwitterProvider>()
+                  .socialSentimentRes
+                  ?.data[index ?? 0]
+                  .isAlertAdded ??
+              0;
+          if (alertOn == 0) {
+            showPlatformBottomSheet(
+              backgroundColor: const Color.fromARGB(255, 23, 23, 23),
+              context: context,
+              showClose: false,
+              content: AlertPopup(
+                insetPadding:
+                    EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
+                symbol: symbol,
+                index: index ?? 0,
+                sentimentShowTheLast: true,
+              ),
+            );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const Alerts()),
+            );
+          }
+        }
+        // ignore: empty_catches
+      } catch (e) {}
+    }
+  }
+
+  void _onWatchListClickLast(BuildContext context, String symbol,
+      num? isWatchlistAdded, int index) async {
+    if (isWatchlistAdded == 1) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => const WatchList()),
+      );
+    } else {
+      if (context.read<UserProvider>().user != null) {
+        await navigatorKey.currentContext!
+            .read<RedditTwitterProvider>()
+            .addToWishList(
+              type: "ShowTheLast",
+              symbol: symbol,
+              index: index,
+              up: true,
+            );
+        return;
+      }
+      try {
+        ApiResponse res = await navigatorKey.currentContext!
+            .read<RedditTwitterProvider>()
+            .getRedditTwitterData();
+        if (res.status) {
+          num alertOn = navigatorKey.currentContext!
+                  .read<RedditTwitterProvider>()
+                  .socialSentimentRes
+                  ?.data[index]
+                  .isWatchlistAdded ??
+              0;
+          if (alertOn == 0) {
+            await navigatorKey.currentContext!
+                .read<RedditTwitterProvider>()
+                .addToWishList(
+                  type: "ShowTheLast",
+                  symbol: symbol,
+                  index: index,
+                  up: true,
+                );
+          } else {
+            Navigator.push(
+              navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => const WatchList()),
+            );
+          }
+        }
+      } catch (e) {}
+    }
   }
 }

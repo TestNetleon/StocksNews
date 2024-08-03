@@ -15,6 +15,7 @@ import 'package:stocks_news_new/screens/membership_new/membership.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/custom/confirmation_point_popup.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 
@@ -86,13 +87,22 @@ class _NewsDetailsLockState extends State<NewsDetailsLock> {
     }
   }
 
-  void _onViewNewsClick(context) async {
+  Future _onViewNewsClick(context) async {
     NewsDetailProvider provider =
         Provider.of<NewsDetailProvider>(context, listen: false);
-    HomeProvider homeProvider =
-        Provider.of<HomeProvider>(context, listen: false);
-    await provider.getNewsDetailData(slug: widget.slug, pointsDeducted: true);
-    homeProvider.getHomeSlider();
+
+    confirmationPopUp(
+      points: provider.data?.postDetail?.pointsRequired,
+      message: provider.data?.postDetail?.popUpMessage,
+      buttonText: provider.data?.postDetail?.popUpButton,
+      onTap: () async {
+        HomeProvider homeProvider =
+            Provider.of<HomeProvider>(context, listen: false);
+        await provider.getNewsDetailData(
+            slug: widget.slug, pointsDeducted: true);
+        homeProvider.getHomeSlider();
+      },
+    );
   }
 
   Future _membership() async {

@@ -211,6 +211,7 @@ class BannerBlogRes {
   final String? publishedDateString;
   final String? slug;
   final int? isPremium;
+  final String? headingText;
   // final DateTime updatedAt;
   // final DateTime createdAt;
 
@@ -218,6 +219,7 @@ class BannerBlogRes {
     // required this.id,
     // required this.blogId,
     this.name,
+    this.headingText,
     this.image,
     this.publishedDateString,
     this.slug,
@@ -230,6 +232,7 @@ class BannerBlogRes {
         // id: json["_id"],
         // blogId: json["blog_id"],
         name: json["name"],
+        headingText: json["heading_text"],
         image: json["image"],
         publishedDateString: json["published_date_string"],
         slug: json["slug"],
@@ -243,6 +246,7 @@ class BannerBlogRes {
         // "blog_id": blogId,
         "name": name,
         "image": image,
+        "heading_text": headingText,
         "published_date_string": publishedDateString,
         "slug": slug,
         "is_premium": isPremium,

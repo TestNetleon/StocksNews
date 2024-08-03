@@ -84,6 +84,7 @@ class _SdTechnicalState extends State<SdTechnical> {
                 tabPaddingNew: false,
                 padding: const EdgeInsets.only(bottom: 10),
                 scrollable: true,
+                physics: NeverScrollableScrollPhysics(),
                 onChange: (index) {
                   onChange(index);
                 },

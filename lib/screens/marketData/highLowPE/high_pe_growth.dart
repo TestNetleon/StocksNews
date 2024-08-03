@@ -271,7 +271,9 @@ class _HighPeGrowthStocksState extends State<HighPeGrowthStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

@@ -226,6 +226,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
   Future createAlertSendPeer({
+    String type = "",
     required String alertName,
     required String symbol,
     required int index,
@@ -247,7 +248,13 @@ class StockDetailProviderNew extends ChangeNotifier {
         showProgress: true,
         removeForceLogin: true,
       );
-      _analysis?.peersData?[index].isAlertAdded = 1;
+      if (type == "peer") {
+        _analysis?.peersData?[index].isAlertAdded = 1;
+      }
+      if (type == "compititor") {
+        _competitorRes?.tickerList[index].isAlertAdded = 1;
+      }
+
       notifyListeners();
 
       _extra = (response.extra is Extra ? response.extra as Extra : null);
@@ -273,6 +280,7 @@ class StockDetailProviderNew extends ChangeNotifier {
   }
 
   Future addToWishListPeer({
+    String type = "",
     required String symbol,
     required bool up,
     required int index,
@@ -293,8 +301,18 @@ class StockDetailProviderNew extends ChangeNotifier {
       );
       if (response.status) {
         //
-        _analysis?.peersData?[index].isWatchlistAdded = 1;
+
+        if (type == "Peer") {
+          _analysis?.peersData?[index].isWatchlistAdded = 1;
+        }
+        if (type == "compititor") {
+          _competitorRes?.tickerList[index].isWatchlistAdded = 1;
+        }
+
         notifyListeners();
+        showErrorMessage(
+            message: response.message,
+            type: response.status ? SnackbarType.info : SnackbarType.error);
 
         // _homeTrendingRes?.trending[index].isWatchlistAdded = 1;
 
@@ -304,9 +322,6 @@ class StockDetailProviderNew extends ChangeNotifier {
             .read<HomeProvider>()
             .setTotalsWatchList(response.data['total_watchlist']);
       }
-      showErrorMessage(
-          message: response.message,
-          type: response.status ? SnackbarType.info : SnackbarType.error);
 
       closeGlobalProgressDialog();
       return ApiResponse(status: response.status);
@@ -1197,6 +1212,8 @@ class StockDetailProviderNew extends ChangeNotifier {
     setStatusOwnership(Status.loading);
     try {
       Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
         "symbol": symbol ?? "",
         'sort': "ownership",
         'direction': "desc",
@@ -1250,7 +1267,11 @@ class StockDetailProviderNew extends ChangeNotifier {
   Future getCompetitorData({String? symbol}) async {
     setStatusCompetitor(Status.loading);
     try {
-      Map request = {"symbol": symbol ?? ""};
+      Map request = {
+        "token":
+            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+        "symbol": symbol ?? ""
+      };
       ApiResponse response = await apiRequest(
         url: Apis.detailCompetitor,
         request: request,
@@ -1761,7 +1782,9 @@ class StockDetailProviderNew extends ChangeNotifier {
       } else {
         HapticFeedback.lightImpact();
       }
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   void changePeriodType(index, {String? symbol}) {

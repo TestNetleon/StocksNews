@@ -59,8 +59,8 @@ class HomeProvider extends ChangeNotifier {
   Status _statusInsider = Status.ideal;
   Status get statusInsider => _statusInsider;
 
-  Status _statusIpo = Status.ideal;
-  Status get statusIpo => _statusIpo;
+  // Status _statusIpo = Status.ideal;
+  // Status get statusIpo => _statusIpo;
 
   Status _statusBenefits = Status.ideal;
   Status get statusBenefits => _statusBenefits;
@@ -123,7 +123,7 @@ class HomeProvider extends ChangeNotifier {
   bool get isLoadingSentiment => _statusSentiment == Status.loading;
   bool get isLoadingTrending => _statusTrending == Status.loading;
   bool get isLoadingInsider => _statusInsider == Status.loading;
-  bool get isLoadingIpo => _statusIpo == Status.loading;
+  // bool get isLoadingIpo => _statusIpo == Status.loading;
   bool get isLoadingBenefits => _statusBenefits == Status.loading;
   bool get isLoadingHomeAlert => _statusHomeAlert == Status.loading;
   bool get isLoadingStockFocus => _statusFocus == Status.loading;

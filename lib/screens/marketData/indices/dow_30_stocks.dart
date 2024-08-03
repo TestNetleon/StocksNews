@@ -256,7 +256,9 @@ class _Dow30StocksState extends State<Dow30Stocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

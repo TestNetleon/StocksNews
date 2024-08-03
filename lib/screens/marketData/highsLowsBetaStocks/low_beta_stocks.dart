@@ -285,7 +285,9 @@ class _LowsBetaStocksState extends State<LowsBetaStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

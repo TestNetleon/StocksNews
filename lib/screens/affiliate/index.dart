@@ -14,7 +14,9 @@ class ReferAFriend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true),
+      // appBar: const AppBarHome(isPopback: true),
+      appBar: AppBarHome(isPopback: true, title: ""),
+
       body: CustomTabContainer(
         padding: const EdgeInsets.symmetric(horizontal: Dimen.padding),
         tabs: [

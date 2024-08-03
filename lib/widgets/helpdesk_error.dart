@@ -19,6 +19,7 @@ class CommonEmptyError extends StatelessWidget {
     required this.onClick,
     this.title,
     this.subTitle,
+    this.showRefresh = true,
     this.buttonText,
   });
   final Widget child;
@@ -32,6 +33,7 @@ class CommonEmptyError extends StatelessWidget {
   final String? title;
   final String? subTitle;
   final String? buttonText;
+  final bool showRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +72,20 @@ class CommonEmptyError extends StatelessWidget {
                           ),
                         ),
                         const SpacerVertical(height: 10),
-                        ThemeButtonSmall(
-                          showArrow: false,
-                          onPressed: onClick,
-                          text: buttonText ?? "Refresh",
-                          iconFront: true,
-                          radius: 30,
-                          mainAxisSize: MainAxisSize.max,
-                          textSize: 15,
-                          fontBold: true,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 11),
+                        Visibility(
+                          visible: showRefresh,
+                          child: ThemeButtonSmall(
+                            showArrow: false,
+                            onPressed: onClick,
+                            text: buttonText ?? "Refresh",
+                            iconFront: true,
+                            radius: 30,
+                            mainAxisSize: MainAxisSize.max,
+                            textSize: 15,
+                            fontBold: true,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 11),
+                          ),
                         ),
                       ],
                     )

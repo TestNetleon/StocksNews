@@ -268,7 +268,9 @@ class _LowPEGrowthStocksState extends State<LowPEGrowthStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }
