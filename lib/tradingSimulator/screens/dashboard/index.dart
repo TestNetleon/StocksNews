@@ -31,12 +31,10 @@ class TsDashboard extends StatelessWidget {
                 scrollable: false,
                 tabPaddingNew: false,
                 tabs: [
-                tabs: [
                   "Open",
                   "Pending",
                   "Closed",
                 ],
-                widgets: [
                 widgets: [
                   TsOpenList(),
                   //  const SummaryErrorWidget(

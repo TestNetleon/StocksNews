@@ -25,6 +25,7 @@ import 'package:stocks_news_new/screens/t&cAndPolicy/tc_policy.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/plaid/portfolio/index.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/screens/whatWeDo/index.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/dashboard/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/refer.dart';
