@@ -4,11 +4,10 @@ import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/searchTradingTicker/search_list.dart';
+import 'package:stocks_news_new/tradingSimulator/widgets/text_input_field_search_common.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
-
-import '../searchField/field.dart';
 
 class SearchTradingTicker extends StatefulWidget {
   final bool buy;
@@ -65,7 +64,15 @@ class _SearchTradingTickerState extends State<SearchTradingTicker> {
               ),
               child: Column(
                 children: [
-                  SdTradeSearchField(buy: widget.buy),
+                  // SdTradeSearchField(buy: widget.buy),
+                  TsTextInputFieldSearch(
+                    // searchFocusNode: provider.searchFocusNode,
+                    hintText: "Search symbol or company name",
+                    // searching: context.watch<SearchProvider>().isLoading,
+                    // onChanged: (text) {},
+                    editable: true,
+                    buy: widget.buy,
+                  ),
                   SdTradeDefaultSearch(buy: widget.buy),
                 ],
               ),

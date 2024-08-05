@@ -4,27 +4,27 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:stocks_news_new/modals/search_new.dart';
+import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/modals/search_res.dart';
-import 'package:stocks_news_new/providers/search_provider.dart';
+import 'package:stocks_news_new/providers/stock_detail_new.dart';
+// import 'package:stocks_news_new/providers/search_provider.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
+import 'package:stocks_news_new/route/my_app.dart';
 import 'package:stocks_news_new/screens/search/search.dart';
-import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/trade/sheet.dart';
+import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/cache_network_image.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-import '../route/my_app.dart';
-import '../screens/stockDetail/index.dart';
-import 'spacer_horizontal.dart';
-
-//
-class TextInputFieldSearchCommon extends StatefulWidget {
-  const TextInputFieldSearchCommon({
-    // required this.controller,
-    required this.onChanged,
+class TsTextInputFieldSearch extends StatefulWidget {
+  const TsTextInputFieldSearch({
+    // required this.onChanged,
     this.maxLength = 40,
     this.minLines = 1,
     this.editable = false,
@@ -39,6 +39,7 @@ class TextInputFieldSearchCommon extends StatefulWidget {
     this.openConstraints = true,
     this.searchFocusNode,
     this.searchForNews = false,
+    required this.buy,
   });
 
   // final TextEditingController controller;
@@ -49,24 +50,25 @@ class TextInputFieldSearchCommon extends StatefulWidget {
   final TextStyle? style;
   final Color? borderColor;
   final String? hintText;
-  final Function(String) onChanged;
+  // final Function(String) onChanged;
   final bool searching;
   final double? radius;
   final EdgeInsets? contentPadding;
   final bool openConstraints;
   final FocusNode? searchFocusNode;
   final bool searchForNews;
+  final bool buy;
 
   @override
-  State<TextInputFieldSearchCommon> createState() =>
-      _TextInputFieldSearchCommonState();
+  State<TsTextInputFieldSearch> createState() =>
+      _TsTextInputFieldSearchCommonState();
 }
 
-class _TextInputFieldSearchCommonState
-    extends State<TextInputFieldSearchCommon> {
+class _TsTextInputFieldSearchCommonState extends State<TsTextInputFieldSearch> {
   final TextEditingController controller = TextEditingController();
   Timer? _timer;
   bool firstTime = true;
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -76,22 +78,71 @@ class _TextInputFieldSearchCommonState
   void _searchApiCall(String text) {
     firstTime = false;
     setState(() {});
-    Utils().showLog("---calling search api call");
     if (text.isEmpty) {
-      context.read<SearchProvider>().clearSearch();
+      context.read<TradingSearchProvider>().clearSearch();
     } else {
       Map request = {
         "term": text,
         "token": context.read<UserProvider>().user?.token ?? ""
       };
-      // context.read<SearchProvider>().searchSymbols(request);
-      context.read<SearchProvider>().searchSymbolsAndNews(request);
+      context.read<TradingSearchProvider>().searchSymbols(request);
     }
+  }
+
+  Future _onTap({String? symbol}) async {
+    try {
+      StockDetailProviderNew provider =
+          navigatorKey.currentContext!.read<StockDetailProviderNew>();
+
+      ApiResponse response =
+          await provider.getTabData(symbol: symbol, showProgress: true);
+      if (response.status) {
+        SummaryOrderNew order = await Navigator.pushReplacement(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => TradeBuySellIndex(buy: widget.buy),
+          ),
+        );
+        TradeProviderNew provider =
+            navigatorKey.currentContext!.read<TradeProviderNew>();
+
+        widget.buy
+            ? provider.addOrderData(order)
+            : provider.sellOrderData(order);
+        await _showSheet(order, widget.buy);
+      } else {
+        //
+      }
+    } catch (e) {
+      //
+    }
+  }
+
+  Future _showSheet(SummaryOrderNew? order, bool buy) async {
+    await showModalBottomSheet(
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+        ),
+      ),
+      backgroundColor: ThemeColors.transparent,
+      isScrollControlled: false,
+      context: navigatorKey.currentContext!,
+      builder: (context) {
+        return SuccessTradeSheet(
+          order: order,
+          buy: buy,
+          close: true,
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    SearchProvider provider = context.watch<SearchProvider>();
+    TradingSearchProvider provider = context.watch<TradingSearchProvider>();
 
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.radius?.r ?? Dimen.radius.r),
@@ -117,7 +168,6 @@ class _TextInputFieldSearchCommonState
               children: [
                 TextField(
                   cursorColor: ThemeColors.white,
-                  // focusNode: widget.searchFocusNode,
                   autocorrect: false,
                   controller: controller,
                   maxLength: widget.maxLength,
@@ -166,7 +216,6 @@ class _TextInputFieldSearchCommonState
                       const Duration(milliseconds: 1000),
                       () {
                         _searchApiCall(value);
-                        // widget.onChanged(value);
                       },
                     );
                   },
@@ -204,7 +253,7 @@ class _TextInputFieldSearchCommonState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
-                      visible: provider.dataNew?.symbols?.isNotEmpty == true,
+                      visible: provider.dataNew?.isNotEmpty == true,
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 10.sp),
                         child: Text(
@@ -214,33 +263,36 @@ class _TextInputFieldSearchCommonState
                       ),
                     ),
                     Visibility(
-                      visible: provider.dataNew?.symbols?.isNotEmpty == true,
+                      visible: provider.dataNew?.isNotEmpty == true,
                       child: ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
-                          SearchRes? data = provider.dataNew?.symbols?[index];
+                          SearchRes? data = provider.dataNew?[index];
                           return InkWell(
                             onTap: () {
                               closeKeyboard();
                               provider.clearSearch();
-                              Navigator.push(
-                                navigatorKey.currentContext!,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        StockDetail(symbol: data!.symbol)),
-                              );
+                              _onTap(symbol: data?.symbol ?? "");
+                              // Navigator.push(
+                              //   navigatorKey.currentContext!,
+                              //   MaterialPageRoute(
+                              //       builder: (_) =>
+                              //           StockDetail(symbol: data!.symbol)),
+                              // );
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 6.sp),
                               child: Row(
                                 children: [
                                   Container(
-                                      width: 43.sp,
-                                      height: 43.sp,
-                                      padding: EdgeInsets.all(5.sp),
-                                      child: CachedNetworkImagesWidget(
-                                          data?.image)),
+                                    width: 43.sp,
+                                    height: 43.sp,
+                                    padding: EdgeInsets.all(5.sp),
+                                    child: CachedNetworkImagesWidget(
+                                      data?.image ?? "",
+                                    ),
+                                  ),
                                   const SpacerHorizontal(width: 6),
                                   Expanded(
                                     child: Column(
@@ -248,12 +300,12 @@ class _TextInputFieldSearchCommonState
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          data?.symbol ?? '',
+                                          data?.symbol ?? "",
                                           style:
                                               stylePTSansRegular(fontSize: 14),
                                         ),
                                         Text(
-                                          data?.name ?? '',
+                                          data?.name ?? "",
                                           style: stylePTSansRegular(
                                               fontSize: 12,
                                               color: ThemeColors.greyText),
@@ -269,50 +321,7 @@ class _TextInputFieldSearchCommonState
                         separatorBuilder: (BuildContext context, int index) {
                           return const Divider(color: ThemeColors.dividerDark);
                         },
-                        itemCount: provider.dataNew?.symbols?.length ?? 0,
-                      ),
-                    ),
-                    Visibility(
-                      visible: provider.dataNew?.news?.isNotEmpty == true,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 10.sp, top: 10.sp),
-                        child: Text(
-                          "News",
-                          style: stylePTSansBold(color: ThemeColors.accent),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: provider.dataNew?.news?.isNotEmpty == true,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          SearchNewsRes? data = provider.dataNew?.news?[index];
-                          return InkWell(
-                            onTap: () {
-                              closeKeyboard();
-                              provider.clearSearch();
-                              Navigator.push(
-                                navigatorKey.currentContext!,
-                                MaterialPageRoute(
-                                  builder: (_) => NewsDetails(slug: data!.slug),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 6.sp),
-                              child: Text(
-                                data?.title ?? '',
-                                style: stylePTSansRegular(fontSize: 14),
-                              ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(color: ThemeColors.dividerDark);
-                        },
-                        itemCount: provider.dataNew?.news?.length ?? 0,
+                        itemCount: provider.dataNew?.length ?? 0,
                       ),
                     ),
                   ],

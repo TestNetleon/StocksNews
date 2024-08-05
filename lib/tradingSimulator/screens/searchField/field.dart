@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/providers/trade_provider.dart';
+import 'package:stocks_news_new/tradingSimulator/providers/trading_search_provider.dart';
 import 'package:stocks_news_new/tradingSimulator/screens/tradeBuySell/index.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 
@@ -37,15 +39,15 @@ class _SdTradeSearchFieldState extends State<SdTradeSearchField> {
   }
 
   void _searchApiCall(String text) {
-    // if (text.isEmpty) {
-    //   context.read<TradingSearchProvider>().clearSearch();
-    // } else {
-    //   Map request = {
-    //     "term": text,
-    //     "token": context.read<UserProvider>().user?.token ?? ""
-    //   };
-    //   context.read<TradingSearchProvider>().searchSymbols(request);
-    // }
+    if (text.isEmpty) {
+      context.read<TradingSearchProvider>().clearSearch();
+    } else {
+      Map request = {
+        "term": text,
+        "token": context.read<UserProvider>().user?.token ?? ""
+      };
+      context.read<TradingSearchProvider>().searchSymbols(request);
+    }
   }
 
   Future _onTap({String? symbol}) async {

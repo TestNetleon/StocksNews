@@ -49,30 +49,6 @@ class AboutStocksNews extends StatefulWidget {
 }
 
 class _AboutStocksNewsState extends State<AboutStocksNews> {
-  // void _onShareAppClick() async {
-  //   if (context.read<UserProvider>().user == null) {
-  //     isPhone ? await loginSheet() : await loginSheetTablet();
-  //   }
-  //   showModalBottomSheet(
-  //     useSafeArea: true,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(10.sp),
-  //         topRight: Radius.circular(10.sp),
-  //       ),
-  //       // side: const BorderSide(color: ThemeColors.greyBorder),
-  //     ),
-  //     context: context,
-  //     backgroundColor: Colors.transparent,
-  //     isScrollControlled: true,
-  //     enableDrag: true,
-  //     barrierColor: Colors.transparent,
-  //     builder: (BuildContext ctx) {
-  //       return const SingleChildScrollView(child: ReferDialog());
-  //     },
-  //   );
-  // }
-
   Future _onShareAppClick() async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
@@ -143,155 +119,10 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     );
   }
 
-  // List<DrawerRes> getVisibleAboutTiles() {
-  //   HomeProvider provider = context.watch<HomeProvider>();
-  //   UserRes? user = context.watch<UserProvider>().user;
-
-  //   List<DrawerRes> visibleAboutTiles = [];
-
-  //   // My Account is always visible
-  //   visibleAboutTiles.add(
-  //     DrawerRes(
-  //       iconData: Icons.person_2_outlined,
-  //       text: "My Account",
-  //       onTap: () {
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(builder: (_) => const MyAccount()),
-  //         );
-  //       },
-  //     ),
-  //   );
-
-  //   // My Membership
-  //   if (user != null && user.membership?.purchased == 1 && showMembership) {
-  //     visibleAboutTiles.add(DrawerRes(
-  //       iconData: Icons.wallet_membership,
-  //       text: "My Membership",
-  //       onTap: () {
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(builder: (_) => const MembershipIndex()),
-  //         );
-  //       },
-  //     ));
-  //   }
-
-  //   // Morningstar Reports
-  //   if (provider.extra?.showMorningstar == true) {
-  //     visibleAboutTiles.add(DrawerRes(
-  //       iconData: Icons.library_books_sharp,
-  //       text: "MORNINGSTAR Reports",
-  //       onTap: () {
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(builder: (_) => const MorningStarTransaction()),
-  //         );
-  //       },
-  //     ));
-  //   }
-
-  //   // Portfolio
-  //   if (provider.extra?.showPortfolio == true) {
-  //     visibleAboutTiles.add(DrawerRes(
-  //       iconData: Icons.person_pin_outlined,
-  //       text: "Portfolio",
-  //       onTap: () {
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(builder: (_) => const HomePlaidAdded()),
-  //         );
-  //       },
-  //     ));
-  //   }
-
-  //   // Points Transactions if only not joined affiliate
-  //   // if (provider.extra?.referral?.shwReferral != true) {
-  //   visibleAboutTiles.add(
-  //     DrawerRes(
-  //       iconData: Icons.leaderboard_outlined,
-  //       text: "Transactions",
-  //       onTap: () {
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(
-  //             builder: (context) => const AffiliateTransaction(),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  //   // }
-
-  //   // Refer and Earn
-  //   if (provider.extra?.referral?.shwReferral == true) {
-  //     visibleAboutTiles.add(
-  //       DrawerRes(
-  //         iconData: Icons.leaderboard_outlined,
-  //         text: "Refer and Earn",
-  //         onTap: () {
-  //           _onShareAppClick();
-  //         },
-  //       ),
-  //     );
-  //   }
-
-  //   // What We Do is always visible
-  //   visibleAboutTiles.add(DrawerRes(
-  //     iconData: Icons.featured_play_list_outlined,
-  //     text: "What We Do",
-  //     onTap: () {
-  //       Navigator.push(
-  //         navigatorKey.currentContext!,
-  //         MaterialPageRoute(builder: (_) => const WhatWeDoIndex()),
-  //       );
-  //     },
-  //   ));
-
-  //   // Helpdesk
-  //   visibleAboutTiles.add(
-  //     DrawerRes(
-  //       iconData: Icons.support_agent,
-  //       text: "Helpdesk",
-  //       onTap: () async {
-  //         // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-  //         // log("1");
-  //         // if (user == null) {
-  //         //   isPhone ? await loginSheet() : await loginSheetTablet();
-  //         // }
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(builder: (_) => const HelpDesk()),
-  //         );
-  //         // log("3");
-  //       },
-  //     ),
-  //   );
-
-  //   // FAQ is always visible
-  //   visibleAboutTiles.add(
-  //     DrawerRes(
-  //       iconData: Icons.help_outline_rounded,
-  //       text: "FAQ",
-  //       onTap: () {
-  //         Navigator.push(
-  //           navigatorKey.currentContext!,
-  //           MaterialPageRoute(builder: (_) => const FAQ()),
-  //         );
-  //       },
-  //     ),
-  //   );
-
-  //   return visibleAboutTiles;
-  // }
-
   @override
   Widget build(BuildContext context) {
     UserRes? user = context.watch<UserProvider>().user;
-    // List<DrawerRes> visibleAboutTiles = getVisibleAboutTiles();
     HomeProvider provider = context.watch<HomeProvider>();
-    // UserRes? user = context.watch<UserProvider>().user;
-
     List<DrawerRes> visibleAboutTiles = [];
 
     // My Account is always visible
@@ -307,7 +138,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         },
       ),
     );
-
     // My Membership
     if (user != null && user.membership?.purchased == 1 && showMembership) {
       visibleAboutTiles.add(
@@ -323,7 +153,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // Morningstar Reports
     if (provider.extra?.showMorningstar == true) {
       visibleAboutTiles.add(
@@ -339,7 +168,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // Always Visible
     if (user != null) {
       visibleAboutTiles.add(
@@ -359,7 +187,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // Portfolio
     if (provider.extra?.showPortfolio == true) {
       visibleAboutTiles.add(
@@ -375,7 +202,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // Trading Simulator
     if (user != null) {
       visibleAboutTiles.add(
@@ -383,8 +209,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
           iconData: Icons.bakery_dining_outlined,
           text: "Trading Simulator",
           onTap: () {
-            // Navigator.pop(context);
-            // Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -395,7 +219,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // Refer and Earn
     if (provider.extra?.referral?.shwReferral == true) {
       visibleAboutTiles.add(
@@ -444,7 +267,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     // What We Do is always visible
     // if (provider.extra?.showWhatWeDo == true) {
     visibleAboutTiles.add(
@@ -460,7 +282,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       ),
     );
     // }
-
     // Helpdesk
     visibleAboutTiles.add(
       DrawerRes(
@@ -480,7 +301,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         },
       ),
     );
-
     // FAQ is always visible
     if (provider.extra?.showFAQ == true) {
       visibleAboutTiles.add(
@@ -496,7 +316,6 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
         ),
       );
     }
-
     return Scaffold(
       backgroundColor: ThemeColors.background,
       body: SafeArea(
