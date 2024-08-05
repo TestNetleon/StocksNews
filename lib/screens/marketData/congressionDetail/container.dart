@@ -318,7 +318,9 @@ class _CongressionalDetailContainerState
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }

@@ -298,6 +298,8 @@ class HomeProvider extends ChangeNotifier {
 
   Future refreshData(String? inAppMsgId) async {
     retryCount = 0;
+    showAdd = true;
+
     getHomePortfolio();
     // _getLastMarketOpen();
     _getLastMarketOpenFW();
@@ -378,7 +380,7 @@ class HomeProvider extends ChangeNotifier {
   //   }
   // }
 
-  Future getHomeSlider({showProgress = false}) async {
+  Future getHomeSlider({showProgress = false, String? addId}) async {
     _statusSlider = Status.loading;
     notifyListeners();
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
@@ -393,11 +395,17 @@ class HomeProvider extends ChangeNotifier {
         "fcm_permission": "$granted",
         "platform": Platform.operatingSystem,
       };
+      if (addId != null) {
+        request.addAll({"ad_id": addId});
+      }
       ApiResponse response = await apiRequest(
         url: Apis.homeSlider,
         request: request,
         showProgress: showProgress,
         updateDatabase: true,
+        onAddClick: () async {
+          getHomeSlider(addId: _extra?.adManager?.adId);
+        },
         onRefresh: () => refreshData(null),
       );
 

@@ -22,7 +22,6 @@ import 'package:stocks_news_new/screens/tabs/news/newsDetail/new_detail.dart';
 import 'package:stocks_news_new/screens/tabs/tabs.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/dialogs.dart';
-
 import 'package:stocks_news_new/utils/in_app_messages.dart';
 import 'package:stocks_news_new/database/preference.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +29,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/required_login.dart';
-
+import '../screens/Adds/adds.dart';
 import '../screens/stockDetail/index.dart';
 
 String? validAuthToken;
@@ -72,6 +71,7 @@ Future<ApiResponse> apiRequest({
   checkAppUpdate = true,
   removeForceLogin = false,
   updateDatabase = true,
+  Future Function()? onAddClick,
 }) async {
   // ConnectivityResult type = await _isConnected();
   // if (type == ConnectivityResult.none) {
@@ -166,6 +166,19 @@ Future<ApiResponse> apiRequest({
       if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
+        AdManagerRes? adManagerRes = (res.extra as Extra).adManager;
+
+        if (adManagerRes != null &&
+            showAdd &&
+            (adManagerRes.popUpImage != null &&
+                adManagerRes.popUpImage != '')) {
+          showAdd = false;
+          addOnSheet(
+            adManager: adManagerRes,
+            onTap: onAddClick,
+          );
+        }
+
         if (checkAppUpdate) {
           _checkForNewVersion(
             res.extra,

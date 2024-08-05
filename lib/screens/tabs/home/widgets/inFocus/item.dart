@@ -64,14 +64,14 @@ class StocksInFocusItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        focusRes?.symbol ?? "",
+                        focusRes?.symbol ?? "AAA",
                         style: styleGeorgiaBold(fontSize: 14),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SpacerVertical(height: 5),
                       Text(
-                        focusRes?.name ?? "",
+                        focusRes?.name ?? "AAA",
                         style: styleGeorgiaRegular(
                           color: ThemeColors.greyText,
                           fontSize: 12,
@@ -104,13 +104,13 @@ class StocksInFocusItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      focusRes?.price ?? "",
+                      focusRes?.price ?? "AAA",
                       style: stylePTSansBold(fontSize: 20),
                     ),
                     Row(
                       children: [
                         Text(
-                          focusRes?.change ?? "",
+                          focusRes?.change ?? "AAAA",
                           style: stylePTSansBold(
                               fontSize: 13,
                               color: (focusRes?.changesPercentage ?? 0) > 0

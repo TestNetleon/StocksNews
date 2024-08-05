@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -40,9 +39,13 @@ class _ViewAllListState extends State<ViewAllList> {
     HelpDeskProvider provider = context.watch<HelpDeskProvider>();
 
     return BaseContainer(
-      appBar: const AppBarHome(isPopback: true),
+      // appBar: const AppBarHome(isPopback: true),
+      appBar: AppBarHome(
+        isPopback: true,
+        title: "Help Desk",
+      ),
       body: Padding(
-        padding: EdgeInsets.all(Dimen.padding.sp),
+        padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: CommonEmptyError(
           hasData: provider.data?.tickets == null ||
               provider.data?.tickets?.isNotEmpty != true,
