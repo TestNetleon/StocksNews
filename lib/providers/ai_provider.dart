@@ -28,6 +28,9 @@ class AIProvider extends ChangeNotifier {
   Extra? _extra;
   Extra? get extra => _extra;
 
+  Extra? _extraD;
+  Extra? get extraD => _extraD;
+
   NewsDetailDataRes? _detail;
   NewsDetailDataRes? get detail => _detail;
 
@@ -112,7 +115,11 @@ class AIProvider extends ChangeNotifier {
     inAppMsgId,
     notificationId,
     pointsDeducted,
+    bool setShowAdd = true,
+    String? adId,
   }) async {
+    showAdd = setShowAdd;
+
     setStatusDetail(Status.loading);
     try {
       Map request = {
@@ -121,10 +128,20 @@ class AIProvider extends ChangeNotifier {
         "slug": slug ?? "",
       };
 
+      if (adId != null) {
+        request.addAll({"ad_id": adId});
+      }
       ApiResponse response = await apiRequest(
         url: Apis.newsDetails,
         request: request,
         showProgress: showProgress,
+        onAddClick: () async {
+          await getNewsDetailData(
+            adId: extraD?.adManager?.adId,
+            setShowAdd: false,
+            slug: slug,
+          );
+        },
       );
       if (response.status) {
         _detail = newsDetailDataResFromJson(jsonEncode(response.data));
@@ -132,6 +149,7 @@ class AIProvider extends ChangeNotifier {
         _detail = null;
         _errorDetail = response.message;
       }
+      _extraD = (response.extra is Extra ? response.extra as Extra : null);
       setStatusDetail(Status.loaded);
     } catch (e) {
       _detail = null;

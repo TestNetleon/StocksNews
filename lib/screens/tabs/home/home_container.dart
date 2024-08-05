@@ -22,6 +22,7 @@ import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
+import '../../Adds/adds.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -137,7 +138,18 @@ class HomeContainer extends StatelessWidget {
               //       },
               //       child: const Text('Stock Analysis')),
               // ),
-
+              Visibility(
+                visible: provider.extra?.adManager != null &&
+                    (provider.extra?.adManager?.bannerImage != null &&
+                        provider.extra?.adManager?.bannerImage != ''),
+                child: AddOnScreen(
+                  adManager: provider.extra?.adManager,
+                  onTap: () {
+                    provider.getHomeSlider(
+                        addId: provider.extra?.adManager?.adId);
+                  },
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -272,6 +284,9 @@ class HomeContainer extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  // StocksInFocus(),
+
                   Visibility(
                     visible: provider.extra?.showPortfolio ?? false,
                     child: Container(

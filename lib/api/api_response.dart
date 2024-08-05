@@ -121,7 +121,10 @@ class Extra {
   final bool? isOldApp;
   final bool? notificationSetting;
   final List<PointsSummaryRes>? pointsSummary;
+  final AdManagerRes? adManager;
+
   Extra({
+    this.adManager,
     this.storeTitle,
     this.storeSubTitle,
     this.showFeatured,
@@ -203,6 +206,9 @@ class Extra {
         search: json["search"],
         storeTitle: json["store_title"],
         storeSubTitle: json["store_subtitle"],
+        adManager: json["ad_manager"] == null
+            ? null
+            : AdManagerRes.fromJson(json["ad_manager"]),
 
         tagLine: json['tag_line'],
         showFeatured: json['show_featured'],
@@ -359,7 +365,7 @@ class Extra {
         'total_points_received': received,
         "total_balance": balance,
         "total_spent": spent,
-
+        "ad_manager": adManager?.toJson(),
         "text1": text1,
         "tag_line": tagLine,
         "text2": text2,
@@ -431,6 +437,36 @@ class Extra {
         "show_faq": showFAQ,
         "old_app": isOldApp,
         "show_notification_setting": notificationSetting,
+      };
+}
+
+class AdManagerRes {
+  final String? adText;
+  final String? bannerImage, popUpImage;
+  final String? url;
+  final String? adId;
+
+  AdManagerRes({
+    this.adText,
+    this.bannerImage,
+    this.popUpImage,
+    this.url,
+    this.adId,
+  });
+
+  factory AdManagerRes.fromJson(Map<String, dynamic> json) => AdManagerRes(
+      adText: json["ad_text"],
+      bannerImage: json["banner_image"],
+      popUpImage: json["popup_image"],
+      url: json["url"],
+      adId: json['_id']);
+
+  Map<String, dynamic> toJson() => {
+        "ad_text": adText,
+        "banner_image": bannerImage,
+        "popup_image": popUpImage,
+        "url": url,
+        "_id": adId,
       };
 }
 

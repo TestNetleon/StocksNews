@@ -35,9 +35,12 @@ class NewsDetailProvider extends ChangeNotifier {
     showProgress = false,
     String? slug,
     inAppMsgId,
+    String? adId,
     notificationId,
     pointsDeducted,
+    bool setShowAdd = true,
   }) async {
+    showAdd = setShowAdd;
     setStatus(Status.loading);
     try {
       Map request = pointsDeducted != null
@@ -64,11 +67,22 @@ class NewsDetailProvider extends ChangeNotifier {
       if (notificationId != null) {
         request.addAll({"notification_id": notificationId!});
       }
+
+      if (adId != null) {
+        request.addAll({"ad_id": adId});
+      }
       ApiResponse response = await apiRequest(
         url: Apis.newsDetails,
         request: request,
         showProgress: showProgress,
         updateDatabase: true,
+        onAddClick: () async {
+          await getNewsDetailData(
+            adId: extra?.adManager?.adId,
+            setShowAdd: false,
+            slug: slug,
+          );
+        },
       );
       if (response.status) {
         _data = newsDetailDataResFromJson(jsonEncode(response.data));

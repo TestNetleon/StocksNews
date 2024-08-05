@@ -35,10 +35,33 @@ class _TrendingViewState extends State<TrendingView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // _showImagePopup();
+      // _showImageBottomSheet();
       // context.read<TrendingProvider>().getData();
       log("TRENDING INDEX   => ${widget.index}");
     });
   }
+
+  // void _showImagePopup() {
+  //   showDialog(
+  //     context: navigatorKey.currentContext!,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         child: GestureDetector(
+  //           onTap: () {
+  //             Navigator.pop(context);
+  //             openUrl("https://stocks.news/muln/");
+  //           },
+  //           child: Container(
+  //             padding: EdgeInsets.all(10),
+  //             child: Image.asset(Images.bannerImage),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

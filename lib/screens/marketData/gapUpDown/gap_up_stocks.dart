@@ -288,7 +288,9 @@ class _GapUpStocksState extends State<GapUpStocks> {
             );
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   }
 }
