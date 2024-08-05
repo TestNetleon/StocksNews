@@ -240,7 +240,7 @@ class _NewMembershipUpgradeCurrentPlanState
   List<bool> isSelectedList = List.generate(3, (_) => false);
   int selectedIndex = -1;
 
-  Future _subscribe() async {
+  Future _subscribe({type}) async {
     UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
     if (provider.user == null) {
       Utils().showLog("---ask to login----");
@@ -265,7 +265,7 @@ class _NewMembershipUpgradeCurrentPlanState
     if (provider.user?.phone != null &&
         provider.user?.phone != '' &&
         provider.user?.membership?.purchased == 0) {
-      await RevenueCatService.initializeSubscription();
+      await RevenueCatService.initializeSubscription(type: type);
     }
   }
 
@@ -390,15 +390,12 @@ class _NewMembershipUpgradeCurrentPlanState
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  // if (widget.withClickCondition) {
-                  //   _subscribe();
-                  // } else {
-                  //   RevenueCatService.initializeSubscription(
-                  //       type: data?.plans?[index].type);
-                  // }
-
-                  RevenueCatService.initializeSubscription(
-                      type: data?.plans?[index].type);
+                  if (widget.withClickCondition) {
+                    _subscribe(type: data?.plans?[index].type);
+                  } else {
+                    RevenueCatService.initializeSubscription(
+                        type: data?.plans?[index].type);
+                  }
 
                   for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
                     data?.plans?[i].selected = false;

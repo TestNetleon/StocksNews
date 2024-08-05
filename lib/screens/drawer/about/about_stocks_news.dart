@@ -203,22 +203,23 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
       );
     }
     // Trading Simulator
-    if (user != null) {
-      visibleAboutTiles.add(
-        DrawerRes(
-          iconData: Icons.bakery_dining_outlined,
-          text: "Trading Simulator",
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const TsDashboard(),
-              ),
-            );
-          },
-        ),
-      );
-    }
+    // if (user != null) {
+    //   visibleAboutTiles.add(
+    //     DrawerRes(
+    //       iconData: Icons.bakery_dining_outlined,
+    //       text: "Trading Simulator",
+    //       onTap: () {
+    //         Navigator.push(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => const TsDashboard(),
+    //           ),
+    //         );
+    //       },
+    //     ),
+    //   );
+    // }
+
     // Refer and Earn
     if (provider.extra?.referral?.shwReferral == true) {
       visibleAboutTiles.add(
