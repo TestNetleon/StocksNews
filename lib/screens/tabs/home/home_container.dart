@@ -16,13 +16,16 @@ import 'package:stocks_news_new/widgets/error_display_common.dart';
 import 'package:stocks_news_new/widgets/loading.dart';
 import 'package:stocks_news_new/widgets/screen_title.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
+import 'package:stocks_news_new/widgets/theme_button.dart';
 import 'package:stocks_news_new/widgets/theme_button_small.dart';
 // import 'package:upgrader/upgrader.dart';
 import '../../../modals/home_insider_res.dart';
 import '../../../utils/colors.dart';
 import '../../../widgets/custom/refer.dart';
 import '../../../widgets/custom/refresh_indicator.dart';
-import '../../Adds/adds.dart';
+import '../../AdManager/manager.dart';
+import '../../prediction/radar.dart';
+import '../../stockAnalysis/stock_analysis.dart';
 import '../news/news_item.dart';
 import 'widgets/home_inner_tabs.dart';
 import 'widgets/sliderNews/slider.dart';
@@ -61,6 +64,18 @@ class HomeContainer extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
+              ThemeButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => StockAnalysis()));
+                },
+              ),
+              ThemeButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RadarIndex()));
+                },
+              ),
               BlogItemHome(),
               const HomeTopNewsSlider(),
               const MembershipCoinsOption(),
@@ -138,16 +153,11 @@ class HomeContainer extends StatelessWidget {
               //       child: const Text('Stock Analysis')),
               // ),
               Visibility(
-                visible: provider.extra?.adManager != null &&
-                    (provider.extra?.adManager?.bannerImage != null &&
-                        provider.extra?.adManager?.bannerImage != ''),
-                child: AddOnScreen(
-                  adManager: provider.extra?.adManager,
-                  onTap: () {
-                    provider.getHomeSlider(
-                        addId: provider.extra?.adManager?.adId);
-                  },
-                ),
+                visible:
+                    provider.trendingExtra?.adManagers?.data?.place1 != null,
+                child: AdManagerIndex(
+                    places: AdPlaces.place1,
+                    data: provider.trendingExtra?.adManagers?.data?.place1),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,6 +198,13 @@ class HomeContainer extends StatelessWidget {
                       ),
                       child: const TopPlaidIndex(),
                     ),
+                  ),
+                  Visibility(
+                    visible: provider.trendingExtra?.adManagers?.data?.place2 !=
+                        null,
+                    child: AdManagerIndex(
+                        places: AdPlaces.place2,
+                        data: provider.trendingExtra?.adManagers?.data?.place2),
                   ),
                   Visibility(
                     visible: provider.homeSliderRes?.affiliateAdv != null,
@@ -380,6 +397,14 @@ class HomeContainer extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+
+              Visibility(
+                visible:
+                    provider.trendingExtra?.adManagers?.data?.place3 != null,
+                child: AdManagerIndex(
+                    places: AdPlaces.place3,
+                    data: provider.trendingExtra?.adManagers?.data?.place3),
               ),
               if (provider.extra?.disclaimer != null)
                 DisclaimerWidget(

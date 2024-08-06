@@ -143,6 +143,9 @@ class Apis {
   static const membership = "/membership/transactions";
   static const membershipSuccess = "/membership/success";
 
+  static const adViewed = "/ad-viewed";
+  static const adClicked = "/ad-clicked";
+
   // Stock Detail New ---
   static const stockDetailTab = "/stock-detail-topbar";
   static const detailEarning = "/stock-detail-earning";
@@ -187,6 +190,7 @@ class Apis {
   // static const tsRequestBuy = "/simulator/buy-share";
   // static const tsRequestSell = "/simulator/sell-share";
   static const tsOpenList = "/simulator/list-purchased-shares";
+
   // ---------   Trading Simulator End --------------
 }
 

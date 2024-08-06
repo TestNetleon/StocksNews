@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:stocks_news_new/providers/ad_provider.dart';
 import 'package:stocks_news_new/providers/ai_provider.dart';
 import 'package:stocks_news_new/providers/alert_provider.dart';
 import 'package:stocks_news_new/providers/all_stocks_provider.dart';
@@ -596,6 +597,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TradingSearchProvider()),
       ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
       ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
+      ChangeNotifierProvider(create: (_) => AdProvider()),
     ];
   }
 }

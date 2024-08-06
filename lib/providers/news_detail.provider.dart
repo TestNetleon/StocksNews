@@ -41,6 +41,7 @@ class NewsDetailProvider extends ChangeNotifier {
     bool setShowAdd = true,
   }) async {
     showAdd = setShowAdd;
+
     setStatus(Status.loading);
     try {
       Map request = pointsDeducted != null

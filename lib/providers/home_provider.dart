@@ -220,6 +220,8 @@ class HomeProvider extends ChangeNotifier {
         }
 
         _extra = (response.extra is Extra ? response.extra as Extra : null);
+
+        Utils().showLog("Inside API ${_extra == null}");
         await _player.play(AssetSource(AudioFiles.alertWeathlist));
 
         navigatorKey.currentContext!
@@ -459,6 +461,9 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
+  Extra? _trendingExtra;
+  Extra? get trendingExtra => _trendingExtra;
+
   Future getHomeTrendingData() async {
     topLoading = true;
     // popularPresent = true;
@@ -487,6 +492,9 @@ class HomeProvider extends ChangeNotifier {
         _homeTrendingRes = null;
         _error = "Data not found";
       }
+      _trendingExtra =
+          (response.extra is Extra ? response.extra as Extra : null);
+
       topLoading = false;
       _statusTrending = Status.loaded;
       notifyListeners();
