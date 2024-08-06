@@ -134,6 +134,7 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.4
   widget_and_text_animator: ^1.1.5
   floating_action_bubble_custom: ^1.0.0+2
+  visibility_detector: ^0.4.0+2
   # flutter_neumorphic_plus: ^3.4.0
 
 dev_dependencies:

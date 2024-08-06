@@ -18,118 +18,27 @@ class SdTopDisclaimer extends StatelessWidget {
       return const SizedBox();
     }
     return Padding(
-        padding: EdgeInsets.only(left: 5.sp),
-        child: Visibility(
-          visible: keyStats?.marketStatus != null,
-          child: Row(
-            children: [
-              const Icon(
-                Icons.watch_later,
-                size: 15,
+      padding: EdgeInsets.only(left: 5.sp),
+      child: Visibility(
+        visible: keyStats?.marketStatus != null,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.watch_later,
+              size: 15,
+              color: ThemeColors.greyText,
+            ),
+            const SpacerHorizontal(width: 5),
+            Text(
+              keyStats?.marketStatus ?? "",
+              style: stylePTSansRegular(
                 color: ThemeColors.greyText,
+                fontSize: 11,
               ),
-              const SpacerHorizontal(width: 5),
-              Text(
-                keyStats?.marketStatus ?? "",
-                style: stylePTSansRegular(
-                  color: ThemeColors.greyText,
-                  fontSize: 11,
-                ),
-              ),
-            ],
-          ),
-        )
-
-        // Row(
-        //   children: [
-        //     Expanded(
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: [
-        //           Visibility(
-        //             visible: keyStats?.exchange != null,
-        //             child: RichText(
-        //               text: TextSpan(
-        //                 children: [
-        //                   TextSpan(
-        //                     text: "${keyStats?.exchange} ",
-        //                     style: stylePTSansRegular(
-        //                       fontSize: 12,
-        //                       color: ThemeColors.white,
-        //                     ),
-        //                   ),
-        //                   TextSpan(
-        //                     text: "Currency in ",
-        //                     style: stylePTSansRegular(
-        //                       fontSize: 12,
-        //                       color: ThemeColors.greyText,
-        //                     ),
-        //                   ),
-        //                   TextSpan(
-        //                     text: "USD ",
-        //                     style: stylePTSansBold(fontSize: 12),
-        //                   ),
-        //                   TextSpan(
-        //                     text: "Disclaimer",
-        //                     style: stylePTSansRegular(
-        //                         fontSize: 12,
-        //                         decoration: TextDecoration.underline),
-        //                     recognizer: TapGestureRecognizer()
-        //                       ..onTap = () {
-        //                         Navigator.push(
-        //                           context,
-        //                           createRoute(
-        //                             const TCandPolicy(
-        //                               policyType: PolicyType.disclaimer,
-        //                               slug: "disclaimer",
-        //                             ),
-        //                           ),
-        //                         );
-        //                         // Navigator.push(context, TCandPolicy.path,
-        //                         //     arguments: PolicyType.disclaimer);
-        //                       },
-        //                   ),
-        //                 ],
-        //               ),
-        //             ),
-        //           ),
-        //           const SpacerVertical(height: 3),
-        //           Visibility(
-        //             visible: keyStats?.marketStatus != null,
-        //             child: Row(
-        //               children: [
-        //                 const Icon(
-        //                   Icons.watch_later,
-        //                   size: 15,
-        //                   color: ThemeColors.greyText,
-        //                 ),
-        //                 const SpacerHorizontal(width: 5),
-        //                 Text(
-        //                   keyStats?.marketStatus ?? "",
-        //                   style: stylePTSansRegular(
-        //                     color: ThemeColors.greyText,
-        //                     fontSize: 11,
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //           )
-        //         ],
-        //       ),
-        //     ),
-        //     GestureDetector(
-        //       onTap: () {
-        //         commonShare(
-        //           title:
-        //               "${provider.tabRes?.keyStats?.name} (${provider.tabRes?.keyStats?.symbol})",
-        //           url: provider.tabRes?.shareUrl ?? "",
-        //         );
-        //       },
-        //       child: const Icon(Icons.ios_share),
-        //     )
-        //     // Icon(Icons.ios_share)
-        //   ],
-        // ),
-        );
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

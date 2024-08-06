@@ -21,6 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../widgets/custom/update_error.dart';
 import '../../../../widgets/disclaimer_widget.dart';
 import '../../../../widgets/theme_button_small.dart';
+import '../../../AdManager/manager.dart';
 import '../../../t&cAndPolicy/tc_policy.dart';
 import '../newsDetail/news_details_body.dart';
 import '../newsDetail/news_details_list.dart';
@@ -168,6 +169,38 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                                       ),
                             SpacerVertical(height: Dimen.itemSpacing.sp),
                             HtmlWidget(
+                              customWidgetBuilder: (element) {
+                                if (element.innerHtml
+                                    .contains('DISPLAY_AD_1')) {
+                                  return Visibility(
+                                    visible: provider.extra?.adManagers?.data
+                                            ?.newsPlace1 !=
+                                        null,
+                                    child: AdManagerIndex(
+                                        screen: AdScreen.aiNews,
+                                        places: AdPlaces.place1,
+                                        margin: EdgeInsets.zero,
+                                        data: provider.extraD?.adManagers?.data
+                                            ?.newsPlace1),
+                                  );
+                                }
+
+                                if (element.innerHtml
+                                    .contains('DISPLAY_AD_2')) {
+                                  return Visibility(
+                                    visible: provider.extra?.adManagers?.data
+                                            ?.newsPlace2 !=
+                                        null,
+                                    child: AdManagerIndex(
+                                        screen: AdScreen.aiNews,
+                                        places: AdPlaces.place2,
+                                        margin: EdgeInsets.zero,
+                                        data: provider.extraD?.adManagers?.data
+                                            ?.newsPlace2),
+                                  );
+                                }
+                                return null;
+                              },
                               onTapUrl: (url) async {
                                 if (url.startsWith(
                                     "https://app.stocks.news/page/")) {
@@ -382,6 +415,13 @@ class _NewsDetailsBodyAIState extends State<NewsDetailsBodyAI> {
                               ),
                             ),
                             const SpacerVertical(height: 25),
+                            AdManagerIndex(
+                              screen: AdScreen.aiNews,
+                              places: AdPlaces.place3,
+                              margin: EdgeInsets.zero,
+                              data:
+                                  provider.extraD?.adManagers?.data?.newsPlace3,
+                            ),
                             const ScreenTitle(
                               title: "More News to Read",
                               dividerPadding: EdgeInsets.zero,

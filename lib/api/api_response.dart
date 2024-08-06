@@ -122,8 +122,10 @@ class Extra {
   final bool? notificationSetting;
   final List<PointsSummaryRes>? pointsSummary;
   final AdManagerRes? adManager;
+  final AdManagersRes? adManagers;
 
   Extra({
+    this.adManagers,
     this.adManager,
     this.storeTitle,
     this.storeSubTitle,
@@ -209,7 +211,9 @@ class Extra {
         adManager: json["ad_manager"] == null
             ? null
             : AdManagerRes.fromJson(json["ad_manager"]),
-
+        adManagers: json["ad_managers"] == null
+            ? null
+            : AdManagersRes.fromJson(json["ad_managers"]),
         tagLine: json['tag_line'],
         showFeatured: json['show_featured'],
         showWatchlist: json['show_watchlist'],
@@ -345,6 +349,8 @@ class Extra {
       );
 
   Map<String, dynamic> toJson() => {
+        "ad_managers": adManagers?.toJson(),
+
         "feeback_type": feebackType == null
             ? []
             : List<dynamic>.from(feebackType!.map((x) => x)),
@@ -437,6 +443,110 @@ class Extra {
         "show_faq": showFAQ,
         "old_app": isOldApp,
         "show_notification_setting": notificationSetting,
+      };
+}
+
+class AdManagersRes {
+  final ManagersScreenRes? data;
+  final PopupAdRes? popUp;
+
+  AdManagersRes({
+    this.data,
+    this.popUp,
+  });
+
+  factory AdManagersRes.fromJson(Map<String, dynamic> json) => AdManagersRes(
+        data: json["data"] == null
+            ? null
+            : ManagersScreenRes.fromJson(json["data"]),
+        popUp:
+            json["popup"] == null ? null : PopupAdRes.fromJson(json["popup"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": data?.toJson(),
+        "popup": popUp?.toJson(),
+      };
+}
+
+class ManagersScreenRes {
+  final PopupAdRes? place1;
+  final PopupAdRes? place2;
+  final PopupAdRes? place3;
+  final PopupAdRes? newsPlace1;
+  final PopupAdRes? newsPlace2;
+  final PopupAdRes? newsPlace3;
+
+  ManagersScreenRes({
+    this.place1,
+    this.place2,
+    this.place3,
+    this.newsPlace1,
+    this.newsPlace2,
+    this.newsPlace3,
+  });
+
+  factory ManagersScreenRes.fromJson(Map<String, dynamic> json) =>
+      ManagersScreenRes(
+        place1: json["home-place-1"] == null
+            ? null
+            : PopupAdRes.fromJson(json["home-place-1"]),
+        place2: json["home-place-2"] == null
+            ? null
+            : PopupAdRes.fromJson(json["home-place-2"]),
+        place3: json["home-place-3"] == null
+            ? null
+            : PopupAdRes.fromJson(json["home-place-3"]),
+        newsPlace1: json["news-place-1"] == null
+            ? null
+            : PopupAdRes.fromJson(json["news-place-1"]),
+        newsPlace2: json["news-place-2"] == null
+            ? null
+            : PopupAdRes.fromJson(json["news-place-2"]),
+        newsPlace3: json["news-place-3"] == null
+            ? null
+            : PopupAdRes.fromJson(json["news-place-3"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "home-place-1": place1?.toJson(),
+        "home-place-2": place2?.toJson(),
+        "home-place-3": place3?.toJson(),
+        "news-place-1": newsPlace1?.toJson(),
+        "news-place-2": newsPlace2?.toJson(),
+        "news-place-3": newsPlace3?.toJson(),
+      };
+}
+
+class PopupAdRes {
+  final String? id;
+  final String? title;
+  final String? image;
+  final String? url;
+  final String? adText;
+
+  PopupAdRes({
+    this.id,
+    this.title,
+    this.image,
+    this.url,
+    this.adText,
+  });
+
+  factory PopupAdRes.fromJson(Map<String, dynamic> json) => PopupAdRes(
+        id: json["_id"],
+        title: json["title"],
+        image: json["image"],
+        url: json["url"],
+        adText: json["ad_text"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "title": title,
+        "image": image,
+        "url": url,
+        "ad_text": adText,
       };
 }
 

@@ -10,6 +10,7 @@ import 'package:stocks_news_new/database/database_helper.dart';
 import 'package:stocks_news_new/modals/news_datail_res.dart';
 import 'package:stocks_news_new/providers/news_detail.provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
+import 'package:stocks_news_new/screens/AdManager/manager.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/verifyIdentity/verify_identity.dart';
 import 'package:stocks_news_new/screens/blogDetail/widgets/item.dart';
@@ -320,15 +321,38 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                                       ),
                             SpacerVertical(height: Dimen.itemSpacing.sp),
                             HtmlWidget(
-                              // customStylesBuilder: (element) {
-                              //   if (element.localName == 'a') {
-                              //     return {
-                              //       'color': '#1bb449',
-                              //       'text-decoration': 'none'
-                              //     };
-                              //   }
-                              //   return null;
-                              // },
+                              customWidgetBuilder: (element) {
+                                if (element.innerHtml
+                                    .contains('DISPLAY_AD_1')) {
+                                  return Visibility(
+                                    visible: provider.extra?.adManagers?.data
+                                            ?.newsPlace1 !=
+                                        null,
+                                    child: AdManagerIndex(
+                                        screen: AdScreen.newsDetail,
+                                        places: AdPlaces.place1,
+                                        margin: EdgeInsets.zero,
+                                        data: provider.extra?.adManagers?.data
+                                            ?.newsPlace1),
+                                  );
+                                }
+
+                                if (element.innerHtml
+                                    .contains('DISPLAY_AD_2')) {
+                                  return Visibility(
+                                    visible: provider.extra?.adManagers?.data
+                                            ?.newsPlace2 !=
+                                        null,
+                                    child: AdManagerIndex(
+                                        screen: AdScreen.newsDetail,
+                                        places: AdPlaces.place2,
+                                        margin: EdgeInsets.zero,
+                                        data: provider.extra?.adManagers?.data
+                                            ?.newsPlace2),
+                                  );
+                                }
+                                return null;
+                              },
                               onTapUrl: (url) async {
                                 if (url.startsWith(
                                     "https://app.stocks.news/page/")) {
@@ -362,6 +386,7 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               textStyle: styleGeorgiaRegular(
                                   fontSize: 18, height: 1.5),
                             ),
+
                             // const SpacerVertical(height: 20),
                             if (provider.data?.feedbackMsg != null)
                               ArticleFeedback(
@@ -540,6 +565,17 @@ class _NewsDetailsBodyState extends State<NewsDetailsBody> {
                               ),
                             ),
                             const SpacerVertical(height: 25),
+                            Visibility(
+                              visible: provider
+                                      .extra?.adManagers?.data?.newsPlace3 !=
+                                  null,
+                              child: AdManagerIndex(
+                                  places: AdPlaces.place3,
+                                  screen: AdScreen.newsDetail,
+                                  margin: EdgeInsets.zero,
+                                  data: provider
+                                      .extra?.adManagers?.data?.newsPlace3),
+                            ),
                             const ScreenTitle(title: "More News to Read"),
                             ListView.separated(
                               itemCount: provider.data?.otherPost?.length ?? 0,

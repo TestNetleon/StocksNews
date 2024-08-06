@@ -29,7 +29,8 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/custom/alert_popup.dart';
 import 'package:stocks_news_new/widgets/custom/required_login.dart';
-import '../screens/Adds/adds.dart';
+// import '../screens/Adds/adds.dart';
+import '../screens/AdManager/item.dart';
 import '../screens/stockDetail/index.dart';
 
 String? validAuthToken;
@@ -166,17 +167,11 @@ Future<ApiResponse> apiRequest({
       if (res.extra is Extra && session) {
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
-        AdManagerRes? adManagerRes = (res.extra as Extra).adManager;
+        AdManagersRes? adManagerRes = (res.extra as Extra).adManagers;
 
-        if (adManagerRes != null &&
-            showAdd &&
-            (adManagerRes.popUpImage != null &&
-                adManagerRes.popUpImage != '')) {
+        if (adManagerRes != null && showAdd && adManagerRes.popUp != null) {
           showAdd = false;
-          addOnSheet(
-            adManager: adManagerRes,
-            onTap: onAddClick,
-          );
+          addOnSheetManagers(popUp: adManagerRes.popUp);
         }
 
         if (checkAppUpdate) {

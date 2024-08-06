@@ -56,6 +56,10 @@ enum AddType { alert, watchlist }
 
 enum SocialTrendingType { now, recently, cap }
 
+enum AdPlaces { place1, place2, place3 }
+
+enum AdScreen { home, newsDetail, aiNews }
+
 // ------ These are global constants to access in complete app --------
 bool isPhone = true;
 bool isAppInForeground = false;
@@ -77,6 +81,26 @@ bool signUpVisible = false;
 String? geoCountryCode;
 bool isSVG = false;
 bool showAdd = false;
+
+//------------ Ad API Globals
+
+Map<AdScreen, Map<AdPlaces, bool>> adVisibilityMap = {
+  AdScreen.home: {
+    AdPlaces.place1: false,
+    AdPlaces.place2: false,
+    AdPlaces.place3: false,
+  },
+  AdScreen.newsDetail: {
+    AdPlaces.place1: false,
+    AdPlaces.place2: false,
+    AdPlaces.place3: false,
+  },
+  AdScreen.aiNews: {
+    AdPlaces.place1: false,
+    AdPlaces.place2: false,
+    AdPlaces.place3: false,
+  },
+};
 
 // String? clientId;
 // String? secret;
