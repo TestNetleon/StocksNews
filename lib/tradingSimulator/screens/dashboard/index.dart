@@ -8,7 +8,11 @@ import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/custom_tab_container.dart';
 
 class TsDashboard extends StatelessWidget {
-  const TsDashboard({super.key});
+  final int initialIndex;
+  const TsDashboard({
+    super.key,
+    this.initialIndex = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +24,25 @@ class TsDashboard extends StatelessWidget {
         showPortfolio: true,
         title: "Virtual Trading Account",
       ),
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.fromLTRB(Dimen.padding, 0, Dimen.padding, 0),
         child: Column(
           children: [
             TsDashboardHeader(),
             Expanded(
               child: CommonTabContainer(
+                initialIndex: initialIndex,
                 scrollable: false,
                 tabPaddingNew: false,
-                tabs: [
+                tabs: const [
                   "Open",
                   "Pending",
-                  "Closed",
+                  "Transactions",
                 ],
-                widgets: [
+                widgets: const [
                   TsOpenList(),
                   SummaryErrorWidget(title: "No pending orders"),
-                  SummaryErrorWidget(title: "No closed orders"),
+                  SummaryErrorWidget(title: "No transactions"),
                 ],
               ),
             ),

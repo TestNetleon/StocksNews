@@ -133,6 +133,7 @@ class _UserCardState extends State<UserCard> {
                     child: InkWell(
                       onTap: userProvider.user?.membership?.purchased == 1
                           ? () {
+                              Scaffold.of(context).closeDrawer();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -261,6 +262,7 @@ class _UserCardState extends State<UserCard> {
                         ),
                         onPressed: () {
                           Scaffold.of(context).closeDrawer();
+                          // Navigator.pop(context);
                           _upgradeSubscription();
                           // Navigator.push(
                           //   context,

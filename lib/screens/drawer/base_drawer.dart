@@ -54,6 +54,11 @@ class _BaseDrawerState extends State<BaseDrawer> {
     setState(() {});
   }
 
+  void _closeDrawer() {
+    // Navigator.pop(context);
+    Scaffold.of(context).closeDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     HomeProvider provider = context.watch<HomeProvider>();
@@ -146,6 +151,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             visible: userProvider.user != null,
                             child: UserCard(
                               onTap: () {
+                                _closeDrawer();
                                 easeOutBuilder(
                                   context,
                                   child:
@@ -167,6 +173,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                                 userProvider.user?.membership?.purchased == 1,
                             child: GestureDetector(
                               onTap: () {
+                                _closeDrawer();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -247,7 +254,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Scaffold.of(context).closeDrawer();
+                                  _closeDrawer();
                                   Navigator.push(
                                     navigatorKey.currentContext!,
                                     MaterialPageRoute(
@@ -282,7 +289,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                               const SpacerHorizontal(width: 40),
                               InkWell(
                                 onTap: () {
-                                  Scaffold.of(context).closeDrawer();
+                                  _closeDrawer();
                                   Navigator.push(
                                     navigatorKey.currentContext!,
                                     MaterialPageRoute(
@@ -341,7 +348,10 @@ class _BaseDrawerState extends State<BaseDrawer> {
                             length: marketData.length,
                             getChild: (index) {
                               return InkWell(
-                                onTap: marketData[index].onTap,
+                                onTap: () {
+                                  _closeDrawer();
+                                  marketData[index].onTap!();
+                                },
                                 child: DrawerNewWidget(
                                   image: marketData[index].icon,
                                   icon: marketData[index].iconData,
@@ -378,6 +388,7 @@ class _BaseDrawerState extends State<BaseDrawer> {
                           // const SpacerVertical(height: 20),
                           InkWell(
                             onTap: () {
+                              _closeDrawer();
                               easeOutBuilder(
                                 context,
                                 child: AboutStocksNews(version: version ?? ""),

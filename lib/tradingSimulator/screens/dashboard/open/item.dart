@@ -71,7 +71,7 @@ class TsOpenListItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "Price : ${item?.currentPrice}",
+                            "Price: ${item?.currentPrice}",
                             style: styleGeorgiaRegular(
                               // color: ThemeColors.greyText,
                               fontSize: 14,
@@ -106,6 +106,11 @@ class TsOpenListItem extends StatelessWidget {
                       style: stylePTSansBold(fontSize: 18),
                     ),
                     const SpacerVertical(height: 5),
+                    Text(
+                      // "${item?.price}",
+                      "Avg: ${item?.price}",
+                      style: stylePTSansRegular(fontSize: 14),
+                    ),
                     // RichText(
                     //   text: TextSpan(
                     //     children: [

@@ -51,7 +51,11 @@ class _TsOpenListState extends State<TsOpenList> {
           return TsOpenListItem(
             item: item,
             onTap: () {
-              tradeSheet(symbol: item.symbol, doPop: false);
+              tradeSheet(
+                symbol: item.symbol,
+                doPop: false,
+                qty: item.quantity,
+              );
             },
           );
         },
