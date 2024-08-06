@@ -145,7 +145,6 @@ class MembershipProvider extends ChangeNotifier {
     String? notificationId,
   }) async {
     setStatus(Status.loading);
-
     try {
       Map request = {
         "token":
@@ -181,6 +180,7 @@ class MembershipProvider extends ChangeNotifier {
               keys?.playStore ?? "goog_KXHVJRLChlyjoOamWsqCWQSJZfI")
             ..appUserID = userRes?.userId ?? "";
         } else if (Platform.isIOS) {
+          Utils().showLog("---Platform.isIOS-----");
           configuration = PurchasesConfiguration(
               keys?.appStore ?? "appl_kHwXNrngqMNktkEZJqYhEgLjbcC")
             ..appUserID = userRes?.userId ?? "";
@@ -188,6 +188,7 @@ class MembershipProvider extends ChangeNotifier {
 
         try {
           if (configuration != null) {
+            Utils().showLog("--integrating configuration----");
             await Purchases.configure(configuration);
           }
           Offerings? offerings;
@@ -206,6 +207,9 @@ class MembershipProvider extends ChangeNotifier {
               // String price = offering
               //     .availablePackages.first.storeProduct.priceString
               //     .replaceAll(RegExp(r'\s+'), '');
+
+              Utils().showLog(
+                  "--Pricing => ${offering.availablePackages.first.storeProduct.priceString}");
 
               _membershipInfoRes?.plans?[i].price =
                   offering.availablePackages.first.storeProduct.priceString;

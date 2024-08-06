@@ -390,15 +390,15 @@ class _NewMembershipUpgradeCurrentPlanState
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  // if (widget.withClickCondition) {
-                  //   _subscribe();
-                  // } else {
-                  //   RevenueCatService.initializeSubscription(
-                  //       type: data?.plans?[index].type);
-                  // }
+                  if (widget.withClickCondition) {
+                    _subscribe();
+                  } else {
+                    RevenueCatService.initializeSubscription(
+                        type: data?.plans?[index].type);
+                  }
 
-                  RevenueCatService.initializeSubscription(
-                      type: data?.plans?[index].type);
+                  // RevenueCatService.initializeSubscription(
+                  //     type: data?.plans?[index].type);
 
                   for (int i = 0; i < (data?.plans?.length ?? 0); i++) {
                     data?.plans?[i].selected = false;
