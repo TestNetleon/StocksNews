@@ -17,19 +17,22 @@ import '../modals/search_new.dart';
 //
 class SearchProvider extends ChangeNotifier {
   List<SearchRes>? _data;
+  List<SearchRes>? get data => _data;
+
   List<TopSearch>? _topSearch;
-  String? _error;
+  List<TopSearch>? get topSearch => _topSearch;
+
   Status _status = Status.ideal;
   Status get status => _status;
-  List<SearchRes>? get data => _data;
-  List<TopSearch>? get topSearch => _topSearch;
   bool get isLoading => _status == Status.loading || _status == Status.ideal;
-  String? get error => _error ?? Const.errSomethingWrong;
+
   final FocusNode searchFocusNode = FocusNode();
+
+  String? _error;
+  String? get error => _error ?? Const.errSomethingWrong;
 
   Status _statusS = Status.ideal;
   Status get statusS => _statusS;
-
   bool get isLoadingS => _statusS == Status.loading;
 
   SearchNewRes? _dataNew;
@@ -65,9 +68,6 @@ class SearchProvider extends ChangeNotifier {
   Future searchSymbols(request, {showProgress = false}) async {
     setStatus(Status.loading);
     try {
-      // Map request = {
-      //   "token": navigatorKey.currentContext!.read<UserProvider>().user?.token??""
-      // };
       ApiResponse response = await apiRequest(
         url: Apis.search,
         request: request,
@@ -79,7 +79,6 @@ class SearchProvider extends ChangeNotifier {
       } else {
         _data = null;
         notifyListeners();
-        // showErrorMessage(message: response.message);
       }
       setStatus(Status.loaded);
     } catch (e) {

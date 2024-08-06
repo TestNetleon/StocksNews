@@ -183,13 +183,13 @@ class Apis {
   static const tradingMostSearch = "/simulator/most-search-symbol";
   static const tsRequestBuy = "/simulator/buy";
   static const tsRequestSell = "/simulator/sell";
+  static const tsSearchSymbol = "/simulator/search-symbol";
   // static const tsRequestBuy = "/simulator/buy-share";
   // static const tsRequestSell = "/simulator/sell-share";
   static const tsOpenList = "/simulator/list-purchased-shares";
   // ---------   Trading Simulator End --------------
 }
 
-//
 class ApiKeys {
   static const apiKey = "AIzaSyA26KdOgpIBTIVuNfZwRoixNsfPnMKT2rE";
   static const appId = "1:661986825229:android:ce1c460925d54b155bb144";

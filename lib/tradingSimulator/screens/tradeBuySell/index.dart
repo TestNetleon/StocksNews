@@ -30,6 +30,8 @@ class TradeBuySellIndex extends StatelessWidget {
         isPopback: true,
         title: keyStats?.symbol ?? "",
         subTitle: keyStats?.name ?? "",
+        showTrailing: false,
+        canSearch: false,
         widget: keyStats?.symbol == null
             ? null
             : Row(

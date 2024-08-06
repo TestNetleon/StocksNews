@@ -11,47 +11,55 @@ class TsOpenListRes {
   final dynamic symbol;
   final dynamic quantity;
   final dynamic price;
-  final dynamic totalAmount;
+  final dynamic currentPrice;
+  final dynamic invested;
   final dynamic currentAmountOfShare;
   final dynamic percentChangeLoss;
   final dynamic image;
-  // final DateTime createdAt;
-  // final DateTime updatedAt;
+  final dynamic change;
+  final dynamic changesPercentage;
+  final dynamic company;
 
   TsOpenListRes({
     required this.symbol,
     required this.quantity,
     required this.price,
-    required this.totalAmount,
+    required this.currentPrice,
+    required this.invested,
     required this.currentAmountOfShare,
     required this.percentChangeLoss,
     required this.image,
-    // required this.createdAt,
-    // required this.updatedAt,
+    required this.change,
+    required this.changesPercentage,
+    required this.company,
   });
 
   factory TsOpenListRes.fromJson(Map<String, dynamic> json) => TsOpenListRes(
         symbol: json["symbol"],
         quantity: json["quantity"],
         price: json["price"],
-        totalAmount: json["total_amount"],
+        currentPrice: json["currentPrice"],
+        invested: json["invested"],
         currentAmountOfShare: json["current_amount_of_share"],
         percentChangeLoss: json["percent_change_loss"],
         image: json["image"],
-        // createdAt: DateTime.parse(json["created_at"]),
-        // updatedAt: DateTime.parse(json["updated_at"]),
+        change: json["change"],
+        changesPercentage: json["changesPercentage"],
+        company: json["company"],
       );
 
   Map<String, dynamic> toJson() => {
         "symbol": symbol,
         "quantity": quantity,
         "price": price,
-        "total_amount": totalAmount,
+        "currentPrice": currentPrice,
+        "invested": invested,
         "current_amount_of_share": currentAmountOfShare,
         "percent_change_loss": percentChangeLoss,
         "image": image,
-        // "created_at": createdAt.toIso8601String(),
-        // "updated_at": updatedAt.toIso8601String(),
+        "change": change,
+        "changesPercentage": changesPercentage,
+        "company": company,
       };
 }
 

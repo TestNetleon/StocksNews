@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -63,24 +64,29 @@ class RevenueCatService {
 
         closeGlobalProgressDialog();
 
+        log("TYPE ==>> annual-membership   =>>  $type ");
+
         PaywallResult result = await RevenueCatUI.presentPaywall(
           offering: offerings.getOffering(type ?? 'access'),
+          // offering: offerings.getOffering("annual-membership"),
         );
+
         // Offering? offering = offerings.getOffering(type ?? 'access');
         // if (offering != null) {
         //   Utils().showLog(
         //       "PRICE ${offering.availablePackages.first.storeProduct.price}");
         //   Utils().showLog(
         //       "COUNTRY CODE ${offering.availablePackages.first.storeProduct.currencyCode}");
-
         //   Utils().showLog(
         //       "COUNTRY CODE ${offering.availablePackages.first.storeProduct.priceString}");
         // } else {
         //   //
         // }
 
-        await _handlePaywallResult(result,
-            isMembership: type == null || type == '');
+        await _handlePaywallResult(
+          result,
+          isMembership: type == null || type == '',
+        );
       } else {
         closeGlobalProgressDialog();
       }

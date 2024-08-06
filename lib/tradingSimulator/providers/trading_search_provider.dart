@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stocks_news_new/api/api_requester.dart';
 import 'package:stocks_news_new/api/api_response.dart';
 import 'package:stocks_news_new/api/apis.dart';
+import 'package:stocks_news_new/modals/search_res.dart';
 import 'package:stocks_news_new/tradingSimulator/modals/trading_search_res.dart';
 import 'package:stocks_news_new/providers/user_provider.dart';
 import 'package:stocks_news_new/route/my_app.dart';
@@ -25,8 +26,10 @@ class TradingSearchProvider extends ChangeNotifier {
 
   Status _statusS = Status.ideal;
   Status get statusS => _statusS;
-
   bool get isLoadingS => _statusS == Status.loading;
+
+  List<SearchRes>? _dataNew;
+  List<SearchRes>? get dataNew => _dataNew;
 
   Extra? _extra;
   Extra? get extra => _extra;
@@ -44,8 +47,7 @@ class TradingSearchProvider extends ChangeNotifier {
   void clearSearch() {
     _status = Status.ideal;
     _statusS = Status.ideal;
-    _data = null;
-    // _dataNew = null;
+    _dataNew = null;
     notifyListeners();
   }
 
@@ -67,13 +69,36 @@ class TradingSearchProvider extends ChangeNotifier {
         _extra = (response.extra is Extra ? response.extra as Extra : null);
         _data = tradingSearchTickerResFromJson(jsonEncode(response.data));
       } else {
-        // _data = null;
+        _data = null;
+        _error = response.message ?? Const.errSomethingWrong;
         // showErrorMessage(message: response.message);
       }
       setStatus(Status.ideal);
     } catch (e) {
+      _data = null;
+      _error = Const.errSomethingWrong;
       Utils().showLog(e.toString());
       setStatus(Status.ideal);
+    }
+  }
+
+  Future searchSymbols(request, {showProgress = false}) async {
+    setStatusS(Status.loading);
+    try {
+      ApiResponse response = await apiRequest(
+        url: Apis.tsSearchSymbol,
+        request: request,
+        showProgress: showProgress,
+      );
+      if (response.status) {
+        _dataNew = searchResFromJson(jsonEncode(response.data));
+      } else {
+        _dataNew = null;
+      }
+      setStatusS(Status.loaded);
+    } catch (e) {
+      Utils().showLog(e.toString());
+      setStatusS(Status.loaded);
     }
   }
 }

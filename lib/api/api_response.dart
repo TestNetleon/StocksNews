@@ -445,6 +445,7 @@ class AdManagerRes {
   final String? bannerImage, popUpImage;
   final String? url;
   final String? adId;
+  final dynamic showOnHome;
 
   AdManagerRes({
     this.adText,
@@ -452,14 +453,17 @@ class AdManagerRes {
     this.popUpImage,
     this.url,
     this.adId,
+    this.showOnHome,
   });
 
   factory AdManagerRes.fromJson(Map<String, dynamic> json) => AdManagerRes(
-      adText: json["ad_text"],
-      bannerImage: json["banner_image"],
-      popUpImage: json["popup_image"],
-      url: json["url"],
-      adId: json['_id']);
+        adText: json["ad_text"],
+        bannerImage: json["banner_image"],
+        popUpImage: json["popup_image"],
+        url: json["url"],
+        adId: json['_id'],
+        showOnHome: json['show_on_home'],
+      );
 
   Map<String, dynamic> toJson() => {
         "ad_text": adText,
@@ -467,6 +471,7 @@ class AdManagerRes {
         "popup_image": popUpImage,
         "url": url,
         "_id": adId,
+        "show_on_home": showOnHome,
       };
 }
 

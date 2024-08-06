@@ -43,7 +43,8 @@ class TsOpenListItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            item?.symbol ?? "",
+                            // item?.symbol ?? "",
+                            "${item?.company}",
                             style: styleGeorgiaBold(fontSize: 18),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -67,14 +68,30 @@ class TsOpenListItem extends StatelessWidget {
                         ],
                       ),
                       const SpacerVertical(height: 5),
-                      Text(
-                        item?.symbol ?? "",
-                        style: styleGeorgiaRegular(
-                          color: ThemeColors.greyText,
-                          fontSize: 12,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Row(
+                        children: [
+                          Text(
+                            "Price : ${item?.currentPrice}",
+                            style: styleGeorgiaRegular(
+                              // color: ThemeColors.greyText,
+                              fontSize: 14,
+                            ),
+                            // maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            " (${item?.changesPercentage})",
+                            style: styleGeorgiaRegular(
+                              color:
+                                  (item?.changesPercentage ?? "").contains("-")
+                                      ? Colors.red
+                                      : Colors.green,
+                              fontSize: 14,
+                            ),
+                            // maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -83,32 +100,35 @@ class TsOpenListItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${item?.price}",
-                        style: stylePTSansBold(fontSize: 18)),
-                    const SpacerVertical(height: 5),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                // "${item?.change} (${item?.changePercentage?.toCurrency()}%)",
-                                "(${item?.percentChangeLoss})",
-                            style: stylePTSansRegular(
-                              fontSize: 14,
-                              color: item?.percentChangeLoss.contains('-')
-                                  ? Colors.red
-                                  : Colors.green,
-                            ),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      // "${item?.price}",
+                      "${item?.quantity} Qty",
+                      style: stylePTSansBold(fontSize: 18),
                     ),
+                    const SpacerVertical(height: 5),
+                    // RichText(
+                    //   text: TextSpan(
+                    //     children: [
+                    //       TextSpan(
+                    //         text:
+                    //             // "${item?.change} (${item?.changePercentage?.toCurrency()}%)",
+                    //             "(${item?.percentChangeLoss})",
+                    //         style: stylePTSansRegular(
+                    //           fontSize: 14,
+                    //           color: item?.percentChangeLoss.contains('-')
+                    //               ? Colors.red
+                    //               : Colors.green,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 )
               ],
             ),
 
-            // const Divider(color: ThemeColors.greyBorder, height: 10),
+            const Divider(color: ThemeColors.greyBorder, height: 10),
 
             // const SpacerVertical(height: 5),
             // Align(
@@ -122,7 +142,7 @@ class TsOpenListItem extends StatelessWidget {
             //       ),
             //       const SpacerHorizontal(width: 5),
             //       Text(
-            //         "${item?.shares ?? "N/A"} Qty",
+            //         "${item?.quantity ?? "N/A"} Qty",
             //         style: stylePTSansRegular(fontSize: 14),
             //         maxLines: 1,
             //         overflow: TextOverflow.ellipsis,
@@ -130,74 +150,74 @@ class TsOpenListItem extends StatelessWidget {
             //     ],
             //   ),
             // ),
-            // const SpacerVertical(height: 5),
-            // Row(
-            //   children: [
-            //     Flexible(
-            //       child: Column(
-            //         children: [
-            //           Text(
-            //             "Invested",
-            //             style: stylePTSansRegular(
-            //               color: ThemeColors.greyText,
-            //               fontSize: 13,
-            //             ),
-            //           ),
-            //           const SpacerVertical(height: 3),
-            //           Text(
-            //             item?.invested == null
-            //                 ? item?.invested?.toCurrency() ?? "N/A"
-            //                 : "\$${item?.invested?.toCurrency() ?? "N/A"}",
-            //             style: stylePTSansBold(
-            //                 color: ThemeColors.white, fontSize: 14),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //     const SpacerHorizontal(width: 40),
-            //     Flexible(
-            //       child: Column(
-            //         children: [
-            //           Text(
-            //             "Current",
-            //             style: stylePTSansRegular(
-            //               color: ThemeColors.greyText,
-            //               fontSize: 13,
-            //             ),
-            //           ),
-            //           const SpacerVertical(height: 3),
-            //           Text(
-            //             item?.invested == null
-            //                 ? (item?.invested?.toCurrency()) ?? "N/A"
-            //                 : "\$${item?.invested?.toCurrency() ?? "N/A"}",
-            //             style: stylePTSansBold(
-            //                 color: ThemeColors.white, fontSize: 14),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //     const SpacerHorizontal(width: 40),
-            //     Flexible(
-            //       child: Column(
-            //         children: [
-            //           Text(
-            //             "4.33%",
-            //             style: stylePTSansRegular(
-            //               color: ThemeColors.sos,
-            //               fontSize: 13,
-            //             ),
-            //           ),
-            //           const SpacerVertical(height: 3),
-            //           Text(
-            //             "-\$0.22",
-            //             style: stylePTSansBold(
-            //                 color: ThemeColors.sos, fontSize: 14),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            const SpacerVertical(height: 5),
+            Row(
+              children: [
+                Flexible(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Invested",
+                        style: stylePTSansRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SpacerVertical(height: 3),
+                      Text(
+                        "${item?.invested}",
+                        style: stylePTSansBold(
+                            color: ThemeColors.white, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+                const SpacerHorizontal(width: 40),
+                Flexible(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Current",
+                        style: stylePTSansRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SpacerVertical(height: 3),
+                      Text(
+                        "${item?.currentAmountOfShare}",
+                        style: stylePTSansBold(
+                            color: ThemeColors.white, fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+                const SpacerHorizontal(width: 40),
+                Flexible(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Change",
+                        style: stylePTSansRegular(
+                          color: ThemeColors.greyText,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SpacerVertical(height: 3),
+                      Text(
+                        "${item?.percentChangeLoss}",
+                        style: stylePTSansBold(
+                          color: (item?.percentChangeLoss ?? "").contains("-")
+                              ? Colors.red
+                              : Colors.green,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             // // Text(
             // //   "QTY: ${order?.shares ?? "N/A"}",
             // //   style: styleGeorgiaBold(fontSize: 15),

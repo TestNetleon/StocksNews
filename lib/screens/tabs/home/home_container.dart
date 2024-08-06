@@ -113,7 +113,6 @@ class HomeContainer extends StatelessWidget {
               //       },
               //       child: const Text('Radar Screen')),
               // ),
-
               // Container(
               //   margin: const EdgeInsets.fromLTRB(
               //     Dimen.padding,
@@ -159,7 +158,10 @@ class HomeContainer extends StatelessWidget {
                       provider.statusTrending != Status.loading))
                     Container(
                       margin: const EdgeInsets.only(
-                          top: Dimen.homeSpacing, left: 15, right: 15),
+                        top: Dimen.homeSpacing,
+                        left: 15,
+                        right: 15,
+                      ),
                       child: const StockInBuzz(),
                     ),
                   const FeaturedStocksIndex(),

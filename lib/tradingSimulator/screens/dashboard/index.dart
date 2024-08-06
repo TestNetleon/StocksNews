@@ -12,7 +12,6 @@ class TsDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // UserProvider userProvider = context.watch<UserProvider>();
     return BaseContainer(
       appBar: const AppBarHome(
         isPopback: true,
@@ -37,9 +36,6 @@ class TsDashboard extends StatelessWidget {
                 ],
                 widgets: [
                   TsOpenList(),
-                  //  const SummaryErrorWidget(
-                  //         title: "No open orders",
-                  //       )
                   SummaryErrorWidget(title: "No pending orders"),
                   SummaryErrorWidget(title: "No closed orders"),
                 ],
