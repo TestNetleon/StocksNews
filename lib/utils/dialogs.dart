@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +15,11 @@ import 'package:stocks_news_new/utils/bottom_sheets.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/app_update_content.dart';
 import 'package:stocks_news_new/widgets/bottom_sheet_container.dart';
 import 'package:stocks_news_new/widgets/progress_dialog.dart';
+import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
 // void showProgressDialog(BuildContext context) {
 //   showPlatformDialog(
@@ -295,40 +298,109 @@ void showPlatformBottomSheet({
   );
 }
 
-class CommonSnackbar {
-  static bool _isShowing = false;
+// class CommonSnackbar {
+//   static bool _isShowing = false;
 
-  static void show({
-    String? message,
-    int duration = 2,
-    SnackbarType type = SnackbarType.error,
-  }) {
-    if (!_isShowing) {
-      _isShowing = true;
+//   static void show({
+//     String? message,
+//     int duration = 2,
+//     Duration? displayDuration,
+//     Color? backgroundColor,
+//     Function()? onTap,
+//     SnackbarType type = SnackbarType.error,
+//   }) {
+//     if (!_isShowing) {
+//       _isShowing = true;
 
-      final snackBar = SnackBar(
-        duration: Duration(seconds: duration),
-        // behavior: SnackBarBehavior.floating,
-        backgroundColor: type == SnackbarType.error ? Colors.red : Colors.green,
-        // action: SnackBarAction(
-        //   label: 'Close',
-        //   textColor: ThemeColors.white,
-        //   onPressed: () {
-        //     ScaffoldMessenger.of(navigatorKey.currentContext!)
-        //         .hideCurrentSnackBar();
-        //     _isShowing = false;
-        //   },
-        // ),
-        content: Text(
-          message ?? "No message present.",
-          style: stylePTSansRegular(color: ThemeColors.white),
+//       final snackBar = SnackBar(
+//         duration: displayDuration ?? Duration(seconds: duration),
+//         // behavior: SnackBarBehavior.floating,
+//         backgroundColor: backgroundColor ??
+//             (type == SnackbarType.error ? Colors.red : Colors.green),
+//         action: SnackBarAction(
+//           backgroundColor: ThemeColors.background,
+//           label: onTap != null ? "Settings" : 'Close',
+//           textColor: ThemeColors.white,
+//           onPressed: onTap ??
+//               () {
+//                 ScaffoldMessenger.of(navigatorKey.currentContext!)
+//                     .hideCurrentSnackBar();
+//                 _isShowing = false;
+//               },
+//         ),
+//         content: Text(
+//           message ?? "No message present.",
+//           style: stylePTSansRegular(color: ThemeColors.white, fontSize: 17),
+//         ),
+//       );
+//       ScaffoldMessenger.of(navigatorKey.currentContext!)
+//           .showSnackBar(snackBar)
+//           .closed
+//           .then((value) => _isShowing = false);
+//     }
+//   }
+// }
+class CustomSnackbar extends StatelessWidget {
+  final String message;
+  final Duration displayDuration;
+  final VoidCallback? onTap;
+
+  const CustomSnackbar({
+    super.key,
+    required this.message,
+    this.displayDuration = const Duration(seconds: 2),
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 13, vertical: 4),
+          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Color.fromARGB(255, 255, 5, 5)),
+            color: Color.fromARGB(255, 199, 5, 5),
+            // borderRadius: BorderRadius.circular(0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  message,
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                ),
+              ),
+              SpacerHorizontal(width: 5),
+              if (onTap != null)
+                ElevatedButton(
+                  onPressed: onTap,
+                  child: Text(
+                    'Enable',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              // if (onTap == null)
+              //   TextButton(
+              //     onPressed: () {
+              //       // Handle close action
+              //     },
+              //     child: Text(
+              //       'Close',
+              //       style: TextStyle(color: Colors.white),
+              //     ),
+              //   ),
+            ],
+          ),
         ),
-      );
-      ScaffoldMessenger.of(navigatorKey.currentContext!)
-          .showSnackBar(snackBar)
-          .closed
-          .then((value) => _isShowing = false);
-    }
+      ),
+    );
   }
 }
 
@@ -492,4 +564,40 @@ void showMaintenanceDialog({title, description, onClick, log}) {
       );
     },
   );
+}
+
+// Future openNotificationsSettings() async {
+//   FirebaseMessaging messaging = FirebaseMessaging.instance;
+//   NotificationSettings settings = await messaging.getNotificationSettings();
+//   Utils()
+//       .showLog("--Firebase Permission Status: ${settings.authorizationStatus}");
+//   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+//     //
+//   } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+//     _showSnackbar("Enable notifications in app settings.");
+//   } else if (settings.authorizationStatus == AuthorizationStatus.provisional ||
+//       settings.authorizationStatus == AuthorizationStatus.notDetermined) {
+//     _showSnackbar(
+//         "Notifications are not fully enabled. Please enable them in your device settings.");
+//   }
+// }
+
+Future<bool> openNotificationsSettings() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.getNotificationSettings();
+  Utils()
+      .showLog("--Firebase Permission Status: ${settings.authorizationStatus}");
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    return false;
+  } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
+    return true;
+  } else if (settings.authorizationStatus == AuthorizationStatus.provisional ||
+      settings.authorizationStatus == AuthorizationStatus.notDetermined) {
+    return true;
+  }
+  return true;
+}
+
+closeSnackbar() {
+  ScaffoldMessenger.of(navigatorKey.currentContext!).hideCurrentSnackBar();
 }

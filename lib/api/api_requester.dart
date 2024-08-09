@@ -168,11 +168,20 @@ Future<ApiResponse> apiRequest({
         InAppNotification? inAppMsg = (res.extra as Extra).inAppMsg;
         MaintenanceDialog? maintenanceDialog = (res.extra as Extra).maintenance;
         AdManagersRes? adManagerRes = (res.extra as Extra).adManagers;
-
-        if (adManagerRes != null && showAdd && adManagerRes.popUp != null) {
-          showAdd = false;
+        if (adManagerRes != null && adManagerRes.popUp != null) {
           addOnSheetManagers(popUp: adManagerRes.popUp);
         }
+
+        // AdManagerRes? adManagerRes = (res.extra as Extra).adManager;
+
+        // if (adManagerRes != null &&
+        //     (adManagerRes.popUpImage != null &&
+        //         adManagerRes.popUpImage != '')) {
+        //   addOnSheet(
+        //     adManager: adManagerRes,
+        //     onTap: onAddClick,
+        //   );
+        // }
 
         if (checkAppUpdate) {
           _checkForNewVersion(

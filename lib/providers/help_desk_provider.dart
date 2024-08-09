@@ -196,42 +196,37 @@ class HelpDeskProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> replyTicket({File? image}) async {
-    showGlobalProgressDialog();
-    notifyListeners();
-
-    try {
-      final formData = FormData.fromMap({
-        "token":
-            navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
-        "ticket_id": ticketId,
-        "message": messageController.text.toString().trim(),
-        // "image": multipartFile,
-      });
-
-      ApiResponse response = await apiRequest(
-        url: Apis.ticketReply,
-        showProgress: true,
-        removeForceLogin: true,
-        formData: formData,
-      );
-
-      if (response.status) {
-        setSlug(slug, ticketId);
-        notifyListeners();
-
-        getHelpDeskChatScreen();
-        messageController.text = "";
-      }
-
-      closeGlobalProgressDialog();
-      notifyListeners();
-    } catch (e) {
-      Utils().showLog("Error in replyTicket: $e");
-      closeGlobalProgressDialog();
-      notifyListeners();
-    }
-  }
+  // Future<void> replyTicket({File? image}) async {
+  //   showGlobalProgressDialog();
+  //   notifyListeners();
+  //   try {
+  //     final formData = FormData.fromMap({
+  //       "token":
+  //           navigatorKey.currentContext!.read<UserProvider>().user?.token ?? "",
+  //       "ticket_id": ticketId,
+  //       "message": messageController.text.toString().trim(),
+  //       // "image": multipartFile,
+  //     });
+  //     ApiResponse response = await apiRequest(
+  //       url: Apis.ticketReply,
+  //       showProgress: true,
+  //       removeForceLogin: true,
+  //       formData: formData,
+  //     );
+  //     if (response.status) {
+  //       setSlug(slug, ticketId);
+  //       notifyListeners();
+  //       getHelpDeskChatScreen();
+  //       messageController.text = "";
+  //     }
+  //     closeGlobalProgressDialog();
+  //     notifyListeners();
+  //   } catch (e) {
+  //     Utils().showLog("Error in replyTicket: $e");
+  //     closeGlobalProgressDialog();
+  //     notifyListeners();
+  //   }
+  // }
 
   String _formatMessage(String message) {
     // Regular expression to detect URLs

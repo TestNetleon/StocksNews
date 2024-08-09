@@ -9,7 +9,7 @@ import 'package:stocks_news_new/modals/stockDetailRes/earnings.dart';
 import 'package:stocks_news_new/modals/stockDetailRes/financial.dart';
 import 'package:stocks_news_new/screens/auth/login/login_sheet.dart';
 import 'package:stocks_news_new/screens/auth/signup/signup_sheet.dart';
-import 'package:stocks_news_new/screens/help/help_desk.dart';
+import 'package:stocks_news_new/screens/helpDesk/front/index.dart';
 import 'package:stocks_news_new/screens/marketData/congressionalData/index.dart';
 import 'package:stocks_news_new/screens/marketData/dividends/dividends.dart';
 import 'package:stocks_news_new/screens/marketData/earnings/earnings.dart';
@@ -894,7 +894,8 @@ void handleNavigation({
   } else if (type == DeeplinkEnum.helpdesk) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const HelpDesk()),
+      // MaterialPageRoute(builder: (_) => const HelpDesk()),
+      MaterialPageRoute(builder: (_) => const HelpDeskNew()),
     );
     // *********** Market data Pages from Here ********
   } else if (type == DeeplinkEnum.gainerLoser) {

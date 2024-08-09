@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:stocks_news_new/screens/tabs/home/widgets/app_bar_home.dart';
 import 'package:stocks_news_new/utils/colors.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/utils/utils.dart';
 import 'package:stocks_news_new/widgets/base_container.dart';
 import 'package:stocks_news_new/widgets/base_ui_container.dart';
 import 'package:stocks_news_new/widgets/spacer_vertical.dart';
-
+import '../../../providers/home_provider.dart';
 import '../../../providers/notification_settings.dart';
+import '../../../route/my_app.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/dialogs.dart';
 
 class NotificationSetting extends StatefulWidget {
   const NotificationSetting({super.key});
@@ -16,23 +21,60 @@ class NotificationSetting extends StatefulWidget {
   State<NotificationSetting> createState() => _NotificationSettingState();
 }
 
-class _NotificationSettingState extends State<NotificationSetting> {
+class _NotificationSettingState extends State<NotificationSetting>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getSettings();
+      WidgetsBinding.instance.addObserver(this);
+      _getSettings();
     });
   }
 
-  void getSettings() async {
-    context.read<NotificationsSettingProvider>().getSettings();
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        Utils().showLog('App resumed');
+        _check();
+        break;
+      case AppLifecycleState.paused:
+        Utils().showLog('App paused');
+        break;
+      case AppLifecycleState.inactive:
+        Utils().showLog('App inactive');
+        break;
+      case AppLifecycleState.detached:
+        Utils().showLog('App detached');
+        break;
+      default:
+        break;
+    }
+  }
+
+  Future _check() async {
+    notifySnackbar = await openNotificationsSettings();
+    Utils().showLog("OPEN SNACKBAR? $notifySnackbar");
+    setState(() {});
+  }
+
+  Future _getSettings() async {
+    await context.read<NotificationsSettingProvider>().getSettings();
   }
 
   @override
   Widget build(BuildContext context) {
     NotificationsSettingProvider provider =
         context.watch<NotificationsSettingProvider>();
+    HomeProvider homeProvider = context.watch<HomeProvider>();
+
     return BaseContainer(
       appBar: AppBarHome(
         isPopback: true,
@@ -40,69 +82,96 @@ class _NotificationSettingState extends State<NotificationSetting> {
         canSearch: false,
         title: provider.extra?.title ?? "Notification Settings",
       ),
-      body: BaseUiContainer(
-        hasData: provider.settings != null && !provider.isLoading,
-        isLoading: provider.isLoading,
-        error: provider.error,
-        onRefresh: getSettings,
-        errorDispCommon: true,
-        showPreparingText: true,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.separated(
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return Column(
-                  children: [
-                    NotificationSettingItem(
-                      label: provider.allOn
-                          ? "Turn off all notifications"
-                          : "Turn on all notifications",
-                      isOn: provider.allOn,
-                      visible:
-                          provider.updatingIndex == -1 && provider.isUpdating,
-                      // onChanged: (value) => provider.changeAll(),
-                      onChanged: (value) => provider.updateSettings(
-                        slug: "all",
-                        value: provider.allOn ? 0 : 1,
-                        index: -1,
-                      ),
+      body:
+
+          //  userProvider.user == null
+          //     ? LoginError(
+          //         title: "Notification Settings",
+          //         onClick: () async {
+          //           isPhone ? await loginSheet() : await loginSheetTablet();
+          //           await _getSettings();
+          //         },
+          //       )
+          //     :
+
+          Stack(
+        children: [
+          BaseUiContainer(
+            hasData: provider.settings != null && !provider.isLoading,
+            isLoading: provider.isLoading,
+            error: provider.error,
+            onRefresh: provider.getSettings,
+            errorDispCommon: true,
+            showPreparingText: true,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Column(
+                      children: [
+                        NotificationSettingItem(
+                          label: provider.allOn
+                              ? "Turn off all notifications"
+                              : "Turn on all notifications",
+                          isOn: provider.allOn,
+                          visible: provider.updatingIndex == -1 &&
+                              provider.isUpdating,
+                          // onChanged: (value) => provider.changeAll(),
+                          onChanged: (value) => provider.updateSettings(
+                            slug: "all",
+                            value: provider.allOn ? 0 : 1,
+                            index: -1,
+                          ),
+                        ),
+                        SpacerVertical(height: 10),
+                        NotificationSettingItem(
+                          label: provider.settings?[index].title ?? '',
+                          isOn: provider.settings?[index].selected == 1,
+                          visible: provider.updatingIndex == index &&
+                              provider.isUpdating,
+                          // onChanged: (value) => provider.open(index),
+                          onChanged: (value) => provider.updateSettings(
+                            slug: provider.settings?[index].slug,
+                            value:
+                                provider.settings?[index].selected == 1 ? 0 : 1,
+                            index: index,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  return NotificationSettingItem(
+                    label: provider.settings?[index].title ?? '',
+                    isOn: provider.settings?[index].selected == 1,
+                    // onChanged: (value) => provider.open(index),
+                    visible:
+                        provider.updatingIndex == index && provider.isUpdating,
+                    onChanged: (value) => provider.updateSettings(
+                      slug: provider.settings?[index].slug,
+                      value: provider.settings?[index].selected == 1 ? 0 : 1,
+                      index: index,
                     ),
-                    SpacerVertical(height: 10),
-                    NotificationSettingItem(
-                      label: provider.settings?[index].title ?? '',
-                      isOn: provider.settings?[index].selected == 1,
-                      visible: provider.updatingIndex == index &&
-                          provider.isUpdating,
-                      // onChanged: (value) => provider.open(index),
-                      onChanged: (value) => provider.updateSettings(
-                        slug: provider.settings?[index].slug,
-                        value: provider.settings?[index].selected == 1 ? 0 : 1,
-                        index: index,
-                      ),
-                    ),
-                  ],
-                );
-              }
-              return NotificationSettingItem(
-                label: provider.settings?[index].title ?? '',
-                isOn: provider.settings?[index].selected == 1,
-                // onChanged: (value) => provider.open(index),
-                visible: provider.updatingIndex == index && provider.isUpdating,
-                onChanged: (value) => provider.updateSettings(
-                  slug: provider.settings?[index].slug,
-                  value: provider.settings?[index].selected == 1 ? 0 : 1,
-                  index: index,
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return SpacerVertical(height: 10);
-            },
-            // itemCount: provider.data.length,
-            itemCount: provider.settings?.length ?? 0,
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SpacerVertical(height: 10);
+                },
+                // itemCount: provider.data.length,
+                itemCount: provider.settings?.length ?? 0,
+              ),
+            ),
           ),
-        ),
+          if (notifySnackbar && homeProvider.extra?.notifyTextMsg != null)
+            CustomSnackbar(
+              message:
+                  "${navigatorKey.currentContext!.watch<HomeProvider>().extra?.notifyTextMsg}",
+              displayDuration: Duration(minutes: 1),
+              onTap: () async {
+                await openAppSettings();
+              },
+            ),
+        ],
       ),
     );
   }

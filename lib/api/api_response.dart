@@ -123,6 +123,7 @@ class Extra {
   final List<PointsSummaryRes>? pointsSummary;
   final AdManagerRes? adManager;
   final AdManagersRes? adManagers;
+  final String? notifyTextMsg;
 
   Extra({
     this.adManagers,
@@ -132,6 +133,7 @@ class Extra {
     this.showFeatured,
     this.tagLine,
     this.showWatchlist,
+    this.notifyTextMsg,
     this.showMostPurchased,
     this.text1,
     this.text2,
@@ -207,6 +209,7 @@ class Extra {
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
         search: json["search"],
         storeTitle: json["store_title"],
+        notifyTextMsg: json['notification_setting_txt'],
         storeSubTitle: json["store_subtitle"],
         adManager: json["ad_manager"] == null
             ? null
@@ -370,13 +373,13 @@ class Extra {
         "earn_condition": earnCondition,
         'total_points_received': received,
         "total_balance": balance,
+        "notification_setting_txt": notifyTextMsg,
         "total_spent": spent,
         "ad_manager": adManager?.toJson(),
         "text1": text1,
         "tag_line": tagLine,
         "text2": text2,
         "text3": text3,
-
         // "subscription": subscription?.toJson(),
         "total_points_pending": pending,
         'referral_status_message': suspendMsg,
