@@ -1,14 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class ForcastingChart extends StatefulWidget {
-  const ForcastingChart({super.key});
+class ForecastingChart extends StatefulWidget {
+  const ForecastingChart({super.key});
 
   @override
-  State<ForcastingChart> createState() => _ForcastingChartState();
+  State<ForecastingChart> createState() => _ForecastingChartState();
 }
 
-class _ForcastingChartState extends State<ForcastingChart> {
+class _ForecastingChartState extends State<ForecastingChart> {
   List<Color> gradientColors = [
     Colors.green,
     const Color.fromARGB(255, 1, 126, 5),
@@ -198,8 +198,6 @@ class _ForcastingChartState extends State<ForcastingChart> {
               );
             },
           ),
-          // Other chart configurations
-          // ...
         ),
       ),
     );

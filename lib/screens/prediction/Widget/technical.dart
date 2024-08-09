@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:stocks_news_new/screens/prediction/Widget/linechart.dart';
+// import 'package:stocks_news_new/screens/prediction/Widget/linechart.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
 import 'package:stocks_news_new/widgets/spacer_horizontal.dart';
 
-class TechnicalAnalaysis extends StatefulWidget {
-  const TechnicalAnalaysis({super.key});
+import 'linechart.dart';
+
+class TechnicalAnalysis extends StatefulWidget {
+  const TechnicalAnalysis({super.key});
 
   @override
-  State<TechnicalAnalaysis> createState() => _TechnicalAnalaysisState();
+  State<TechnicalAnalysis> createState() => _TechnicalAnalysisState();
 }
 
-class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
+class _TechnicalAnalysisState extends State<TechnicalAnalysis>
     with SingleTickerProviderStateMixin {
   late TabController controller;
 
@@ -217,10 +219,10 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                                         CrossAxisAlignment.start,
                                     children: [
                                       //graph
-                                      const SizedBox(
-                                        height: 180,
-                                        child: LineChartSample2(),
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 180,
+                                      //   child: LineChartSample2(),
+                                      // ),
 
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -326,10 +328,10 @@ class _TechnicalAnalaysisState extends State<TechnicalAnalaysis>
                                         CrossAxisAlignment.start,
                                     children: [
                                       //graph
-                                      const SizedBox(
-                                        height: 180,
-                                        child: LineChartSample2(),
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 180,
+                                      //   child: LineChartSample2(),
+                                      // ),
 
                                       Padding(
                                         padding: const EdgeInsets.only(

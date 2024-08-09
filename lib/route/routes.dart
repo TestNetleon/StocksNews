@@ -21,6 +21,7 @@ import 'package:stocks_news_new/providers/fifty_two_weeks_provider.dart';
 import 'package:stocks_news_new/providers/filter_provider.dart';
 import 'package:stocks_news_new/providers/gap_down_provider.dart';
 import 'package:stocks_news_new/providers/gap_up_provider.dart';
+import 'package:stocks_news_new/providers/help_desk.dart';
 import 'package:stocks_news_new/providers/help_desk_provider.dart';
 import 'package:stocks_news_new/providers/high_beta_stocks_providers.dart';
 import 'package:stocks_news_new/providers/high_pe_growth_provider.dart';
@@ -110,6 +111,7 @@ import '../providers/featured_ticker.dart';
 import '../providers/high_low_pe.dart';
 import '../providers/low_prices_stocks.dart';
 import '../providers/notification_settings.dart';
+import '../providers/scroll_controller.dart';
 import '../tradingSimulator/providers/trading_simulator.dart';
 import '../providers/trending_industries.dart';
 import '../screens/marketData/congressionalData/index.dart';
@@ -559,7 +561,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => CongressionalProvider()),
       // ChangeNotifierProvider(create: (_) => PennyStocksProvider()),
       // ChangeNotifierProvider(create: (_) => FiftyTwoWeeksProvider()),
-      // ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
+      ChangeNotifierProvider(create: (_) => ScrollControllerProvider()),
       ChangeNotifierProvider(create: (_) => FilterProvider()),
       ChangeNotifierProvider(create: (_) => GapUpProvider()),
       ChangeNotifierProvider(create: (_) => GapDownProvider()),
@@ -598,6 +600,7 @@ class Routes {
       ChangeNotifierProvider(create: (_) => TsOpenListProvider()),
       ChangeNotifierProvider(create: (_) => TsPortfolioProvider()),
       ChangeNotifierProvider(create: (_) => AdProvider()),
+      ChangeNotifierProvider(create: (_) => NewHelpDeskProvider()),
     ];
   }
 }

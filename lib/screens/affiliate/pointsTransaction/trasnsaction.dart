@@ -20,7 +20,7 @@ import '../../../utils/colors.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/utils.dart';
 import '../../blogDetail/index.dart';
-import '../../help/chatScreen/chat_screen.dart';
+import '../../helpDesk/chats/index.dart';
 import '../../stockDetail/index.dart';
 import '../../tabs/tabs.dart';
 
@@ -315,9 +315,12 @@ class AffiliateTranItem extends StatelessWidget {
         Navigator.pushReplacement(
           navigatorKey.currentContext!,
           MaterialPageRoute(
-            builder: (_) => ChatScreen(
-              slug: "1",
-              ticketId: slug,
+            // builder: (_) => ChatScreen(
+            //   slug: "1",
+            //   ticketId: slug,
+            // ),
+            builder: (_) => HelpDeskAllChatsNew(
+              ticketId: slug ?? "N/A",
             ),
           ),
         );

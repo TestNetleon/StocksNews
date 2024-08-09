@@ -23,24 +23,6 @@ class SdTopWidgetDetail extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Visibility(
-        //   visible: true,
-        //   child: ClipRRect(
-        //     borderRadius: BorderRadius.circular(0),
-        //     child: Container(
-        //       decoration: BoxDecoration(
-        //         shape: BoxShape.circle,
-        //         color: Colors.white,
-        //       ),
-        //       padding: const EdgeInsets.all(10),
-        //       width: 70,
-        //       height: 70,
-        //       child: ThemeImageView(url: companyInfo?.image ?? ""),
-        //     ),
-        //   ),
-        // ),
-        // const SpacerHorizontal(width: 12),
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -125,92 +107,9 @@ class SdTopWidgetDetail extends StatelessWidget {
                 keyStats?.marketCap ?? "",
                 style: stylePTSansBold(fontSize: 26),
               ),
-              // Visibility(
-              //   visible: keyStats?.change != null,
-              //   child: Row(
-              //     children: [
-              //       Icon(
-              //         (keyStats?.change ?? 0) > 0
-              //             ? Icons.arrow_drop_up
-              //             : Icons.arrow_drop_down,
-              //         color: (keyStats?.change ?? 0) > 0
-              //             ? ThemeColors.accent
-              //             : Colors.red,
-              //         size: 20.sp,
-              //       ),
-              //       Text(
-              //         "${keyStats?.changeWithCur} (${keyStats?.changesPercentage?.toCurrency()}%)",
-              //         style: stylePTSansBold(
-              //           fontSize: 12,
-              //           color: (keyStats?.change ?? 0) > 0
-              //               ? ThemeColors.accent
-              //               : Colors.red,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
-
-        // SizedBox(
-        //   height: 50,
-        //   width: 60,
-        //   child: VerticalDivider(
-        //     color: ThemeColors.greyText,
-        //   ),
-        // ),
-        // GestureDetector(
-        //   onTap: () {
-        //     commonShare(
-        //       title:
-        //           "${provider.tabRes?.keyStats?.name} (${provider.tabRes?.keyStats?.symbol})",
-        //       url: provider.tabRes?.shareUrl ?? "",
-        //     );
-        //   },
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       shape: BoxShape.circle,
-        //       color: Color.fromARGB(236, 2, 78, 5),
-        //     ),
-        //     padding: EdgeInsets.all(20),
-        //     child: const Icon(Icons.share_outlined, size: 18),
-        //   ),
-        // )
-
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Text(keyStats?.price ?? "", style: stylePTSansBold(fontSize: 32)),
-        //     const SpacerVertical(height: 2),
-        //     Visibility(
-        //       visible: keyStats?.change != null,
-        //       child: Row(
-        //         children: [
-        //           Icon(
-        //             (keyStats?.change ?? 0) > 0
-        //                 ? Icons.arrow_drop_up
-        //                 : Icons.arrow_drop_down,
-        //             color: (keyStats?.change ?? 0) > 0
-        //                 ? ThemeColors.accent
-        //                 : Colors.red,
-        //             size: 20.sp,
-        //           ),
-        //           Text(
-        //             "${keyStats?.changeWithCur} (${keyStats?.changesPercentage?.toCurrency()}%)",
-        //             style: stylePTSansBold(
-        //               fontSize: 12,
-        //               color: (keyStats?.change ?? 0) > 0
-        //                   ? ThemeColors.accent
-        //                   : Colors.red,
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }

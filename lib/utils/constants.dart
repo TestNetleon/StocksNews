@@ -77,6 +77,8 @@ String? fcmTokenGlobal;
 String? appVersion;
 bool showMembership = true;
 bool signUpVisible = false;
+
+bool notifySnackbar = false;
 // this is to set default country code for phone number
 String? geoCountryCode;
 bool isSVG = false;

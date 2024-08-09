@@ -18,6 +18,7 @@ import 'package:stocks_news_new/screens/drawer/about/tile.dart';
 import 'package:stocks_news_new/screens/drawer/settings/index.dart';
 import 'package:stocks_news_new/screens/drawer/widgets/review_app_pop_up.dart';
 import 'package:stocks_news_new/screens/faq/index.dart';
+import 'package:stocks_news_new/screens/helpDesk/front/index.dart';
 import 'package:stocks_news_new/screens/membership/index.dart';
 import 'package:stocks_news_new/screens/morningstarTranscations/morningstar_txn.dart';
 import 'package:stocks_news_new/screens/myAccount/my_account.dart';
@@ -35,7 +36,6 @@ import '../../../utils/constants.dart';
 import '../../../utils/theme.dart';
 import '../../../widgets/spacer_vertical.dart';
 import '../../affiliate/index.dart';
-import '../../help/help_desk.dart';
 import '../widgets/drawer_top_new.dart';
 import 'refer_dialog.dart';
 
@@ -104,19 +104,19 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     );
   }
 
-  Future _helpDesk() async {
-    UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
+  // Future _helpDesk() async {
+  //   UserProvider provider = navigatorKey.currentContext!.read<UserProvider>();
 
-    if (provider.user == null) {
-      isPhone ? await loginSheet() : await loginSheetTablet();
-    }
-    if (provider.user == null) return;
+  //   if (provider.user == null) {
+  //     isPhone ? await loginSheet() : await loginSheetTablet();
+  //   }
+  //   if (provider.user == null) return;
 
-    await Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const HelpDesk()),
-    );
-  }
+  //   await Navigator.push(
+  //     navigatorKey.currentContext!,
+  //     MaterialPageRoute(builder: (_) => const HelpDesk()),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -283,24 +283,33 @@ class _AboutStocksNewsState extends State<AboutStocksNews> {
     );
     // }
     // Helpdesk
+    // visibleAboutTiles.add(
+    //   DrawerRes(
+    //     iconData: Icons.support_agent,
+    //     text: "Helpdesk",
+    //     onTap: () async {
+
+    //       Navigator.push(
+    //         navigatorKey.currentContext!,
+    //         MaterialPageRoute(builder: (_) => const HelpDesk()),
+    //       );
+    //     },
+    //   ),
+    // );
+
     visibleAboutTiles.add(
       DrawerRes(
         iconData: Icons.support_agent,
         text: "Helpdesk",
         onTap: () async {
-          // UserRes? user = navigatorKey.currentContext!.read<UserProvider>().user;
-          // log("1");
-          // if (user == null) {
-          //   isPhone ? await loginSheet() : await loginSheetTablet();
-          // }
           Navigator.push(
             navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => const HelpDesk()),
+            MaterialPageRoute(builder: (_) => const HelpDeskNew()),
           );
-          // log("3");
         },
       ),
     );
+
     // FAQ is always visible
     if (provider.extra?.showFAQ == true) {
       visibleAboutTiles.add(

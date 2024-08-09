@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:stocks_news_new/utils/constants.dart';
 import 'package:stocks_news_new/utils/theme.dart';
+import 'package:stocks_news_new/widgets/spacer_vertical.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class FundamentalAnalaysis extends StatefulWidget {
-  const FundamentalAnalaysis({super.key});
+class FundamentalAnalysis extends StatefulWidget {
+  const FundamentalAnalysis({super.key});
 
   @override
-  State<FundamentalAnalaysis> createState() => _FundamentalAnalaysisState();
+  State<FundamentalAnalysis> createState() => _FundamentalAnalysisState();
 }
 
-class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
+class _FundamentalAnalysisState extends State<FundamentalAnalysis> {
   List<String> fundamentals = ["Net Profilt", "Revenue", "Debits"];
 
   @override
@@ -18,15 +19,17 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Fundamental Analysis Metrics',
-            style: stylePTSansBold(fontSize: 18)),
-        const SizedBox(
-          height: 10.0,
+        Text(
+          'Fundamental Analysis Metrics',
+          style: stylePTSansBold(fontSize: 18),
         ),
+        const SpacerVertical(height: 10),
         Container(
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
-          padding: const EdgeInsets.all(10.0),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,12 +43,12 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                           Icons.radar,
                           color: Colors.green,
                         ),
-                        const SizedBox(
-                          width: 8.0,
+                        const SpacerVertical(height: 8),
+                        Text(
+                          'AI Satisfaction Scan',
+                          style: stylePTSansBold(
+                              color: Colors.black, fontSize: 20),
                         ),
-                        Text('AI Satisfation Scan',
-                            style: stylePTSansBold(
-                                color: Colors.black, fontSize: 20)),
                       ],
                     ),
                   ),
@@ -56,9 +59,7 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                         opacity: const AlwaysStoppedAnimation(.5),
                         height: 20,
                       ),
-                      const SizedBox(
-                        width: 20.0,
-                      ),
+                      const SpacerVertical(height: 20),
                       Image.asset(
                         Images.report,
                         height: 20,
@@ -67,16 +68,16 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                   )
                 ],
               ),
-              Text('Recent Customer Satisfication Score',
-                  style: stylePTSansRegular(color: Colors.black)),
-              const SizedBox(
-                height: 3.0,
+              Text(
+                'Recent Customer Satisfaction Score',
+                style: stylePTSansRegular(color: Colors.black),
               ),
-              Text('Within your casual range of 80-90%',
-                  style: stylePTSansRegular(color: Colors.green)),
-              const SizedBox(
-                height: 8.0,
+              const SpacerVertical(height: 3),
+              Text(
+                'Within your casual range of 80-90%',
+                style: stylePTSansRegular(color: Colors.green),
               ),
+              const SpacerVertical(height: 8),
               SizedBox(
                 height: 180,
                 child: Stack(
@@ -112,32 +113,30 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                               pointerOffset: 0.1,
                               cornerStyle: CornerStyle.bothCurve,
                               sizeUnit: GaugeSizeUnit.factor,
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                     Positioned(
                       top: 60,
                       child: Column(
                         children: [
-                          Text('80%', // Display the overall value here
-                              style: stylePTSansBold(fontSize: 25)),
+                          Text('80%', style: stylePTSansBold(fontSize: 25)),
                           const SizedBox(
                             height: 3.0,
                           ),
                           Text(
-                              'Satisfiction Index', // Display the overall value here
-                              style: stylePTSansRegular(color: Colors.white)),
+                            'Satisfaction Index',
+                            style: stylePTSansRegular(color: Colors.white),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 8.0,
-              ),
+              const SpacerVertical(height: 8),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.10,
                 child: ListView.builder(
@@ -145,29 +144,26 @@ class _FundamentalAnalaysisState extends State<FundamentalAnalaysis> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
+                      alignment: Alignment.center,
                       width: MediaQuery.of(context).size.width * 0.25,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Color.fromARGB(255, 177, 247, 179),
-                                offset: Offset(0, 2),
-                                blurRadius: 6,
-                                spreadRadius: 2)
-                          ]),
-                      padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            child: Text(
-                                fundamentals[
-                                    index], // Display the overall value here
-                                style: stylePTSansBold(color: Colors.black)),
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 19, 201, 25),
+                            offset: Offset(0, 2),
+                            blurRadius: 6,
+                            spreadRadius: 2,
                           ),
                         ],
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.all(8.0),
+                      child: Text(
+                        fundamentals[index],
+                        maxLines: 2,
+                        style: stylePTSansBold(color: Colors.black),
                       ),
                     );
                   },

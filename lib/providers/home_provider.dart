@@ -299,6 +299,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future refreshData(String? inAppMsgId) async {
+    notifySnackbar = await openNotificationsSettings();
+
     retryCount = 0;
     showAdd = true;
 
