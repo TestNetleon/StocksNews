@@ -72,8 +72,8 @@ class ThemeColors {
   static const lightRed = Color.fromARGB(255, 252, 111, 111);
   static const transparentGreen = Color.fromARGB(92, 146, 247, 106);
   static const lightGreen = Color.fromARGB(255, 111, 252, 120);
-  static const sos = Colors.red;
-  static const blue = Color.fromARGB(255, 33, 222, 243);
+  static const sos = Color(0xFFF44336);
+  static const blue = Color(0xFF21DEF3);
   static const white = Colors.white;
   static const bottomsheetGradient = Color.fromARGB(255, 0, 35, 5);
   static const buttonLightRed = Color.fromARGB(255, 252, 193, 189);

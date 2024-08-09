@@ -65,7 +65,7 @@ class HelpDeskNewContainer extends StatelessWidget {
                             style: stylePTSansBold(),
                           ),
                           Text(
-                            "${provider.data?.totalTickets ?? 0} Active",
+                            "${provider.data?.totalActive ?? 0} Active",
                             style: stylePTSansRegular(
                                 color: ThemeColors.greyText, fontSize: 13),
                           ),
